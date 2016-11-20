@@ -13,7 +13,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       flash[:success] = "#{@user.full_name} さんを追加しました"
-      redirect_to @user
+      redirect_to action: :new
     else
       render 'new'
     end
