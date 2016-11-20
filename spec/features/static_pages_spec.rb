@@ -16,6 +16,6 @@ RSpec.feature "StaticPages", type: :feature do
     click_on 'About'
 
     expect(page).to have_title(full_title('About'))
-    expect(page).to have_content('LiveLog について')
+    expect(page).to have_content('About')
   end
 end
