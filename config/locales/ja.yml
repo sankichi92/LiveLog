@@ -7,6 +7,15 @@ ja:
         restrict_dependent_destroy:
           has_one: "%{record}が存在しているので削除できません"
           has_many: "%{record}が存在しているので削除できません"
+    attributes:
+      user:
+        first_name: 名
+        last_name: 姓
+        furigana: ふりがな
+        nickname: ニックネーム
+        email: メールアドレス
+        joined: 入部年度
+        password: パスワード
   date:
     abbr_day_names:
     - 日

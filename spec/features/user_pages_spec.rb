@@ -29,10 +29,10 @@ RSpec.feature "UserPages", type: :feature do
     end
 
     scenario 'A logged in user can create a new user with valid information' do
-      fill_in 'Last name', with: '京大'
-      fill_in 'First name', with: 'アンプラ太郎'
-      fill_in 'Furigana', with: 'きょうだいあんぷらたろう'
-      select '2011', from: 'Joined'
+      fill_in '姓', with: '京大'
+      fill_in '名', with: 'アンプラ太郎'
+      fill_in 'ふりがな', with: 'きょうだいあんぷらたろう'
+      select '2011', from: '入部年度'
 
       expect { click_button submit }.to change(User, :count).by(1)
       expect(page).to have_selector '.alert-success'
