@@ -6,25 +6,9 @@
     = csrf_meta_tags
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
-    / [if lt IE 9]
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    / [endif]
+    = render 'layouts/shim'
   %body
-    %nav.navbar.navbar-inverse.navbar-fixed-top
-      .container
-        .navbar-header
-          %button.navbar-toggle.collapsed{type: 'button', 'data-toggle': 'collapse', 'data-target': '#bs-navbar-collapse', 'area-expanded': false}
-            %span.sr-only Toggle navigation
-            %span.icon-bar
-            %span.icon-bar
-            %span.icon-bar
-          %a.navbar-brand LiveLog
-
-        #bs-navbar-collapse.collapse.navbar-collapse
-          %ul.nav.navbar-nav
-            %li= link_to 'About', about_path
-          %ul.nav.navbar-nav.navbar-right
-            %li= link_to 'Log in', '#'
+    = render 'layouts/navbar'
     .container
       = yield
+    = render 'layouts/footer'

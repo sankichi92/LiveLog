@@ -1,0 +1,15 @@
+%nav.navbar.navbar-inverse.navbar-fixed-top
+  .container
+    .navbar-header
+      %button.navbar-toggle.collapsed{type: 'button', 'data-toggle': 'collapse', 'data-target': '#bs-navbar-collapse', 'area-expanded': false}
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      %a.navbar-brand LiveLog
+
+    #bs-navbar-collapse.collapse.navbar-collapse
+      %ul.nav.navbar-nav
+        %li= link_to 'About', about_path
+      %ul.nav.navbar-nav.navbar-right
+        %li= link_to 'Log in', '#'
