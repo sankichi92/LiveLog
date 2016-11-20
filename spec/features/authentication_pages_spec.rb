@@ -24,7 +24,7 @@ RSpec.feature "AuthenticationPages", type: :feature do
     is_expected.not_to have_selector('.alert')
   end
 
-  scenario 'A user can log in with valid information' do
+  scenario 'A user can login and logout with valid information' do
     user = create(:user)
     visit login_path
 
@@ -35,5 +35,9 @@ RSpec.feature "AuthenticationPages", type: :feature do
     is_expected.to have_content(user.full_name)
     is_expected.to have_link('Log out', href: logout_path)
     is_expected.not_to have_link('Log in', href: login_path)
+
+    click_on 'Log out'
+
+    is_expected.to have_link('Log in', href: login_path)
   end
 end
