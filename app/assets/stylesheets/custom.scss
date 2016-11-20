@@ -5,9 +5,9 @@ $navbar-default-bg: #f0ad4e;
 $navbar-default-link-color: #333;
 $navbar-default-link-hover-color: #000;
 $navbar-default-link-active-color: #000;
-$navbar-default-toggle-hover-bg: #aaa;
-$navbar-default-toggle-icon-bar-bg: #444;
-$navbar-default-toggle-border-color: #aaa;
+$navbar-default-toggle-hover-bg: lighten($navbar-default-bg, 20%);
+$navbar-default-toggle-icon-bar-bg: #333;
+$navbar-default-toggle-border-color: lighten($navbar-default-bg, 10%);
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
