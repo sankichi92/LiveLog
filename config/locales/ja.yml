@@ -13,9 +13,7 @@ ja:
         last_name: 姓
         furigana: ふりがな
         nickname: ニックネーム
-        email: メールアドレス
         joined: 入部年度
-        password: パスワード
   date:
     abbr_day_names:
     - 日
