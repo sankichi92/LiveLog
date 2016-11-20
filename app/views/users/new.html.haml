@@ -1,2 +1,29 @@
-%h1 Users#new
-%p Find me in app/views/users/new.html.haml
+- provide(:title, 'Add Member')
+.page-header
+  %h1 Add Member
+= render 'shared/error_messages'
+= form_for(@user, html: {class: 'form-horizontal'}) do |f|
+  .form-group
+    = f.label :last_name, class: 'col-sm-3 control-label'
+    .col-sm-9
+      = f.text_field :last_name, class: 'form-control'
+
+  .form-group
+    = f.label :first_name, class: 'col-sm-3 control-label'
+    .col-sm-9
+      = f.text_field :first_name, class: 'form-control'
+
+  .form-group
+    = f.label :furigana, class: 'col-sm-3 control-label'
+    .col-sm-9
+      = f.text_field :furigana, class: 'form-control'
+
+  .form-group
+    = f.label :joined, class: 'col-sm-3 control-label'
+    .col-sm-9
+      = f.select :joined, (1995..nendo(Date.today)).to_a.reverse, {}, {class: 'form-control'}
+
+  .form-group
+    .col-sm-offset-3.col-sm-9
+      = f.submit 'Add', class: 'btn btn-primary'
+
