@@ -9,4 +9,8 @@ class User < ApplicationRecord
   validates :joined, presence: true
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }
+
+  def name
+    last_name + ' ' + first_name
+  end
 end
