@@ -1,7 +1,7 @@
 - if @user.errors.any?
-  .alert.alert-danger
-    The form contains
-    = pluralize(@user.errors.count, 'error')
+  .alert.alert-danger<
+    = @user.errors.count
+    件のエラーがあります
     %ul
       - @user.errors.full_messages.each do |msg|
         %li= msg
