@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     params[:user][:password] = params[:user][:password_confirmation] = 'dummy_pass'
     @user = User.new(user_params)
     if @user.save
-      flash[:success] = "#{@user.joined}年度入部の #{@user.full_name} さんを追加しました"
+      flash[:success] = "#{@user.full_name} さんを追加しました"
       redirect_to @user
     else
       render 'new'
