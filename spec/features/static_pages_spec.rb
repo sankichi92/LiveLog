@@ -2,13 +2,12 @@ require 'rails_helper'
 
 RSpec.feature "StaticPages", type: :feature do
 
-  let(:base_title) { 'LiveLog' }
-
   scenario 'A user can see the Home page' do
     visit root_path
 
-    expect(page).to have_title('LiveLog')
-    expect(page).to have_content(base_title)
+    expect(page).to have_title(full_title(''))
+    expect(page).not_to have_title('|')
+    expect(page).to have_content('セットリスト検索システムです')
   end
 
   scenario 'A user can see the About page' do
@@ -16,7 +15,7 @@ RSpec.feature "StaticPages", type: :feature do
 
     click_on 'About'
 
-    expect(page).to have_title("About | #{base_title}")
+    expect(page).to have_title(full_title('About'))
     expect(page).to have_content('LiveLog について')
   end
 end
