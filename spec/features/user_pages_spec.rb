@@ -25,15 +25,17 @@ RSpec.feature "UserPages", type: :feature do
 
     scenario 'A logged in user cannot create a new user with invalid information' do
       expect { click_button submit }.not_to change(User, :count)
+      expect(page).to have_content('error')
     end
 
     scenario 'A logged in user can create a new user with valid information' do
-      fill_in 'last_name', with: '京大'
-      fill_in 'first_name', with: 'アンプラ太郎'
-      fill_in 'furigana', with: 'きょうだいあんぷらたろう'
-      fill_in 'joiend', with: '2011'
+      fill_in 'Last name', with: '京大'
+      fill_in 'First name', with: 'アンプラ太郎'
+      fill_in 'Furigana', with: 'きょうだいあんぷらたろう'
+      select '2011', from: 'Joined'
 
       expect { click_button submit }.to change(User, :count).by(1)
+      expect(page).to have_selector '.alert-success'
     end
   end
 end

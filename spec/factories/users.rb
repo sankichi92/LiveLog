@@ -5,7 +5,7 @@ FactoryGirl.define do
     furigana 'きょうだいあんぷらたろう'
     nickname 'アンプラ'
     email 'livelog@ku-unplugged.net'
-    joined '2011-06-01'
+    joined 2011
     password 'foobar'
     password_confirmation 'foobar'
   end
