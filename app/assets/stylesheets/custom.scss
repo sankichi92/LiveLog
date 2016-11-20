@@ -8,6 +8,8 @@ $navbar-default-link-active-color: #000;
 $navbar-default-toggle-hover-bg: lighten($navbar-default-bg, 20%);
 $navbar-default-toggle-icon-bar-bg: #333;
 $navbar-default-toggle-border-color: lighten($navbar-default-bg, 10%);
+$well-bg: lighten($brand-primary, 40%);
+$well-border: lighten($brand-primary, 30%);
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
