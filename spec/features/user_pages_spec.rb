@@ -19,35 +19,40 @@ RSpec.feature "UserPages", type: :feature do
   end
 
   context 'when creating a new user' do
-    background { visit new_user_path }
-    given(:submit) { 'Add' }
+    background do
+      log_in_as create(:user)
+      visit new_user_path
+    end
 
-    scenario 'A user cannot create a new user with invalid information' do
-      expect { click_button submit }.not_to change(User, :count)
+    scenario 'A logged-in user cannot create a new user with invalid information' do
+      expect { click_button 'Add' }.not_to change(User, :count)
       expect(page).to have_selector('.alert-danger')
     end
 
-    scenario 'A user can create a new user with valid information' do
+    scenario 'A logged-in user can create a new user with valid information' do
       fill_in '姓', with: '京大'
       fill_in '名', with: 'アンプラ太郎'
       fill_in 'ふりがな', with: 'きょうだいあんぷらたろう'
       select '2011', from: '入部年度'
 
-      expect { click_button submit }.to change(User, :count).by(1)
+      expect { click_button 'Add' }.to change(User, :count).by(1)
       expect(page).to have_selector('.alert-success')
     end
   end
 
   context 'when editing his/her profile' do
     given(:user) { create(:user) }
-    background { visit edit_user_path(user) }
+    background do
+      log_in_as user
+      visit edit_user_path(user)
+    end
 
-    scenario 'A user can see the edit page' do
+    scenario 'A logged-in user can see the edit page' do
       expect(page).to have_content('Update your profile')
       expect(page).to have_title('Edit user')
     end
 
-    scenario 'A user cannot save changes with invalid information' do
+    scenario 'A logged-in user cannot save changes with invalid information' do
       fill_in 'パスワード', with: 'foo'
       fill_in 'パスワードを再入力', with: 'bar'
       click_button 'Save'
@@ -55,7 +60,7 @@ RSpec.feature "UserPages", type: :feature do
       expect(page).to have_selector('.alert-danger')
     end
 
-    scenario 'A user can save changes with valid information' do
+    scenario 'A logged-in user can save changes with valid information' do
       new_nickname = 'New Nickname'
       new_email = 'new@ku-unplugged.net'
 

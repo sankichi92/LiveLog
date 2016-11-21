@@ -44,4 +44,16 @@ RSpec.feature "AuthenticationPages", type: :feature do
 
     expect(user.reload.remember_digest).not_to be_blank
   end
+
+  feature 'authorization' do
+
+    context 'for non-logged-in users' do
+      given(:user) { create(:user) }
+
+      scenario 'A non-logged-in user cannot visit edit page' do
+        visit edit_user_path(user)
+        expect(page).to have_title('Log in')
+      end
+    end
+  end
 end
