@@ -48,9 +48,26 @@ RSpec.feature "UserPages", type: :feature do
     end
 
     scenario 'A user cannot save changes with invalid information' do
+      fill_in 'パスワード', with: 'foo'
+      fill_in 'パスワードを再入力', with: 'bar'
       click_button 'Save'
 
       expect(page).to have_selector('.alert-danger')
+    end
+
+    scenario 'A user can save changes with valid information' do
+      new_nickname = 'New Nickname'
+      new_email = 'new@ku-unplugged.net'
+
+      fill_in 'ニックネーム', with: new_nickname
+      fill_in 'メールアドレス', with: new_email
+      fill_in 'パスワード', with: ''
+      fill_in 'パスワードを再入力', with: ''
+      click_button 'Save'
+
+      expect(page).to have_selector('.alert-success')
+      expect(user.reload.nickname).to eq new_nickname
+      expect(user.reload.email).to eq new_email
     end
   end
 end
