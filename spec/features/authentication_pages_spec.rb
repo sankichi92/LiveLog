@@ -31,7 +31,7 @@ RSpec.feature "AuthenticationPages", type: :feature do
     expect(page).to have_link('Settings', href: edit_user_path(user))
     expect(page).to have_link('Log out', href: logout_path)
     expect(page).not_to have_link('Log in', href: login_path)
-    expect(User.find(user.id).remember_digest).to be_blank
+    expect(user.reload.remember_digest).to be_blank
 
     click_on 'Log out'
 
@@ -42,6 +42,6 @@ RSpec.feature "AuthenticationPages", type: :feature do
     user = create(:user)
     log_in_as user, remember_me: true
 
-    expect(User.find(user.id).remember_digest).not_to be_blank
+    expect(user.reload.remember_digest).not_to be_blank
   end
 end
