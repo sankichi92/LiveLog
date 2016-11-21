@@ -18,7 +18,7 @@ RSpec.feature "UserPages", type: :feature do
     expect(page).to have_title(user.full_name)
   end
 
-  context 'when creating a new user' do
+  feature 'Create a new user' do
     background do
       log_in_as create(:user)
       visit new_user_path
@@ -40,7 +40,7 @@ RSpec.feature "UserPages", type: :feature do
     end
   end
 
-  context 'when editing his/her profile' do
+  feature 'Edit his/her profile' do
     given(:user) { create(:user) }
     background do
       log_in_as user
@@ -73,6 +73,23 @@ RSpec.feature "UserPages", type: :feature do
       expect(page).to have_selector('.alert-success')
       expect(user.reload.nickname).to eq new_nickname
       expect(user.reload.email).to eq new_email
+    end
+  end
+
+  feature 'Index' do
+    background do
+      log_in_as create(:user)
+      create(:user, first_name: 'Bob', email: 'bob@ku-unplugged.net')
+      create(:user, first_name: 'Ben', email: 'ben@ku-unplugged.net')
+      visit users_path
+    end
+
+    scenario 'A user can see the members page' do
+      expect(page).to have_title('Members')
+      expect(page).to have_content('Members')
+      User.all.each do |user|
+        expect(page).to have_selector('li', text: user.full_name)
+      end
     end
   end
 end
