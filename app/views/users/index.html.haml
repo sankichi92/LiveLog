@@ -1,5 +1,11 @@
 - provide(:title, 'Members')
 %h1 Members
-%ol
-  - @users.each do |user|
-    %li= link_to user.full_name, user
+.row
+  - (@users.minimum(:joined)..@users.maximum(:joined)).reverse_each do |y|
+    - if @users.exists?(joined: y)
+      .col-sm-3
+        %h2= y
+        %ol
+          - @users.where(joined: y).each do |u|
+            %li
+              = link_to u.full_name, u
