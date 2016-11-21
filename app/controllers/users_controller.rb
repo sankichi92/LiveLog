@@ -3,7 +3,8 @@ class UsersController < ApplicationController
   before_action :correct_user, only: [:edit, :update]
 
   def index
-    @users = User.order('furigana COLLATE "C"')
+    @users = User.order('furigana COLLATE "C"') # TODO: Remove 'COLLATE "C"'
+    @years = User.select(:joined).distinct.order(joined: :desc).map { |u| u.joined }
   end
 
   def show

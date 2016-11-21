@@ -1,8 +1,8 @@
 - provide(:title, 'Members')
 %h1 Members
-.row
-  - (@users.minimum(:joined)..@users.maximum(:joined)).reverse_each do |y|
-    - if @users.exists?(joined: y)
+- @years.each_slice(4) do |four_y|
+  .row
+    - four_y.each do |y|
       .col-sm-3
         %h2= y
         %ol
