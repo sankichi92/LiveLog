@@ -6,6 +6,4 @@
       .col-sm-3
         %h2= y
         %ol
-          - @users.where(joined: y).each do |u|
-            %li
-              = link_to u.full_name, u
+          = render @users.where(joined: y)
