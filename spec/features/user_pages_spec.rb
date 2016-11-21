@@ -41,6 +41,7 @@ RSpec.feature "UserPages", type: :feature do
 
   feature 'Profile page' do
     given(:user) { create(:user) }
+    background { log_in_as user }
 
     scenario 'A user can see his/her profile page' do
       visit user_path(user)
