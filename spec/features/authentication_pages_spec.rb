@@ -44,4 +44,13 @@ RSpec.feature "AuthenticationPages", type: :feature do
 
     expect(user.reload.remember_digest).not_to be_blank
   end
+
+  scenario 'A user redirect to the protected page after logging in (friendly forwarding)' do
+    visit edit_user_path(user)
+    fill_in 'Email', with: user.email
+    fill_in 'Password', with: user.password
+    click_button 'Log in'
+
+    expect(page).to have_title('Edit user')
+  end
 end
