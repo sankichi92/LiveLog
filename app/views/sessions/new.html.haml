@@ -14,4 +14,11 @@
 
   .form-group
     .col-sm-offset-3.col-sm-9
+      .checkbox
+        %label
+          = f.check_box :remember_me
+          Remember me
+
+  .form-group
+    .col-sm-offset-3.col-sm-9
       = f.submit 'Log in', class: 'btn btn-primary'

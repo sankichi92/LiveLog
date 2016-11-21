@@ -35,9 +35,22 @@ RSpec.feature "AuthenticationPages", type: :feature do
     is_expected.to have_content(user.full_name)
     is_expected.to have_link('Log out', href: logout_path)
     is_expected.not_to have_link('Log in', href: login_path)
+    expect(User.find_by(id: user.id).remember_digest).to be_blank
 
     click_on 'Log out'
 
     is_expected.to have_link('Log in', href: login_path)
+  end
+
+  scenario 'A user can login with remembering' do
+    user = create(:user)
+    visit login_path
+
+    fill_in 'Email', with: user.email.upcase
+    fill_in 'Password', with: user.password
+    check 'Remember me'
+    click_button 'Log in'
+
+    expect(User.find_by(id: user.id).remember_digest).not_to be_blank
   end
 end
