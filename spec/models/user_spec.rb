@@ -8,6 +8,7 @@ RSpec.describe User, type: :model do
 
   it { is_expected.to respond_to(:first_name) }
   it { is_expected.to respond_to(:last_name) }
+  it { is_expected.to respond_to(:full_name) }
   it { is_expected.to respond_to(:furigana) }
   it { is_expected.to respond_to(:nickname) }
   it { is_expected.to respond_to(:email) }
@@ -15,6 +16,7 @@ RSpec.describe User, type: :model do
   it { is_expected.to respond_to(:password_digest) }
   it { is_expected.to respond_to(:password) }
   it { is_expected.to respond_to(:password_confirmation) }
+  it { is_expected.to respond_to(:remember_token) }
   it { is_expected.to respond_to(:authenticate) }
 
   it { is_expected.to be_valid }
