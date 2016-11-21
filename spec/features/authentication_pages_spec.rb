@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.feature "AuthenticationPages", type: :feature do
 
+  given(:user) { create(:user) }
+
   scenario 'A user can see login page' do
     visit login_path
 
@@ -23,7 +25,6 @@ RSpec.feature "AuthenticationPages", type: :feature do
   end
 
   scenario 'A user can login and logout with valid information' do
-    user = create(:user)
     log_in_as user
 
     expect(page).to have_content(user.full_name)
@@ -39,21 +40,8 @@ RSpec.feature "AuthenticationPages", type: :feature do
   end
 
   scenario 'A user can login with remembering' do
-    user = create(:user)
-    log_in_as user, remember_me: true
+    log_in_as user, remember_me: '1'
 
     expect(user.reload.remember_digest).not_to be_blank
-  end
-
-  feature 'authorization' do
-
-    context 'for non-logged-in users' do
-      given(:user) { create(:user) }
-
-      scenario 'A non-logged-in user cannot visit edit page' do
-        visit edit_user_path(user)
-        expect(page).to have_title('Log in')
-      end
-    end
   end
 end
