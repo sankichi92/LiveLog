@@ -37,4 +37,20 @@ RSpec.feature "UserPages", type: :feature do
       expect(page).to have_selector('.alert-success')
     end
   end
+
+  context 'when editing his/her profile' do
+    given(:user) { create(:user) }
+    background { visit edit_user_path(user) }
+
+    scenario 'A user can see the edit page' do
+      expect(page).to have_content('Update your profile')
+      expect(page).to have_title('Edit user')
+    end
+
+    scenario 'A user cannot save changes with invalid information' do
+      click_button 'Save'
+
+      expect(page).to have_selector('.alert-danger')
+    end
+  end
 end

@@ -31,6 +31,8 @@ RSpec.feature "AuthenticationPages", type: :feature do
     click_button 'Log in'
 
     expect(page).to have_content(user.full_name)
+    expect(page).to have_link('Profile', href: user_path(user))
+    expect(page).to have_link('Settings', href: edit_user_path(user))
     expect(page).to have_link('Log out', href: logout_path)
     expect(page).not_to have_link('Log in', href: login_path)
     expect(User.find(user.id).remember_digest).to be_blank
