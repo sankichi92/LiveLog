@@ -24,11 +24,7 @@ RSpec.feature "AuthenticationPages", type: :feature do
 
   scenario 'A user can login and logout with valid information' do
     user = create(:user)
-    visit login_path
-
-    fill_in 'Email', with: user.email.upcase
-    fill_in 'Password', with: user.password
-    click_button 'Log in'
+    log_in_as user
 
     expect(page).to have_content(user.full_name)
     expect(page).to have_link('Profile', href: user_path(user))
@@ -44,12 +40,7 @@ RSpec.feature "AuthenticationPages", type: :feature do
 
   scenario 'A user can login with remembering' do
     user = create(:user)
-    visit login_path
-
-    fill_in 'Email', with: user.email.upcase
-    fill_in 'Password', with: user.password
-    check 'Remember me'
-    click_button 'Log in'
+    log_in_as user, remember_me: true
 
     expect(User.find(user.id).remember_digest).not_to be_blank
   end
