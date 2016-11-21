@@ -50,13 +50,6 @@ RSpec.feature "UserPages", type: :feature do
     end
   end
 
-  scenario 'A user can see the sign up page' do
-    visit signup_path
-
-    expect(page).to have_title(full_title('Sign up'))
-    expect(page).to have_content('Sign up')
-  end
-
   feature 'Create a new user' do
     background do
       log_in_as create(:user)
