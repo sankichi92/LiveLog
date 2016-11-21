@@ -6,7 +6,7 @@ class CreateUsers < ActiveRecord::Migration[5.0]
       t.string :furigana
       t.string :nickname
       t.string :email
-      t.date :joined
+      t.integer :joined
 
       t.timestamps
     end

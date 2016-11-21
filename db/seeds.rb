@@ -1,7 +1,22 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+class OldRecord < ActiveRecord::Base
+  establish_connection(adapter: 'mysql2',
+                       host: 'localhost',
+                       username: 'live_log',
+                       password: '1ive_Log',
+                       database: 'live_log')
+  self.abstract_class = true
+end
+
+class Member < OldRecord
+end
+
+Member.all.each do |m|
+  User.new(first_name: m.first_name,
+           last_name: m.last_name,
+           furigana: m.furigana,
+           joined: m.year,
+           email: m.email,
+           nickname: m.nickname,
+           password_digest: m.password,
+           admin: m.admin).save!(validate: false)
+end

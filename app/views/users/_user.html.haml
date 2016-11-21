@@ -1,0 +1,6 @@
+%li
+  = link_to user.full_name, user
+  - if user.admin?
+    %span *
+  - if current_user.admin? && !current_user?(user)
+    = link_to '&times;'.html_safe, user, method: :delete, data: {confirm: '本当に削除しますか？'}
