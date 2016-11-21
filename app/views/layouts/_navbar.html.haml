@@ -11,8 +11,8 @@
       %ul.nav.navbar-nav
         %li= link_to 'Song Search', '#'
         %li= link_to 'Live List', '#'
-        %li= link_to 'Members', users_path
         - if logged_in?
+          %li= link_to 'Members', users_path
           %li= link_to 'Stats', '#'
         - else
           %li= link_to 'About', about_path

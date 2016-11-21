@@ -17,7 +17,6 @@ Member.all.each do |m|
            joined: m.year,
            email: m.email,
            nickname: m.nickname,
-           password_digest: m.password).save!(validate: false)
+           password_digest: m.password,
+           admin: m.admin).save!(validate: false)
 end
-
-

@@ -17,6 +17,26 @@ RSpec.feature "UserPages", type: :feature do
         expect(page).to have_selector('li', text: user.full_name)
       end
     end
+
+    scenario 'A user cannot see delete link' do
+      expect(page).not_to have_link('×')
+    end
+
+    context 'Admin user' do
+      given(:admin) { create(:admin) }
+      background do
+        log_in_as admin
+        visit users_path
+      end
+
+      scenario 'An admin user can delete another user' do
+        expect { click_link('×', match: :first) }.to change(User, :count).by(-1)
+      end
+
+      scenario 'An admin user cannot delete him/herself' do
+        expect(page).not_to have_link('×', href: user_path(admin))
+      end
+    end
   end
 
   scenario 'A user can see the sign up page' do

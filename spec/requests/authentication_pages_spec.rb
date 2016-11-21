@@ -35,4 +35,16 @@ RSpec.describe "AuthenticationPages", type: :request do
       specify { expect(response).to redirect_to(root_path) }
     end
   end
+
+  describe 'as non-admin user' do
+    let(:user) { create(:user) }
+    let(:non_admin) { create(:user) }
+
+    before { log_in_as non_admin, capybara: false }
+
+    describe 'submitting a DELETE request to the Users#destroy action' do
+      before { delete user_path(user) }
+      specify { expect(response).to redirect_to(root_path)}
+    end
+  end
 end
