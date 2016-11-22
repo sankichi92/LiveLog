@@ -22,4 +22,7 @@ Member.all.each do |m|
                admin: m.admin)
 end
 
-User.first.update_attributes(activated: true, activated_at: Time.zone.now)
+User.first.update_attributes(password: 'foobar',
+                             password_confirmation: 'foobar',
+                             activated: true,
+                             activated_at: Time.zone.now)

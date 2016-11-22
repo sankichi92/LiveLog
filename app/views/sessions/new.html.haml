@@ -11,6 +11,7 @@
     = f.label :password, class: 'col-sm-3 control-label'
     .col-sm-9
       = f.password_field :password, class: 'form-control'
+      %span.help-block= link_to 'forgot password', new_password_reset_path
 
   .form-group
     .col-sm-offset-3.col-sm-9

@@ -93,7 +93,7 @@ RSpec.describe User, type: :model do
       user_with_same_email.save
     end
 
-    it { is_expected.not_to be_valid }
+    it { is_expected.not_to be_valid(:update) }
   end
 
   describe 'email address with mixed case' do

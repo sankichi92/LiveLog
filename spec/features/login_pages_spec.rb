@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "AuthenticationPages", type: :feature do
+RSpec.feature "LoginPages", type: :feature do
 
   given(:user) { create(:user) }
 
