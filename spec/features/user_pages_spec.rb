@@ -111,32 +111,32 @@ RSpec.feature "UserPages", type: :feature do
 
   feature 'Invite a user' do
     given(:user) { create(:user) }
-    given(:inactivated_user) { create(:user, email: nil, activated: false) }
+    given(:not_activated_user) { create(:user, email: nil, activated: false) }
 
     scenario 'A non-logged-in user cannot see an invitation page' do
-      visit invite_user_path(inactivated_user)
-      expect(page).not_to have_content('Invite')
+      visit new_user_activations_path(not_activated_user)
+      expect(page).not_to have_title('Invite')
     end
 
-    scenario 'A logged-in user can invite an inactivated user' do
-      new_email = 'inactivated@ku-unplugged.net'
+    scenario 'A logged-in user can invite an not_activated user' do
+      new_email = 'not_activated@ku-unplugged.net'
 
       log_in_as user
-      visit invite_user_path(inactivated_user)
+      visit new_user_activations_path(not_activated_user)
 
       expect(page).to have_title('Invite')
 
       fill_in 'メールアドレス', with: new_email
       click_button 'Invite'
 
-      expect(inactivated_user.reload.email).to eq new_email
-      expect(page).to have_selector('.alert-success', text: inactivated_user.full_name)
+      expect(not_activated_user.reload.email).to eq new_email
+      expect(page).to have_selector('.alert-success', text: not_activated_user.full_name)
       expect(page).to have_title('Members')
     end
 
     scenario 'A logged-in user cannot invite with invalid email' do
       log_in_as user
-      visit invite_user_path(inactivated_user)
+      visit new_user_activations_path(not_activated_user)
 
       fill_in 'メールアドレス', with: ''
       click_button 'Invite'
@@ -147,9 +147,9 @@ RSpec.feature "UserPages", type: :feature do
 
     scenario 'A logged-in user cannot invite an activated user' do
       log_in_as user
-      visit invite_user_path(inactivated_user)
+      visit new_user_activations_path(create(:user))
 
-      expect(page).not_to have_content('Invite')
+      expect(page).not_to have_title('Invite')
     end
   end
 end

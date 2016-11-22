@@ -5,9 +5,6 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
   resources :users do
-    member do
-      get 'invite'
-    end
+    resource :account_activations, only: [:new, :create, :edit, :update], path: :activations, as: :activations
   end
-  resources :account_activations, only: [:create, :edit, :update]
 end

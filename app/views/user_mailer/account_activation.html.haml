@@ -8,4 +8,4 @@
   LiveLog へようこそ！<br>
   以下のリンクをクリックしてアカウントの有効化手続きを行ってください。
 
-= link_to '有効化する', edit_account_activation_url(@user.activation_token, email: @user.email)
+= link_to '有効化手続きに進む', edit_user_activations_url(@user, token: @user.activation_token)
