@@ -14,6 +14,7 @@ RSpec.feature "AuthenticationPages", type: :feature do
   scenario 'A user cannot log in with invalid information' do
     visit login_path
 
+    fill_in 'Email', with: user.email
     click_button 'Log in'
 
     expect(page).to have_title('Log in')

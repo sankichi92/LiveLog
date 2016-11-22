@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, except: [:show, :signup]
+  before_action :logged_in_user
   before_action :correct_user, only: [:edit, :update]
   before_action :admin_user, only: :destroy
 
@@ -17,7 +17,6 @@ class UsersController < ApplicationController
   end
 
   def create
-    params[:user][:password] = params[:user][:password_confirmation] = 'dummy_password'
     @user = User.new(user_params)
     if @user.save
       flash[:success] = "#{@user.full_name} さんを追加しました"
@@ -45,26 +44,13 @@ class UsersController < ApplicationController
     redirect_to users_url
   end
 
-  def signup
-
-  end
-
   private
 
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :furigana, :nickname, :email, :joined,
-                                 :password, :password_confirmation)
+    params.require(:user).permit(:first_name, :last_name, :furigana, :nickname, :email, :joined)
   end
 
   # Before filters
-
-  def logged_in_user
-    unless logged_in?
-      store_location
-      flash[:danger] = 'ログインしてください'
-      redirect_to login_url
-    end
-  end
 
   def correct_user
     @user = User.find(params[:id])

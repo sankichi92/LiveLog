@@ -23,6 +23,10 @@ RSpec.describe User, type: :model do
   it { is_expected.to be_valid }
   it { is_expected.not_to be_admin }
 
+  it 'authenticated? should return false for a user with nil digest' do
+    expect(user.authenticated?(:remember, ''))
+  end
+
   describe 'with admin attribute set to "true"' do
     before do
       user.save!
@@ -59,7 +63,7 @@ RSpec.describe User, type: :model do
 
   describe 'when email is too long' do
     before { user.email = 'a' * 244 + '@ku-unplugged.net' }
-    it { is_expected.not_to be_valid }
+    it { is_expected.not_to be_valid(:update) }
   end
 
   describe 'when email format is invalid' do
@@ -67,7 +71,7 @@ RSpec.describe User, type: :model do
       addresses = %w[user@foo,com user_at_foo.org example.user@foo. foo@bar_baz.com foo@bar+baz.com]
       addresses.each do |invalid_address|
         user.email = invalid_address
-        expect(user).not_to be_valid
+        expect(user).not_to be_valid(:update)
       end
     end
   end
@@ -77,7 +81,7 @@ RSpec.describe User, type: :model do
       addresses = %w[user@foo.COM A_US-ER@f.b.org frst.lst@foo.jp a+b@baz.cn]
       addresses.each do |valid_address|
         user.email = valid_address
-        expect(user).to be_valid
+        expect(user).to be_valid(:update)
       end
     end
   end
@@ -104,17 +108,17 @@ RSpec.describe User, type: :model do
 
   describe 'when password is not present' do
     before { user.password = user.password_confirmation = ' ' * 6 }
-    it { is_expected.not_to be_valid }
+    it { is_expected.not_to be_valid(:update) }
   end
 
   describe 'when password does not match confirmation' do
     before { user.password_confirmation = 'mismatch' }
-    it { is_expected.not_to be_valid }
+    it { is_expected.not_to be_valid(:update) }
   end
 
   describe 'when password is too short' do
     before { user.password = user.password_confirmation = 'a' * 5 }
-    it { is_expected.not_to be_valid }
+    it { is_expected.not_to be_valid(:update) }
   end
 
   describe 'return value of authenticate method' do
