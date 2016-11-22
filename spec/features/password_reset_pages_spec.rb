@@ -51,6 +51,14 @@ RSpec.feature "PasswordResetPages", type: :feature do
 
     scenario 'A user cannot see the password reset page with wrong token' do
       visit edit_password_reset_path('wrong token', email: user.email)
+
+      expect(page).not_to have_title('Reset password')
+    end
+
+    scenario 'A user cannot see the password reset page sith expired token' do
+      user.update_attribute(:reset_sent_at, 3.hours.ago)
+      visit edit_password_reset_path(user.reset_token, email: user.email)
+
       expect(page).not_to have_title('Reset password')
     end
 
