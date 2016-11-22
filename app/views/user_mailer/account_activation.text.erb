@@ -1,0 +1,6 @@
+<%= @user.full_name %> 様
+
+LiveLog へようこそ！
+以下のリンクをクリックしてアカウントの有効化手続きを行ってください。
+
+<%= edit_account_activation_url(@user.activation_token, email: @user.email) %>

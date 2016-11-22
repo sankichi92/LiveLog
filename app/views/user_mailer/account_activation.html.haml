@@ -1,4 +1,11 @@
-%h1= class_name + "#" + @action
+%h1 LiveLog
 
 %p
-  = @greeting + ", find me in app/views/user_mailer/account_activation.html.haml"
+  = @user.full_name
+  様
+
+%p
+  LiveLog へようこそ！<br>
+  以下のリンクをクリックしてアカウントの有効化手続きを行ってください。
+
+= link_to '有効化する', edit_account_activation_url(@user.activation_token, email: @user.email)
