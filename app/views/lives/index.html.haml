@@ -1,0 +1,25 @@
+%h1 Listing lives
+
+%table
+  %thead
+    %tr
+      %th Name
+      %th Date
+      %th Place
+      %th
+      %th
+      %th
+
+  %tbody
+    - @lives.each do |life|
+      %tr
+        %td= life.name
+        %td= life.date
+        %td= life.place
+        %td= link_to 'Show', life
+        %td= link_to 'Edit', edit_life_path(life)
+        %td= link_to 'Destroy', life, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Live', new_life_path

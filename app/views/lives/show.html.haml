@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @life.name
+%p
+  %b Date:
+  = @life.date
+%p
+  %b Place:
+  = @life.place
+
+= link_to 'Edit', edit_life_path(@life)
+\|
+= link_to 'Back', lives_path
