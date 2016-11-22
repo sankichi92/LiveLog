@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  attr_accessor :remember_token, :activation_token
+  attr_accessor :remember_token, :activation_token, :reset_token
   before_save :downcase_email
   validates :first_name, presence: true
   validates :last_name, presence: true
@@ -45,6 +45,12 @@ class User < ApplicationRecord
     if update_attributes(email: email, activation_digest: User.digest(activation_token))
       UserMailer.account_activation(self).deliver_now
     end
+  end
+
+  def send_password_reset
+    self.reset_token = User.new_token
+    update_columns(reset_digest: User.digest(reset_token), reset_setn_at: Time.zone.now)
+    UserMailer.password_reset(self).deliver_now
   end
 
   def activate(new_password)
