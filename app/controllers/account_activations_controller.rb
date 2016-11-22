@@ -7,10 +7,8 @@ class AccountActivationsController < ApplicationController
   end
 
   def create
-    if @user.update_attributes(email: params[:user][:email])
-      @user.create_activation_digest
-      UserMailer.account_activation(@user).deliver_now
-      flash[:success] = "#{@user.full_name}さんに招待メールを送信しました"
+    if @user.send_invitation(params[:user][:email])
+      flash[:success] = "招待メールを送信しました"
       redirect_to users_url
     else
       render 'new'
@@ -21,8 +19,7 @@ class AccountActivationsController < ApplicationController
   end
 
   def update
-    if @user.update_attributes(params.require(:user).permit(:password, :password_confirmation))
-      @user.update_attributes(activated: true, activated_at: Time.zone.now)
+    if @user.activate(params.require(:user).permit(:password, :password_confirmation))
       log_in @user
       flash[:success] = 'Welcome to LiveLog!'
       redirect_to @user

@@ -39,9 +39,16 @@ class User < ApplicationRecord
     update_attribute(:remember_digest, nil)
   end
 
-  def create_activation_digest
+  def send_invitation(email)
     self.activation_token = User.new_token
-    self.activation_digest = User.digest(activation_token)
+    if update_attributes(email: email, activation_digest: User.digest(activation_token))
+      UserMailer.account_activation(self).deliver_now
+    end
+  end
+
+  def activate(new_password)
+    update_attributes(new_password)
+    update_attributes(activated: true, activated_at: Time.zone.now)
   end
 
   private

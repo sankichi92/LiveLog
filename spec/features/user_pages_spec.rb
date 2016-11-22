@@ -130,7 +130,7 @@ RSpec.feature "UserPages", type: :feature do
       click_button 'Invite'
 
       expect(not_activated_user.reload.email).to eq new_email
-      expect(page).to have_selector('.alert-success', text: not_activated_user.full_name)
+      expect(page).to have_selector('.alert-success')
       expect(page).to have_title('Members')
     end
 
