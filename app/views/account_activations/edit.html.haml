@@ -1,7 +1,6 @@
 - provide(:title, 'Activation')
 .page-header
-  %h1
-    Activate an account
+  %h1 Activate an account
 
 = render 'shared/error_messages'
 = form_for(@user, url: user_activations_path, html: {class: 'form-horizontal well'}) do |f|

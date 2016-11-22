@@ -25,19 +25,23 @@ class User < ApplicationRecord
     last_name + ' ' + first_name
   end
 
-  def remember
-    self.remember_token = User.new_token
-    update_attribute(:remember_digest, User.digest(remember_token))
-  end
-
   def authenticated?(attribute, token)
     digest = send("#{attribute}_digest")
     return false if digest.nil?
     BCrypt::Password.new(digest).is_password?(token)
   end
 
+  def remember
+    self.remember_token = User.new_token
+    update_attribute(:remember_digest, User.digest(remember_token))
+  end
+
   def forget
     update_attribute(:remember_digest, nil)
+  end
+
+  def activate
+    update_columns(activated: true, activated_at: Time.zone.now)
   end
 
   def send_invitation(email)
@@ -51,12 +55,6 @@ class User < ApplicationRecord
     self.reset_token = User.new_token
     update_columns(reset_digest: User.digest(reset_token), reset_setn_at: Time.zone.now)
     UserMailer.password_reset(self).deliver_now
-  end
-
-  def activate(new_password)
-    if update_attributes(new_password)
-      update_columns(activated: true, activated_at: Time.zone.now)
-    end
   end
 
   private
