@@ -5,6 +5,7 @@ RSpec.feature "ActivationPages", type: :feature do
   feature 'Invitation' do
     given(:user) { create(:user) }
     given(:not_activated_user) { create(:user, email: nil, activated: false) }
+    background { ActionMailer::Base.deliveries.clear }
 
     scenario 'A non-logged-in user cannot see an invitation page' do
       visit new_user_activations_path(not_activated_user)
@@ -23,7 +24,8 @@ RSpec.feature "ActivationPages", type: :feature do
       click_button 'Invite'
 
       expect(not_activated_user.reload.email).to eq new_email
-      expect(page).to have_selector('.alert-success')
+      expect(ActionMailer::Base.deliveries.size).to eq 1
+      expect(page).to have_selector('.alert-info')
       expect(page).to have_title('Members')
     end
 
