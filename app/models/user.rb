@@ -6,8 +6,7 @@ class User < ApplicationRecord
   validates :furigana, presence: true
   validates :nickname, length: {maximum: 50}
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
-  validates :email, uniqueness: {case_sensitive: false}
-  validates :email, presence: true, length: {maximum: 255}, format: {with: VALID_EMAIL_REGEX}, on: :update
+  validates :email, presence: true, length: {maximum: 255}, format: {with: VALID_EMAIL_REGEX}, uniqueness: {case_sensitive: false}, on: :update
   validates :joined, presence: true, numericality: {only_integer: true, greater_than: 1994, less_than_or_equal_to: Date.today.year}
   has_secure_password(validations: false)
   validates :password, presence: true, confirmation: true, length: {minimum: 6, maximum: 72}, allow_nil: true, on: :update
