@@ -29,7 +29,7 @@ RSpec.feature "UserPages", type: :feature do
         visit users_path
       end
 
-      scenario 'An admin user can delete another user' do
+      scenario 'An admin user delete another user' do
         expect { click_link('×', match: :first) }.to change(User, :count).by(-1)
       end
 
@@ -109,7 +109,7 @@ RSpec.feature "UserPages", type: :feature do
     end
   end
 
-  feature 'Invite a user' do
+  feature 'Invitation' do
     given(:user) { create(:user) }
     given(:not_activated_user) { create(:user, email: nil, activated: false) }
 
@@ -150,6 +150,56 @@ RSpec.feature "UserPages", type: :feature do
       visit new_user_activations_path(create(:user))
 
       expect(page).not_to have_title('Invite')
+    end
+  end
+
+  feature 'Activation' do
+    given(:user) { create(:user, activated: false) }
+    given(:token) { User.new_token }
+    background do
+      user.activation_digest = User.digest(token)
+      user.save
+    end
+
+    scenario 'A user can activate his/her account with valid information' do
+      password = 'new_password'
+      visit edit_user_activations_path(user, t: token)
+
+      expect(page).to have_title('Activation')
+
+      fill_in 'パスワードを作成', with: password
+      fill_in 'パスワードを再入力', with: password
+      click_button 'Activate'
+
+      expect(page).to have_selector('.alert-success')
+      expect(page).to have_title(user.full_name)
+    end
+
+    scenario 'A user cannot activate his/her account with invalid token' do
+      visit edit_user_activations_path(user, t: 'invalid_token')
+
+      expect(page).to have_selector('.alert-danger')
+      expect(page).not_to have_title('Activation')
+    end
+
+    scenario 'A user cannot activate other users account' do
+      another_user = create(:user, activated: false)
+      visit edit_user_activations_path(another_user, t: 'invalid_token')
+
+      expect(page).to have_selector('.alert-danger')
+      expect(page).not_to have_title('Activation')
+    end
+
+    scenario 'A user cannot activate his/her account with invalid password' do
+      password = ' '
+      visit edit_user_activations_path(user, t: token)
+
+      fill_in 'パスワードを作成', with: password
+      fill_in 'パスワードを再入力', with: password
+      click_button 'Activate'
+
+      expect(page).to have_selector('.alert-danger')
+      expect(page).not_to have_title(user.full_name)
     end
   end
 end
