@@ -23,6 +23,10 @@ RSpec.describe User, type: :model do
   it { is_expected.to be_valid }
   it { is_expected.not_to be_admin }
 
+  it 'authenticated? should return false for a user with nil digest' do
+    expect(user.authenticated?(:remember, ''))
+  end
+
   describe 'with admin attribute set to "true"' do
     before do
       user.save!
