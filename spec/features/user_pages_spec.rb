@@ -86,8 +86,7 @@ RSpec.feature "UserPages", type: :feature do
     end
 
     scenario 'A logged-in user cannot save changes with invalid information' do
-      fill_in 'パスワード', with: 'foo'
-      fill_in 'パスワードを再入力', with: 'bar'
+      fill_in 'メールアドレス', with: ''
       click_button 'Save'
 
       expect(page).to have_selector('.alert-danger')
@@ -99,8 +98,6 @@ RSpec.feature "UserPages", type: :feature do
 
       fill_in 'ニックネーム', with: new_nickname
       fill_in 'メールアドレス', with: new_email
-      fill_in 'パスワード', with: ''
-      fill_in 'パスワードを再入力', with: ''
       click_button 'Save'
 
       expect(page).to have_selector('.alert-success')
@@ -191,7 +188,7 @@ RSpec.feature "UserPages", type: :feature do
     end
 
     scenario 'A user cannot activate his/her account with invalid password' do
-      password = ' '
+      password = ''
       visit edit_user_activations_path(user, t: token)
 
       fill_in 'パスワードを作成', with: password

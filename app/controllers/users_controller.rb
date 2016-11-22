@@ -17,7 +17,6 @@ class UsersController < ApplicationController
   end
 
   def create
-    params[:user][:password] = params[:user][:password_confirmation] = '!dummy_password!'
     @user = User.new(user_params)
     if @user.save
       flash[:success] = "#{@user.full_name} さんを追加しました"
@@ -48,8 +47,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :furigana, :nickname, :email, :joined,
-                                 :password, :password_confirmation)
+    params.require(:user).permit(:first_name, :last_name, :furigana, :nickname, :email, :joined)
   end
 
   # Before filters

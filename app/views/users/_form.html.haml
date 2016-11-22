@@ -25,25 +25,15 @@
   - if full
 
     .form-group
-      = f.label :nickname, class: 'col-sm-3 control-label'
-      .col-sm-9
-        = f.text_field :nickname, class: 'form-control'
-        %span.help-block 同姓の人がいて紛らわしい，あだ名の方がわかりやすい，サークル外の人には名前を伏せたい，などの場合に利用してください
-
-    .form-group
       = f.label :email, class: 'col-sm-3 control-label'
       .col-sm-9
         = f.email_field :email, class: 'form-control', placeholder: 'example@ku-unplugged.net'
 
     .form-group
-      = f.label :password, class: 'col-sm-3 control-label'
+      = f.label :nickname, class: 'col-sm-3 control-label'
       .col-sm-9
-        = f.password_field :password, class: 'form-control'
-
-    .form-group
-      = f.label :password_confirmation, class: 'col-sm-3 control-label'
-      .col-sm-9
-        = f.password_field :password_confirmation, class: 'form-control'
+        = f.text_field :nickname, class: 'form-control'
+        %span.help-block 同姓の人がいて紛らわしい，あだ名の方がわかりやすい，サークル外の人には名前を伏せたい，などの場合に利用してください
 
   .form-group
     .col-sm-offset-3.col-sm-9

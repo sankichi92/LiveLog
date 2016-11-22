@@ -11,8 +11,7 @@ class Member < OldRecord
 end
 
 Member.all.each do |m|
-  m.password ||= User.digest('dummy_password')
-  m.first_name = 'dummy' if m.first_name.blank?
+  m.first_name = 'no_name' if m.first_name.blank?
   User.create!(first_name: m.first_name,
                last_name: m.last_name,
                furigana: m.furigana,
