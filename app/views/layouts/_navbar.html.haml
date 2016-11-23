@@ -9,22 +9,31 @@
       = link_to 'LiveLog', root_path, class: 'navbar-brand'
     #bs-navbar-collapse.collapse.navbar-collapse
       %ul.nav.navbar-nav
-        %li= link_to 'Song Search', '#'
-        %li= link_to 'Live List', '#'
+        %li= link_to 'Live List', lives_path
         - if logged_in?
           %li= link_to 'Members', users_path
           %li= link_to 'Stats', '#'
         - else
           %li= link_to 'About', about_path
-      %ul.nav.navbar-nav.navbar-right
-        - if logged_in?
+      - if logged_in?
+        %ul.nav.navbar-nav.navbar-right
+          - if current_user.admin_or_elder?
+            %li.dropdown
+              %a{href: '#', class: 'dropdown-toggle', 'data-toggle': 'dropdown', role: 'button', 'aria-haspopup': 'true', 'aria-expanded': 'false'}
+                Actions
+                %span.caret
+                %ul.dropdown-menu
+                  %li= link_to 'New Live', new_live_path
+                  %li= link_to 'Add Member', new_user_path
           %li.dropdown
             %a{href: '#', class: 'dropdown-toggle', 'data-toggle': 'dropdown', role: 'button', 'aria-haspopup': 'true', 'aria-expanded': 'false'}
               = current_user.full_name
               %span.caret
               %ul.dropdown-menu
-                %li= link_to 'Profile', current_user
-                %li= link_to 'Settings', edit_user_path(current_user)
-                %li= link_to 'Log out', logout_path, method: :delete
-        - else
-          %li= link_to 'Log in', login_path
+                %li= link_to glyphicon(:user) + 'Profile',  current_user
+                %li= link_to glyphicon(:cog) + 'Settings', edit_user_path(current_user)
+                %li.divider{role: 'separator'}
+                %li= link_to glyphicon('log-out') + 'Log out', logout_path, method: :delete
+      - else
+        = link_to login_path do
+          %button.btn.btn-default.navbar-btn.navbar-right= glyphicon('log-in') + 'Log in'

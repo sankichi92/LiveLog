@@ -12,6 +12,10 @@ class User < ApplicationRecord
   validates :password, presence: true, confirmation: true, length: {minimum: 6, maximum: 72}, allow_nil: true, on: :update
   validates :password_confirmation, presence: true, allow_nil: true, on: :update
 
+  def User.joined_years
+    User.select(:joined).distinct.order(joined: :desc).map { |u| u.joined }
+  end
+
   def User.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
     BCrypt::Password.create(string, cost: cost)
@@ -22,7 +26,15 @@ class User < ApplicationRecord
   end
 
   def full_name
-    last_name + ' ' + first_name
+    "#{last_name} #{first_name}"
+  end
+
+  def elder?
+    joined < 2011
+  end
+
+  def admin_or_elder?
+    admin? || elder?
   end
 
   def authenticated?(attribute, token)

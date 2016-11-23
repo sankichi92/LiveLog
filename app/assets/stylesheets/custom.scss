@@ -1,5 +1,7 @@
 $brand-primary: darken(#f0ad4e, 6.5%);
 $gray-lighter: lighten($brand-primary, 36%);
+$table-bg-hover: lighten($brand-primary, 36%);
+$table-border-color: lighten($brand-primary, 30%);
 $navbar-default-color: #333;
 $navbar-default-bg: #f0ad4e;
 $navbar-default-link-color: #333;
@@ -16,4 +18,8 @@ $well-border: lighten($brand-primary, 30%);
 
 body {
   padding-top: 60px;
+}
+
+tr[onclick]:hover {
+  cursor: pointer;
 }

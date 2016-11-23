@@ -1,7 +1,7 @@
-- if @user.errors.any?
+- if object.errors.any?
   .alert.alert-danger<
-    = @user.errors.count
+    = object.errors.count
     件のエラーがあります
     %ul
-      - @user.errors.full_messages.each do |msg|
+      - object.errors.full_messages.each do |msg|
         %li= msg

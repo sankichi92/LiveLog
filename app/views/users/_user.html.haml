@@ -1,6 +1,7 @@
 %li
-  = link_to user.full_name, user
+  = link_to user do
+    = user.nickname.blank? ? user.full_name : "#{user.full_name} (#{user.nickname})"
   - if user.admin?
     %span *
-  - if current_user.admin? && !current_user?(user)
-    = link_to '&times;'.html_safe, user, method: :delete, data: {confirm: '本当に削除しますか？'}
+  - if current_user.admin_or_elder? && !current_user?(user) && !user.activated
+    = link_to glyphicon(:trash, 'text-danger'), user, method: :delete, data: {confirm: '本当に削除しますか？'}

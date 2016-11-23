@@ -1,0 +1,2 @@
+module LivesHelper
+end

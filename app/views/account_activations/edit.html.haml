@@ -2,8 +2,9 @@
 .page-header
   %h1 Activate an account
 
-= render 'shared/error_messages'
 = form_for(@user, url: user_activations_path, html: {class: 'form-horizontal well'}) do |f|
+  = render 'shared/error_messages', object: f.object
+
   = hidden_field_tag :t, params[:t]
 
   .form-group
@@ -12,9 +13,9 @@
       %p.form-control-static= @user.full_name
 
   .form-group
-    = f.label :email, class: 'col-sm-3 control-label'
+    = f.label :joined, class: 'col-sm-3 control-label'
     .col-sm-9
-      %p.form-control-static= @user.email
+      %p.form-control-static= @user.joined
 
   .form-group
     = f.label :password, 'パスワードを作成', class: 'col-sm-3 control-label'

@@ -8,4 +8,5 @@ Rails.application.routes.draw do
     resource :account_activations, only: %i(new create edit update), path: :activations, as: :activations
   end
   resources :password_resets, only: %i(new create edit update)
+  resources :lives
 end

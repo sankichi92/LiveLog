@@ -4,7 +4,7 @@ FactoryGirl.define do
     first_name 'アンプラ太郎'
     furigana 'きょうだいあんぷらたろう'
     sequence(:email) { |n| "livelog_#{n}@ku-unplugged.net" }
-    joined 2010
+    joined 2016
     password 'foobar'
     password_confirmation 'foobar'
     activated true
