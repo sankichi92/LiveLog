@@ -2,4 +2,7 @@
 .page-header
   %h1<
     = @live.name
-    %small= "#{I18n.l(@live.date)}@#{@live.place}"
+    %small
+      = "#{I18n.l(@live.date)} @#{@live.place}"
+      - if current_user.admin_or_elder?
+        = link_to glyphicon(:cog), edit_live_path(@live)

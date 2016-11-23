@@ -21,4 +21,8 @@ module ApplicationHelper
     start = Date.new(year, 4)
     (start...start + 1.year)
   end
+
+  def glyphicon(name, clazz = '')
+    "<span class=\"glyphicon glyphicon-#{name} #{clazz}\" aria-hidden=\"true\"></span> ".html_safe
+  end
 end
