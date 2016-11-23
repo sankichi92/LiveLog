@@ -26,7 +26,11 @@ class User < ApplicationRecord
   end
 
   def full_name
-    last_name + ' ' + first_name
+    "#{last_name} #{first_name}"
+  end
+
+  def elder?
+    joined < 2011
   end
 
   def authenticated?(attribute, token)

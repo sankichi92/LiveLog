@@ -23,4 +23,15 @@ RSpec.feature "LivePages", type: :feature do
       expect(page).to have_content(live.name)
     end
   end
+
+  feature 'Add live' do
+
+    scenario 'A non-logged-in user cannot see the add live page' do
+      visit new_live_path
+
+      expect(page).not_to have_title('Add live')
+      expect(page).to have_title('Log in')
+      expect(page).to have_selector('.alert-danger')
+    end
+  end
 end
