@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :lives
   root 'static_pages#home'
   get '/about', to: 'static_pages#about'
   get '/login', to: 'sessions#new'
@@ -9,4 +8,5 @@ Rails.application.routes.draw do
     resource :account_activations, only: %i(new create edit update), path: :activations, as: :activations
   end
   resources :password_resets, only: %i(new create edit update)
+  resources :lives
 end
