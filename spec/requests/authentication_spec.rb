@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "AuthenticationPages", type: :request do
+RSpec.describe "Authentication", type: :request do
 
   describe 'for non-signed-in users' do
     let(:user) { create(:user) }
