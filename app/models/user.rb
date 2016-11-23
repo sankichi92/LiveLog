@@ -33,6 +33,10 @@ class User < ApplicationRecord
     joined < 2011
   end
 
+  def admin_or_elder?
+    admin? || elder?
+  end
+
   def authenticated?(attribute, token)
     digest = send("#{attribute}_digest")
     return false if digest.nil?
