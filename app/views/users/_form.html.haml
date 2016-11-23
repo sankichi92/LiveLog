@@ -19,7 +19,7 @@
   .form-group
     = f.label :joined, class: 'col-sm-3 control-label'
     .col-sm-9
-      = f.select :joined, (1995..nendo(Date.today)).to_a.reverse, {}, {class: 'form-control'}
+      = f.select :joined, (1995..nendo).to_a.reverse, {}, {class: 'form-control'}
       %span.help-block 初めてライブに出演した年度を選択してください
 
   - if full

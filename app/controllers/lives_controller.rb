@@ -1,10 +1,8 @@
 class LivesController < ApplicationController
   before_action :set_life, only: [:show, :edit, :update, :destroy]
 
-  # GET /lives
-  # GET /lives.json
   def index
-    @lives = Live.all
+    @lives = Live.order(date: :desc)
   end
 
   # GET /lives/1

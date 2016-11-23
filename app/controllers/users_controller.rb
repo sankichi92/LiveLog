@@ -5,7 +5,7 @@ class UsersController < ApplicationController
 
   def index
     @users = User.order('furigana COLLATE "C"') # TODO: Remove 'COLLATE "C"'
-    @years = User.select(:joined).distinct.order(joined: :desc).map { |u| u.joined }
+    @years = User.joined_years
   end
 
   def show

@@ -1,2 +1,18 @@
 - provide(:title, 'Live List')
-%h1 Live List
+.page-header
+  %h1 Live List
+- (@lives.first.nendo..@lives.last.nendo).each_slice(2) do |two_y|
+  .row
+    - two_y.each do |y|
+      - y_live = @lives.where(date: nendo_range(y))
+      - if y_live.exists?
+        .col-sm-6
+          %h2= y
+          %table.table.table-hover
+            %thead
+              %tr
+                %th Date
+                %th Name
+                %th Place
+            %tbody
+              = render y_live

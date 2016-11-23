@@ -1,5 +1,6 @@
 - provide(:title, 'Members')
-%h1 Members
+.page-header
+  %h1 Members
 - @years.each_slice(4) do |four_y|
   .row
     - four_y.each do |y|
