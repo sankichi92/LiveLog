@@ -10,7 +10,6 @@ class LivesController < ApplicationController
   def show
   end
 
-  # GET /lives/new
   def new
     @live = Live.new
   end
@@ -19,14 +18,15 @@ class LivesController < ApplicationController
   def edit
   end
 
-  # POST /lives
-  # POST /lives.json
   def create
     @live = Live.new(live_params)
 
     respond_to do |format|
       if @live.save
-        format.html { redirect_to @live, notice: 'Live was successfully created.' }
+        format.html do
+          flash[:success] = "#{@live.title} を追加しました"
+          redirect_to @live, notice: 'Live was successfully created.'
+        end
         format.json { render :show, status: :created, location: @live }
       else
         format.html { render :new }

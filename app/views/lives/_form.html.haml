@@ -1,19 +1,21 @@
-= form_for @life do |f|
-  - if @life.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@life.errors.count, "error")} prohibited this life from being saved:"
-      %ul
-        - @life.errors.full_messages.each do |msg|
-          %li= msg
+= form_for(@live, html: {class: 'form-horizontal well'}) do |f|
+  = render 'shared/error_messages', object: f.object
 
-  .field
-    = f.label :name
-    = f.text_field :name
-  .field
-    = f.label :date
-    = f.date_select :date
-  .field
-    = f.label :place
-    = f.text_field :place
-  .actions
-    = f.submit 'Save'
+  .form-group
+    = f.label :name, class: 'col-sm-3 control-label'
+    .col-sm-9
+      = f.text_field :name, class: 'form-control', placeholder: '6月ライブ'
+
+  .form-group
+    = f.label :date, class: 'col-sm-3 control-label'
+    .col-sm-9
+      = f.date_field :date, value: Date.today, class: 'form-control'
+
+  .form-group
+    = f.label :place, class: 'col-sm-3 control-label'
+    .col-sm-9
+      = f.text_field :place, class: 'form-control', placeholder: '4共21'
+
+  .form-group
+    .col-sm-offset-3.col-sm-9
+      = f.submit 'Add', class: 'btn btn-primary'
