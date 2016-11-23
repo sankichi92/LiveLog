@@ -8,6 +8,7 @@ RSpec.describe Live, type: :model do
   it { is_expected.to respond_to(:name) }
   it { is_expected.to respond_to(:date) }
   it { is_expected.to respond_to(:place) }
+  it { is_expected.to respond_to(:songs) }
 
   it { is_expected.to be_valid }
 

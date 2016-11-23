@@ -28,12 +28,12 @@ ActiveRecord::Schema.define(version: 20161123142150) do
     t.string   "name"
     t.string   "artist"
     t.string   "youtube_url"
-    t.integer  "lives_id"
+    t.integer  "live_id"
     t.integer  "order"
     t.time     "time"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.index ["lives_id"], name: "index_songs_on_lives_id", using: :btree
+    t.index ["live_id"], name: "index_songs_on_live_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -56,5 +56,5 @@ ActiveRecord::Schema.define(version: 20161123142150) do
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
   end
 
-  add_foreign_key "songs", "lives", column: "lives_id"
+  add_foreign_key "songs", "lives"
 end

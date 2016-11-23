@@ -1,4 +1,5 @@
 class Live < ApplicationRecord
+  has_many :songs
   validates :name, presence: true, uniqueness: {scope: :date}
   validates :date, presence: true
 
