@@ -22,4 +22,9 @@ RSpec.describe Song, type: :model do
     before { song.live_id = nil }
     it { is_expected.not_to be_valid }
   end
+
+  describe 'when name is not present' do
+    before {song.name = ''}
+    it {is_expected.not_to be_valid}
+  end
 end
