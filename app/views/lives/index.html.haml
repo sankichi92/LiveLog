@@ -1,7 +1,7 @@
 - provide(:title, 'Live List')
 .page-header
   %h1 Live List
-- (@lives.first.nendo..@lives.last.nendo).each_slice(2) do |two_y|
+- @lives.first.nendo.downto(@lives.last.nendo).each_slice(2) do |two_y|
   .row
     - two_y.each do |y|
       - y_live = @lives.where(date: nendo_range(y))
