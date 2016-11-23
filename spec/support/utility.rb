@@ -6,7 +6,9 @@ def log_in_as(user, capybara: true, remember_me: '0')
     fill_in 'Email', with: user.email
     fill_in 'Password', with: user.password
     check 'Remember me' if remember_me == '1'
-    click_button 'Log in'
+    within('form') do
+      click_button 'Log in'
+    end
   else
     post login_path, params: {session: {email: user.email, password: user.password, remember_me: remember_me}}
   end

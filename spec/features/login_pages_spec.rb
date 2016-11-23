@@ -15,7 +15,9 @@ RSpec.feature "LoginPages", type: :feature do
     visit login_path
 
     fill_in 'Email', with: user.email
-    click_button 'Log in'
+    within('form') do
+      click_button 'Log in'
+    end
 
     expect(page).to have_title('Log in')
     expect(page).to have_selector('.alert-danger')
@@ -50,7 +52,9 @@ RSpec.feature "LoginPages", type: :feature do
     visit edit_user_path(user)
     fill_in 'Email', with: user.email
     fill_in 'Password', with: user.password
-    click_button 'Log in'
+    within('form') do
+      click_button 'Log in'
+    end
 
     expect(page).to have_title('Edit user')
   end
