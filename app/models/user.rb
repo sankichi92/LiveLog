@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   attr_accessor :remember_token, :activation_token, :reset_token
   before_save :downcase_email
+  default_scope { order('furigana COLLATE "C"') } # TODO: Remove 'COLLATE "C"'
+  scope :distinct_joined, -> { unscoped.select(:joined).distinct.order(joined: :desc) }
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :furigana, presence: true
@@ -11,10 +13,6 @@ class User < ApplicationRecord
   has_secure_password(validations: false)
   validates :password, presence: true, confirmation: true, length: {minimum: 6, maximum: 72}, allow_nil: true, on: :update
   validates :password_confirmation, presence: true, allow_nil: true, on: :update
-
-  def User.joined_years
-    User.select(:joined).distinct.order(joined: :desc).map { |u| u.joined }
-  end
 
   def User.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost

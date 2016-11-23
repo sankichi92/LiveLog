@@ -4,8 +4,8 @@ class UsersController < ApplicationController
   before_action :admin_or_elder_user, only: %i(new create destroy)
 
   def index
-    @users = User.order('furigana COLLATE "C"') # TODO: Remove 'COLLATE "C"'
-    @years = User.joined_years
+    @users = User.all
+    @years = @users.distinct_joined.map { |u| u.joined }
   end
 
   def show
