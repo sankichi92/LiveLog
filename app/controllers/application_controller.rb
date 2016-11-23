@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
   end
 
   def admin_or_elder_user
-    admin_user
-    redirect_to(root_url) unless current_user.elder?
+    logged_in_user
+    redirect_to(root_url) unless current_user.admin? || current_user.elder?
   end
 end
