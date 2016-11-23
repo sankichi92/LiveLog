@@ -13,4 +13,14 @@ RSpec.feature "LivePages", type: :feature do
       expect(page).to have_content(live.name)
     end
   end
+
+  feature 'Show' do
+    scenario 'A user can see the individual live page' do
+      live = create(:live)
+      visit live_path(live)
+      
+      expect(page).to have_title(live.name)
+      expect(page).to have_content(live.name)
+    end
+  end
 end
