@@ -18,4 +18,4 @@
 
   .form-group
     .col-sm-offset-3.col-sm-9
-      = f.submit 'Add', class: 'btn btn-primary'
+      = f.submit yield(:button_text), class: 'btn btn-primary'

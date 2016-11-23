@@ -27,7 +27,7 @@ RSpec.feature "LivePages", type: :feature do
   end
 
   feature 'Add live' do
-    given(:admin) {create(:admin)}
+    given(:admin) { create(:admin) }
     background do
       log_in_as admin
       visit new_live_path
@@ -54,9 +54,48 @@ RSpec.feature "LivePages", type: :feature do
       fill_in 'Date', with: '2016-11-23'
       fill_in 'Place', with: '4共31'
 
-      expect{click_button 'Add'}.to change(Live, :count).by(1)
+      expect { click_button 'Add' }.to change(Live, :count).by(1)
       expect(page).to have_selector('.alert-success')
       expect(page).to have_title(name)
+    end
+  end
+
+  feature 'Edit live' do
+    given(:live) { create(:live) }
+    given(:admin) { create(:admin) }
+    background do
+      log_in_as admin
+      visit edit_live_path(live)
+    end
+
+    scenario 'A non-admin user cannot see the edit live page' do
+      log_in_as create(:user)
+      visit edit_live_path(live)
+
+      expect(page).not_to have_title('Edit live')
+      expect(page).not_to have_content('Edit live')
+    end
+
+    scenario 'An admin user cannot edit the live with blank name' do
+      fill_in 'Name', with: ''
+      click_button 'Save'
+
+      expect(page).to have_selector('.alert-danger')
+      expect(page).to have_title('Edit live')
+    end
+
+    scenario 'An admin user can edit the live with valid information' do
+      new_name = 'New ライブ'
+      new_date = Date.today
+
+      fill_in 'Name', with: new_name
+      fill_in 'Date', with: new_date
+      click_button 'Save'
+
+      expect(page).to have_selector('.alert-success')
+      expect(live.reload.name).to eq new_name
+      expect(live.reload.date).to eq new_date
+      expect(page).to have_title('Live List')
     end
   end
 end

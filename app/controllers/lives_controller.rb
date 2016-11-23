@@ -14,7 +14,6 @@ class LivesController < ApplicationController
     @live = Live.new
   end
 
-  # GET /lives/1/edit
   def edit
   end
 
@@ -35,12 +34,13 @@ class LivesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /lives/1
-  # PATCH/PUT /lives/1.json
   def update
     respond_to do |format|
       if @live.update(live_params)
-        format.html { redirect_to @live, notice: 'Live was successfully updated.' }
+        format.html do
+          flash[:success] = "#{@live.title} を更新しました"
+          redirect_to lives_url
+        end
         format.json { render :show, status: :ok, location: @live }
       else
         format.html { render :edit }
