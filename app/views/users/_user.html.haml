@@ -4,4 +4,4 @@
   - if user.admin?
     %span *
   - if current_user.admin_or_elder? && !current_user?(user) && !user.activated
-    = link_to glyphicon(:trash, 'text-danger'), method: :delete, data: {confirm: '本当に削除しますか？'}
+    = link_to glyphicon(:trash, 'text-danger'), user, method: :delete, data: {confirm: '本当に削除しますか？'}

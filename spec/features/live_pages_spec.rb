@@ -5,13 +5,14 @@ RSpec.feature "LivePages", type: :feature do
   feature 'Show live list' do
 
     scenario 'A user can see the live page' do
-      live = create(:live)
       visit root_path
       click_link 'Live List'
 
       expect(page).to have_title('Live List')
       expect(page).to have_content('Live List')
-      expect(page).to have_content(live.name)
+      Live.all.each do |live|
+        expect(page).to have_selector('td', text: live.name)
+      end
     end
   end
 
@@ -95,7 +96,23 @@ RSpec.feature "LivePages", type: :feature do
       expect(page).to have_selector('.alert-success')
       expect(live.reload.name).to eq new_name
       expect(live.reload.date).to eq new_date
-      expect(page).to have_title('Live List')
+    end
+  end
+
+  feature 'Delete live' do
+    given(:admin) { create(:admin) }
+    given(:live) { create(:live) }
+
+    scenario 'A user cannot see delete link' do
+      visit live_path(live)
+      expect(page).not_to have_selector('.glyphicon-trash')
+    end
+
+    xscenario 'An admin user can delete live' do # TODO: Find how to click glyphicon
+      log_in_as admin
+      visit live_path(live)
+
+      expect { click_link('×', match: :first) }.to change(User, :count).by(-1)
     end
   end
 end

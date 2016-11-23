@@ -6,3 +6,4 @@
       = "#{I18n.l(@live.date)} @#{@live.place}"
       - if logged_in? && current_user.admin_or_elder?
         = link_to glyphicon(:cog), edit_live_path(@live)
+        = link_to glyphicon(:trash), @live, method: :delete, data: {confirm: '本当に削除しますか？'}

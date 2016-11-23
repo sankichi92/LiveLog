@@ -39,7 +39,7 @@ class LivesController < ApplicationController
       if @live.update(live_params)
         format.html do
           flash[:success] = "#{@live.title} を更新しました"
-          redirect_to lives_url
+          redirect_to @live
         end
         format.json { render :show, status: :ok, location: @live }
       else
@@ -49,12 +49,13 @@ class LivesController < ApplicationController
     end
   end
 
-  # DELETE /lives/1
-  # DELETE /lives/1.json
   def destroy
     @live.destroy
     respond_to do |format|
-      format.html { redirect_to lives_url, notice: 'Live was successfully destroyed.' }
+      format.html do
+        flash[:success] = 'ライブを削除しました'
+        redirect_to lives_url
+      end
       format.json { head :no_content }
     end
   end

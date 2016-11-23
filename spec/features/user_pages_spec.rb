@@ -11,7 +11,7 @@ RSpec.feature "UserPages", type: :feature do
       visit users_path
     end
 
-    scenario 'A user can see the members page' do
+    scenario 'A logged-in user can see the members page' do
       expect(page).to have_title('Members')
       expect(page).to have_content('Members')
       User.all.each do |user|
@@ -19,7 +19,7 @@ RSpec.feature "UserPages", type: :feature do
       end
     end
 
-    scenario 'A user cannot see delete link' do
+    scenario 'A logged-in user cannot see delete link' do
       expect(page).not_to have_selector('.glyphicon-trash')
     end
 
@@ -30,7 +30,7 @@ RSpec.feature "UserPages", type: :feature do
         visit users_path
       end
 
-      xscenario 'An admin user delete another user' do # TODO: Find how to click glyphicon
+      xscenario 'An admin user can delete another user' do # TODO: Find how to click glyphicon
         expect { click_link('×', match: :first) }.to change(User, :count).by(-1)
       end
 
