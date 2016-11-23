@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161122184906) do
+ActiveRecord::Schema.define(version: 20161123142150) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,18 @@ ActiveRecord::Schema.define(version: 20161122184906) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name", "date"], name: "index_lives_on_name_and_date", unique: true, using: :btree
+  end
+
+  create_table "songs", force: :cascade do |t|
+    t.string   "name"
+    t.string   "artist"
+    t.string   "youtube_url"
+    t.integer  "lives_id"
+    t.integer  "order"
+    t.time     "time"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["lives_id"], name: "index_songs_on_lives_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -44,4 +56,5 @@ ActiveRecord::Schema.define(version: 20161122184906) do
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
   end
 
+  add_foreign_key "songs", "lives", column: "lives_id"
 end
