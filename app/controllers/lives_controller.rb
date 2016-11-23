@@ -50,13 +50,14 @@ class LivesController < ApplicationController
   end
 
   def destroy
-    @live.destroy
-    respond_to do |format|
-      format.html do
-        flash[:success] = 'ライブを削除しました'
-        redirect_to lives_url
-      end
-      format.json { head :no_content }
+    begin
+      @live.destroy
+    rescue ActiveRecord::DeleteRestrictionError => e
+      flash.now[:danger] = e.message
+      render :show
+    else
+      flash[:success] = 'ライブを削除しました'
+      redirect_to lives_url
     end
   end
 

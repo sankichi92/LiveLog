@@ -1,5 +1,5 @@
 class Live < ApplicationRecord
-  has_many :songs
+  has_many :songs, dependent: :restrict_with_exception
   default_scope { order(date: :desc) }
   validates :name, presence: true, uniqueness: {scope: :date}
   validates :date, presence: true

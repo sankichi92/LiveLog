@@ -26,5 +26,14 @@ RSpec.describe Live, type: :model do
     before { live.dup.save }
     it { is_expected.not_to be_valid }
   end
+
+  describe 'song associations' do
+    before { live.save }
+    let!(:song) { create(:song, live: live) }
+
+    it 'should raise an exception when live is deleted with songs' do
+      expect { live.destroy }.to raise_exception ActiveRecord::DeleteRestrictionError
+    end
+  end
 end
 
