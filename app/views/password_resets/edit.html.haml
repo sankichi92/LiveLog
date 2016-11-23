@@ -2,8 +2,9 @@
 .page-header
   %h1 Reset password
 
-= render 'shared/error_messages'
 = form_for(@user, url: password_reset_path(params[:id]), html: {class: 'form-horizontal well'}) do |f|
+  = render 'shared/error_messages', object: f.object
+
   = hidden_field_tag :email, @user.email
 
   .form-group

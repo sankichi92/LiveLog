@@ -4,8 +4,8 @@
     Send an invitation to
     = @user.full_name
 
-= render 'shared/error_messages'
 = form_for(@user, url: user_activations_path, html: {method: :post, class: 'form-horizontal well'}) do |f|
+  = render 'shared/error_messages', object: f.object
 
   .form-group
     = f.label :email, class: 'col-sm-3 control-label'
