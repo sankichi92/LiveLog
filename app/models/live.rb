@@ -1,5 +1,6 @@
 class Live < ApplicationRecord
   has_many :songs
+  default_scope { order(date: :desc) }
   validates :name, presence: true, uniqueness: {scope: :date}
   validates :date, presence: true
 

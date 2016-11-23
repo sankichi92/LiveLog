@@ -4,7 +4,7 @@ class LivesController < ApplicationController
   before_action :admin_or_elder_user, except: %i(index show)
 
   def index
-    @lives = Live.order(date: :desc)
+    @lives = Live.all
   end
 
   def show
