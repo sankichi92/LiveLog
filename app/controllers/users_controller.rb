@@ -17,7 +17,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(user_params)
+    @user = User.new(create_user_params)
     if @user.save
       flash[:success] = "#{@user.full_name} さんを追加しました"
       redirect_to action: :new
@@ -30,7 +30,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    if @user.update_attributes(user_params)
+    if @user.update_attributes(update_user_params)
       flash[:success] = 'プロフィールを更新しました'
       redirect_to @user
     else
@@ -46,8 +46,12 @@ class UsersController < ApplicationController
 
   private
 
-  def user_params
-    params.require(:user).permit(:first_name, :last_name, :furigana, :nickname, :email, :joined)
+  def create_user_params
+    params.require(:user).permit(:first_name, :last_name, :furigana, :joined)
+  end
+
+  def update_user_params
+    params.require(:user).permit(:first_name, :last_name, :furigana, :nickname, :email)
   end
 
   # Before filters

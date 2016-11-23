@@ -1,5 +1,35 @@
 - provide(:title, 'Edit user')
-- provide(:button_text, 'Save')
 .page-header
   %h1 Update your profile
-= render 'form', { full: true }
+= render 'shared/error_messages'
+= form_for(@user, html: {class: 'form-horizontal well'}) do |f|
+  .form-group
+    = f.label :last_name, class: 'col-sm-3 control-label'
+    .col-sm-9
+      = f.text_field :last_name, class: 'form-control', placeholder: '京大'
+
+  .form-group
+    = f.label :first_name, class: 'col-sm-3 control-label'
+    .col-sm-9
+      = f.text_field :first_name, class: 'form-control', placeholder: 'アンプラ太郎'
+
+  .form-group
+    = f.label :furigana, class: 'col-sm-3 control-label'
+    .col-sm-9
+      = f.text_field :furigana, class: 'form-control', placeholder: 'きょうだいあんぷらたろう'
+      %span.help-block 姓名の間はスペースなしで詰めてください
+
+  .form-group
+    = f.label :email, class: 'col-sm-3 control-label'
+    .col-sm-9
+      = f.email_field :email, class: 'form-control', placeholder: 'example@ku-unplugged.net'
+
+  .form-group
+    = f.label :nickname, class: 'col-sm-3 control-label'
+    .col-sm-9
+      = f.text_field :nickname, class: 'form-control'
+      %span.help-block 同姓の人がいて紛らわしい，あだ名の方がわかりやすい，サークル外の人には名前を伏せたい，などの場合に利用してください
+
+  .form-group
+    .col-sm-offset-3.col-sm-9
+      = f.submit 'Save', class: 'btn btn-primary'

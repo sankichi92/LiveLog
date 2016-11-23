@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.feature "LivePages", type: :feature do
 
-  feature 'Index' do
+  feature 'Show live list' do
+
     scenario 'A user can see the live page' do
       live = create(:live)
       visit root_path
@@ -14,11 +15,12 @@ RSpec.feature "LivePages", type: :feature do
     end
   end
 
-  feature 'Show' do
+  feature 'Show individual live' do
+
     scenario 'A user can see the individual live page' do
       live = create(:live)
       visit live_path(live)
-      
+
       expect(page).to have_title(live.name)
       expect(page).to have_content(live.name)
     end
