@@ -19,3 +19,7 @@ $well-border: lighten($brand-primary, 30%);
 body {
   padding-top: 60px;
 }
+
+tr[onclick]:hover {
+  cursor: pointer;
+}
