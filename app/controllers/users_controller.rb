@@ -22,7 +22,7 @@ class UsersController < ApplicationController
       flash[:success] = "#{@user.full_name} さんを追加しました"
       redirect_to action: :new
     else
-      render 'new'
+      render :new
     end
   end
 
@@ -34,7 +34,7 @@ class UsersController < ApplicationController
       flash[:success] = 'プロフィールを更新しました'
       redirect_to @user
     else
-      render 'edit'
+      render :edit
     end
   end
 
