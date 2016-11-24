@@ -10,8 +10,14 @@ end
 class Member < OldRecord
 end
 
+class OldSong < OldRecord
+  self.table_name = 'songs'
+  belongs_to :live, class_name: 'OldLive', foreign_key: 'live_id'
+end
+
 class OldLive < OldRecord
   self.table_name = 'lives'
+  has_many :songs, class_name: 'OldSong', foreign_key: 'live_id'
 end
 
 Member.all.each do |m|
@@ -32,5 +38,12 @@ User.first.update_attributes(password: 'foobar',
                              activated_at: Time.zone.now)
 
 OldLive.all.each do |l|
-  Live.create!(name: l.name, date: l.date, place: l.place)
+  live = Live.create!(name: l.name, date: l.date, place: l.place)
+  l.songs.each do |s|
+    live.songs.create!(name: s.name,
+                       artist: s.artist,
+                       youtube_url: s.url,
+                       order: s.order,
+                       time: s.time)
+  end
 end
