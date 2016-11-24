@@ -74,6 +74,6 @@ class User < ApplicationRecord
   private
 
   def downcase_email
-    self.email = email.downcase unless self.email.nil?
+    self.email = email.downcase unless email.nil?
   end
 end

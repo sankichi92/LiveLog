@@ -32,10 +32,10 @@ Member.all.each do |m|
                admin: m.admin)
 end
 
-User.first.update_attributes(password: 'foobar',
-                             password_confirmation: 'foobar',
-                             activated: true,
-                             activated_at: Time.zone.now)
+User.find(1).update_attributes(password: 'foobar',
+                               password_confirmation: 'foobar',
+                               activated: true,
+                               activated_at: Time.zone.now)
 
 OldLive.all.each do |l|
   live = Live.create!(name: l.name, date: l.date, place: l.place)
