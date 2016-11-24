@@ -17,6 +17,13 @@ ja:
         email: メールアドレス
         password: パスワード
         password_confirmation: パスワードを再入力
+      song:
+        name: 曲名
+        artist: アーティスト名
+        youtube_id: YouTube URL
+        live_id: ライブ
+        order: 曲順
+        time: 時間
   date:
     abbr_day_names:
     - 日

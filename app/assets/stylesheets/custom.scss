@@ -1,7 +1,10 @@
 $brand-primary: darken(#f0ad4e, 6.5%);
-$gray-lighter: lighten($brand-primary, 36%);
-$table-bg-hover: lighten($brand-primary, 36%);
-$table-border-color: lighten($brand-primary, 30%);
+$brand-bg: #fcf8e3;
+$brand-border: #faebcc;
+$gray-lighter: $brand-border;
+$table-bg-hover: $brand-bg;
+$table-bg-accent: lighten($brand-bg, 2%);
+$table-border-color: $brand-border;
 $navbar-default-color: #333;
 $navbar-default-bg: #f0ad4e;
 $navbar-default-link-color: #333;
@@ -10,8 +13,8 @@ $navbar-default-link-active-color: #000;
 $navbar-default-toggle-hover-bg: lighten($navbar-default-bg, 20%);
 $navbar-default-toggle-icon-bar-bg: #333;
 $navbar-default-toggle-border-color: lighten($navbar-default-bg, 10%);
-$well-bg: lighten($brand-primary, 40%);
-$well-border: lighten($brand-primary, 30%);
+$well-bg: $brand-bg;
+$well-border: $brand-border;
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
@@ -22,4 +25,12 @@ body {
 
 tr[onclick]:hover {
   cursor: pointer;
+}
+
+ol.set-list li {
+  @extend .lead
+}
+
+.panel-default {
+  @extend .panel-warning
 }

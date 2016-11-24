@@ -1,15 +1,15 @@
 class UsersController < ApplicationController
+  before_action :set_user, only: %i(show edit update destroy)
   before_action :logged_in_user
   before_action :correct_user, only: %i(edit update)
   before_action :admin_or_elder_user, only: %i(new create destroy)
 
   def index
-    @users = User.order('furigana COLLATE "C"') # TODO: Remove 'COLLATE "C"'
-    @years = User.joined_years
+    @users = User.all
+    @years = @users.distinct_joined.map { |u| u.joined }
   end
 
   def show
-    @user = User.find(params[:id])
   end
 
   def new
@@ -22,7 +22,7 @@ class UsersController < ApplicationController
       flash[:success] = "#{@user.full_name} さんを追加しました"
       redirect_to action: :new
     else
-      render 'new'
+      render :new
     end
   end
 
@@ -34,12 +34,12 @@ class UsersController < ApplicationController
       flash[:success] = 'プロフィールを更新しました'
       redirect_to @user
     else
-      render 'edit'
+      render :edit
     end
   end
 
   def destroy
-    User.find(params[:id]).destroy
+    @user.destroy
     flash[:success] = 'メンバーを削除しました'
     redirect_to users_url
   end
@@ -56,8 +56,11 @@ class UsersController < ApplicationController
 
   # Before filters
 
-  def correct_user
+  def set_user
     @user = User.find(params[:id])
+  end
+
+  def correct_user
     redirect_to(root_url) unless current_user?(@user)
   end
 end

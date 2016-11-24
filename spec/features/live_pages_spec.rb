@@ -17,13 +17,15 @@ RSpec.feature "LivePages", type: :feature do
   end
 
   feature 'Show individual live' do
+    given(:live) { create(:live) }
+    given!(:song) { create(:song, live: live) }
 
     scenario 'A user can see the individual live page' do
-      live = create(:live)
       visit live_path(live)
 
       expect(page).to have_title(live.name)
       expect(page).to have_content(live.name)
+      expect(page).to have_content(song.name)
     end
   end
 

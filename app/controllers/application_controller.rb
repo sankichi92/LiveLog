@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   include SessionsHelper
 
-  protected
+  private
 
   def logged_in_user
     unless logged_in?
@@ -13,12 +13,10 @@ class ApplicationController < ActionController::Base
   end
 
   def admin_user
-    logged_in_user
     redirect_to(root_url) unless current_user.admin?
   end
 
   def admin_or_elder_user
-    logged_in_user
     redirect_to(root_url) unless current_user.admin? || current_user.elder?
   end
 end

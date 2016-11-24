@@ -4,10 +4,11 @@ class LivesController < ApplicationController
   before_action :admin_or_elder_user, except: %i(index show)
 
   def index
-    @lives = Live.order(date: :desc)
+    @lives = Live.all
   end
 
   def show
+    @songs = @live.songs
   end
 
   def new
@@ -50,24 +51,26 @@ class LivesController < ApplicationController
   end
 
   def destroy
-    @live.destroy
-    respond_to do |format|
-      format.html do
-        flash[:success] = 'ライブを削除しました'
-        redirect_to lives_url
-      end
-      format.json { head :no_content }
+    begin
+      @live.destroy
+    rescue ActiveRecord::DeleteRestrictionError => e
+      flash.now[:danger] = e.message
+      render :show
+    else
+      flash[:success] = 'ライブを削除しました'
+      redirect_to lives_url
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_live
-      @live = Live.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def live_params
-      params.require(:live).permit(:name, :date, :place)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_live
+    @live = Live.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def live_params
+    params.require(:live).permit(:name, :date, :place)
+  end
 end

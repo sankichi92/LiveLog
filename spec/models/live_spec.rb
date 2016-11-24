@@ -8,6 +8,7 @@ RSpec.describe Live, type: :model do
   it { is_expected.to respond_to(:name) }
   it { is_expected.to respond_to(:date) }
   it { is_expected.to respond_to(:place) }
+  it { is_expected.to respond_to(:songs) }
 
   it { is_expected.to be_valid }
 
@@ -24,6 +25,15 @@ RSpec.describe Live, type: :model do
   describe 'when the combination of name and date is already taken' do
     before { live.dup.save }
     it { is_expected.not_to be_valid }
+  end
+
+  describe 'song associations' do
+    before { live.save }
+    let!(:song) { create(:song, live: live) }
+
+    it 'should raise an exception when live is deleted with songs' do
+      expect { live.destroy }.to raise_exception ActiveRecord::DeleteRestrictionError
+    end
   end
 end
 

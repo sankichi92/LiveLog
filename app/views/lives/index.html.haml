@@ -1,5 +1,5 @@
 - provide(:title, 'Live List')
-.page-header
+%header.page-header
   %h1 Live List
 - @lives.first.nendo.downto(@lives.last.nendo).each_slice(2) do |two_y|
   .row
@@ -7,12 +7,14 @@
       - y_live = @lives.where(date: nendo_range(y))
       - if y_live.exists?
         .col-sm-6
-          %h2= y
-          %table.table.table-hover
-            %thead
-              %tr
-                %th Date
-                %th Name
-                %th Place
-            %tbody
-              = render y_live
+          .panel.panel-default
+            .panel-heading
+              %h3.panel-title= y
+            %table.table.table-hover
+              %thead
+                %tr
+                  %th Date
+                  %th Name
+                  %th Place
+              %tbody
+                = render y_live
