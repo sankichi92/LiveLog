@@ -9,4 +9,5 @@ Rails.application.routes.draw do
   end
   resources :password_resets, only: %i(new create edit update)
   resources :lives
+  resources :songs, only: %i(new create edit update destroy)
 end

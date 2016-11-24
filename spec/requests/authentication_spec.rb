@@ -17,6 +17,20 @@ RSpec.describe "Authentication", type: :request do
         specify { expect(response).to redirect_to(login_path) }
       end
     end
+
+    describe 'in the Songs controller' do
+      let(:song) { create(:song, live: create(:live)) }
+
+      describe 'submitting to the create action' do
+        before { post songs_path }
+        specify { expect(response).to redirect_to(login_path) }
+      end
+
+      describe 'submitting to the update action' do
+        before { patch song_path(song) }
+        specify { expect(response).to redirect_to(login_path) }
+      end
+    end
   end
 
   describe 'as wrong user' do
@@ -42,9 +56,40 @@ RSpec.describe "Authentication", type: :request do
 
     before { log_in_as non_admin, capybara: false }
 
-    describe 'submitting a DELETE request to the Users#destroy action' do
-      before { delete user_path(user) }
-      specify { expect(response).to redirect_to(root_path)}
+    describe 'in the Users controller' do
+
+      describe 'submitting a DELETE request to the destroy action' do
+        before { delete user_path(user) }
+        specify { expect(response).to redirect_to(root_path) }
+      end
+    end
+
+    describe 'in the Lives controller' do
+      let(:live) { create(:live) }
+
+      describe 'submitting to the create action' do
+        before { post lives_path }
+        specify { expect(response).to redirect_to(root_path) }
+      end
+
+      describe 'submitting to the update action' do
+        before { patch live_path(live) }
+        specify { expect(response).to redirect_to(root_path) }
+      end
+
+      describe 'submitting to the destroy action' do
+        before { delete live_path(live) }
+        specify { expect(response).to redirect_to(root_path) }
+      end
+    end
+
+    describe 'in the Songs controller' do
+      let(:song) { create(:song, live: create(:live)) }
+
+      describe 'submitting to the destroy action' do
+        before { delete song_path(song) }
+        specify { expect(response).to redirect_to(root_path) }
+      end
     end
   end
 end
