@@ -1,10 +1,14 @@
 - provide(:title, @live.title)
-.page-header
+%header.page-header
   %h1<
     = @live.name
     %small= "#{I18n.l(@live.date)} @#{@live.place}"
 
+- if @songs.count > 20
+  = render @songs
+
 - if logged_in? && current_user.admin_or_elder?
-  = link_to glyphicon(:edit) + 'Edit', edit_live_path(@live), class: 'btn btn-primary', role: 'button'
-  - if @live.songs.empty?
-    = link_to glyphicon(:trash) + 'Delete', @live, method: :delete, data: {confirm: '本当に削除しますか？'}, class: 'btn btn-danger', role: 'button'
+  %section
+    = link_to glyphicon(:edit) + 'Edit', edit_live_path(@live), class: 'btn btn-primary', role: 'button'
+    - if @live.songs.empty?
+      = link_to glyphicon(:trash) + 'Delete', @live, method: :delete, data: {confirm: '本当に削除しますか？'}, class: 'btn btn-danger', role: 'button'

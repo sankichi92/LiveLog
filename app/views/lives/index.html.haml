@@ -1,5 +1,5 @@
 - provide(:title, 'Live List')
-.page-header
+%header.page-header
   %h1 Live List
 - @lives.first.nendo.downto(@lives.last.nendo).each_slice(2) do |two_y|
   .row
