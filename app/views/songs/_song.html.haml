@@ -1,7 +1,7 @@
 %tr
   - if show_time
-    %td= song.time.strftime("%R")
+    %td= song.time_str
   %td= song.order
-  %td= song.name
+  %td= logged_in? ? link_to(song.name, song) : song.name
   %td= song.artist
   %td

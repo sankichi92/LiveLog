@@ -1,7 +1,10 @@
 class SongsController < ApplicationController
   before_action :logged_in_user
   before_action :admin_or_elder_user, only: %i(new create destroy)
-  before_action :set_song, only: %i(edit update destroy)
+  before_action :set_song, only: %i(show edit update destroy)
+
+  def show
+  end
 
   def new
     live = params[:live_id] ? Live.find(params[:live_id]) : Live.first
@@ -30,7 +33,7 @@ class SongsController < ApplicationController
   private
 
   def set_song
-    @song = Song.find(paramas[:id])
+    @song = Song.find(params[:id])
   end
 
   def song_params

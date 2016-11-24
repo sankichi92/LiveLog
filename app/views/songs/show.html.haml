@@ -1,0 +1,43 @@
+- provide(:title, @song.name)
+%article
+  %header.page-header
+    %h1<
+      %small
+        = link_to @song.live.title, @song.live
+        \-
+        = @song.time_str unless @song.time.nil?
+        = @song.order
+      %br
+      = "#{@song.name} / #{@song.artist}"
+
+  - if @song.youtube_id.blank?
+
+  - else
+    .row
+      .col-sm-9
+        .embed-responsive.embed-responsive-16by9
+          = @song.youtube_embed
+      .col-sm-3
+
+  %nav
+    %ul.pager
+      - if @song.previous.nil?
+        %li.previous.disabled
+          %a<
+            %span{'aria-hidden': true} &larr;
+            Previous
+      - else
+        %li.previous
+          = link_to @song.previous do
+            %span{'aria-hidden': true} &larr;
+            Previous
+      - if @song.next.nil?
+        %li.next.disabled
+          %a<
+            Next
+            %span{'aria-hidden': true} &rarr;
+      - else
+        %li.next
+          = link_to @song.next do
+            Next
+            %span{'aria-hidden': true} &rarr;

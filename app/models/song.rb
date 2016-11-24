@@ -19,4 +19,20 @@ class Song < ApplicationRecord
       self.youtube_id = m[:id]
     end
   end
+
+  def youtube_embed
+    %(<iframe src="https://www.youtube.com/embed/#{youtube_id}?rel=0" frameborder="0" allowfullscreen></iframe>).html_safe
+  end
+
+  def time_str
+    time.strftime('%R')
+  end
+
+  def previous
+    Song.find_by(live: live, order: order - 1)
+  end
+
+  def next
+    Song.find_by(live: live, order: order + 1)
+  end
 end
