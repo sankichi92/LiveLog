@@ -80,4 +80,16 @@ RSpec.feature "SongPages", type: :feature do
       expect(song.reload.name).to eq new_song_name
     end
   end
+
+  feature 'song deletion' do
+    given(:admin) { create(:admin) }
+    background do
+      log_in_as admin
+      visit edit_song_path(song)
+    end
+
+    scenario 'An admin user can delete a song' do
+      expect { click_link('Delete') }.to change(Song, :count).by(-1)
+    end
+  end
 end

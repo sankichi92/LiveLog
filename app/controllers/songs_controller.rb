@@ -35,6 +35,10 @@ class SongsController < ApplicationController
   end
 
   def destroy
+    live = @song.live
+    @song.destroy
+    flash[:success] = '曲を削除しました'
+    redirect_back_or live
   end
 
   private
