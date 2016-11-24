@@ -45,7 +45,7 @@ OldLive.all.each do |l|
                          artist: s.artist,
                          youtube_id: s.url,
                          order: s.order,
-                         time: s.time)
+                         time: s.time - 9.hour)
     rescue => e
       p e
       puts s.url

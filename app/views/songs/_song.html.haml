@@ -1,7 +1,11 @@
 %tr
-  - if show_time
-    %td= song.time_str
-  %td= song.order
+  - if show_live
+    %td= song.live.title
+  %td
+    = song.time_str unless song.time.blank?
+    = song.order
   %td= logged_in? ? link_to(song.name, song) : song.name
   %td= song.artist
   %td
+  - if logged_in? && current_user.admin_or_elder?
+    %td= link_to glyphicon(:edit), edit_song_path(song)

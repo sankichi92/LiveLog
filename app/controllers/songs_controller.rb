@@ -1,6 +1,7 @@
 class SongsController < ApplicationController
   before_action :logged_in_user
   before_action :admin_or_elder_user, only: %i(new create destroy)
+  before_action :store_location, only: :edit
   before_action :set_song, only: %i(show edit update destroy)
 
   def show
@@ -25,6 +26,12 @@ class SongsController < ApplicationController
   end
 
   def update
+    if @song.update_attributes(song_params)
+      flash[:success] = '曲を更新しました'
+      redirect_back_or @song
+    else
+      render :edit
+    end
   end
 
   def destroy
@@ -38,5 +45,9 @@ class SongsController < ApplicationController
 
   def song_params
     params.require(:song).permit(:live_id, :time, :order, :name, :artist, :youtube_id)
+  end
+
+  def store_location
+    session[:forwarding_url] = request.referer
   end
 end

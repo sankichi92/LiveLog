@@ -20,6 +20,10 @@ class Song < ApplicationRecord
     end
   end
 
+  def youtube_url
+    "https://www.youtube.com/watch?v=#{youtube_id}" unless youtube_id.blank?
+  end
+
   def youtube_embed
     %(<iframe src="https://www.youtube.com/embed/#{youtube_id}?rel=0" frameborder="0" allowfullscreen></iframe>).html_safe
   end

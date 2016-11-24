@@ -9,7 +9,7 @@
   .form-group
     = f.label :order, class: 'col-sm-3 control-label'
     .col-sm-9
-      = f.text_field :order, class: 'form-control', placeholder: '1'
+      = f.number_field :order, class: 'form-control', placeholder: '1'
 
   - if @song.live.name.include?('NF')
     .form-group
@@ -30,7 +30,7 @@
   .form-group
     = f.label :youtube_id, class: 'col-sm-3 control-label'
     .col-sm-9
-      = f.text_field :youtube_id, class: 'form-control', placeholder: 'https://www.youtube.com/watch?v=sSbqm7ZK_9s'
+      = f.text_field :youtube_id, value: @song.youtube_url, class: 'form-control', placeholder: 'https://www.youtube.com/watch?v=sSbqm7ZK_9s'
 
   .form-group
     .col-sm-offset-3.col-sm-9
