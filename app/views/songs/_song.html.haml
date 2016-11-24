@@ -1,7 +1,7 @@
 %tr
   - if show_time
-    %td song.time
-  %td song.order
-  %td song.name
-  %td song.artist
+    %td= song.time.strftime("%R")
+  %td= song.order
+  %td= song.name
+  %td= song.artist
   %td
