@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  has_many :playings, dependent: :restrict_with_exception
+  has_many :songs, through: :playings
   attr_accessor :remember_token, :activation_token, :reset_token
   before_save :downcase_email
   default_scope { order('furigana COLLATE "C"') } # TODO: Remove 'COLLATE "C"'

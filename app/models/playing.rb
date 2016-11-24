@@ -1,4 +1,6 @@
 class Playing < ApplicationRecord
-  belongs_to :user_id
-  belongs_to :song_id
+  belongs_to :user
+  belongs_to :song
+  validates :user_id, presence: true
+  validates :song_id, presence: true
 end

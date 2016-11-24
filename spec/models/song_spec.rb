@@ -14,6 +14,8 @@ RSpec.describe Song, type: :model do
   it { is_expected.to respond_to(:time) }
   it { is_expected.to respond_to(:live_id) }
   it { is_expected.to respond_to(:live) }
+  it { is_expected.to respond_to(:playings) }
+  it { is_expected.to respond_to(:users)}
   it { expect(song.live).to eq live }
 
   it { is_expected.to be_valid }

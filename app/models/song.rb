@@ -1,4 +1,6 @@
 class Song < ApplicationRecord
+  has_many :playings, dependent: :destroy
+  has_many :users, through: :playings
   belongs_to :live
   default_scope { order(:order) }
   validates :live_id, presence: true
