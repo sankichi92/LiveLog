@@ -1,14 +1,32 @@
 - provide(:title, @live.title)
-%header.page-header
-  %h1<
-    = @live.name
-    %small= "#{I18n.l(@live.date)} @#{@live.place}"
+%article
+  %header.page-header
+    %h1<
+      = @live.name
+      %small= "#{I18n.l(@live.date)} @#{@live.place}"
 
-- if @songs.count > 20
-  = render @songs
+  - if @songs.count > 20
+    %table.table.table-striped.table-condensed
+      %thead
+        %tr
+          - show_time = @songs.any? { |s| s.time }
+          - if show_time
+            %th Time
+          %th #
+          %th Song
+          %th Artist
+          %th Members
+      %tbody
+        = render @songs, show_live: false, show_time: show_time
+  - else
+    %ol.set-list
+      - @songs.each do |s|
+        %li= s.name
 
-- if logged_in? && current_user.admin_or_elder?
-  %section
-    = link_to glyphicon(:edit) + 'Edit', edit_live_path(@live), class: 'btn btn-primary', role: 'button'
-    - if @live.songs.empty?
-      = link_to glyphicon(:trash) + 'Delete', @live, method: :delete, data: {confirm: '本当に削除しますか？'}, class: 'btn btn-danger', role: 'button'
+
+  - if logged_in? && current_user.admin_or_elder?
+    %footer
+      %ul.list-inline
+        %li= link_to glyphicon(:edit) + 'Edit', edit_live_path(@live), class: 'btn btn-primary', role: 'button'
+        - if @songs.empty?
+          %li= link_to glyphicon(:trash) + 'Delete', @live, method: :delete, data: {confirm: '本当に削除しますか？'}, class: 'btn btn-danger', role: 'button'

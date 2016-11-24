@@ -8,6 +8,7 @@ class LivesController < ApplicationController
   end
 
   def show
+    @songs = @live.songs
   end
 
   def new

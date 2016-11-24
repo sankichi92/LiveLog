@@ -23,3 +23,7 @@ body {
 tr[onclick]:hover {
   cursor: pointer;
 }
+
+ol.set-list li {
+  @extend .lead
+}
