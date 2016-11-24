@@ -40,10 +40,15 @@ User.first.update_attributes(password: 'foobar',
 OldLive.all.each do |l|
   live = Live.create!(name: l.name, date: l.date, place: l.place)
   l.songs.each do |s|
-    live.songs.create!(name: s.name,
-                       artist: s.artist,
-                       youtube_url: s.url,
-                       order: s.order,
-                       time: s.time)
+    begin
+      live.songs.create!(name: s.name,
+                         artist: s.artist,
+                         youtube_id: s.url,
+                         order: s.order,
+                         time: s.time)
+    rescue => e
+      p e
+      puts s.url
+    end
   end
 end

@@ -20,7 +20,7 @@ ja:
       song:
         name: 曲名
         artist: アーティスト名
-        youtube_url: YouTube URL
+        youtube_id: YouTube URL
         live_id: ライブ
         order: 曲順
         time: 時間

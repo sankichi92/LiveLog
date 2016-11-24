@@ -9,7 +9,7 @@ RSpec.describe Song, type: :model do
 
   it { is_expected.to respond_to(:name) }
   it { is_expected.to respond_to(:artist) }
-  it { is_expected.to respond_to(:youtube_url) }
+  it { is_expected.to respond_to(:youtube_id) }
   it { is_expected.to respond_to(:order) }
   it { is_expected.to respond_to(:time) }
   it { is_expected.to respond_to(:live_id) }
@@ -24,7 +24,32 @@ RSpec.describe Song, type: :model do
   end
 
   describe 'when name is not present' do
-    before {song.name = ''}
-    it {is_expected.not_to be_valid}
+    before { song.name = '' }
+    it { is_expected.not_to be_valid }
+  end
+
+  describe 'when youtube url format is invalid' do
+    it 'should be invalid' do
+      urls = %w(http://livelog.ku-unplugged.net/
+                https://www.youtube.com/
+                https://www.youtube.com/watch?v=aaa)
+      urls.each do |invalid_address|
+        song.youtube_id = invalid_address
+        expect(song).not_to be_valid(:update)
+      end
+    end
+  end
+
+  describe 'when youtube url format is valid' do
+    it 'should be valid' do
+      urls = %w(https://www.youtube.com/watch?v=-gKPuxV3MkY
+                https://youtu.be/-gKPuxV3MkY
+                https://www.youtube.com/watch?list=PLJNbijG2M7OzYyflxDhucn2aaro613QPI&v=-gKPuxV3MkY
+                https://youtu.be/-gKPuxV3MkY?list=PLJNbijG2M7OzYyflxDhucn2aaro613QPI)
+      urls.each do |valid_address|
+        song.youtube_id = valid_address
+        expect(song).to be_valid(:update)
+      end
+    end
   end
 end
