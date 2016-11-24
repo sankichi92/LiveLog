@@ -63,13 +63,14 @@ class LivesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_live
-      @live = Live.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def live_params
-      params.require(:live).permit(:name, :date, :place)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_live
+    @live = Live.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def live_params
+    params.require(:live).permit(:name, :date, :place)
+  end
 end
