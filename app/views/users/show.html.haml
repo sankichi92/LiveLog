@@ -19,7 +19,6 @@
         %th Song
         %th Artist
         %th Members
-        - if logged_in?
-          %th
+        %th
     %tbody
       = render @user.songs, show_live: true
