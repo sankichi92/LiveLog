@@ -3,6 +3,7 @@ class User < ApplicationRecord
   has_many :songs, through: :playings
   attr_accessor :remember_token, :activation_token, :reset_token
   before_save :downcase_email
+  before_save :remove_spaces_from_furigana
   default_scope { order('joined DESC', 'furigana COLLATE "C"') } # TODO: Remove 'COLLATE "C"'
   scope :distinct_joined, -> { unscoped.select(:joined).distinct.order(joined: :desc) }
   validates :first_name, presence: true
@@ -85,5 +86,9 @@ class User < ApplicationRecord
 
   def downcase_email
     self.email = email.downcase unless email.nil?
+  end
+
+  def remove_spaces_from_furigana
+    self.furigana = furigana.gsub(/\s+/, '')
   end
 end
