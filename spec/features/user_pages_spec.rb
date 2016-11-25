@@ -42,13 +42,18 @@ RSpec.feature "UserPages", type: :feature do
 
   feature 'Profile page' do
     given(:user) { create(:user) }
-    background { log_in_as user }
+    given(:song) { create(:song) }
+    background do
+      create(:playing, user: user, song: song)
+      log_in_as user
+    end
 
     scenario 'A user can see his/her profile page' do
       visit user_path(user)
 
       expect(page).to have_content(user.full_name)
       expect(page).to have_title(user.full_name)
+      expect(page).to have_content(song.name)
     end
   end
 
