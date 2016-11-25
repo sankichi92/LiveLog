@@ -6,17 +6,18 @@
       %small= "#{I18n.l(@live.date)} @#{@live.place}"
 
   - if @songs.count > 20
-    %table.table.table-striped.table-condensed
-      %thead
-        %tr
-          %th #
-          %th Song
-          %th Artist
-          %th Members
-          - if logged_in? && current_user.admin_or_elder?
-            %th
-      %tbody
-        = render @songs, show_live: false
+    .table-responsive
+      %table.table.table-striped.table-condensed
+        %thead
+          %tr
+            %th #
+            %th Song
+            %th Artist
+            %th Members
+            - if logged_in?
+              %th
+        %tbody
+          = render @songs, show_live: false
   - else
     %ol#set-list
       - @songs.each do |song|
