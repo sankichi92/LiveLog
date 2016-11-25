@@ -23,11 +23,10 @@
         %li
           = logged_in? ? link_to(song.name, song) : song.name
           = "/ #{song.artist}"
-          - if logged_in? && current_user.admin_or_elder?
+          - if logged_in? && (current_user.admin_or_elder? || current_user.played?(@song))
             %small= link_to glyphicon(:edit), edit_song_path(song)
           %ul.list-inline
             = render song.playings
-
 
   - if logged_in? && current_user.admin_or_elder?
     %footer

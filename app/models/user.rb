@@ -46,6 +46,10 @@ class User < ApplicationRecord
     admin? || elder?
   end
 
+  def played?(song)
+    songs.include?(song)
+  end
+
   def authenticated?(attribute, token)
     digest = send("#{attribute}_digest")
     return false if digest.nil?

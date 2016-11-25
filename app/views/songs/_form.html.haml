@@ -43,6 +43,6 @@
   .form-group
     .col-sm-offset-3.col-sm-9
       = f.submit yield(:button_text), class: 'btn btn-primary'
-      - unless @song.id.nil?
+      - if @song.persisted? && current_user.admin_or_elder?
         = link_to glyphicon(:trash) + 'Delete', @song, method: :delete, data: {confirm: '本当に削除しますか？'}, class: 'btn btn-danger pull-right', role: 'button'
 
