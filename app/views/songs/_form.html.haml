@@ -32,6 +32,15 @@
     .col-sm-9
       = f.text_field :youtube_id, value: @song.youtube_url, class: 'form-control', placeholder: 'https://www.youtube.com/watch?v=sSbqm7ZK_9s'
 
+  = f.fields_for :playings do |playings_form|
+
+    .form-group
+      = playings_form.label :user, class: 'col-sm-3 control-label'
+      .col-sm-3
+        = playings_form.text_field :inst, class: 'form-control', placeholder: 'Gt&Vo'
+      .col-sm-6
+        = playings_form.collection_select :user_id, User.all, :id, :full_name, {}, {class: 'select2 form-control'}
+
   .form-group
     .col-sm-offset-3.col-sm-9
       = f.submit yield(:button_text), class: 'btn btn-primary'

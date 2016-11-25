@@ -24,6 +24,9 @@ ja:
         live_id: ライブ
         order: 曲順
         time: 時間
+      playing:
+        user: メンバー
+        inst: 楽器
   date:
     abbr_day_names:
     - 日

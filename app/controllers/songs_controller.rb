@@ -10,6 +10,7 @@ class SongsController < ApplicationController
   def new
     live = params[:live_id] ? Live.find(params[:live_id]) : Live.first
     @song = live.songs.build
+    @song.playings.build
   end
 
   def create
@@ -48,7 +49,13 @@ class SongsController < ApplicationController
   end
 
   def song_params
-    params.require(:song).permit(:live_id, :time, :order, :name, :artist, :youtube_id)
+    params.require(:song).permit(:live_id,
+                                 :time,
+                                 :order,
+                                 :name,
+                                 :artist,
+                                 :youtube_id,
+                                 playings_attributes: %i(user_id inst _destroy))
   end
 
   def store_location

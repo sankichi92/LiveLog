@@ -3,7 +3,7 @@ class User < ApplicationRecord
   has_many :songs, through: :playings
   attr_accessor :remember_token, :activation_token, :reset_token
   before_save :downcase_email
-  default_scope { order('furigana COLLATE "C"') } # TODO: Remove 'COLLATE "C"'
+  default_scope { order('joined DESC', 'furigana COLLATE "C"') } # TODO: Remove 'COLLATE "C"'
   scope :distinct_joined, -> { unscoped.select(:joined).distinct.order(joined: :desc) }
   validates :first_name, presence: true
   validates :last_name, presence: true
