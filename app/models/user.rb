@@ -25,8 +25,16 @@ class User < ApplicationRecord
     SecureRandom.urlsafe_base64
   end
 
-  def full_name
-    "#{last_name} #{first_name}"
+  def full_name(logged_in = true)
+    if logged_in
+      nickname.blank? ? "#{last_name} #{first_name}" : "#{last_name} #{first_name} (#{nickname})"
+    else
+      handle
+    end
+  end
+
+  def handle
+    nickname.blank? ? last_name : nickname
   end
 
   def elder?

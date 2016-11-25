@@ -19,7 +19,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(create_user_params)
     if @user.save
-      flash[:success] = "#{@user.full_name} さんを追加しました"
+      flash[:success] = "メンバーを追加しました"
       redirect_to action: :new
     else
       render :new
