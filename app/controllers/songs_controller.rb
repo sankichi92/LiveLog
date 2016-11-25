@@ -3,6 +3,7 @@ class SongsController < ApplicationController
   before_action :admin_or_elder_user, only: %i(new create destroy)
   before_action :store_location, only: :edit
   before_action :set_song, only: %i(show edit update destroy)
+  before_action :set_users, only: %i(new create edit update)
 
   def show
   end
@@ -48,6 +49,10 @@ class SongsController < ApplicationController
     @song = Song.find(params[:id])
   end
 
+  def set_users
+    @users = User.all
+  end
+
   def song_params
     params.require(:song).permit(:live_id,
                                  :time,
@@ -55,7 +60,7 @@ class SongsController < ApplicationController
                                  :name,
                                  :artist,
                                  :youtube_id,
-                                 playings_attributes: %i(user_id inst _destroy))
+                                 playings_attributes: %i(id user_id inst _destroy))
   end
 
   def store_location
