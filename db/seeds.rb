@@ -12,7 +12,7 @@ end
 
 class OldSong < OldRecord
   self.table_name = 'songs'
-  belongs_to :live, class_name: 'OldLive', foreign_key: 'live_id'
+  has_many :members_songs, foreign_key: 'song_id'
 end
 
 class OldLive < OldRecord
@@ -20,9 +20,20 @@ class OldLive < OldRecord
   has_many :songs, class_name: 'OldSong', foreign_key: 'live_id'
 end
 
+class MembersSong < OldRecord
+  def inst
+    if sub_instrument.blank?
+      instrument
+    else
+      "#{instrument}&#{sub_instrument}"
+    end
+  end
+end
+
 Member.all.each do |m|
   m.first_name = 'no_name' if m.first_name.blank?
-  User.create!(first_name: m.first_name,
+  User.create!(id: m.id,
+               first_name: m.first_name,
                last_name: m.last_name,
                furigana: m.furigana,
                joined: m.year,
@@ -40,15 +51,18 @@ User.find(1).update_attributes(password: 'foobar',
 OldLive.all.each do |l|
   live = Live.create!(name: l.name, date: l.date, place: l.place)
   l.songs.each do |s|
+    s.time -= 9.hour unless s.time.blank?
     begin
       live.songs.create!(name: s.name,
                          artist: s.artist,
                          youtube_id: s.url,
                          order: s.order,
-                         time: s.time - 9.hour)
+                         time: s.time,
+                         playings_attributes: s.members_songs.map { |p| {user_id: p.member_id, inst: p.inst} })
     rescue => e
       p e
-      puts s.url
+      p s.members_songs.map { |p| {user_id: p.member_id, inst: p.inst} }
+      raise
     end
   end
 end
