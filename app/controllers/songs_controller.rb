@@ -1,8 +1,10 @@
 class SongsController < ApplicationController
   before_action :logged_in_user
+  before_action :set_song, only: %i(show edit update destroy)
+  before_action :correct_user, only: %i(edit update)
   before_action :admin_or_elder_user, only: %i(new create destroy)
   before_action :store_location, only: :edit
-  before_action :set_song, only: %i(show edit update destroy)
+  before_action :set_users, only: %i(new create edit update)
 
   def show
   end
@@ -10,6 +12,7 @@ class SongsController < ApplicationController
   def new
     live = params[:live_id] ? Live.find(params[:live_id]) : Live.first
     @song = live.songs.build
+    @song.playings.build
   end
 
   def create
@@ -43,12 +46,26 @@ class SongsController < ApplicationController
 
   private
 
+  def correct_user
+    redirect_to(root_url) unless current_user.played?(@song) || current_user.admin_or_elder?
+  end
+
   def set_song
     @song = Song.find(params[:id])
   end
 
+  def set_users
+    @users = User.all
+  end
+
   def song_params
-    params.require(:song).permit(:live_id, :time, :order, :name, :artist, :youtube_id)
+    params.require(:song).permit(:live_id,
+                                 :time,
+                                 :order,
+                                 :name,
+                                 :artist,
+                                 :youtube_id,
+                                 playings_attributes: %i(id user_id inst _destroy))
   end
 
   def store_location

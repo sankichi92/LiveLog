@@ -5,4 +5,9 @@ FactoryGirl.define do
     artist 'アンプラグダー'
     sequence(:order) { |n| n }
   end
+
+  factory :playing do
+    user
+    song
+  end
 end

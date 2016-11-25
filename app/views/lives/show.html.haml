@@ -6,29 +6,33 @@
       %small= "#{I18n.l(@live.date)} @#{@live.place}"
 
   - if @songs.count > 20
-    %table.table.table-striped.table-condensed
-      %thead
-        %tr
-          %th #
-          %th Song
-          %th Artist
-          %th Members
-          - if logged_in? && current_user.admin_or_elder?
-            %th
-      %tbody
-        = render @songs, show_live: false
+    .table-responsive
+      %table.table.table-striped.table-condensed
+        %thead
+          %tr
+            %th #
+            %th Song
+            %th Artist
+            %th Members
+            - if logged_in?
+              %th
+        %tbody
+          = render @songs, show_live: false
   - else
-    %ol.set-list
+    %ol#set-list
       - @songs.each do |song|
         %li
           = logged_in? ? link_to(song.name, song) : song.name
-          - if logged_in? && current_user.admin_or_elder?
+          = "/ #{song.artist}"
+          - if logged_in? && (current_user.admin_or_elder? || current_user.played?(@song))
             %small= link_to glyphicon(:edit), edit_song_path(song)
+          %ul.list-inline
+            = render song.playings
 
   - if logged_in? && current_user.admin_or_elder?
     %footer
       %ul.list-inline
         %li= link_to glyphicon('plus-sign') + 'Add song', new_song_path(live_id: @live.id), class: 'btn btn-default', role: 'button'
         %li= link_to glyphicon(:edit) + 'Edit', edit_live_path(@live), class: 'btn btn-primary', role: 'button'
-        - if @songs.empty?
-          %li= link_to glyphicon(:trash) + 'Delete', @live, method: :delete, data: {confirm: '本当に削除しますか？'}, class: 'btn btn-danger', role: 'button'
+        - unless @songs.exists?
+          %li= link_to glyphicon(:trash) + 'Delete', @live, method: :delete, class: 'btn btn-danger', role: 'button'

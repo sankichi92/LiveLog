@@ -1,6 +1,9 @@
 class Song < ApplicationRecord
+  has_many :playings, dependent: :destroy, inverse_of: :song
+  has_many :users, through: :playings
   belongs_to :live
-  default_scope { order(:order) }
+  accepts_nested_attributes_for :playings, allow_destroy: true
+  default_scope { includes(:live).order('lives.date DESC', :order) }
   validates :live_id, presence: true
   validates :name, presence: true
   VALID_YOUTUBE_REGEX =
@@ -33,10 +36,10 @@ class Song < ApplicationRecord
   end
 
   def previous
-    Song.find_by(live: live, order: order - 1)
+    Song.find_by(live: live, order: order - 1) unless order.blank?
   end
 
   def next
-    Song.find_by(live: live, order: order + 1)
+    Song.find_by(live: live, order: order + 1) unless order.blank?
   end
 end

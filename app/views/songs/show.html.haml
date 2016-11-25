@@ -2,22 +2,24 @@
 %article
   %header.page-header
     %h1<
+      = "#{@song.name} / #{@song.artist}"
       %small
         = link_to @song.live.title, @song.live
-        \-
-        = @song.time_str unless @song.time.nil?
+        = '-' unless @song.order.blank?
+        = @song.time_str unless @song.time.blank?
         = @song.order
-      %br
-      = "#{@song.name} / #{@song.artist}"
 
   - if @song.youtube_id.blank?
-
+    %ul#player-list.list-inline
+      = render @song.playings
   - else
     .row
       .col-sm-9
         .embed-responsive.embed-responsive-16by9
           = @song.youtube_embed
       .col-sm-3
+        %ul#player-list.list-unstyled
+          = render @song.playings
 
   %nav
     %ul.pager

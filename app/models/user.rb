@@ -1,7 +1,10 @@
 class User < ApplicationRecord
+  has_many :playings, dependent: :restrict_with_exception
+  has_many :songs, through: :playings
   attr_accessor :remember_token, :activation_token, :reset_token
   before_save :downcase_email
-  default_scope { order('furigana COLLATE "C"') } # TODO: Remove 'COLLATE "C"'
+  before_save :remove_spaces_from_furigana
+  default_scope { order('joined DESC', 'furigana COLLATE "C"') } # TODO: Remove 'COLLATE "C"'
   scope :distinct_joined, -> { unscoped.select(:joined).distinct.order(joined: :desc) }
   validates :first_name, presence: true
   validates :last_name, presence: true
@@ -23,8 +26,16 @@ class User < ApplicationRecord
     SecureRandom.urlsafe_base64
   end
 
-  def full_name
-    "#{last_name} #{first_name}"
+  def full_name(logged_in = true)
+    if logged_in
+      nickname.blank? ? "#{last_name} #{first_name}" : "#{last_name} #{first_name} (#{nickname})"
+    else
+      handle
+    end
+  end
+
+  def handle
+    nickname.blank? ? last_name : nickname
   end
 
   def elder?
@@ -33,6 +44,10 @@ class User < ApplicationRecord
 
   def admin_or_elder?
     admin? || elder?
+  end
+
+  def played?(song)
+    songs.include?(song)
   end
 
   def authenticated?(attribute, token)
@@ -75,5 +90,9 @@ class User < ApplicationRecord
 
   def downcase_email
     self.email = email.downcase unless email.nil?
+  end
+
+  def remove_spaces_from_furigana
+    self.furigana = furigana.gsub(/\s+/, '')
   end
 end

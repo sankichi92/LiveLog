@@ -23,6 +23,8 @@ RSpec.describe User, type: :model do
   it { is_expected.to respond_to(:activation_token) }
   it { is_expected.to respond_to(:reset_token) }
   it { is_expected.to respond_to(:reset_sent_at) }
+  it { is_expected.to respond_to(:playings) }
+  it { is_expected.to respond_to(:songs) }
 
   it { is_expected.to be_valid }
   it { is_expected.not_to be_admin }

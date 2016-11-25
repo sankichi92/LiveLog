@@ -1,0 +1,14 @@
+= f.hidden_field :_destroy, value: 0
+.form-group{id: "song_playings_attributes_#{f.index}_fields"}
+  = f.label :user, class: 'col-sm-3 control-label'
+  .col-sm-2
+    = f.text_field :inst, class: 'form-control', placeholder: 'Gt&Vo'
+  .col-sm-6
+    = f.collection_select :user_id, @users, :id, :full_name, {}, {class: 'select2 form-control'}
+  .col-sm-1
+    = content_tag :button,
+                  glyphicon(:minus),
+                  type: 'button',
+                  class: 'remove-member btn btn-link',
+                  data: {prefix: "song_playings_attributes_#{f.index}"}
+
