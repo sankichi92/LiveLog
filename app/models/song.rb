@@ -16,6 +16,11 @@ class Song < ApplicationRecord
   validates :youtube_id, format: {with: VALID_YOUTUBE_REGEX}, allow_blank: true
   before_save :extract_youtube_id
 
+  def Song.search(query, page) # TODO: Improve
+    q = "%#{query}%"
+    where('songs.name ILIKE ? OR artist ILIKE ?', q, q).paginate(page: page)
+  end
+
   def extract_youtube_id
     unless youtube_id.blank?
       m = youtube_id.match(VALID_YOUTUBE_REGEX)
