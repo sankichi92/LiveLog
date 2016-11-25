@@ -1,0 +1,3 @@
+%li<
+  = playing.inst + '.'
+  = logged_in? ? link_to(playing.user.handle, playing.user) : playing.user.handle

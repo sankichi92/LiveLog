@@ -21,6 +21,7 @@ class OldLive < OldRecord
 end
 
 class MembersSong < OldRecord
+  belongs_to :member
   def inst
     if sub_instrument.blank?
       instrument
@@ -32,8 +33,7 @@ end
 
 Member.all.each do |m|
   m.first_name = 'no_name' if m.first_name.blank?
-  User.create!(id: m.id,
-               first_name: m.first_name,
+  User.create!(first_name: m.first_name,
                last_name: m.last_name,
                furigana: m.furigana,
                joined: m.year,
@@ -58,7 +58,9 @@ OldLive.all.each do |l|
                          youtube_id: s.url,
                          order: s.order,
                          time: s.time,
-                         playings_attributes: s.members_songs.map { |p| {user_id: p.member_id, inst: p.inst} })
+                         playings_attributes: s.members_songs.map { |p|
+                           {user_id: User.find_by(furigana: p.member.furigana).id,
+                            inst: p.inst} })
     rescue => e
       p e
       p s.members_songs.map { |p| {user_id: p.member_id, inst: p.inst} }

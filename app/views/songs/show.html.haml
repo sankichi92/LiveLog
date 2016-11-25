@@ -11,13 +11,16 @@
       = "#{@song.name} / #{@song.artist}"
 
   - if @song.youtube_id.blank?
-
+    %ul#player-list.list-inline
+      = render @song.playings
   - else
     .row
       .col-sm-9
         .embed-responsive.embed-responsive-16by9
           = @song.youtube_embed
       .col-sm-3
+        %ul#player-list.list-unstyled
+          = render @song.playings
 
   %nav
     %ul.pager

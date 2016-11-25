@@ -27,10 +27,14 @@ tr[onclick]:hover {
   cursor: pointer;
 }
 
-ol.set-list li {
+#set-list > li, #player-list > li {
   @extend .lead
 }
 
 .panel-default {
   @extend .panel-warning
+}
+
+td .list-inline {
+  margin-bottom: 0
 }

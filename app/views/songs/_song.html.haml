@@ -7,5 +7,7 @@
   %td= logged_in? ? link_to(song.name, song) : song.name
   %td= song.artist
   %td
+    %ul.list-inline
+      = render song.playings
   - if logged_in? && current_user.admin_or_elder?
     %td= link_to glyphicon(:edit), edit_song_path(song)

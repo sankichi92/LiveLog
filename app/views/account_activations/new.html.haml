@@ -1,8 +1,8 @@
 - provide(:title, 'Invite user')
 %header.page-header
-  %h1
-    Send an invitation to
+  %h1<
     = @user.full_name
+    に招待メールを送る
 
 = form_for(@user, url: user_activations_path, html: {method: :post, class: 'form-horizontal well'}) do |f|
   = render 'shared/error_messages', object: f.object

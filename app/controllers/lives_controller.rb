@@ -25,7 +25,7 @@ class LivesController < ApplicationController
       if @live.save
         format.html do
           flash[:success] = "#{@live.title} を追加しました"
-          redirect_to @live, notice: 'Live was successfully created.'
+          redirect_to @live
         end
         format.json { render :show, status: :created, location: @live }
       else
