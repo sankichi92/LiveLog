@@ -36,10 +36,10 @@ class Song < ApplicationRecord
   end
 
   def previous
-    Song.find_by(live: live, order: order - 1)
+    Song.find_by(live: live, order: order - 1) unless order.blank?
   end
 
   def next
-    Song.find_by(live: live, order: order + 1)
+    Song.find_by(live: live, order: order + 1) unless order.blank?
   end
 end
