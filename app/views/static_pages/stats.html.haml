@@ -27,54 +27,59 @@
     曲を演奏しました
 
   .row
-    %section.col-md-4
-      %header.page-header
-        %h2 演奏された楽器
-      %p.lead
-        %mark= @insts.size
-        種類の楽器が演奏されました
-      %ul.list-inline.lead
-        - @insts.each do |inst, count|
-          %li
-            = inst
-            %span.badge= count
+    .col-md-4.col-sm-6
+      %section.panel.panel-default
+        %header.panel-heading
+          %h2.panel-title 演奏された楽器
+        .panel-body
+          %p.lead
+            %mark= @insts.size
+            種類の楽器が演奏されました
+          %ul.list-inline.lead
+            - @insts.each do |inst, count|
+              %li
+                = inst
+                %span.badge= count
 
-    %section.col-md-4
-      %header.page-header
-        %h2 カバーしたアーティスト
-      %p.lead
-        %mark= @artists.size
-        組のアーティストの曲が演奏されました
-      %p
-        特に次のアーティストが人気です
-      %ul.list-group
-        - @artists.select{ |a, c| c >= 5 }.each do |artist, count|
-          %li.list-group-item
-            %span.badge= count
-            = artist
-      %p
-        他にも次のようなアーティストが演奏されています
-      %ul.list-inline
-        - @artists.select{ |a, c| c < 5 }.sample(20).each do |artist, count|
-          %li
-            = artist
-            %span.badge= count
+    .col-md-4.col-sm-6
+      %section.panel.panel-default
+        %header.panel-heading
+          %h2.panel-title カバーしたアーティスト
+        .panel-body
+          %p.lead
+            %mark= @artists.size
+            組のアーティストの曲が演奏されました
+          %p 特に次のアーティストが人気です
+        %ul.list-group
+          - @artists.select{ |a, c| c >= 5 }.each do |artist, count|
+            %li.list-group-item
+              %span.badge= count
+              = artist
+        .panel-body
+          %p 他にも次のようなアーティストが演奏されています
+          %ul.list-inline
+            - @artists.select{ |a, c| c < 5 }.sample(20).each do |artist, count|
+              %li
+                = artist
+                %span.badge= count
 
-    %section.col-md-4
-      %header.page-header
-        %h2 バンドの構成人数
-      %p.lead
-        構成人数の平均は
-        %mark= (@formations.inject(0) { |sum, (f, c)| sum += f * c } / @count.to_f).round(2)
-        人でした
-        %br
-        一人平均
-        %mark= (@member_count.inject(0) { |sum, (m, c)| sum += c } / @member_count.size.to_f).round(2)
-        曲を演奏しています
-      %ul.list-group
-        - @formations.each do |formation, count|
-          %li.list-group-item
-            %span.badge
-              = (count / @count.to_f * 100).round(1)
-              \%
-            = "#{formation}人"
+    .col-md-4.col-sm-6
+      %section.panel.panel-default
+        %header.panel-heading
+          %h2.panel-title バンドの構成人数
+        .panel-body
+          %p.lead
+            構成人数の平均は
+            %mark= (@formations.inject(0) { |sum, (f, c)| sum += f * c } / @count.to_f).round(2)
+            人でした
+            %br
+            一人平均
+            %mark= (@member_count.inject(0) { |sum, (m, c)| sum += c } / @member_count.size.to_f).round(2)
+            曲演奏しています
+        %ul.list-group
+          - @formations.each do |formation, count|
+            %li.list-group-item
+              %span.badge
+                = (count / @count.to_f * 100).round(1)
+                \%
+              = "#{formation}人"
