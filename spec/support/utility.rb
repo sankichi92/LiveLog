@@ -5,7 +5,7 @@ def log_in_as(user, capybara: true, remember_me: '0')
     visit login_path
     fill_in 'Email', with: user.email
     fill_in 'Password', with: user.password
-    check 'Remember me' if remember_me == '1'
+    check '保存する' if remember_me == '1'
     within('form') do
       click_button 'Log in'
     end

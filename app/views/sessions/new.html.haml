@@ -1,24 +1,28 @@
 - provide(:title, 'Log in')
 %header.page-header
   %h1 Log in
+
+%p
+  京大アンプラグドの会員のみアカウントを作成することができます。
+  %br
+  会員の方は，すでにアカウントを持っている人に招待してもらってください。
+
 = form_for(:session, url: login_path, html: {class: 'form-horizontal well'}) do |f|
-  .form-group
-    = f.label :email, class: 'col-sm-3 control-label'
-    .col-sm-9
-      = f.email_field :email, class: 'form-control'
+
+  = render 'users/email_form', f: f
 
   .form-group
     = f.label :password, class: 'col-sm-3 control-label'
     .col-sm-9
       = f.password_field :password, class: 'form-control'
-      %span.help-block= link_to 'forgot password', new_password_reset_path
+      %span.help-block= link_to 'パスワードを忘れた場合', new_password_reset_path
 
   .form-group
     .col-sm-offset-3.col-sm-9
       .checkbox
         %label
           = f.check_box :remember_me
-          Remember me
+          保存する
 
   .form-group
     .col-sm-offset-3.col-sm-9

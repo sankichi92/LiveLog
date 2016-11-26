@@ -14,7 +14,7 @@
 .row
   = render 'panel', title: '出演数・楽器' do
     .panel-body.text-center.lead
-      = total
+      %mark= total
       曲
     %ul.list-group
       - Playing.resolve_insts(@user.playings.count_insts).each do |inst, count|
@@ -33,7 +33,7 @@
 
   = render 'panel', title: '共演者' do
     .panel-body
-      = @playings.group(:user).count.size - 1
+      %mark= @playings.group(:user).count.size - 1
       人
     %ul.list-group
       - @playings.group(:user).count.sort{ |(k1, v1), (k2, v2)| v2 <=> v1 }.drop(1).take(20).each do |user, count|
@@ -51,7 +51,9 @@
           = "#{formation}人"
         - sum += formation * count
     .panel-body
-      = "平均#{(sum.to_f / total).round(2)}人"
+      平均
+      %mark= (sum.to_f / total).round(2)
+      人
 
   .col-xs-12.col-sm-6.col-md-4
     %section.panel.panel-default
@@ -59,7 +61,7 @@
         %h2.panel-title 自己紹介
       .panel-body
         %dl
-          - if logged_in? && current_user.admin?
+          - if logged_in? && current_user.admin? && !@user.email.blank?
             %dt Email
             %dd= mail_to @user.email
           - unless @user.url.blank?
