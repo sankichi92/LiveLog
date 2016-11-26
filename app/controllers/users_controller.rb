@@ -6,7 +6,7 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all
-    @years = @users.distinct_joined.map { |u| u.joined }
+    @years = @users.distinct_joined
   end
 
   def show
