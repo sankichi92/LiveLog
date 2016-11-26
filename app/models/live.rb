@@ -4,6 +4,10 @@ class Live < ApplicationRecord
   validates :name, presence: true, uniqueness: {scope: :date}
   validates :date, presence: true
 
+  def Live.years
+    Live.all.select(:date).map(&:nendo).uniq
+  end
+
   def title
     "#{date.year} #{name}"
   end

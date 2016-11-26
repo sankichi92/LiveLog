@@ -1,0 +1,18 @@
+= render 'panel', title: title do
+  .panel-body
+    %p.lead
+      %mark= artists.size
+      組のアーティストの曲が演奏されました
+    %p 特に次のアーティストが人気です
+    %ul.list-group
+      - artists.select{ |a, c| c >= 5 }.each do |artist, count|
+        %li.list-group-item
+          %span.badge= count
+          = artist
+    .panel-body
+      %p 他にも次のようなアーティストが演奏されています
+      %ul.list-inline
+        - artists.select{ |a, c| c < 5 }.sample(20).each do |artist, count|
+          %li
+            = artist
+            %span.badge= count
