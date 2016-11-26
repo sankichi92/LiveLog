@@ -12,13 +12,11 @@
     = @user.full_name(logged_in?)
 
 .row
-  = render 'panel', title: '出演数' do
+  = render 'panel', title: '出演数・楽器' do
     .panel-body.text-center.lead
       = total
       曲
-
-  = render 'panel', title: '楽器' do
-    %ul.list-group.lead
+    %ul.list-group
       - Playing.resolve_insts(@user.playings.count_insts).each do |inst, count|
         - unless inst.blank?
           %li.list-group-item
@@ -54,5 +52,20 @@
         - sum += formation * count
     .panel-body
       = "平均#{(sum.to_f / total).round(2)}人"
+
+  .col-xs-12.col-sm-6.col-md-4
+    %section.panel.panel-default
+      %header.panel-heading
+        %h2.panel-title 自己紹介
+      .panel-body
+        %dl
+          - if logged_in? && current_user.admin?
+            %dt Email
+            %dd= mail_to @user.email
+          - unless @user.url.blank?
+            %dt URL
+            %dd= link_to @user.url, target: '_blank'
+        %p= @user.intro
+
 
 = render 'songs/songs_table', songs: @user.songs, show_live: true
