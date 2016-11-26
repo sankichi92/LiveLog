@@ -25,7 +25,7 @@
 
   = render 'panel', title: 'アーティスト' do
     %ul.list-group
-      - @user.songs.unscope(:order).group(:artist).count('lives.date').sort { |(k1, v1), (k2, v2)| v2 <=> v1 }.each do |artist, count|
+      - @user.songs.unscope(:order).group(:artist).count.sort { |(k1, v1), (k2, v2)| v2 <=> v1 }.take(20).each do |artist, count|
         - if count >= 2 && !artist.blank?
           %li.list-group-item
             %span.badge= count
