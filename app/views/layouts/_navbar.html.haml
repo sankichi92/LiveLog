@@ -9,6 +9,7 @@
       = link_to 'LiveLog', root_path, class: 'navbar-brand'
     #bs-navbar-collapse.collapse.navbar-collapse
       %ul.nav.navbar-nav
+        %li= link_to 'Song Search', songs_path
         %li= link_to 'Live List', lives_path
         - if logged_in?
           %li= link_to 'Members', users_path

@@ -9,5 +9,4 @@
   %td
     %ul.list-inline
       = render song.playings
-  - if logged_in? && (current_user.admin_or_elder? || current_user.played?(song))
-    %td= link_to glyphicon(:edit), edit_song_path(song)
+  %td= render 'songs/link_to_edit', song: song

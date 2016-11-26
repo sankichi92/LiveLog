@@ -8,6 +8,7 @@
         = '-' unless @song.order.blank?
         = @song.time_str unless @song.time.blank?
         = @song.order
+        = render 'link_to_edit', song: @song
 
   - if @song.youtube_id.blank?
     %ul#player-list.list-inline
@@ -23,23 +24,11 @@
 
   %nav
     %ul.pager
-      - if @song.previous.nil?
-        %li.previous.disabled
-          %a<
-            %span{'aria-hidden': true} &larr;
-            Previous
-      - else
-        %li.previous
-          = link_to @song.previous do
-            %span{'aria-hidden': true} &larr;
-            Previous
-      - if @song.next.nil?
-        %li.next.disabled
-          %a<
-            Next
-            %span{'aria-hidden': true} &rarr;
-      - else
-        %li.next
-          = link_to @song.next do
-            Next
-            %span{'aria-hidden': true} &rarr;
+      %li.previous{class: (@song.previous.nil? ? 'disabled' : '')}
+        = link_to @song.previous do
+          %span{'aria-hidden': true} &larr;
+          Previous
+      %li.next{class: (@song.next.nil? ? 'disabled' : '')}
+        = link_to @song.next do
+          Next
+          %span{'aria-hidden': true} &rarr;

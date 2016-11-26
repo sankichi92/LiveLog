@@ -1,0 +1,13 @@
+.table-responsive
+  %table#songs.table.table-striped.table-condensed
+    %thead
+      %tr
+        - if show_live
+          %th Live
+        %th #
+        %th Song
+        %th Artist
+        %th Members
+        %th
+    %tbody
+      = render songs, show_live: true
