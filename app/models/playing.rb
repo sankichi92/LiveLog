@@ -26,7 +26,7 @@ class Playing < ApplicationRecord
   def format_inst
     unless inst.blank?
       self.inst = inst.tr('ａ-ｚＡ-Ｚ＆．', 'a-zA-Z&.')
-      self.inst = inst.gsub(/(\s+|\.)/, '')
+      self.inst = inst.gsub(/(\s|\.)/, '')
     end
   end
 end

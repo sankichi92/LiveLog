@@ -16,6 +16,4 @@
     .col-sm-9
       = f.text_field :place, class: 'form-control', placeholder: '4共21'
 
-  .form-group
-    .col-sm-offset-3.col-sm-9
-      = f.submit yield(:button_text), class: 'btn btn-primary'
+  = render 'shared/submit', f: f

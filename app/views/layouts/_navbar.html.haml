@@ -11,8 +11,7 @@
       %ul.nav.navbar-nav
         %li= link_to 'Song Search', songs_path
         %li= link_to 'Live List', lives_path
-        - if logged_in?
-          %li= link_to 'Members', users_path
+        %li= link_to 'Members', users_path
         %li= link_to 'Stats', stats_path
       - if logged_in?
         %ul.nav.navbar-nav.navbar-right

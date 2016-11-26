@@ -8,6 +8,9 @@ class OldRecord < ActiveRecord::Base
 end
 
 class Member < OldRecord
+  def kana
+    furigana.gsub(/\s+/, '')
+  end
 end
 
 class OldSong < OldRecord
@@ -32,7 +35,7 @@ class MembersSong < OldRecord
 end
 
 Member.all.each do |m|
-  m.first_name = 'no_name' if m.first_name.blank?
+  m.first_name = '?' if m.first_name.blank?
   User.create!(first_name: m.first_name,
                last_name: m.last_name,
                furigana: m.furigana,
@@ -52,19 +55,13 @@ OldLive.all.each do |l|
   live = Live.create!(name: l.name, date: l.date, place: l.place)
   l.songs.each do |s|
     s.time -= 9.hour unless s.time.blank?
-    begin
-      live.songs.create!(name: s.name,
-                         artist: s.artist,
-                         youtube_id: s.url,
-                         order: s.order,
-                         time: s.time,
-                         playings_attributes: s.members_songs.map { |p|
-                           {user_id: User.find_by(furigana: p.member.furigana).id,
-                            inst: p.inst} })
-    rescue => e
-      p e
-      p s.members_songs.map { |p| {user_id: p.member_id, inst: p.inst} }
-      raise
-    end
+    live.songs.create!(name: s.name,
+                       artist: s.artist,
+                       youtube_id: s.url,
+                       order: s.order,
+                       time: s.time,
+                       playings_attributes: s.members_songs.map { |p|
+                         {user_id: User.find_by(furigana: p.member.kana, joined: p.member.year).id,
+                          inst: p.inst} })
   end
 end

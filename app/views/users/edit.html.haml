@@ -1,36 +1,44 @@
 - provide(:title, 'Edit user')
+- provide(:button_text, 'Save')
 %header.page-header
   %h1 Update your profile
 
 = form_for(@user, html: {class: 'form-horizontal well'}) do |f|
   = render 'shared/error_messages', object: f.object
 
-  .form-group
-    = f.label :last_name, class: 'col-sm-3 control-label'
-    .col-sm-9
-      = f.text_field :last_name, class: 'form-control', placeholder: '京大'
+  = render 'name_form', f: f
 
-  .form-group
-    = f.label :first_name, class: 'col-sm-3 control-label'
-    .col-sm-9
-      = f.text_field :first_name, class: 'form-control', placeholder: 'アンプラ太郎'
-
-  .form-group
-    = f.label :furigana, class: 'col-sm-3 control-label'
-    .col-sm-9
-      = f.text_field :furigana, class: 'form-control', placeholder: 'きょうだいあんぷらたろう'
-
-  .form-group
-    = f.label :email, class: 'col-sm-3 control-label'
-    .col-sm-9
-      = f.email_field :email, class: 'form-control', placeholder: 'example@ku-unplugged.net'
+  = render 'email_form', f: f
 
   .form-group
     = f.label :nickname, class: 'col-sm-3 control-label'
     .col-sm-9
       = f.text_field :nickname, class: 'form-control'
-      %span.help-block 同姓の人がいて紛らわしい，あだ名の方がわかりやすい，サークル外の人には名前を伏せたい，などの場合に利用してください
 
   .form-group
-    .col-sm-offset-3.col-sm-9
-      = f.submit 'Save', class: 'btn btn-primary'
+    = f.label :url, class: 'col-sm-3 control-label'
+    .col-sm-9
+      = f.text_field :url, class: 'form-control', placeholder: 'http://ku-unplugged.net/'
+
+  .form-group
+    = f.label :intro, class: 'col-sm-3 control-label'
+    .col-sm-9
+      = f.text_area :intro, class: 'form-control', rows: '3'
+
+  .form-group
+    = f.label :public, class: 'col-sm-3 control-label'
+    .col-sm-9
+      %label.radio-inline
+        = f.radio_button :public, 'true'
+        公開
+      %label.radio-inline
+        = f.radio_button :public, 'false'
+        非公開
+      %span.help-block
+        「公開」にしても，名前とメールアドレスが公開されることはありません。
+        %br
+        ただし，ニックネームが存在しない場合，姓は公開されます。
+
+  = render 'shared/submit', f: f
+
+
