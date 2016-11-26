@@ -1,10 +1,13 @@
 - provide(:title, 'Members')
 %header.page-header
   %h1 Members
-- @years.each_slice(4) do |four_y|
+- @users.distinct_joined.each_slice(4) do |four_y|
   .row
     - four_y.each do |y|
       .col-sm-3
         %h2= y
         %ol
           = render @users.where(joined: y)
+
+- if logged_in?
+  %p * 印が付いているメンバーは管理者です。
