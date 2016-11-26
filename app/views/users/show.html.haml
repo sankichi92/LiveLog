@@ -36,8 +36,8 @@
       %mark= @playings.group(:user).count.size - 1
       人
     %ul.list-group
-      - @playings.group(:user).count.sort{ |(k1, v1), (k2, v2)| v2 <=> v1 }.drop(1).take(20).each do |user, count|
-        - if count >= 2 && ((count.to_f / total) >= 0.2 || count > 10)
+      - @playings.group(:user).count.sort{ |(k1, v1), (k2, v2)| v2 <=> v1 }.take(20).each do |user, count|
+        - if user != @user && count >= 2 && ((count.to_f / total) >= 0.2 || count >= 10)
           %li.list-group-item
             %span.badge= count
             = logged_in? || user.public? ? link_to(user.full_name(logged_in?), user) : user.handle
