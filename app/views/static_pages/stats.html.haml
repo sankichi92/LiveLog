@@ -76,10 +76,18 @@
             一人平均
             %mark= (@member_count.inject(0) { |sum, (m, c)| sum += c } / @member_count.size.to_f).round(2)
             曲演奏しています
-        %ul.list-group
+        %table.table.table-striped
+          %thead
+            %tr
+              %th 人数
+              %th パーセント
+              %th 曲数
+          %tbody
           - @formations.each do |formation, count|
-            %li.list-group-item
-              %span.badge
+            %tr
+              %td= "#{formation}人"
+              %td
                 = (count / @count.to_f * 100).round(1)
                 \%
-              = "#{formation}人"
+              %td
+                %span.badge= count
