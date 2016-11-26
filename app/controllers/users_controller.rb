@@ -1,12 +1,12 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i(show edit update destroy)
-  before_action :logged_in_user
+  before_action :logged_in_user, except: %i(index show)
+  before_action :check_public, only: :show
   before_action :correct_user, only: %i(edit update)
   before_action :admin_or_elder_user, only: %i(new create destroy)
 
   def index
-    @users = User.all
-    @years = @users.distinct_joined
+    @users = logged_in? ? User.all : User.where(public: true)
   end
 
   def show
@@ -59,6 +59,10 @@ class UsersController < ApplicationController
 
   def set_user
     @user = User.find(params[:id])
+  end
+
+  def check_public
+    redirect_to(root_url) unless logged_in? || @user.public?
   end
 
   def correct_user

@@ -40,7 +40,7 @@
         - if count >= 2 && ((count.to_f / total) >= 0.2 || count > 10)
           %li.list-group-item
             %span.badge= count
-            =link_to user.full_name(logged_in?), user
+            = logged_in? || user.public? ? link_to(user.full_name(logged_in?), user) : user.handle
 
   = render 'panel', title: '構成人数' do
     %ul.list-group
