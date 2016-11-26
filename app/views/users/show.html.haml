@@ -39,7 +39,7 @@
       人
     %ul.list-group
       - @playings.group(:user).count.sort{ |(k1, v1), (k2, v2)| v2 <=> v1 }.drop(1).take(20).each do |user, count|
-        - if (count.to_f / total) >= 0.2 || count > 10
+        - if count >= 2 && ((count.to_f / total) >= 0.2 || count > 10)
           %li.list-group-item
             %span.badge= count
             =link_to user.full_name(logged_in?), user
