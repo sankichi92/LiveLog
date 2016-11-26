@@ -9,6 +9,8 @@ ja:
           has_many: "%{record}が存在しているので削除できません"
     models:
       song:
+        zero: 曲
+        one: 曲
         other: 曲
     attributes:
       user:

@@ -10,15 +10,4 @@
   %h1
     = @user.full_name(logged_in?)
 
-.table-responsive
-  %table.table.table-striped.table-condensed
-    %thead
-      %tr
-        %th Live
-        %th #
-        %th Song
-        %th Artist
-        %th Members
-        %th
-    %tbody
-      = render @user.songs, show_live: true
+= render 'songs/songs_table', songs: @user.songs, show_live: true
