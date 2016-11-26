@@ -6,10 +6,11 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all
-    @years = @users.distinct_joined.map { |u| u.joined }
+    @years = @users.distinct_joined
   end
 
   def show
+    @playings = Playing.where(song_id: @user.songs.pluck('songs.id'))
   end
 
   def new

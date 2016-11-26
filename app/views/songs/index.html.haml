@@ -2,10 +2,8 @@
 %header.page-header
   %h1 Song Search
 
-= form_tag '', method: 'get', class: 'form-inline well' do
-  .form-group
-    = text_field_tag :q, params[:q], {class: 'form-control', placeholder: '曲名・アーティスト名'}
-  = button_tag glyphicon(:search) + '検索', class: 'btn btn-primary'
+.well.well-sm
+  = render 'search_form'
 
 %p.text-right
   = page_entries_info

@@ -13,9 +13,7 @@
         %li= link_to 'Live List', lives_path
         - if logged_in?
           %li= link_to 'Members', users_path
-          %li= link_to 'Stats', '#'
-        - else
-          %li= link_to 'About', about_path
+        %li= link_to 'Stats', stats_path
       - if logged_in?
         %ul.nav.navbar-nav.navbar-right
           - if current_user.admin_or_elder?

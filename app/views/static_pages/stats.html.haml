@@ -1,0 +1,93 @@
+- provide(:title, 'Stats')
+%article
+  %header.page-header
+    %h1<
+      京大アンプラグドについて
+      = "(#{params[:y]}年度)" if params[:y]
+
+  - if logged_in?
+    %aside.form-inline.well.well-sm
+      = select_tag :y,
+                   options_for_select(Live.select(:date).pluck(:date).map(&:year).uniq, selected: params[:y]),
+                   class: 'form-control',
+                   onchange: "location.href='#{request.path}?y=' + $(this).val();"
+      = label_tag :y, '年度の情報を見る'
+
+  %p.lead<
+    - if params[:y]
+      %mark= params[:y]
+      年度の京大アンプラグドのデータです
+    - else
+      過去1年間の京大アンプラグドのデータを紹介します
+    %br
+    この1年間に
+    %mark= @member_count.size
+    人のメンバーで
+    %mark= @count
+    曲を演奏しました
+
+  .row
+    .col-md-4.col-sm-6
+      %section.panel.panel-default
+        %header.panel-heading
+          %h2.panel-title 演奏された楽器
+        .panel-body
+          %p.lead
+            %mark= @insts.size
+            種類の楽器が演奏されました
+          %ul.list-inline.lead
+            - @insts.each do |inst, count|
+              %li
+                = inst
+                %span.badge= count
+
+    .col-md-4.col-sm-6
+      %section.panel.panel-default
+        %header.panel-heading
+          %h2.panel-title カバーしたアーティスト
+        .panel-body
+          %p.lead
+            %mark= @artists.size
+            組のアーティストの曲が演奏されました
+          %p 特に次のアーティストが人気です
+        %ul.list-group
+          - @artists.select{ |a, c| c >= 5 }.each do |artist, count|
+            %li.list-group-item
+              %span.badge= count
+              = artist
+        .panel-body
+          %p 他にも次のようなアーティストが演奏されています
+          %ul.list-inline
+            - @artists.select{ |a, c| c < 5 }.sample(20).each do |artist, count|
+              %li
+                = artist
+                %span.badge= count
+
+    .col-md-4.col-sm-6
+      %section.panel.panel-default
+        %header.panel-heading
+          %h2.panel-title バンドの構成人数
+        .panel-body
+          %p.lead
+            構成人数の平均は
+            %mark= (@formations.inject(0) { |sum, (f, c)| sum += f * c } / @count.to_f).round(2)
+            人でした
+            %br
+            一人平均
+            %mark= (@member_count.inject(0) { |sum, (m, c)| sum += c } / @member_count.size.to_f).round(2)
+            曲演奏しています
+        %table.table.table-striped
+          %thead
+            %tr
+              %th 人数
+              %th パーセント
+              %th 曲数
+          %tbody
+          - @formations.each do |formation, count|
+            %tr
+              %td= "#{formation}人"
+              %td
+                = (count / @count.to_f * 100).round(1)
+                \%
+              %td
+                %span.badge= count

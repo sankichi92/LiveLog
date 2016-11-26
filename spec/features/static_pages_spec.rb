@@ -10,12 +10,12 @@ RSpec.feature "StaticPages", type: :feature do
     expect(page).to have_content('セットリスト検索システムです')
   end
 
-  scenario 'A user can see the About page' do
+  scenario 'A user can see the Stats page' do
     visit root_path
 
-    click_on 'About'
+    click_on 'Stats'
 
-    expect(page).to have_title(full_title('About'))
-    expect(page).to have_content('About')
+    expect(page).to have_title(full_title('Stats'))
+    expect(page).to have_content('について')
   end
 end
