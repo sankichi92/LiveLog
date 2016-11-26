@@ -2,7 +2,7 @@ class Playing < ApplicationRecord
   belongs_to :user
   belongs_to :song
   scope :count_insts, -> { group(:inst).count(:id) }
-  scope :count_members, -> { group(:song_id).count(:id) }
+  scope :count_members_per_song, -> { group(:song_id).count(:id) }
   before_save :format_inst
   validates :user_id, presence: true
   validates :song, presence: true

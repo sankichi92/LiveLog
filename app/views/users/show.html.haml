@@ -1,4 +1,5 @@
 - provide(:title, @user.full_name(logged_in?))
+- total = @user.songs.count
 %header.page-header
   .pull-right
     - if logged_in? && !@user.activated?
@@ -9,5 +10,49 @@
 
   %h1
     = @user.full_name(logged_in?)
+
+.row
+  = render 'panel', title: '出演数' do
+    .panel-body.text-center.lead
+      = total
+      曲
+
+  = render 'panel', title: '楽器' do
+    %ul.list-group.lead
+      - Playing.resolve_insts(@user.playings.count_insts).each do |inst, count|
+        - unless inst.blank?
+          %li.list-group-item
+            %span.badge= count
+            = inst
+
+  = render 'panel', title: 'アーティスト' do
+    %ul.list-group
+      - @user.songs.unscope(:order).group(:artist).count('lives.date').sort { |(k1, v1), (k2, v2)| v2 <=> v1 }.each do |artist, count|
+        - if count >= 2 && !artist.blank?
+          %li.list-group-item
+            %span.badge= count
+            = artist
+
+  = render 'panel', title: '共演者' do
+    .panel-body
+      = @playings.group(:user).count.size - 1
+      人
+    %ul.list-group
+      - @playings.group(:user).count.sort{ |(k1, v1), (k2, v2)| v2 <=> v1 }.drop(1).take(20).each do |user, count|
+        - if (count.to_f / total) >= 0.2 || count > 10
+          %li.list-group-item
+            %span.badge= count
+            =link_to user.full_name(logged_in?), user
+
+  = render 'panel', title: '構成人数' do
+    %ul.list-group
+      - sum = 0
+      - Playing.count_formation(@playings.count_members_per_song).each do |formation, count|
+        %li.list-group-item
+          %span.badge= count
+          = "#{formation}人"
+        - sum += formation * count
+    .panel-body
+      = "平均#{(sum.to_f / total).round(2)}人"
 
 = render 'songs/songs_table', songs: @user.songs, show_live: true

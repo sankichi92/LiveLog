@@ -19,6 +19,6 @@ class StaticPagesController < ApplicationController
     playings = Playing.includes(song: :live).where('lives.date': range)
     @member_count = playings.group(:user_id).count
     @insts = Playing.resolve_insts(playings.count_insts)
-    @formations = Playing.count_formation(playings.count_members)
+    @formations = Playing.count_formation(playings.count_members_per_song)
   end
 end
