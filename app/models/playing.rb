@@ -8,8 +8,8 @@ class Playing < ApplicationRecord
   validates :song, presence: true
 
   def Playing.resolve_insts(inst_counts)
-    singles = inst_counts.reject { |inst, count| inst.include?('&') || inst.blank? }
-    multis = inst_counts.select { |inst, count| inst.include?('&') }
+    singles = inst_counts.reject { |inst, count| inst.blank? || inst.include?('&') }
+    multis = inst_counts.select { |inst, count| !inst.blank? && inst.include?('&') }
     resolved = multis.each_with_object(Hash.new(0)) do |(insts, count), hash|
       insts.split('&').each { |inst| hash[inst] += count }
     end
