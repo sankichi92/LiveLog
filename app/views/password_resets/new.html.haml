@@ -6,3 +6,5 @@
 = form_for(:password_reset, url: password_resets_path, html: {class: 'form-horizontal well'}) do |f|
 
   = render 'users/email_form', f: f
+
+  = render 'shared/submit', f: f

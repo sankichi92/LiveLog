@@ -23,7 +23,7 @@ ja:
         password: パスワード
         password_confirmation: パスワードを再入力
         public: 公開
-        url: ホームページ
+        url: URL
         intro: 自己紹介
       song:
         name: 曲名

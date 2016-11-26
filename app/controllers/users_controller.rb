@@ -52,7 +52,7 @@ class UsersController < ApplicationController
   end
 
   def update_user_params
-    params.require(:user).permit(:first_name, :last_name, :furigana, :nickname, :email)
+    params.require(:user).permit(:first_name, :last_name, :furigana, :nickname, :email, :url, :intro, :public)
   end
 
   # Before filters

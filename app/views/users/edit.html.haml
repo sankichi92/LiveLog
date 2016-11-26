@@ -8,12 +8,37 @@
 
   = render 'name_form', f: f
 
+  = render 'email_form', f: f
+
   .form-group
     = f.label :nickname, class: 'col-sm-3 control-label'
     .col-sm-9
       = f.text_field :nickname, class: 'form-control'
-      %span.help-block 同姓の人がいて紛らわしい，あだ名の方がわかりやすい，サークル外の人には名前を伏せたい，などの場合に利用してください
 
-  = render 'email_form', f: f
+  .form-group
+    = f.label :url, class: 'col-sm-3 control-label'
+    .col-sm-9
+      = f.text_field :url, class: 'form-control', placeholder: 'http://ku-unplugged.net/'
+
+  .form-group
+    = f.label :intro, class: 'col-sm-3 control-label'
+    .col-sm-9
+      = f.text_area :intro, class: 'form-control', rows: '3'
+
+  .form-group
+    = f.label :public, class: 'col-sm-3 control-label'
+    .col-sm-9
+      %label.radio-inline
+        = f.radio_button :public, 'true'
+        公開
+      %label.radio-inline
+        = f.radio_button :public, 'false'
+        非公開
+      %span.help-block
+        「公開」にしても，名前とメールアドレスが公開されることはありません。
+        %br
+        ただし，ニックネームが存在しない場合，姓は公開されます
+
+  = render 'shared/submit', f: f
 
 
