@@ -1,6 +1,7 @@
-<%= @user.full_name %> 様
+京大アンプラグド<%= @user.joined %>年度入部
+<%= @user.full_name %> さん
 
-LiveLog へようこそ！
-以下のリンクをクリックしてアカウントの有効化手続きを行ってください。
+<%= @inviter.joined %>年度入部の <%= @inviter.full_name %> さんから LiveLog に招待されています。
+以下のURLからアカウントの有効化手続きを行ってください。
 
 <%= edit_user_activation_url(@user, t: @user.activation_token) %>

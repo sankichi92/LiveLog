@@ -70,10 +70,10 @@ class User < ApplicationRecord
     update_columns(activated: true, activated_at: Time.zone.now)
   end
 
-  def send_invitation(email)
+  def send_invitation(email, inviter)
     self.activation_token = User.new_token
     if update_attributes(email: email, activation_digest: User.digest(activation_token))
-      UserMailer.account_activation(self).deliver_now
+      UserMailer.account_activation(self, inviter).deliver_now
     end
   end
 

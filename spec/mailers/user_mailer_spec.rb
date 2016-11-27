@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe UserMailer, type: :mailer do
   describe 'account_activation' do
     let(:user) { create(:user) }
-    let(:mail) { UserMailer.account_activation(user) }
+    let(:inviter) { create(:user) }
+    let(:mail) { UserMailer.account_activation(user, inviter) }
     before { user.activation_token = User.new_token }
 
     it 'renders the headers' do
