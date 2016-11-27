@@ -1,10 +1,8 @@
 %tr
   - if show_live
-    %td= song.live.title
-  %td
-    = song.time_str unless song.time.blank?
-    = song.order
-  %td= logged_in? ? link_to(song.name, song) : song.name
+    %td= link_to song.live.title, song.live
+  %td= song.time_order
+  %td= can_watch?(song) ? link_to(song.name, song) : song.name
   %td= song.artist
   %td
     %ul.list-inline

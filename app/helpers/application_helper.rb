@@ -5,7 +5,7 @@ module ApplicationHelper
     if page_title.empty?
       base_title
     else
-      page_title + ' | ' + base_title
+      page_title + ' - ' + base_title
     end
   end
 
@@ -22,7 +22,7 @@ module ApplicationHelper
     (start...start + 1.year)
   end
 
-  def glyphicon(name, clazz = '')
-    %(<span class="glyphicon glyphicon-#{name} #{clazz}" aria-hidden="true"></span> ).html_safe
+  def glyphicon(name, klass = '')
+    %(<span class="glyphicon glyphicon-#{name} #{klass}" aria-hidden="true"></span> ).html_safe
   end
 end

@@ -1,9 +1,10 @@
 class SongsController < ApplicationController
-  before_action :logged_in_user, except: :index
   before_action :set_song, only: %i(show edit update destroy)
+  before_action :logged_in_user, except: %i(index show)
+  before_action :check_status, only: :show
   before_action :correct_user, only: %i(edit update)
   before_action :admin_or_elder_user, only: %i(new create destroy)
-  before_action :store_location, only: :edit
+  before_action :store_referer, only: :edit
   before_action :set_users, only: %i(new create edit update)
 
   def index
@@ -33,11 +34,17 @@ class SongsController < ApplicationController
   end
 
   def update
-    if @song.update_attributes(song_params)
-      flash[:success] = '曲を更新しました'
-      redirect_back_or @song
-    else
-      render :edit
+    respond_to do |format|
+      if @song.update_attributes(song_params)
+        format.html do
+          flash[:success] = '曲を更新しました'
+          redirect_back_or @song
+        end
+        format.js { flash.now[:success] = '更新しました' }
+      else
+        format.html { render :edit }
+        format.js { flash.now[:danger] = @song.errors.full_messages }
+      end
     end
   end
 
@@ -49,6 +56,14 @@ class SongsController < ApplicationController
   end
 
   private
+
+  def check_status
+    if @song.closed?
+      logged_in_user
+    elsif @song.secret?
+      redirect_to(root_url) unless logged_in? && current_user.played?(@song)
+    end
+  end
 
   def correct_user
     redirect_to(root_url) unless current_user.played?(@song) || current_user.admin_or_elder?
@@ -69,10 +84,12 @@ class SongsController < ApplicationController
                                  :name,
                                  :artist,
                                  :youtube_id,
+                                 :status,
+                                 :comment,
                                  playings_attributes: %i(id user_id inst _destroy))
   end
 
-  def store_location
-    session[:forwarding_url] = request.referer || root_path
+  def store_referer
+    session[:forwarding_url] = request.referer || root_url
   end
 end

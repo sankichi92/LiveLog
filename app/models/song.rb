@@ -8,13 +8,21 @@ class Song < ApplicationRecord
   validates :name, presence: true
   VALID_YOUTUBE_REGEX =
       %r(\A
-         (?:https?://)?
-         (?:www\.youtube\.com/watch\?(?:\S*&)*v=
-          |youtu\.be/)
-         (?<id>\S{11})
+         (?:
+          (?<id>\S{11})\z
+          |(?:https?://)?
+           (?:www\.youtube\.com/watch\?(?:\S*&)*v=
+            |youtu\.be/)
+           (?<id>\S{11})
+         )
         )x
   validates :youtube_id, format: {with: VALID_YOUTUBE_REGEX}, allow_blank: true
   before_save :extract_youtube_id
+  enum status: {
+      secret: 0,
+      closed: 1,
+      open: 2
+  }
 
   def Song.search(query, page) # TODO: Improve
     q = "%#{query}%"
@@ -28,6 +36,10 @@ class Song < ApplicationRecord
     end
   end
 
+  def title
+    artist.blank? ? name : "#{name} / #{artist}"
+  end
+
   def youtube_url
     "https://www.youtube.com/watch?v=#{youtube_id}" unless youtube_id.blank?
   end
@@ -37,7 +49,11 @@ class Song < ApplicationRecord
   end
 
   def time_str
-    time.strftime('%R')
+    time.strftime('%R') unless time.blank?
+  end
+
+  def time_order
+    "#{time_str} #{order}"
   end
 
   def previous
