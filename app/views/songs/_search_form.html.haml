@@ -1,4 +1,4 @@
 = form_tag '/songs', method: 'get', class: 'form-inline' do
   .form-group
-    = search_field_tag :q, '', class: 'form-control', placeholder: '曲名・アーティスト名'
+    = search_field_tag :q, params[:q], class: 'form-control', placeholder: '曲名・アーティスト名'
   = button_tag glyphicon(:search) + '検索', class: 'btn btn-primary'
