@@ -1,10 +1,17 @@
 = form_for(@song, html: {class: 'form-horizontal well'}) do |f|
   = render 'shared/error_messages', object: f.object
 
-  .form-group
-    = f.label :live_id, class: 'col-sm-3 control-label'
-    .col-sm-9
-      = f.collection_select :live_id, Live.all, :id, :title, {}, {class: 'form-control'}
+  - if current_user.admin?
+
+    .form-group
+      = f.label :live_id, class: 'col-sm-3 control-label'
+      .col-sm-9
+        = f.collection_select :live_id, Live.all, :id, :title, {}, class: 'form-control'
+
+    .form-group
+      = f.label :youtube_id, class: 'col-sm-3 control-label'
+      .col-sm-9
+        = f.text_field :youtube_id, value: @song.youtube_url, class: 'form-control', placeholder: 'https://www.youtube.com/watch?v=sSbqm7ZK_9s'
 
   .form-group
     = f.label :order, class: 'col-sm-3 control-label'
@@ -12,6 +19,7 @@
       = f.number_field :order, class: 'form-control', placeholder: '1'
 
   - if @song.live.name.include?('NF')
+
     .form-group
       = f.label :time, class: 'col-sm-3 control-label'
       .col-sm-9
@@ -27,11 +35,6 @@
     .col-sm-9
       = f.text_field :artist, class: 'form-control', placeholder: 'Eric Clapton'
 
-  .form-group
-    = f.label :youtube_id, class: 'col-sm-3 control-label'
-    .col-sm-9
-      = f.text_field :youtube_id, value: @song.youtube_url, class: 'form-control', placeholder: 'https://www.youtube.com/watch?v=sSbqm7ZK_9s'
-
   #playings-fields
     = f.fields_for :playings do |builder|
       = render 'playings_fields', f: builder
@@ -39,6 +42,18 @@
   .form-group
     .col-sm-3.control-label
       = button_to_add_member glyphicon('plus'), f
+
+  - if current_user.played?(@song)
+
+    .form-group
+      = f.label :status, class: 'col-sm-3 control-label'
+      .col-sm-9
+        = f.select :status, {'バンド内': 'secret', 'サークル内': 'closed', '公開': 'open'}, {}, class: 'form-control'
+
+    .form-group
+      = f.label :comment, class: 'col-sm-3 control-label'
+      .col-sm-9
+        = f.text_area :comment, class: 'form-control', rows: 3
 
   .form-group
     .col-sm-offset-3.col-sm-9

@@ -15,10 +15,23 @@
       .col-sm-12.col-md-9
         %p.embed-responsive.embed-responsive-16by9
           = @song.youtube_embed
+
     = render 'panel', title: 'Members' do
       %ul.list-group
         = render @song.playings, klass: 'list-group-item'
-    - unless @song.comment.blank?
+
+    - if logged_in? && current_user.played?(@song)
+      = render 'panel', title: 'Edit' do
+        .panel-body
+          = form_for(@song, remote: true) do |f|
+            .form-group
+              = f.label :status
+              = f.select :status, {'バンド内': 'secret', 'サークル内': 'closed', '公開': 'open'}, {}, class: 'form-control'
+            .form-group
+              = f.label :comment
+              = f.text_area :comment, class: 'form-control', rows: 3
+            = f.submit 'Save', class: 'btn btn-primary'
+    - elsif !@song.comment.blank?
       = render 'panel', title: 'Comments' do
         .panel-body
           %p= @song.comment

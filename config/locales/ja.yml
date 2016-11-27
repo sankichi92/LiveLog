@@ -32,6 +32,8 @@ ja:
         live_id: ライブ
         order: 曲順
         time: 時間
+        status: 公開設定
+        comment: コメント
       playing:
         user: メンバー
         inst: 楽器

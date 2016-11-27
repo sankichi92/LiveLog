@@ -33,11 +33,17 @@ class SongsController < ApplicationController
   end
 
   def update
-    if @song.update_attributes(song_params)
-      flash[:success] = '曲を更新しました'
-      redirect_back_or @song
-    else
-      render :edit
+    respond_to do |format|
+      if @song.update_attributes(song_params)
+        format.html do
+          flash[:success] = '曲を更新しました'
+          redirect_back_or @song
+        end
+        format.js { flash.now[:success] = '更新しました' }
+      else
+        format.html { render :edit }
+        format.js { flash.now[:danger] = '失敗しました' }
+      end
     end
   end
 
@@ -69,6 +75,8 @@ class SongsController < ApplicationController
                                  :name,
                                  :artist,
                                  :youtube_id,
+                                 :status,
+                                 :comment,
                                  playings_attributes: %i(id user_id inst _destroy))
   end
 
