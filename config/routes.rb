@@ -5,7 +5,8 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
   resources :users, path: :members do
-    resource :account_activations, only: %i(new create edit update), path: :activations, as: :activations
+    resource :account_activations, only: %i(new create edit update), path: :activations, as: :activations # TODO: Change to resouce"s"
+    resource :admin, only: %i(create destroy)
   end
   resources :password_resets, only: %i(new create edit update)
   resources :lives
