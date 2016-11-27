@@ -73,6 +73,6 @@ class SongsController < ApplicationController
   end
 
   def store_location
-    session[:forwarding_url] = request.referer || root_path
+    session[:forwarding_url] = request.referer || song_path(@song)
   end
 end

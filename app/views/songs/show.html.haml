@@ -1,14 +1,14 @@
-- provide(:title, @song.name)
+- provide(:title, "#{@song.name} | #{@song.live.title}")
 %article
   %header.page-header
     %h1<
-      = "#{@song.name} / #{@song.artist}"
-      %small
-        = link_to @song.live.title, @song.live
-        = '-' unless @song.order.blank?
-        = @song.time_str unless @song.time.blank?
-        = @song.order
-        = render 'link_to_edit', song: @song
+      = @song.title
+      %small= render 'link_to_edit', song: @song
+
+  %ol.breadcrumb
+    %li= link_to 'Live List', lives_path
+    %li= link_to @song.live.title, @song.live
+    %li.active= "#{@song.time_order} #{@song.name}"
 
   .row
     - unless @song.youtube_id.blank?
@@ -22,7 +22,6 @@
       = render 'panel', title: 'Comments' do
         .panel-body
           %p= @song.comment
-
 
   %nav
     %ul.pager

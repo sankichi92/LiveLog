@@ -33,6 +33,10 @@ class Song < ApplicationRecord
     end
   end
 
+  def title
+    artist.blank? ? name : "#{name} / #{artist}"
+  end
+
   def youtube_url
     "https://www.youtube.com/watch?v=#{youtube_id}" unless youtube_id.blank?
   end
@@ -42,7 +46,11 @@ class Song < ApplicationRecord
   end
 
   def time_str
-    time.strftime('%R')
+    time.strftime('%R') unless time.blank?
+  end
+
+  def time_order
+    "#{time_str} #{order}"
   end
 
   def previous
