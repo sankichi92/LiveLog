@@ -16,6 +16,8 @@
 
   %h1
     = @user.full_name(logged_in?)
+    - if logged_in?
+      %small= @user.public? ? glyphicon(:globe) : glyphicon(:lock)
 
 .row
   = render 'panel', title: '出演数・楽器' do
