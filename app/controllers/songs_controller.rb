@@ -4,7 +4,7 @@ class SongsController < ApplicationController
   before_action :check_status, only: :show
   before_action :correct_user, only: %i(edit update)
   before_action :admin_or_elder_user, only: %i(new create destroy)
-  before_action :store_location, only: :edit
+  before_action :store_referer, only: :edit
   before_action :set_users, only: %i(new create edit update)
 
   def index
@@ -58,11 +58,10 @@ class SongsController < ApplicationController
   private
 
   def check_status
-    case @song.status
-      when 'closed'
-        redirect_to(root_url) unless logged_in?
-      when 'secret'
-        redirect_to(root_url) unless logged_in? && current_user.played?(@song)
+    if @song.closed?
+      logged_in_user
+    elsif @song.secret?
+      redirect_to(root_url) unless logged_in? && current_user.played?(@song)
     end
   end
 
@@ -90,7 +89,7 @@ class SongsController < ApplicationController
                                  playings_attributes: %i(id user_id inst _destroy))
   end
 
-  def store_location
-    session[:forwarding_url] = request.referer || song_path(@song)
+  def store_referer
+    session[:forwarding_url] = request.referer || root_url
   end
 end

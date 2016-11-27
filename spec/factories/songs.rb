@@ -4,6 +4,7 @@ FactoryGirl.define do
     name 'テーマソング'
     artist 'アンプラグダー'
     sequence(:order) { |n| n }
+    status :closed
   end
 
   factory :playing do

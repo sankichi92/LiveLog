@@ -9,11 +9,12 @@ class Song < ApplicationRecord
   VALID_YOUTUBE_REGEX =
       %r(\A
          (?:
-          (?:https?://)?
-          (?:www\.youtube\.com/watch\?(?:\S*&)*v=
-           |youtu\.be/)
-         )?
-         (?<id>\S{11})
+          (?<id>\S{11})\z
+          |(?:https?://)?
+           (?:www\.youtube\.com/watch\?(?:\S*&)*v=
+            |youtu\.be/)
+           (?<id>\S{11})
+         )
         )x
   validates :youtube_id, format: {with: VALID_YOUTUBE_REGEX}, allow_blank: true
   before_save :extract_youtube_id

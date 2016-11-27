@@ -6,8 +6,17 @@ RSpec.feature "SongPages", type: :feature do
 
   feature 'show song' do
     given(:user) { create(:user) }
+    given(:open_song) { create(:song, status: :open) }
+    given(:secret_song) { create(:song, status: :secret) }
 
-    scenario 'A non-logged-in user cannot see the song page' do
+    scenario 'A non-logged-in user can see the open song' do
+      visit song_path(open_song)
+
+      expect(page).to have_title(song.name)
+      expect(page).to have_content(song.name)
+    end
+
+    scenario 'A non-logged-in user cannot see the closed song' do
       visit song_path(song)
 
       expect(page).not_to have_title(song.name)
@@ -15,12 +24,19 @@ RSpec.feature "SongPages", type: :feature do
       expect(page).to have_selector('.alert-danger')
     end
 
-    scenario 'A logged-in user can see the song page' do
+    scenario 'A logged-in user can see the closed song' do
       log_in_as user
       visit song_path(song)
 
       expect(page).to have_title(song.name)
       expect(page).to have_content(song.name)
+    end
+
+    scenario 'A logged-in user cannot see the secret song' do
+      log_in_as create(:user)
+      visit song_path(secret_song)
+
+      expect(page).not_to have_title(song.name)
     end
   end
 
@@ -85,7 +101,7 @@ RSpec.feature "SongPages", type: :feature do
     given(:admin) { create(:admin) }
     background do
       log_in_as admin
-      visit edit_song_path(song)
+      visit edit_song_path(create(:song))
     end
 
     scenario 'An admin user can delete a song' do
