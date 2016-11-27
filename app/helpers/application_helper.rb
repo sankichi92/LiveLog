@@ -22,7 +22,7 @@ module ApplicationHelper
     (start...start + 1.year)
   end
 
-  def glyphicon(name, clazz = '')
-    %(<span class="glyphicon glyphicon-#{name} #{clazz}" aria-hidden="true"></span> ).html_safe
+  def glyphicon(name, klass = '')
+    %(<span class="glyphicon glyphicon-#{name} #{klass}" aria-hidden="true"></span> ).html_safe
   end
 end

@@ -10,17 +10,19 @@
         = @song.order
         = render 'link_to_edit', song: @song
 
-  - if @song.youtube_id.blank?
-    %ul#player-list.list-inline
-      = render @song.playings
-  - else
-    .row
-      .col-sm-9
-        .embed-responsive.embed-responsive-16by9
+  .row
+    - unless @song.youtube_id.blank?
+      .col-sm-12.col-md-9
+        %p.embed-responsive.embed-responsive-16by9
           = @song.youtube_embed
-      .col-sm-3
-        %ul#player-list.list-unstyled
-          = render @song.playings
+    = render 'panel', title: 'Members' do
+      %ul.list-group
+        = render @song.playings, klass: 'list-group-item'
+    - unless @song.comment.blank?
+      = render 'panel', title: 'Comments' do
+        .panel-body
+          %p= @song.comment
+
 
   %nav
     %ul.pager

@@ -28,7 +28,7 @@ tr[onclick]:hover {
   cursor: pointer;
 }
 
-#set-list > li, #player-list > li {
+#set-list > li {
   @extend .lead
 }
 
