@@ -38,11 +38,13 @@
 
   %nav
     %ul.pager
-      %li.previous{class: (@song.previous.nil? ? 'disabled' : '')}
-        = link_to @song.previous do
+      - p = @song.previous(logged_in?)
+      %li.previous{class: p.nil? ? 'disabled' : ''}
+        = link_to p do
           %span{'aria-hidden': true} &larr;
           Previous
-      %li.next{class: (@song.next.nil? ? 'disabled' : '')}
-        = link_to @song.next do
+      - n = @song.next(logged_in?)
+      %li.next{class: n.nil? ? 'disabled' : ''}
+        = link_to n do
           Next
           %span{'aria-hidden': true} &rarr;
