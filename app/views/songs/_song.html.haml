@@ -1,6 +1,6 @@
 %tr
   - if show_live
-    %td= song.live.title
+    %td= link_to song.live.title, song.live
   %td
     = song.time_str unless song.time.blank?
     = song.order
