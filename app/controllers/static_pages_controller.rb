@@ -1,6 +1,6 @@
 class StaticPagesController < ApplicationController
   def home
-    @songs = Song.paginate(page: params[:page])
+    @songs = Song.paginate(page: params[:page], per_page: 20)
   end
 
   def stats
