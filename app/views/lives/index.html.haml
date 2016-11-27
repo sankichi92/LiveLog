@@ -1,6 +1,7 @@
 - provide(:title, 'Live List')
 %header.page-header
   %h1 Live List
+
 - Live.years.each_slice(2) do |two_y|
   .row
     - two_y.each do |y|

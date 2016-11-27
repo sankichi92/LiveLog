@@ -6,7 +6,17 @@ class UsersController < ApplicationController
   before_action :admin_or_elder_user, only: %i(new create destroy)
 
   def index
-    @users = logged_in? ? User.all : User.where(public: true)
+    if logged_in?
+      if params[:active] == 'true'
+        today = Date.today
+        range = (today - 1.year..today)
+        @users = User.includes(songs: :live).where('lives.date': range)
+      else
+        @users = User.all
+      end
+    else
+      @users = User.where(public: true)
+    end
   end
 
   def show
