@@ -9,8 +9,9 @@
           = link_to glyphicon(:trash) + 'Delete', @user, method: :delete, class: 'btn btn-danger'
       - elsif current_user.admin? && current_user != @user
         - if @user.admin?
-          = link_to '管理者権限を無効にする', user_admin_path(@user), method: :delete, data: {confirm: '本当に管理者権限を無効にしますか？'}, class: 'btn btn-danger'
+          = link_to '管理者権限を無効にする', user_admin_path(@user), method: :delete, data: {confirm: '本当に管理者権限を無効にしますか？'}, class: 'btn btn-default'
         - else
+          = link_to 'アカウントを無効にする', user_activation_path(@user), method: :delete, data: {confirm: '本当にアカウントを無効にしますか？'}, class: 'btn btn-warning'
           = link_to '管理者にする', user_admin_path(@user), method: :post, data: {confirm: '本当に管理者にしますか？'}, class: 'btn btn-danger'
 
   %h1
