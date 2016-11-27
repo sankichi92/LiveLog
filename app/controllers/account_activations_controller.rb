@@ -8,7 +8,7 @@ class AccountActivationsController < ApplicationController
   end
 
   def create
-    if @user.send_invitation(params[:user][:email])
+    if @user.send_invitation(params[:user][:email], current_user)
       flash[:info] = '招待メールを送信しました'
       redirect_to users_url
     else

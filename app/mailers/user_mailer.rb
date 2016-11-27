@@ -1,7 +1,8 @@
 class UserMailer < ApplicationMailer
 
-  def account_activation(user)
+  def account_activation(user, inviter)
     @user = user
+    @inviter = inviter
     mail to: user.email, subject: '【LiveLog】アカウントの有効化'
   end
 
