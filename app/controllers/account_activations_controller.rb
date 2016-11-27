@@ -26,7 +26,7 @@ class AccountActivationsController < ApplicationController
     elsif @user.update_attributes(user_params)
       @user.activate
       log_in @user
-      flash[:success] = 'Welcome to LiveLog!'
+      flash[:success] = 'LiveLog へようこそ！'
       redirect_to @user
     else
       render 'edit'

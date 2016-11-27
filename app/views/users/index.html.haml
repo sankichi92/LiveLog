@@ -8,6 +8,8 @@
       %label
         = check_box_tag :active, true, false, checked: params[:active] == 'true', onchange: "location.href='#{request.path}?active=' + $(this).is(':checked');"
         1年以内にライブに出演したメンバーのみ表示
+- else
+  %p プロフィールを公開しているメンバーの一覧です。
 
 - @users.distinct_joined.each_slice(4) do |four_y|
   .row
