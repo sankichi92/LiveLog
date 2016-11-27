@@ -8,9 +8,11 @@ class Song < ApplicationRecord
   validates :name, presence: true
   VALID_YOUTUBE_REGEX =
       %r(\A
-         (?:https?://)?
-         (?:www\.youtube\.com/watch\?(?:\S*&)*v=
-          |youtu\.be/)
+         (?:
+          (?:https?://)?
+          (?:www\.youtube\.com/watch\?(?:\S*&)*v=
+           |youtu\.be/)
+         )?
          (?<id>\S{11})
         )x
   validates :youtube_id, format: {with: VALID_YOUTUBE_REGEX}, allow_blank: true
