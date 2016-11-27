@@ -1,6 +1,7 @@
 class AccountActivationsController < ApplicationController
   before_action :logged_in_user, only: %i(new create)
-  before_action :check_inactivated
+  before_action :set_user
+  before_action :check_inactivated, except: :destroy
   before_action :valid_user, only: %i(edit update)
 
   def new
@@ -32,6 +33,12 @@ class AccountActivationsController < ApplicationController
     end
   end
 
+  def destroy
+    @user.update_columns(activated: false, activation_digest: nil)
+    flash[:success] = 'アカウントを無効にしました'
+    redirect_to @user
+  end
+
   private
 
   def user_params
@@ -40,8 +47,11 @@ class AccountActivationsController < ApplicationController
 
   # Before filters
 
-  def check_inactivated
+  def set_user
     @user = User.find(params[:user_id])
+  end
+
+  def check_inactivated
     redirect_to(root_url) if @user.activated?
   end
 
