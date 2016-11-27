@@ -15,6 +15,11 @@ class Song < ApplicationRecord
         )x
   validates :youtube_id, format: {with: VALID_YOUTUBE_REGEX}, allow_blank: true
   before_save :extract_youtube_id
+  enum status: {
+      secret: 0,
+      closed: 1,
+      open: 2
+  }
 
   def Song.search(query, page) # TODO: Improve
     q = "%#{query}%"
