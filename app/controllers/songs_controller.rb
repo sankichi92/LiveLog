@@ -1,6 +1,7 @@
 class SongsController < ApplicationController
-  before_action :logged_in_user, except: :index
   before_action :set_song, only: %i(show edit update destroy)
+  before_action :logged_in_user, except: %i(index show)
+  before_action :check_status, only: :show
   before_action :correct_user, only: %i(edit update)
   before_action :admin_or_elder_user, only: %i(new create destroy)
   before_action :store_location, only: :edit
@@ -42,7 +43,7 @@ class SongsController < ApplicationController
         format.js { flash.now[:success] = '更新しました' }
       else
         format.html { render :edit }
-        format.js { flash.now[:danger] = '失敗しました' }
+        format.js { flash.now[:danger] = @song.errors.full_messages }
       end
     end
   end
@@ -55,6 +56,15 @@ class SongsController < ApplicationController
   end
 
   private
+
+  def check_status
+    case @song.status
+      when 'closed'
+        redirect_to(root_url) unless logged_in?
+      when 'secret'
+        redirect_to(root_url) unless logged_in? && current_user.played?(@song)
+    end
+  end
 
   def correct_user
     redirect_to(root_url) unless current_user.played?(@song) || current_user.admin_or_elder?

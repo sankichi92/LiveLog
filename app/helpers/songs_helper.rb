@@ -1,5 +1,19 @@
 module SongsHelper
 
+  def can_watch?(song)
+    if logged_in? && current_user.played?(song)
+      true
+    elsif (song.open? || song.closed? && logged_in?) && !song.youtube_id.blank?
+      true
+    else
+      false
+    end
+  end
+
+  def can_edit?(song)
+    logged_in? && (current_user.admin_or_elder? || current_user.played?(song))
+  end
+
   def button_to_add_member(text, f)
     fields = f.fields_for(:playings, @song.playings.build) do |builder|
       render 'playings_fields', f: builder

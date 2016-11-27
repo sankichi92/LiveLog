@@ -2,7 +2,7 @@
   - if show_live
     %td= link_to song.live.title, song.live
   %td= song.time_order
-  %td= logged_in? ? link_to(song.name, song) : song.name
+  %td= can_watch?(song) ? link_to(song.name, song) : song.name
   %td= song.artist
   %td
     %ul.list-inline
