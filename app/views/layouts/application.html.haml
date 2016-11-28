@@ -9,7 +9,7 @@
     = csrf_meta_tags
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
-    = render 'page-level-ads' if Rails.env.production? && !logged_in?
+    = render 'shared/page-level-ads' if Rails.env.production? && !logged_in?
     = render 'layouts/shim'
   %body
     = render 'shared/analyticstracking' if Rails.env.production?
@@ -17,6 +17,6 @@
     #main.container
       = render 'layouts/flash'
       = yield
-      = render 'layouts/content-ads' if Rails.env.production? && !logged_in?
+      = render 'shared/content-ads' if Rails.env.production? && !logged_in?
     = render 'layouts/footer'
     = debug(params) if Rails.env.development?
