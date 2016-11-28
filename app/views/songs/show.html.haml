@@ -34,7 +34,7 @@
     - elsif !@song.comment.blank?
       = render 'panel', title: 'Comments' do
         .panel-body
-          %p= @song.comment
+          = simple_format(@song.comment)
 
   %nav
     %ul.pager

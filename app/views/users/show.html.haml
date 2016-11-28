@@ -75,6 +75,6 @@
           - unless @user.url.blank?
             %dt URL
             %dd= link_to @user.url, @user.url, target: '_blank'
-        %p= @user.intro
+        = simple_format(@user.intro)
 
 = render 'songs/songs_table', songs: @user.songs, show_live: true
