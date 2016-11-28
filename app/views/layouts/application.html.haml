@@ -11,6 +11,7 @@
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
     = render 'layouts/shim'
   %body
+    = render 'shared/analyticstracking' if Rails.env.production?
     = render 'layouts/navbar'
     #main.container
       = render 'layouts/flash'
