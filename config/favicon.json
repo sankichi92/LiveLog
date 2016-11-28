@@ -33,7 +33,7 @@
     },
     "android_chrome": {
       "picture_aspect": "shadow",
-      "theme_color": "#ff00aa",
+      "theme_color": "#f0ad4e",
       "manifest": {
         "name": "LiveLog",
         "display": "standalone",
