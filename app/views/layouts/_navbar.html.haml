@@ -9,10 +9,10 @@
       = link_to 'LiveLog', root_path, class: 'navbar-brand'
     #bs-navbar-collapse.collapse.navbar-collapse
       %ul.nav.navbar-nav
-        %li= link_to 'Song Search', songs_path
-        %li= link_to 'Live List', lives_path
-        %li= link_to 'Members', users_path
-        %li= link_to 'Stats', stats_path
+        %li{class: current_page?(songs_path) ? 'active' : ''}= link_to 'Song Search', songs_path
+        %li{class: params[:controller] == 'lives' ? 'active' : ''}= link_to 'Live List', lives_path
+        %li{class: params[:controller] == 'users' ? 'active' : ''}= link_to 'Members', users_path
+        %li{class: current_page?(stats_path) ? 'active' : ''}= link_to 'Stats', stats_path
       - if logged_in?
         %ul.nav.navbar-nav.navbar-right
           - if current_user.admin_or_elder?
