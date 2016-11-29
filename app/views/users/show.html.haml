@@ -1,6 +1,7 @@
 - provide(:title, @user.full_name(logged_in?))
 - total = @user.songs.count
 %header.page-header
+
   .pull-right
     - if logged_in?
       - if !@user.activated?
@@ -20,6 +21,7 @@
       %small= @user.public? ? glyphicon(:globe) : glyphicon(:lock)
 
 .row
+  
   = render 'panel', title: '出演数・楽器' do
     .panel-body.text-center.lead
       %mark= total
