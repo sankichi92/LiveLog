@@ -1,6 +1,7 @@
 - provide(:title, @user.full_name(logged_in?))
 - total = @user.songs.count
 %header.page-header
+
   .pull-right
     - if logged_in?
       - if !@user.activated?
@@ -20,6 +21,7 @@
       %small= @user.public? ? glyphicon(:globe) : glyphicon(:lock)
 
 .row
+  
   = render 'panel', title: '出演数・楽器' do
     .panel-body.text-center.lead
       %mark= total
@@ -31,37 +33,39 @@
             %span.badge= count
             = inst
 
-  = render 'panel', title: 'アーティスト' do
-    %ul.list-group
-      - @user.songs.unscope(:order).group(:artist).count.sort { |(k1, v1), (k2, v2)| v2 <=> v1 }.take(20).each do |artist, count|
-        - if count >= 2 && (count.to_f / total) >= 0.04 && !artist.blank?
+  - unless total == 0
+
+    = render 'panel', title: 'アーティスト' do
+      %ul.list-group
+        - @user.songs.unscope(:order).group(:artist).count.sort { |(k1, v1), (k2, v2)| v2 <=> v1 }.take(20).each do |artist, count|
+          - if count >= 2 && (count.to_f / total) >= 0.04 && !artist.blank?
+            %li.list-group-item
+              %span.badge= count
+              = artist
+
+    = render 'panel', title: '共演者' do
+      .panel-body
+        %mark= @playings.group(:user).count.size - 1
+        人
+      %ul.list-group
+        - @playings.group(:user).count.sort{ |(k1, v1), (k2, v2)| v2 <=> v1 }.take(20).each do |user, count|
+          - if user != @user && count >= 2 && ((count.to_f / total) >= 0.2 || count >= 10)
+            %li.list-group-item
+              %span.badge= count
+              = logged_in? || user.public? ? link_to(user.full_name(logged_in?), user) : user.handle
+
+    = render 'panel', title: '構成人数' do
+      %ul.list-group
+        - sum = 0
+        - Playing.count_formation(@playings.count_members_per_song).each do |formation, count|
           %li.list-group-item
             %span.badge= count
-            = artist
-
-  = render 'panel', title: '共演者' do
-    .panel-body
-      %mark= @playings.group(:user).count.size - 1
-      人
-    %ul.list-group
-      - @playings.group(:user).count.sort{ |(k1, v1), (k2, v2)| v2 <=> v1 }.take(20).each do |user, count|
-        - if user != @user && count >= 2 && ((count.to_f / total) >= 0.2 || count >= 10)
-          %li.list-group-item
-            %span.badge= count
-            = logged_in? || user.public? ? link_to(user.full_name(logged_in?), user) : user.handle
-
-  = render 'panel', title: '構成人数' do
-    %ul.list-group
-      - sum = 0
-      - Playing.count_formation(@playings.count_members_per_song).each do |formation, count|
-        %li.list-group-item
-          %span.badge= count
-          = "#{formation}人"
-        - sum += formation * count
-    .panel-body
-      平均
-      %mark= (sum.to_f / total).round(2)
-      人
+            = "#{formation}人"
+          - sum += formation * count
+      .panel-body
+        平均
+        %mark= (sum.to_f / total).round(2)
+        人
 
   .col-xs-12.col-sm-6.col-md-4
     %section.panel.panel-default
