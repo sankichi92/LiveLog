@@ -61,7 +61,7 @@ class Song < ApplicationRecord
     return nil if order.blank?
     allowed_statuses = logged_in ? [Song.statuses[:open], Song.statuses[:closed]] : [Song.statuses[:open]]
     Song.where(live: live, status: allowed_statuses)
-        .where('(songs.order < ? OR songs.time < ?) AND songs.youtube_id IS NOT NULL', order, time)
+        .where("(songs.order < ? OR songs.time < ?) AND NOT (songs.youtube_id IS NULL OR songs.youtube_id = '')", order, time)
         .last
   end
 
@@ -69,7 +69,7 @@ class Song < ApplicationRecord
     return nil if order.blank?
     allowed_statuses = logged_in ? [Song.statuses[:open], Song.statuses[:closed]] : [Song.statuses[:open]]
     Song.where(live: live, status: allowed_statuses)
-        .where('(songs.order > ? OR songs.time > ?) AND songs.youtube_id IS NOT NULL', order, time)
+        .where("(songs.order > ? OR songs.time > ?) AND NOT (songs.youtube_id IS NULL OR songs.youtube_id = '')", order, time)
         .first
   end
 end
