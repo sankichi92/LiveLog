@@ -2,18 +2,18 @@
 - total = @user.songs.count
 %header.page-header
 
-  .pull-right
-    - if logged_in?
+  - if logged_in?
+    %ul.pull-right.list-inline
       - if !@user.activated?
-        =link_to glyphicon(:envelope) + '招待する', new_user_activation_path(@user), class: 'btn btn-info btn-lg'
+        %li=link_to glyphicon(:envelope) + '招待する', new_user_activation_path(@user), class: 'btn btn-info btn-lg'
         - if current_user.admin_or_elder? && !@user.songs.exists?
-          = link_to glyphicon(:trash) + 'Delete', @user, method: :delete, class: 'btn btn-danger'
+          %li= link_to glyphicon(:trash) + 'Delete', @user, method: :delete, class: 'btn btn-danger'
       - elsif current_user.admin? && current_user != @user
         - if @user.admin?
-          = link_to '管理者権限を無効にする', user_admin_path(@user), method: :delete, data: {confirm: '本当に管理者権限を無効にしますか？'}, class: 'btn btn-default'
+          %li= link_to '管理者権限を無効にする', user_admin_path(@user), method: :delete, data: {confirm: '本当に管理者権限を無効にしますか？'}, class: 'btn btn-default'
         - else
-          = link_to 'アカウントを無効にする', user_activation_path(@user), method: :delete, data: {confirm: '本当にアカウントを無効にしますか？'}, class: 'btn btn-warning'
-          = link_to '管理者にする', user_admin_path(@user), method: :post, data: {confirm: '本当に管理者にしますか？'}, class: 'btn btn-danger'
+          %li= link_to 'アカウントを無効にする', user_activation_path(@user), method: :delete, data: {confirm: '本当にアカウントを無効にしますか？'}, class: 'btn btn-warning'
+          %li= link_to '管理者にする', user_admin_path(@user), method: :post, data: {confirm: '本当に管理者にしますか？'}, class: 'btn btn-danger'
 
   %h1
     = @user.full_name(logged_in?)
