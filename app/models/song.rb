@@ -27,7 +27,7 @@ class Song < ApplicationRecord
 
   def Song.search(query, page) # TODO: Improve
     q = "%#{query}%"
-    where('songs.name ILIKE ? OR artist ILIKE ?', q, q).paginate(page: page)
+    where('songs.name ILIKE ? OR artist ILIKE ?', q, q).order_by_live.paginate(page: page)
   end
 
   def extract_youtube_id
