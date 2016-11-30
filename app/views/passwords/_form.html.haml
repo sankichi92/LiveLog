@@ -1,0 +1,9 @@
+.form-group
+  = f.label :password, yield(:password_label), class: 'col-sm-3 control-label'
+  .col-sm-9
+    = f.password_field :password, class: 'form-control', required: true
+
+.form-group
+  = f.label :password_confirmation, class: 'col-sm-3 control-label'
+  .col-sm-9
+    = f.password_field :password_confirmation, class: 'form-control'
