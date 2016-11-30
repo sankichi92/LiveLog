@@ -2,8 +2,10 @@ require 'rails_helper'
 
 RSpec.feature "UserPages", type: :feature do
 
+  given(:user) { create(:user) }
+  given(:admin) { create(:admin) }
+
   feature 'Show members' do
-    given(:user) { create(:user) }
     background do
       log_in_as user
       create(:user, first_name: 'Bob', email: 'bob@ku-unplugged.net')
@@ -24,7 +26,6 @@ RSpec.feature "UserPages", type: :feature do
     end
 
     context 'Admin user' do
-      given(:admin) { create(:admin) }
       background do
         log_in_as admin
         visit users_path
@@ -41,7 +42,6 @@ RSpec.feature "UserPages", type: :feature do
   end
 
   feature 'Profile page' do
-    given(:user) { create(:user) }
     given(:song) { create(:song) }
     background do
       create(:playing, user: user, song: song)
@@ -59,7 +59,7 @@ RSpec.feature "UserPages", type: :feature do
 
   feature 'Add member' do
     background do
-      log_in_as create(:admin)
+      log_in_as admin
       visit new_user_path
     end
 
@@ -80,7 +80,6 @@ RSpec.feature "UserPages", type: :feature do
   end
 
   feature 'Edit his/her profile' do
-    given(:user) { create(:user) }
     background do
       log_in_as user
       visit edit_user_path(user)
@@ -110,5 +109,48 @@ RSpec.feature "UserPages", type: :feature do
       expect(user.reload.nickname).to eq new_nickname
       expect(user.reload.email).to eq new_email
     end
+  end
+
+  feature 'password edition' do
+
+    scenario 'A non-logged-in user cannot visit a edit password page' do
+      visit edit_user_password_path(user)
+
+      expect(page).not_to have_title('Edit password')
+      expect(page).to have_selector('.alert-danger')
+    end
+
+    scenario 'A logged-in user cannot visit other users edit password page' do
+      log_in_as user
+      visit edit_user_password_path(create(:user))
+
+      expect(page).not_to have_title('Edit password')
+    end
+
+    scenario 'A logged-in user can edit his/her password with valid information' do
+      new_password = 'new_password'
+      log_in_as user
+      visit edit_user_path(user)
+      click_link 'パスワードを変更する'
+
+      fill_in '現在のパスワード', with: user.password
+      fill_in '新しいパスワード', with: new_password
+      fill_in 'パスワードを再入力', with: new_password
+      click_button 'Save'
+
+      expect(page).to have_title(user.full_name)
+      expect(page).to have_selector('.alert-success')
+    end
+
+    scenario 'A logged-in user cannot edit his/her password with invalid information' do
+      log_in_as user
+      visit edit_user_password_path(user)
+
+      click_button 'Save'
+
+      expect(page).to have_title('Edit password')
+      expect(page).to have_selector('.alert-danger')
+    end
+
   end
 end

@@ -1,0 +1,17 @@
+- provide(:title, 'Edit password')
+- provide(:password_label, '新しいパスワード')
+- provide(:button_text, 'Save')
+%header.page-header
+  %h1 Edit password
+
+= form_for(@user, url: user_password_path, html: {class: 'form-horizontal well'}) do |f|
+  = render 'shared/error_messages', object: f.object
+
+  .form-group
+    = f.label :current_password, '現在のパスワード', class: 'col-sm-3 control-label'
+    .col-sm-9
+      = f.password_field :current_password, class: 'form-control'
+
+  = render 'passwords/form', f: f
+
+  = render 'shared/submit', f: f
