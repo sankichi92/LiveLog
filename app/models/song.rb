@@ -3,7 +3,8 @@ class Song < ApplicationRecord
   has_many :users, through: :playings
   belongs_to :live
   accepts_nested_attributes_for :playings, allow_destroy: true
-  default_scope { includes(:live).order('lives.date DESC', :time, :order) }
+  default_scope { order(:time, :order) }
+  scope :order_by_live, -> { unscope(:order).includes(:live).order('lives.date DESC', :time, :order) }
   validates :live_id, presence: true
   validates :name, presence: true
   VALID_YOUTUBE_REGEX =

@@ -18,7 +18,7 @@
 
     = render 'panel', title: 'Members' do
       %ul.list-group
-        = render @song.playings, klass: 'list-group-item'
+        = render @song.playings.order_by_inst, klass: 'list-group-item'
 
     - if logged_in? && current_user.played?(@song)
       = render 'panel', title: 'Edit' do

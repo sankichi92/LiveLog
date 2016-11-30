@@ -6,5 +6,5 @@
   %td= song.artist
   %td
     %ul.list-inline
-      = render song.playings
+      = render song.playings.order_by_inst
   %td= render 'songs/link_to_edit', song: song

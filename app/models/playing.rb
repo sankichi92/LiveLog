@@ -1,11 +1,21 @@
 class Playing < ApplicationRecord
   belongs_to :user
   belongs_to :song
+  scope :order_by_inst, -> { order(case_str) }
   scope :count_insts, -> { group(:inst).count(:id) }
   scope :count_members_per_song, -> { group(:song_id).count(:id) }
   before_save :format_inst
   validates :user_id, presence: true
   validates :song, presence: true
+  INST_ORDER = %w(Vo Vn Sax Fl Tp Gt Pf Ba Cj Perc)
+
+  def Playing.case_str
+    ret = 'CASE'
+    INST_ORDER.each_with_index do |p, i|
+      ret << " WHEN inst LIKE '%#{p}%' THEN #{i}"
+    end
+    ret << ' END'
+  end
 
   def Playing.resolve_insts(inst_counts)
     singles = inst_counts.reject { |inst, count| inst.blank? || inst.include?('&') }
