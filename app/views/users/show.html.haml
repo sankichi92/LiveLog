@@ -17,8 +17,10 @@
 
   %h1
     = @user.full_name(logged_in?)
-    - if logged_in?
-      %small= @user.public? ? glyphicon(:globe) : glyphicon(:lock)
+    %small
+      = @user.joined
+      - if logged_in?
+        = @user.public? ? glyphicon(:globe) : glyphicon(:lock)
 
 .row
   
