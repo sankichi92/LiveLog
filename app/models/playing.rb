@@ -7,7 +7,7 @@ class Playing < ApplicationRecord
   before_save :format_inst
   validates :user_id, presence: true
   validates :song, presence: true
-  INST_ORDER = %w(Vo Vn Sax Fl Tp Gt Pf Ba Cj Perc)
+  INST_ORDER = %w(Vo Vn Vc Fl Cl Sax Tp Hr Tb Harp Gt Koto Pf Acc 鍵ハ Ba Cj Dr Bongo Perc)
 
   def Playing.case_str
     ret = 'CASE'
