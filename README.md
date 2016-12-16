@@ -1,6 +1,6 @@
 # LiveLog
 
-[![Build Status](https://travis-ci.com/sankichi92/LiveLog2.svg?token=gTa34UBrnELPPMyk1c9U&branch=master)](https://travis-ci.com/sankichi92/LiveLog2)
+[![Build Status](https://travis-ci.org/sankichi92/LiveLog.svg?branch=master)](https://travis-ci.org/sankichi92/LiveLog)
 
 This is the application to manage setlists of the accoustic light music club "[KU Unplugged (京大アンプラグド)](http://ku-unplugged.net/)."
 
