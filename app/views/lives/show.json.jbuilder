@@ -1,1 +1,1 @@
-json.partial! "lives/life", life: @life
+json.partial! 'lives/live', live: @live
