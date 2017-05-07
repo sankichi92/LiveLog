@@ -1,1 +1,1 @@
-json.array! @lives, partial: 'lives/life', as: :life
+json.array! @lives, partial: 'lives/live', as: :live
