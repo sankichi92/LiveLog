@@ -7,9 +7,9 @@ class Playing < ApplicationRecord
   before_save :format_inst
   validates :user_id, presence: true
   validates :song, presence: true
-  INST_ORDER = %w(Vo Vn Vc Fl Cl Sax Tp Hr Tb Harp Gt Koto Pf Acc 鍵ハ Ba Cj Dr Bongo Perc)
+  INST_ORDER = %w[Vo Vn Vc Fl Cl Sax Tp Hr Tb Harp Gt Koto Pf Acc 鍵ハ Ba Cj Dr Bongo Perc].freeze
 
-  def Playing.case_str
+  def self.case_str
     ret = 'CASE'
     INST_ORDER.each_with_index do |p, i|
       ret << " WHEN inst LIKE '%#{p}%' THEN #{i}"
@@ -17,26 +17,29 @@ class Playing < ApplicationRecord
     ret << ' END'
   end
 
-  def Playing.resolve_insts(inst_counts)
-    singles = inst_counts.reject { |inst, count| inst.blank? || inst.include?('&') }
-    multis = inst_counts.select { |inst, count| !inst.blank? && inst.include?('&') }
-    resolved = multis.each_with_object(Hash.new(0)) do |(insts, count), hash|
-      insts.split('&').each { |inst| hash[inst] += count }
+  def self.resolve_insts(inst_to_count)
+    single_inst_to_count = inst_to_count.reject { |inst, _| inst.blank? || inst.include?('&') }
+    multi_inst_to_count = inst_to_count.select { |inst, _| !inst.blank? && inst.include?('&') }
+    divided_inst_to_count = multi_inst_to_count.each_with_object(Hash.new(0)) do |(inst, count), hash|
+      inst.split('&').each { |divided_inst| hash[divided_inst] += count }
     end
-    merged = singles.merge(resolved) do |inst, single_count, resolved_count|
-      single_count + resolved_count
+    resolved_inst_to_count = single_inst_to_count.merge(divided_inst_to_count) do |_, single_count, divided_count|
+      single_count + divided_count
     end
-    merged.sort { |(k1, v1), (k2, v2)| v2 <=> v1 }
+    resolved_inst_to_count.sort_by { |_, count| count }.reverse
   end
 
-  def Playing.count_formation(member_counts)
-    member_counts.each_with_object(Hash.new(0)) { |(id, count), hash| hash[count] += 1 }.sort
+  def self.count_formation(member_counts)
+    member_counts.each_with_object(Hash.new(0)) { |(id, count), hash|
+      hash[count] += 1
+    }.sort
   end
+
+  private
 
   def format_inst
-    unless inst.blank?
-      self.inst = inst.tr('ａ-ｚＡ-Ｚ＆．', 'a-zA-Z&.')
-      self.inst = inst.gsub(/(\s|\.)/, '')
-    end
+    return if inst.blank?
+    self.inst = inst.tr('ａ-ｚＡ-Ｚ＆．', 'a-zA-Z&.')
+    self.inst = inst.gsub(/(\s|\.)/, '')
   end
 end
