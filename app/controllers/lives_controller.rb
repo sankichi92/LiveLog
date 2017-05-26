@@ -1,7 +1,7 @@
 class LivesController < ApplicationController
-  before_action :set_live, only: %i(show edit update destroy)
-  before_action :logged_in_user, except: %i(index show)
-  before_action :admin_or_elder_user, except: %i(index show)
+  before_action :set_live, only: %i[show edit update destroy]
+  before_action :logged_in_user, except: %i[index show]
+  before_action :admin_or_elder_user, except: %i[index show]
 
   def index
     @lives = Live.all
@@ -16,6 +16,7 @@ class LivesController < ApplicationController
   end
 
   def edit
+    #
   end
 
   def create
@@ -51,15 +52,13 @@ class LivesController < ApplicationController
   end
 
   def destroy
-    begin
-      @live.destroy
-    rescue ActiveRecord::DeleteRestrictionError => e
-      flash.now[:danger] = e.message
-      render :show
-    else
-      flash[:success] = 'ライブを削除しました'
-      redirect_to lives_url
-    end
+    @live.destroy
+  rescue ActiveRecord::DeleteRestrictionError => e
+    flash.now[:danger] = e.message
+    render :show
+  else
+    flash[:success] = 'ライブを削除しました'
+    redirect_to lives_url
   end
 
   private
