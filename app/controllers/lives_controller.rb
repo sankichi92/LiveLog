@@ -8,7 +8,7 @@ class LivesController < ApplicationController
   end
 
   def show
-    @songs = @live.songs
+    @songs = @live.songs.played_order
   end
 
   def new
