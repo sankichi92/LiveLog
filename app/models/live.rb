@@ -1,10 +1,10 @@
 class Live < ApplicationRecord
   has_many :songs, dependent: :restrict_with_exception
   default_scope { order(date: :desc) }
-  validates :name, presence: true, uniqueness: {scope: :date}
+  validates :name, presence: true, uniqueness: { scope: :date }
   validates :date, presence: true
 
-  def Live.years
+  def self.years
     Live.all.select(:date).map(&:nendo).uniq
   end
 
