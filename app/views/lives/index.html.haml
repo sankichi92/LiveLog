@@ -5,8 +5,8 @@
 - Live.years.each_slice(2) do |two_y|
   .row
     - two_y.each do |y|
-      - y_live = @lives.where(date: nendo_range(y))
-      - if y_live.exists?
+      - y_live = @lives.select { |l| l.nendo == y }
+      - if y_live.present?
         .col-sm-6
           .panel.panel-default
             .panel-heading
