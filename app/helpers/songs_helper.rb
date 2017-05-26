@@ -1,13 +1,8 @@
 module SongsHelper
 
   def can_watch?(song)
-    if logged_in? && current_user.played?(song)
-      true
-    elsif (song.open? || song.closed? && logged_in?) && !song.youtube_id.blank?
-      true
-    else
-      false
-    end
+    (logged_in? && current_user.played?(song)) ||
+      ((song.open? || song.closed? && logged_in?) && !song.youtube_id.blank?)
   end
 
   def can_edit?(song)
