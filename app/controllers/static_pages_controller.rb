@@ -12,7 +12,7 @@ class StaticPagesController < ApplicationController
       range = (stop - 1.year..stop)
     end
 
-    @songs = Song.unscoped.includes(:live).where('lives.date': range)
-    @playings = Playing.includes(song: :live).where('lives.date': range)
+    @songs = Song.includes(:live).where('lives.date' => range)
+    @playings = Playing.includes(song: :live).where('lives.date' => range)
   end
 end
