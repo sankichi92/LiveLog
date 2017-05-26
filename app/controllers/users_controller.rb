@@ -1,22 +1,23 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i(show edit update destroy)
-  before_action :logged_in_user, except: %i(index show)
+  before_action :set_user, only: %i[show edit update destroy]
+  before_action :logged_in_user, except: %i[index show]
   before_action :check_public, only: :show
-  before_action :correct_user, only: %i(edit update)
-  before_action :admin_or_elder_user, only: %i(new create destroy)
+  before_action :correct_user, only: %i[edit update]
+  before_action :admin_or_elder_user, only: %i[new create destroy]
 
   def index
-    if logged_in?
-      if params[:active] == 'true'
-        today = Date.today
-        range = (today - 1.year..today)
-        @users = User.includes(songs: :live).where('lives.date': range)
-      else
-        @users = User.all
-      end
-    else
-      @users = User.where(public: true)
+    @users = User.natural_order
+
+    unless logged_in?
+      @users = @users.where(public: true)
+      return
     end
+
+    return unless params[:active] == 'true'
+
+    today  = Date.today
+    range  = (today - 1.year..today)
+    @users = @users.includes(songs: :live).where('lives.date' => range)
   end
 
   def show
@@ -30,7 +31,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(create_user_params)
     if @user.save
-      flash[:success] = "メンバーを追加しました"
+      flash[:success] = 'メンバーを追加しました'
       redirect_to action: :new
     else
       render :new
@@ -38,6 +39,7 @@ class UsersController < ApplicationController
   end
 
   def edit
+    #
   end
 
   def update
@@ -62,7 +64,10 @@ class UsersController < ApplicationController
   end
 
   def update_user_params
-    params.require(:user).permit(:first_name, :last_name, :furigana, :nickname, :email, :url, :intro, :public)
+    params.require(:user).permit(
+      :first_name, :last_name, :furigana, :nickname,
+      :email, :url, :intro, :public
+    )
   end
 
   # Before filters

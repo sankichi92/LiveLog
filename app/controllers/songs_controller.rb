@@ -1,21 +1,22 @@
 class SongsController < ApplicationController
-  before_action :set_song, only: %i(show edit update destroy)
-  before_action :logged_in_user, except: %i(index show)
+  before_action :set_song, only: %i[show edit update destroy]
+  before_action :logged_in_user, except: %i[index show]
   before_action :check_status, only: :show
-  before_action :correct_user, only: %i(edit update)
-  before_action :admin_or_elder_user, only: %i(new create destroy)
+  before_action :correct_user, only: %i[edit update]
+  before_action :admin_or_elder_user, only: %i[new create destroy]
   before_action :store_referer, only: :edit
-  before_action :set_users, only: %i(new create edit update)
+  before_action :set_users, only: %i[new create edit update]
 
   def index
     @songs = Song.search(params[:q], params[:page])
   end
 
   def show
+    #
   end
 
   def new
-    live = params[:live_id] ? Live.find(params[:live_id]) : Live.first
+    live  = params[:live_id] ? Live.find(params[:live_id]) : Live.first
     @song = live.songs.build
     @song.playings.build
   end
@@ -31,6 +32,7 @@ class SongsController < ApplicationController
   end
 
   def edit
+    #
   end
 
   def update
@@ -74,7 +76,7 @@ class SongsController < ApplicationController
   end
 
   def set_users
-    @users = User.all
+    @users = User.natural_order
   end
 
   def song_params
@@ -86,7 +88,7 @@ class SongsController < ApplicationController
                                  :youtube_id,
                                  :status,
                                  :comment,
-                                 playings_attributes: %i(id user_id inst _destroy))
+                                 playings_attributes: %i[id user_id inst _destroy])
   end
 
   def store_referer
