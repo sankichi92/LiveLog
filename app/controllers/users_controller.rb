@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   before_action :admin_or_elder_user, only: %i[new create destroy]
 
   def index
-    @users = User.all
+    @users = User.natural_order
 
     unless logged_in?
       @users = @users.where(public: true)

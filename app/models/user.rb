@@ -7,7 +7,7 @@ class User < ApplicationRecord
   before_save :downcase_email
   before_save :remove_spaces_from_furigana
 
-  default_scope { order('joined DESC', 'furigana COLLATE "C"') } # TODO: Remove 'COLLATE "C"'
+  scope :natural_order, -> { order('joined DESC', 'furigana COLLATE "C"') } # TODO: Remove 'COLLATE "C"'
   scope :distinct_joined, lambda {
     unscope(:order).select(:joined).distinct.order(joined: :desc).pluck(:joined)
   }

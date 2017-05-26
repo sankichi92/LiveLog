@@ -74,7 +74,7 @@ class SongsController < ApplicationController
   end
 
   def set_users
-    @users = User.all
+    @users = User.natural_order
   end
 
   def song_params
