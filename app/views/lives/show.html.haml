@@ -6,18 +6,18 @@
       %ul.pull-right.list-inline
         %li= link_to glyphicon('plus-sign') + 'Add song', new_song_path(live_id: @live.id), class: 'btn btn-default', role: 'button'
         %li= link_to glyphicon(:edit) + 'Edit', edit_live_path(@live), class: 'btn btn-primary', role: 'button'
-        - unless @songs.exists?
+        - unless @live.songs.exists?
           %li= link_to glyphicon(:trash) + 'Delete', @live, method: :delete, class: 'btn btn-danger', role: 'button'
 
     %h1<
       = @live.name
       %small= "#{I18n.l(@live.date)} @#{@live.place}"
 
-  - if @songs.count > 20
-    = render 'songs/songs_table', songs: @songs, show_live: false
+  - if @live.songs.count > 20
+    = render 'songs/songs_table', songs: @live.songs.includes(playings: :user).played_order, show_live: false
   - else
     %ol#set-list
-      - @songs.each do |song|
+      - @live.songs.includes(playings: :user).played_order.each do |song|
         %li
           = can_watch?(song) ? link_to(song.name, song) : song.name
           = "/ #{song.artist}"

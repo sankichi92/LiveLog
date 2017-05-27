@@ -1,5 +1,5 @@
 class SongsController < ApplicationController
-  before_action :set_song, only: %i[show edit update destroy]
+  before_action :set_song, only: %i[edit update destroy]
   before_action :logged_in_user, except: %i[index show]
   before_action :check_status, only: :show
   before_action :correct_user, only: %i[edit update]
@@ -8,7 +8,7 @@ class SongsController < ApplicationController
   before_action :set_users, only: %i[new create edit update]
 
   def index
-    @songs = Song.search(params[:q], params[:page])
+    @songs = Song.includes(playings: :user).search(params[:q], params[:page])
   end
 
   def show
@@ -60,6 +60,7 @@ class SongsController < ApplicationController
   private
 
   def check_status
+    @song = Song.includes(playings: :user).find(params[:id])
     if @song.closed?
       logged_in_user
     elsif @song.secret?

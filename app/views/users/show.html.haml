@@ -83,4 +83,4 @@
             %dd= link_to @user.url, @user.url, target: '_blank'
         = simple_format(@user.intro)
 
-= render 'songs/songs_table', songs: @user.songs.order_by_live, show_live: true
+= render 'songs/songs_table', songs: @user.songs.order_by_live.includes(playings: :user), show_live: true
