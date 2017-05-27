@@ -20,9 +20,9 @@ class Playing < ApplicationRecord
   end
 
   def self.count_formation(member_counts)
-    member_counts.each_with_object(Hash.new(0)) { |(id, count), hash|
+    member_counts.each_with_object(Hash.new(0)) do |(_, count), hash|
       hash[count] += 1
-    }.sort
+    end.sort
   end
 
   private
