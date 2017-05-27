@@ -1,12 +1,5 @@
 require 'rails_helper'
 
-RSpec.shared_examples 'valid response' do
-  it 'responds with valid json' do
-    expect(response).to have_http_status(200)
-    expect(response.body).to be_json_as(expected_body)
-  end
-end
-
 RSpec.describe 'Lives', type: :request do
   let!(:live) { create(:live) }
 
