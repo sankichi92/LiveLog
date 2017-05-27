@@ -8,7 +8,7 @@ class LivesController < ApplicationController
   end
 
   def show
-    @live = Live.includes(songs: %i[playings users]).find(params[:id])
+    @live = Live.includes(:songs).find(params[:id])
   end
 
   def new

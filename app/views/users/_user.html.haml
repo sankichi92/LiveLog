@@ -1,5 +1,8 @@
 %li
-  = link_to user do
+  - if logged_in? || user.public?
+    = link_to user do
+      = user.full_name(logged_in?)
+    - if logged_in? && user.admin?
+      %span *
+  - else
     = user.full_name(logged_in?)
-  - if logged_in? && user.admin?
-    %span *

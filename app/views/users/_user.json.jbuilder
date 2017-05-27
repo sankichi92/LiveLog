@@ -1,2 +1,2 @@
 json.extract! user, :id, :joined, :public
-json.nickname user.handle
+json.name user.full_name(logged_in?)

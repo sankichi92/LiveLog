@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[show edit update destroy]
+  before_action :set_user, only: %i[edit update destroy]
   before_action :logged_in_user, except: %i[index show]
   before_action :check_public, only: :show
   before_action :correct_user, only: %i[edit update]
@@ -7,13 +7,11 @@ class UsersController < ApplicationController
 
   def index
     @users = User.natural_order
-    if !logged_in?
-      @users = @users.where(public: true)
-    elsif params[:active] == 'true'
-      today  = Date.today
-      range  = (today - 1.year..today)
-      @users = @users.includes(songs: :live).where('lives.date' => range)
-    end
+
+    return unless params[:active] == 'true'
+    today  = Date.today
+    range  = (today - 1.year..today)
+    @users = @users.includes(songs: :live).where('lives.date' => range)
   end
 
   def show
@@ -73,6 +71,7 @@ class UsersController < ApplicationController
   end
 
   def check_public
+    @user = User.includes(songs: :live).find(params[:id])
     redirect_to(root_url) unless logged_in? || @user.public?
   end
 
