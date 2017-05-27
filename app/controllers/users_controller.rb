@@ -7,17 +7,13 @@ class UsersController < ApplicationController
 
   def index
     @users = User.natural_order
-
-    unless logged_in?
+    if !logged_in?
       @users = @users.where(public: true)
-      return
+    elsif params[:active] == 'true'
+      today  = Date.today
+      range  = (today - 1.year..today)
+      @users = @users.includes(songs: :live).where('lives.date' => range)
     end
-
-    return unless params[:active] == 'true'
-
-    today  = Date.today
-    range  = (today - 1.year..today)
-    @users = @users.includes(songs: :live).where('lives.date' => range)
   end
 
   def show

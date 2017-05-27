@@ -1,6 +1,8 @@
 class StaticPagesController < ApplicationController
   def home
-    @songs = Song.order_by_live.paginate(page: params[:page], per_page: 20)
+    @songs = Song.order_by_live
+                 .includes(playings: :user)
+                 .paginate(page: params[:page], per_page: 20)
   end
 
   def stats

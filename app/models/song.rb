@@ -20,25 +20,25 @@ class Song < ApplicationRecord
        )
       )x
   validates :youtube_id,
-            format:      { with: VALID_YOUTUBE_REGEX },
+            format: { with: VALID_YOUTUBE_REGEX },
             allow_blank: true
   before_save :extract_youtube_id
   enum status: {
     secret: 0,
     closed: 1,
-    open:   2
+    open: 2
   }
 
   def self.search(query, page) # TODO: Improve
     q = "%#{query}%"
-    order_by_live
-      .where('songs.name ILIKE ? OR artist ILIKE ?', q, q)
+    where('songs.name ILIKE ? OR artist ILIKE ?', q, q)
+      .order_by_live
       .paginate(page: page)
   end
 
   def extract_youtube_id
     return if youtube_id.blank?
-    m               = youtube_id.match(VALID_YOUTUBE_REGEX)
+    m = youtube_id.match(VALID_YOUTUBE_REGEX)
     self.youtube_id = m[:id]
   end
 

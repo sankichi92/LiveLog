@@ -1,5 +1,5 @@
 class LivesController < ApplicationController
-  before_action :set_live, only: %i[show edit update destroy]
+  before_action :set_live, only: %i[edit update destroy]
   before_action :logged_in_user, except: %i[index show]
   before_action :admin_or_elder_user, except: %i[index show]
 
@@ -8,7 +8,7 @@ class LivesController < ApplicationController
   end
 
   def show
-    @songs = @live.songs.played_order
+    @live = Live.includes(songs: %i[playings users]).find(params[:id])
   end
 
   def new
