@@ -5,7 +5,7 @@ class Live < ApplicationRecord
   validates :date, presence: true
 
   def self.years
-    Live.all.select(:date).map(&:nendo).uniq
+    Live.order_by_date.select(:date).map(&:nendo).uniq
   end
 
   def title
