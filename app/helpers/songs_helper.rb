@@ -1,4 +1,11 @@
 module SongsHelper
+  INST_ORDER = %w[Vo Vn Vc Fl Cl Sax Tp Hr Tb Harp Gt Koto Pf Acc 鍵ハ Ba Cj Dr Bongo Perc].freeze
+
+  def sort_by_inst(playings)
+    playings.sort do |p1, p2|
+      inst_order(p1.inst) <=> inst_order(p2.inst)
+    end
+  end
 
   def can_watch?(song)
     (logged_in? && current_user.played?(song)) ||
@@ -14,5 +21,12 @@ module SongsHelper
       render 'playings_fields', f: builder
     end
     content_tag :button, text, id: 'add-member', type: 'button', class: 'btn btn-link', data: { fields: fields.gsub("\n", '') }
+  end
+
+  private
+
+  def inst_order(inst)
+    priority = INST_ORDER.index { |i| inst.include?(i) }
+    priority ? priority : INST_ORDER.size
   end
 end

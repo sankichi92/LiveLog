@@ -23,5 +23,5 @@
           = "/ #{song.artist}"
           = render 'songs/link_to_edit', song: song
           %ul.list-inline
-            = render song.playings.order_by_inst.includes(:user)
+            = render sort_by_inst(song.playings)
 
