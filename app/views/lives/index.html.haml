@@ -13,4 +13,4 @@
               %h2.panel-title= y
             %table.table.table-hover
               %tbody
-                = render y_live
+                = render partial: 'live', collection: y_live, cached: true
