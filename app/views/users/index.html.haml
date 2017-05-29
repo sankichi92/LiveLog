@@ -14,7 +14,9 @@
       .col-sm-3
         %h2= y
         %ol
-          = render @users.select { |u| u.joined == y }
+          - @users.select { |u| u.joined == y }.each do |user|
+            - cache_unless logged_in?, user do
+              = render user
 
 - if logged_in?
   %p * 印が付いているメンバーは管理者です。

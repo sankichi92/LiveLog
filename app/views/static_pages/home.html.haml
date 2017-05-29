@@ -9,6 +9,6 @@
         「<a href="http://ku-unplugged.net/" target="_blank">京大アンプラグド</a>」のセットリスト検索システムです。
       = render 'songs/search_form'
 
-= render 'songs/songs_table', songs: @songs, show_live: true
+= render 'songs/songs_table', songs: @songs
 
 = will_paginate @songs
