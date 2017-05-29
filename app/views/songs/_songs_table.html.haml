@@ -9,4 +9,6 @@
         %th Members
         %th
     %tbody
-      = render songs
+      - songs.each do |song|
+        - cache_unless logged_in?, song do
+          = render song
