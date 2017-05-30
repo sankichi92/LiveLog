@@ -29,6 +29,8 @@ RSpec.describe 'Users', type: :request do
         id: user.id,
         joined: user.joined,
         public: user.public,
+        url: user.url,
+        intro: user.intro,
         name: user.handle,
         songs: [
           {
