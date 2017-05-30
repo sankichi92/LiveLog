@@ -1,7 +1,7 @@
 class Song < ApplicationRecord
   has_many :playings, dependent: :destroy, inverse_of: :song
   has_many :users, through: :playings
-  belongs_to :live
+  belongs_to :live, touch: true
   accepts_nested_attributes_for :playings, allow_destroy: true
   scope :played_order, -> { order(:time, :order) }
   scope :order_by_live, lambda {
