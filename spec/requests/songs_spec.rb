@@ -38,6 +38,8 @@ RSpec.describe 'Songs', type: :request do
         artist: song.artist,
         order: song.order,
         time: song.time,
+        youtube_id: song.youtube_id,
+        comment: song.comment,
         live: {
           id: live.id,
           name: live.name,
