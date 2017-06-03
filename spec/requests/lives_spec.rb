@@ -36,7 +36,8 @@ RSpec.describe 'Lives', type: :request do
             name: song.name,
             artist: song.artist,
             order: song.order,
-            time: song.time
+            time: song.time,
+            status: song.status
           }
         ]
       }

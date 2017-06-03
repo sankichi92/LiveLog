@@ -39,6 +39,7 @@ RSpec.describe 'Users', type: :request do
             artist: song.artist,
             order: song.order,
             time: song.time,
+            status: song.status,
             live: {
               id: live.id,
               name: live.name,
