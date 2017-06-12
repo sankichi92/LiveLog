@@ -1,5 +1,5 @@
 module SongsHelper
-  INST_ORDER = %w[Vo Vn Vla Vc Fl Cl Sax Tp Hr Tb Harp Gt Koto Pf Acc 鍵ハ Ba Cj Dr Bongo Shaker Perc].freeze
+  INST_ORDER = %w[Vo Vn Vla Vc Fl Cl Rec Sax Tp Hr Tb Harp Gt Koto 三線 Pf Acc 鍵ハ Ba Cj Dr Bongo Conga Shaker Perc].freeze
 
   def sort_by_inst(playings)
     playings.sort do |p1, p2|
