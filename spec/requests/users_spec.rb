@@ -23,7 +23,7 @@ RSpec.describe 'Users', type: :request do
   describe 'GET /members/:id.json' do
     let(:live) { create(:live) }
     let(:song) { create(:song, live: live) }
-    let!(:playing) { create(:playing, user: user, song: song) }
+    let!(:playing) { create(:playing, user: user, song: song, inst: 'Gt') }
     let(:expected_body) do
       {
         id: user.id,
@@ -32,6 +32,12 @@ RSpec.describe 'Users', type: :request do
         url: user.url,
         intro: user.intro,
         name: user.handle,
+        insts: [
+          {
+            inst: playing.inst,
+            count: 1
+          }
+        ],
         songs: [
           {
             id: song.id,
