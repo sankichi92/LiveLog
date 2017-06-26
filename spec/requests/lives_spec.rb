@@ -37,7 +37,8 @@ RSpec.describe 'Lives', type: :request do
             artist: song.artist,
             order: song.order,
             time: song.time,
-            status: song.status
+            status: song.status,
+            have_video: song.youtube_id.present?
           }
         ]
       }

@@ -14,6 +14,7 @@ RSpec.describe 'Songs', type: :request do
           order: song.order,
           time: song.time,
           status: song.status,
+          have_video: song.youtube_id.present?,
           live: {
             id: live.id,
             name: live.name,
