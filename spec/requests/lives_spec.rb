@@ -17,7 +17,10 @@ RSpec.describe 'Lives', type: :request do
 
     before { get lives_path, as: :json }
 
-    it_behaves_like 'valid response'
+    it 'responds with valid json' do
+      expect(response).to have_http_status(200)
+      expect(response.body).to be_json_as(expected_body)
+    end
   end
 
   describe 'GET /lives/:id.json' do
@@ -46,6 +49,9 @@ RSpec.describe 'Lives', type: :request do
 
     before { get live_path(live), as: :json }
 
-    it_behaves_like 'valid response'
+    it 'responds with valid json' do
+      expect(response).to have_http_status(200)
+      expect(response.body).to be_json_as(expected_body)
+    end
   end
 end

@@ -55,10 +55,3 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 end
-
-RSpec.shared_examples 'valid response' do
-  it 'responds with valid json' do
-    expect(response).to have_http_status(200)
-    expect(response.body).to be_json_as(expected_body)
-  end
-end

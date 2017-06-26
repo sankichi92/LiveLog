@@ -27,7 +27,10 @@ RSpec.describe 'Songs', type: :request do
 
     before { get songs_path, as: :json }
 
-    it_behaves_like 'valid response'
+    it 'responds with valid json' do
+      expect(response).to have_http_status(200)
+      expect(response.body).to be_json_as(expected_body)
+    end
   end
 
   describe 'GET /songs/:id.json' do
@@ -63,6 +66,9 @@ RSpec.describe 'Songs', type: :request do
 
     before { get song_path(song), as: :json }
 
-    it_behaves_like 'valid response'
+    it 'responds with valid json' do
+      expect(response).to have_http_status(200)
+      expect(response.body).to be_json_as(expected_body)
+    end
   end
 end
