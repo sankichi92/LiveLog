@@ -5,6 +5,7 @@ FactoryGirl.define do
     artist 'アンプラグダー'
     sequence(:order) { |n| n }
     status :closed
+    youtube_id 'https://www.youtube.com/watch?v=7LBUEYGfisQ'
   end
 
   factory :playing do

@@ -14,14 +14,15 @@ RSpec.feature "SongPages", type: :feature do
 
       expect(page).to have_title(song.name)
       expect(page).to have_content(song.name)
+      expect(page).to have_selector('.embed-responsive')
     end
 
-    scenario 'A non-logged-in user cannot see the closed song' do
+    scenario 'A non-logged-in user cannot watch the closed song video' do
       visit song_path(song)
 
-      expect(page).not_to have_title(song.name)
-      expect(page).not_to have_content(song.name)
-      expect(page).to have_selector('.alert-danger')
+      expect(page).to have_title(song.name)
+      expect(page).to have_content(song.name)
+      expect(page).not_to have_selector('.embed-responsive')
     end
 
     scenario 'A logged-in user can see the closed song' do
@@ -30,13 +31,15 @@ RSpec.feature "SongPages", type: :feature do
 
       expect(page).to have_title(song.name)
       expect(page).to have_content(song.name)
+      expect(page).to have_selector('.embed-responsive')
     end
 
-    scenario 'A logged-in user cannot see the secret song' do
+    scenario 'A logged-in user cannot watch the secret song video' do
       log_in_as create(:user)
       visit song_path(secret_song)
 
-      expect(page).not_to have_title(song.name)
+      expect(page).to have_title(song.name)
+      expect(page).not_to have_selector('.embed-responsive')
     end
   end
 
