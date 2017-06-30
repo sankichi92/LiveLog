@@ -49,7 +49,7 @@ RSpec.describe 'Users', type: :request do
             order: song.order,
             time: song.time,
             status: song.status,
-            have_video: song.youtube_id.present?,
+            youtube_id: '',
             live: {
               id: live.id,
               name: live.name,

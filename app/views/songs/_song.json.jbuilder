@@ -1,2 +1,2 @@
 json.extract! song, :id, :name, :artist, :order, :time, :status
-json.have_video song.youtube_id.present?
+json.youtube_id song.open? ? song.youtube_id : ''
