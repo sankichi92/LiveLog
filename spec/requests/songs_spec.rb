@@ -12,8 +12,7 @@ RSpec.describe 'Songs', type: :request do
           name: song.name,
           artist: song.artist,
           order: song.order,
-          time: song.time,
-          status: song.status,
+          time: song.time_str,
           youtube_id: song.youtube_id,
           live: {
             id: live.id,
@@ -42,8 +41,7 @@ RSpec.describe 'Songs', type: :request do
         name: song.name,
         artist: song.artist,
         order: song.order,
-        time: song.time,
-        status: song.status,
+        time: song.time_str,
         youtube_id: song.youtube_id,
         comment: song.comment,
         live: {
