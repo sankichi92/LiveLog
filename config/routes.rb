@@ -20,4 +20,12 @@ Rails.application.routes.draw do
 
   resources :songs
 
+  namespace :api, format: 'json' do
+    namespace :v1 do
+      resources :users, only: %i[index show], path: :members
+      resources :lives, only: %i[index show]
+      resources :songs, only: %i[index show]
+    end
+  end
+
 end
