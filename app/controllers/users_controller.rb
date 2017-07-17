@@ -6,12 +6,13 @@ class UsersController < ApplicationController
   before_action :admin_or_elder_user, only: %i[new create destroy]
 
   def index
-    @users = User.natural_order
-
-    return unless params[:active] == 'true'
-    today  = Date.today
-    range  = (today - 1.year..today)
-    @users = @users.includes(songs: :live).where('lives.date' => range)
+    if params[:active] != 'true'
+      @users = User.natural_order
+    else
+      today  = Date.today
+      range  = (today - 1.year..today)
+      @users = User.natural_order.includes(songs: :live).where('lives.date' => range)
+    end
   end
 
   def show
