@@ -49,8 +49,8 @@ class User < ApplicationRecord
     BCrypt::Password.create(string, cost: cost)
   end
 
-  def self.new_token
-    SecureRandom.urlsafe_base64
+  def self.new_token(urlsafe: true)
+    urlsafe ? SecureRandom.urlsafe_base64 : SecureRandom.base64
   end
 
   def full_name(logged_in = true)
