@@ -5,7 +5,16 @@ RSpec.describe 'Api::V1::Tokens', type: :request do
   describe 'POST /api/v1/login' do
     let!(:user) { create(:user) }
 
+    before do
+      post api_v1_token_path, params: {
+        email: email,
+        password: password
+      }
+    end
+
     context 'with valid email and password' do
+      let(:email) { user.email }
+      let(:password) { user.password }
       let(:expected_body) do
         {
           token: String,
@@ -18,26 +27,15 @@ RSpec.describe 'Api::V1::Tokens', type: :request do
         }
       end
 
-      before do
-        post api_v1_token_path, params: {
-          email: user.email,
-          password: user.password
-        }
-      end
-
-      it 'responds with valid json' do
+      it 'responds with valid status and json' do
         expect(response).to have_http_status(201)
         expect(response.body).to be_json_as(expected_body)
       end
     end
 
     context 'with invalid email and password' do
-      before do
-        post api_v1_token_path, params: {
-          email: 'invalid@example.com',
-          password: 'invalid_password'
-        }
-      end
+      let(:email) { 'invalid@example.com' }
+      let(:password) { 'invalid_password' }
 
       it { expect(response).to have_http_status(401) }
     end
