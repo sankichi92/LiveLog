@@ -10,14 +10,14 @@ class Api::V1::TokensController < Api::V1::ApplicationController
         render status: 201
       else
         render(
-          json: { error: 'アカウントが有効化されていません。メールを確認してください' },
           status: 401
+          plain: 'アカウントが有効化されていません。メールを確認してください',
         )
       end
     else
       render(
-        json: { error: '無効なメールアドレスとパスワードの組み合わせです' },
         status: 401
+        plain: '無効なメールアドレスとパスワードの組み合わせです',
       )
     end
   end
