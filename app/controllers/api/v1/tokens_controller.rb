@@ -7,17 +7,17 @@ class Api::V1::TokensController < Api::V1::ApplicationController
         @token = User.new_token(urlsafe: false)
         user.update_attribute(:api_digest, User.digest(@token))
         @current_user = user
-        render status: 201
+        render status: :created
       else
         render(
-          status: 401
           plain: 'アカウントが有効化されていません。メールを確認してください',
+          status: :unauthorized
         )
       end
     else
       render(
-        status: 401
         plain: '無効なメールアドレスとパスワードの組み合わせです',
+        status: :unauthorized
       )
     end
   end
