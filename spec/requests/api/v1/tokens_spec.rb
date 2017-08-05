@@ -6,7 +6,7 @@ RSpec.describe 'Api::V1::Tokens', type: :request do
     let!(:user) { create(:user) }
 
     before do
-      post api_v1_token_path, params: {
+      post api_v1_login_path, params: {
         email: email,
         password: password
       }
