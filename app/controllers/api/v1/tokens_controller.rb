@@ -4,8 +4,7 @@ class Api::V1::TokensController < Api::V1::ApplicationController
     user = User.find_by(email: params[:email].downcase)
     if user && user.authenticate(params[:password])
       if user.activated?
-        @token = User.new_token(urlsafe: false)
-        user.update_attribute(:api_digest, User.digest(@token))
+        user.create_api_token
         @current_user = user
         render status: :created
       else

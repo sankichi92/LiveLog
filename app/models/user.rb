@@ -2,7 +2,7 @@ class User < ApplicationRecord
   has_many :playings, dependent: :restrict_with_exception
   has_many :songs, through: :playings
 
-  attr_accessor :remember_token, :activation_token, :reset_token
+  attr_accessor :remember_token, :activation_token, :reset_token, :api_token
 
   before_save :downcase_email
   before_save :remove_spaces_from_furigana
@@ -118,6 +118,11 @@ class User < ApplicationRecord
 
   def password_reset_expired?
     reset_sent_at < 2.hours.ago
+  end
+
+  def create_api_token
+    self.api_token = User.new_token
+    update_attribute(:api_digest, User.digest(api_token))
   end
 
   private
