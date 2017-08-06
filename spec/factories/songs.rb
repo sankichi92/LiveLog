@@ -5,7 +5,8 @@ FactoryGirl.define do
     artist 'アンプラグダー'
     sequence(:order) { |n| n }
     status :closed
-    youtube_id 'https://www.youtube.com/watch?v=7LBUEYGfisQ'
+    youtube_id 'https://www.youtube.com/watch?v=2TL90rxt9bo'
+    comment 'アンプラグドのテーマソングです'
   end
 
   factory :playing do

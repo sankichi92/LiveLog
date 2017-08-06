@@ -76,7 +76,7 @@ RSpec.describe 'Api::V1::Songs', type: :request do
         order: song.order,
         time: song.time_str,
         youtube_id: youtube_id,
-        comment: song.comment,
+        comment: comment,
         live: {
           id: live.id,
           name: live.name,
@@ -100,6 +100,7 @@ RSpec.describe 'Api::V1::Songs', type: :request do
     context 'with no token' do
       let(:headers) { nil }
       let(:youtube_id) { '' }
+      let(:comment) { '' }
       let(:user_name) { user.handle }
 
       it 'responds with valid status and json' do
@@ -115,6 +116,7 @@ RSpec.describe 'Api::V1::Songs', type: :request do
         { Authorization: "Token token=\"#{token}\", id=\"#{visitor.id}\"" }
       end
       let(:youtube_id) { song.youtube_id }
+      let(:comment) { song.comment }
       let(:user_name) { user.full_name }
 
       it 'responds with valid status and json' do
@@ -130,6 +132,7 @@ RSpec.describe 'Api::V1::Songs', type: :request do
         { Authorization: "Token token=\"#{invalid_token}\", id=\"#{visitor.id}\"" }
       end
       let(:youtube_id) { '' }
+      let(:comment) { '' }
       let(:user_name) { user.handle }
 
       it 'responds with valid status and json' do
