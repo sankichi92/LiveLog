@@ -6,7 +6,7 @@ module Api::V1::ApplicationHelper
     !song.youtube_id.blank? &&
       (song.open? ||
         song.closed? && authenticated? ||
-        authenticated? && current_user.played?(song)
+        authenticated? && @current_user.played?(song)
       )
   end
 end
