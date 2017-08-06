@@ -26,6 +26,7 @@ Rails.application.routes.draw do
       resources :lives, only: %i[index show]
       resources :songs, only: %i[index show]
       post '/login', to: 'tokens#create'
+      delete '/logout', to: 'tokens#destroy'
     end
   end
 end

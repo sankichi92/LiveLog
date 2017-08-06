@@ -125,6 +125,10 @@ class User < ApplicationRecord
     update_attribute(:api_digest, User.digest(api_token))
   end
 
+  def destroy_api_token
+    update_attribute(:api_digest, nil)
+  end
+
   private
 
   def downcase_email

@@ -1,4 +1,5 @@
 class Api::V1::TokensController < Api::V1::ApplicationController
+  before_action :authenticated_user, only: :destroy
 
   def create
     user = User.find_by(email: params[:email].downcase)
@@ -19,5 +20,10 @@ class Api::V1::TokensController < Api::V1::ApplicationController
         status: :unauthorized
       )
     end
+  end
+
+  def destroy
+    @current_user.destroy_api_token
+    @current_user = nil
   end
 end
