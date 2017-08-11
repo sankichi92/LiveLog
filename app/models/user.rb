@@ -3,7 +3,7 @@ class User < ApplicationRecord
   has_many :songs, through: :playings
   has_many :tokens, dependent: :destroy
 
-  attr_accessor :remember_token, :activation_token, :reset_token, :api_token
+  attr_accessor :remember_token, :activation_token, :reset_token
 
   before_save :downcase_email
   before_save :remove_spaces_from_furigana
@@ -50,8 +50,8 @@ class User < ApplicationRecord
     BCrypt::Password.create(string, cost: cost)
   end
 
-  def self.new_token(urlsafe: true)
-    urlsafe ? SecureRandom.urlsafe_base64 : SecureRandom.base64
+  def self.new_token
+    SecureRandom.urlsafe_base64
   end
 
   def full_name(logged_in = true)
@@ -119,15 +119,6 @@ class User < ApplicationRecord
 
   def password_reset_expired?
     reset_sent_at < 2.hours.ago
-  end
-
-  def create_api_token
-    self.api_token = User.new_token
-    update_attribute(:api_digest, User.digest(api_token))
-  end
-
-  def destroy_api_token
-    update_attribute(:api_digest, nil)
   end
 
   def valid_token?(token)
