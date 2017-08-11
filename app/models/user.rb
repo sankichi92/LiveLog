@@ -130,6 +130,11 @@ class User < ApplicationRecord
     update_attribute(:api_digest, nil)
   end
 
+  def valid_token?(token)
+    digests = tokens.pluck(:digest)
+    digests.any? { |d| BCrypt::Password.new(d).is_password?(token) }
+  end
+
   private
 
   def downcase_email

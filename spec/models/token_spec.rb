@@ -15,9 +15,14 @@ RSpec.describe Token, type: :model do
 
   describe 'after saving token' do
     before { token.save }
+
     it 'should have present token and digest' do
       expect(token.token).not_to be_nil
       expect(token.digest).not_to be_nil
+    end
+
+    it 'should have valid token' do
+      expect(token.user.valid_token?(token.token)).to be_truthy
     end
   end
 end
