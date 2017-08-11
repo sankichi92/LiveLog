@@ -19,7 +19,8 @@ module Api::V1
     def authenticate
       authenticate_with_http_token do |token, options|
         user = User.find_by(id: options[:id])
-        @current_user = user if user.authenticated?(:api, token)
+        @current_user = user if user.valid_token?(token)
+        @token = token
       end
     end
 

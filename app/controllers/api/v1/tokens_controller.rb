@@ -5,7 +5,7 @@ class Api::V1::TokensController < Api::V1::ApplicationController
     user = User.find_by(email: params[:email].downcase)
     if user && user.authenticate(params[:password])
       if user.activated?
-        user.create_api_token
+        @token = user.tokens.create
         @current_user = user
         render status: :created
       else
@@ -23,7 +23,7 @@ class Api::V1::TokensController < Api::V1::ApplicationController
   end
 
   def destroy
-    @current_user.destroy_api_token
+    @current_user.destroy_token(@token)
     @current_user = nil
   end
 end

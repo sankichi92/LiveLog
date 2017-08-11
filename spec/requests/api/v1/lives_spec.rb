@@ -45,6 +45,7 @@ RSpec.describe 'Api::V1::Lives', type: :request do
         ]
       }
     end
+    let(:token) { create(:token) }
 
     before { get api_v1_live_path(live), headers: headers }
 
@@ -59,10 +60,8 @@ RSpec.describe 'Api::V1::Lives', type: :request do
     end
 
     context 'with valid token' do
-      let(:token) { User.new_token }
-      let(:visitor) { create(:user, api_digest: User.digest(token)) }
       let(:headers) do
-        { Authorization: "Token token=\"#{token}\", id=\"#{visitor.id}\"" }
+        { Authorization: "Token token=\"#{token.token}\", id=\"#{token.user.id}\"" }
       end
       let(:youtube_id) { song.youtube_id }
 
@@ -73,10 +72,9 @@ RSpec.describe 'Api::V1::Lives', type: :request do
     end
 
     context 'with invalid token' do
-      let(:invalid_token) { User.new_token }
-      let(:visitor) { create(:user) }
+      let(:invalid_token) { create(:token) }
       let(:headers) do
-        { Authorization: "Token token=\"#{invalid_token}\", id=\"#{visitor.id}\"" }
+        { Authorization: "Token token=\"#{invalid_token.token}\", id=\"#{token.user.id}\"" }
       end
       let(:youtube_id) { '' }
 

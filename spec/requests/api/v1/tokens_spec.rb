@@ -54,24 +54,23 @@ RSpec.describe 'Api::V1::Tokens', type: :request do
     end
 
     context 'with invalid token' do
-      let(:invalid_token) { User.new_token }
+      let(:invalid_token) { create(:token) }
       let(:headers) do
-        { Authorization: "Token token=\"#{invalid_token}\", id=\"#{user.id}\"" }
+        { Authorization: "Token token=\"#{invalid_token.token}\", id=\"#{user.id}\"" }
       end
 
       it { expect(response).to have_http_status(401) }
     end
 
     context 'with valid token' do
-      let(:token) { User.new_token }
-      let(:user) { create(:user, api_digest: User.digest(token)) }
+      let(:token) { create(:token, user: user) }
       let(:headers) do
-        { Authorization: "Token token=\"#{token}\", id=\"#{user.id}\"" }
+        { Authorization: "Token token=\"#{token.token}\", id=\"#{user.id}\"" }
       end
 
       it 'responds with valid status and make api token invalid' do
         expect(response).to have_http_status(204)
-        expect(user.reload.api_digest).to be_nil
+        expect(token.user.valid_token?(token.token)).to be_falsey
       end
     end
   end
