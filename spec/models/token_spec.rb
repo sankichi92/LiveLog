@@ -12,4 +12,12 @@ RSpec.describe Token, type: :model do
   it { is_expected.to respond_to(:token) }
 
   it { is_expected.to be_valid }
+
+  describe 'after saving token' do
+    before { token.save }
+    it 'should have present token and digest' do
+      expect(token.token).not_to be_nil
+      expect(token.digest).not_to be_nil
+    end
+  end
 end
