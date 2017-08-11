@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170811130856) do
+ActiveRecord::Schema.define(version: 20170811131258) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,13 @@ ActiveRecord::Schema.define(version: 20170811130856) do
     t.index ["live_id"], name: "index_songs_on_live_id", using: :btree
   end
 
+  create_table "tokens", force: :cascade do |t|
+    t.integer  "user_id",    null: false
+    t.string   "digest",     null: false
+    t.datetime "created_at", null: false
+    t.index ["user_id"], name: "index_tokens_on_user_id", using: :btree
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "first_name"
     t.string   "last_name"
@@ -77,4 +84,5 @@ ActiveRecord::Schema.define(version: 20170811130856) do
   add_foreign_key "playings", "songs"
   add_foreign_key "playings", "users"
   add_foreign_key "songs", "lives"
+  add_foreign_key "tokens", "users"
 end
