@@ -9,6 +9,7 @@ RSpec.describe Token, type: :model do
   it { is_expected.to respond_to(:user_id) }
   it { is_expected.to respond_to(:user) }
   it { is_expected.to respond_to(:digest) }
+  it { is_expected.to respond_to(:token) }
 
   it { is_expected.to be_valid }
 end
