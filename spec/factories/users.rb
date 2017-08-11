@@ -14,4 +14,8 @@ FactoryGirl.define do
       admin true
     end
   end
+
+  factory :token do
+    user
+  end
 end
