@@ -111,7 +111,7 @@ class User < ApplicationRecord
   def send_password_reset
     self.reset_token = User.new_token
     update_columns(
-      reset_digest:  User.digest(reset_token),
+      reset_digest: User.digest(reset_token),
       reset_sent_at: Time.zone.now
     )
     UserMailer.password_reset(self).deliver_now
@@ -124,6 +124,11 @@ class User < ApplicationRecord
   def valid_token?(token)
     digests = tokens.pluck(:digest)
     digests.any? { |d| BCrypt::Password.new(d).is_password?(token) }
+  end
+
+  def destroy_token(token)
+    token = tokens.find { |t| BCrypt::Password.new(t.digest).is_password?(token) }
+    token.destroy if token
   end
 
   private
