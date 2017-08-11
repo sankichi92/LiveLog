@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Api::V1::Users', type: :request do
-  let(:token) { User.new_token }
-  let!(:user) { create(:user, public: public, api_digest: User.digest(token)) }
+  let(:user) { create(:user, public: public) }
+  let!(:token) { create(:token, user: user) }
 
   describe 'GET /api/v1/members' do
     let(:public) { false }
@@ -31,7 +31,7 @@ RSpec.describe 'Api::V1::Users', type: :request do
 
     context 'with valid token' do
       let(:headers) do
-        { Authorization: "Token token=\"#{token}\", id=\"#{user.id}\"" }
+        { Authorization: "Token token=\"#{token.token}\", id=\"#{user.id}\"" }
       end
       let(:user_name) { user.full_name }
 
@@ -91,6 +91,7 @@ RSpec.describe 'Api::V1::Users', type: :request do
         ]
       }
     end
+    let(:token) { create(:token) }
 
     before { get api_v1_user_path(user), headers: headers }
 
@@ -116,10 +117,8 @@ RSpec.describe 'Api::V1::Users', type: :request do
     end
 
     context 'with valid token' do
-      let(:token) { User.new_token }
-      let(:visitor) { create(:user, api_digest: User.digest(token)) }
       let(:headers) do
-        { Authorization: "Token token=\"#{token}\", id=\"#{visitor.id}\"" }
+        { Authorization: "Token token=\"#{token.token}\", id=\"#{token.user.id}\"" }
       end
       let(:public) { false }
       let(:user_name) { user.full_name }
@@ -132,10 +131,9 @@ RSpec.describe 'Api::V1::Users', type: :request do
     end
 
     context 'with invalid token' do
-      let(:invalid_token) { User.new_token }
-      let(:visitor) { create(:user) }
+      let(:invalid_token) { create(:token) }
       let(:headers) do
-        { Authorization: "Token token=\"#{invalid_token}\", id=\"#{visitor.id}\"" }
+        { Authorization: "Token token=\"#{invalid_token.token}\", id=\"#{token.user.id}\"" }
       end
 
       context 'when user.public == true' do

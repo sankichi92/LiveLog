@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Api::V1::Songs', type: :request do
   let(:live) { create(:live) }
   let!(:song) { create(:song, live: live) }
+  let(:token) { create(:token) }
 
   describe 'GET /api/v1/songs' do
     let(:expected_body) do
@@ -37,10 +38,8 @@ RSpec.describe 'Api::V1::Songs', type: :request do
     end
 
     context 'with valid token' do
-      let(:token) { User.new_token }
-      let(:user) { create(:user, api_digest: User.digest(token)) }
       let(:headers) do
-        { Authorization: "Token token=\"#{token}\", id=\"#{user.id}\"" }
+        { Authorization: "Token token=\"#{token.token}\", id=\"#{token.user.id}\"" }
       end
       let(:youtube_id) { song.youtube_id }
 
@@ -51,10 +50,9 @@ RSpec.describe 'Api::V1::Songs', type: :request do
     end
 
     context 'with invalid token' do
-      let(:invalid_token) { User.new_token }
-      let(:user) { create(:user) }
+      let(:invalid_token) { create(:token) }
       let(:headers) do
-        { Authorization: "Token token=\"#{invalid_token}\", id=\"#{user.id}\"" }
+        { Authorization: "Token token=\"#{invalid_token.token}\", id=\"#{token.user.id}\"" }
       end
       let(:youtube_id) { '' }
 
@@ -110,10 +108,8 @@ RSpec.describe 'Api::V1::Songs', type: :request do
     end
 
     context 'with valid token' do
-      let(:token) { User.new_token }
-      let(:visitor) { create(:user, api_digest: User.digest(token)) }
       let(:headers) do
-        { Authorization: "Token token=\"#{token}\", id=\"#{visitor.id}\"" }
+        { Authorization: "Token token=\"#{token.token}\", id=\"#{token.user.id}\"" }
       end
       let(:youtube_id) { song.youtube_id }
       let(:comment) { song.comment }
@@ -126,10 +122,9 @@ RSpec.describe 'Api::V1::Songs', type: :request do
     end
 
     context 'with invalid token' do
-      let(:invalid_token) { User.new_token }
-      let(:visitor) { create(:user) }
+      let(:invalid_token) { create(:token) }
       let(:headers) do
-        { Authorization: "Token token=\"#{invalid_token}\", id=\"#{visitor.id}\"" }
+        { Authorization: "Token token=\"#{invalid_token.token}\", id=\"#{token.user.id}\"" }
       end
       let(:youtube_id) { '' }
       let(:comment) { '' }
