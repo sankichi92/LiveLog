@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170717132818) do
+ActiveRecord::Schema.define(version: 20170811130856) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,7 +70,6 @@ ActiveRecord::Schema.define(version: 20170717132818) do
     t.boolean  "public",            default: false
     t.string   "url"
     t.text     "intro"
-    t.string   "api_digest"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["furigana"], name: "index_users_on_furigana", using: :btree
   end
