@@ -16,4 +16,9 @@
     .col-sm-9
       = f.text_field :place, class: 'form-control', placeholder: '4共21'
 
+  .form-group
+    = f.label :album_url, class: 'col-sm-3 control-label'
+    .col-sm-9
+      = f.text_field :album_url, class: 'form-control', placeholder: 'https://goo.gl/photos/o94hbpFHQtcjzjwj6'
+
   = render 'shared/submit', f: f

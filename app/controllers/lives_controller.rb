@@ -70,6 +70,6 @@ class LivesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def live_params
-    params.require(:live).permit(:name, :date, :place)
+    params.require(:live).permit(:name, :date, :place, :album_url)
   end
 end
