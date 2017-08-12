@@ -22,33 +22,20 @@ class LivesController < ApplicationController
 
   def create
     @live = Live.new(live_params)
-
-    respond_to do |format|
-      if @live.save
-        format.html do
-          flash[:success] = "#{@live.title} を追加しました"
-          redirect_to @live
-        end
-        format.json { render :show, status: :created, location: @live }
-      else
-        format.html { render :new }
-        format.json { render json: @live.errors, status: :unprocessable_entity }
-      end
+    if @live.save
+      flash[:success] = "#{@live.title} を追加しました"
+      redirect_to @live
+    else
+      render :new
     end
   end
 
   def update
-    respond_to do |format|
-      if @live.update(live_params)
-        format.html do
-          flash[:success] = "#{@live.title} を更新しました"
-          redirect_to @live
-        end
-        format.json { render :show, status: :ok, location: @live }
-      else
-        format.html { render :edit }
-        format.json { render json: @live.errors, status: :unprocessable_entity }
-      end
+    if @live.update(live_params)
+      flash[:success] = "#{@live.title} を更新しました"
+      redirect_to @live
+    else
+      render :edit
     end
   end
 
