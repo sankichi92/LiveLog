@@ -13,6 +13,7 @@ class LivesController < ApplicationController
 
   def new
     @live = Live.new
+    @live.date = Date.today
   end
 
   def edit
