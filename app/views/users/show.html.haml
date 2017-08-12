@@ -1,26 +1,15 @@
 - provide(:title, @user.full_name(logged_in?))
 - total = @user.songs.count
 %header.page-header
-
-  - if logged_in?
-    %ul.pull-right.list-inline
-      - if !@user.activated?
-        %li=link_to glyphicon(:envelope) + '招待する', new_user_activation_path(@user), class: 'btn btn-info btn-lg'
-        - if current_user.admin_or_elder? && !@user.songs.exists?
-          %li= link_to glyphicon(:trash) + 'Delete', @user, method: :delete, class: 'btn btn-danger'
-      - elsif current_user.admin? && current_user != @user
-        - if @user.admin?
-          %li= link_to '管理者権限を無効にする', user_admin_path(@user), method: :delete, data: {confirm: '本当に管理者権限を無効にしますか？'}, class: 'btn btn-default'
-        - else
-          %li= link_to 'アカウントを無効にする', user_activation_path(@user), method: :delete, data: {confirm: '本当にアカウントを無効にしますか？'}, class: 'btn btn-warning'
-          %li= link_to '管理者にする', user_admin_path(@user), method: :post, data: {confirm: '本当に管理者にしますか？'}, class: 'btn btn-danger'
-
   %h1
     = @user.full_name(logged_in?)
     %small
       = @user.joined
-      - if logged_in?
-        = @user.public? ? glyphicon(:globe) : glyphicon(:lock)
+      - if !@user.public?
+        = glyphicon(:lock)
+    - if logged_in? && !@user.activated?
+      .pull-right
+        =link_to glyphicon(:envelope) + '招待する', new_user_activation_path(@user), class: 'btn btn-info btn-lg'
 
 .row
 
@@ -84,3 +73,14 @@
         = simple_format(@user.intro)
 
 = render 'songs/songs_table', songs: @user.songs.order_by_live.includes(playings: :user)
+
+- if logged_in? && current_user.admin?
+  %ul.list-inline.text-right
+    - if !@user.activated? && !@user.songs.exists?
+      %li= link_to glyphicon(:trash) + 'Delete', @user, method: :delete, class: 'btn btn-danger'
+    - if @user.activated? && current_user != @user
+      - if @user.admin?
+        %li= link_to '管理者権限を無効にする', user_admin_path(@user), method: :delete, data: {confirm: '本当に管理者権限を無効にしますか？'}, class: 'btn btn-default'
+      - else
+        %li= link_to 'アカウントを無効にする', user_activation_path(@user), method: :delete, data: {confirm: '本当にアカウントを無効にしますか？'}, class: 'btn btn-warning'
+        %li= link_to '管理者にする', user_admin_path(@user), method: :post, data: {confirm: '本当に管理者にしますか？'}, class: 'btn btn-danger'
