@@ -4,8 +4,9 @@
     %h1<
       = @live.name
       %small
-        = " #{I18n.l(@live.date)} @#{@live.place}"
-        = link_to glyphicon(:picture), @live.album_url, target: '_blank'
+        = " #{I18n.l(@live.date)} @#{@live.place} "
+        - if @live.album_url.present?
+          = link_to glyphicon(:picture), @live.album_url, target: '_blank'
 
   - if logged_in? && current_user.admin_or_elder?
     %ul.list-inline.text-right
