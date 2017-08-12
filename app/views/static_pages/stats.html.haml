@@ -33,7 +33,7 @@
              instruments: Playing.resolve_insts(@playings.count_insts)
     = render 'artists',
              title: 'カバーしたアーティスト',
-             artists: @songs.group(:artist).count.sort { |(k1, v1), (k2, v2)| v2 <=> v1 }
+             artists: @songs.where.not(artist: [nil, '']).group(:artist).count.sort { |(_, c1), (_, c2)| c2 <=> c1 }
     = render 'formations',
              title: 'バンドの構成人数',
              formations: Playing.count_formation(@playings.count_members_per_song),
