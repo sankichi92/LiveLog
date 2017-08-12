@@ -1,19 +1,18 @@
 - provide(:title, @live.title)
 %article
   %header.page-header
-
-    - if logged_in? && current_user.admin_or_elder?
-      %ul.pull-right.list-inline
-        %li= link_to glyphicon('plus-sign') + 'Add song', new_song_path(live_id: @live.id), class: 'btn btn-default', role: 'button'
-        %li= link_to glyphicon(:edit) + 'Edit', edit_live_path(@live), class: 'btn btn-primary', role: 'button'
-        - unless @live.songs.exists?
-          %li= link_to glyphicon(:trash) + 'Delete', @live, method: :delete, class: 'btn btn-danger', role: 'button'
-
     %h1<
       = @live.name
       %small
         = " #{I18n.l(@live.date)} @#{@live.place}"
         = link_to glyphicon(:picture), @live.album_url, target: '_blank'
+
+  - if logged_in? && current_user.admin_or_elder?
+    %ul.list-inline.text-right
+      %li= link_to glyphicon('plus-sign') + 'Add song', new_song_path(live_id: @live.id), class: 'btn btn-default', role: 'button'
+      %li= link_to glyphicon(:edit) + 'Edit', edit_live_path(@live), class: 'btn btn-primary', role: 'button'
+      - unless @live.songs.exists?
+        %li= link_to glyphicon(:trash) + 'Delete', @live, method: :delete, class: 'btn btn-danger', role: 'button'
 
   - if @live.songs.count > 20
     .table-responsive
