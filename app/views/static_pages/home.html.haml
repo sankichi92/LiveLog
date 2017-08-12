@@ -1,14 +1,13 @@
 %header.jumbotron
   .row
-    .col-sm-4
+    .col-lg-4.col-md-6
       = image_tag 'logo.png', alt: 'LiveLog logo', class: 'img-responsive'
-    .col-sm-8.text-center
+    .col-lg-8.col-md-6.text-center
       %h1 LiveLog
       %p
         京都大学を中心に活動するアコースティック軽音サークル<br>
         「<a href="http://ku-unplugged.net/" target="_blank">京大アンプラグド</a>」のセットリスト検索システムです。
       = render 'songs/search_form'
-
-= render 'songs/songs_table', songs: @songs
-
-= will_paginate @songs
+      %p
+        %a{href: 'https://play.google.com/store/apps/details?id=net.ku_unplugged.livelog&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1', target: '_blank'}
+          %img{src: 'https://play.google.com/intl/en_us/badges/images/generic/ja_badge_web_generic.png', alt: 'Google Play で手に入れよう', width: 160}
