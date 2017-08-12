@@ -9,6 +9,7 @@ RSpec.describe Live, type: :model do
   it { is_expected.to respond_to(:date) }
   it { is_expected.to respond_to(:place) }
   it { is_expected.to respond_to(:songs) }
+  it { is_expected.to respond_to(:album_url) }
 
   it { is_expected.to be_valid }
 
@@ -34,6 +35,11 @@ RSpec.describe Live, type: :model do
     it 'should raise an exception when live is deleted with songs' do
       expect { live.destroy }.to raise_exception ActiveRecord::DeleteRestrictionError
     end
+  end
+
+  describe 'when album_url is not URL' do
+    before { live.album_url = 'invalid url' }
+    it { is_expected.not_to be_valid }
   end
 end
 

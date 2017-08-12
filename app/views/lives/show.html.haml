@@ -11,7 +11,9 @@
 
     %h1<
       = @live.name
-      %small= "#{I18n.l(@live.date)} @#{@live.place}"
+      %small
+        = " #{I18n.l(@live.date)} @#{@live.place}"
+        = link_to glyphicon(:picture), @live.album_url, target: '_blank'
 
   - if @live.songs.count > 20
     .table-responsive
