@@ -5,9 +5,13 @@
 .well.well-sm
   = render 'search_form'
 
-%p.text-right
-  = page_entries_info
+- if @songs.present?
+  %p.text-right
+    = page_entries_info
+  = render 'songs/songs_table', songs: @songs
+  = will_paginate
 
-= render 'songs/songs_table', songs: @songs
-
-= will_paginate
+- else
+  .alert.alert-danger{role: 'alert'}
+    %strong= params[:q]
+    に一致する曲は見つかりませんでした。
