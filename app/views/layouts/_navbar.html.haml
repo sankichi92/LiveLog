@@ -29,6 +29,7 @@
               %span.caret
             %ul.dropdown-menu
               %li= link_to glyphicon(:user) + 'Profile',  current_user
+              %li= link_to glyphicon(:comment) + 'Report', feedback_url(current_user), target: '_blank'
               %li= link_to glyphicon(:cog) + 'Settings', edit_user_path(current_user)
               %li.divider{role: 'separator'}
               %li= link_to glyphicon('log-out') + 'Log out', logout_path, method: :delete
