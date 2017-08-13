@@ -1,6 +1,7 @@
 # LiveLog
 
 [![Build Status](https://travis-ci.org/sankichi92/LiveLog.svg?branch=master)](https://travis-ci.org/sankichi92/LiveLog)
+[![Gitter chat](https://badges.gitter.im/sankichi92/LiveLog.svg)](https://gitter.im/ku-unplugged-livelog/Lobby)
 
 This is the application to manage set lists of the acoustic light music club "[KU Unplugged (京大アンプラグド)](http://ku-unplugged.net/)."
 
