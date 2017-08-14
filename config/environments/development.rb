@@ -12,7 +12,7 @@ Rails.application.configure do
   # Show full error reports.
   config.consider_all_requests_local = true
 
-  # Enable/disable caching.
+  # Enable/disable caching. By default caching is disabled.
   config.action_controller.perform_caching = true
 
   config.cache_store = :memory_store
@@ -23,7 +23,7 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :test
   host = 'localhost:3000'
-  config.action_mailer.default_url_options = {host: host, protocol: 'https'}
+  config.action_mailer.default_url_options = { host: host, protocol: 'https' }
   config.action_mailer.perform_caching = false
 
   # Print deprecation notices to the Rails logger.
