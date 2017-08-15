@@ -273,8 +273,11 @@ DEPENDENCIES
   turbolinks (~> 5)
   tzinfo-data
   uglifier (>= 3.2.0)
-  web-console
+  web-console (>= 3.5.1)
   will_paginate (~> 3.1.6)
+
+RUBY VERSION
+   ruby 2.4.1p111
 
 BUNDLED WITH
    1.15.3

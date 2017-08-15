@@ -28,7 +28,7 @@ group :development do
   gem 'rails_real_favicon'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.1'
-  gem 'web-console'
+  gem 'web-console', '>= 3.5.1'
 end
 
 group :test do
