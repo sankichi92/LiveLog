@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  get 'entries/new'
+
+  get 'entries/create'
+
   root 'static_pages#home'
 
   get '/stats', to: 'static_pages#stats'
