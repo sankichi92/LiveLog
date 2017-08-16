@@ -1,3 +1,7 @@
 - provide(:title, 'Apply for song')
 %header.page-header
-  %h1 Entry form
+  %h1
+    Apply for a song to
+    = @live.name
+
+= render 'form'
