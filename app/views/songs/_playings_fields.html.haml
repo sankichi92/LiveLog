@@ -4,7 +4,7 @@
   .col-sm-2
     = f.text_field :inst, class: 'form-control', placeholder: 'Gt&Vo'
   .col-sm-6
-    = f.collection_select :user_id, @users, :id, :full_name, {}, class: 'select2 form-control'
+    = f.collection_select :user_id, User.natural_order, :id, :full_name, {}, class: 'select2 form-control'
   .col-sm-1
     = content_tag :button,
                   glyphicon(:minus),
