@@ -13,5 +13,7 @@ RSpec.describe SongMailer, type: :mailer do
       expect(mail.to).to eq(['miyoshi@ku-unplugged.net'])
       expect(mail.from).to eq([applicant.email])
     end
+
+    # TODO: Resolve https://github.com/sankichi92/LiveLog/issues/85 and test the body
   end
 end
