@@ -29,10 +29,15 @@
               %span.caret
             %ul.dropdown-menu
               %li= link_to glyphicon(:user) + 'Profile',  current_user
-              %li= link_to glyphicon(:comment) + 'Report', feedback_url(current_user), target: '_blank'
               %li= link_to glyphicon(:cog) + 'Settings', edit_user_path(current_user)
-              %li.divider{role: 'separator'}
               %li= link_to glyphicon('log-out') + 'Log out', logout_path, method: :delete
+              - if Live.future.exists?
+                %li.divider{role: 'separator'}
+                %li.dropdown-header Apply
+                - Live.future.each do |live|
+                  %li= link_to live.name, new_live_entry_path(live)
+              %li.divider{role: 'separator'}
+              %li= link_to glyphicon(:comment) + 'Report', feedback_url(current_user), target: '_blank'
       - else
         = link_to login_path do
           %button.btn.btn-default.navbar-btn.navbar-right= glyphicon('log-in') + 'Log in'
