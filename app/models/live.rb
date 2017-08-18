@@ -2,7 +2,7 @@ class Live < ApplicationRecord
   has_many :songs, dependent: :restrict_with_exception
 
   scope :order_by_date, -> { order(date: :desc) }
-  scope :future, -> { where('date > ?', Date.today) }
+  scope :future, -> { where('date >= ?', Date.today + 1.week) }
 
   validates :name, presence: true, uniqueness: { scope: :date }
   validates :date, presence: true
