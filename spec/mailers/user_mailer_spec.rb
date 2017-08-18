@@ -13,7 +13,8 @@ RSpec.describe UserMailer, type: :mailer do
       expect(mail.from).to eq(['noreply@livelog.ku-unplugged.net'])
     end
 
-    xit 'renders the body' do # TODO: Solve encoding of Japanese mail
+    # TODO: Resolve https://github.com/sankichi92/LiveLog/issues/85
+    xit 'renders the body' do
       expect(mail.body.encoded).to match(user.full_name)
       expect(mail.body.encoded).to match(user.activation_token)
       expect(mail.body.encoded).to match(CGI.escape(user.email))
@@ -31,7 +32,8 @@ RSpec.describe UserMailer, type: :mailer do
       expect(mail.from).to eq(['noreply@livelog.ku-unplugged.net'])
     end
 
-    xit 'renders the body' do # TODO: Solve encoding of Japanese mail
+    # TODO: Resolve https://github.com/sankichi92/LiveLog/issues/85
+    xit 'renders the body' do
       expect(mail.body.encoded).to match(user.reset_token)
       expect(mail.body.encoded).to match(CGI.escape(user.email))
     end

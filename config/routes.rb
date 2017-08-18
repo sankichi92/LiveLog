@@ -16,7 +16,9 @@ Rails.application.routes.draw do
     resource :admin, only: %i[create destroy]
   end
 
-  resources :lives
+  resources :lives do
+    resource :entry, only: %i[new create]
+  end
 
   resources :songs
 

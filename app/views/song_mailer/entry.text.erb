@@ -1,0 +1,13 @@
+申請者: <%= "#{@applicant.formal_name} (#{@applicant.joined})" %>
+
+ライブ: <%= @song.live.title %>
+
+曲名 / アーティスト名: <%= @song.title %>
+
+メンバー:
+<% @song.playings.each do |playing| %>
+    <%= "#{playing.inst}. #{playing.user.formal_name} (#{playing.user.joined})" %>
+<% end %>
+
+備考:
+<%= @notes %>

@@ -1,0 +1,35 @@
+= form_for(@song, url: { action: 'create' }, html: {class: 'form-horizontal well'}) do |f|
+  = render 'shared/error_messages', object: f.object
+
+  .form-group
+    = f.label :name, class: 'col-sm-3 control-label'
+    .col-sm-9
+      = f.text_field :name, class: 'form-control', placeholder: 'Tears in Heaven'
+
+  .form-group
+    = f.label :artist, class: 'col-sm-3 control-label'
+    .col-sm-9
+      = f.text_field :artist, class: 'form-control', placeholder: 'Eric Clapton'
+
+  #playings-fields
+    = f.fields_for :playings do |builder|
+      = render 'songs/playings_fields', f: builder
+
+  .form-group
+    .col-sm-3.control-label
+      = button_to_add_member glyphicon('plus'), f
+
+  .form-group
+    = f.label :status, class: 'col-sm-3 control-label'
+    .col-sm-9
+      = f.select :status, { 'バンド内': 'secret', 'サークル内': 'closed', '公開': 'open' }, { selected: 'open' }, class: 'form-control'
+      %p.help-block 動画がアップロードされた際の公開範囲です。
+
+  .form-group
+    = label_tag :notes, '備考', class: 'col-sm-3 control-label'
+    .col-sm-9
+      = text_area_tag :notes, '', class: 'form-control', rows: 3
+
+  .form-group
+    .col-sm-offset-3.col-sm-9
+      = f.submit 'Send', class: 'btn btn-primary'
