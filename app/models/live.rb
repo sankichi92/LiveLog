@@ -3,6 +3,7 @@ class Live < ApplicationRecord
 
   scope :order_by_date, -> { order(date: :desc) }
   scope :future, -> { where('date >= ?', Date.today + 1.week) }
+  scope :visible, -> { where('date < ?', Date.today + 1.week) }
 
   validates :name, presence: true, uniqueness: { scope: :date }
   validates :date, presence: true

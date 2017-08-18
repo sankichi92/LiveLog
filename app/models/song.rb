@@ -19,6 +19,7 @@ class Song < ApplicationRecord
          (?<id>\S{11})
        )
       )x
+  scope :visible, -> { where('lives.date < ?', Date.today + 1.week) }
   validates :youtube_id,
             format: { with: VALID_YOUTUBE_REGEX },
             allow_blank: true
