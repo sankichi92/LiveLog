@@ -1,5 +1,5 @@
 class SongMailer < ApplicationMailer
-  default to: 'miyoshi@ku-unplugged.net' # TODO: Replace "miyoshi" with "pa"
+  default to: 'pa@ku-unplugged.net'
 
   def entry(song, applicant, notes)
     @song = song
