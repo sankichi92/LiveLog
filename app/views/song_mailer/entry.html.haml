@@ -7,10 +7,9 @@
   %dd= link_to @song.title, song_url(@song)
   %dt メンバー
   %dd
-    %ul
-      - @song.playings.each do |playing|
-        %li
-          = "#{playing.inst}."
-          = link_to "#{playing.user.formal_name} (#{playing.user.joined})", user_url(playing.user)
+    - @song.playings.reverse.each do |playing|
+      = "#{playing.inst}."
+      = link_to "#{playing.user.formal_name} (#{playing.user.joined})", user_url(playing.user)
+      %br
   %dt 備考
   %dd= @notes

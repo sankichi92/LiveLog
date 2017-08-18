@@ -5,7 +5,7 @@
 曲名 / アーティスト名: <%= @song.title %>
 
 メンバー:
-<% @song.playings.each do |playing| %>
+<% @song.playings.reverse.each do |playing| %>
     <%= "#{playing.inst}. #{playing.user.formal_name} (#{playing.user.joined})" %>
 <% end %>
 
