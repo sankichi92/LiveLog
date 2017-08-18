@@ -10,7 +10,7 @@ RSpec.describe SongMailer, type: :mailer do
 
     it 'renders the headers' do
       expect(mail.subject).to eq("#{song.live.title} 曲申請「#{song.title}」")
-      expect(mail.to).to eq(['miyoshi@ku-unplugged.net'])
+      expect(mail.to).to eq(['pa@ku-unplugged.net'])
       expect(mail.from).to eq([applicant.email])
     end
 
