@@ -17,7 +17,7 @@ class Song < ApplicationRecord
 
   scope :played_order, -> { order(:time, :order) }
   scope :order_by_live, -> { includes(:live).order('lives.date DESC', :time, :order) }
-  scope :visible, -> { where('lives.date < ?', Date.today + 1.week) }
+  scope :visible, -> { where('lives.date < ?', Live.boundary_date) }
 
   validates :live_id, presence: true
   validates :name, presence: true

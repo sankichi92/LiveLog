@@ -2,8 +2,8 @@ class Live < ApplicationRecord
   has_many :songs, dependent: :restrict_with_exception
 
   scope :order_by_date, -> { order(date: :desc) }
-  scope :future, -> { where('date >= ?', Date.today + 1.week) }
-  scope :visible, -> { where('date < ?', Date.today + 1.week) }
+  scope :future, -> { where('date >= ?', boundary_date) }
+  scope :visible, -> { where('date < ?', boundary_date) }
 
   validates :name, presence: true, uniqueness: { scope: :date }
   validates :date, presence: true
@@ -11,6 +11,10 @@ class Live < ApplicationRecord
 
   def self.years
     Live.order_by_date.select(:date).map(&:nendo).uniq
+  end
+
+  def self.boundary_date
+    Date.today + 1.week
   end
 
   def title
@@ -23,5 +27,9 @@ class Live < ApplicationRecord
     else
       date.year
     end
+  end
+
+  def future?
+    date >= Live.boundary_date
   end
 end
