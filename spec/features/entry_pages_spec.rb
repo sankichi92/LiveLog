@@ -6,17 +6,33 @@ RSpec.feature 'EntryPages', type: :feature do
   feature 'Entry' do
     given(:user) { create(:user) }
 
+    background { ActionMailer::Base.deliveries.clear }
+
     scenario 'A non-logged-in user cannot visit a new entry page' do
       visit new_live_entry_path(live)
 
       expect(page).not_to have_title('Apply for song')
     end
 
-    scenario 'A logged-in user can visit a new entry page' do
+    scenario 'A logged-in user can send an entry with valid information' do
       log_in_as user
       visit new_live_entry_path(live)
 
       expect(page).to have_title('Apply for song')
+
+      fill_in '曲名', with: 'テストソング'
+
+      expect { click_button 'Send' }.to change(Song, :count).by(1)
+      expect(ActionMailer::Base.deliveries.size).to eq 1
+    end
+
+    scenario 'A logged-in user cannot send an entry with invalid information' do
+      log_in_as user
+      visit new_live_entry_path(live)
+
+      expect { click_button 'Send' }.not_to change(Song, :count)
+      expect(ActionMailer::Base.deliveries.size).to eq 0
+      expect(page).to have_selector('.alert-danger')
     end
   end
 end

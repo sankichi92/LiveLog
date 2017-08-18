@@ -63,6 +63,10 @@ class Song < ApplicationRecord
     "#{time_str} #{order}"
   end
 
+  def send_entry(applicant, notes)
+    SongMailer.entry(self, applicant, notes).deliver_now
+  end
+
   def previous(logged_in = false)
     return nil if order.blank?
     allowed_statuses = if logged_in
