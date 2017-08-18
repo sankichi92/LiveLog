@@ -5,8 +5,12 @@
       = @live.name
       %small
         = " #{I18n.l(@live.date)} @#{@live.place} "
-      - if logged_in? && @live.album_url.present?
-        = link_to glyphicon(:picture) + 'アルバム', @live.album_url, class: 'pull-right btn btn-primary btn-lg', target: '_blank', 'data-toggle': 'tooltip', 'data-placement': 'top', title: '持っている写真を共有しよう！'
+      - if logged_in?
+        %ul.list-inline.pull-right
+          - if @live.future?
+            %li= link_to glyphicon(:send) + '曲を出す', new_live_entry_path(@live), class: 'btn btn-info btn-lg'
+          - if @live.album_url.present?
+            %li= link_to glyphicon(:picture) + 'アルバム', @live.album_url, class: 'btn btn-primary btn-lg', target: '_blank', 'data-toggle': 'tooltip', 'data-placement': 'top', title: '持っている写真を共有しよう！'
 
   - if logged_in? && current_user.admin_or_elder?
     %ul.list-inline.text-right
