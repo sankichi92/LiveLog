@@ -1,5 +1,6 @@
 class LivesController < ApplicationController
   before_action :set_live, only: %i[edit update destroy]
+  before_action :future_live, only: :show
   before_action :logged_in_user, except: %i[index show]
   before_action :admin_or_elder_user, except: %i[index show]
 
@@ -8,7 +9,7 @@ class LivesController < ApplicationController
   end
 
   def show
-    @live = Live.includes(:songs).find(params[:id])
+    #
   end
 
   def new
@@ -51,9 +52,13 @@ class LivesController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_live
     @live = Live.find(params[:id])
+  end
+
+  def future_live
+    @live = Live.includes(:songs).find(params[:id])
+    logged_in_user if @live.date > Date.today
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
