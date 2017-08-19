@@ -1,0 +1,5 @@
+$('form > .alert.alert-danger').remove()
+$('<%= escape_javascript(render 'shared/error_messages', object: @song) %>')
+    .prependTo('form')
+    .hide()
+    .fadeIn();

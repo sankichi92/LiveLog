@@ -10,7 +10,7 @@ class EntriesController < ApplicationController
 
   def create
     @song = @live.songs.build(song_params)
-    return render :new unless @song.save
+    return unless @song.save
     if @song.send_entry(current_user)
       flash[:info] = '曲の申請メールを送信しました'
     else
