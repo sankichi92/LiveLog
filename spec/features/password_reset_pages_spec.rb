@@ -30,8 +30,8 @@ RSpec.feature "PasswordResetPages", type: :feature do
   feature 'Reset password' do
     given(:user) { create(:user) }
     background do
-      user.reset_token = User.new_token
-      user.reset_digest = User.digest(user.reset_token)
+      user.reset_token = Token.random
+      user.reset_digest = Token.digest(user.reset_token)
       user.reset_sent_at = Time.zone.now
       user.save
     end

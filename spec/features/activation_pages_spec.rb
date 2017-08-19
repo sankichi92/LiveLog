@@ -50,9 +50,9 @@ RSpec.feature "ActivationPages", type: :feature do
 
   feature 'Activation' do
     given(:user) { create(:user, activated: false) }
-    given(:token) { User.new_token }
+    given(:token) { Token.random }
     background do
-      user.activation_digest = User.digest(token)
+      user.activation_digest = Token.digest(token)
       user.save
     end
 

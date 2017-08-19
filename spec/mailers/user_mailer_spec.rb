@@ -5,7 +5,7 @@ RSpec.describe UserMailer, type: :mailer do
     let(:user) { create(:user) }
     let(:inviter) { create(:user) }
     let(:mail) { UserMailer.account_activation(user, inviter) }
-    before { user.activation_token = User.new_token }
+    before { user.activation_token = Token.random }
 
     it 'renders the headers' do
       expect(mail.subject).to eq('【LiveLog】アカウントの有効化')
@@ -24,7 +24,7 @@ RSpec.describe UserMailer, type: :mailer do
   describe 'password_reset' do
     let(:user) { create(:user) }
     let(:mail) { UserMailer.password_reset(user) }
-    before { user.reset_token = User.new_token }
+    before { user.reset_token = Token.random }
 
     it 'renders the headers' do
       expect(mail.subject).to eq('【LiveLog】パスワード再設定')

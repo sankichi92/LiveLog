@@ -10,7 +10,7 @@ RSpec.describe SessionsHelper, type: :helper do
   end
 
   describe 'when remember digest is wrong' do
-    before { user.update_attribute(:remember_digest, User.digest(User.new_token)) }
+    before { user.update_attribute(:remember_digest, Token.digest(Token.random)) }
     it { expect(current_user).to be_nil }
   end
 end

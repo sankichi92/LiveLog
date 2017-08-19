@@ -42,7 +42,7 @@ RSpec.describe 'Api::V1::Users', type: :request do
     end
 
     context 'with invalid token' do
-      let(:invalid_token) { User.new_token }
+      let(:invalid_token) { Token.random }
       let(:headers) do
         { Authorization: "Token token=\"#{invalid_token}\", id=\"#{user.id}\"" }
       end
