@@ -113,6 +113,10 @@ class User < ApplicationRecord
     UserMailer.password_reset(self).deliver_now
   end
 
+  def reset_password(password_params)
+    update(password_params) && update_column(:reset_digest, nil)
+  end
+
   def password_reset_expired?
     reset_sent_at < 2.hours.ago
   end
