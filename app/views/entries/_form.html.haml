@@ -26,9 +26,9 @@
       %p.help-block 動画がアップロードされた際の公開範囲です。
 
   .form-group
-    = label_tag :notes, '備考', class: 'col-sm-3 control-label'
+    = f.label :notes, '備考', class: 'col-sm-3 control-label'
     .col-sm-9
-      = text_area_tag :notes, '', class: 'form-control', rows: 3
+      = f.text_area :notes, id: 'song_notes', class: 'form-control', rows: 3
 
   .form-group
     .col-sm-offset-3.col-sm-9

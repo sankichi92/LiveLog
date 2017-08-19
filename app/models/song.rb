@@ -15,6 +15,8 @@ class Song < ApplicationRecord
   belongs_to :live, touch: true
   accepts_nested_attributes_for :playings, allow_destroy: true
 
+  attr_accessor :notes
+
   scope :played_order, -> { order(:time, :order) }
   scope :order_by_live, -> { includes(:live).order('lives.date DESC', :time, :order) }
   scope :visible, -> { where('lives.date < ?', Live.boundary_date) }
@@ -67,8 +69,8 @@ class Song < ApplicationRecord
     "#{time_str} #{order}"
   end
 
-  def send_entry(applicant, notes)
-    SongMailer.entry(self, applicant, notes).deliver_now
+  def send_entry(applicant)
+    SongMailer.entry(self, applicant).deliver_now
   end
 
   def previous(logged_in = false)
