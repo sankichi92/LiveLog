@@ -16,25 +16,25 @@ class User < ApplicationRecord
   validates :nickname, length: { maximum: 50 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
   validates :email,
-            presence:   true,
-            length:     { maximum: 255 },
-            format:     { with: VALID_EMAIL_REGEX },
+            presence: true,
+            length: { maximum: 255 },
+            format: { with: VALID_EMAIL_REGEX },
             uniqueness: { case_sensitive: false },
-            on:         :update
+            on: :update
   validates :joined,
-            presence:     true,
+            presence: true,
             numericality: {
-              only_integer:          true,
-              greater_than:          1994,
+              only_integer: true,
+              greater_than: 1994,
               less_than_or_equal_to: Date.today.year
             }
   validates :url, format: /\A#{URI.regexp(%w[http https])}\z/, allow_blank: true
   validates :password,
-            presence:     true,
+            presence: true,
             confirmation: true,
-            length:       { minimum: 6, maximum: 72 },
-            allow_nil:    true,
-            on:           :update
+            length: { minimum: 6, maximum: 72 },
+            allow_nil: true,
+            on: :update
   validates :password_confirmation, presence: true, allow_nil: true, on: :update
 
   scope :natural_order, -> { order('joined DESC', 'furigana COLLATE "C"') } # TODO: Remove 'COLLATE "C"'
@@ -57,18 +57,13 @@ class User < ApplicationRecord
     "#{last_name} #{first_name}"
   end
 
-  def full_name(logged_in = true)
-    return handle unless logged_in
-
-    if nickname.blank?
-      formal_name
-    else
-      "#{last_name} #{first_name} (#{nickname})"
-    end
-  end
-
   def handle
     nickname.blank? ? last_name : nickname
+  end
+
+  def full_name(logged_in = true)
+    return handle unless logged_in
+    nickname.blank? ? formal_name : "#{last_name} #{first_name} (#{nickname})"
   end
 
   def elder?
@@ -80,7 +75,7 @@ class User < ApplicationRecord
   end
 
   def played?(song)
-    playings.map(&:song_id).include?(song.id)
+    song.playings.pluck(:user_id).include?(id)
   end
 
   def authenticated?(attribute, token)
@@ -104,19 +99,13 @@ class User < ApplicationRecord
 
   def send_invitation(email, inviter)
     self.activation_token = User.new_token
-    return unless update_attributes(
-      email: email,
-      activation_digest: User.digest(activation_token)
-    )
+    return unless update_attributes(email: email, activation_digest: User.digest(activation_token))
     UserMailer.account_activation(self, inviter).deliver_now
   end
 
   def send_password_reset
     self.reset_token = User.new_token
-    update_columns(
-      reset_digest: User.digest(reset_token),
-      reset_sent_at: Time.zone.now
-    )
+    update_columns(reset_digest: User.digest(reset_token), reset_sent_at: Time.zone.now)
     UserMailer.password_reset(self).deliver_now
   end
 
