@@ -41,7 +41,7 @@
 
   .form-group
     .col-sm-3.control-label
-      = button_to_add_member glyphicon('plus'), f
+      = button_to_add_member(f)
 
   - if current_user.played?(@song)
 
