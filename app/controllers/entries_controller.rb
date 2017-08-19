@@ -26,7 +26,7 @@ class EntriesController < ApplicationController
   end
 
   def future_live
-    redirect_to root_url if @live.date <= Date.today
+    redirect_to root_url unless @live.future?
   end
 
   def song_params
