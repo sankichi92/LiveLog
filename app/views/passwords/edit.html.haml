@@ -1,7 +1,7 @@
 - provide(:title, 'Edit password')
 - provide(:button_text, 'Save')
 %header.page-header
-  %h1 Edit password
+  %h1 パスワードを変更する
 
 = form_for(@user, url: user_password_path, html: {class: 'form-horizontal well'}) do |f|
   = render 'shared/error_messages', object: f.object

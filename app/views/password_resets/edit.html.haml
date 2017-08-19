@@ -1,6 +1,6 @@
 - provide(:title, 'Reset password')
 %header.page-header
-  %h1 Reset password
+  %h1 パスワードを再設定する
 
 = form_for(@user, url: password_reset_path(params[:id]), html: {class: 'form-horizontal well'}) do |f|
   = render 'shared/error_messages', object: f.object

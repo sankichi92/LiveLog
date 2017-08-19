@@ -18,7 +18,7 @@ RSpec.feature "ActivationPages", type: :feature do
       log_in_as user
       visit new_user_activation_path(not_activated_user)
 
-      expect(page).to have_title('Invite')
+      expect(page).to have_title('Invitation')
 
       fill_in 'メールアドレス', with: new_email
       click_button 'Invite'
