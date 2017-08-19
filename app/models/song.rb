@@ -10,30 +10,24 @@ class Song < ApplicationRecord
        )
       )x
 
-  has_many :playings, dependent: :destroy, inverse_of: :song
-  has_many :users, through: :playings
   belongs_to :live, touch: true
+  has_many :users, through: :playings
+  has_many :playings, dependent: :destroy, inverse_of: :song
   accepts_nested_attributes_for :playings, allow_destroy: true
 
   attr_accessor :notes
 
-  scope :played_order, -> { order(:time, :order) }
-  scope :order_by_live, -> { includes(:live).order('lives.date DESC', :time, :order) }
-  scope :visible, -> { where('lives.date < ?', Live.boundary_date) }
-
-  validates :live_id, presence: true
-  validates :name, presence: true
-  validates :youtube_id,
-            format: { with: VALID_YOUTUBE_REGEX },
-            allow_blank: true
+  enum status: { secret: 0, closed: 1, open: 2 }
 
   before_save :extract_youtube_id
 
-  enum status: {
-    secret: 0,
-    closed: 1,
-    open: 2
-  }
+  validates :live_id, presence: true
+  validates :name, presence: true
+  validates :youtube_id, format: { with: VALID_YOUTUBE_REGEX }, allow_blank: true
+
+  scope :played_order, -> { order(:time, :order) }
+  scope :order_by_live, -> { includes(:live).order('lives.date DESC', :time, :order) }
+  scope :visible, -> { where('lives.date < ?', Live.boundary_date) }
 
   def self.search(query, page) # TODO: Improve
     q = "%#{query}%"

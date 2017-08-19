@@ -1,5 +1,6 @@
 class Token < ApplicationRecord
   belongs_to :user
+
   attr_accessor :token
 
   before_create :create_token

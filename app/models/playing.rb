@@ -1,11 +1,14 @@
 class Playing < ApplicationRecord
   belongs_to :user
   belongs_to :song, touch: true
-  scope :count_insts, -> { group(:inst).count(:id) }
-  scope :count_members_per_song, -> { group(:song_id).count(:id) }
+
   before_save :format_inst
+
   validates :user_id, presence: true
   validates :song, presence: true
+
+  scope :count_insts, -> { group(:inst).count(:id) }
+  scope :count_members_per_song, -> { group(:song_id).count(:id) }
 
   def self.resolve_insts(inst_to_count)
     single_inst_to_count = inst_to_count.reject { |inst, _| inst.blank? || inst.include?('&') }

@@ -5,13 +5,10 @@ class User < ApplicationRecord
 
   attr_accessor :remember_token, :activation_token, :reset_token
 
+  has_secure_password(validations: false)
+
   before_save :downcase_email
   before_save :remove_spaces_from_furigana
-
-  scope :natural_order, -> { order('joined DESC', 'furigana COLLATE "C"') } # TODO: Remove 'COLLATE "C"'
-  scope :distinct_joined, lambda {
-    unscope(:order).select(:joined).distinct.order(joined: :desc).pluck(:joined)
-  }
 
   validates :first_name, presence: true
   validates :last_name, presence: true
@@ -32,7 +29,6 @@ class User < ApplicationRecord
               less_than_or_equal_to: Date.today.year
             }
   validates :url, format: /\A#{URI.regexp(%w[http https])}\z/, allow_blank: true
-  has_secure_password(validations: false)
   validates :password,
             presence:     true,
             confirmation: true,
@@ -40,6 +36,9 @@ class User < ApplicationRecord
             allow_nil:    true,
             on:           :update
   validates :password_confirmation, presence: true, allow_nil: true, on: :update
+
+  scope :natural_order, -> { order('joined DESC', 'furigana COLLATE "C"') } # TODO: Remove 'COLLATE "C"'
+  scope :distinct_joined, -> { unscope(:order).select(:joined).distinct.order(joined: :desc).pluck(:joined) }
 
   def self.digest(string)
     cost = if ActiveModel::SecurePassword.min_cost
