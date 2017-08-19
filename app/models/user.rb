@@ -86,11 +86,11 @@ class User < ApplicationRecord
 
   def remember
     self.remember_token = User.new_token
-    update_attribute(:remember_digest, User.digest(remember_token))
+    update_column(:remember_digest, User.digest(remember_token))
   end
 
   def forget
-    update_attribute(:remember_digest, nil)
+    update_column(:remember_digest, nil)
   end
 
   def activate(password_params)
@@ -103,7 +103,7 @@ class User < ApplicationRecord
 
   def send_invitation(email, inviter)
     self.activation_token = User.new_token
-    return unless update_attributes(email: email, activation_digest: User.digest(activation_token))
+    return unless update(email: email, activation_digest: User.digest(activation_token))
     UserMailer.account_activation(self, inviter).deliver_now
   end
 
