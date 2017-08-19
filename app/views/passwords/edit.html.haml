@@ -1,5 +1,4 @@
 - provide(:title, 'Edit password')
-- provide(:password_label, '新しいパスワード')
 - provide(:button_text, 'Save')
 %header.page-header
   %h1 Edit password
@@ -12,6 +11,6 @@
     .col-sm-9
       = f.password_field :current_password, class: 'form-control'
 
-  = render 'passwords/form', f: f
+  = render 'passwords/form', f: f, label: '新しいパスワード'
 
   = render 'shared/submit', f: f
