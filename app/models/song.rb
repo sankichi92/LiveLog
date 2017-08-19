@@ -29,11 +29,9 @@ class Song < ApplicationRecord
   scope :order_by_live, -> { includes(:live).order('lives.date DESC', :time, :order) }
   scope :visible, -> { where('lives.date < ?', Live.boundary_date) }
 
-  def self.search(query, page) # TODO: Improve
+  def self.search(query, page)
     q = "%#{query}%"
-    where('songs.name ILIKE ? OR artist ILIKE ?', q, q)
-      .order_by_live
-      .paginate(page: page)
+    where('songs.name ILIKE ? OR artist ILIKE ?', q, q).order_by_live.paginate(page: page)
   end
 
   def extract_youtube_id
