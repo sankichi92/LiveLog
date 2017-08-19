@@ -22,11 +22,7 @@ class Live < ApplicationRecord
   end
 
   def nendo
-    if date.mon < 4
-      date.year - 1
-    else
-      date.year
-    end
+    date.mon < 4 ? date.year - 1 : date.year
   end
 
   def future?
