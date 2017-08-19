@@ -4,11 +4,11 @@ Rails.application.routes.draw do
 
   get '/stats', to: 'static_pages#stats'
 
-  get '/login', to: 'sessions#new'
-  post '/login', to: 'sessions#create'
-  delete '/logout', to: 'sessions#destroy'
+  resources :songs
 
-  resources :password_resets, only: %i[new create edit update]
+  resources :lives do
+    resource :entry, only: %i[new create]
+  end
 
   resources :users, path: :members do
     resource :account_activation, path: :activation, as: :activation
@@ -16,11 +16,11 @@ Rails.application.routes.draw do
     resource :admin, only: %i[create destroy]
   end
 
-  resources :lives do
-    resource :entry, only: %i[new create]
-  end
+  resources :password_resets, only: %i[new create edit update]
 
-  resources :songs
+  get '/login', to: 'sessions#new'
+  post '/login', to: 'sessions#create'
+  delete '/logout', to: 'sessions#destroy'
 
   namespace :api, format: 'json' do
     namespace :v1 do
