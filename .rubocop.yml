@@ -3,3 +3,6 @@ Metrics/LineLength:
 
 Style/ClassAndModuleChildren:
   EnforcedStyle: compact
+
+Style/Documentation:
+  Enabled: false
