@@ -1,15 +1,14 @@
-= form_for(@song, url: { action: 'create' }, html: {class: 'form-horizontal well'}) do |f|
-  = render 'shared/error_messages', object: f.object
+= form_with(model: @song, url: live_entry_path, class: 'form-horizontal well') do |f|
 
   .form-group
     = f.label :name, class: 'col-sm-3 control-label'
     .col-sm-9
-      = f.text_field :name, class: 'form-control', placeholder: 'Tears in Heaven'
+      = f.text_field :name, id: 'song_name', class: 'form-control', placeholder: 'Tears in Heaven'
 
   .form-group
     = f.label :artist, class: 'col-sm-3 control-label'
     .col-sm-9
-      = f.text_field :artist, class: 'form-control', placeholder: 'Eric Clapton'
+      = f.text_field :artist, id: 'song_artist', class: 'form-control', placeholder: 'Eric Clapton'
 
   #playings-fields
     = f.fields_for :playings do |builder|
@@ -22,13 +21,13 @@
   .form-group
     = f.label :status, class: 'col-sm-3 control-label'
     .col-sm-9
-      = f.select :status, { 'バンド内': 'secret', 'サークル内': 'closed', '公開': 'open' }, { selected: 'open' }, class: 'form-control'
+      = f.select :status, { 'バンド内': 'secret', 'サークル内': 'closed', '公開': 'open' }, { selected: 'open' }, id: 'song_status', class: 'form-control'
       %p.help-block 動画がアップロードされた際の公開範囲です。
 
   .form-group
-    = label_tag :notes, '備考', class: 'col-sm-3 control-label'
+    = f.label :notes, '備考', class: 'col-sm-3 control-label'
     .col-sm-9
-      = text_area_tag :notes, '', class: 'form-control', rows: 3
+      = f.text_area :notes, id: 'song_notes', class: 'form-control', rows: 3
 
   .form-group
     .col-sm-offset-3.col-sm-9

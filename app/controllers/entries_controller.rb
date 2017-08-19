@@ -10,8 +10,8 @@ class EntriesController < ApplicationController
 
   def create
     @song = @live.songs.build(song_params)
-    return render :new unless @song.save
-    if @song.send_entry(current_user, params[:notes])
+    return unless @song.save
+    if @song.send_entry(current_user)
       flash[:info] = '曲の申請メールを送信しました'
     else
       flash[:danger] = 'メールの送信に失敗しました'
@@ -26,10 +26,10 @@ class EntriesController < ApplicationController
   end
 
   def future_live
-    redirect_to root_url if @live.date <= Date.today
+    redirect_to root_url unless @live.future?
   end
 
   def song_params
-    params.require(:song).permit(:name, :artist, :status, playings_attributes: %i[id user_id inst])
+    params.require(:song).permit(:name, :artist, :status, :notes, playings_attributes: %i[id user_id inst])
   end
 end

@@ -4,9 +4,9 @@ RSpec.describe SongMailer, type: :mailer do
 
   describe 'entry' do
     let(:applicant) { create(:user) }
-    let(:song) { create(:song) }
     let(:notes) { 'Vo がタンバリンを使うかもしれません' }
-    let(:mail) { SongMailer.entry(song, applicant, notes) }
+    let(:song) { create(:song, notes: notes) }
+    let(:mail) { SongMailer.entry(song, applicant) }
 
     it 'renders the headers' do
       expect(mail.subject).to eq("#{song.live.title} 曲申請「#{song.title}」")

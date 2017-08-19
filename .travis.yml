@@ -1,24 +1,30 @@
 language: ruby
 
-rvm:
-  - 2.4.1
-
-bundler_args: --without production
-
-cache: bundler
-
 services:
   - postgresql
 
+addons:
+  chrome: stable
+
+cache: bundler
+
+before_install:
+  # cf. https://github.com/teamcapybara/capybara/blob/667faf54677662ecf7a340c8b1c12ab418a17391/.travis.yml#L89-L92
+  - mkdir -p ~/drivers; export PATH=~/drivers:$PATH;
+  - CHROMEDRIVER_VERSION=$(wget -q -O - http://chromedriver.storage.googleapis.com/LATEST_RELEASE);
+    CHROMEDRIVER_URL="http://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip";
+    FILE=`mktemp`; wget "$CHROMEDRIVER_URL" -qO $FILE && unzip $FILE chromedriver -d ~/drivers; rm $FILE; chmod 777 ~/drivers/chromedriver;
+
+bundler_args: --without production --deployment
+
 before_script:
   - cp config/database.yml.travis config/database.yml
-  - ./bin/rails db:create
-  - ./bin/rails db:migrate
+  - bin/rails db:create
+
+script:
+  - bin/rails spec
 
 notifications:
   webhooks:
     urls:
       - https://webhooks.gitter.im/e/f5e88c507b05f867f94a
-    on_success: change
-    on_failure: always
-    on_start: never

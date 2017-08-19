@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.feature 'EntryPages', type: :feature do
   given(:live) { create(:live, date: Date.today + 1.month) }
 
-  feature 'Entry' do
+  feature 'Entry', js: true do
     given(:user) { create(:user) }
 
     background { ActionMailer::Base.deliveries.clear }
@@ -21,8 +21,9 @@ RSpec.feature 'EntryPages', type: :feature do
       expect(page).to have_title('Apply for song')
 
       fill_in '曲名', with: 'テストソング'
+      click_button 'Send'
 
-      expect { click_button 'Send' }.to change(Song, :count).by(1)
+      expect(page).to have_selector('.alert-info')
       expect(ActionMailer::Base.deliveries.size).to eq 1
     end
 
@@ -30,9 +31,10 @@ RSpec.feature 'EntryPages', type: :feature do
       log_in_as user
       visit new_live_entry_path(live)
 
-      expect { click_button 'Send' }.not_to change(Song, :count)
-      expect(ActionMailer::Base.deliveries.size).to eq 0
+      click_button 'Send'
+
       expect(page).to have_selector('.alert-danger')
+      expect(ActionMailer::Base.deliveries.size).to eq 0
     end
   end
 end
