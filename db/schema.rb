@@ -10,76 +10,76 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170812075755) do
+ActiveRecord::Schema.define(version: 20170819085058) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "lives", force: :cascade do |t|
-    t.string   "name"
-    t.date     "date"
-    t.string   "place"
+  create_table "lives", id: :serial, force: :cascade do |t|
+    t.string "name", null: false
+    t.date "date", null: false
+    t.string "place"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string   "album_url"
-    t.index ["date"], name: "index_lives_on_date", using: :btree
-    t.index ["name", "date"], name: "index_lives_on_name_and_date", unique: true, using: :btree
+    t.string "album_url"
+    t.index ["date"], name: "index_lives_on_date"
+    t.index ["name", "date"], name: "index_lives_on_name_and_date", unique: true
   end
 
-  create_table "playings", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "song_id"
-    t.string   "inst"
+  create_table "playings", id: :serial, force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "song_id", null: false
+    t.string "inst"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["song_id"], name: "index_playings_on_song_id", using: :btree
-    t.index ["user_id", "song_id"], name: "index_playings_on_user_id_and_song_id", unique: true, using: :btree
-    t.index ["user_id"], name: "index_playings_on_user_id", using: :btree
+    t.index ["song_id"], name: "index_playings_on_song_id"
+    t.index ["user_id", "song_id"], name: "index_playings_on_user_id_and_song_id", unique: true
+    t.index ["user_id"], name: "index_playings_on_user_id"
   end
 
-  create_table "songs", force: :cascade do |t|
-    t.string   "name"
-    t.string   "artist"
-    t.string   "youtube_id"
-    t.integer  "live_id"
-    t.integer  "order"
-    t.time     "time"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-    t.integer  "status",     default: 1
-    t.text     "comment"
-    t.index ["live_id"], name: "index_songs_on_live_id", using: :btree
-  end
-
-  create_table "tokens", force: :cascade do |t|
-    t.integer  "user_id",    null: false
-    t.string   "digest",     null: false
+  create_table "songs", id: :serial, force: :cascade do |t|
+    t.string "name", null: false
+    t.string "artist"
+    t.string "youtube_id"
+    t.integer "live_id", null: false
+    t.integer "order"
+    t.time "time"
     t.datetime "created_at", null: false
-    t.index ["user_id"], name: "index_tokens_on_user_id", using: :btree
+    t.datetime "updated_at", null: false
+    t.integer "status", default: 1
+    t.text "comment"
+    t.index ["live_id"], name: "index_songs_on_live_id"
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "furigana"
-    t.string   "nickname"
-    t.string   "email"
-    t.integer  "joined"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
-    t.string   "password_digest"
-    t.string   "remember_digest"
-    t.boolean  "admin",             default: false
-    t.string   "activation_digest"
-    t.boolean  "activated",         default: false
+  create_table "tokens", id: :serial, force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "digest", null: false
+    t.datetime "created_at", null: false
+    t.index ["user_id"], name: "index_tokens_on_user_id"
+  end
+
+  create_table "users", id: :serial, force: :cascade do |t|
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.string "furigana", null: false
+    t.string "nickname"
+    t.string "email"
+    t.integer "joined", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "password_digest"
+    t.string "remember_digest"
+    t.boolean "admin", default: false
+    t.string "activation_digest"
+    t.boolean "activated", default: false
     t.datetime "activated_at"
-    t.string   "reset_digest"
+    t.string "reset_digest"
     t.datetime "reset_sent_at"
-    t.boolean  "public",            default: false
-    t.string   "url"
-    t.text     "intro"
-    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
-    t.index ["furigana"], name: "index_users_on_furigana", using: :btree
+    t.boolean "public", default: false
+    t.string "url"
+    t.text "intro"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["furigana"], name: "index_users_on_furigana"
   end
 
   add_foreign_key "playings", "songs"
