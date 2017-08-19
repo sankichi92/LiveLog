@@ -3,11 +3,12 @@ class PasswordsController < ApplicationController
   before_action :correct_user
 
   def edit
+    #
   end
 
   def update
     if @user.authenticate(params[:user][:current_password])
-      if @user.update_attributes(password_params)
+      if @user.update(password_params)
         flash[:success] = 'パスワードを変更しました'
         redirect_to @user
       else
