@@ -3,7 +3,17 @@ language: ruby
 services:
   - postgresql
 
+addons:
+  chrome: stable
+
 cache: bundler
+
+before_install:
+  # cf. https://github.com/teamcapybara/capybara/blob/667faf54677662ecf7a340c8b1c12ab418a17391/.travis.yml#L89-L92
+  - mkdir -p ~/drivers; export PATH=~/drivers:$PATH;
+  - CHROMEDRIVER_VERSION=$(wget -q -O - http://chromedriver.storage.googleapis.com/LATEST_RELEASE);
+    CHROMEDRIVER_URL="http://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip";
+    FILE=`mktemp`; wget "$CHROMEDRIVER_URL" -qO $FILE && unzip $FILE chromedriver -d ~/drivers; rm $FILE; chmod 777 ~/drivers/chromedriver;
 
 bundler_args: --without production --deployment
 
