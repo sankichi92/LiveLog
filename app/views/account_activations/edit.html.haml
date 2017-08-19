@@ -1,7 +1,7 @@
 - provide(:title, 'Activation')
 - provide(:button_text, 'Activate')
 %header.page-header
-  %h1 Activate an account
+  %h1 アカウントの有効化
 
 = form_for(@user, url: user_activation_path, html: {class: 'form-horizontal well'}) do |f|
   = render 'shared/error_messages', object: f.object
