@@ -93,8 +93,12 @@ class User < ApplicationRecord
     update_attribute(:remember_digest, nil)
   end
 
-  def activate
-    update_columns(activated: true, activated_at: Time.zone.now)
+  def activate(password_params)
+    update(password_params) && update_columns(activated: true, activated_at: Time.zone.now)
+  end
+
+  def deactivate
+    update_columns(activated: false, activation_digest: nil)
   end
 
   def send_invitation(email, inviter)
