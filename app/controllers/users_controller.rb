@@ -6,13 +6,11 @@ class UsersController < ApplicationController
   before_action :admin_or_elder_user, only: %i[new create destroy]
 
   def index
-    if params[:active] != 'true'
-      @users = User.natural_order
-    else
-      today  = Date.today
-      range  = (today - 1.year..today)
-      @users = User.natural_order.includes(songs: :live).where('lives.date' => range)
-    end
+    @users = if params[:active] != 'true'
+               User.natural_order
+             else
+               User.natural_order.includes(songs: :live).where('lives.date' => 1.year.ago..Date.today)
+             end
   end
 
   def show
@@ -38,7 +36,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    if @user.update_attributes(update_user_params)
+    if @user.update(update_user_params)
       flash[:success] = 'プロフィールを更新しました'
       redirect_to @user
     else
@@ -48,6 +46,10 @@ class UsersController < ApplicationController
 
   def destroy
     @user.destroy
+  rescue ActiveRecord::DeleteRestrictionError => e
+    flash.now[:danger] = e.message
+    render :show
+  else
     flash[:success] = 'メンバーを削除しました'
     redirect_to users_url
   end
@@ -59,10 +61,7 @@ class UsersController < ApplicationController
   end
 
   def update_user_params
-    params.require(:user).permit(
-      :first_name, :last_name, :furigana, :nickname,
-      :email, :url, :intro, :public
-    )
+    params.require(:user).permit(:first_name, :last_name, :furigana, :nickname, :email, :url, :intro, :public)
   end
 
   # Before filters
