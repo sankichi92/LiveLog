@@ -33,12 +33,6 @@ class Song < ApplicationRecord
     where('songs.name ILIKE ? OR artist ILIKE ?', q, q).order_by_live.paginate(page: page)
   end
 
-  def extract_youtube_id
-    return if youtube_id.blank?
-    m = youtube_id.match(VALID_YOUTUBE_REGEX)
-    self.youtube_id = m[:id]
-  end
-
   def title
     artist.blank? ? name : "#{name} / #{artist}"
   end
@@ -96,5 +90,13 @@ class Song < ApplicationRecord
       .where(live: live, status: allowed_statuses)
       .where("(songs.order > ? OR songs.time > ?) AND NOT (songs.youtube_id IS NULL OR songs.youtube_id = '')", order, time)
       .first
+  end
+
+  private
+
+  def extract_youtube_id
+    return if youtube_id.blank?
+    m = youtube_id.match(VALID_YOUTUBE_REGEX)
+    self.youtube_id = m[:id]
   end
 end
