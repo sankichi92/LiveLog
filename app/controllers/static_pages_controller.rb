@@ -6,7 +6,11 @@ class StaticPagesController < ApplicationController
   def home
     return unless logged_in?
     today = Time.zone.today
-    @place, @place_url = fetch_place(today)
+    @song = Rails.cache.fetch("static_pages/home/pickup_#{today}", expires_in: 1.day) do
+      songs = Song.where.not(youtube_id: '', status: :secret)
+      songs.offset(rand(songs.count)).first
+    end
+    @info = fetch_place(today)
   end
 
   def stats
@@ -24,17 +28,15 @@ class StaticPagesController < ApplicationController
   private
 
   def fetch_place(day)
-    Rails.cache.fetch("/place/#{day}", expires_in: 1.day) do
-      begin
-        top_doc = Nokogiri::HTML(open('http://s.maho.jp/homepage/7cffb2d25ef87ff8/'))
-        month_url = top_doc.css("a:contains('#{day.month}月活動予定')").attribute('href').value
-        month_doc = Nokogiri::HTML(open(month_url))
-        day_match = month_doc.at_css('#mahoimain').to_s.match(/\n#{day.day}（[月火水木金土日]）(?<place>[@×].*)<br>/)
-        [day_match[:place], month_url]
-      rescue => e
-        logger.error e.message
-        return
-      end
+    Rails.cache.fetch("static_pages/fetch_place/#{day}", expires_in: 1.day) do
+      top_doc = Nokogiri::HTML(open('http://s.maho.jp/homepage/7cffb2d25ef87ff8/'))
+      month_url = top_doc.css("a:contains('#{day.month}月活動予定')").attribute('href').value
+      month_doc = Nokogiri::HTML(open(month_url))
+      day_match = month_doc.at_css('#mahoimain').to_s.match(/\n#{day.day}（[月火水木金土日]）(?<place>[@×].*)<br>/)
+      { place: day_match[:place], url: month_url }
     end
+  rescue => e
+    logger.error e.message
+    nil
   end
 end
