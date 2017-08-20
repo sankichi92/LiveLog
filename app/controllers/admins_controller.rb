@@ -4,13 +4,13 @@ class AdminsController < ApplicationController
 
   def create
     @user.update_attribute(:admin, true)
-    flash[:success] = "管理者にしました"
+    flash[:success] = '管理者にしました'
     redirect_to @user
   end
 
   def destroy
     @user.update_attribute(:admin, false)
-    flash[:success] = "管理者権限を無効にしました"
+    flash[:success] = '管理者権限を無効にしました'
     redirect_to @user
   end
 

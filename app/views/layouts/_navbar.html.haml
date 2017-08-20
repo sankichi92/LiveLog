@@ -33,7 +33,7 @@
               %li= link_to glyphicon('log-out') + 'Log out', logout_path, method: :delete
               - if Live.future.exists?
                 %li.divider{role: 'separator'}
-                %li.dropdown-header Apply
+                %li.dropdown-header Entry
                 - Live.future.each do |live|
                   %li= link_to live.name, new_live_entry_path(live)
               %li.divider{role: 'separator'}

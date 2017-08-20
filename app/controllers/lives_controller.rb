@@ -61,7 +61,6 @@ class LivesController < ApplicationController
     logged_in_user if @live.date > Date.today
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
   def live_params
     params.require(:live).permit(:name, :date, :place, :album_url)
   end

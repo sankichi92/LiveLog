@@ -14,7 +14,7 @@ class SongsController < ApplicationController
   end
 
   def new
-    live = params[:live_id] ? Live.find(params[:live_id]) : Live.first
+    live = Live.find_by(id: params[:live_id]) || Live.last
     @song = live.songs.build
     @song.playings.build
   end
@@ -34,7 +34,7 @@ class SongsController < ApplicationController
   end
 
   def update
-    if @song.update_attributes(song_params)
+    if @song.update(song_params)
       flash[:success] = '曲を更新しました'
       redirect_back_or @song
     else
@@ -45,6 +45,10 @@ class SongsController < ApplicationController
   def destroy
     live = @song.live
     @song.destroy
+  rescue ActiveRecord::DeleteRestrictionError => e
+    flash.now[:danger] = e.message
+    render :show
+  else
     flash[:success] = '曲を削除しました'
     redirect_back_or live
   end

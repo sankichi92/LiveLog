@@ -1,9 +1,10 @@
 class PasswordResetsController < ApplicationController
-  before_action :set_user, only: %i(edit update)
-  before_action :valid_user, only: %i(edit update)
-  before_action :check_expiration, only: %i(edit update)
+  before_action :set_user, only: %i[edit update]
+  before_action :valid_user, only: %i[edit update]
+  before_action :check_expiration, only: %i[edit update]
 
   def new
+    #
   end
 
   def create
@@ -19,15 +20,15 @@ class PasswordResetsController < ApplicationController
   end
 
   def edit
+    #
   end
 
   def update
     if params[:user][:password].empty?
       @user.errors.add(:password, :blank)
       render 'edit'
-    elsif @user.update_attributes(user_params)
+    elsif @user.reset_password(user_params)
       log_in @user
-      @user.update_attribute(:reset_digest, nil)
       flash[:success] = 'パスワードが再設定されました'
       redirect_to @user
     else
@@ -46,15 +47,12 @@ class PasswordResetsController < ApplicationController
   end
 
   def valid_user
-    unless @user && @user.activated? && @user.authenticated?(:reset, params[:id])
-      redirect_to root_url
-    end
+    redirect_to root_url unless @user && @user.activated? && @user.authenticated?(:reset, params[:id])
   end
 
   def check_expiration
-    if @user.password_reset_expired?
-      flash[:danger] = 'パスワード再設定の有効期限が過ぎてきます'
-      redirect_to new_password_reset_url
-    end
+    return unless @user.password_reset_expired?
+    flash[:danger] = 'パスワード再設定の有効期限が過ぎてきます'
+    redirect_to new_password_reset_url
   end
 end

@@ -11,14 +11,14 @@ RSpec.feature 'EntryPages', type: :feature do
     scenario 'A non-logged-in user cannot visit a new entry page' do
       visit new_live_entry_path(live)
 
-      expect(page).not_to have_title('Apply for song')
+      expect(page).not_to have_title('Entry')
     end
 
     scenario 'A logged-in user can send an entry with valid information' do
       log_in_as user
       visit new_live_entry_path(live)
 
-      expect(page).to have_title('Apply for song')
+      expect(page).to have_title('Entry')
 
       fill_in '曲名', with: 'テストソング'
       click_button 'Send'

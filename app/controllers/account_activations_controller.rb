@@ -1,10 +1,11 @@
 class AccountActivationsController < ApplicationController
-  before_action :logged_in_user, only: %i(new create)
+  before_action :logged_in_user, only: %i[new create]
   before_action :set_user
   before_action :check_inactivated, except: :destroy
-  before_action :valid_user, only: %i(edit update)
+  before_action :valid_user, only: %i[edit update]
 
   def new
+    #
   end
 
   def create
@@ -17,14 +18,14 @@ class AccountActivationsController < ApplicationController
   end
 
   def edit
+    #
   end
 
   def update
     if params[:user][:password].empty?
       @user.errors.add(:password, :blank)
       render 'edit'
-    elsif @user.update_attributes(user_params)
-      @user.activate
+    elsif @user.activate(user_params)
       log_in @user
       flash[:success] = 'LiveLog へようこそ！'
       redirect_to @user
@@ -34,7 +35,7 @@ class AccountActivationsController < ApplicationController
   end
 
   def destroy
-    @user.update_columns(activated: false, activation_digest: nil)
+    @user.deactivate
     flash[:success] = 'アカウントを無効にしました'
     redirect_to @user
   end
@@ -52,13 +53,12 @@ class AccountActivationsController < ApplicationController
   end
 
   def check_inactivated
-    redirect_to(root_url) if @user.activated?
+    redirect_to root_url if @user.activated?
   end
 
   def valid_user
-    unless @user.authenticated?(:activation, params[:t])
-      flash[:danger] = '無効なリンクです'
-      redirect_to(root_url)
-    end
+    return if @user.authenticated?(:activation, params[:t])
+    flash[:danger] = '無効なリンクです'
+    redirect_to root_url
   end
 end

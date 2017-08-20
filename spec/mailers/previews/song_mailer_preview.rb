@@ -5,7 +5,7 @@ class SongMailerPreview < ActionMailer::Preview
   def entry
     applicant = User.first
     song = applicant.songs.last
-    notes = 'Vo がタンバリンを使うかもしれません'
-    SongMailer.entry(song, applicant, notes)
+    song.notes = 'Vo がタンバリンを使うかもしれません'
+    SongMailer.entry(song, applicant)
   end
 end

@@ -56,6 +56,6 @@ RSpec.feature "LoginPages", type: :feature do
       click_button 'Log in'
     end
 
-    expect(page).to have_title('Edit user')
+    expect(page).to have_title('Edit profile')
   end
 end

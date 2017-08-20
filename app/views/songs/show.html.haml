@@ -11,7 +11,7 @@
     %li.active= "#{@song.time_order} #{@song.name}"
 
   .row
-    - if can_watch?(@song)
+    - if @song.watchable?(current_user)
       .col-sm-12.col-md-9
         %p.embed-responsive.embed-responsive-16by9
           = @song.youtube_embed

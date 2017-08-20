@@ -15,7 +15,6 @@ RSpec.describe Song, type: :model do
   it { is_expected.to respond_to(:live_id) }
   it { is_expected.to respond_to(:live) }
   it { is_expected.to respond_to(:playings) }
-  it { is_expected.to respond_to(:users) }
   it { is_expected.to respond_to(:status) }
   it { is_expected.to respond_to(:open?) }
   it { is_expected.to respond_to(:closed?) }

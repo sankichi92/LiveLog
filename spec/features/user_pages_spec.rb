@@ -86,8 +86,8 @@ RSpec.feature "UserPages", type: :feature do
     end
 
     scenario 'A logged-in user can see the edit page' do
-      expect(page).to have_content('Update your profile')
-      expect(page).to have_title('Edit user')
+      expect(page).to have_content('Edit Profile')
+      expect(page).to have_title('Edit profile')
     end
 
     scenario 'A logged-in user cannot save changes with invalid information' do

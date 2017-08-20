@@ -1,13 +1,13 @@
 %p
-  = "京大アンプラグド#{@user.joined}年度入部"
+  = "京大アンプラグド #{@user.joined}年度入部"
   %br
-  = "#{@user.full_name} さん"
+  = "#{@user.formal_name} さん"
 
 %p
-  = "#{@inviter.joined}年度入部の #{@inviter.full_name} さんから"
+  = "#{@inviter.joined}年度入部の #{@inviter.formal_name} さんから"
   = link_to 'LiveLog', 'http://livelog.ku-unplugged.net/'
   に招待されています。
   %br
   以下のリンクをクリックしてアカウントの有効化手続きを行ってください。
 
-%p= link_to '有効化手続きに進む', edit_user_activation_url(@user, t: @user.activation_token)
+%p= link_to 'アカウントの有効化手続きに進む', edit_user_activation_url(@user, t: @user.activation_token)

@@ -5,13 +5,10 @@ class User < ApplicationRecord
 
   attr_accessor :remember_token, :activation_token, :reset_token
 
+  has_secure_password(validations: false)
+
   before_save :downcase_email
   before_save :remove_spaces_from_furigana
-
-  scope :natural_order, -> { order('joined DESC', 'furigana COLLATE "C"') } # TODO: Remove 'COLLATE "C"'
-  scope :distinct_joined, lambda {
-    unscope(:order).select(:joined).distinct.order(joined: :desc).pluck(:joined)
-  }
 
   validates :first_name, presence: true
   validates :last_name, presence: true
@@ -19,57 +16,41 @@ class User < ApplicationRecord
   validates :nickname, length: { maximum: 50 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
   validates :email,
-            presence:   true,
-            length:     { maximum: 255 },
-            format:     { with: VALID_EMAIL_REGEX },
+            presence: true,
+            length: { maximum: 255 },
+            format: { with: VALID_EMAIL_REGEX },
             uniqueness: { case_sensitive: false },
-            on:         :update
+            on: :update
   validates :joined,
-            presence:     true,
+            presence: true,
             numericality: {
-              only_integer:          true,
-              greater_than:          1994,
+              only_integer: true,
+              greater_than: 1994,
               less_than_or_equal_to: Date.today.year
             }
   validates :url, format: /\A#{URI.regexp(%w[http https])}\z/, allow_blank: true
-  has_secure_password(validations: false)
   validates :password,
-            presence:     true,
+            presence: true,
             confirmation: true,
-            length:       { minimum: 6, maximum: 72 },
-            allow_nil:    true,
-            on:           :update
+            length: { minimum: 6, maximum: 72 },
+            allow_nil: true,
+            on: :update
   validates :password_confirmation, presence: true, allow_nil: true, on: :update
 
-  def self.digest(string)
-    cost = if ActiveModel::SecurePassword.min_cost
-             BCrypt::Engine::MIN_COST
-           else
-             BCrypt::Engine.cost
-           end
-    BCrypt::Password.create(string, cost: cost)
-  end
-
-  def self.new_token
-    SecureRandom.urlsafe_base64
-  end
+  scope :natural_order, -> { order('joined DESC', 'furigana COLLATE "C"') } # TODO: Remove 'COLLATE "C"'
+  scope :distinct_joined, -> { unscope(:order).select(:joined).distinct.order(joined: :desc).pluck(:joined) }
 
   def formal_name
     "#{last_name} #{first_name}"
   end
 
-  def full_name(logged_in = true)
-    return handle unless logged_in
-
-    if nickname.blank?
-      formal_name
-    else
-      "#{last_name} #{first_name} (#{nickname})"
-    end
-  end
-
   def handle
     nickname.blank? ? last_name : nickname
+  end
+
+  def full_name(logged_in = true)
+    return handle unless logged_in
+    nickname.blank? ? formal_name : "#{last_name} #{first_name} (#{nickname})"
   end
 
   def elder?
@@ -81,7 +62,7 @@ class User < ApplicationRecord
   end
 
   def played?(song)
-    playings.map(&:song_id).include?(song.id)
+    song.playings.pluck(:user_id).include?(id)
   end
 
   def authenticated?(attribute, token)
@@ -91,34 +72,36 @@ class User < ApplicationRecord
   end
 
   def remember
-    self.remember_token = User.new_token
-    update_attribute(:remember_digest, User.digest(remember_token))
+    self.remember_token = Token.random
+    update_column(:remember_digest, Token.digest(remember_token))
   end
 
   def forget
-    update_attribute(:remember_digest, nil)
+    update_column(:remember_digest, nil)
   end
 
-  def activate
-    update_columns(activated: true, activated_at: Time.zone.now)
+  def activate(password_params)
+    update(password_params) && update_columns(activated: true, activated_at: Time.zone.now)
+  end
+
+  def deactivate
+    update_columns(activated: false, activation_digest: nil)
   end
 
   def send_invitation(email, inviter)
-    self.activation_token = User.new_token
-    return unless update_attributes(
-      email: email,
-      activation_digest: User.digest(activation_token)
-    )
+    self.activation_token = Token.random
+    return unless update(email: email, activation_digest: Token.digest(activation_token))
     UserMailer.account_activation(self, inviter).deliver_now
   end
 
   def send_password_reset
-    self.reset_token = User.new_token
-    update_columns(
-      reset_digest: User.digest(reset_token),
-      reset_sent_at: Time.zone.now
-    )
+    self.reset_token = Token.random
+    update_columns(reset_digest: Token.digest(reset_token), reset_sent_at: Time.zone.now)
     UserMailer.password_reset(self).deliver_now
+  end
+
+  def reset_password(password_params)
+    update(password_params) && update_column(:reset_digest, nil)
   end
 
   def password_reset_expired?
