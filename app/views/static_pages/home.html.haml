@@ -26,7 +26,7 @@
 - if logged_in? && @song.present?
 
   .page-header
-    %h2= Time.zone.today.strftime('%m月%d日のおすすめ')
+    %h2= Time.zone.today.strftime('%m月%d日のピックアップ')
 
   %ol.breadcrumb
     %li= link_to @song.live.title, @song.live
