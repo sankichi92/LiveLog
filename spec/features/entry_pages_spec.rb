@@ -23,7 +23,7 @@ RSpec.feature 'EntryPages', type: :feature do
       fill_in '曲名', with: 'テストソング'
       click_button 'Send'
 
-      expect(page).to have_selector('.alert-info')
+      expect(page).to have_selector('.alert-success')
       expect(ActionMailer::Base.deliveries.size).to eq 1
     end
 

@@ -12,7 +12,7 @@ class EntriesController < ApplicationController
     @song = @live.songs.build(song_params)
     return unless @song.save
     if @song.send_entry(current_user)
-      flash[:info] = '曲の申請メールを送信しました'
+      flash[:success] = '曲の申請メールを送信しました'
     else
       flash[:danger] = 'メールの送信に失敗しました'
     end

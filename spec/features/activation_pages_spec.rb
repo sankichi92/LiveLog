@@ -25,7 +25,7 @@ RSpec.feature "ActivationPages", type: :feature do
 
       expect(not_activated_user.reload.email).to eq new_email
       expect(ActionMailer::Base.deliveries.size).to eq 1
-      expect(page).to have_selector('.alert-info')
+      expect(page).to have_selector('.alert-success')
       expect(page).to have_title('Members')
     end
 

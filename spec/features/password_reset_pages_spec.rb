@@ -22,7 +22,7 @@ RSpec.feature "PasswordResetPages", type: :feature do
 
       expect(user.reset_digest).not_to eq user.reload.reset_digest
       expect(ActionMailer::Base.deliveries.size).to eq 1
-      expect(page).to have_selector('.alert-info')
+      expect(page).to have_selector('.alert-success')
       expect(page).not_to have_title('Forgot password')
     end
   end

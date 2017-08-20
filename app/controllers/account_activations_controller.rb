@@ -10,7 +10,7 @@ class AccountActivationsController < ApplicationController
 
   def create
     if @user.send_invitation(params[:user][:email], current_user)
-      flash[:info] = '招待メールを送信しました'
+      flash[:success] = '招待メールを送信しました'
       redirect_to users_url
     else
       render 'new'
