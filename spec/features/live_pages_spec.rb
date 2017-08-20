@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "LivePages", type: :feature do
+RSpec.feature 'LivePages', type: :feature do
 
   feature 'Show live list' do
 
@@ -114,11 +114,11 @@ RSpec.feature "LivePages", type: :feature do
       expect(page).not_to have_selector('.glyphicon-trash')
     end
 
-    xscenario 'An admin user can delete live' do # TODO: Find how to click glyphicon
+    scenario 'An admin user can delete live' do
       log_in_as admin
       visit live_path(live)
 
-      expect { click_link('×', match: :first) }.to change(User, :count).by(-1)
+      expect { click_link('Delete', match: :first) }.to change(Live, :count).by(-1)
     end
   end
 end

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "UserPages", type: :feature do
+RSpec.feature 'UserPages', type: :feature do
 
   given(:user) { create(:user) }
   given(:admin) { create(:admin) }
@@ -21,22 +21,17 @@ RSpec.feature "UserPages", type: :feature do
       end
     end
 
-    scenario 'A logged-in user cannot see delete link' do
-      expect(page).not_to have_selector('.glyphicon-trash')
-    end
-
     context 'Admin user' do
+      given(:not_activated_user) { create(:user, activated: false) }
+
       background do
         log_in_as admin
-        visit users_path
       end
 
-      xscenario 'An admin user can delete another user' do # TODO: Find how to click glyphicon
-        expect { click_link('×', match: :first) }.to change(User, :count).by(-1)
-      end
+      scenario 'An admin user can delete another user' do
+        visit user_path(not_activated_user)
 
-      xscenario 'An admin user cannot delete him/herself' do
-        expect(page).not_to have_link('×', href: user_path(admin))
+        expect { click_link('Delete', match: :first) }.to change(User, :count).by(-1)
       end
     end
   end
