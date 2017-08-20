@@ -2,3 +2,4 @@
   %td= I18n.l live.date
   %td= live.name
   %td= '@' + live.place
+  %td= glyphicon(:picture) if logged_in? && live.album_url.present?
