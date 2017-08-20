@@ -20,6 +20,18 @@ RSpec.describe SongMailer, type: :mailer do
       expect(mail.reply_to).to eq([applicant.email])
     end
 
-    # TODO: Resolve https://github.com/sankichi92/LiveLog/issues/85 and test the body
+    it 'renders the text body' do
+      expect(mail.text_part.body).to match(applicant.formal_name)
+      expect(mail.text_part.body).to match(song.title)
+      expect(mail.text_part.body).to match(player.formal_name)
+      expect(mail.text_part.body).to match(notes)
+    end
+
+    it 'renders the html body' do
+      expect(mail.html_part.body).to match(applicant.formal_name)
+      expect(mail.html_part.body).to match(song.title)
+      expect(mail.html_part.body).to match(player.formal_name)
+      expect(mail.html_part.body).to match(notes)
+    end
   end
 end
