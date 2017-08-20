@@ -5,14 +5,14 @@ ruby '2.4.1'
 
 gem 'bcrypt', '~> 3.1.11'
 gem 'bootstrap-sass', '~> 3.3.7'
-gem 'bootstrap-will_paginate', '~> 0.0.11'
+gem 'bootstrap-will_paginate', '~> 1.0.0'
 gem 'coffee-rails', '~> 4.2'
 gem 'dalli', '~> 2.7.6'
 gem 'haml-rails', '~> 1.0'
 gem 'jbuilder', '~> 2.7'
 gem 'jquery-rails'
 gem 'pg', '~> 0.21'
-gem 'puma', '~> 3.9'
+gem 'puma', '~> 3.10'
 gem 'rails', '~> 5.1.3'
 gem 'sass-rails', '~> 5.0'
 gem 'select2-rails', '~> 4.0.3'
@@ -26,7 +26,7 @@ group :development, :test do
 end
 
 group :development do
-  gem 'listen', '~> 3.0.8'
+  gem 'listen', '~> 3.1.5'
   gem 'rails_real_favicon'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.1'
