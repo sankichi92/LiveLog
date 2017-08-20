@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'open-uri'
+
 class StaticPagesController < ApplicationController
   def home
     return unless logged_in?
