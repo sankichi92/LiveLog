@@ -1,3 +1,12 @@
+- if logged_in? && @place.present?
+  .alert.alert-info
+    - if @place.start_with?('@')
+      今日の例会教室は
+      %strong= @place[1..-1]
+      です
+    - elsif @place.start_with?('×')
+      今日の例会はありません
+
 %header.jumbotron
   .row
     .col-lg-4.col-md-6
