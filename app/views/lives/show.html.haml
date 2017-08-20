@@ -46,7 +46,7 @@
         - cache_unless logged_in?, song do
           %li
             = song.watchable?(current_user) ? link_to(song.name, song) : song.name
-            = "/ #{song.artist}"
+            = "/ #{song.artist}" if song.artist.present?
             = render 'songs/link_to_edit', song: song
             %ul.list-inline
               = render sort_by_inst(song.playings)
