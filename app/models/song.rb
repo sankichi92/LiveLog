@@ -94,6 +94,7 @@ class Song < ApplicationRecord
                        end
     Song
       .where(live: live, status: allowed_statuses)
-      .find_by("(songs.order > ? OR songs.time > ?) AND NOT (songs.youtube_id IS NULL OR songs.youtube_id = '')", order, time)
+      .where("(songs.order > ? OR songs.time > ?) AND NOT (songs.youtube_id IS NULL OR songs.youtube_id = '')", order, time)
+      .first
   end
 end
