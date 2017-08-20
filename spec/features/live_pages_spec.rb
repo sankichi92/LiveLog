@@ -29,7 +29,7 @@ RSpec.feature "LivePages", type: :feature do
       expect(page).to have_content(live.name)
       expect(page).to have_content(song.name)
       expect(page).to have_content(user.handle)
-      expect(page).not_to have_link(href:live.album_url)
+      expect(page).not_to have_link(href: live.album_url)
     end
   end
 

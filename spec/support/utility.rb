@@ -10,7 +10,7 @@ def log_in_as(user, capybara: true, remember_me: '0')
       click_button 'Log in'
     end
   else
-    post login_path, params: {session: {email: user.email, password: user.password, remember_me: remember_me}}
+    post login_path, params: { session: { email: user.email, password: user.password, remember_me: remember_me } }
   end
 end
 

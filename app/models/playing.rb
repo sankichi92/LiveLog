@@ -12,7 +12,7 @@ class Playing < ApplicationRecord
 
   def self.resolve_insts(inst_to_count)
     single_inst_to_count = inst_to_count.reject { |inst, _| inst.blank? || inst.include?('&') }
-    multi_inst_to_count = inst_to_count.select { |inst, _| !inst.blank? && inst.include?('&') }
+    multi_inst_to_count = inst_to_count.select { |inst, _| inst.present? && inst.include?('&') }
     divided_inst_to_count = multi_inst_to_count.each_with_object(Hash.new(0)) do |(inst, count), hash|
       inst.split('&').each { |divided_inst| hash[divided_inst] += count }
     end

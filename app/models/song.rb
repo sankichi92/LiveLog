@@ -44,7 +44,7 @@ class Song < ApplicationRecord
   end
 
   def youtube_url
-    "https://www.youtube.com/watch?v=#{youtube_id}" unless youtube_id.blank?
+    "https://www.youtube.com/watch?v=#{youtube_id}" if youtube_id.present?
   end
 
   def youtube_embed
@@ -61,7 +61,7 @@ class Song < ApplicationRecord
   end
 
   def time_str
-    time.strftime('%R') unless time.blank?
+    time.strftime('%R') if time.present?
   end
 
   def time_order
@@ -94,7 +94,6 @@ class Song < ApplicationRecord
                        end
     Song
       .where(live: live, status: allowed_statuses)
-      .where("(songs.order > ? OR songs.time > ?) AND NOT (songs.youtube_id IS NULL OR songs.youtube_id = '')", order, time)
-      .first
+      .find_by("(songs.order > ? OR songs.time > ?) AND NOT (songs.youtube_id IS NULL OR songs.youtube_id = '')", order, time)
   end
 end

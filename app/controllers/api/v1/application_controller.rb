@@ -13,7 +13,7 @@ module Api::V1
 
     def check_user_agent
       user_agent = request.user_agent
-      render status: :forbidden unless user_agent.match(ANDROID_UA_PAT)
+      render status: :forbidden unless user_agent.match?(ANDROID_UA_PAT)
     end
 
     def authenticate

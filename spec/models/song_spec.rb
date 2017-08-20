@@ -36,9 +36,9 @@ RSpec.describe Song, type: :model do
 
   describe 'when youtube url format is invalid' do
     it 'should be invalid' do
-      urls = %w(http://livelog.ku-unplugged.net/
+      urls = %w[http://livelog.ku-unplugged.net/
                 https://www.youtube.com/
-                https://www.youtube.com/watch?v=aaa)
+                https://www.youtube.com/watch?v=aaa]
       urls.each do |invalid_address|
         song.youtube_id = invalid_address
         expect(song).not_to be_valid(:update)
@@ -48,10 +48,10 @@ RSpec.describe Song, type: :model do
 
   describe 'when youtube url format is valid' do
     it 'should be valid' do
-      urls = %w(https://www.youtube.com/watch?v=-gKPuxV3MkY
+      urls = %w[https://www.youtube.com/watch?v=-gKPuxV3MkY
                 https://youtu.be/-gKPuxV3MkY
                 https://www.youtube.com/watch?list=PLJNbijG2M7OzYyflxDhucn2aaro613QPI&v=-gKPuxV3MkY
-                https://youtu.be/-gKPuxV3MkY?list=PLJNbijG2M7OzYyflxDhucn2aaro613QPI)
+                https://youtu.be/-gKPuxV3MkY?list=PLJNbijG2M7OzYyflxDhucn2aaro613QPI]
       urls.each do |valid_address|
         song.youtube_id = valid_address
         expect(song).to be_valid(:update)

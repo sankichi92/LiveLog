@@ -115,7 +115,7 @@ class User < ApplicationRecord
 
   def destroy_token(token)
     token = tokens.find { |t| BCrypt::Password.new(t.digest).is_password?(token) }
-    token.destroy if token
+    token&.destroy
   end
 
   private
