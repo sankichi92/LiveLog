@@ -52,6 +52,14 @@ class Song < ApplicationRecord
       .html_safe
   end
 
+  def visible?(user)
+    open? || closed? && user || user && user.played?(self)
+  end
+
+  def watchable?(user)
+    youtube_id.present? && visible?(user)
+  end
+
   def time_str
     time.strftime('%R') unless time.blank?
   end

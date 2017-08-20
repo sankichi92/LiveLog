@@ -34,7 +34,7 @@
             - cache_unless logged_in?, song do
               %tr
                 %td= song.time_order
-                %td= can_watch?(song) ? link_to(song.name, song) : song.name
+                %td= song.watchable?(current_user) ? link_to(song.name, song) : song.name
                 %td= song.artist
                 %td
                   %ul.list-inline
@@ -45,7 +45,7 @@
       - @live.songs.played_order.includes(playings: :user).each do |song|
         - cache_unless logged_in?, song do
           %li
-            = can_watch?(song) ? link_to(song.name, song) : song.name
+            = song.watchable?(current_user) ? link_to(song.name, song) : song.name
             = "/ #{song.artist}"
             = render 'songs/link_to_edit', song: song
             %ul.list-inline

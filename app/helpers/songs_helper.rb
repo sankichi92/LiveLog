@@ -5,10 +5,6 @@ module SongsHelper
     playings.sort { |p1, p2| inst_order(p1.inst) <=> inst_order(p2.inst) }
   end
 
-  def can_watch?(song)
-    !song.youtube_id.blank? && (song.open? || song.closed? && logged_in? || logged_in? && current_user.played?(song))
-  end
-
   def can_edit?(song)
     logged_in? && (current_user.admin_or_elder? || current_user.played?(song))
   end

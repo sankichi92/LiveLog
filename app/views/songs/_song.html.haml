@@ -1,7 +1,7 @@
 %tr
   %td= link_to song.live.title, song.live
   %td= song.time_order
-  %td= can_watch?(song) ? link_to(song.name, song) : song.name
+  %td= song.watchable?(current_user) ? link_to(song.name, song) : song.name
   %td= song.artist
   %td
     %ul.list-inline
