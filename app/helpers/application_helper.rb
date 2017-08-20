@@ -5,7 +5,7 @@ module ApplicationHelper
     page_title.empty? ? base_title : page_title + ' - ' + base_title
   end
 
-  def nendo(date = Date.today)
+  def nendo(date = Time.zone.today)
     date.mon < 4 ? date.year - 1 : date.year
   end
 

@@ -14,7 +14,7 @@ class Live < ApplicationRecord
   end
 
   def self.boundary_date
-    Date.today + 1.week
+    Time.zone.today + 1.week
   end
 
   def title

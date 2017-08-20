@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'EntryPages', type: :feature do
-  given(:live) { create(:live, date: Date.today + 1.month) }
+  given(:live) { create(:live, date: Time.zone.today + 1.month) }
 
   feature 'Entry', js: true do
     given(:user) { create(:user) }

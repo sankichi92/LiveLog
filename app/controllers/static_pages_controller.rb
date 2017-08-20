@@ -8,7 +8,7 @@ class StaticPagesController < ApplicationController
               start = Date.new(params[:y].to_i, 4, 1)
               (start...start + 1.year)
             else
-              (1.year.ago..Date.today)
+              (1.year.ago..Time.zone.today)
             end
 
     @songs = Song.includes(:live).where('lives.date' => range)

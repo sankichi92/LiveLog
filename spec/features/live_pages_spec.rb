@@ -93,7 +93,7 @@ RSpec.feature "LivePages", type: :feature do
 
     scenario 'An admin user can edit the live with valid information' do
       new_name = 'New ライブ'
-      new_date = Date.today
+      new_date = Time.zone.today
 
       fill_in 'Name', with: new_name
       fill_in 'Date', with: new_date

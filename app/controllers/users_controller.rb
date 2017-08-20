@@ -9,7 +9,7 @@ class UsersController < ApplicationController
     @users = if params[:active] != 'true'
                User.natural_order
              else
-               User.natural_order.includes(songs: :live).where('lives.date' => 1.year.ago..Date.today)
+               User.natural_order.includes(songs: :live).where('lives.date' => 1.year.ago..Time.zone.today)
              end
   end
 

@@ -14,7 +14,7 @@ class LivesController < ApplicationController
 
   def new
     @live = Live.new
-    @live.date = Date.today
+    @live.date = Time.zone.today
   end
 
   def edit
@@ -58,7 +58,7 @@ class LivesController < ApplicationController
 
   def future_live
     @live = Live.includes(:songs).find(params[:id])
-    logged_in_user if @live.date > Date.today
+    logged_in_user if @live.date > Time.zone.today
   end
 
   def live_params

@@ -26,7 +26,7 @@ class User < ApplicationRecord
             numericality: {
               only_integer: true,
               greater_than: 1994,
-              less_than_or_equal_to: Date.today.year
+              less_than_or_equal_to: Time.zone.today.year
             }
   validates :url, format: /\A#{URI.regexp(%w[http https])}\z/, allow_blank: true
   validates :password,
