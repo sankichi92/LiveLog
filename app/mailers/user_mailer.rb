@@ -1,13 +1,15 @@
 class UserMailer < ApplicationMailer
+  default reply_to: 'miyoshi@ku-unplugged.net'
 
   def account_activation(user, inviter)
     @user = user
     @inviter = inviter
-    mail to: user.email, subject: '【LiveLog】アカウントの有効化'
+    subject = "#{inviter.formal_name} さんが LiveLog に招待しています"
+    mail to: user.email, subject: subject
   end
 
   def password_reset(user)
     @user = user
-    mail to: user.email, subject: '【LiveLog】パスワード再設定'
+    mail to: user.email, subject: 'パスワード再設定のご案内'
   end
 end

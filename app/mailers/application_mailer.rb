@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'noreply@livelog.ku-unplugged.net'
+  default from: '"LiveLog" <noreply@livelog.ku-unplugged.net>'
   layout 'mailer'
 end
