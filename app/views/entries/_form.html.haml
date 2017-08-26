@@ -21,7 +21,7 @@
   .form-group
     = f.label :status, class: 'col-sm-3 control-label'
     .col-sm-9
-      = f.select :status, { 'バンド内': 'secret', 'サークル内': 'closed', '公開': 'open' }, { selected: 'open' }, id: 'song_status', class: 'form-control'
+      = f.select :status, { '公開': 'open', 'サークル内': 'closed', 'バンド内': 'secret' }, { selected: 'open' }, id: 'song_status', class: 'form-control'
       %p.help-block 動画がアップロードされた際の公開範囲です。
 
   .form-group
