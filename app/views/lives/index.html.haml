@@ -15,4 +15,4 @@
               %tbody
                 - lives.each do |live|
                   - cache_unless logged_in?, live do
-                    - render live
+                    = render live

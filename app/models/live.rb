@@ -6,7 +6,7 @@ class Live < ApplicationRecord
   validates :album_url, format: /\A#{URI.regexp(%w[http https])}\z/, allow_blank: true
 
   scope :order_by_date, -> { order(date: :desc) }
-  scope :nendo, ->(year) { where(date: Date.new(year - 1, 4, 1)...Date.new(year, 4, 1)) }
+  scope :nendo, ->(year) { where(date: Date.new(year, 4, 1)...Date.new(year + 1, 4, 1)) }
   scope :future, -> { where('date >= ?', boundary_date) }
   scope :visible, -> { where('date < ?', boundary_date) }
 
