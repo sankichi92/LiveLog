@@ -2,15 +2,17 @@
 %header.page-header
   %h1 Live List
 
-- Live.years.each_slice(2) do |two_y|
+- Live.years.each_slice(2) do |two_years|
   .row
-    - two_y.each do |y|
-      - y_live = @lives.select { |l| l.nendo == y }
-      - if y_live.present?
+    - two_years.each do |year|
+      - lives = @lives.nendo(year)
+      - if lives.present?
         .col-sm-6
           .panel.panel-default
             .panel-heading
-              %h2.panel-title= y
+              %h2.panel-title= year
             %table.table.table-hover
               %tbody
-                = render partial: 'live', collection: y_live, cached: true
+                - lives.each do |live|
+                  - cache_unless logged_in?, live do
+                    - render live
