@@ -48,7 +48,7 @@
     .form-group
       = f.label :status, class: 'col-sm-3 control-label'
       .col-sm-9
-        = f.select :status, {'バンド内': 'secret', 'サークル内': 'closed', '公開': 'open'}, {}, class: 'form-control'
+        = f.select :status, {'公開': 'open', 'サークル内': 'closed', 'バンド内': 'secret'}, {}, class: 'form-control'
 
     .form-group
       = f.label :comment, class: 'col-sm-3 control-label'
