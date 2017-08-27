@@ -1,7 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "SongPages", type: :feature do
-
+RSpec.feature 'SongPages', type: :feature do
   given(:song) { create(:song) }
 
   feature 'show song' do
@@ -16,8 +15,8 @@ RSpec.feature "SongPages", type: :feature do
     scenario 'A non-logged-in user can see the open song' do
       visit song_path(open_song)
 
-      expect(page).to have_title(song.name)
-      expect(page).to have_content(song.name)
+      expect(page).to have_title(open_song.name)
+      expect(page).to have_content(open_song.name)
       expect(page).to have_selector('.embed-responsive')
     end
 
@@ -42,7 +41,8 @@ RSpec.feature "SongPages", type: :feature do
       log_in_as create(:user)
       visit song_path(secret_song)
 
-      expect(page).to have_title(song.name)
+      expect(page).to have_title(secret_song.name)
+      expect(page).to have_content(secret_song.name)
       expect(page).not_to have_selector('.embed-responsive')
     end
 
