@@ -5,8 +5,9 @@ module ApplicationHelper
     page_title.empty? ? base_title : page_title + ' - ' + base_title
   end
 
-  def nendo(date = Time.zone.today)
-    date.mon < 4 ? date.year - 1 : date.year
+  def current_nendo
+    current = Time.current
+    current.mon < 4 ? current.year - 1 : current.year
   end
 
   def glyphicon(name)

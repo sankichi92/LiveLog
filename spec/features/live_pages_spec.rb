@@ -3,6 +3,9 @@ require 'rails_helper'
 RSpec.feature 'LivePages', type: :feature do
 
   feature 'Show live list' do
+    before do
+      4.times { create(:live) }
+    end
 
     scenario 'A user can see the live page' do
       visit root_path
