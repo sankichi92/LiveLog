@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.feature 'EntryPages', type: :feature do
   given(:live) { create(:live, date: Time.zone.today + 1.month) }
 
-  feature 'Entry', js: true do
+  feature 'Entry' do
     given(:user) { create(:user) }
 
     background { ActionMailer::Base.deliveries.clear }
@@ -14,7 +14,7 @@ RSpec.feature 'EntryPages', type: :feature do
       expect(page).not_to have_title('Entry')
     end
 
-    scenario 'A logged-in user can send an entry with valid information' do
+    scenario 'A logged-in user can send an entry with valid information', js: true do
       log_in_as user
       visit new_live_entry_path(live)
 
@@ -27,7 +27,7 @@ RSpec.feature 'EntryPages', type: :feature do
       expect(ActionMailer::Base.deliveries.size).to eq 1
     end
 
-    scenario 'A logged-in user cannot send an entry with invalid information' do
+    scenario 'A logged-in user cannot send an entry with invalid information', js: true do
       log_in_as user
       visit new_live_entry_path(live)
 
