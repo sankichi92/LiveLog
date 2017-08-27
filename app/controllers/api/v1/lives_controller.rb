@@ -1,7 +1,7 @@
 class Api::V1::LivesController < Api::V1::ApplicationController
 
   def index
-    @lives = Live.order_by_date
+    @lives = Live.visible.order_by_date
   end
 
   def show
