@@ -9,6 +9,10 @@ RSpec.feature "SongPages", type: :feature do
     given(:open_song) { create(:song, status: :open) }
     given(:secret_song) { create(:song, status: :secret) }
 
+    background do
+      create(:playing, user: user, song: secret_song)
+    end
+
     scenario 'A non-logged-in user can see the open song' do
       visit song_path(open_song)
 
@@ -40,6 +44,23 @@ RSpec.feature "SongPages", type: :feature do
 
       expect(page).to have_title(song.name)
       expect(page).not_to have_selector('.embed-responsive')
+    end
+
+    scenario 'A logged-in user user can edit the song he/she played', js: true do
+      log_in_as user
+      visit song_path(secret_song)
+
+      expect(page).to have_title(secret_song.name)
+      expect(page).to have_content(secret_song.name)
+      expect(page).to have_selector('.embed-responsive')
+
+      select '公開', from: '公開設定'
+      fill_in 'コメント', with: 'うまく演奏できました'
+      click_button 'Save'
+
+      expect(page).to have_selector('.alert-success')
+      expect(secret_song.reload.status).to eq('open')
+      expect(secret_song.reload.comment).to eq('うまく演奏できました')
     end
   end
 
