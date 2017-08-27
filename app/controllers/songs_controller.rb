@@ -34,11 +34,17 @@ class SongsController < ApplicationController
   end
 
   def update
-    if @song.update(song_params)
-      flash[:success] = '曲を更新しました'
-      redirect_back_or @song
-    else
-      render :edit
+    respond_to do |format|
+      if @song.update_attributes(song_params)
+        format.html do
+          flash[:success] = '曲を更新しました'
+          redirect_back_or @song
+        end
+        format.js { flash.now[:success] = '更新しました' }
+      else
+        format.html { render :edit }
+        format.js { flash.now[:danger] = @song.errors.full_messages }
+      end
     end
   end
 
