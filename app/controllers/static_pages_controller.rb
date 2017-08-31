@@ -27,12 +27,12 @@ class StaticPagesController < ApplicationController
 
   private
 
-  def fetch_place(day)
-    Rails.cache.fetch("static_pages/fetch_place/#{day}", expires_in: 1.day) do
+  def fetch_place(date)
+    Rails.cache.fetch("static_pages/fetch_place/#{date}", expires_in: 1.day) do
       top_doc = Nokogiri::HTML(open('http://s.maho.jp/homepage/7cffb2d25ef87ff8/'))
-      month_url = top_doc.css("a:contains('#{day.month}月活動予定')").attribute('href').value
+      month_url = top_doc.css("a:contains('#{date.month}月活動予定')").attribute('href').value
       month_doc = Nokogiri::HTML(open(month_url))
-      day_match = month_doc.at_css('#mahoimain').to_s.match(/\n#{day.day}（[月火水木金土日]）(?<place>[@×].*)<br>/)
+      day_match = month_doc.at_css('#mahoimain').to_s.match(/\n#{date.day}（[月火水木金土日]）(?<place>[@×].*)<br>/)
       { place: day_match[:place], url: month_url }
     end
   rescue => e
