@@ -64,7 +64,6 @@ RSpec.describe 'Api::V1::Users', type: :request do
         id: user.id,
         joined: user.joined,
         public: user.public,
-        nickname: user.nickname,
         url: user.url,
         intro: user.intro,
         name: user_name,

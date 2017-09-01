@@ -1,5 +1,5 @@
 json.cache_if! !authenticated?, ['v1', @user] do
-  json.extract! @user, :id, :joined, :public, :nickname, :url, :intro
+  json.extract! @user, :id, :joined, :public, :url, :intro
   json.name @user.full_name(authenticated?)
 end
 json.insts do
