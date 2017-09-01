@@ -23,7 +23,11 @@ RSpec.describe 'Api::V1::Tokens', type: :request do
             id: user.id,
             email: user.email,
             joined: user.joined,
-            name: user.full_name
+            name: user.full_name,
+            public: user.public,
+            nickname: user.nickname,
+            url: user.url,
+            intro: user.intro
           }
         }
       end
