@@ -14,3 +14,6 @@ def log_in_as(user, capybara: true, remember_me: '0')
   end
 end
 
+def authorized_headers(token, headers = {})
+  { Authorization: "Token token=\"#{token.token}\", id=\"#{token.user.id}\"" }.merge(headers)
+end
