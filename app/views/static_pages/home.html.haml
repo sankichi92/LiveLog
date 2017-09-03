@@ -1,12 +1,5 @@
-- if logged_in? && @info.present?
-  .alert.alert-info
-    - if @info[:place].start_with?('@')
-      = "今日#{Time.zone.today.day}日の例会教室は"
-      = link_to @info[:place][1..-1], @info[:url], class: 'alert-link', target: '_blank'
-      です
-    - elsif @info[:place].start_with?('×')
-      = "今日#{Time.zone.today.day}日は例会がありません"
-      = link_to '今月の例会教室', @info[:url], class: 'alert-link', target: '_blank'
+- if logged_in? && @regular_meeting.place.present?
+  = render 'regular_meeting', regular_meeting: @regular_meeting
 
 %header.jumbotron
   .row
