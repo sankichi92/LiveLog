@@ -2,7 +2,8 @@
   - if regular_meeting.place.start_with?('@')
     = "今日#{regular_meeting.date.day}日の例会教室は"
     = link_to regular_meeting.place[1..-1], regular_meeting.place_url, class: 'alert-link', target: '_blank'
-    です
+    です。
+    = "（#{regular_meeting.note}）" if regular_meeting.note.present?
   - elsif regular_meeting.place.start_with?('×')
     = "今日#{regular_meeting.date.day}日は例会がありません。"
     = link_to '今月の例会教室', regular_meeting.place_url, class: 'alert-link', target: '_blank'

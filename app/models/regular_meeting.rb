@@ -5,12 +5,12 @@ require 'open-uri'
 class RegularMeeting
   REGULAR_MEETINGS_INFO_URL = 'http://s.maho.jp/homepage/7cffb2d25ef87ff8/'
 
-  attr_reader :date, :place, :place_url
+  attr_reader :date, :place, :note, :place_url
 
   def initialize(date = Time.zone.today)
     @date = date
     @place_url = fetch_detail_url
-    @place = fetch_place if place_url.present?
+    @place, @note = fetch_place if place_url.present?
   end
 
   private
@@ -25,8 +25,8 @@ class RegularMeeting
 
   def fetch_place
     doc = Nokogiri::HTML(open(place_url))
-    match = doc.at_css('#mahoimain').to_s.match(/\n#{date.day}（[月火水木金土日]）(?<place>[@×].*)<br>/)
-    match[:place]
+    match = doc.at_css('#mahoimain').to_s.match(/\n#{date.day}（[月火水木金土日]）(?<place>[@×][^（<\n]*)(?:（(?<note>.+)）)?.*<br>/)
+    [match[:place], match[:note]]
   rescue => e
     logger.error e.message
     nil

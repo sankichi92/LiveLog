@@ -1,1 +1,1 @@
-json.extract! @regular_meeting, :date, :place, :place_url
+json.extract! @regular_meeting, :date, :place, :note, :place_url
