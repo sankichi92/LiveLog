@@ -33,6 +33,7 @@ RSpec.describe 'Api::V1::Lives', type: :request do
         name: live.name,
         date: live.date.to_s,
         place: live.place,
+        album_url: live.album_url,
         songs: [
           {
             id: song.id,
