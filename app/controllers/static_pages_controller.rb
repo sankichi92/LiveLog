@@ -4,13 +4,9 @@ require 'open-uri'
 
 class StaticPagesController < ApplicationController
   def home
-    return unless logged_in?
     today = Time.zone.today
-    @song = Rails.cache.fetch("static_pages/home/pickup_#{today}", expires_in: 1.day) do
-      songs = Song.where.not(youtube_id: '', status: :secret)
-      songs.offset(rand(songs.count)).first
-    end
     @info = fetch_place(today)
+    @song = Rails.cache.fetch("pickup/#{today}", expires_in: 1.day) { Song.pickup }
   end
 
   def stats

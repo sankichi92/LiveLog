@@ -23,7 +23,7 @@
         = link_to 'https://play.google.com/store/apps/details?id=net.ku_unplugged.livelog&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1', target: '_blank' do
           %img{src: 'https://play.google.com/intl/en_us/badges/images/generic/ja_badge_web_generic.png', alt: 'Google Play で手に入れよう', width: 160}
 
-- if logged_in? && @song.present?
+- if @song.present? && @song.watchable?(current_user)
 
   .page-header
     %h2= Time.zone.today.strftime('%m月%d日のピックアップ')
