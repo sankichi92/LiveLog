@@ -24,6 +24,7 @@ Rails.application.routes.draw do
 
   namespace :api, format: 'json' do
     namespace :v1 do
+      resources :regular_meetings, only: :show
       resources :users, only: %i[index show], path: :members
       resources :lives, only: %i[index show]
       resources :songs, only: %i[index show]
