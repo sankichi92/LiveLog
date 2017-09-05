@@ -19,6 +19,10 @@ RSpec.describe 'Api::V1::Pickups', type: :request do
       }
     end
 
+    before do
+      allow(Rails.cache).to receive(:fetch).and_return(song)
+    end
+
     it 'responds with valid status and json' do
       get api_v1_pickup_path(Time.zone.today.strftime('%Y-%m-%d')), headers: headers
       expect(response).to have_http_status(200)
