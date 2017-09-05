@@ -5,7 +5,7 @@ require 'open-uri'
 class StaticPagesController < ApplicationController
   def home
     today = Time.zone.today
-    @song = Song.pickup(today)
+    @song = Rails.cache.fetch("pickup/#{today}", expires_in: 1.day) { Song.pickup(today) }
     return unless logged_in?
     @regular_meeting = Rails.cache.fetch("regular_meeting/#{today}", expires_in: 1.day) do
       RegularMeeting.new(today)
