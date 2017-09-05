@@ -33,9 +33,10 @@ class Song < ApplicationRecord
     where('songs.name ILIKE ? OR artist ILIKE ?', q, q).order_by_live.paginate(page: page)
   end
 
-  def self.pickup
+  def self.pickup(date = Time.zone.today)
+    random = Random.new(date.to_time.to_i)
     songs = where.not(youtube_id: '', status: :secret)
-    songs.offset(rand(songs.count)).first
+    songs.offset(random.rand(songs.count)).first if songs.exists?
   end
 
   def title
