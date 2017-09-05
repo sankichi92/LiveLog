@@ -1,7 +1,12 @@
 class Api::V1::LivesController < Api::V1::ApplicationController
 
   def index
-    @lives = Live.visible.order_by_date
+    limit = params[:limit].to_i
+    @lives = if limit.positive?
+               Live.visible.order_by_date.limit(limit)
+             else
+               Live.visible.order_by_date
+             end
   end
 
   def show
