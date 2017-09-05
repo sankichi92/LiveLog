@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Api::V1::Pickups', type: :request do
+  let!(:song) { create(:song) }
   let(:headers) { authorized_headers(create(:token)) }
 
   describe 'GET /api/v1/pickups/:id' do
@@ -13,7 +14,7 @@ RSpec.describe 'Api::V1::Pickups', type: :request do
         time: Object,
         youtube_id: String,
         comment: String,
-        live: Enumerable,
+        live: Hash,
         playings: Array
       }
     end
