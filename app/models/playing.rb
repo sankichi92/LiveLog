@@ -4,7 +4,7 @@ class Playing < ApplicationRecord
 
   before_save :format_inst
 
-  validates :user_id, presence: true
+  validates :user_id, presence: true, uniqueness: { scope: :song_id }
   validates :song, presence: true
 
   scope :count_insts, -> { group(:inst).count(:id) }
