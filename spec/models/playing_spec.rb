@@ -22,4 +22,9 @@ RSpec.describe Playing, type: :model do
     before { playing.song_id = nil }
     it { is_expected.not_to be_valid }
   end
+
+  describe 'when the combination of user and song is already taken' do
+    before { playing.dup.save }
+    it { is_expected.not_to be_valid }
+  end
 end
