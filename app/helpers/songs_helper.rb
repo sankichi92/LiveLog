@@ -5,10 +5,6 @@ module SongsHelper
     playings.sort { |p1, p2| inst_order(p1.inst) <=> inst_order(p2.inst) }
   end
 
-  def can_edit?(song)
-    logged_in? && (current_user.admin_or_elder? || current_user.played?(song))
-  end
-
   def button_to_add_member(form)
     fields = form.fields_for(:playings, @song.playings.build) do |builder|
       render 'songs/playings_fields', f: builder

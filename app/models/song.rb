@@ -60,6 +60,10 @@ class Song < ApplicationRecord
     youtube_id.present? && visible?(user)
   end
 
+  def editable?(user)
+    user.present? && (user.admin_or_elder? || user.played?(self))
+  end
+
   def time_str
     time.strftime('%R') if time.present?
   end
