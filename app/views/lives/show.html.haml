@@ -31,23 +31,25 @@
             %th
         %tbody
           - @live.songs.played_order.includes(playings: :user).each do |song|
-            - cache_unless logged_in?, song do
-              %tr
-                %td= song.time_order
-                %td= song.watchable?(current_user) ? link_to(song.name, song) : song.name
-                %td= song.artist
-                %td
-                  %ul.list-inline
-                    = render sort_by_inst(song.playings)
-                %td= render 'songs/link_to_edit', song: song
+            - if not @live.future? or current_user.admin_or_elder? or current_user.played?(song)
+              - cache_unless logged_in?, song do
+                %tr
+                  %td= song.time_order
+                  %td= song.watchable?(current_user) ? link_to(song.name, song) : song.name
+                  %td= song.artist
+                  %td
+                    %ul.list-inline
+                      = render sort_by_inst(song.playings)
+                  %td= render 'songs/link_to_edit', song: song
   - else
     %ol#set-list
       - @live.songs.played_order.includes(playings: :user).each do |song|
         - cache_unless logged_in?, song do
-          %li
-            = song.watchable?(current_user) ? link_to(song.name, song) : song.name
-            = "/ #{song.artist}" if song.artist.present?
-            = render 'songs/link_to_edit', song: song
-            %ul.list-inline
-              = render sort_by_inst(song.playings)
+          - if not @live.future? or current_user.admin_or_elder? or current_user.played?(song)
+            %li
+              = song.watchable?(current_user) ? link_to(song.name, song) : song.name
+              = "/ #{song.artist}" if song.artist.present?
+              = render 'songs/link_to_edit', song: song
+              %ul.list-inline
+                = render sort_by_inst(song.playings)
 

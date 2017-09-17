@@ -4,6 +4,7 @@ class SongsController < ApplicationController
   before_action :correct_user, only: %i[edit update]
   before_action :admin_or_elder_user, only: %i[new create destroy]
   before_action :store_referer, only: :edit
+  before_action :check_future_live, only: :show
 
   def index
     @songs = Song.visible.includes(playings: :user).search(params[:q], params[:page])
@@ -83,5 +84,9 @@ class SongsController < ApplicationController
 
   def store_referer
     session[:forwarding_url] = request.referer || root_url
+  end
+
+  def check_future_live
+    redirect_to(root_url) if @song.live.future? && !current_user.admin_or_elder? && !current_user.played?(@song)
   end
 end
