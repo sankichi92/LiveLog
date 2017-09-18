@@ -5,7 +5,7 @@ class LivesController < ApplicationController
   before_action :admin_or_elder_user, except: %i[index show]
 
   def index
-    @lives = logged_in? ? Live.order_by_date : Live.published.order_by_date
+    @lives = logged_in? ? Live.order_by_date : Live.past.order_by_date
   end
 
   def show
