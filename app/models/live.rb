@@ -7,8 +7,8 @@ class Live < ApplicationRecord
 
   scope :order_by_date, -> { order(date: :desc) }
   scope :nendo, ->(year) { where(date: Date.new(year, 4, 1)...Date.new(year + 1, 4, 1)) }
-  scope :future, -> { where('date >= ?', boundary_date) }
-  scope :visible, -> { where('date < ?', boundary_date) }
+  scope :unpublished, -> { where('date >= ?', boundary_date) }
+  scope :published, -> { where('date < ?', boundary_date) }
 
   def self.years
     Live.order_by_date.select(:date).map(&:nendo).uniq

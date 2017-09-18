@@ -6,7 +6,7 @@ class SongsController < ApplicationController
   before_action :store_referer, only: :edit
 
   def index
-    @songs = Song.visible.includes(playings: :user).search(params[:q], params[:page])
+    @songs = Song.published.includes(playings: :user).search(params[:q], params[:page])
   end
 
   def show
