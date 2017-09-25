@@ -1,11 +1,11 @@
 class LivesController < ApplicationController
-  before_action :set_live, only: %i[edit update destroy]
-  before_action :future_live, only: :show
+  before_action :set_live, only: %i[show edit update destroy]
   before_action :logged_in_user, except: %i[index show]
+  before_action :logged_in_user, only: :show, if: :future_live?
   before_action :admin_or_elder_user, except: %i[index show]
 
   def index
-    @lives = logged_in? ? Live.order_by_date : Live.visible.order_by_date
+    @lives = logged_in? ? Live.order_by_date : Live.past.order_by_date
   end
 
   def show
@@ -53,12 +53,11 @@ class LivesController < ApplicationController
   private
 
   def set_live
-    @live = Live.find(params[:id])
+    @live = Live.includes(:songs).find(params[:id])
   end
 
-  def future_live
-    @live = Live.includes(:songs).find(params[:id])
-    logged_in_user if @live.date > Time.zone.today
+  def future_live?
+    @live.future?
   end
 
   def live_params

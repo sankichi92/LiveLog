@@ -7,15 +7,11 @@ class Live < ApplicationRecord
 
   scope :order_by_date, -> { order(date: :desc) }
   scope :nendo, ->(year) { where(date: Date.new(year, 4, 1)...Date.new(year + 1, 4, 1)) }
-  scope :future, -> { where('date >= ?', boundary_date) }
-  scope :visible, -> { where('date < ?', boundary_date) }
+  scope :future, -> { where('date >= ?', Time.zone.today) }
+  scope :past, -> { where('date < ?', Time.zone.today) }
 
   def self.years
     Live.order_by_date.select(:date).map(&:nendo).uniq
-  end
-
-  def self.boundary_date
-    Time.zone.today + 1.week
   end
 
   def title
@@ -27,6 +23,6 @@ class Live < ApplicationRecord
   end
 
   def future?
-    date >= Live.boundary_date
+    date >= Time.zone.today
   end
 end

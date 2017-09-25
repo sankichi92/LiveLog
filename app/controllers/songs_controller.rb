@@ -7,7 +7,7 @@ class SongsController < ApplicationController
   before_action :check_future_live, only: :show
 
   def index
-    @songs = Song.visible.includes(playings: :user).search(params[:q], params[:page])
+    @songs = Song.past.includes(playings: :user).search(params[:q], params[:page])
   end
 
   def show
