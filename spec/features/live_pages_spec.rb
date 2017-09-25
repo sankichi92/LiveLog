@@ -21,9 +21,14 @@ RSpec.feature 'LivePages', type: :feature do
 
   feature 'Show individual live' do
     given(:live) { create(:live) }
+    given(:future_live) {create(:future_live)}
     given(:song) { create(:song, live: live) }
     given(:user) { create(:user) }
+    given(:user_out_of_song) {create(:user)}
+    given(:song_on_entry) {create(:song, live:create(:future_live))}
+    given(:playing) { user.playings.build(song: :song_on_entry) }
     background { create(:playing, user: user, song: song) }
+    background { create(:playing, user: user_out_of_song, song: song_on_entry)}
 
     scenario 'A user can see the individual live page' do
       visit live_path(live)
@@ -33,6 +38,12 @@ RSpec.feature 'LivePages', type: :feature do
       expect(page).to have_content(song.name)
       expect(page).to have_content(user.handle)
       expect(page).not_to have_link(href: live.album_url)
+    end
+
+    scenario 'A user cannot see the future song if he/she will not play the song' do
+      log_in_as user_out_of_song
+      visit live_path(future_live)
+      expect(page).not_to have_content(song_on_entry.name)
     end
   end
 
