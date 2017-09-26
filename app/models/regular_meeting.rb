@@ -17,7 +17,16 @@ class RegularMeeting
 
   def fetch_detail_url
     doc = Nokogiri::HTML(open(REGULAR_MEETINGS_INFO_URL))
-    doc.css("a:contains('#{date.month}月活動予定')").attribute('href').value
+    url = doc.css("a:contains('#{date.month}月活動予定')").attribute('href').value
+    if url.start_with?('http')
+      return url
+    elsif url.start_with?('//')
+      return 'https:' + url
+    elsif url.start_with?('/')
+      return 'http://s.hamo.jp' + url
+    else
+      return REGULAR_MEETINGS_INFO_URL + url
+    end
   rescue => e
     logger.error e.message
     nil
