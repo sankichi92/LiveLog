@@ -28,7 +28,7 @@ class RegularMeeting
       return REGULAR_MEETINGS_INFO_URL + url
     end
   rescue => e
-    logger.error e.message
+    Rails.logger.error e.message
     nil
   end
 
@@ -37,7 +37,7 @@ class RegularMeeting
     match = doc.at_css('#mahoimain').to_s.match(/\n#{date.day}（[月火水木金土日]）(?<place>[@×][^（<\n]*)(?:（(?<note>.+)）)?.*<br>/)
     [match[:place], match[:note]]
   rescue => e
-    logger.error e.message
+    Rails.logger.error e.message
     nil
   end
 end
