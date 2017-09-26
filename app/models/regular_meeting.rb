@@ -19,7 +19,7 @@ class RegularMeeting
     doc = Nokogiri::HTML(open(REGULAR_MEETINGS_INFO_URL))
     doc.css("a:contains('#{date.month}月活動予定')").attribute('href').value
   rescue => e
-    logger.error e.message
+    Rails.logger.error e.message
     nil
   end
 
@@ -28,7 +28,7 @@ class RegularMeeting
     match = doc.at_css('#mahoimain').to_s.match(/\n#{date.day}（[月火水木金土日]）(?<place>[@×][^（<\n]*)(?:（(?<note>.+)）)?.*<br>/)
     [match[:place], match[:note]]
   rescue => e
-    logger.error e.message
+    Rails.logger.error e.message
     nil
   end
 end
