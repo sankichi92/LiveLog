@@ -19,7 +19,8 @@
       - unless @live.songs.exists?
         %li= link_to glyphicon(:trash) + 'Delete', @live, method: :delete, class: 'btn btn-danger', role: 'button'
 
-  - songs = @live.future? ? @live.songs.played_order.includes(playings: :user).select { |song| song.editable?(current_user) } : @live.songs.played_order.includes(playings: :user)
+  - songs = @live.songs.played_order.includes(playings: :user)
+  - songs = songs.select { |song| song.editable?(current_user) } if @live.future?
   - if songs.count > 20
     .table-responsive
       %table#songs.table.table-striped.table-condensed
