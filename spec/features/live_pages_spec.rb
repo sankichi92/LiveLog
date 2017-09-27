@@ -21,14 +21,9 @@ RSpec.feature 'LivePages', type: :feature do
 
   feature 'Show individual live' do
     given(:live) { create(:live) }
-    given(:future_live) {create(:future_live)}
     given(:song) { create(:song, live: live) }
     given(:user) { create(:user) }
-    given(:user_out_of_song) {create(:user)}
-    given(:song_on_entry) {create(:song, live:create(:future_live))}
-    given(:playing) { user.playings.build(song: :song_on_entry) }
     background { create(:playing, user: user, song: song) }
-    background { create(:playing, user: user_out_of_song, song: song_on_entry)}
 
     scenario 'A user can see the individual live page' do
       visit live_path(live)
@@ -40,10 +35,25 @@ RSpec.feature 'LivePages', type: :feature do
       expect(page).not_to have_link(href: live.album_url)
     end
 
-    scenario 'A user cannot see the future song if he/she will not play the song' do
-      log_in_as user_out_of_song
-      visit live_path(future_live)
-      expect(page).not_to have_content(song_on_entry.name)
+    context 'with future live' do
+      given(:future_live) { create(:live, date: 1.month.from_now) }
+      given(:future_song_user_will_play) { create(:song, live: future_live, name: 'Visible Song') }
+      given(:future_song_user_will_not_play) { create(:song, live: future_live, name: 'Invisible Song') }
+
+      background do
+        create(:playing, user: user, song: future_song_user_will_play)
+        log_in_as user
+      end
+
+      scenario 'A logged-in user can see the future song if he/she will play the song' do
+        visit live_path(future_live)
+        expect(page).to have_content(future_song_user_will_play.name)
+      end
+
+      scenario 'A logged-in user cannot see the future song if he/she will not play the song' do
+        visit live_path(future_live)
+        expect(page).not_to have_content(future_song_user_will_not_play.name)
+      end
     end
   end
 

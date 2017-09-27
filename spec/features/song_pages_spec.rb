@@ -8,8 +8,6 @@ RSpec.feature 'SongPages', type: :feature do
     given(:user_out_of_song) {create(:user)}
     given(:open_song) { create(:song, status: :open) }
     given(:secret_song) { create(:song, status: :secret) }
-    given(:song_on_entry) {create(:song, live:create(:future_live))}
-    given(:playing) { user.playings.build(song: :song_on_entry) }
 
     background do
       create(:playing, user: user, song: secret_song)
@@ -64,12 +62,6 @@ RSpec.feature 'SongPages', type: :feature do
       expect(page).to have_selector('.alert-success')
       expect(secret_song.reload.status).to eq('open')
       expect(secret_song.reload.comment).to eq('うまく演奏できました')
-    end
-
-    scenario 'A logged-in user cannot see the song on entry and he/she will not play' do
-      log_in_as user_out_of_song
-      visit song_path(song_on_entry)
-      expect(page).not_to have_content(song_on_entry.name)
     end
   end
 

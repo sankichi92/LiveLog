@@ -48,6 +48,19 @@ RSpec.describe "Authentication", type: :request do
       before { patch user_path(wrong_user) }
       specify { expect(response).to redirect_to(root_path) }
     end
+
+    describe 'in the Songs Controller' do
+
+      describe 'visiting a future song he/she will not play' do
+        let(:future_live) { create(:live, date: 1.month.from_now) }
+        let(:future_song_user_will_not_play) { create(:song, live: future_live) }
+
+        it 'should be redirected to root' do
+          get song_path(future_song_user_will_not_play)
+          expect(response).to redirect_to(root_path)
+        end
+      end
+    end
   end
 
   describe 'as non-admin user' do
