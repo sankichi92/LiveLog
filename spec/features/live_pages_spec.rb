@@ -38,7 +38,7 @@ RSpec.feature 'LivePages', type: :feature do
     context 'with future live' do
       given(:future_live) { create(:live, date: 1.month.from_now) }
       given(:future_song_user_will_play) { create(:song, live: future_live, name: 'Visible Song') }
-      given(:future_song_user_will_not_play) { create(:song, live: future_live, name: 'Invisible Song') }
+      given!(:future_song_user_will_not_play) { create(:song, live: future_live, name: 'Invisible Song') }
 
       background do
         create(:playing, user: user, song: future_song_user_will_play)
