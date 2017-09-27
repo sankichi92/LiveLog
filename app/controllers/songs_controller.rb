@@ -87,6 +87,6 @@ class SongsController < ApplicationController
   end
 
   def future_song?
-    return @song.live.future?
+    @song.live.future?
   end
 end
