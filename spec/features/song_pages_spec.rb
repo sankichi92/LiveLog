@@ -5,7 +5,6 @@ RSpec.feature 'SongPages', type: :feature do
 
   feature 'show song' do
     given(:user) { create(:user) }
-    given(:user_out_of_song) {create(:user)}
     given(:open_song) { create(:song, status: :open) }
     given(:secret_song) { create(:song, status: :secret) }
 
