@@ -19,7 +19,9 @@
       - unless @live.songs.exists?
         %li= link_to glyphicon(:trash) + 'Delete', @live, method: :delete, class: 'btn btn-danger', role: 'button'
 
-  - if @live.songs.count > 20
+  - songs = @live.songs.played_order.includes(playings: :user)
+  - songs = songs.select { |song| song.editable?(current_user) } if @live.future?
+  - if songs.count > 20
     .table-responsive
       %table#songs.table.table-striped.table-condensed
         %thead
@@ -30,7 +32,7 @@
             %th Members
             %th
         %tbody
-          - @live.songs.played_order.includes(playings: :user).each do |song|
+          - songs.each do |song|
             - cache_unless logged_in?, song do
               %tr
                 %td= song.time_order
@@ -42,7 +44,7 @@
                 %td= render 'songs/link_to_edit', song: song
   - else
     %ol#set-list
-      - @live.songs.played_order.includes(playings: :user).each do |song|
+      - songs.each do |song|
         - cache_unless logged_in?, song do
           %li
             = song.watchable?(current_user) ? link_to(song.name, song) : song.name
