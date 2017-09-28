@@ -45,13 +45,9 @@ RSpec.feature 'LivePages', type: :feature do
         log_in_as user
       end
 
-      scenario 'A logged-in user can see the future song if he/she will play the song' do
+      scenario 'A logged-in user can see the future song only he/she will play' do
         visit live_path(future_live)
         expect(page).to have_content(future_song_user_will_play.name)
-      end
-
-      scenario 'A logged-in user cannot see the future song if he/she will not play the song' do
-        visit live_path(future_live)
         expect(page).not_to have_content(future_song_user_will_not_play.name)
       end
     end
