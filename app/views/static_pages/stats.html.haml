@@ -21,8 +21,7 @@
       過去1年間の京大アンプラグドのデータを紹介します。
     %br
     この1年間に
-    - members_count = @playings.group(:user_id).count
-    %mark= members_count.size
+    %mark= @playings.count('DISTINCT user_id')
     人のメンバーで
     %mark= @songs.count
     曲を演奏しました。
