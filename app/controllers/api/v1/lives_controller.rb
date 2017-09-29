@@ -3,9 +3,9 @@ class Api::V1::LivesController < Api::V1::ApplicationController
   def index
     limit = params[:limit].to_i
     @lives = if limit.positive?
-               Live.past.order_by_date.limit(limit)
+               Live.performed.order_by_date.limit(limit)
              else
-               Live.past.order_by_date
+               Live.performed.order_by_date
              end
   end
 

@@ -28,7 +28,7 @@ class Song < ApplicationRecord
 
   scope :played_order, -> { order(:time, :order) }
   scope :order_by_live, -> { includes(:live).order('lives.date DESC', :time, :order) }
-  scope :past, -> { where('lives.date < ?', Time.zone.today) }
+  scope :performed, -> { where('lives.date < ?', Time.zone.today) }
 
   def self.search(query, page)
     q = "%#{query}%"
