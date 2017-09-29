@@ -36,19 +36,19 @@ RSpec.feature 'LivePages', type: :feature do
     end
 
     context 'with future live' do
-      given(:future_live) { create(:live, date: 1.month.from_now) }
-      given(:future_song_user_will_play) { create(:song, live: future_live, name: 'Visible Song') }
-      given!(:future_song_user_will_not_play) { create(:song, live: future_live, name: 'Invisible Song') }
+      given(:draft_live) { create(:live, date: 1.month.from_now) }
+      given(:draft_song_user_will_play) { create(:song, live: draft_live, name: 'Visible Song') }
+      given!(:draft_song_user_will_not_play) { create(:song, live: draft_live, name: 'Invisible Song') }
 
       background do
-        create(:playing, user: user, song: future_song_user_will_play)
+        create(:playing, user: user, song: draft_song_user_will_play)
         log_in_as user
       end
 
-      scenario 'A logged-in user can see the future song only he/she will play' do
-        visit live_path(future_live)
-        expect(page).to have_content(future_song_user_will_play.name)
-        expect(page).not_to have_content(future_song_user_will_not_play.name)
+      scenario 'A logged-in user can see the draft song only he/she will play' do
+        visit live_path(draft_live)
+        expect(page).to have_content(draft_song_user_will_play.name)
+        expect(page).not_to have_content(draft_song_user_will_not_play.name)
       end
     end
   end

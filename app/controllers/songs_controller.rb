@@ -2,7 +2,7 @@ class SongsController < ApplicationController
   before_action :set_song, only: %i[show edit update destroy]
   before_action :logged_in_user, except: %i[index show]
   before_action :correct_user, only: %i[edit update]
-  before_action :correct_user, only: :show, if: :future_song?
+  before_action :correct_user, only: :show, if: :draft_song?
   before_action :admin_or_elder_user, only: %i[new create destroy]
   before_action :store_referer, only: :edit
 
@@ -86,7 +86,7 @@ class SongsController < ApplicationController
     session[:forwarding_url] = request.referer || root_url
   end
 
-  def future_song?
-    @song.live.future?
+  def draft_song?
+    @song.live.draft?
   end
 end
