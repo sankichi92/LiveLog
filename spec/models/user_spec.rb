@@ -146,4 +146,20 @@ RSpec.describe User, type: :model do
       specify { expect(user_for_invalid_password).to be_falsey }
     end
   end
+
+  describe '#performed_songs' do
+    let(:user) { create(:user) }
+    let(:performed_song) { create(:song, live: create(:live, date: 1.month.ago)) }
+    let(:entering_song) { create(:song, live: create(:live, date: 1.month.from_now)) }
+    before do
+      create(:playing, user: user, song: performed_song)
+      create(:playing, user: user, song: entering_song)
+    end
+
+    it 'should include only performed songs' do
+      result = user.performed_songs
+      expect(result).to include(performed_song)
+      expect(result).not_to include(entering_song)
+    end
+  end
 end

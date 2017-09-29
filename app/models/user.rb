@@ -61,6 +61,10 @@ class User < ApplicationRecord
     admin? || elder?
   end
 
+  def performed_songs
+    songs.performed
+  end
+
   def played?(song)
     song.playings.pluck(:user_id).include?(id)
   end
