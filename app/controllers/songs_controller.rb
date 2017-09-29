@@ -87,6 +87,6 @@ class SongsController < ApplicationController
   end
 
   def draft_song?
-    @song.live.draft?
+    @song.draft?
   end
 end
