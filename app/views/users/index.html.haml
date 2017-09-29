@@ -8,7 +8,7 @@
       = check_box_tag :active, true, false, checked: params[:active] == 'true', onchange: "location.href='#{request.path}?active=' + $(this).is(':checked');"
       1年以内にライブに出演したメンバーのみ表示
 
-- @users.distinct_joined.each_slice(4) do |four_years|
+- @users.joined_years.each_slice(4) do |four_years|
   .row
     - four_years.each do |year|
       .col-sm-3

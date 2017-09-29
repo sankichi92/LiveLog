@@ -38,7 +38,7 @@ class User < ApplicationRecord
   validates :password_confirmation, presence: true, allow_nil: true, on: :update
 
   scope :natural_order, -> { order('joined DESC', 'furigana COLLATE "C"') } # TODO: Remove 'COLLATE "C"'
-  scope :distinct_joined, -> { unscope(:order).select(:joined).distinct.order(joined: :desc).pluck(:joined) }
+  scope :joined_years, -> { unscope(:order).order(joined: :desc).pluck('DISTINCT joined') }
 
   def formal_name
     "#{last_name} #{first_name}"
