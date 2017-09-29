@@ -14,7 +14,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @playings = Playing.where(song_id: @user.songs.pluck('songs.id'))
+    @playings = Playing.where(song_id: @user.performed_songs.pluck('songs.id'))
   end
 
   def new

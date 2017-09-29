@@ -1,5 +1,5 @@
 - provide(:title, @user.full_name(logged_in?))
-- total = @user.songs.count
+- total = @user.performed_songs.count
 %header.page-header
   %h1
     = @user.full_name(logged_in?)
@@ -28,7 +28,7 @@
 
     = render 'panel', title: 'アーティスト' do
       %ul.list-group
-        - @user.songs.group(:artist).count.sort { |(k1, v1), (k2, v2)| v2 <=> v1 }.take(20).each do |artist, count|
+        - @user.performed_songs.group(:artist).count.sort { |(k1, v1), (k2, v2)| v2 <=> v1 }.take(20).each do |artist, count|
           - if count >= 2 && (count.to_f / total) >= 0.04 && !artist.blank?
             %li.list-group-item
               %span.badge= count
@@ -72,11 +72,11 @@
             %dd= link_to @user.url, @user.url, target: '_blank'
         = simple_format(@user.intro)
 
-= render 'songs/songs_table', songs: @user.songs.order_by_live.includes(playings: :user)
+= render 'songs/songs_table', songs: @user.performed_songs.order_by_live.includes(playings: :user)
 
 - if logged_in? && current_user.admin?
   %ul.list-inline.text-right
-    - if !@user.activated? && !@user.songs.exists?
+    - if !@user.activated? && !@user.performed_songs.exists?
       %li= link_to glyphicon(:trash) + 'Delete', @user, method: :delete, class: 'btn btn-danger'
     - if @user.activated? && current_user != @user
       - if @user.admin?

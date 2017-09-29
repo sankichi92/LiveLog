@@ -9,7 +9,7 @@ json.insts do
   end
 end
 json.songs do
-  json.array! @user.songs.order_by_live do |song|
+  json.array! @user.performed_songs.order_by_live do |song|
     json.cache_if! !authenticated?, ['v1', song] do
       json.partial! 'api/v1/songs/song', song: song
       json.live song.live, partial: 'api/v1/lives/live', as: :live
