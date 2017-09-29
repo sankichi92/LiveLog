@@ -1,5 +1,5 @@
 %tr
-  %td= link_to song.live.title, song.live
+  %td= link_to song.live_title, song.live
   %td= song.time_order
   %td= song.watchable?(current_user) ? link_to(song.name, song) : song.name
   %td= song.artist

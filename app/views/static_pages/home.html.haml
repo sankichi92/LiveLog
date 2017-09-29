@@ -22,7 +22,7 @@
     %h2= Time.zone.today.strftime('%m月%d日のピックアップ')
 
   %ol.breadcrumb
-    %li= link_to @song.live.title, @song.live
+    %li= link_to @song.live_title, @song.live
     %li.active= link_to "#{@song.time_order} #{@song.name}", @song
 
   .row

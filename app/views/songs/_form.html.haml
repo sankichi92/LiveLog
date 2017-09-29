@@ -18,7 +18,7 @@
     .col-sm-9
       = f.number_field :order, class: 'form-control', placeholder: '1'
 
-  - if @song.live.name.include?('NF')
+  - if @song.live_name.include?('NF')
 
     .form-group
       = f.label :time, class: 'col-sm-3 control-label'

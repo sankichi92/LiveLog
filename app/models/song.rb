@@ -14,6 +14,8 @@ class Song < ApplicationRecord
   has_many :playings, dependent: :destroy, inverse_of: :song
   accepts_nested_attributes_for :playings, allow_destroy: true
 
+  delegate :title, :name, to: :live, prefix: true
+
   attr_accessor :notes
 
   enum status: { secret: 0, closed: 1, open: 2 }

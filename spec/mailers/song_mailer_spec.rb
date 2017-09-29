@@ -14,7 +14,7 @@ RSpec.describe SongMailer, type: :mailer do
     end
 
     it 'renders the headers' do
-      expect(mail.subject).to eq("#{song.live.name} 曲申請「#{song.title}」")
+      expect(mail.subject).to eq("#{song.live_name} 曲申請「#{song.title}」")
       expect(mail.to).to eq(['pa@ku-unplugged.net'])
       expect(mail.from).to eq(['noreply@livelog.ku-unplugged.net'])
       expect(mail.reply_to).to eq([applicant.email])
