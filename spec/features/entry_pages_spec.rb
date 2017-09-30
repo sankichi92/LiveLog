@@ -1,16 +1,22 @@
 require 'rails_helper'
 
 RSpec.feature 'EntryPages', type: :feature do
-  given(:live) { create(:live, date: Time.zone.today + 1.month) }
+  given(:live) { create(:draft_live) }
 
   feature 'Show the entry list for the live' do
     given(:user) { create(:user) }
-
-    scenario 'A logged-in user can visit the entry list' do
+    given!(:their_entry) { create(:draft_song, live: live, name: 'Visible song', user: user) }
+    given!(:other_entry) { create(:draft_song, live: live, name: 'Invisible song') }
+    background do
       log_in_as user
+    end
+
+    scenario 'A logged-in user can see the entries only they will play' do
       visit live_entries_path(live)
 
       expect(page).to have_title(live.title)
+      expect(page).to have_content('Visible song')
+      expect(page).not_to have_content('Invisible song')
     end
   end
 

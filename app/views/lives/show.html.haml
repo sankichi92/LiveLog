@@ -22,26 +22,7 @@
   - songs = @live.songs.played_order.includes(playings: :user)
   - songs = songs.select { |song| song.editable?(current_user) } if @live.draft?
   - if @live.nf?
-    .table-responsive
-      %table#songs.table.table-striped.table-condensed
-        %thead
-          %tr
-            %th #
-            %th Song
-            %th Artist
-            %th Members
-            %th
-        %tbody
-          - songs.each do |song|
-            - cache_unless logged_in?, song do
-              %tr
-                %td= song.time_order
-                %td= song.watchable?(current_user) ? link_to(song.name, song) : song.name
-                %td= song.artist
-                %td
-                  %ul.list-inline
-                    = render sort_by_inst(song.playings)
-                %td= render 'songs/link_to_edit', song: song
+    = render 'songs_table', songs: songs
   - else
     %ol#set-list
       - songs.each do |song|
