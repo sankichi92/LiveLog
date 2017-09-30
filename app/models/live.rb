@@ -7,8 +7,8 @@ class Live < ApplicationRecord
 
   scope :order_by_date, -> { order(date: :desc) }
   scope :nendo, ->(year) { where(date: Date.new(year, 4, 1)...Date.new(year + 1, 4, 1)) }
-  scope :future, -> { where('date >= ?', Time.zone.today) }
-  scope :past, -> { where('date < ?', Time.zone.today) }
+  scope :draft, -> { where('date > ?', Time.zone.today) }
+  scope :performed, -> { where('date <= ?', Time.zone.today) }
 
   def self.years
     Live.order_by_date.select(:date).map(&:nendo).uniq
@@ -22,7 +22,7 @@ class Live < ApplicationRecord
     date.mon < 4 ? date.year - 1 : date.year
   end
 
-  def future?
-    date >= Time.zone.today
+  def draft?
+    date > Time.zone.today
   end
 end

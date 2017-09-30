@@ -15,6 +15,7 @@ class Song < ApplicationRecord
   accepts_nested_attributes_for :playings, allow_destroy: true
 
   delegate :title, :name, to: :live, prefix: true
+  delegate :draft?, to: :live
 
   attr_accessor :notes
 
@@ -28,7 +29,7 @@ class Song < ApplicationRecord
 
   scope :played_order, -> { order(:time, :order) }
   scope :order_by_live, -> { includes(:live).order('lives.date DESC', :time, :order) }
-  scope :past, -> { where('lives.date < ?', Time.zone.today) }
+  scope :performed, -> { eager_load(:live).where('lives.date <= ?', Time.zone.today) }
 
   def self.search(query, page)
     q = "%#{query}%"

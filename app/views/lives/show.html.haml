@@ -7,7 +7,7 @@
         = " #{I18n.l(@live.date)} @#{@live.place} "
       - if logged_in?
         %ul.list-inline.pull-right
-          - if @live.future?
+          - if @live.draft?
             %li= link_to glyphicon(:send) + '曲を出す', new_live_entry_path(@live), class: 'btn btn-info btn-lg'
           - if @live.album_url.present?
             %li= link_to glyphicon(:picture) + 'アルバム', @live.album_url, class: 'btn btn-primary btn-lg', target: '_blank', 'data-toggle': 'tooltip', 'data-placement': 'top', title: '持っている写真を共有しよう！'
@@ -20,7 +20,7 @@
         %li= link_to glyphicon(:trash) + 'Delete', @live, method: :delete, class: 'btn btn-danger', role: 'button'
 
   - songs = @live.songs.played_order.includes(playings: :user)
-  - songs = songs.select { |song| song.editable?(current_user) } if @live.future?
+  - songs = songs.select { |song| song.editable?(current_user) } if @live.draft?
   - if songs.count > 20
     .table-responsive
       %table#songs.table.table-striped.table-condensed
