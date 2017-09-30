@@ -15,6 +15,7 @@ RSpec.feature 'EntryPages', type: :feature do
       visit live_entries_path(live)
 
       expect(page).to have_title(live.title)
+      expect(page).to have_link('エントリーする', href: new_live_entry_path(live))
       expect(page).to have_content('Visible song')
       expect(page).not_to have_content('Invisible song')
     end
