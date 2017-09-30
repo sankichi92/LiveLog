@@ -1,37 +1,48 @@
 require 'rails_helper'
 
 RSpec.feature 'UserPages', type: :feature do
-
   given(:user) { create(:user) }
   given(:admin) { create(:admin) }
 
   feature 'Show members' do
     background do
-      log_in_as user
-      create(:user, first_name: 'Bob', email: 'bob@ku-unplugged.net')
-      create(:user, first_name: 'Ben', email: 'ben@ku-unplugged.net')
-      visit users_path
+      create(:user, last_name: '山田', first_name: '花子', nickname: 'はな')
+      create(:user, last_name: 'Smith', first_name: 'John')
     end
 
-    scenario 'A logged-in user can see the members page' do
+    scenario 'A non-logged-in user can see the members page' do
+      visit root_path
+      click_link 'Members'
+
       expect(page).to have_title('Members')
-      expect(page).to have_content('Members')
       User.all.each do |user|
-        expect(page).to have_selector('li', text: user.full_name)
+        expect(page).to have_content(user.handle)
+        expect(page).not_to have_content(user.full_name)
       end
     end
 
-    context 'Admin user' do
-      given(:not_activated_user) { create(:user, activated: false) }
+    scenario 'A logged-in user can see full name of all members in the members page' do
+      log_in_as user
+      visit users_path
 
+      expect(page).to have_title('Members')
+      User.all.each do |user|
+        expect(page).to have_content(user.full_name)
+      end
+    end
+
+    context 'only performed within a year' do
       background do
-        log_in_as admin
+        create(:song, user: user)
       end
 
-      scenario 'An admin user can delete another user' do
-        visit user_path(not_activated_user)
+      scenario 'A user can see members only who performed within a year', js: true do
+        visit users_path
+        check '1年以内にライブに出演したメンバーのみ表示'
 
-        expect { click_link('Delete', match: :first) }.to change(User, :count).by(-1)
+        expect(page).to have_content(user.handle)
+        expect(page).not_to have_content('はな')
+        expect(page).not_to have_content('Smith')
       end
     end
   end
@@ -103,6 +114,19 @@ RSpec.feature 'UserPages', type: :feature do
       expect(page).to have_selector('.alert-success')
       expect(user.reload.nickname).to eq new_nickname
       expect(user.reload.email).to eq new_email
+    end
+  end
+
+  feature 'Delete user' do
+    given(:not_activated_user) { create(:user, activated: false) }
+    background do
+      log_in_as admin
+    end
+
+    scenario 'An admin user can delete another user' do
+      visit user_path(not_activated_user)
+
+      expect { click_link('Delete', match: :first) }.to change(User, :count).by(-1)
     end
   end
 
