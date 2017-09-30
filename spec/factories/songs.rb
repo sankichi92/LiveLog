@@ -17,6 +17,13 @@ FactoryGirl.define do
     end
   end
 
+  factory :draft_song, parent: :song do
+    association :live, factory: :draft_live
+    order nil
+    youtube_id nil
+    comment nil
+  end
+
   factory :playing do
     user
     song
