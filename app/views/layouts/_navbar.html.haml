@@ -23,6 +23,14 @@
               %ul.dropdown-menu
                 %li= link_to 'New Live', new_live_path
                 %li= link_to 'New Member', new_user_path
+          - if Live.drafts.exists?
+            %li.dropdown
+              %a{href: '#', class: 'dropdown-toggle', 'data-toggle': 'dropdown', role: 'button', 'aria-haspopup': 'true', 'aria-expanded': 'false'}
+                Entry
+                %span.caret
+              %ul.dropdown-menu
+                - Live.drafts.each do |live|
+                  %li= link_to live.name, live_entries_path(live)
           %li.dropdown
             %a{href: '#', class: 'dropdown-toggle', 'data-toggle': 'dropdown', role: 'button', 'aria-haspopup': 'true', 'aria-expanded': 'false'}
               = current_user.full_name
@@ -31,11 +39,6 @@
               %li= link_to glyphicon(:user) + 'Profile',  current_user
               %li= link_to glyphicon(:cog) + 'Settings', edit_user_path(current_user)
               %li= link_to glyphicon('log-out') + 'Log out', logout_path, method: :delete
-              - if Live.draft.exists?
-                %li.divider{role: 'separator'}
-                %li.dropdown-header Entry
-                - Live.draft.each do |live|
-                  %li= link_to live.name, new_live_entry_path(live)
               %li.divider{role: 'separator'}
               %li= link_to glyphicon(:comment) + 'Report', feedback_url(current_user), target: '_blank'
       - else

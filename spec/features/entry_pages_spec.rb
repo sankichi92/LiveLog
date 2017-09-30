@@ -12,7 +12,8 @@ RSpec.feature 'EntryPages', type: :feature do
     end
 
     scenario 'A logged-in user can see the entries only they will play' do
-      visit live_entries_path(live)
+      visit root_path
+      click_link live.name
 
       expect(page).to have_title(live.title)
       expect(page).to have_link('エントリーする', href: new_live_entry_path(live))
