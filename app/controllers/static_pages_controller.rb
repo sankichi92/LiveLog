@@ -1,5 +1,3 @@
-require 'open-uri'
-
 class StaticPagesController < ApplicationController
   def home
     today = Time.zone.today
