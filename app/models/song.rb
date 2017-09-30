@@ -15,7 +15,7 @@ class Song < ApplicationRecord
   accepts_nested_attributes_for :playings, allow_destroy: true
 
   delegate :title, :name, to: :live, prefix: true
-  delegate :draft?, to: :live
+  delegate :draft?, :nf?, to: :live
 
   attr_accessor :notes
 

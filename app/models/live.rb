@@ -25,4 +25,8 @@ class Live < ApplicationRecord
   def draft?
     date > Time.zone.today
   end
+
+  def nf?
+    name.include?('NF')
+  end
 end

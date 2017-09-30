@@ -21,7 +21,7 @@
 
   - songs = @live.songs.played_order.includes(playings: :user)
   - songs = songs.select { |song| song.editable?(current_user) } if @live.draft?
-  - if songs.count > 20
+  - if @live.nf?
     .table-responsive
       %table#songs.table.table-striped.table-condensed
         %thead
