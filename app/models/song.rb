@@ -38,7 +38,7 @@ class Song < ApplicationRecord
 
   def self.pickup(date = Time.zone.today)
     random = Random.new(date.to_time.to_i)
-    songs = where.not(youtube_id: '', status: :secret)
+    songs = where.not(youtube_id: '', status: :secret).where('created_at < ?', date)
     songs.offset(random.rand(songs.count)).first if songs.exists?
   end
 
