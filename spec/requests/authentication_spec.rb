@@ -41,7 +41,7 @@ RSpec.describe "Authentication", type: :request do
       end
 
       describe 'submitting to the create action' do
-        before { post live_entry_path(live) }
+        before { post live_entries_path(live) }
         specify { expect(response).to redirect_to(login_path) }
       end
     end

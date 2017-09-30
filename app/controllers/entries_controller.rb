@@ -3,6 +3,10 @@ class EntriesController < ApplicationController
   before_action :set_live
   before_action :draft_live
 
+  def index
+    #
+  end
+
   def new
     @song = @live.songs.build
     @song.playings.build

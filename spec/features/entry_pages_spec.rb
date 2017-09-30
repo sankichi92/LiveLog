@@ -3,7 +3,18 @@ require 'rails_helper'
 RSpec.feature 'EntryPages', type: :feature do
   given(:live) { create(:live, date: Time.zone.today + 1.month) }
 
-  feature 'Entry' do
+  feature 'Show the entry list for the live' do
+    given(:user) { create(:user) }
+
+    scenario 'A logged-in user can visit the entry list' do
+      log_in_as user
+      visit live_entries_path(live)
+
+      expect(page).to have_title(live.title)
+    end
+  end
+
+  feature 'Create an entry' do
     given(:user) { create(:user) }
 
     background { ActionMailer::Base.deliveries.clear }
