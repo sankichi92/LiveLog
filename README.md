@@ -7,6 +7,12 @@
 
 This is the application to manage set lists of the acoustic light music club "[京大アンプラグド](http://ku-unplugged.net/)."
 
+## Requirements
+
+- Ruby 2.4.1
+- PostgreSQL 9.1 or later
+- ChromeDriver (for test environment)
+
 ## Getting started
 
 To get started with the app, clone the repo and then install the needed gems:
