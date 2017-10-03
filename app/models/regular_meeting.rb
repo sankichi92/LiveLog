@@ -1,7 +1,7 @@
 require 'open-uri'
 
 class RegularMeeting
-  REGULAR_MEETINGS_INFO_URL = 'http://s.maho.jp/homepage/7cffb2d25ef87ff8/'
+  REGULAR_MEETINGS_INFO_URL = URI.parse('https://s.maho.jp/homepage/7cffb2d25ef87ff8/')
 
   attr_reader :date, :place, :note, :place_url
 
@@ -15,7 +15,9 @@ class RegularMeeting
 
   def fetch_detail_url
     doc = Nokogiri::HTML(open(REGULAR_MEETINGS_INFO_URL))
-    doc.css("a:contains('#{date.month}月活動予定')").attribute('href').value
+    url = URI.parse(doc.css("a:contains('#{date.month}月活動予定')").attribute('href').value)
+    url = REGULAR_MEETINGS_INFO_URL.merge(url) unless url.absolute?
+    url.to_s
   rescue => e
     Rails.logger.error e.message
     nil
