@@ -139,15 +139,14 @@ RSpec.feature 'SongPages', type: :feature do
       end
     end
 
-    scenario 'An admin user not save changes with invalid information' do
-      new_song_name = 'ニューソング'
+    scenario 'An admin user can save changes with valid information' do
       visit edit_song_path(song)
 
-      fill_in '曲名', with: new_song_name
+      fill_in '曲名', with: 'ニューソング'
       click_button 'Save'
 
       expect(page).to have_selector('.alert-success')
-      expect(song.reload.name).to eq new_song_name
+      expect(song.reload.name).to eq 'ニューソング'
     end
   end
 
