@@ -52,15 +52,18 @@ RSpec.describe "Authentication", type: :request do
     let(:wrong_user) { create(:user, email: 'wrong@example.com') }
     before { log_in_as user, capybara: false }
 
-    describe 'submitting a GET request to the Users#edit action' do
-      before { get edit_user_path(wrong_user) }
-      specify { expect(response.body).not_to match(full_title('Edit user')) }
-      specify { expect(response).to redirect_to(root_url) }
-    end
+    describe 'in the Users controller' do
 
-    describe 'submitting a PATCH request to the Users#update action' do
-      before { patch user_path(wrong_user) }
-      specify { expect(response).to redirect_to(root_path) }
+      describe 'visiting the edit page' do
+        before { get edit_user_path(wrong_user) }
+        specify { expect(response.body).not_to match(full_title('Edit user')) }
+        specify { expect(response).to redirect_to(root_url) }
+      end
+
+      describe 'submitting to the update action' do
+        before { patch user_path(wrong_user) }
+        specify { expect(response).to redirect_to(root_path) }
+      end
     end
 
     describe 'in the Songs Controller' do
