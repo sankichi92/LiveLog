@@ -50,15 +50,23 @@ RSpec.describe "Authentication", type: :request do
     end
 
     describe 'in the Songs Controller' do
+      let(:live) { create(:live) }
+      let(:song) { create(:song, live: live, user: wrong_user) }
 
-      describe 'visiting a draft song he/she will not play' do
-        let(:draft_live) { create(:live, date: 1.month.from_now) }
-        let(:draft_song_user_will_not_play) { create(:song, live: draft_live) }
+      describe 'visiting the draft song page' do
+        let(:live) { create(:draft_live) }
+        before { get song_path(song) }
+        specify { expect(response).to redirect_to(root_path) }
+      end
 
-        it 'should be redirected to root' do
-          get song_path(draft_song_user_will_not_play)
-          expect(response).to redirect_to(root_path)
-        end
+      describe 'visiting the edit page' do
+        before { get edit_song_path(song) }
+        specify { expect(response).to redirect_to(root_path) }
+      end
+
+      describe 'submitting to the update action' do
+        before { patch song_path(song) }
+        specify { expect(response).to redirect_to(root_path) }
       end
     end
   end

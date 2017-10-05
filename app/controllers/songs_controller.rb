@@ -2,7 +2,7 @@ class SongsController < ApplicationController
   before_action :set_song, only: %i[show edit update destroy]
   before_action :logged_in_user, except: %i[index show]
   before_action :correct_user, only: %i[edit update]
-  before_action :correct_user, only: :show, if: :draft_song?
+  before_action :correct_user_for_draft_song, only: :show, if: :draft_song?
   before_action :admin_or_elder_user, only: %i[new create destroy]
   before_action :store_referer, only: :edit
 
@@ -64,6 +64,10 @@ class SongsController < ApplicationController
 
   def correct_user
     redirect_to(root_url) unless current_user.played?(@song) || current_user.admin_or_elder?
+  end
+
+  def correct_user_for_draft_song
+    correct_user
   end
 
   def set_song

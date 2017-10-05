@@ -90,13 +90,7 @@ RSpec.feature 'SongPages', type: :feature do
   feature 'song edition' do
     given(:admin) { create(:admin) }
 
-    scenario 'A user cannot see the edit page' do
-      visit edit_song_path(song)
 
-      expect(page).not_to have_content('Edit song')
-      expect(page).not_to have_title('Edit song')
-      expect(page).to have_selector('.alert-danger')
-    end
 
     scenario 'An admin user cannot save changes with invalid information' do
       log_in_as admin
