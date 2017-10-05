@@ -8,12 +8,6 @@ RSpec.feature 'EntryPages', type: :feature do
 
     background { ActionMailer::Base.deliveries.clear }
 
-    scenario 'A non-logged-in user cannot visit a new entry page' do
-      visit new_live_entry_path(live)
-
-      expect(page).not_to have_title('Entry')
-    end
-
     scenario 'A logged-in user can send an entry with valid information', js: true do
       log_in_as user
       visit new_live_entry_path(live)

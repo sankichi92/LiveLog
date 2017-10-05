@@ -31,6 +31,20 @@ RSpec.describe "Authentication", type: :request do
         specify { expect(response).to redirect_to(login_path) }
       end
     end
+
+    describe 'in the Entries controller' do
+      let(:live) { create(:draft_live) }
+
+      describe 'visiting the new entry page' do
+        before { get new_live_entry_path(live) }
+        specify { expect(response).to redirect_to(login_path) }
+      end
+
+      describe 'submitting to the create action' do
+        before { post live_entry_path(live) }
+        specify { expect(response).to redirect_to(login_path) }
+      end
+    end
   end
 
   describe 'as wrong user' do
