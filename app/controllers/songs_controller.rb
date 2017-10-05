@@ -28,6 +28,9 @@ class SongsController < ApplicationController
     else
       render :new
     end
+  rescue ActiveRecord::RecordNotUnique
+    @song.add_error_for_duplicated_user
+    render :new
   end
 
   def edit
@@ -47,6 +50,9 @@ class SongsController < ApplicationController
         format.js { flash.now[:danger] = @song.errors.full_messages }
       end
     end
+  rescue ActiveRecord::RecordNotUnique
+    @song.add_error_for_duplicated_user
+    render :edit
   end
 
   def destroy

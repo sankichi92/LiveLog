@@ -79,6 +79,10 @@ class Song < ApplicationRecord
     SongMailer.entry(self, applicant).deliver_now
   end
 
+  def add_error_for_duplicated_user
+    errors.add(:playings, 'が重複しています')
+  end
+
   def previous(logged_in = false)
     return nil if order.blank?
     allowed_statuses = if logged_in

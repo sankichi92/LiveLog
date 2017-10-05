@@ -34,6 +34,7 @@ ja:
         time: 時間
         status: 公開設定
         comment: コメント
+        playings: 演者
       playing:
         user: メンバー
         inst: 楽器

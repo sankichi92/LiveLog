@@ -17,6 +17,8 @@ class EntriesController < ApplicationController
       flash[:danger] = 'メールの送信に失敗しました'
     end
     redirect_to @song.live
+  rescue ActiveRecord::RecordNotUnique
+    @song.add_error_for_duplicated_user
   end
 
   private
