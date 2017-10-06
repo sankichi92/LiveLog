@@ -25,7 +25,7 @@ class RegularMeeting
 
   def fetch_place
     doc = Nokogiri::HTML(open(place_url))
-    match = doc.at_css('#mahoimain').to_s.match(/\n#{date.day}（[月火水木金土日]）(?<place>[@×][^（<\n]*)(?:（(?<note>.+)）)?.*<br>/)
+    match = doc.at_css('#mahoimain').to_s.match(/\n#{date.day}（[月火水木金土日]）\s*(?<place>[@×][^（<\n]*)(?:（(?<note>.+)）)?.*<br>/)
     [match[:place], match[:note]]
   rescue => e
     Rails.logger.error e.message
