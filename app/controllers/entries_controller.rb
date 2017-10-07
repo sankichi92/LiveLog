@@ -3,6 +3,10 @@ class EntriesController < ApplicationController
   before_action :set_live
   before_action :draft_live
 
+  def index
+    @entries = @live.songs.played_order.includes(playings: :user).select { |song| song.editable?(current_user) }
+  end
+
   def new
     @song = @live.songs.build
     @song.playings.build
@@ -16,7 +20,7 @@ class EntriesController < ApplicationController
     else
       flash[:danger] = 'メールの送信に失敗しました'
     end
-    redirect_to @song.live
+    redirect_to action: :index
   rescue ActiveRecord::RecordNotUnique
     @song.add_error_for_duplicated_user
   end

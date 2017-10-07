@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   resources :songs
 
   resources :lives do
-    resource :entry, only: %i[new create]
+    resources :entries, only: %i[index new create]
   end
 
   resources :users, path: :members do

@@ -1,0 +1,13 @@
+- provide(:title, @live.title)
+%header.page-header
+  %h1<
+    = @live.name
+    %small
+      = " #{I18n.l(@live.date)} @#{@live.place} "
+
+- if @entries.present?
+  = render 'lives/songs_table', songs: @entries
+
+.row
+  %p.col-sm-offset-3.col-sm-6
+    = link_to glyphicon(:send) + 'エントリーする', new_live_entry_path(@live), class: 'btn btn-primary btn-lg btn-block'
