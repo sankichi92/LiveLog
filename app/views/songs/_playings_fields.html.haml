@@ -1,12 +1,13 @@
 = f.hidden_field :_destroy, value: 0
 .form-group{id: "song_playings_attributes_#{f.index}_fields"}
-  = f.label :user, class: 'col-sm-3 control-label'
-  .col-sm-2
-    = f.text_field :inst, class: 'form-control', placeholder: 'Gt&Vo'
-  .col-sm-6
-    = f.collection_select :user_id, User.natural_order, :id, :full_name, {}, class: 'select2 form-control'
-  .col-sm-1
-    = content_tag :button,
-                  glyphicon(:minus),
-                  type: 'button', class: 'remove-member btn btn-link', data: {prefix: "song_playings_attributes_#{f.index}"}
+  = f.label :user
+  .form-row
+    .col-3.col-md-2
+      = f.text_field :inst, class: 'form-control', placeholder: 'Gt&Vo'
+    .col
+      = f.collection_select :user_id, User.natural_order, :id, :name_with_handle, {}, class: 'select2 form-control'
+    .col-2.col-md-1
+      = content_tag :button,
+                    icon('minus'),
+                    type: 'button', class: 'remove-member btn btn-block btn-light', data: { prefix: "song_playings_attributes_#{f.index}" }
 

@@ -1,0 +1,40 @@
+%ol.breadcrumb
+  %li.breadcrumb-item= link_to song.live_title, song.live
+  %li.breadcrumb-item.active
+    = song.time_order
+    = current_page?(song) ? song.name : link_to(song.name, song)
+    - if song.artist.present?
+      \/
+      = link_to(song.artist, songs_path(q: song.artist))
+- if song.watchable?(current_user)
+  %p.embed-responsive.embed-responsive-16by9
+    = song.youtube_embed
+.row
+  .col-md-6.mb-3
+    %section.card
+      %h6.card-header Members
+      .list-group.list-group-flush
+        - sort_by_inst(song.playings).each do |playing|
+          = link_to_user playing.user, logged_in?, class: 'list-group-item list-group-item-action' do
+            = playing.inst + '.' unless playing.inst.blank?
+            = playing.display_name(logged_in?)
+            %small.text-muted= playing.joined
+  - if current_page?(song) && logged_in? && current_user.played?(song)
+    .col-md-6
+      %section.card
+        %h6.card-header Edit
+        .card-body
+          = form_with model: song do |f|
+            .form-group
+              = f.label :status
+              = f.select :status, { '公開': 'open', 'サークル内': 'closed', 'バンド内': 'secret' }, {}, id: 'song_status', class: 'form-control'
+            .form-group
+              = f.label :comment
+              = f.text_area :comment, id: 'song_comment', class: 'form-control', rows: 3
+            = f.submit 'Save', class: 'btn btn-primary'
+  - elsif song.comment.present?
+    .col-md-6
+      %section.card
+        %h6.card-header Comments
+        .card-body
+          = simple_format(song.comment)

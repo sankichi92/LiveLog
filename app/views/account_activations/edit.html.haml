@@ -1,23 +1,23 @@
 - provide(:title, 'Activation')
-- provide(:button_text, 'Activate')
 %header.page-header
-  %h1 アカウントを有効化する
+  %h1 Activation
 
-= form_for(@user, url: user_activation_path, html: {class: 'form-horizontal well'}) do |f|
+= form_for @user, url: user_activation_path do |f|
   = render 'shared/error_messages', object: f.object
-
   = hidden_field_tag :t, params[:t]
 
-  .form-group
-    = f.label :name, '名前', class: 'col-sm-3 control-label'
-    .col-sm-9
-      %p.form-control-static= @user.full_name
-
-  .form-group
-    = f.label :joined, class: 'col-sm-3 control-label'
-    .col-sm-9
-      %p.form-control-static= @user.joined
+  %fieldset{ disabled: true }
+    .form-group
+      = f.label :joined
+      = f.number_field :joined, class: 'form-control'
+    .form-row
+      .form-group.col
+        = f.label :last_name, class: 'col-form-label'
+        = f.text_field :last_name, class: 'form-control'
+      .form-group.col
+        = f.label :first_name, class: 'col-form-label'
+        = f.text_field :first_name, class: 'form-control'
 
   = render 'passwords/form', f: f, label: 'パスワードを作成'
 
-  = render 'shared/submit', f: f
+  = f.submit 'Activate', class: 'btn btn-primary'

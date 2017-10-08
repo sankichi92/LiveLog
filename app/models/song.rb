@@ -83,32 +83,6 @@ class Song < ApplicationRecord
     errors.add(:playings, 'が重複しています')
   end
 
-  def previous(logged_in = false)
-    return nil if order.blank?
-    allowed_statuses = if logged_in
-                         [Song.statuses[:open], Song.statuses[:closed]]
-                       else
-                         [Song.statuses[:open]]
-                       end
-    Song
-      .where(live: live, status: allowed_statuses)
-      .where("(songs.order < ? OR songs.time < ?) AND NOT (songs.youtube_id IS NULL OR songs.youtube_id = '')", order, time)
-      .last
-  end
-
-  def next(logged_in = false)
-    return nil if order.blank?
-    allowed_statuses = if logged_in
-                         [Song.statuses[:open], Song.statuses[:closed]]
-                       else
-                         [Song.statuses[:open]]
-                       end
-    Song
-      .where(live: live, status: allowed_statuses)
-      .where("(songs.order > ? OR songs.time > ?) AND NOT (songs.youtube_id IS NULL OR songs.youtube_id = '')", order, time)
-      .first
-  end
-
   private
 
   def extract_youtube_id

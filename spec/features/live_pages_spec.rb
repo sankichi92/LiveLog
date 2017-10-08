@@ -58,11 +58,11 @@ RSpec.feature 'LivePages', type: :feature do
 
     scenario 'An admin user can create a new live with valid information' do
       name = 'テストライブ'
-      expect(page).to have_title('New live')
+      expect(page).to have_title('New Live')
 
-      fill_in 'Name', with: name
-      fill_in 'Date', with: '2016-11-23'
-      fill_in 'Place', with: '4共31'
+      fill_in 'ライブ名', with: name
+      fill_in '開催日', with: '2016-11-23'
+      fill_in '場所', with: '4共31'
 
       expect { click_button 'Add' }.to change(Live, :count).by(1)
       expect(page).to have_selector('.alert-success')
@@ -82,24 +82,24 @@ RSpec.feature 'LivePages', type: :feature do
       log_in_as create(:user)
       visit edit_live_path(live)
 
-      expect(page).not_to have_title('Edit live')
-      expect(page).not_to have_content('Edit live')
+      expect(page).not_to have_title('Edit Live')
+      expect(page).not_to have_content('Edit Live')
     end
 
     scenario 'An admin user cannot edit the live with blank name' do
-      fill_in 'Name', with: ''
+      fill_in 'ライブ名', with: ''
       click_button 'Save'
 
       expect(page).to have_selector('.alert-danger')
-      expect(page).to have_title('Edit live')
+      expect(page).to have_title('Edit Live')
     end
 
     scenario 'An admin user can edit the live with valid information' do
       new_name = 'New ライブ'
       new_date = Time.zone.today
 
-      fill_in 'Name', with: new_name
-      fill_in 'Date', with: new_date
+      fill_in 'ライブ名', with: new_name
+      fill_in '開催日', with: new_date
       click_button 'Save'
 
       expect(page).to have_selector('.alert-success')
@@ -114,7 +114,7 @@ RSpec.feature 'LivePages', type: :feature do
 
     scenario 'A user cannot see delete link' do
       visit live_path(live)
-      expect(page).not_to have_selector('.glyphicon-trash')
+      expect(page).not_to have_selector('.fa-trash')
     end
 
     scenario 'An admin user can delete live' do

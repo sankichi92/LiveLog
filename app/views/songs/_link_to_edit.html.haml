@@ -1,7 +1,0 @@
-- if song.editable?(current_user)
-  = link_to glyphicon(:edit), edit_song_path(song)
-- if logged_in? && current_user.played?(song)
-  - if song.open?
-    = glyphicon(:globe)
-  - elsif song.secret?
-    = glyphicon(:lock)

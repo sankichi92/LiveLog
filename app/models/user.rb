@@ -41,7 +41,7 @@ class User < ApplicationRecord
   scope :active, -> { includes(songs: :live).where('lives.date': 1.year.ago..Time.zone.today) }
   scope :joined_years, -> { unscope(:order).order(joined: :desc).distinct.pluck(:joined) }
 
-  def formal_name
+  def name
     "#{last_name} #{first_name}"
   end
 
@@ -49,9 +49,12 @@ class User < ApplicationRecord
     nickname.blank? ? last_name : nickname
   end
 
-  def full_name(logged_in = true)
-    return handle unless logged_in
-    nickname.blank? ? formal_name : "#{last_name} #{first_name} (#{nickname})"
+  def name_with_handle
+    nickname.blank? ? name : "#{name} (#{nickname})"
+  end
+
+  def display_name(logged_in)
+    logged_in ? name_with_handle : handle
   end
 
   def elder?

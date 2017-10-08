@@ -1,10 +1,10 @@
 %p
   = "京大アンプラグド #{@user.joined}年度入部"
   %br
-  = "#{@user.formal_name} さん"
+  = "#{@user.name} さん"
 
 %p
-  = "#{@inviter.joined}年度入部の #{@inviter.formal_name} さんから"
+  = "#{@inviter.joined}年度入部の #{@inviter.name} さんから"
   = link_to 'LiveLog', 'http://livelog.ku-unplugged.net/'
   に招待されています。
   %br

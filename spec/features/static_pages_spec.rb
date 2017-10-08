@@ -7,7 +7,7 @@ RSpec.feature "StaticPages", type: :feature do
 
     expect(page).to have_title(full_title(''))
     expect(page).not_to have_title('-')
-    expect(page).to have_content('セットリスト検索システムです')
+    expect(page).to have_content('セットリスト管理アプリ')
   end
 
   scenario 'A user can see the Stats page' do
@@ -16,6 +16,6 @@ RSpec.feature "StaticPages", type: :feature do
     click_on 'Stats'
 
     expect(page).to have_title(full_title('Stats'))
-    expect(page).to have_content('について')
+    expect(page).to have_content('Stats')
   end
 end

@@ -30,7 +30,7 @@ RSpec.feature "LoginPages", type: :feature do
   scenario 'A user can login and logout with valid information' do
     log_in_as user
 
-    expect(page).to have_content(user.full_name)
+    expect(page).to have_content(user.name_with_handle)
     expect(page).to have_link('Profile', href: user_path(user))
     expect(page).to have_link('Settings', href: edit_user_path(user))
     expect(page).to have_link('Log out', href: logout_path)
@@ -56,6 +56,6 @@ RSpec.feature "LoginPages", type: :feature do
       click_button 'Log in'
     end
 
-    expect(page).to have_title('Edit profile')
+    expect(page).to have_title('Settings')
   end
 end

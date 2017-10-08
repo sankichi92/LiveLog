@@ -1,2 +1,2 @@
 json.extract! user, :id, :joined, :public
-json.name user.full_name(authenticated?)
+json.name user.display_name(authenticated?)

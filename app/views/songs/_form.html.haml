@@ -1,38 +1,26 @@
-= form_for(@song, html: {class: 'form-horizontal well'}) do |f|
+= form_for @song do |f|
   = render 'shared/error_messages', object: f.object
 
   - if current_user.admin?
-
     .form-group
-      = f.label :live_id, class: 'col-sm-3 control-label'
-      .col-sm-9
-        = f.collection_select :live_id, Live.order_by_date, :id, :title, {}, class: 'form-control'
+      = f.label :live_id
+      = f.collection_select :live_id, Live.order_by_date, :id, :title, {}, class: 'form-control'
 
-    .form-group
-      = f.label :youtube_id, class: 'col-sm-3 control-label'
-      .col-sm-9
-        = f.text_field :youtube_id, value: @song.youtube_url, class: 'form-control', placeholder: 'https://www.youtube.com/watch?v=sSbqm7ZK_9s'
-
-  .form-group
-    = f.label :order, class: 'col-sm-3 control-label'
-    .col-sm-9
+  .form-row
+    - if @song.nf?
+      .form-group.col
+        = f.label :time, class: 'col-form-label'
+        = f.time_field :time, class: 'form-control', placeholder: '10:00'
+    .form-group.col
+      = f.label :order, class: 'col-form-label'
       = f.number_field :order, class: 'form-control', placeholder: '1'
 
-  - if @song.nf?
-
-    .form-group
-      = f.label :time, class: 'col-sm-3 control-label'
-      .col-sm-9
-        = f.time_field :time, class: 'form-control', placeholder: '10:00'
-
-  .form-group
-    = f.label :name, class: 'col-sm-3 control-label'
-    .col-sm-9
+  .form-row
+    .form-group.col-sm
+      = f.label :name, class: 'col-form-label'
       = f.text_field :name, class: 'form-control', placeholder: 'Tears in Heaven'
-
-  .form-group
-    = f.label :artist, class: 'col-sm-3 control-label'
-    .col-sm-9
+    .form-group.col-sm
+      = f.label :artist, class: 'col-form-label'
       = f.text_field :artist, class: 'form-control', placeholder: 'Eric Clapton'
 
   #playings-fields
@@ -40,24 +28,21 @@
       = render 'playings_fields', f: builder
 
   .form-group
-    .col-sm-3.control-label
-      = button_to_add_member(f)
+    .form-text= button_to_add_member(f)
+
+  - if current_user.admin?
+    .form-group
+      = f.label :youtube_id
+      = f.url_field :youtube_id, value: @song.youtube_url, class: 'form-control', placeholder: 'https://www.youtube.com/watch?v=sSbqm7ZK_9s'
 
   - if current_user.played?(@song)
-
     .form-group
-      = f.label :status, class: 'col-sm-3 control-label'
-      .col-sm-9
-        = f.select :status, {'公開': 'open', 'サークル内': 'closed', 'バンド内': 'secret'}, {}, class: 'form-control'
-
+      = f.label :status
+      = f.select :status, { '公開': 'open', 'サークル内': 'closed', 'バンド内': 'secret' }, {}, class: 'form-control'
     .form-group
-      = f.label :comment, class: 'col-sm-3 control-label'
-      .col-sm-9
-        = f.text_area :comment, class: 'form-control', rows: 3
+      = f.label :comment
+      = f.text_area :comment, class: 'form-control', rows: 3
 
-  .form-group
-    .col-sm-offset-3.col-sm-9
-      = f.submit yield(:button_text), class: 'btn btn-primary'
-      - if @song.persisted? && current_user.admin_or_elder?
-        = link_to glyphicon(:trash) + 'Delete', @song, method: :delete, data: {confirm: '本当に削除しますか？'}, class: 'btn btn-danger pull-right', role: 'button'
+
+  = f.submit yield(:button_text), class: 'btn btn-primary'
 

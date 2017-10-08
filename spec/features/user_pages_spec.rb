@@ -5,9 +5,13 @@ RSpec.feature 'UserPages', type: :feature do
   given(:admin) { create(:admin) }
 
   feature 'Show members' do
+    given(:users) do
+      [create(:user, last_name: '山田', first_name: '花子', nickname: 'はな'),
+       create(:user, last_name: 'Smith', first_name: 'John')]
+    end
     background do
-      create(:user, last_name: '山田', first_name: '花子', nickname: 'はな')
-      create(:user, last_name: 'Smith', first_name: 'John')
+      live = create(:live, date: Time.zone.today)
+      create(:song, live: live, users: users)
     end
 
     scenario 'A non-logged-in user can see the members page' do
@@ -15,9 +19,9 @@ RSpec.feature 'UserPages', type: :feature do
       click_link 'Members'
 
       expect(page).to have_title('Members')
-      User.all.each do |user|
+      users.each do |user|
         expect(page).to have_content(user.handle)
-        expect(page).not_to have_content(user.full_name)
+        expect(page).not_to have_content(user.name_with_handle)
       end
     end
 
@@ -26,23 +30,18 @@ RSpec.feature 'UserPages', type: :feature do
       visit users_path
 
       expect(page).to have_title('Members')
-      User.all.each do |user|
-        expect(page).to have_content(user.full_name)
+      users.each do |user|
+        expect(page).to have_content(user.name_with_handle)
       end
     end
 
-    context 'only performed within a year' do
-      background do
-        create(:song, user: user)
-      end
+    scenario 'A user can see all members', js: true do
+      visit users_path
+      uncheck '1年以内にライブに出演したメンバーのみ表示'
 
-      scenario 'A user can see members only who performed within a year', js: true do
-        visit users_path
-        check '1年以内にライブに出演したメンバーのみ表示'
-
+      User.all.each do |user|
         expect(page).to have_content(user.handle)
-        expect(page).not_to have_content('はな')
-        expect(page).not_to have_content('Smith')
+        expect(page).not_to have_content(user.name_with_handle)
       end
     end
   end
@@ -57,8 +56,8 @@ RSpec.feature 'UserPages', type: :feature do
     scenario 'A user can see his/her profile page' do
       visit user_path(user)
 
-      expect(page).to have_content(user.full_name)
-      expect(page).to have_title(user.full_name)
+      expect(page).to have_content(user.name_with_handle)
+      expect(page).to have_title(user.name_with_handle)
       expect(page).to have_content(song.name)
     end
   end
@@ -92,8 +91,8 @@ RSpec.feature 'UserPages', type: :feature do
     end
 
     scenario 'A logged-in user can see the edit page' do
-      expect(page).to have_content('Edit Profile')
-      expect(page).to have_title('Edit profile')
+      expect(page).to have_content('Settings')
+      expect(page).to have_title('Settings')
     end
 
     scenario 'A logged-in user cannot save changes with invalid information' do
@@ -157,7 +156,7 @@ RSpec.feature 'UserPages', type: :feature do
       fill_in 'パスワードを再入力', with: new_password
       click_button 'Save'
 
-      expect(page).to have_title(user.full_name)
+      expect(page).to have_title(user.name_with_handle)
       expect(page).to have_selector('.alert-success')
     end
 
@@ -167,7 +166,7 @@ RSpec.feature 'UserPages', type: :feature do
 
       click_button 'Save'
 
-      expect(page).to have_title('Edit password')
+      expect(page).to have_title('Change Password')
       expect(page).to have_selector('.alert-danger')
     end
 

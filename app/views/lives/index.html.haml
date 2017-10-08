@@ -1,18 +1,13 @@
 - provide(:title, 'Live List')
 %header.page-header
-  %h1 Live List
+  %h1.display-4 Live List
 
-- Live.years.each_slice(2) do |two_years|
-  .row
-    - two_years.each do |year|
-      - lives = @lives.nendo(year)
-      - if lives.present?
-        .col-sm-6
-          .panel.panel-default
-            .panel-heading
-              %h2.panel-title= year
-            %table.table.table-hover
-              %tbody
-                - lives.each do |live|
-                  - cache_unless logged_in?, live do
-                    = render live
+.row
+  - Live.years.each do |year|
+    - lives = @lives.nendo(year)
+    .col-lg-6.mb-3
+      %section.card
+        %h4.card-header= year
+        %table.table.table-hover
+          %tbody
+            = render partial: 'live', collection: lives, cached: true

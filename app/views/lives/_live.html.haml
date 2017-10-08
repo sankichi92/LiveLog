@@ -1,5 +1,4 @@
-%tr{onclick: "location.href='#{live_path(live)}';"}
+%tr{ onclick: "location.href='#{live_path(live)}';" }
   %td= I18n.l live.date
   %td= live.name
-  %td= '@' + live.place
-  %td= glyphicon(:picture) if logged_in? && live.album_url.present?
+  %td= live.place.present? ? "@#{live.place}" : ''

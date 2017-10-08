@@ -1,4 +1,4 @@
-申請者: <%= "#{@applicant.formal_name} (#{@applicant.joined})" %>
+申請者: <%= "#{@applicant.name} (#{@applicant.joined})" %>
 
 ライブ: <%= @song.live_title %>
 
@@ -6,7 +6,7 @@
 
 メンバー:
 <% @song.playings.reverse.each do |playing| %>
-    <%= "#{playing.inst}. #{playing.user.formal_name} (#{playing.user.joined})" %>
+    <%= "#{playing.inst}. #{playing.name} (#{playing.joined})" %>
 <% end %>
 
 備考:

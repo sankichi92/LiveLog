@@ -1,22 +1,24 @@
 - provide(:title, 'Members')
 %header.page-header
-  %h1 Members
+  %h1.display-4 Members
 
-%aside.form-inline.well.well-sm
-  .checkbox
-    %label
-      = check_box_tag :active, true, false, checked: params[:active] == 'true', onchange: "location.href='#{request.path}?active=' + $(this).is(':checked');"
-      1年以内にライブに出演したメンバーのみ表示
+%aside.card.mb-3
+  .card-body
+    .form-check.mb-0
+      %label.form-check-label
+        = check_box_tag :active, true, false, checked: params[:active] != 'false', onchange: "location.href='#{request.path}?active=' + $(this).is(':checked');"
+        1年以内にライブに出演したメンバーのみ表示
 
-- @users.joined_years.each_slice(4) do |four_years|
-  .row
-    - four_years.each do |year|
-      .col-sm-3
-        %h2= year
-        %ol
-          - @users.where(joined: year).each do |user|
-            - cache_unless logged_in?, user do
-              = render user
+.row
+  - @users.joined_years.each do |year|
+    .col-sm-6.col-md-4.col-lg-3.mb-3
+      %section.card
+        %h4.card-header= year
+        %ul.list-group.list-group-flush
+          - if logged_in?
+            = render @users.where(joined: year)
+          - else
+            = render partial: 'user', collection: @users.where(joined: year), cached: true
 
 - if logged_in?
   %p * 印が付いているメンバーは管理者です。

@@ -1,13 +1,11 @@
-= form_with(model: @song, url: live_entries_path, class: 'form-horizontal well') do |f|
+= form_with model: @song, url: live_entries_path do |f|
 
-  .form-group
-    = f.label :name, class: 'col-sm-3 control-label'
-    .col-sm-9
+  .form-row
+    .form-group.col-sm
+      = f.label :name, class: 'col-form-label'
       = f.text_field :name, id: 'song_name', class: 'form-control', placeholder: 'Tears in Heaven'
-
-  .form-group
-    = f.label :artist, class: 'col-sm-3 control-label'
-    .col-sm-9
+    .form-group.col-sm
+      = f.label :artist, class: 'col-form-label'
       = f.text_field :artist, id: 'song_artist', class: 'form-control', placeholder: 'Eric Clapton'
 
   #playings-fields
@@ -15,20 +13,15 @@
       = render 'songs/playings_fields', f: builder
 
   .form-group
-    .col-sm-3.control-label
-      = button_to_add_member(f)
+    .form-text= button_to_add_member(f)
 
   .form-group
-    = f.label :status, class: 'col-sm-3 control-label'
-    .col-sm-9
-      = f.select :status, { '公開': 'open', 'サークル内': 'closed', 'バンド内': 'secret' }, { selected: 'open' }, id: 'song_status', class: 'form-control'
-      %p.help-block 動画がアップロードされた際の公開範囲です。
+    = f.label :status
+    = f.select :status, { '公開': 'open', 'サークル内': 'closed', 'バンド内': 'secret' }, { selected: 'open' }, id: 'song_status', class: 'form-control'
+    %small.form-text.text-muted 動画がアップロードされた際の公開範囲です。
 
   .form-group
-    = f.label :notes, '備考', class: 'col-sm-3 control-label'
-    .col-sm-9
-      = f.text_area :notes, id: 'song_notes', class: 'form-control', rows: 3
+    = f.label :notes, '備考'
+    = f.text_area :notes, id: 'song_notes', class: 'form-control', rows: 3
 
-  .form-group
-    .col-sm-offset-3.col-sm-9
-      = f.submit 'Send', class: 'btn btn-primary'
+  = f.submit 'Send', class: 'btn btn-primary'

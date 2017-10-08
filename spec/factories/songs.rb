@@ -10,10 +10,14 @@ FactoryGirl.define do
 
     transient do
       user nil
+      users []
     end
 
     after(:create) do |song, evaluator|
       create(:playing, song: song, user: evaluator.user) if evaluator.user
+      evaluator.users.each do |user|
+        create(:playing, song: song, user: user)
+      end
     end
   end
 

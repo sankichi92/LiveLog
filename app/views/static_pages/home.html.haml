@@ -2,39 +2,22 @@
   = render 'regular_meeting', regular_meeting: @regular_meeting
 
 %header.jumbotron
-  .row
-    .col-lg-4.col-md-6
-      = image_tag 'logo.png', alt: 'LiveLog logo', class: 'img-responsive'
-    .col-lg-8.col-md-6.text-center
-      %h1 LiveLog
-      %p<
+  .row.justify-content-center.align-items-center
+    .col-sm-8.col-md-6.col-lg
+      = image_tag 'logo.png', alt: 'LiveLog logo', class: 'img-fluid'
+    .col-lg-8.text-center
+      %h1.display-3 LiveLog
+      %p.lead<
         京都大学を中心に活動するアコースティック軽音サークル
         %br
-        「<a href="http://ku-unplugged.net/" target="_blank">京大アンプラグド</a>」のセットリスト検索システムです。
+        「<a href="http://ku-unplugged.net/" target="_blank">京大アンプラグド</a>」のセットリスト管理アプリ
       = render 'songs/search_form'
       %p
         = link_to 'https://play.google.com/store/apps/details?id=net.ku_unplugged.livelog&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1', target: '_blank' do
           %img{src: 'https://play.google.com/intl/en_us/badges/images/generic/ja_badge_web_generic.png', alt: 'Google Play で手に入れよう', width: 160}
 
 - if @song.present? && @song.watchable?(current_user)
-
-  .page-header
-    %h2= Time.zone.today.strftime('%m月%d日のピックアップ')
-
-  %ol.breadcrumb
-    %li= link_to @song.live_title, @song.live
-    %li.active= link_to "#{@song.time_order} #{@song.name}", @song
-
-  .row
-    .col-sm-12.col-md-9
-      %p.embed-responsive.embed-responsive-16by9
-        = @song.youtube_embed
-
-    = render 'songs/panel', title: 'Members' do
-      %ul.list-group
-        = render sort_by_inst(@song.playings), klass: 'list-group-item'
-
-    - if @song.comment.present?
-      = render 'songs/panel', title: 'Comments' do
-        .panel-body
-          = simple_format(@song.comment)
+  %section
+    %header.page-header
+      %h2 Today's Pickup!
+    = render 'songs/song_detail', song: @song

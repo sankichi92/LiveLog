@@ -6,10 +6,10 @@ class UsersController < ApplicationController
   before_action :admin_or_elder_user, only: %i[new create destroy]
 
   def index
-    @users = if params[:active] != 'true'
-               User.natural_order
-             else
+    @users = if params[:active] != 'false'
                User.active.natural_order
+             else
+               User.natural_order
              end
   end
 

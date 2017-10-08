@@ -96,7 +96,7 @@ RSpec.feature 'SongPages', type: :feature do
     scenario 'An admin user can create the song with valid information' do
       visit new_song_path(live_id: live.id)
 
-      expect(page).to have_title('Add song')
+      expect(page).to have_title('Add Song')
 
       fill_in '曲名', with: 'テストソング'
 
@@ -130,8 +130,8 @@ RSpec.feature 'SongPages', type: :feature do
       scenario 'An admin user cannot save changes with duplicated players' do
         visit edit_song_path(song)
 
-        select admin.full_name, from: 'song[playings_attributes][0][user_id]'
-        select admin.full_name, from: 'song[playings_attributes][1][user_id]'
+        select admin.name_with_handle, from: 'song[playings_attributes][0][user_id]'
+        select admin.name_with_handle, from: 'song[playings_attributes][1][user_id]'
         click_button 'Save'
 
         expect(page).to have_selector('.alert-danger')

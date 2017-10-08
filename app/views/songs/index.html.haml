@@ -1,15 +1,14 @@
 - provide(:title, 'Song Search')
 %header.page-header
-  %h1 Song Search
+  %h1.display-4 Song Search
 
-.well.well-sm
-  = render 'search_form'
+= render 'search_form'
 
 - if @songs.present?
   %p.text-right
     = page_entries_info
   = render 'songs/songs_table', songs: @songs
-  = will_paginate
+  = will_paginate inner_window: 2, outer_window: 0, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer
 
 - else
   .alert.alert-danger{role: 'alert'}
