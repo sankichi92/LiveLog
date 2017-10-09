@@ -69,6 +69,10 @@ class User < ApplicationRecord
     songs.performed
   end
 
+  def performed_playings
+    playings.includes(song: :live).where('lives.date <= ?', Time.zone.today)
+  end
+
   def played?(song)
     song.playings.pluck(:user_id).include?(id)
   end
