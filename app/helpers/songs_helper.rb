@@ -10,8 +10,16 @@ module SongsHelper
       render 'songs/playings_fields', f: builder
     end
     content_tag :button,
-                glyphicon('plus'),
-                id: 'add-member', type: 'button', class: 'btn btn-link', data: { fields: fields.delete("\n") }
+                icon('plus') + ' メンバーを追加する',
+                id: 'add-member', type: 'button', class: 'btn btn-light', data: { fields: fields.delete("\n") }
+  end
+
+  def status_icon(song)
+    if song.open?
+      icon('globe')
+    elsif song.secret?
+      icon('lock')
+    end
   end
 
   private

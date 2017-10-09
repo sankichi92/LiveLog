@@ -1,10 +1,9 @@
-- provide(:title, 'Forgot password')
-- provide(:button_text, 'Submit')
+- provide(:title, 'Forgot Password')
 %header.page-header
   %h1 パスワードを再設定する
 
-= form_for(:password_reset, url: password_resets_path, html: {class: 'form-horizontal well'}) do |f|
+= form_for :password_reset, url: password_resets_path do |f|
 
   = render 'users/email_form', f: f
 
-  = render 'shared/submit', f: f
+  = f.submit 'Send', class: 'btn btn-primary'

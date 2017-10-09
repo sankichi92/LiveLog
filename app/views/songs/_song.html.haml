@@ -1,9 +1,11 @@
 %tr
-  %td= link_to song.live_title, song.live
+  %td= link_to song.live_title, song.live if @live.blank?
   %td= song.time_order
-  %td= song.watchable?(current_user) ? link_to(song.name, song) : song.name
-  %td= song.artist
+  %td
+    = song.watchable?(current_user) ? link_to(song.name, song) : song.name
+    = status_icon(song) if logged_in? && current_user.played?(song)
+  %td= link_to song.artist, songs_path(q: song.artist)
   %td
     %ul.list-inline
       = render sort_by_inst(song.playings)
-  %td= render 'songs/link_to_edit', song: song
+  %td= link_to icon('pencil'), edit_song_path(song) if song.editable?(current_user)

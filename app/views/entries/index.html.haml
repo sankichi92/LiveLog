@@ -2,12 +2,13 @@
 %header.page-header
   %h1<
     = @live.name
-    %small
-      = " #{I18n.l(@live.date)} @#{@live.place} "
-
-- if @entries.present?
-  = render 'lives/songs_table', songs: @entries
+    %small.text-muted
+      = @live.place.present? ? " #{I18n.l(@live.date)} @#{@live.place} " : I18n.l(@live.date)
 
 .row
-  %p.col-sm-offset-3.col-sm-6
-    = link_to glyphicon(:send) + 'エントリーする', new_live_entry_path(@live), class: 'btn btn-primary btn-lg btn-block'
+  .col-md-6.ml-auto.mr-auto.mb-4
+    = link_to icon('paper-plane') + ' エントリーする', new_live_entry_path(@live), class: 'btn btn-outline-info btn-lg btn-block'
+
+- if @entries.present?
+  = render 'songs/songs_table', songs: @entries
+

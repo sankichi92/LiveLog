@@ -33,7 +33,7 @@ RSpec.describe 'Api::V1::Users', type: :request do
       let(:headers) do
         { Authorization: "Token token=\"#{token.token}\", id=\"#{user.id}\"" }
       end
-      let(:user_name) { user.full_name }
+      let(:user_name) { user.name_with_handle }
 
       it 'responds with valid status and json' do
         expect(response).to have_http_status(200)
@@ -121,7 +121,7 @@ RSpec.describe 'Api::V1::Users', type: :request do
         { Authorization: "Token token=\"#{token.token}\", id=\"#{token.user.id}\"" }
       end
       let(:public) { false }
-      let(:user_name) { user.full_name }
+      let(:user_name) { user.name_with_handle }
       let(:youtube_id) { song.youtube_id }
 
       it 'responds with valid status and json' do

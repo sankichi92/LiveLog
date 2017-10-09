@@ -1,8 +1,4 @@
-%li
-  - if logged_in? || user.public?
-    = link_to user do
-      = user.full_name(logged_in?)
-    - if logged_in? && user.admin?
-      %span *
-  - else
-    = user.full_name(logged_in?)
+= link_to_user user, logged_in?, class: 'list-group-item list-group-item-action' do
+  = user.display_name(logged_in?)
+  - if logged_in? && user.admin?
+    %span *

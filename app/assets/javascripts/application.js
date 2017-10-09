@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require popper
 //= require bootstrap-sprockets
 //= require select2
 //= require select2_locale_ja

@@ -1,21 +1,22 @@
-= render 'panel', title: title do
-  .panel-body
-    %p.lead
+%section.card
+  %h4.card-header バンドの構成人数
+  .card-body
+    %p<
       構成人数の平均は
-      %mark= (formations.inject(0) { |sum, (f, c)| sum += f * c } / total.to_f).round(2)
-      人でした
-    %table.table.table-striped
-      %thead
-        %tr
-          %th 人数
-          %th 割合
-          %th 曲数
-      %tbody
-      - formations.each do |formation, count|
-        %tr
-          %td= "#{formation}人"
-          %td
-            = (count / total.to_f * 100).round(1)
-            \%
-          %td
-            %span.badge= count
+      %mark= (formation_to_count.inject(0) { |sum, (f, c)| sum += f * c } / total.to_f).round(2)
+      人でした。
+  %table.table.table-striped
+    %thead
+      %tr
+        %th 人数
+        %th 割合
+        %th 曲数
+    %tbody
+    - formation_to_count.each do |formation, count|
+      %tr
+        %td= "#{formation}人"
+        %td<
+          = (count / total.to_f * 100).round(1)
+          \%
+        %td
+          %span.badge.badge-pill.badge-secondary= count

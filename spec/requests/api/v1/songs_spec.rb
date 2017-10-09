@@ -113,7 +113,7 @@ RSpec.describe 'Api::V1::Songs', type: :request do
       end
       let(:youtube_id) { song.youtube_id }
       let(:comment) { song.comment }
-      let(:user_name) { user.full_name }
+      let(:user_name) { user.name_with_handle }
 
       it 'responds with valid status and json' do
         expect(response).to have_http_status(200)

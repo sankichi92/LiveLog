@@ -1,15 +1,17 @@
 %dl
   %dt 申請者
-  %dd= link_to "#{@applicant.formal_name} (#{@applicant.joined})", user_url(@applicant)
+  %dd= link_to "#{@applicant.name} (#{@applicant.joined})", user_url(@applicant)
   %dt ライブ
   %dd= link_to @song.live_title, live_url(@song.live)
   %dt 曲名 / アーティスト名
-  %dd= link_to @song.title, song_url(@song)
+  %dd
+    = link_to @song.name, song_url(@song)
+    = "/ #{@song.artist}" if @song.artist.present?
   %dt メンバー
   %dd
     - @song.playings.reverse.each do |playing|
       = "#{playing.inst}."
-      = link_to "#{playing.user.formal_name} (#{playing.user.joined})", user_url(playing.user)
+      = link_to "#{playing.name} (#{playing.joined})", user_url(playing.user)
       %br
   %dt 備考
   %dd= @song.notes

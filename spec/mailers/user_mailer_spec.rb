@@ -9,19 +9,19 @@ RSpec.describe UserMailer, type: :mailer do
     before { user.activation_token = Token.random }
 
     it 'renders the headers' do
-      expect(mail.subject).to eq("#{inviter.formal_name} さんが LiveLog に招待しています")
+      expect(mail.subject).to eq("#{inviter.name} さんが LiveLog に招待しています")
       expect(mail.to).to eq([user.email])
       expect(mail.from).to eq(['noreply@livelog.ku-unplugged.net'])
       expect(mail.reply_to).to eq(['miyoshi@ku-unplugged.net'])
     end
 
     it 'renders the text body' do
-      expect(mail.text_part.body).to match(user.full_name)
+      expect(mail.text_part.body).to match(user.name_with_handle)
       expect(mail.text_part.body).to match(user.activation_token)
     end
 
     it 'renders the html body' do
-      expect(mail.html_part.body).to match(user.full_name)
+      expect(mail.html_part.body).to match(user.name_with_handle)
       expect(mail.html_part.body).to match(user.activation_token)
     end
   end

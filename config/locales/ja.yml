@@ -35,6 +35,11 @@ ja:
         status: 公開設定
         comment: コメント
         playings: 演者
+      live:
+        name: ライブ名
+        date: 開催日
+        place: 場所
+        album_url: アルバム URL
       playing:
         user: メンバー
         inst: 楽器

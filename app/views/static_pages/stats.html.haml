@@ -1,39 +1,41 @@
 - provide(:title, 'Stats')
 %article
   %header.page-header
-    %h1<
-      京大アンプラグドについて
-      = "(#{params[:y]}年度)" if params[:y]
-
-  - if logged_in?
-    %aside.form-inline.well.well-sm
-      = select_tag :y,
-                   options_for_select(Live.years, selected: params[:y]),
-                   class: 'form-control',
-                   onchange: "location.href='#{request.path}?y=' + $(this).val();"
-      = label_tag :y, '年度の情報を見る'
+    %h1.display-4<
+      Stats
+      %small.text-muted= params[:y] if params[:y]
 
   %p.lead<
     - if params[:y]
       %mark= params[:y]
-      年度の京大アンプラグドのデータです。
+      年度の京大アンプラグドに関するデータです。
     - else
-      過去1年間の京大アンプラグドのデータを紹介します。
+      過去1年間の京大アンプラグドに関するデータを紹介します。
     %br
     この1年間に
-    %mark= @playings.count('DISTINCT user_id')
+    %mark= @playings.distinct.count(:user_id)
     人のメンバーで
     %mark= @songs.count
     曲を演奏しました。
 
+  - if logged_in?
+    %aside.card.mb-3
+      .card-body.form-inline
+        = label_tag :y, '年度', class: 'sr-only'
+        = select_tag :y,
+                     options_for_select(Live.years, selected: params[:y]),
+                     class: 'form-control',
+                     onchange: "location.href='#{request.path}?y=' + $(this).val();"
+        年度の情報を見る
+
   .row
-    = render 'instruments',
-             title: '演奏された楽器',
-             instruments: Playing.resolve_insts(@playings.count_insts)
-    = render 'artists',
-             title: 'カバーしたアーティスト',
-             artists: @songs.where.not(artist: [nil, '']).group(:artist).count.sort { |(_, c1), (_, c2)| c2 <=> c1 }
-    = render 'formations',
-             title: 'バンドの構成人数',
-             formations: Playing.count_formation(@playings.count_members_per_song),
-             total: @songs.count
+    .col-lg.mb-3
+      = render 'instruments',
+               inst_to_count: Playing.resolve_insts(@playings.count_insts)
+    .col-lg.mb-3
+      = render 'artists',
+               artist_to_count: @songs.where.not(artist: [nil, '']).group(:artist).count.sort { |(_, c1), (_, c2)| c2 <=> c1 }
+    .col-lg.mb-3
+      = render 'formations',
+               formation_to_count: Playing.count_formation(@playings.count_members_per_song),
+               total: @songs.count

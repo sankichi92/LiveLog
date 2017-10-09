@@ -4,7 +4,7 @@ class UserMailer < ApplicationMailer
   def account_activation(user, inviter)
     @user = user
     @inviter = inviter
-    subject = "#{inviter.formal_name} さんが LiveLog に招待しています"
+    subject = "#{inviter.name} さんが LiveLog に招待しています"
     mail to: user.email, subject: subject
   end
 

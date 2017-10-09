@@ -3,29 +3,32 @@
   %header.page-header
     %h1<
       = @live.name
-      %small
-        = " #{I18n.l(@live.date)} @#{@live.place} "
-      - if logged_in?
-        %ul.list-inline.pull-right
-          - if @live.album_url.present?
-            %li= link_to glyphicon(:picture) + 'アルバム', @live.album_url, class: 'btn btn-primary btn-lg', target: '_blank', 'data-toggle': 'tooltip', 'data-placement': 'top', title: '持っている写真を共有しよう！'
+      %small.text-muted
+        = @live.place.present? ? " #{I18n.l(@live.date)} @#{@live.place} " : I18n.l(@live.date)
+      - if logged_in? && @live.album_url.present?
+        = link_to icon('picture-o') + ' Album', @live.album_url, class: 'btn btn-primary btn-lg float-md-right mt-2', target: '_blank', 'data-toggle': 'tooltip', 'data-placement': 'top', title: '写真を共有しよう！'
 
   - if logged_in? && current_user.admin_or_elder?
-    %ul.list-inline.text-right
-      %li= link_to glyphicon('plus-sign') + 'Add song', new_song_path(live_id: @live.id), class: 'btn btn-default', role: 'button'
-      %li= link_to glyphicon(:edit) + 'Edit', edit_live_path(@live), class: 'btn btn-primary', role: 'button'
-      - unless @live.songs.exists?
-        %li= link_to glyphicon(:trash) + 'Delete', @live, method: :delete, class: 'btn btn-danger', role: 'button'
+    .btn-toolbar.justify-content-end.mb-3{ role: 'toolbar' }
+      .btn-group.mr-2{ role: 'group' }
+        = link_to icon('plus-circle') + ' Add song', new_song_path(live_id: @live.id), class: 'btn btn-outline-secondary'
+      .btn-group{ role: 'group' }
+        = link_to icon('pencil') + ' Edit', edit_live_path(@live), class: 'btn btn-outline-primary'
+        - unless @live.songs.exists?
+          = link_to icon('trash') + ' Delete', @live, method: :delete, class: 'btn btn-outline-danger'
 
   - if @live.nf?
-    = render 'songs_table', songs: @live.songs.played_order.includes(playings: :user)
+    = render 'songs/songs_table', songs: @live.songs.played_order.includes(playings: :user)
   - else
     %ol#set-list
       - @live.songs.played_order.includes(playings: :user).each do |song|
         - cache_unless logged_in?, song do
-          %li
+          %li.mb-3
             = song.watchable?(current_user) ? link_to(song.name, song) : song.name
-            = "/ #{song.artist}" if song.artist.present?
-            = render 'songs/link_to_edit', song: song
+            - if song.artist.present?
+              \/
+              = link_to(song.artist, songs_path(q: song.artist)) if song.artist.present?
+            = status_icon(song) if logged_in? && current_user.played?(song)
+            = link_to icon('pencil'), edit_song_path(song) if song.editable?(current_user)
             %ul.list-inline
               = render sort_by_inst(song.playings)

@@ -1,10 +1,11 @@
-= render 'panel', title: title do
-  .panel-body
-    %p.lead
-      %mark= instruments.size
-      種類の楽器が演奏されました
-    %ul.list-inline.lead
-      - instruments.each do |inst, count|
-        %li
+%section.card
+  %h4.card-header 演奏された楽器
+  .card-body
+    %p<
+      %mark= inst_to_count.size
+      種類の楽器が演奏されました。
+    %ul.list-inline
+      - inst_to_count.each do |inst, count|
+        %li.list-inline-item.lead
           = inst
-          %span.badge= count
+          %span.badge.badge-pill.badge-secondary= count

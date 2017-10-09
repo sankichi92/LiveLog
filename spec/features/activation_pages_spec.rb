@@ -18,10 +18,10 @@ RSpec.feature "ActivationPages", type: :feature do
       log_in_as user
       visit new_user_activation_path(not_activated_user)
 
-      expect(page).to have_title('Invitation')
+      expect(page).to have_title('Invite')
 
       fill_in 'メールアドレス', with: new_email
-      click_button 'Invite'
+      click_button 'Send'
 
       expect(not_activated_user.reload.email).to eq new_email
       expect(ActionMailer::Base.deliveries.size).to eq 1
@@ -34,7 +34,7 @@ RSpec.feature "ActivationPages", type: :feature do
       visit new_user_activation_path(not_activated_user)
 
       fill_in 'メールアドレス', with: ''
-      click_button 'Invite'
+      click_button 'Send'
 
       expect(page).to have_selector('.alert-danger')
       expect(page).not_to have_title('Members')
@@ -67,7 +67,7 @@ RSpec.feature "ActivationPages", type: :feature do
       click_button 'Activate'
 
       expect(page).to have_selector('.alert-success')
-      expect(page).to have_title(user.full_name)
+      expect(page).to have_title(user.name_with_handle)
     end
 
     scenario 'A user cannot activate his/her account with invalid token' do
@@ -94,7 +94,7 @@ RSpec.feature "ActivationPages", type: :feature do
       click_button 'Activate'
 
       expect(page).to have_selector('.alert-danger')
-      expect(page).not_to have_title(user.full_name)
+      expect(page).not_to have_title(user.name_with_handle)
     end
   end
 end

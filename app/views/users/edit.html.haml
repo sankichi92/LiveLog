@@ -1,46 +1,42 @@
-- provide(:title, 'Edit profile')
-- provide(:button_text, 'Save')
+- provide(:title, 'Settings')
 %header.page-header
-  %h1 Edit Profile
+  %h1 Settings
 
 %p= link_to 'パスワードを変更する', edit_user_password_path(@user)
 
-= form_for(@user, html: {class: 'form-horizontal well'}) do |f|
+= form_for @user do |f|
   = render 'shared/error_messages', object: f.object
 
   = render 'name_form', f: f
 
+  .form-group
+    = f.label :nickname
+    = f.text_field :nickname, class: 'form-control'
+
   = render 'email_form', f: f
 
   .form-group
-    = f.label :nickname, class: 'col-sm-3 control-label'
-    .col-sm-9
-      = f.text_field :nickname, class: 'form-control'
+    = f.label :url
+    = f.url_field :url, class: 'form-control', placeholder: 'http://ku-unplugged.net/'
 
   .form-group
-    = f.label :url, class: 'col-sm-3 control-label'
-    .col-sm-9
-      = f.text_field :url, class: 'form-control', placeholder: 'http://ku-unplugged.net/'
+    = f.label :intro
+    = f.text_area :intro, class: 'form-control', rows: '3'
 
   .form-group
-    = f.label :intro, class: 'col-sm-3 control-label'
-    .col-sm-9
-      = f.text_area :intro, class: 'form-control', rows: '3'
+    .form-check.form-check-inline
+      %label.form-check-label
+        = f.radio_button :public, 'true', class: 'form-check-input'
+        プロフィールを公開する
+    .form-check.form-check-inline
+      %label.form-check-label
+        = f.radio_button :public, 'false', class: 'form-check-input'
+        プロフィールを公開しない
+    %small.form-text.text-muted
+      プロフィールを公開しても，名前とメールアドレスが公開されることはありません。
+      %br
+      ただし，ニックネームが存在しない場合，姓は公開されます。
 
-  .form-group
-    = f.label :public, class: 'col-sm-3 control-label'
-    .col-sm-9
-      %label.radio-inline
-        = f.radio_button :public, 'true'
-        公開
-      %label.radio-inline
-        = f.radio_button :public, 'false'
-        非公開
-      %span.help-block
-        「公開」にしても，名前とメールアドレスが公開されることはありません。
-        %br
-        ただし，ニックネームが存在しない場合，姓は公開されます。
-
-  = render 'shared/submit', f: f
+  = f.submit 'Save', class: 'btn btn-primary'
 
 

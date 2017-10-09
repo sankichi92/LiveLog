@@ -1,13 +1,12 @@
-- provide(:title, 'Invitation')
-- provide(:button_text, 'Invite')
+- provide(:title, "Invite #{@user.name}")
 %header.page-header
-  %h1<
-    = @user.full_name
-    に招待メールを送る
+  %h1
+    Send an Invitation to
+    = @user.name
 
-= form_for(@user, url: user_activation_path, html: {method: :post, class: 'form-horizontal well'}) do |f|
+= form_for @user, url: user_activation_path, html: { method: :post } do |f|
   = render 'shared/error_messages', object: f.object
 
   = render 'users/email_form', f: f
 
-  = render 'shared/submit', f: f
+  = f.submit 'Send', class: 'btn btn-primary'

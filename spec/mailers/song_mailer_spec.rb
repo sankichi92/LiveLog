@@ -21,16 +21,16 @@ RSpec.describe SongMailer, type: :mailer do
     end
 
     it 'renders the text body' do
-      expect(mail.text_part.body).to match(applicant.formal_name)
+      expect(mail.text_part.body).to match(applicant.name)
       expect(mail.text_part.body).to match(song.title)
-      expect(mail.text_part.body).to match(player.formal_name)
+      expect(mail.text_part.body).to match(player.name)
       expect(mail.text_part.body).to match(notes)
     end
 
     it 'renders the html body' do
-      expect(mail.html_part.body).to match(applicant.formal_name)
-      expect(mail.html_part.body).to match(song.title)
-      expect(mail.html_part.body).to match(player.formal_name)
+      expect(mail.html_part.body).to match(applicant.name)
+      expect(mail.html_part.body).to match(song.name)
+      expect(mail.html_part.body).to match(player.name)
       expect(mail.html_part.body).to match(notes)
     end
   end

@@ -1,0 +1,22 @@
+@import "bootstrap-variables";
+@import "bootstrap";
+
+.page-header {
+  padding-bottom: ($spacer * .5);
+  margin: ($spacer * 3) 0 ($spacer * 1.5);
+  border-bottom: 1px solid $theme-border;
+}
+
+.card {
+  table {
+    margin-bottom: 0;
+  }
+}
+
+tr[onclick]:hover {
+  cursor: pointer;
+}
+
+#set-list > li {
+  @extend .lead
+}
