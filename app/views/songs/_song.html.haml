@@ -6,6 +6,6 @@
     = status_icon(song) if logged_in? && current_user.played?(song)
   %td= link_to song.artist, songs_path(q: song.artist)
   %td
-    %ul.list-inline
+    %ul.list-inline.mb-0
       = render sort_by_inst(song.playings)
   %td= link_to icon('pencil'), edit_song_path(song) if song.editable?(current_user)
