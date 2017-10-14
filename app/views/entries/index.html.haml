@@ -9,6 +9,9 @@
   .col-md-6.ml-auto.mr-auto.mb-4
     = link_to icon('paper-plane') + ' エントリーする', new_live_entry_path(@live), class: 'btn btn-outline-info btn-lg btn-block'
 
+- if current_user.admin_or_elder?
+  = render 'lives/btn_toolbar', live: @live
+
 - if @entries.present?
   = render 'songs/songs_table', songs: @entries
 
