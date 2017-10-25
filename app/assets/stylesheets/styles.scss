@@ -1,10 +1,43 @@
-@import "bootstrap-variables";
+@import "bootstrap/functions";
+
+$orange: #fd7e14 !default;
+$yellow: #ffc107 !default;
+
+$theme-color-interval: 8% !default;
+
+$primary: $yellow;
+$warning: $orange;
+
+$theme-colors: (
+        "primary": $primary,
+        "warning": $warning
+);
+
+$theme-border-color: theme-color-level("primary", -5);
+$theme-bg: #fcf8e3;
+
+$link-color: theme-color-level("primary", 1);
+$table-accent-bg: $theme-bg;
+$table-hover-bg: $theme-bg;
+$table-border-color: $theme-border-color;
+$pagination-border-color: $theme-border-color;
+$pagination-hover-bg: $theme-bg;
+$pagination-hover-border-color: $theme-border-color;
+$pagination-disabled-border-color: $theme-border-color;
+$jumbotron-bg: $theme-bg;
+$card-border-color: $theme-border-color;
+$card-cap-bg: $theme-bg;
+$list-group-border-color: $theme-border-color;
+$list-group-hover-bg: $theme-bg;
+$breadcrumb-bg: $theme-bg;
+$breadcrumb-divider: ">";
+
 @import "bootstrap";
 
 .page-header {
   padding-bottom: ($spacer * .5);
   margin: ($spacer * 3) 0 ($spacer * 1.5);
-  border-bottom: 1px solid $theme-border;
+  border-bottom: 1px solid $theme-border-color;
 }
 
 .card {
