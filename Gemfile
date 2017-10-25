@@ -34,7 +34,7 @@ end
 
 group :test do
   gem 'capybara', '~> 2.15'
-  gem 'factory_girl_rails', '~> 4.9'
+  gem 'factory_bot_rails', '~> 4.8'
   gem 'rspec-json_matcher', '~> 0.1.6'
   gem 'selenium-webdriver', '~> 3.5.1'
 end
