@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :user do
     last_name '京大'
     first_name 'アンプラ太郎'

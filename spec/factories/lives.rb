@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :live, class: 'Live' do
     sequence(:date) { |n| n.month.ago }
     name { "#{date.mon}月ライブ" }
