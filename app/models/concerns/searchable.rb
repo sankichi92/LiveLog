@@ -1,4 +1,4 @@
-module Song::Searchable
+module Searchable
   extend ActiveSupport::Concern
 
   included do
