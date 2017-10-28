@@ -4,6 +4,14 @@ module Searchable
   included do
     include Elasticsearch::Model
 
+    after_commit on: %i[create update] do
+      __elasticsearch__.index_document unless draft?
+    end
+
+    after_commit on: [:destroy] do
+      __elasticsearch__.delete_document unless draft?
+    end
+
     def as_indexed_json(options = {})
       as_json(
         only: %i[id name artist status],
