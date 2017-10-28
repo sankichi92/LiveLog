@@ -11,6 +11,7 @@ This is the application to manage set lists of the acoustic light music club "[ä
 
 - Ruby 2.4.1
 - PostgreSQL 9.1 or later
+- Elasticsearch 5.x
 - ChromeDriver (for test environment)
 
 ## Getting started

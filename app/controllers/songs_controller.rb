@@ -7,7 +7,11 @@ class SongsController < ApplicationController
   before_action :store_referer, only: :edit
 
   def index
-    @songs = Song.performed.includes(playings: :user).search(params[:q], params[:page])
+    @songs = if params[:q].present?
+               Song.search(params[:q]).page(params[:page]).records(includes: [:live, { playings: :user }])
+             else
+               Song.performed.includes(playings: :user).page(params[:page]).order_by_live
+             end
   end
 
   def show

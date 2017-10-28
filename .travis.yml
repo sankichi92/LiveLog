@@ -2,6 +2,7 @@ language: ruby
 
 services:
   - postgresql
+  - elasticsearch
 
 addons:
   chrome: stable
@@ -20,6 +21,7 @@ bundler_args: --without production --deployment
 before_script:
   - cp config/database.yml.travis config/database.yml
   - bin/rails db:create
+  - sleep 10 # cf. https://docs.travis-ci.com/user/database-setup/#ElasticSearch
 
 script:
   - bin/rails spec

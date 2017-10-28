@@ -6,6 +6,9 @@ gem 'bootstrap', '~> 4.0.0.beta2.1'
 gem 'bootstrap-will_paginate', '~> 1.0.0'
 gem 'coffee-rails', '~> 4.2'
 gem 'dalli', '~> 2.7.6'
+gem 'will_paginate', '~> 3.1.6'
+gem 'elasticsearch-model', '~> 5.0'
+gem 'elasticsearch-rails', '~> 5.0'
 gem 'font-awesome-sass', '~> 4.7.0'
 gem 'haml-rails', '~> 1.0'
 gem 'jbuilder', '~> 2.7'
@@ -17,7 +20,6 @@ gem 'sass-rails', '~> 5.0'
 gem 'select2-rails', '~> 4.0.3'
 gem 'turbolinks', '~> 5'
 gem 'uglifier', '>= 3.2.0'
-gem 'will_paginate', '~> 3.1.6'
 
 group :development, :test do
   gem 'byebug', platform: :mri
