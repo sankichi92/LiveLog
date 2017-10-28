@@ -65,6 +65,11 @@ class Song < ApplicationRecord
     user.present? && (user.admin_or_elder? || user.played?(self))
   end
 
+  def datetime
+    return date if time.blank?
+    date + time.hour.hours + time.min.minutes
+  end
+
   def time_str
     time.strftime('%R') if time.present?
   end

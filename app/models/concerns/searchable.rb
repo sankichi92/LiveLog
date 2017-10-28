@@ -14,8 +14,8 @@ module Searchable
 
     def as_indexed_json(options = {})
       as_json(
-        only: %i[id name artist status],
-        methods: %i[youtube_id? live_name date playings_count],
+        only: %i[id order name artist status],
+        methods: %i[youtube_id? live_name datetime playings_count],
         include: {
           playings: {
             only: %i[inst user_id]
@@ -26,7 +26,10 @@ module Searchable
 
     def self.search(query)
       __elasticsearch__.search(
-        sort: [{ date: :desc }],
+        sort: [
+          { datetime: :desc },
+          { order: :asc }
+        ],
         query: {
           bool: {
             should: [
