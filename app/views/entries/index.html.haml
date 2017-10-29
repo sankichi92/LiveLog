@@ -4,15 +4,47 @@
     = @live.name
     %small.text-muted
       = @live.place.present? ? " #{I18n.l(@live.date)} @#{@live.place} " : I18n.l(@live.date)
-    - if @entries.present?
+    - if @songs.present?
       = link_to icon('paper-plane') + ' エントリーする', new_live_entry_path(@live), class: 'btn btn-info btn-lg float-md-right mt-2'
 
 
 - if current_user.admin_or_elder?
   = render 'lives/btn_toolbar', live: @live
+  %aside.card.mb-3
+    .card-body.form-inline
+      = label_tag :order_select, '並び替え', class: 'mr-2'
+      = select_tag :order,
+                   options_for_select({ '演奏順': 'default', '作成日時': 'created_at', '変更日時': 'updated_at' }, params[:order]),
+                   id: :order_select,
+                   class: 'form-control',
+                   onchange: "location.href='#{request.path}?order=' + $(this).val();"
 
-- if @entries.present?
-  = render 'songs/songs_table', songs: @entries
+- if @songs.present?
+  %table.table.table-responsive.table-striped.table-sm
+    %thead
+      %tr
+        %th Entered
+        %th Updated
+        %th #
+        %th Song
+        %th Artist
+        %th Members
+        %th
+    %tbody
+      - @songs.each do |song|
+        %tr
+          %td= song.created_at.strftime('%m/%d %R')
+          %td= song.updated_at.to_i == song.created_at.to_i ? '' : song.updated_at.strftime('%m/%d %R')
+          %td= song.time_order
+          %td
+            = song.name
+            = status_icon(song) if logged_in? && current_user.played?(song)
+          %td= link_to song.artist, songs_path(q: song.artist)
+          %td
+            %ul.list-inline.mb-0
+              = render sort_by_inst(song.playings)
+          %td= link_to icon('pencil'), edit_song_path(song)
+
 - else
   .row.mb-3
     .col-md-6.ml-auto.mr-auto
