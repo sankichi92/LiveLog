@@ -1,4 +1,6 @@
 class Song < ApplicationRecord
+  include Searchable
+
   VALID_YOUTUBE_REGEX =
     %r(\A
        (?:
@@ -15,7 +17,8 @@ class Song < ApplicationRecord
   accepts_nested_attributes_for :playings, allow_destroy: true
 
   delegate :title, :name, to: :live, prefix: true
-  delegate :draft?, :nf?, to: :live
+  delegate :date, :draft?, :nf?, to: :live
+  delegate :count, to: :playings, prefix: true
 
   attr_accessor :notes
 
@@ -30,11 +33,6 @@ class Song < ApplicationRecord
   scope :played_order, -> { order(:time, :order) }
   scope :order_by_live, -> { includes(:live).order('lives.date DESC', :time, :order) }
   scope :performed, -> { eager_load(:live).where('lives.date <= ?', Time.zone.today) }
-
-  def self.search(query, page)
-    q = "%#{query}%"
-    where('songs.name ILIKE ? OR artist ILIKE ?', q, q).order_by_live.paginate(page: page)
-  end
 
   def self.pickup(date = Time.zone.today)
     random = Random.new(date.to_time.to_i)
@@ -65,6 +63,11 @@ class Song < ApplicationRecord
 
   def editable?(user)
     user.present? && (user.admin_or_elder? || user.played?(self))
+  end
+
+  def datetime
+    return date if time.blank?
+    date + time.hour.hours + time.min.minutes
   end
 
   def time_str
