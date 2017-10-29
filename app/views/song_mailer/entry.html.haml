@@ -13,5 +13,9 @@
       = "#{playing.inst}."
       = link_to "#{playing.name} (#{playing.joined})", user_url(playing.user)
       %br
+  %dt リハーサル希望時間
+  %dd= @song.rehearsal_time
+  %dt 演奏希望時間
+  %dd= @song.play_time
   %dt 備考
   %dd= @song.notes

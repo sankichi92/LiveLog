@@ -21,6 +21,8 @@ class Song < ApplicationRecord
   delegate :count, to: :playings, prefix: true
 
   attr_accessor :notes
+  attr_accessor :rehearsal_time
+  attr_accessor :play_time
 
   enum status: { secret: 0, closed: 1, open: 2 }
 
@@ -29,6 +31,9 @@ class Song < ApplicationRecord
   validates :live_id, presence: true
   validates :name, presence: true
   validates :youtube_id, format: { with: VALID_YOUTUBE_REGEX }, allow_blank: true
+
+  validates :rehearsal_time, presence: true, on: :entry
+  validates :play_time, presence: true, on: :entry
 
   scope :played_order, -> { order(:time, :order) }
   scope :order_by_live, -> { includes(:live).order('lives.date DESC', :time, :order) }

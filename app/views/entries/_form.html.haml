@@ -21,6 +21,14 @@
     %small.form-text.text-muted 動画がアップロードされた際の公開範囲です。
 
   .form-group
+    = f.label :rehearsal_time, 'リハーサル希望時間'
+    = f.text_area :rehearsal_time, id: 'song_rehearsal_time', class: 'form-control', rows: 2
+
+  .form-group
+    = f.label :play_time, '演奏希望時間'
+    = f.text_area :play_time, id: 'song_play_time', class: 'form-control', rows: 2
+
+  .form-group
     = f.label :notes, '備考'
     = f.text_area :notes, id: 'song_notes', class: 'form-control', rows: 3
 
