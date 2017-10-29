@@ -4,7 +4,12 @@ class EntriesController < ApplicationController
   before_action :draft_live
 
   def index
-    @songs = @live.songs.order(:time, :order, created_at: :desc).includes(playings: :user).select { |song| song.editable?(current_user) }
+    songs = if params[:order] == 'created_at' || params[:order] == 'updated_at'
+              @live.songs.order(params[:order] => :desc).includes(playings: :user)
+            else
+              @live.songs.order(:time, :order, created_at: :desc).includes(playings: :user)
+            end
+    @songs = songs.select { |song| song.editable?(current_user) }
   end
 
   def new
