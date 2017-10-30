@@ -34,7 +34,9 @@ RSpec.feature 'EntryPages', type: :feature do
       expect(page).to have_title('Entry')
 
       fill_in '曲名', with: 'テストソング'
-      click_button 'Send'
+      accept_confirm do
+        click_button 'Send'
+      end
 
       expect(page).to have_selector('.alert-success')
       expect(ActionMailer::Base.deliveries.size).to eq 1
@@ -44,7 +46,9 @@ RSpec.feature 'EntryPages', type: :feature do
       log_in_as user
       visit new_live_entry_path(live)
 
-      click_button 'Send'
+      accept_confirm do
+        click_button 'Send'
+      end
 
       expect(page).to have_selector('.alert-danger')
       expect(ActionMailer::Base.deliveries.size).to eq 0
