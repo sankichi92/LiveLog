@@ -24,4 +24,4 @@
     = f.label :notes, '備考'
     = f.text_area :notes, id: 'song_notes', class: 'form-control', rows: 3
 
-  = f.submit 'Send', class: 'btn btn-primary'
+  = f.submit 'Send', data: { confirm: '本当に送信しますか？' }, class: 'btn btn-primary'
