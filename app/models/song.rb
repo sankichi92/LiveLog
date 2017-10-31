@@ -30,9 +30,6 @@ class Song < ApplicationRecord
   validates :name, presence: true
   validates :youtube_id, format: { with: VALID_YOUTUBE_REGEX }, allow_blank: true
 
-  validates :rehearsal_time, presence: true, on: :entry
-  validates :play_time, presence: true, on: :entry
-
   scope :played_order, -> { order(:time, :order) }
   scope :order_by_live, -> { includes(:live).order('lives.date DESC', :time, :order) }
   scope :performed, -> { eager_load(:live).where('lives.date <= ?', Time.zone.today) }
