@@ -23,13 +23,13 @@
   .form-row
     .form-group.col-sm
       = f.label :possible_rehearsal_time, 'リハーサル希望時間'
-      %small.form-text.text-muted 未記入の場合, 希望時間なしとなります
       = f.text_area :possible_rehearsal_time, id: 'song_possible_rehearsal_time', class: 'form-control', rows: 2
+      %small.form-text.text-muted 未記入の場合，希望時間なしとなります。
 
     .form-group.col-sm
       = f.label :possible_play_time, '演奏希望時間'
-      %small.form-text.text-muted 未記入の場合, 希望時間なしとなります
       = f.text_area :possible_play_time, id: 'song_possible_play_time', class: 'form-control', rows: 2
+      %small.form-text.text-muted 未記入の場合，希望時間なしとなります。
 
   .form-group
     = f.label :notes, '備考'
