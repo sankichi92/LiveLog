@@ -20,9 +20,7 @@ class Song < ApplicationRecord
   delegate :date, :draft?, :nf?, to: :live
   delegate :count, to: :playings, prefix: true
 
-  attr_accessor :notes
-  attr_accessor :rehearsal_time
-  attr_accessor :play_time
+  attr_accessor :notes, :possible_rehearsal_time, :possible_play_time
 
   enum status: { secret: 0, closed: 1, open: 2 }
 
