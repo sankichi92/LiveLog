@@ -34,8 +34,6 @@ RSpec.feature 'EntryPages', type: :feature do
       expect(page).to have_title('Entry')
 
       fill_in '曲名', with: 'テストソング'
-      fill_in 'リハーサル希望時間', with: '20:00 以降を希望します'
-      fill_in '演奏希望時間', with: '23:00まででお願いします'
       click_button 'Send'
 
       expect(page).to have_selector('.alert-success')
