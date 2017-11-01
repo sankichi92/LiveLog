@@ -5,7 +5,9 @@ RSpec.describe SongMailer, type: :mailer do
   describe 'entry' do
     let(:applicant) { create(:user) }
     let(:notes) { 'Vo がタンバリンを使うかもしれません' }
-    let(:song) { create(:song, notes: notes) }
+    let(:possible_rehearsal_time) { '20:00 以降でお願いします' }
+    let(:possible_play_time) { '22:00まででお願いします' }
+    let(:song) { create(:song, notes: notes, possible_rehearsal_time: possible_rehearsal_time, possible_play_time: possible_play_time) }
     let(:player) { create(:user) }
     let(:mail) { SongMailer.entry(song, applicant) }
 
@@ -25,6 +27,8 @@ RSpec.describe SongMailer, type: :mailer do
       expect(mail.text_part.body).to match(song.title)
       expect(mail.text_part.body).to match(player.name)
       expect(mail.text_part.body).to match(notes)
+      expect(mail.text_part.body).to match(possible_rehearsal_time)
+      expect(mail.text_part.body).to match(possible_play_time)
     end
 
     it 'renders the html body' do
@@ -32,6 +36,8 @@ RSpec.describe SongMailer, type: :mailer do
       expect(mail.html_part.body).to match(song.name)
       expect(mail.html_part.body).to match(player.name)
       expect(mail.html_part.body).to match(notes)
+      expect(mail.html_part.body).to match(possible_rehearsal_time)
+      expect(mail.html_part.body).to match(possible_play_time)
     end
   end
 end
