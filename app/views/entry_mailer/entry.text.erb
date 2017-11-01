@@ -1,0 +1,19 @@
+申請者: <%= "#{@entry.applicant_name} (#{@entry.applicant_joined})" %>
+
+ライブ: <%= @entry.live_title %>
+
+曲名 / アーティスト名: <%= @entry.title %>
+
+メンバー:
+<% @entry.playings.reverse.each do |playing| %>
+    <%= "#{playing.inst}. #{playing.name} (#{playing.joined})" %>
+<% end %>
+
+リハーサル希望時間:
+<%= @entry.preferred_rehearsal_time %>
+
+演奏希望時間:
+<%= @entry.preferred_performance_time %>
+
+備考:
+<%= @entry.notes %>

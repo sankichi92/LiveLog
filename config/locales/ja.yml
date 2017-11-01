@@ -35,8 +35,6 @@ ja:
         status: 公開設定
         comment: コメント
         playings: 演者
-        possible_rehearsal_time: リハーサル希望時間
-        possible_play_time: 演奏希望時間
       live:
         name: ライブ名
         date: 開催日
