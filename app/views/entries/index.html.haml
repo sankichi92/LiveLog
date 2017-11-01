@@ -20,6 +20,10 @@
                    onchange: "location.href='#{request.path}?order=' + $(this).val();"
 
 - if @songs.present?
+  %p.text-right<
+    全
+    %b= @songs.count
+    件
   %table.table.table-responsive.table-striped.table-sm
     %thead
       %tr
