@@ -20,8 +20,6 @@ class Song < ApplicationRecord
   delegate :date, :draft?, :nf?, to: :live
   delegate :count, to: :playings, prefix: true
 
-  attr_accessor :notes, :possible_rehearsal_time, :possible_play_time
-
   enum status: { secret: 0, closed: 1, open: 2 }
 
   before_save :extract_youtube_id
@@ -76,10 +74,6 @@ class Song < ApplicationRecord
 
   def time_order
     "#{time_str} #{order}"
-  end
-
-  def send_entry(applicant)
-    SongMailer.entry(self, applicant).deliver_now
   end
 
   def add_error_for_duplicated_user

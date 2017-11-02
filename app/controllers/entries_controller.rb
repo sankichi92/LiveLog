@@ -20,7 +20,14 @@ class EntriesController < ApplicationController
   def create
     @song = @live.songs.build(song_params)
     return unless @song.save
-    if @song.send_entry(current_user)
+    entry = Entry.new(
+      applicant: current_user,
+      song: @song,
+      preferred_rehearsal_time: params[:song][:preferred_rehearsal_time],
+      preferred_performance_time: params[:song][:preferred_performance_time],
+      notes: params[:song][:notes]
+    )
+    if entry.deliver
       flash[:success] = '曲の申請メールを送信しました'
     else
       flash[:danger] = 'メールの送信に失敗しました'
@@ -41,6 +48,6 @@ class EntriesController < ApplicationController
   end
 
   def song_params
-    params.require(:song).permit(:name, :artist, :status, :possible_rehearsal_time, :possible_play_time, :notes, playings_attributes: %i[id user_id inst _destroy])
+    params.require(:song).permit(:name, :artist, :status, playings_attributes: %i[id user_id inst _destroy])
   end
 end
