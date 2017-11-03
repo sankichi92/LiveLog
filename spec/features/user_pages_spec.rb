@@ -15,8 +15,7 @@ RSpec.feature 'UserPages', type: :feature do
     end
 
     scenario 'A non-logged-in user can see the members page' do
-      visit root_path
-      click_link 'Members'
+      visit users_path
 
       expect(page).to have_title('Members')
       users.each do |user|
