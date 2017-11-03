@@ -15,7 +15,7 @@ module Searchable
     def as_indexed_json(options = {})
       as_json(
         only: %i[id order name artist status],
-        methods: %i[youtube_id? live_name datetime playings_count],
+        methods: %i[youtube_id? live_name datetime playings_size],
         include: {
           playings: {
             only: %i[inst user_id]

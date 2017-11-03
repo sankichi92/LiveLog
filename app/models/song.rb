@@ -18,7 +18,7 @@ class Song < ApplicationRecord
 
   delegate :title, :name, to: :live, prefix: true
   delegate :date, :draft?, :nf?, to: :live
-  delegate :count, to: :playings, prefix: true
+  delegate :size, to: :playings, prefix: true
 
   enum status: { secret: 0, closed: 1, open: 2 }
 
