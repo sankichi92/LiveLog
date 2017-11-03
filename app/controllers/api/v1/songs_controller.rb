@@ -4,7 +4,7 @@ class Api::V1::SongsController < Api::V1::ApplicationController
     @songs = if params[:q].present?
                Song.search(params[:q]).page(params[:page]).records(includes: [:live, { playings: :user }])
              else
-               Song.performed.includes(playings: :user).page(params[:page]).order_by_live
+               Song.published.includes(playings: :user).page(params[:page]).order_by_live
              end
   end
 

@@ -2,10 +2,10 @@ class LivesController < ApplicationController
   before_action :set_live, only: %i[show edit update destroy]
   before_action :logged_in_user, except: %i[index show]
   before_action :admin_or_elder_user, except: %i[index show]
-  before_action :performed_live, only: :show
+  before_action :published_live, only: :show
 
   def index
-    @lives = Live.performed.order_by_date
+    @lives = Live.published.order_by_date
   end
 
   def show
@@ -56,8 +56,8 @@ class LivesController < ApplicationController
     @live = Live.includes(:songs).find(params[:id])
   end
 
-  def performed_live
-    redirect_to live_entries_url(@live) if @live.draft?
+  def published_live
+    redirect_to live_entries_url(@live) unless @live.published?
   end
 
   def live_params

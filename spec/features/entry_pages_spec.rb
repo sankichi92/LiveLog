@@ -25,6 +25,7 @@ RSpec.feature 'EntryPages', type: :feature do
   feature 'Publish the live' do
     given(:admin) { create(:admin) }
     background do
+      Song.__elasticsearch__.create_index!
       log_in_as admin
     end
 

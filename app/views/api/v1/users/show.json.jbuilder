@@ -3,13 +3,13 @@ json.cache_if! !authenticated?, ['v1', @user] do
   json.name @user.display_name(authenticated?)
 end
 json.insts do
-  json.array! Playing.resolve_insts(@user.performed_playings.count_insts) do |inst, count|
+  json.array! Playing.resolve_insts(@user.playings.published.count_insts) do |inst, count|
     json.inst inst
     json.count count
   end
 end
 json.songs do
-  json.array! @user.performed_songs.order_by_live do |song|
+  json.array! @user.songs.published.order_by_live do |song|
     json.cache_if! !authenticated?, ['v1', song] do
       json.partial! 'api/v1/songs/song', song: song
       json.live song.live, partial: 'api/v1/lives/live', as: :live

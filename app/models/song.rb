@@ -17,7 +17,7 @@ class Song < ApplicationRecord
   accepts_nested_attributes_for :playings, allow_destroy: true
 
   delegate :title, :name, to: :live, prefix: true
-  delegate :date, :draft?, :nf?, to: :live
+  delegate :date, :published?, :nf?, to: :live
   delegate :size, to: :playings, prefix: true
 
   enum status: { secret: 0, closed: 1, open: 2 }
@@ -30,7 +30,7 @@ class Song < ApplicationRecord
 
   scope :played_order, -> { order(:time, :order) }
   scope :order_by_live, -> { includes(:live).order('lives.date DESC', :time, :order) }
-  scope :performed, -> { eager_load(:live).where('lives.date <= ?', Time.zone.today) }
+  scope :published, -> { eager_load(:live).where('lives.published': true) }
 
   def self.pickup(date = Time.zone.today)
     random = Random.new(date.to_time.to_i)

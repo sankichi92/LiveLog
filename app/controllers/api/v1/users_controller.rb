@@ -10,7 +10,7 @@ class Api::V1::UsersController < Api::V1::ApplicationController
   end
 
   def show
-    @playings = Playing.where(song_id: @user.performed_songs.pluck('songs.id'))
+    @playings = Playing.where(song_id: @user.songs.published.pluck('songs.id'))
   end
 
   private

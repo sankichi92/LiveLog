@@ -11,6 +11,7 @@ class Playing < ApplicationRecord
 
   scope :count_insts, -> { group(:inst).count(:id) }
   scope :count_members_per_song, -> { group(:song_id).count(:id) }
+  scope :published, -> { includes(song: :live).where('lives.published': true) }
 
   def self.resolve_insts(inst_to_count)
     single_inst_to_count = inst_to_count.reject { |inst, _| inst.blank? || inst.include?('&') }
