@@ -21,3 +21,26 @@
     %header.page-header
       %h2 Today's Pickup!
     = render 'songs/song_detail', song: @song
+
+- if @lives.exists?
+  %section
+    %header.page-header
+      %h2 Latest Lives
+    .row
+      - @lives.each do |live|
+        - song_count = live.songs.count
+        - song = live.songs.offset(rand(song_count)).first
+        .col-lg-3.col-md-4.col-sm-6
+          .card.mb-3
+            .card-body
+              %h4.card-title= live.name
+              %h6.card-subtitle.text-muted.mb-3= live.place.present? ? " #{I18n.l(live.date)} @#{live.place} " : I18n.l(live.date)
+              %p.card-text
+                = link_to_song(song)
+                - if song.artist.present?
+                  \/
+                  = link_to song.artist, songs_path(q: song.artist)
+                %br
+                = "など#{song_count}曲"
+              = link_to '詳細へ', live_path(live), class: 'card-link'
+              = link_to 'アルバムへ', live.album_url, class: 'card-link' if logged_in? && live.album_url.present?
