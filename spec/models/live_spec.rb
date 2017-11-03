@@ -10,6 +10,7 @@ RSpec.describe Live, type: :model do
   it { is_expected.to respond_to(:place) }
   it { is_expected.to respond_to(:songs) }
   it { is_expected.to respond_to(:album_url) }
+  it { is_expected.to respond_to(:published) }
   it { is_expected.to respond_to(:published_at) }
 
   it { is_expected.to be_valid }
