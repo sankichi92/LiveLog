@@ -4,6 +4,9 @@ class PublishesController < ApplicationController
   before_action :draft_live
 
   def create
+    @live.publish
+    flash[:success] = '公開しました'
+    redirect_to @live
   end
 
   private

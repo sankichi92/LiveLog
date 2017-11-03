@@ -29,4 +29,9 @@ class Live < ApplicationRecord
   def nf?
     name.include?('NF')
   end
+
+  def publish
+    update(published: true, published_at: Time.zone.now)
+    songs.includes(:playings).import
+  end
 end
