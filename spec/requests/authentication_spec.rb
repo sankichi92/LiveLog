@@ -134,5 +134,14 @@ RSpec.describe "Authentication", type: :request do
         specify { expect(response).to redirect_to(root_path) }
       end
     end
+
+    describe 'in the Publishes controller' do
+      let(:live) { create(:draft_live) }
+
+      describe 'submitting to the create action' do
+        before { post live_publish_path(live) }
+        specify { expect(response).to redirect_to(root_path) }
+      end
+    end
   end
 end
