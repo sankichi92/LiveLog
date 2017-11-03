@@ -18,7 +18,7 @@
       - @live.songs.played_order.includes(playings: :user).each do |song|
         - cache_unless logged_in?, song do
           %li.mb-3
-            = song.watchable?(current_user) ? link_to(song.name, song) : song.name
+            = link_to_song(song)
             - if song.artist.present?
               \/
               = link_to(song.artist, songs_path(q: song.artist)) if song.artist.present?

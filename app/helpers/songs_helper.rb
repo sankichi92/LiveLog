@@ -22,6 +22,10 @@ module SongsHelper
     end
   end
 
+  def link_to_song(song)
+    song.watchable?(current_user) ? link_to(song.name, song) : song.name
+  end
+
   private
 
   def inst_order(inst)

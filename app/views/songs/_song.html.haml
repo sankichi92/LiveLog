@@ -2,7 +2,7 @@
   %td= link_to song.live_title, song.live if @live.blank?
   %td= song.time_order
   %td
-    = song.watchable?(current_user) ? link_to(song.name, song) : song.name
+    = link_to_song(song)
     = status_icon(song) if logged_in? && current_user.played?(song)
   %td= link_to song.artist, songs_path(q: song.artist)
   %td
