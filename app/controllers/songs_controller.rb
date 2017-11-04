@@ -74,6 +74,10 @@ class SongsController < ApplicationController
 
   private
 
+  def set_song
+    @song = Song.includes(playings: :user).find(params[:id])
+  end
+
   def correct_user
     redirect_to(root_url) unless current_user.played?(@song) || current_user.admin_or_elder?
   end
@@ -82,8 +86,12 @@ class SongsController < ApplicationController
     correct_user
   end
 
-  def set_song
-    @song = Song.includes(playings: :user).find(params[:id])
+  def store_referer
+    session[:forwarding_url] = request.referer || root_url
+  end
+
+  def draft_song?
+    !@song.published?
   end
 
   def search_params_present
@@ -100,13 +108,5 @@ class SongsController < ApplicationController
                                  :status,
                                  :comment,
                                  playings_attributes: %i[id user_id inst _destroy])
-  end
-
-  def store_referer
-    session[:forwarding_url] = request.referer || root_url
-  end
-
-  def draft_song?
-    !@song.published?
   end
 end
