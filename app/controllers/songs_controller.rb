@@ -1,17 +1,19 @@
 class SongsController < ApplicationController
   before_action :set_song, only: %i[show edit update destroy]
-  before_action :logged_in_user, except: %i[index show]
+  before_action :logged_in_user, only: %i[new create edit update destroy]
   before_action :correct_user, only: %i[edit update]
   before_action :correct_user_for_draft_song, only: :show, if: :draft_song?
   before_action :admin_or_elder_user, only: %i[new create destroy]
   before_action :store_referer, only: :edit
+  before_action :search_params_present, only: :search
 
   def index
-    @songs = if params[:q].present?
-               Song.search(params[:q]).page(params[:page]).records(includes: [:live, { playings: :user }])
-             else
-               Song.published.includes(playings: :user).page(params[:page]).order_by_live
-             end
+    @songs = Song.published.includes(playings: :user).page(params[:page]).order_by_live
+  end
+
+  def search
+    @songs = Song.search(params[:q]).page(params[:page]).records(includes: [:live, { playings: :user }])
+    render :index
   end
 
   def show
@@ -82,6 +84,10 @@ class SongsController < ApplicationController
 
   def set_song
     @song = Song.includes(playings: :user).find(params[:id])
+  end
+
+  def search_params_present
+    redirect_to songs_path if params[:q].blank?
   end
 
   def song_params

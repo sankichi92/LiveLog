@@ -4,7 +4,9 @@ Rails.application.routes.draw do
 
   get '/stats', to: 'static_pages#stats'
 
-  resources :songs
+  resources :songs do
+    get 'search', on: :collection
+  end
 
   resources :lives do
     resources :entries, only: %i[index new create]
