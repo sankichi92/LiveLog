@@ -12,7 +12,12 @@ class SongsController < ApplicationController
   end
 
   def search
-    @songs = Song.search(params[:q]).page(params[:page]).records(includes: [:live, { playings: :user }])
+    response = if params[:q].present?
+                 Song.basic_search(params[:q])
+               else
+                 Song.advanced_search(search_params, logged_in?)
+               end
+    @songs = response.page(params[:page]).records(includes: [:live, { playings: :user }])
     render :index
   end
 
@@ -95,7 +100,7 @@ class SongsController < ApplicationController
   end
 
   def search_params_present
-    redirect_to songs_path if params[:q].blank?
+    redirect_to songs_path if params[:q].blank? && search_params.blank?
   end
 
   def song_params
@@ -108,5 +113,9 @@ class SongsController < ApplicationController
                                  :status,
                                  :comment,
                                  playings_attributes: %i[id user_id inst _destroy])
+  end
+
+  def search_params
+    params.permit(:name, :artist, :instruments, :players_lower, :players_upper, :date_lower, :date_upper, :has_video)
   end
 end
