@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   resources :lives do
     resources :entries, only: %i[index new create]
+    resource :publish, only: :create
   end
 
   resources :users, path: :members do

@@ -10,7 +10,7 @@ class SongsController < ApplicationController
     @songs = if params[:q].present?
                Song.search(params[:q]).page(params[:page]).records(includes: [:live, { playings: :user }])
              else
-               Song.performed.includes(playings: :user).page(params[:page]).order_by_live
+               Song.published.includes(playings: :user).page(params[:page]).order_by_live
              end
   end
 
@@ -101,6 +101,6 @@ class SongsController < ApplicationController
   end
 
   def draft_song?
-    @song.draft?
+    !@song.published?
   end
 end

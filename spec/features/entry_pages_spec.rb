@@ -22,6 +22,24 @@ RSpec.feature 'EntryPages', type: :feature do
     end
   end
 
+  feature 'Publish the live' do
+    given(:admin) { create(:admin) }
+    background do
+      Song.__elasticsearch__.create_index!
+      log_in_as admin
+    end
+
+    scenario 'An admin user can publish the live' do
+      visit live_entries_path(live)
+
+      click_link 'Publish'
+
+      expect(live.reload.published).to be_truthy
+      expect(live.published_at).not_to be_nil
+      expect(page).to have_selector('.alert-success')
+    end
+  end
+
   feature 'Create an entry' do
     given(:user) { create(:user) }
 

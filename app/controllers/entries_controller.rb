@@ -44,7 +44,7 @@ class EntriesController < ApplicationController
   end
 
   def draft_live
-    redirect_to root_url unless @live.draft?
+    redirect_to root_url if @live.published?
   end
 
   def song_params

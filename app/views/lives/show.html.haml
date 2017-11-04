@@ -9,7 +9,13 @@
         = link_to icon('picture-o') + ' Album', @live.album_url, class: 'btn btn-primary btn-lg float-md-right mt-2', target: '_blank', 'data-toggle': 'tooltip', 'data-placement': 'top', title: '写真を共有しよう！'
 
   - if logged_in? && current_user.admin_or_elder?
-    = render 'btn_toolbar', live: @live
+    .btn-toolbar.justify-content-end.mb-3{ role: 'toolbar' }
+      .btn-group.mr-2{ role: 'group' }
+        = link_to icon('plus-circle') + ' Add song', new_song_path(live_id: @live.id), class: 'btn btn-outline-secondary'
+      .btn-group{ role: 'group' }
+        = link_to icon('pencil') + ' Edit', edit_live_path(@live), class: 'btn btn-outline-primary'
+        - unless @live.songs.exists?
+          = link_to icon('trash') + ' Delete', @live, method: :delete, class: 'btn btn-outline-danger'
 
   - if @live.nf?
     = render 'songs/songs_table', songs: @live.songs.played_order.includes(playings: :user)
