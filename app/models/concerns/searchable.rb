@@ -16,16 +16,33 @@ module Searchable
       __elasticsearch__.delete_document if published?
     end
 
-    def as_indexed_json(options = {})
-      as_json(
-        only: %i[id order name artist status],
-        methods: %i[youtube_id? live_name datetime playings_size],
-        include: {
-          playings: {
-            only: %i[inst user_id]
+    settings index: {
+      number_of_shards: 1,
+      number_of_replicas: 0,
+      analysis: {
+        analyzer: {
+          default: {
+            type: 'kuromoji',
+            stopwords: '_english_'
           }
         }
-      )
+      }
+    }
+
+    mapping dynamic: false, _all: { enabled: false } do
+      indexes :id, type: 'integer'
+      indexes :live_name, type: 'text', index: 'no'
+      indexes :datetime, type: 'date'
+      indexes :order, type: 'short'
+      indexes :name, type: 'text'
+      indexes :artist, type: 'text'
+      indexes :status, type: 'keyword'
+      indexes :has_video?, type: 'boolean'
+      indexes :players_count, type: 'byte'
+      indexes :players do
+        indexes :user_id, type: 'integer', index: 'no'
+        indexes :instruments, type: 'keyword'
+      end
     end
 
     def self.search(query)
@@ -44,5 +61,20 @@ module Searchable
         }
       )
     end
+  end
+
+  def as_indexed_json(options = {})
+    {
+      id: id,
+      live_name: live_name,
+      datetime: datetime,
+      order: order,
+      name: name,
+      artist: artist,
+      status: status,
+      has_video?: youtube_id?,
+      players_count: playings_size,
+      players: playings.as_json(only: %i[user_id instruments], methods: [:instruments])
+    }
   end
 end
