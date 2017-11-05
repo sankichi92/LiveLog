@@ -11,11 +11,12 @@ class Song
     }.freeze
 
     attr_accessor :q, :name, :artist, :instruments, :excluded_instruments, :players_lower, :players_upper, :date_lower,
-                  :date_upper, :video
+                  :date_upper, :video, :user_id
 
     validate :valid_date?
     validates :players_lower, :players_upper, numericality: { only_integer: true }, allow_blank: true
     validates :video, inclusion: { in: %w[0 1] }, allow_blank: true
+    validates :user_id, numericality: { only_integer: true }, allow_blank: true
 
     def to_payload(logged_in)
       return {} if invalid?
@@ -94,6 +95,9 @@ class Song
                 end
                 q.must do |q|
                   q.term status: logged_in ? 'closed' : 'open' if video?
+                end
+                q.must do |q|
+                  q.term 'players.user_id': user_id.to_i if user_id.present?
                 end
                 q.must_not do |q|
                   q.terms 'players.instruments': excluded_instruments if excluded_instruments.present?

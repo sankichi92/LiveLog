@@ -51,6 +51,7 @@ ja:
         instruments: 楽器
         players_count: 構成人数
         date: ライブ開催日
+        user_id: メンバー ID
   date:
     abbr_day_names:
     - 日

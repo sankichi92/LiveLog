@@ -12,7 +12,8 @@ class SongsController < ApplicationController
   end
 
   def search
-    @songs = Song.search(@search.to_payload(logged_in?)).page(params[:page]).records(includes: [:live, { playings: :user }])
+    response = Song.search(@search.to_payload(logged_in?)).page(params[:page])
+    @songs = response.records(includes: [:live, { playings: :user }])
     render :index
   end
 
@@ -112,6 +113,7 @@ class SongsController < ApplicationController
   end
 
   def search_params
-    params.permit(:q, :name, :artist, :instruments, :players_lower, :players_upper, :date_lower, :date_upper, :video)
+    params.permit(:q, :name, :artist, :instruments, :players_lower, :players_upper, :date_lower, :date_upper, :video,
+                  :user_id)
   end
 end

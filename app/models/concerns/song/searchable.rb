@@ -42,7 +42,7 @@ module Concerns
           indexes :has_video?, type: 'boolean'
           indexes :players_count, type: 'byte'
           indexes :players do
-            indexes :user_id, type: 'integer', index: 'no'
+            indexes :user_id, type: 'integer'
             indexes :instruments, type: 'keyword'
           end
         end
