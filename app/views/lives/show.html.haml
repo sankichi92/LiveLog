@@ -14,7 +14,7 @@
         = link_to icon('plus-circle') + ' Add song', new_song_path(live_id: @live.id), class: 'btn btn-outline-secondary'
       .btn-group{ role: 'group' }
         = link_to icon('pencil') + ' Edit', edit_live_path(@live), class: 'btn btn-outline-primary'
-        - unless @live.songs.exists?
+        - unless @live.songs.present?
           = link_to icon('trash') + ' Delete', @live, method: :delete, class: 'btn btn-outline-danger'
 
   - if @live.nf?

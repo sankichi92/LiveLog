@@ -1,5 +1,5 @@
 - provide(:title, @user.display_name(logged_in?))
-- total = @user.songs.published.count
+- total = @user.songs.published.size
 %header.page-header
   %h1
     = @user.display_name(logged_in?)
@@ -88,6 +88,6 @@
           - else
             = link_to 'アカウントを無効にする', user_activation_path(@user), method: :delete, data: { confirm: '本当にアカウントを無効にしますか？' }, class: 'btn btn-outline-warning'
             = link_to '管理者にする', user_admin_path(@user), method: :post, data: { confirm: '本当に管理者にしますか？' }, class: 'btn btn-outline-danger'
-      - elsif !@user.songs.published.exists?
+      - elsif !@user.songs.published.present?
         .btn-group{ role: 'group' }
           = link_to icon('trash') + ' Delete', @user, method: :delete, class: 'btn btn-outline-danger'
