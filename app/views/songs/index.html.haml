@@ -13,37 +13,37 @@
   #basic.tab-pane.fade{ class: advanced ? '' : 'show active', role: 'tabpanel', 'aria-labelledby': 'basicTab' }
     = render 'search_form'
   #advanced.tab-pane.fade{ class: advanced ? 'show active' : '', role: 'tabpanel', 'aria-labelledby': 'advancedTab' }
-    = form_with url: search_songs_path, method: :get, local: true, class: 'mb-3' do |f|
+    = form_with model: @search || Song::Search.new, scope: '', url: search_songs_path, method: :get, local: true, class: 'mb-3' do |f|
 
       .form-row
         .form-group.col-sm
-          = f.label :name, '曲名', class: 'col-form-label'
-          = f.text_field :name, value: params[:name], id: 'name', class: 'form-control', placeholder: '楓'
+          = f.label :name, class: 'col-form-label'
+          = f.text_field :name, id: 'name', class: 'form-control', placeholder: '楓'
         .form-group.col-sm
-          = f.label :artist, 'アーティスト名', class: 'col-form-label'
-          = f.text_field :artist, value: params[:artist], id: 'artist', class: 'form-control', placeholder: 'スピッツ'
+          = f.label :artist, class: 'col-form-label'
+          = f.text_field :artist, id: 'artist', class: 'form-control', placeholder: 'スピッツ'
 
       .form-row
         .form-group.col-sm
-          = f.label :instruments, '楽器', class: 'col-form-label'
-          = f.text_field :instruments, value: params[:instruments], id: 'instruments', class: 'form-control', placeholder: 'Vo Gt Ba Cj -Vn'
+          = f.label :instruments, class: 'col-form-label'
+          = f.text_field :instruments, id: 'instruments', class: 'form-control', placeholder: 'Vo Gt Ba Cj -Vn'
         .form-group.col-sm
-          = f.label :players_count, '構成人数', class: 'col-form-label'
+          = f.label :players_count, class: 'col-form-label'
           .input-group
-            = f.number_field :players_lower, value: params[:players_lower], class: 'form-control', placeholder: '4'
+            = f.number_field :players_lower, class: 'form-control', placeholder: '4'
             %span.input-group-addon 〜
-            = f.number_field :players_upper, value: params[:players_upper], class: 'form-control', placeholder: '6'
+            = f.number_field :players_upper, class: 'form-control', placeholder: '6'
 
       .form-group
-        = f.label :date, 'ライブ開催日', class: 'col-form-label'
+        = f.label :date
         .input-group
           = f.date_field :date_lower, value: params[:date_lower], class: 'form-control'
           %span.input-group-addon 〜
           = f.date_field :date_upper, value: params[:date_upper], class: 'form-control'
 
       .form-check
-        = f.label :has_video, class: 'form-check-label' do
-          = f.check_box :has_video, checked: params[:has_video] == '1', id: 'has_video', class: 'form-check-input'
+        = f.label :video, class: 'form-check-label' do
+          = f.check_box :video, id: 'video', class: 'form-check-input'
           動画を視聴できる曲のみ
 
       = f.submit 'Search', class: 'btn btn-primary'
