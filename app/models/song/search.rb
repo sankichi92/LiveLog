@@ -13,7 +13,8 @@ class Song
     attr_accessor :q, :name, :artist, :instruments, :excluded_instruments, :players_lower, :players_upper, :date_lower,
                   :date_upper, :video, :user_id
 
-    validate :valid_date?
+    validate :valid_date
+    validate :valid_user_id
     validates :players_lower, :players_upper, numericality: { only_integer: true }, allow_blank: true
     validates :video, inclusion: { in: %w[0 1] }, allow_blank: true
     validates :user_id, numericality: { only_integer: true }, allow_blank: true
@@ -29,11 +30,17 @@ class Song
 
     private
 
-    def valid_date?
+    def valid_date
       date_lower.to_date if date_lower.present?
       date_upper.to_date if date_upper.present?
     rescue ArgumentError
       errors.add(:date_lower, :invalid)
+    end
+
+    def valid_user_id
+      @user = User.find(user_id)
+    rescue ActiveRecord::RecordNotFound
+      errors.add(:user_id, :invalid)
     end
 
     def instrument_arr
@@ -96,8 +103,12 @@ class Song
                 q.must do |q|
                   q.term status: logged_in ? 'closed' : 'open' if video?
                 end
-                q.must do |q|
-                  q.term 'players.user_id': user_id.to_i if user_id.present?
+                if user_id.present?
+                  if logged_in || @user.public?
+                    q.must { |q| q.term 'players.user_id': user_id.to_i }
+                  else
+                    q.must { term 'players.user_id': 0 }
+                  end
                 end
                 q.must_not do |q|
                   q.terms 'players.instruments': excluded_instruments if excluded_instruments.present?
