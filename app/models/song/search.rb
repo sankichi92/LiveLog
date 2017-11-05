@@ -72,18 +72,12 @@ class Song
       search do |q|
         q.query do |q|
           q.bool do |q|
-            q.must do |q|
-              q.match name: name if name.present?
-            end
-            q.must do |q|
-              q.match artist: artist if artist.present?
-            end
+            q.must { |q| q.match name: name } if name.present?
+            q.must { |q| q.match artist: artist } if artist.present?
             q.filter do |q|
               q.bool do |q|
                 included_instruments.each do |instrument|
-                  q.must do |q|
-                    q.term 'players.instruments': instrument
-                  end
+                  q.must { term 'players.instruments': instrument }
                 end
                 q.must do |q|
                   q.range :players_count do |q|
@@ -97,12 +91,8 @@ class Song
                     q.lte date_upper.to_date if date_upper.present?
                   end
                 end
-                q.must do |q|
-                  q.term has_video?: video? if video?
-                end
-                q.must do |q|
-                  q.term status: logged_in ? 'closed' : 'open' if video?
-                end
+                q.must { |q| q.term has_video?: video? } if video?
+                q.must { |q| q.term status: logged_in ? 'closed' : 'open' } if video?
                 if user_id.present?
                   if logged_in || @user.public?
                     q.must { |q| q.term 'players.user_id': user_id.to_i }
@@ -110,9 +100,7 @@ class Song
                     q.must { term 'players.user_id': 0 }
                   end
                 end
-                q.must_not do |q|
-                  q.terms 'players.instruments': excluded_instruments if excluded_instruments.present?
-                end
+                q.must_not { |q| q.terms 'players.instruments': excluded_instruments } if excluded_instruments.present?
               end
             end
           end
