@@ -31,7 +31,7 @@
             - last_count = 0
             - @user.songs.published.group(:artist).count.select { |a, _| a.present? }.sort { |(_, c1), (_, c2)| c2 <=> c1 }.each_with_index do |(artist, count), i|
               - break if count < 2 || i >= 5 && count != last_count
-              = link_to search_songs_path(q: artist),
+              = link_to search_songs_path(artist: artist),
                         class: 'list-group-item list-group-item-action d-flex justify-content-between align-items-center' do
                 = artist
                 %span.badge.badge-pill.badge-secondary= count

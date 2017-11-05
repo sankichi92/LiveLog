@@ -27,7 +27,7 @@
             = link_to_song(song)
             - if song.artist.present?
               \/
-              = link_to(song.artist, search_songs_path(q: song.artist)) if song.artist.present?
+              = link_to(song.artist, search_songs_path(artist: song.artist)) if song.artist.present?
             = status_icon(song) if logged_in? && current_user.played?(song)
             = link_to icon('pencil'), edit_song_path(song) if song.editable?(current_user)
             %ul.list-inline

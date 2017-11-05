@@ -5,7 +5,7 @@
     = current_page?(song) ? song.name : link_to(song.name, song)
     - if song.artist.present?
       \/
-      = link_to(song.artist, search_songs_path(q: song.artist))
+      = link_to(song.artist, search_songs_path(artist: song.artist))
 - if song.watchable?(current_user)
   %p.embed-responsive.embed-responsive-16by9
     = song.youtube_embed
