@@ -1,17 +1,24 @@
 class SongsController < ApplicationController
   before_action :set_song, only: %i[show edit update destroy]
-  before_action :logged_in_user, except: %i[index show]
+  before_action :logged_in_user, only: %i[new create edit update destroy]
   before_action :correct_user, only: %i[edit update]
   before_action :correct_user_for_draft_song, only: :show, if: :draft_song?
   before_action :admin_or_elder_user, only: %i[new create destroy]
   before_action :store_referer, only: :edit
+  before_action :search_params_present, only: :search
 
   def index
-    @songs = if params[:q].present?
-               Song.search(params[:q]).page(params[:page]).records(includes: [:live, { playings: :user }])
-             else
-               Song.published.includes(playings: :user).page(params[:page]).order_by_live
-             end
+    @songs = Song.published.includes(playings: :user).page(params[:page]).order_by_live
+  end
+
+  def search
+    response = if params[:q].present?
+                 Song.basic_search(params[:q])
+               else
+                 Song.advanced_search(search_params, logged_in?)
+               end
+    @songs = response.page(params[:page]).records(includes: [:live, { playings: :user }])
+    render :index
   end
 
   def show
@@ -72,6 +79,10 @@ class SongsController < ApplicationController
 
   private
 
+  def set_song
+    @song = Song.includes(playings: :user).find(params[:id])
+  end
+
   def correct_user
     redirect_to(root_url) unless current_user.played?(@song) || current_user.admin_or_elder?
   end
@@ -80,8 +91,16 @@ class SongsController < ApplicationController
     correct_user
   end
 
-  def set_song
-    @song = Song.includes(playings: :user).find(params[:id])
+  def store_referer
+    session[:forwarding_url] = request.referer || root_url
+  end
+
+  def draft_song?
+    !@song.published?
+  end
+
+  def search_params_present
+    redirect_to songs_path if params[:q].blank? && search_params.blank?
   end
 
   def song_params
@@ -96,11 +115,7 @@ class SongsController < ApplicationController
                                  playings_attributes: %i[id user_id inst _destroy])
   end
 
-  def store_referer
-    session[:forwarding_url] = request.referer || root_url
-  end
-
-  def draft_song?
-    !@song.published?
+  def search_params
+    params.permit(:name, :artist, :instruments, :players_lower, :players_upper, :date_lower, :date_upper, :has_video)
   end
 end

@@ -31,6 +31,10 @@ class Playing < ApplicationRecord
     end.sort
   end
 
+  def instruments
+    inst&.split('&')
+  end
+
   private
 
   def format_inst

@@ -1,4 +1,4 @@
-= form_tag '/songs', method: 'get', class: 'form-inline d-inline-flex mb-3' do
+= form_tag '/songs/search', method: 'get', class: 'form-inline d-inline-flex mb-3' do
   = label_tag :q, 'Keyword', class: 'sr-only'
   .input-group
     = search_field_tag :q, params[:q], class: 'form-control', placeholder: '曲名・アーティスト名'
