@@ -41,7 +41,7 @@
           %ul.list-inline
             - inst_to_count.each do |inst, count|
               %li.list-inline-item.lead
-                = link_to_search inst, instruments: inst, date: @date_range
+                = link_to_search inst, instruments: inst, date_range: @date_range
                 %span.badge.badge-pill.badge-secondary= count
 
     .col-lg.mb-3
@@ -56,7 +56,7 @@
             特に次のアーティストが人気です。
         .list-group.list-group-flush
           - artist_to_count.select { |_, count| count >= 5 }.each do |artist, count|
-            = link_to_search({ artist: artist, date_lower: @date_range.begin, date_upper: @date_range.end },
+            = link_to_search({ artist: artist, date_range: @date_range },
                              class: 'list-group-item list-group-item-action d-flex justify-content-between align-items-center') do
               = artist
               %span.badge.badge-pill.badge-secondary= count
@@ -65,7 +65,7 @@
           %ul.list-inline
             - artist_to_count.select { |_, count| count < 5 }.sample(20).each do |artist, count|
               %li.list-inline-item
-                = link_to_search artist, artist: artist, date_lower: @date_range.begin, date_upper: @date_range.end
+                = link_to_search artist, artist: artist, date_range: @date_range
                 %span.badge.badge-pill.badge-secondary= count
 
     .col-lg.mb-3
