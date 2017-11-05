@@ -1,4 +1,5 @@
 - provide(:title, 'Stats')
+- total = @songs.count
 %article
   %header.page-header
     %h1.display-4<
@@ -15,7 +16,7 @@
     この1年間に
     %mark= @playings.distinct.count(:user_id)
     人のメンバーで
-    %mark= @songs.count
+    %mark= total
     曲を演奏しました。
 
   - if logged_in?
@@ -30,12 +31,64 @@
 
   .row
     .col-lg.mb-3
-      = render 'instruments',
-               inst_to_count: Playing.resolve_insts(@playings.count_insts)
+      %section.card
+        %h4.card-header 演奏された楽器
+        - inst_to_count = Playing.resolve_insts(@playings.count_insts)
+        .card-body
+          %p<
+            %mark= inst_to_count.size
+            種類の楽器が演奏されました。
+          %ul.list-inline
+            - inst_to_count.each do |inst, count|
+              %li.list-inline-item.lead
+                = link_to_search inst, instruments: inst, date: @date_range
+                %span.badge.badge-pill.badge-secondary= count
+
     .col-lg.mb-3
-      = render 'artists',
-               artist_to_count: @songs.where.not(artist: [nil, '']).group(:artist).count.sort { |(_, c1), (_, c2)| c2 <=> c1 }
+      %section.card
+        %h4.card-header カバーしたアーティスト
+        - artist_to_count = @songs.where.not(artist: [nil, '']).group(:artist).count.sort { |(_, c1), (_, c2)| c2 <=> c1 }
+        .card-body
+          %p<
+            %mark= artist_to_count.size
+            組のアーティストの曲が演奏されました。
+            %br
+            特に次のアーティストが人気です。
+        .list-group.list-group-flush
+          - artist_to_count.select { |_, count| count >= 5 }.each do |artist, count|
+            = link_to_search({ artist: artist, date_lower: @date_range.begin, date_upper: @date_range.end },
+                             class: 'list-group-item list-group-item-action d-flex justify-content-between align-items-center') do
+              = artist
+              %span.badge.badge-pill.badge-secondary= count
+        .card-body
+          %p 他にも次のようなアーティストが演奏されています。
+          %ul.list-inline
+            - artist_to_count.select { |_, count| count < 5 }.sample(20).each do |artist, count|
+              %li.list-inline-item
+                = link_to_search artist, artist: artist, date_lower: @date_range.begin, date_upper: @date_range.end
+                %span.badge.badge-pill.badge-secondary= count
+
     .col-lg.mb-3
-      = render 'formations',
-               formation_to_count: Playing.count_formation(@playings.count_members_per_song),
-               total: @songs.count
+      %section.card
+        %h4.card-header バンドの構成人数
+        - formation_to_count = Playing.count_formation(@playings.count_members_per_song)
+        .card-body
+          %p<
+            構成人数の平均は
+            %mark= (formation_to_count.inject(0) { |sum, (f, c)| sum += f * c } / total.to_f).round(2)
+            人でした。
+        %table.table.table-hover
+          %thead
+            %tr
+              %th 人数
+              %th 割合
+              %th 曲数
+          %tbody
+          - formation_to_count.each do |formation, count|
+            %tr{ onclick: "location.href='#{search_songs_path(players_lower: formation, players_upper: formation, date_lower: @date_range.begin, date_upper: @date_range.end)}#results';" }
+              %td= "#{formation}人"
+              %td<
+                = (count / total.to_f * 100).round(1)
+                \%
+              %td
+                %span.badge.badge-pill.badge-secondary= count

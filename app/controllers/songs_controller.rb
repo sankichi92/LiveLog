@@ -5,19 +5,15 @@ class SongsController < ApplicationController
   before_action :correct_user_for_draft_song, only: :show, if: :draft_song?
   before_action :admin_or_elder_user, only: %i[new create destroy]
   before_action :store_referer, only: :edit
-  before_action :search_params_present, only: :search
+  before_action :search_params_validation, only: :search
 
   def index
     @songs = Song.published.includes(playings: :user).page(params[:page]).order_by_live
   end
 
   def search
-    response = if params[:q].present?
-                 Song.basic_search(params[:q])
-               else
-                 Song.advanced_search(search_params, logged_in?)
-               end
-    @songs = response.page(params[:page]).records(includes: [:live, { playings: :user }])
+    response = Song.search(@search.to_payload(logged_in?)).page(params[:page])
+    @songs = response.records(includes: [:live, { playings: :user }])
     render :index
   end
 
@@ -99,8 +95,9 @@ class SongsController < ApplicationController
     !@song.published?
   end
 
-  def search_params_present
-    redirect_to songs_path if params[:q].blank? && search_params.blank?
+  def search_params_validation
+    @search = Song::Search.new(search_params)
+    render action: :index, status: :bad_request if @search.invalid?
   end
 
   def song_params
@@ -116,6 +113,7 @@ class SongsController < ApplicationController
   end
 
   def search_params
-    params.permit(:name, :artist, :instruments, :players_lower, :players_upper, :date_lower, :date_upper, :has_video)
+    params.permit(:q, :name, :artist, :instruments, :players_lower, :players_upper, :date_lower, :date_upper, :video,
+                  :user_id)
   end
 end

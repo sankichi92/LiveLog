@@ -10,13 +10,13 @@ class StaticPagesController < ApplicationController
   end
 
   def stats
-    range = if params[:y] && Live.years.include?(params[:y]&.to_i)
-              start = Date.new(params[:y].to_i, 4, 1)
-              start...start + 1.year
-            else
-              1.year.ago..Time.zone.today
-            end
-    @songs = Song.includes(:live).published.where('lives.date': range)
-    @playings = Playing.includes(song: :live).published.where('lives.date': range)
+    @date_range = if params[:y] && Live.years.include?(params[:y]&.to_i)
+                    start = Date.new(params[:y].to_i, 4, 1)
+                    start...start + 1.year
+                  else
+                    1.year.ago.to_date..Time.zone.today
+                  end
+    @songs = Song.published.includes(:live).where('lives.date': @date_range)
+    @playings = Playing.published.includes(song: :live).where('lives.date': @date_range)
   end
 end

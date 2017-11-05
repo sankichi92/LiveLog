@@ -49,7 +49,7 @@
           %td
             = song.name
             = status_icon(song) if logged_in? && current_user.played?(song)
-          %td= link_to song.artist, search_songs_path(q: song.artist)
+          %td= link_to_search song.artist, artist: song.artist
           %td
             %ul.list-inline.mb-0
               = render sort_by_inst(song.playings)

@@ -11,8 +11,9 @@ This is the application to manage set lists of the acoustic light music club "[ä
 
 - Ruby 2.4.1
 - PostgreSQL 9.1 or later
-- Elasticsearch 5.x
-- ChromeDriver (for test environment)
+- [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/install-elasticsearch.html) 5.x
+  - with [Japanese (kuromoji) Analysis Plugin](https://www.elastic.co/guide/en/elasticsearch/plugins/current/analysis-kuromoji.html)
+- [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/) (for test environment)
 
 ## Getting started
 
