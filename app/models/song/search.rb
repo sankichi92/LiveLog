@@ -38,7 +38,7 @@ class Song
     end
 
     def valid_user_id
-      @user = User.find(user_id)
+      @user = User.find(user_id) if user_id.present?
     rescue ActiveRecord::RecordNotFound
       errors.add(:user_id, :invalid)
     end
