@@ -54,10 +54,11 @@
       = f.submit 'Search', class: 'btn btn-primary'
 
 - if @songs.present?
-  %p.text-right
-    = page_entries_info
-  = render 'songs/songs_table', songs: @songs
-  = will_paginate inner_window: 2, outer_window: 0, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer
+  #results
+    %p.text-right
+      = page_entries_info
+    = render 'songs/songs_table', songs: @songs
+    = will_paginate inner_window: 2, outer_window: 0, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer
 
 - else
   .alert.alert-danger{ role: 'alert' }

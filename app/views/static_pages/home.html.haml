@@ -39,7 +39,7 @@
                   = link_to_song(song)
                   - if song.artist.present?
                     \/
-                    = link_to song.artist, search_songs_path(artist: song.artist)
+                    = link_to_search song.artist, artist: song.artist
                   %br
                   = "など#{live.songs.size}曲"
               = link_to '詳細へ', live_path(live), class: 'card-link'
