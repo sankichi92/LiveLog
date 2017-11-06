@@ -11,7 +11,7 @@ class Song
     }.freeze
 
     attr_accessor :q, :name, :artist, :instruments, :excluded_instruments, :players_lower, :players_upper, :date_lower,
-                  :date_upper, :video, :user_id
+                  :date_upper, :video, :user_id, :ids
 
     validate :valid_date
     validate :valid_user_id
@@ -91,21 +91,17 @@ class Song
                     q.lte date_upper.to_date if date_upper.present?
                   end
                 end
+                q.must { |q| q.terms id: ids } if ids.present?
                 q.must { |q| q.term has_video?: video? } if video?
                 q.must { |q| q.term status: logged_in ? 'closed' : 'open' } if video?
-                if user_id.present?
-                  if logged_in || @user.public?
-                    q.must { |q| q.term 'players.user_id': user_id.to_i }
-                  else
-                    q.must { term 'players.user_id': 0 }
-                  end
-                end
+                q.must { |q| q.term 'players.user_id': user_id.to_i } if user_id.present?
                 q.must_not { |q| q.terms 'players.instruments': excluded_instruments } if excluded_instruments.present?
               end
             end
           end
         end
         q.sort SORT
+        q.size ids.size if ids.present?
       end
     end
   end

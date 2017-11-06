@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     resource :account_activation, path: :activation, as: :activation
     resource :password, only: %i[edit update]
     resource :admin, only: %i[create destroy]
+    get 'search', on: :member
   end
 
   resources :password_resets, only: %i[new create edit update]

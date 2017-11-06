@@ -15,11 +15,6 @@
   #advanced.tab-pane.fade{ class: advanced ? 'show active' : '', role: 'tabpanel', 'aria-labelledby': 'advancedTab' }
     = form_with model: @search || Song::Search.new, scope: '', url: search_songs_path, method: :get, local: true, class: 'mb-3' do |f|
 
-      - if params[:user_id].present?
-        .form-group
-          = f.label :user_id
-          = f.number_field :user_id, id: 'user_id', class: 'form-control', readonly: true
-
       .form-row
         .form-group.col-sm
           = f.label :name, class: 'col-form-label'

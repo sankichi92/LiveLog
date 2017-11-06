@@ -97,7 +97,7 @@ class SongsController < ApplicationController
 
   def search_params_validation
     @search = Song::Search.new(search_params)
-    render action: :index, status: :bad_request if @search.invalid?
+    render :index, status: :bad_request if @search.invalid?
   end
 
   def song_params
@@ -113,7 +113,6 @@ class SongsController < ApplicationController
   end
 
   def search_params
-    params.permit(:q, :name, :artist, :instruments, :players_lower, :players_upper, :date_lower, :date_upper, :video,
-                  :user_id)
+    params.permit(:q, :name, :artist, :instruments, :players_lower, :players_upper, :date_lower, :date_upper, :video)
   end
 end

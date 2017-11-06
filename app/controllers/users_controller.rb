@@ -1,7 +1,9 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[edit update destroy]
-  before_action :logged_in_user, except: %i[index show]
-  before_action :check_public, only: :show
+  before_action :set_user, only: %i[show search edit update destroy]
+  before_action :logged_in_user, except: %i[index show search]
+  before_action :check_public, only: %i[show search]
+  before_action :set_playings, only: %i[show search]
+  before_action :search_params_validation, only: :search
   before_action :correct_user, only: %i[edit update]
   before_action :admin_or_elder_user, only: %i[new create destroy]
 
@@ -14,7 +16,13 @@ class UsersController < ApplicationController
   end
 
   def show
-    @playings = Playing.where(song_id: @user.songs.published.pluck('songs.id'))
+    @songs = @user.songs.published.order_by_live.includes(playings: :user)
+  end
+
+  def search
+    @search.ids = @user.songs.pluck(:id)
+    @songs = Song.search(@search.to_payload(logged_in?)).records(includes: { playings: :user })
+    render :show
   end
 
   def new
@@ -64,15 +72,27 @@ class UsersController < ApplicationController
     params.require(:user).permit(:first_name, :last_name, :furigana, :nickname, :email, :url, :intro, :public)
   end
 
+  def search_params
+    params.permit(:artist, :instruments, :players_lower, :players_upper, :user_id)
+  end
+
   # Before filters
 
   def set_user
-    @user = User.find(params[:id])
+    @user = User.includes(songs: :live).find(params[:id])
   end
 
   def check_public
-    @user = User.includes(songs: :live).find(params[:id])
     redirect_to(root_url) unless logged_in? || @user.public?
+  end
+
+  def set_playings
+    @playings = Playing.where(song_id: @user.songs.published.pluck('songs.id'))
+  end
+
+  def search_params_validation
+    @search = Song::Search.new(search_params)
+    render :show, status: :bad_request if @search.invalid?
   end
 
   def correct_user
