@@ -4,11 +4,11 @@
   %header.page-header
     %h1.display-4<
       Stats
-      %small.text-muted= params[:y] if params[:y]
+      %small.text-muted= @year if @year.present?
 
   %p.lead<
-    - if params[:y]
-      %mark= params[:y]
+    - if @year.present?
+      %mark= @year
       年度の京大アンプラグドに関するデータです。
     - else
       過去1年間の京大アンプラグドに関するデータを紹介します。
@@ -19,15 +19,14 @@
     %mark= total
     曲を演奏しました。
 
-  - if logged_in?
-    %aside.card.mb-3
-      .card-body.form-inline
-        = label_tag :y, '年度', class: 'sr-only'
-        = select_tag :y,
-                     options_for_select(Live.years, selected: params[:y]),
-                     class: 'form-control',
-                     onchange: "location.href='#{request.path}?y=' + $(this).val();"
-        年度の情報を見る
+  %aside.card.mb-3
+    .card-body.form-inline
+      = label_tag :y, '年度', class: 'sr-only'
+      = select_tag :y,
+                   options_for_select(Live.years.unshift(''), selected: @year),
+                   class: 'form-control',
+                   onchange: "location.href='#{request.path}?y=' + $(this).val();"
+      年度の情報を見る
 
   .row
     .col-lg.mb-3
