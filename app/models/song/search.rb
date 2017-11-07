@@ -8,7 +8,6 @@ class Song
                   :date_upper, :video, :user_id, :ids
 
     validate :valid_date
-    validate :valid_user_id
     validates :players_lower, :players_upper, numericality: { only_integer: true }, allow_blank: true
     validates :video, inclusion: { in: %w[0 1] }, allow_blank: true
     validates :user_id, numericality: { only_integer: true }, allow_blank: true
@@ -63,12 +62,6 @@ class Song
       date_upper.to_date if date_upper.present?
     rescue ArgumentError
       errors.add(:date_lower, :invalid)
-    end
-
-    def valid_user_id
-      @user = User.find(user_id) if user_id.present?
-    rescue ActiveRecord::RecordNotFound
-      errors.add(:user_id, :invalid)
     end
 
     def instrument_arr
