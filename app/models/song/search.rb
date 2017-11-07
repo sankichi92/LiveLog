@@ -2,7 +2,6 @@ class Song
   class Search
     include ActiveModel::Model
     include Elasticsearch::DSL
-    extend ActiveModel::Naming
 
     attr_accessor :q, :name, :artist, :instruments, :excluded_instruments, :players_lower, :players_upper, :date_lower,
                   :date_upper, :video, :user_id, :ids
