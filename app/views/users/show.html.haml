@@ -18,7 +18,7 @@
           %mark= total
           曲
         %ul.list-group.list-group-flush
-          - Playing.resolve_insts(@user.playings.published.count_insts).each do |inst, count|
+          - @user.inst_to_count.each do |inst, count|
             - unless inst.blank?
               = link_to search_user_path(instruments: inst),
                         class: (params[:instruments] == inst ? 'active ' : '') + 'list-group-item list-group-item-action d-flex justify-content-between align-items-center' do
@@ -41,11 +41,11 @@
         %section.card
           %h6.card-header 共演者
           .card-body.text-center.lead
-            %mark= @playings.group(:user).count.size - 1
+            %mark= @user.collaborators_to_count.size - 1
             人
           .list-group.list-group-flush
             - last_count = 0
-            - @playings.group(:user).count.sort{ |(_, c1), (_, c2)| c2 <=> c1 }.slice(1..-1).each_with_index do |(user, count), i|
+            - @user.collaborators_to_count.sort{ |(_, c1), (_, c2)| c2 <=> c1 }.slice(1..-1).each_with_index do |(user, count), i|
               - break if count < 5 || i >= 5 && count != last_count
               = link_to search_user_path(user_id: user.id),
                         class: (params[:user_id] == user.id.to_s ? 'active ' : '') + 'list-group-item list-group-item-action d-flex justify-content-between align-items-center' do
@@ -57,7 +57,7 @@
           %h6.card-header 構成人数
           %ul.list-group.list-group-flush
             - sum = 0
-            - Playing.count_formation(@playings.count_members_per_song).each do |formation, count|
+            - @user.formation_to_count.each do |formation, count|
               = link_to search_user_path(players_lower: formation, players_upper: formation),
                         class: ((params[:players_lower]&.to_i || 0..params[:players_upper]&.to_i || 0)&.include?(formation) ? 'active ' : '') + 'list-group-item list-group-item-action d-flex justify-content-between align-items-center' do
                 = "#{formation}人"

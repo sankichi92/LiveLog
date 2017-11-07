@@ -19,7 +19,7 @@ class Song
     validates :video, inclusion: { in: %w[0 1] }, allow_blank: true
     validates :user_id, numericality: { only_integer: true }, allow_blank: true
 
-    def to_payload(logged_in)
+    def to_payload(logged_in = false)
       return {} if invalid?
       if q.nil?
         advanced_payload(logged_in)

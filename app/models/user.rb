@@ -69,6 +69,22 @@ class User < ApplicationRecord
     song.playings.pluck(:user_id).include?(id)
   end
 
+  def inst_to_count
+    Playing.resolve_insts(playings.published.count_insts)
+  end
+
+  def related_playings
+    Playing.where(song_id: songs.published.pluck('songs.id'))
+  end
+
+  def collaborators_to_count
+    related_playings.group(:user).count
+  end
+
+  def formation_to_count
+    Playing.count_formation(related_playings.count_members_per_song)
+  end
+
   def authenticated?(attribute, token)
     digest = send("#{attribute}_digest")
     return false if digest.nil?
