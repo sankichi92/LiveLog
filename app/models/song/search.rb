@@ -3,8 +3,8 @@ class Song
     include ActiveModel::Model
     include Elasticsearch::DSL
 
-    attr_accessor :q, :name, :artist, :instruments, :excluded_instruments, :players_lower, :players_upper, :date_lower,
-                  :date_upper, :video, :user_id, :ids
+    attr_accessor :q, :name, :artist, :instruments, :players_lower, :players_upper, :date_lower, :date_upper, :video,
+                  :user_id, :ids
 
     validate :valid_date
     validates :players_lower, :players_upper, numericality: { only_integer: true }, allow_blank: true
