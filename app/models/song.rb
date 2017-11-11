@@ -46,11 +46,6 @@ class Song < ApplicationRecord
     "https://www.youtube.com/watch?v=#{youtube_id}" if youtube_id.present?
   end
 
-  def youtube_embed
-    %(<iframe src="https://www.youtube.com/embed/#{youtube_id}?rel=0" frameborder="0" allowfullscreen></iframe>)
-      .html_safe
-  end
-
   def visible?(user)
     open? || closed? && user || user && user.played?(self)
   end

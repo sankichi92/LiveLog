@@ -14,6 +14,13 @@ module SongsHelper
                 id: 'add-member', type: 'button', class: 'btn btn-light', data: { fields: fields.delete("\n") }
   end
 
+  def youtube_embed(song)
+    return unless song.youtube_id?
+    content_tag :iframe,
+                '',
+                src: %(https://www.youtube.com/embed/#{song.youtube_id}?rel=0" frameborder="0" allowfullscreen)
+  end
+
   def status_icon(song)
     if song.open?
       icon('globe')
