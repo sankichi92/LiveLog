@@ -20,7 +20,7 @@ RSpec.feature 'Static pages', type: :feature do
     end
 
     feature "Today's Pickup!" do
-      given!(:song) { create(:song, status: :open) }
+      given!(:song) { create(:song, status: :open, created_at: 1.day.ago) }
 
       scenario 'A user can see the pickup song' do
         visit root_path

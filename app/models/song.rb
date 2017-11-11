@@ -34,7 +34,7 @@ class Song < ApplicationRecord
 
   def self.pickup(date = Time.zone.today)
     random = Random.new(date.to_time.to_i)
-    songs = eager_load(:live).where('lives.date <= ?', date).where.not(youtube_id: '', status: :secret)
+    songs = published.where('songs.created_at <= ?', date).where.not(youtube_id: '', status: :secret)
     songs.offset(random.rand(songs.count)).first if songs.exists?
   end
 
