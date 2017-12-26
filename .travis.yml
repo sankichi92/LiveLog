@@ -16,11 +16,10 @@ before_install:
     CHROMEDRIVER_URL="http://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip";
     FILE=`mktemp`; wget "$CHROMEDRIVER_URL" -qO $FILE && unzip $FILE chromedriver -d ~/drivers; rm $FILE; chmod 777 ~/drivers/chromedriver;
 
-bundler_args: --without production --deployment
-
 before_script:
   - sudo /usr/share/elasticsearch/bin/elasticsearch-plugin install -b analysis-kuromoji
   - sudo service elasticsearch restart
+  - gem update --system
   - cp config/database.yml.travis config/database.yml
   - bin/rails db:create
   - sleep 10 # cf. https://docs.travis-ci.com/user/database-setup/#ElasticSearch
