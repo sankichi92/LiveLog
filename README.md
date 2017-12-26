@@ -9,7 +9,7 @@ This is the application to manage set lists of the acoustic light music club "[ä
 
 ## Requirements
 
-- Ruby 2.4.1
+- Ruby 2.5.0
 - PostgreSQL 9.1 or later
 - [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/install-elasticsearch.html) 5.x
   - with [Japanese (kuromoji) Analysis Plugin](https://www.elastic.co/guide/en/elasticsearch/plugins/current/analysis-kuromoji.html)
