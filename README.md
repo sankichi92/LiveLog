@@ -20,14 +20,13 @@ This is the application to manage set lists of the acoustic light music club "[ä
 To get started with the app, clone the repo and then install the needed gems:
 
 ```
-$ bundle install --without production
+$ bundle install
 ```
 
-Next, create and migrate the database:
+Next, setup the database:
 
 ```
-$ rails db:create
-$ rails db:migrate
+$ rails db:setup
 ```
 
 Finally, run the test suite to verify that everything is working correctly:
