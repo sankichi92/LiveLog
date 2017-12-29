@@ -30,7 +30,7 @@
           %h6.card-header アーティスト
           .list-group.list-group-flush
             - last_count = 0
-            - @user.songs.published.group(:artist).count.select { |a, _| a.present? }.sort { |(_, c1), (_, c2)| c2 <=> c1 }.each_with_index do |(artist, count), i|
+            - @user.songs.published.where.not('songs.artist': [nil, '']).group(:artist).order(count: :desc).count.each_with_index do |(artist, count), i|
               - break if count < 2 || i >= 5 && count != last_count
               = link_to search_user_path(artist: artist),
                         class: (params[:artist] == artist ? 'active ' : '') + 'list-group-item list-group-item-action d-flex justify-content-between align-items-center' do
@@ -41,11 +41,11 @@
         %section.card
           %h6.card-header 共演者
           .card-body.text-center.lead
-            %mark= @user.collaborators_to_count.size - 1
+            %mark= @user.collaborator_to_count.size
             人
           .list-group.list-group-flush
             - last_count = 0
-            - @user.collaborators_to_count.sort{ |(_, c1), (_, c2)| c2 <=> c1 }.slice(1..-1).each_with_index do |(user, count), i|
+            - @user.collaborator_to_count.each_with_index do |(user, count), i|
               - break if count < 5 || i >= 5 && count != last_count
               = link_to search_user_path(user_id: user.id),
                         class: (params[:user_id] == user.id.to_s ? 'active ' : '') + 'list-group-item list-group-item-action d-flex justify-content-between align-items-center' do

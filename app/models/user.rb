@@ -77,8 +77,8 @@ class User < ApplicationRecord
     Playing.where(song_id: songs.published.pluck('songs.id'))
   end
 
-  def collaborators_to_count
-    related_playings.group(:user).count
+  def collaborator_to_count
+    related_playings.where.not(user_id: id).group(:user).order(count: :desc).count
   end
 
   def formation_to_count
