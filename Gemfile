@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby '2.5.0'
 
 gem 'bcrypt', '~> 3.1.11'
-gem 'bootstrap', '~> 4.0.0.beta2.1'
+gem 'bootstrap', '~> 4.0.0.beta3'
 gem 'bootstrap-will_paginate', '~> 1.0.0'
 gem 'coffee-rails', '~> 4.2'
 gem 'dalli', '~> 2.7.6'

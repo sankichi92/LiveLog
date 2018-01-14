@@ -24,14 +24,12 @@
     = f.text_area :intro, class: 'form-control', rows: '3'
 
   .form-group
-    .form-check.form-check-inline
-      %label.form-check-label
-        = f.radio_button :public, 'true', class: 'form-check-input'
-        プロフィールを公開する
-    .form-check.form-check-inline
-      %label.form-check-label
-        = f.radio_button :public, 'false', class: 'form-check-input'
-        プロフィールを公開しない
+    .custom-control.custom-radio.custom-control-inline
+      = f.radio_button :public, 'true', class: 'custom-control-input'
+      = f.label :public_true, 'プロフィールを公開する', class: 'custom-control-label'
+    .custom-control.custom-radio.custom-control-inline
+      = f.radio_button :public, 'false', class: 'custom-control-input'
+      = f.label :public_false, 'プロフィールを公開しない', class: 'custom-control-label'
     %small.form-text.text-muted
       プロフィールを公開しても，名前とメールアドレスが公開されることはありません。
       %br

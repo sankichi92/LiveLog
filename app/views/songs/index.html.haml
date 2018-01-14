@@ -30,21 +30,22 @@
         .form-group.col-sm
           = f.label :players_count, class: 'col-form-label'
           .input-group
-            = f.number_field :players_lower, class: 'form-control', placeholder: '4'
-            %span.input-group-addon 〜
-            = f.number_field :players_upper, class: 'form-control', placeholder: '6'
+            = f.number_field :players_lower, class: 'form-control col', placeholder: '4'
+            .input-group-append.input-group-prepend
+              %span.input-group-text 〜
+            = f.number_field :players_upper, class: 'form-control col', placeholder: '6'
 
       .form-group
         = f.label :date
         .input-group
           = f.date_field :date_lower, value: params[:date_lower], class: 'form-control'
-          %span.input-group-addon 〜
+          .input-group-append.input-group-prepend
+            %span.input-group-text 〜
           = f.date_field :date_upper, value: params[:date_upper], class: 'form-control'
 
-      .form-check
-        = f.label :video, class: 'form-check-label' do
-          = f.check_box :video, id: 'video', class: 'form-check-input'
-          動画を視聴できる曲のみ
+      .custom-control.custom-checkbox.mb-3
+        = f.check_box :video, id: 'video', class: 'custom-control-input'
+        = f.label :video, '動画を視聴できる曲のみ', class: 'custom-control-label'
 
       = f.submit 'Search', class: 'btn btn-primary'
 
