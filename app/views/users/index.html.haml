@@ -4,10 +4,9 @@
 
 %aside.card.mb-3
   .card-body
-    .form-check.mb-0
-      %label.form-check-label
-        = check_box_tag :active, true, false, checked: params[:active] != 'false', onchange: "location.href='#{request.path}?active=' + $(this).is(':checked');"
-        1年以内にライブに出演したメンバーのみ表示
+    .custom-control.custom-checkbox
+      = check_box_tag :active, true, false, checked: params[:active] != 'false', class: 'custom-control-input', onchange: "location.href='#{request.path}?active=' + $(this).is(':checked');"
+      = label_tag :active, '1年以内にライブに出演したメンバーのみ表示', class: 'custom-control-label'
 
 .row
   - @users.joined_years.each do |year|
