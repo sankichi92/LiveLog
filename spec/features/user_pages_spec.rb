@@ -34,7 +34,7 @@ RSpec.feature 'UserPages', type: :feature do
       end
     end
 
-    scenario 'A user can see all members', js: true do
+    xscenario 'A user can see all members', js: true do
       visit users_path
       uncheck '1年以内にライブに出演したメンバーのみ表示'
 
