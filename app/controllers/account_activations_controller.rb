@@ -42,10 +42,6 @@ class AccountActivationsController < ApplicationController
 
   private
 
-  def user_params
-    params.require(:user).permit(:password, :password_confirmation)
-  end
-
   # Before filters
 
   def set_user
@@ -60,5 +56,11 @@ class AccountActivationsController < ApplicationController
     return if @user.authenticated?(:activation, params[:t])
     flash[:danger] = '無効なリンクです'
     redirect_to root_url
+  end
+
+  # Strong parameters
+
+  def user_params
+    params.require(:user).permit(:password, :password_confirmation)
   end
 end

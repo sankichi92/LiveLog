@@ -38,9 +38,7 @@ class PasswordResetsController < ApplicationController
 
   private
 
-  def user_params
-    params.require(:user).permit(:password, :password_confirmation)
-  end
+  # Before filters
 
   def set_user
     @user = User.find_by(email: params[:email])
@@ -54,5 +52,11 @@ class PasswordResetsController < ApplicationController
     return unless @user.password_reset_expired?
     flash[:danger] = 'パスワード再設定の有効期限が過ぎてきます'
     redirect_to new_password_reset_url
+  end
+
+  # Strong parameters
+
+  def user_params
+    params.require(:user).permit(:password, :password_confirmation)
   end
 end

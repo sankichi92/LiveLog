@@ -39,6 +39,8 @@ class EntriesController < ApplicationController
 
   private
 
+  # Before filters
+
   def set_live
     @live = Live.find(params[:live_id])
   end
@@ -46,6 +48,8 @@ class EntriesController < ApplicationController
   def draft_live
     redirect_to root_url if @live.published?
   end
+
+  # Strong parameters
 
   def song_params
     params.require(:song).permit(:name, :artist, :status, playings_attributes: %i[id user_id inst _destroy])

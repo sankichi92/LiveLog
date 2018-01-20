@@ -62,18 +62,6 @@ class UsersController < ApplicationController
 
   private
 
-  def create_user_params
-    params.require(:user).permit(:first_name, :last_name, :furigana, :joined)
-  end
-
-  def update_user_params
-    params.require(:user).permit(:first_name, :last_name, :furigana, :nickname, :email, :url, :intro, :public)
-  end
-
-  def search_params
-    params.permit(:artist, :instruments, :players_lower, :players_upper, :date_lower, :date_upper, :user_id)
-  end
-
   # Before filters
 
   def set_user
@@ -92,5 +80,19 @@ class UsersController < ApplicationController
 
   def correct_user
     redirect_to(root_url) unless current_user?(@user)
+  end
+
+  # Strong parameters
+
+  def create_user_params
+    params.require(:user).permit(:first_name, :last_name, :furigana, :joined)
+  end
+
+  def update_user_params
+    params.require(:user).permit(:first_name, :last_name, :furigana, :nickname, :email, :url, :intro, :public)
+  end
+
+  def search_params
+    params.permit(:artist, :instruments, :players_lower, :players_upper, :date_lower, :date_upper, :user_id)
   end
 end
