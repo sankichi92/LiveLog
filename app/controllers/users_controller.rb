@@ -19,8 +19,7 @@ class UsersController < ApplicationController
   end
 
   def search
-    @search.ids = @user.songs.pluck(:id)
-    @songs = Song.search(@search.to_payload).records(includes: { playings: :user })
+    @songs = Song.search(@query).records(includes: { playings: :user })
     render :show
   end
 
@@ -87,8 +86,8 @@ class UsersController < ApplicationController
   end
 
   def search_params_validation
-    @search = Song::Search.new(search_params)
-    render :show, status: :bad_request if @search.invalid?
+    @query = Song::SearchQuery.new(search_params.merge(ids: @user.songs.pluck(:id), logged_in: logged_in?))
+    render :show, status: :bad_request if @query.invalid?
   end
 
   def correct_user
