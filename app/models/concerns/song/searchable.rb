@@ -33,7 +33,7 @@ module Concerns
 
         mapping dynamic: false, _all: { enabled: false } do
           indexes :id, type: 'integer'
-          indexes :live_name, type: 'text', index: 'no'
+          indexes :live_name, type: 'text', index: false
           indexes :datetime, type: 'date'
           indexes :order, type: 'short'
           indexes :name, type: 'text'
