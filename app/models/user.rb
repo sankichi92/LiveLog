@@ -70,7 +70,7 @@ class User < ApplicationRecord
   end
 
   def inst_to_count
-    Playing.resolve_insts(playings.published.count_insts)
+    playings.published.count_insts
   end
 
   def related_playings
@@ -82,7 +82,7 @@ class User < ApplicationRecord
   end
 
   def formation_to_count
-    Playing.count_formation(related_playings.count_members_per_song)
+    related_playings.count_formations
   end
 
   def authenticated?(attribute, token)
