@@ -45,7 +45,7 @@ ja:
         inst: 楽器
   activemodel:
     attributes:
-      song/search:
+      song/search_query:
         name: 曲名
         artist: アーティスト名
         instruments: 楽器
