@@ -1,17 +1,17 @@
 class Song
-  class Search
+  class SearchQuery
     include ActiveModel::Model
     include Elasticsearch::DSL
 
     attr_accessor :q, :name, :artist, :instruments, :players_lower, :players_upper, :date_lower, :date_upper, :video,
-                  :user_id, :ids
+                  :user_id, :ids, :logged_in
 
     validate :valid_date
     validates :players_lower, :players_upper, numericality: { only_integer: true }, allow_blank: true
     validates :video, inclusion: { in: %w[0 1] }, allow_blank: true
     validates :user_id, numericality: { only_integer: true }, allow_blank: true
 
-    def to_payload(logged_in = false)
+    def to_hash
       return {} if invalid?
       search do |q|
         q.query do |q|
@@ -51,7 +51,7 @@ class Song
           order: { order: :asc }
         )
         q.size ids.size if ids.present?
-      end
+      end.to_hash
     end
 
     private

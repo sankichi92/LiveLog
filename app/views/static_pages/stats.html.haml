@@ -32,7 +32,7 @@
     .col-lg.mb-3
       %section.card
         %h4.card-header 演奏された楽器
-        - inst_to_count = Playing.resolve_insts(@playings.count_insts)
+        - inst_to_count = @playings.count_insts
         .card-body
           %p<
             %mark= inst_to_count.size
@@ -70,7 +70,7 @@
     .col-lg.mb-3
       %section.card
         %h4.card-header バンドの構成人数
-        - formation_to_count = Playing.count_formation(@playings.count_members_per_song)
+        - formation_to_count = @playings.count_formations
         .card-body
           %p<
             構成人数の平均は

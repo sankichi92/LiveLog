@@ -11,6 +11,8 @@ class PublishesController < ApplicationController
 
   private
 
+  # Before filters
+
   def set_live
     @live = Live.find(params[:live_id])
   end

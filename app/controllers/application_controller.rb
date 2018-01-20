@@ -11,6 +11,8 @@ class ApplicationController < ActionController::Base
     Raven.extra_context(params: params.to_unsafe_h, url: request.url)
   end
 
+  # Before filters
+
   def logged_in_user
     return if logged_in?
     store_location

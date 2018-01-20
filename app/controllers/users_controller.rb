@@ -19,8 +19,7 @@ class UsersController < ApplicationController
   end
 
   def search
-    @search.ids = @user.songs.pluck(:id)
-    @songs = Song.search(@search.to_payload).records(includes: { playings: :user })
+    @songs = Song.search(@query).records(includes: { playings: :user })
     render :show
   end
 
@@ -63,18 +62,6 @@ class UsersController < ApplicationController
 
   private
 
-  def create_user_params
-    params.require(:user).permit(:first_name, :last_name, :furigana, :joined)
-  end
-
-  def update_user_params
-    params.require(:user).permit(:first_name, :last_name, :furigana, :nickname, :email, :url, :intro, :public)
-  end
-
-  def search_params
-    params.permit(:artist, :instruments, :players_lower, :players_upper, :date_lower, :date_upper, :user_id)
-  end
-
   # Before filters
 
   def set_user
@@ -87,11 +74,25 @@ class UsersController < ApplicationController
   end
 
   def search_params_validation
-    @search = Song::Search.new(search_params)
-    render :show, status: :bad_request if @search.invalid?
+    @query = Song::SearchQuery.new(search_params.merge(ids: @user.songs.pluck(:id), logged_in: logged_in?))
+    render :show, status: :bad_request if @query.invalid?
   end
 
   def correct_user
     redirect_to(root_url) unless current_user?(@user)
+  end
+
+  # Strong parameters
+
+  def create_user_params
+    params.require(:user).permit(:first_name, :last_name, :furigana, :joined)
+  end
+
+  def update_user_params
+    params.require(:user).permit(:first_name, :last_name, :furigana, :nickname, :email, :url, :intro, :public)
+  end
+
+  def search_params
+    params.permit(:artist, :instruments, :players_lower, :players_upper, :date_lower, :date_upper, :user_id)
   end
 end

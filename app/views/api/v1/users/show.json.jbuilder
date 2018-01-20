@@ -3,7 +3,7 @@ json.cache_if! !authenticated?, ['v1', @user] do
   json.name @user.display_name(authenticated?)
 end
 json.insts do
-  json.array! Playing.resolve_insts(@user.playings.published.count_insts) do |inst, count|
+  json.array! @user.playings.published.count_insts do |inst, count|
     json.inst inst
     json.count count
   end

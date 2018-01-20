@@ -12,7 +12,7 @@ class SongsController < ApplicationController
   end
 
   def search
-    response = Song.search(@search.to_payload(logged_in?)).page(params[:page])
+    response = Song.search(@query).page(params[:page])
     @songs = response.records(includes: [:live, { playings: :user }])
     render :index
   end
@@ -75,6 +75,8 @@ class SongsController < ApplicationController
 
   private
 
+  # Before filters
+
   def set_song
     @song = Song.includes(playings: :user).find(params[:id])
   end
@@ -96,9 +98,11 @@ class SongsController < ApplicationController
   end
 
   def search_params_validation
-    @search = Song::Search.new(search_params)
-    render :index, status: :bad_request if @search.invalid?
+    @query = Song::SearchQuery.new(search_params.merge(logged_in: logged_in?))
+    render :index, status: :bad_request if @query.invalid?
   end
+
+  # Strong parameters
 
   def song_params
     params.require(:song).permit(:live_id,

@@ -52,6 +52,8 @@ class LivesController < ApplicationController
 
   private
 
+  # Before filters
+
   def set_live
     @live = Live.includes(:songs).find(params[:id])
   end
@@ -59,6 +61,8 @@ class LivesController < ApplicationController
   def published_live
     redirect_to live_entries_url(@live) unless @live.published?
   end
+
+  # Strong parameters
 
   def live_params
     params.require(:live).permit(:name, :date, :place, :album_url)

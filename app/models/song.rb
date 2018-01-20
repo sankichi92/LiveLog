@@ -35,7 +35,7 @@ class Song < ApplicationRecord
   def self.pickup(date = Time.zone.today)
     random = Random.new(date.to_time.to_i)
     songs = published.where('songs.created_at <= ?', date).where.not(youtube_id: '', status: :secret)
-    songs.offset(random.rand(songs.count)).first if songs.exists?
+    songs.offset(random.rand(songs.count)).first if songs.count.positive?
   end
 
   def title
@@ -44,18 +44,6 @@ class Song < ApplicationRecord
 
   def youtube_url
     "https://www.youtube.com/watch?v=#{youtube_id}" if youtube_id.present?
-  end
-
-  def visible?(user)
-    open? || closed? && user || user && user.played?(self)
-  end
-
-  def watchable?(user)
-    youtube_id.present? && visible?(user)
-  end
-
-  def editable?(user)
-    user.present? && (user.admin_or_elder? || user.played?(self))
   end
 
   def datetime
@@ -69,6 +57,18 @@ class Song < ApplicationRecord
 
   def time_order
     "#{time_str} #{order}"
+  end
+
+  def visible?(user)
+    open? || closed? && user || user&.played?(self)
+  end
+
+  def watchable?(user)
+    youtube_id.present? && visible?(user)
+  end
+
+  def editable?(user)
+    user&.admin_or_elder? || user&.played?(self)
   end
 
   def add_error_for_duplicated_user
