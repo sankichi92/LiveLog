@@ -46,7 +46,7 @@ class User < ApplicationRecord
   end
 
   def handle
-    nickname.blank? ? last_name : nickname
+    nickname.presence || last_name
   end
 
   def name_with_handle
