@@ -34,22 +34,30 @@ $breadcrumb-divider: ">";
 
 @import "bootstrap";
 
+tr[onclick]:hover {
+  cursor: pointer;
+}
+
+.card {
+  .table {
+    margin-bottom: 0;
+
+    tr:first-child {
+      td {
+        border-top: 0;
+      }
+    }
+  }
+}
+
 .page-header {
   padding-bottom: ($spacer * .5);
   margin: ($spacer * 3) 0 ($spacer * 1.5);
   border-bottom: 1px solid $theme-border-color;
 }
 
-.card {
-  table {
-    margin-bottom: 0;
+#set-list {
+  > li {
+    @extend .lead;
   }
-}
-
-tr[onclick]:hover {
-  cursor: pointer;
-}
-
-#set-list > li {
-  @extend .lead
 }
