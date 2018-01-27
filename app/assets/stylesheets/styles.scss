@@ -61,3 +61,12 @@ tr[onclick]:hover {
     @extend .lead;
   }
 }
+
+#song-table {
+  @extend .table-responsive-lg;
+  @include media-breakpoint-down(md) {
+    td {
+      white-space: nowrap;
+    }
+  }
+}
