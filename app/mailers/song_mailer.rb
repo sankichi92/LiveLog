@@ -1,0 +1,2 @@
+class SongMailer < ApplicationMailer
+end
