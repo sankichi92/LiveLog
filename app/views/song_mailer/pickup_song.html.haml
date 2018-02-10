@@ -1,0 +1,13 @@
+%p
+  = link_to @song.live_title, live_url(@song.live)
+  であなたが演奏した「
+  = @song.title
+  」が
+  = link_to 'LiveLog', root_url
+  の今日のピックアップに選ばれました！
+%p
+  今日のピックアップは，
+  = link_to 'LiveLog', root_url
+  のトップページから確認することができます。
+  %br
+  = root_url

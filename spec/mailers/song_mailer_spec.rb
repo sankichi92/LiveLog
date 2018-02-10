@@ -1,5 +1,32 @@
-require "rails_helper"
+require 'rails_helper'
 
 RSpec.describe SongMailer, type: :mailer do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe 'pickup_song' do
+    let(:users) { create_list(:user, 3) }
+    let(:user_without_email) { create(:user, email: nil) }
+    let(:song) { create(:song, users: [users, user_without_email].flatten) }
+    let(:mail) { SongMailer.pickup_song }
+
+    before do
+      allow(Song).to receive(:pickup) { song }
+    end
+
+    it 'renders the headers' do
+      expect(mail.subject).to eq("「#{song.name}」が今日のピックアップに選ばれました！")
+      expect(mail.to).to eq(['sankichi92@ku-unplugged.net'])
+      expect(mail.from).to eq(['noreply@livelog.ku-unplugged.net'])
+      expect(mail.bcc).to eq(users.map(&:email))
+      expect(mail.reply_to).to eq(['sankichi92@ku-unplugged.net'])
+    end
+
+    it 'renders the text body' do
+      expect(mail.text_part.body).to match(song.title)
+      expect(mail.text_part.body).to match(root_url)
+    end
+
+    it 'renders the html body' do
+      expect(mail.html_part.body).to match(song.title)
+      expect(mail.html_part.body).to match(root_url)
+    end
+  end
 end

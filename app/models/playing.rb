@@ -2,7 +2,7 @@ class Playing < ApplicationRecord
   belongs_to :user
   belongs_to :song, touch: true
 
-  delegate :handle, :name, :display_name, :joined, :public?, to: :user
+  delegate :handle, :name, :display_name, :joined, :email, :public?, to: :user
 
   before_save :format_inst
 
