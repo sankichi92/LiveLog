@@ -40,7 +40,7 @@ Ruby on Rails を用いた Web アプリケーション開発の基礎を勉強�
 
 ### バグを報告する
 
-- **セキュリティに関するバグの場合は，GitHub に Issue を立てないでください。** miyoshi@ku-unplugged.net までご連絡ください。
+- **セキュリティに関するバグの場合は，GitHub に Issue を立てないでください。** sankichi92@ku-unplugged.net までご連絡ください。
 - セキュリティに関するもの以外であれば，[新しい Issue を立ててください](https://github.com/rails/rails/issues/new)。Issue には，分かりやすいタイトルと，バグに関するできる限り具体的な説明を含めてください。
 
 ### 機能改善や新機能を提案する

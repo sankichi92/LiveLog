@@ -18,6 +18,7 @@ FactoryBot.define do
       evaluator.users.each do |user|
         create(:playing, song: song, user: user)
       end
+      song.reload
     end
   end
 
