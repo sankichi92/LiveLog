@@ -31,6 +31,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'faker'
   gem 'listen', '~> 3.1.5'
   gem 'rails_real_favicon'
   gem 'spring'
