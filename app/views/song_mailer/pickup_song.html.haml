@@ -7,6 +7,9 @@
   の今日のピックアップに選ばれました！
 %p
   今日のピックアップは，
+  - if !@song.open?
+    = link_to 'ログイン', login_url
+    すると
   = link_to 'LiveLog', root_url
   のトップページから確認することができます。
   %br
