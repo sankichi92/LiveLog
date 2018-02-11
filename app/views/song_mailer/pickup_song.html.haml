@@ -14,3 +14,12 @@
   のトップページから確認することができます。
   %br
   = root_url
+%hr
+%p
+  %small
+    配信停止をご希望の方は，ログイン後
+    = link_to '設定', edit_profile_url
+    より「LiveLog からのお知らせメールを受け取る」のチェックを外してください。
+    %br
+    = edit_profile_url
+

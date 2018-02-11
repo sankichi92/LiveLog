@@ -120,6 +120,10 @@ class User < ApplicationRecord
     UserMailer.password_reset(self).deliver_now
   end
 
+  def enable_to_send_info?
+    email.present? && subscribing?
+  end
+
   def reset_password(password_params)
     update(password_params) && update_column(:reset_digest, nil)
   end

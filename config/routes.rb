@@ -20,6 +20,8 @@ Rails.application.routes.draw do
     get 'search', on: :member
   end
 
+  resource :profile, only: :edit
+
   resources :password_resets, only: %i[new create edit update]
 
   get '/login', to: 'sessions#new'

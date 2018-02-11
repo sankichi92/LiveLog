@@ -4,7 +4,8 @@ RSpec.describe SongMailer, type: :mailer do
   describe 'pickup_song' do
     let(:users) { create_list(:user, 3) }
     let(:user_without_email) { create(:user, email: nil) }
-    let(:song) { create(:song, users: [users, user_without_email].flatten) }
+    let(:user_unsubscribing) { create(:user, subscribing: false) }
+    let(:song) { create(:song, users: [users, user_without_email, user_unsubscribing].flatten) }
     let(:mail) { SongMailer.pickup_song }
 
     before do

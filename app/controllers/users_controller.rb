@@ -89,7 +89,7 @@ class UsersController < ApplicationController
   end
 
   def update_user_params
-    params.require(:user).permit(:first_name, :last_name, :furigana, :nickname, :email, :url, :intro, :public)
+    params.require(:user).permit(:first_name, :last_name, :furigana, :nickname, :email, :url, :intro, :public, :subscribing)
   end
 
   def search_params
