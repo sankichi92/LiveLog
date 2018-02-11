@@ -35,6 +35,12 @@
       %br
       ただし，ニックネームが存在しない場合，姓は公開されます。
 
+  .custom-control.custom-checkbox.mb-3
+    = f.check_box :subscribing, class: 'custom-control-input'
+    = f.label :subscribing, class: 'custom-control-label' do
+      LiveLog からのお知らせメールを受け取る
+      = icon 'question-circle', 'data-toggle': 'tooltip', 'data-placement': 'right', title: '演奏した曲が今日のピックアップに選ばれた時などにお知らせします'
+
   = f.submit 'Save', class: 'btn btn-primary'
 
 
