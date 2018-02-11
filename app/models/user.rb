@@ -121,7 +121,7 @@ class User < ApplicationRecord
   end
 
   def enable_to_send_info?
-    email.present? && subscribing?
+    activated? && subscribing?
   end
 
   def reset_password(password_params)
