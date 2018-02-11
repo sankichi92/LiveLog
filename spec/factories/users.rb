@@ -9,6 +9,7 @@ FactoryBot.define do
     password_confirmation 'foobar'
     activated true
     activated_at Time.zone.now
+    subscribing true
 
     factory :admin do
       admin true
