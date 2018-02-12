@@ -1,0 +1,8 @@
+<script>
+    window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+    ga('create', 'UA-56294602-1', 'auto', 'myTracker', {
+        userId: <%= current_user&.id %>
+    });
+    ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
