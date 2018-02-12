@@ -8,12 +8,13 @@
     = csrf_meta_tags
     = stylesheet_link_tag    'application', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
-    = render 'shared/page-level-ads' if Rails.env.production? && !logged_in?
     - if Rails.env.production?
       %script{ src: 'https://www.google-analytics.com/analytics.js', async: true }
       - if logged_in?
         :javascript
           ga('set', 'userId', '#{current_user.id}');
+      - else
+        %script{ src: '//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js', async: true }
   %body
     = render 'layouts/navbar'
     #main.container
