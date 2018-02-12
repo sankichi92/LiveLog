@@ -18,7 +18,9 @@ module SongsHelper
     return unless song.youtube_id?
     content_tag :iframe,
                 '',
-                src: %(https://www.youtube.com/embed/#{song.youtube_id}?rel=0" frameborder="0" allowfullscreen)
+                src: "https://www.youtube.com/embed/#{song.youtube_id}?rel=0",
+                frameborder: 0,
+                allowfullscreen: 1
   end
 
   def status_icon(song)
