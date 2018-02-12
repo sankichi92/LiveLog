@@ -9,8 +9,12 @@
     = stylesheet_link_tag    'application', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
     = render 'shared/page-level-ads' if Rails.env.production? && !logged_in?
+    - if Rails.env.production?
+      %script{ src: 'https://www.google-analytics.com/analytics.js', async: true }
+      - if logged_in?
+        :javascript
+          ga('set', 'userId', '#{current_user.id}');
   %body
-    = render 'shared/analyticstracking' if Rails.env.production?
     = render 'layouts/navbar'
     #main.container
       = render 'layouts/flash'
