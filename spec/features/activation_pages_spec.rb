@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "ActivationPages", type: :feature do
+RSpec.feature 'ActivationPages', type: :feature do
 
   feature 'Invitation' do
     given(:user) { create(:user) }
@@ -95,6 +95,19 @@ RSpec.feature "ActivationPages", type: :feature do
 
       expect(page).to have_selector('.alert-danger')
       expect(page).not_to have_title(user.name_with_handle)
+    end
+
+    scenario 'A user cannot log in without activation' do
+      visit login_path
+
+      fill_in 'Email', with: user.email
+      fill_in 'Password', with: user.password
+      within('form') do
+        click_button 'Log in'
+      end
+
+      expect(page).not_to have_title('Log in')
+      expect(page).to have_selector('.alert-warning')
     end
   end
 end
