@@ -22,7 +22,7 @@ module SongsHelper
                 src: "https://www.youtube.com/embed/#{song.youtube_id}?enablejsapi=1&origin=#{root_url}&rel=0",
                 frameborder: 0,
                 allowfullscreen: true,
-                'data-song-id': song.id
+                'data-song-id': song.id # For logging in youtube.js
   end
 
   def status_icon(song)
