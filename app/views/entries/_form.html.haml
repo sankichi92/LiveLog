@@ -16,9 +16,7 @@
     .form-text= button_to_add_member(f)
 
   .form-group
-    = f.label :status
-    = f.select :status, { '公開': 'open', 'サークル内': 'closed', 'バンド内': 'secret' }, { selected: 'open' }, id: 'song_status', class: 'form-control'
-    %small.form-text.text-muted 動画がアップロードされた際の公開範囲です。
+    = render 'songs/status_form', f: f
 
   .form-row
     .form-group.col-sm
