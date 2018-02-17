@@ -26,9 +26,7 @@
         %h6.card-header Edit
         .card-body
           = form_with model: song do |f|
-            .form-group
-              = f.label :status
-              = f.select :status, { '公開': 'open', 'サークル内': 'closed', 'バンド内': 'secret' }, {}, id: 'song_status', class: 'form-control'
+            = render 'status_form', f: f
             .form-group
               = f.label :comment
               = f.text_area :comment, id: 'song_comment', class: 'form-control', rows: 3

@@ -24,22 +24,24 @@
     = f.text_area :intro, class: 'form-control', rows: '3'
 
   .form-group
-    .custom-control.custom-radio.custom-control-inline
-      = f.radio_button :public, 'true', class: 'custom-control-input'
-      = f.label :public_true, 'プロフィールを公開する', class: 'custom-control-label'
-    .custom-control.custom-radio.custom-control-inline
-      = f.radio_button :public, 'false', class: 'custom-control-input'
-      = f.label :public_false, 'プロフィールを公開しない', class: 'custom-control-label'
-    %small.form-text.text-muted
-      プロフィールを公開しても，名前とメールアドレスが公開されることはありません。
-      %br
-      ただし，ニックネームが存在しない場合，姓は公開されます。
+    .custom-control.custom-checkbox.custom-control-inline
+      = f.check_box :public, class: 'custom-control-input'
+      = f.label :public, class: 'custom-control-label' do
+        ログインしていないユーザにもプロフィールを公開する
+        = icon 'question-circle',
+               'data-toggle': 'tooltip',
+               'data-placement': 'right',
+               title: '名前とメールアドレスが公開されることはありません。ただし，ニックネームがない場合，姓は公開されます'
 
-  .custom-control.custom-checkbox.mb-3
-    = f.check_box :subscribing, class: 'custom-control-input'
-    = f.label :subscribing, class: 'custom-control-label' do
-      LiveLog からのお知らせメールを受け取る
-      = icon 'question-circle', 'data-toggle': 'tooltip', 'data-placement': 'right', title: '演奏した曲が今日のピックアップに選ばれた時などにお知らせします'
+  .form-group
+    .custom-control.custom-checkbox
+      = f.check_box :subscribing, class: 'custom-control-input'
+      = f.label :subscribing, class: 'custom-control-label' do
+        LiveLog からのお知らせメールを受け取る
+        = icon 'question-circle',
+               'data-toggle': 'tooltip',
+               'data-placement': 'right',
+               title: '演奏した曲が今日のピックアップに選ばれた時などにお知らせします'
 
   = f.submit 'Save', class: 'btn btn-primary'
 

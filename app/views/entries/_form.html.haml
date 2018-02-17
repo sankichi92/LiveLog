@@ -16,19 +16,15 @@
     .form-text= button_to_add_member(f)
 
   .form-group
-    = f.label :status
-    = f.select :status, { '公開': 'open', 'サークル内': 'closed', 'バンド内': 'secret' }, { selected: 'open' }, id: 'song_status', class: 'form-control'
-    %small.form-text.text-muted 動画がアップロードされた際の公開範囲です。
+    = render 'songs/status_form', f: f
 
   .form-row
     .form-group.col-sm
       = f.label :preferred_rehearsal_time, 'リハーサル希望時間'
       = f.text_area :preferred_rehearsal_time, id: 'song_preferred_rehearsal_time', class: 'form-control'
-      %small.form-text.text-muted 無記入の場合，希望時間なしとなります。
     .form-group.col-sm
       = f.label :preferred_performance_time, '演奏希望時間'
       = f.text_area :preferred_performance_time, id: 'song_preferred_performance_time', class: 'form-control'
-      %small.form-text.text-muted 無記入の場合，希望時間なしとなります。
 
   .form-group
     = f.label :notes, '備考'
