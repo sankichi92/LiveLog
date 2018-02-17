@@ -3,7 +3,7 @@
   = f.label :user
   .form-row
     .col-3.col-md-2
-      = f.text_field :inst, class: 'form-control', placeholder: 'Gt&Vo'
+      = f.text_field :inst, class: 'form-control', placeholder: 'Gt&Vo', list: 'instruments'
     .col
       = f.collection_select :user_id, User.natural_order, :id, :name_with_handle, {}, class: 'select2 form-control'
     .col-2.col-md-1
