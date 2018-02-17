@@ -21,7 +21,10 @@
           = f.text_field :name, id: 'name', class: 'form-control', placeholder: '楓'
         .form-group.col-sm
           = f.label :artist, class: 'col-form-label'
-          = f.text_field :artist, id: 'artist', class: 'form-control', placeholder: 'スピッツ'
+          = f.text_field :artist, id: 'artist', class: 'form-control', placeholder: 'スピッツ', list: 'artists'
+          %datalist#artists
+            - Song.artists_for_suggestion.each do |artist|
+              %option{ value: artist }
 
       .form-row
         .form-group.col-sm

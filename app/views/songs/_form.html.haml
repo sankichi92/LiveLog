@@ -21,7 +21,10 @@
       = f.text_field :name, class: 'form-control', placeholder: 'Tears in Heaven'
     .form-group.col-sm
       = f.label :artist, class: 'col-form-label'
-      = f.text_field :artist, class: 'form-control', placeholder: 'Eric Clapton'
+      = f.text_field :artist, class: 'form-control', placeholder: 'Eric Clapton', list: 'artists'
+      %datalist#artists
+        - Song.artists_for_suggestion.each do |artist|
+          %option{ value: artist }
 
   = render 'playings_form', f: f
 

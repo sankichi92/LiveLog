@@ -32,6 +32,10 @@ class Song < ApplicationRecord
   scope :order_by_live, -> { includes(:live).order('lives.date DESC', :time, :order) }
   scope :published, -> { eager_load(:live).where('lives.published': true) }
 
+  scope :artists_for_suggestion, lambda {
+    where.not(artist: '').group(:artist).order(count: :desc).having('songs.count >= 2').count.keys
+  }
+
   def self.pickup(date = Time.zone.today)
     random = Random.new(date.to_time.to_i)
     songs = published.where('songs.created_at <= ?', date).where.not(youtube_id: '', status: :secret)
