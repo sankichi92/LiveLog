@@ -8,12 +8,7 @@
       = f.label :artist, class: 'col-form-label'
       = f.text_field :artist, id: 'song_artist', class: 'form-control', placeholder: 'Eric Clapton'
 
-  #playings-fields
-    = f.fields_for :playings do |builder|
-      = render 'songs/playings_fields', f: builder
-
-  .form-group
-    .form-text= button_to_add_member(f)
+  = render 'songs/playings_form', f: f
 
   .form-group
     = render 'songs/status_form', f: f

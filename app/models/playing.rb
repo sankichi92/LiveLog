@@ -28,6 +28,8 @@ class Playing < ApplicationRecord
     group(:song_id).count.each_with_object(Hash.new(0)) { |(_, count), hash| hash[count] += 1 }.sort
   }
 
+  scope :insts_for_suggestion, -> { group(:inst).order(count: :desc).having('playings.count >= 2').count.keys }
+
   def instruments
     inst&.split('&')
   end
