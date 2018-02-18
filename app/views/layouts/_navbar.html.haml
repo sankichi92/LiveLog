@@ -8,7 +8,7 @@
         %li.nav-item{ class: current_page?(songs_path) || current_page?(search_songs_path) ? 'active' : '' }= link_to 'Song Search', songs_path, class: 'nav-link'
         %li.nav-item{ class: params[:controller] == 'lives' ? 'active' : '' }= link_to 'Live List', lives_path, class: 'nav-link'
         %li.nav-item{ class: params[:controller] == 'users' ? 'active' : '' }= link_to 'Members', users_path, class: 'nav-link'
-        %li.nav-item{ class: current_page?(stats_path) ? 'active' : '' }= link_to 'Stats', stats_path, class: 'nav-link'
+        %li.nav-item{ class: params[:controller] == 'stats' ? 'active' : '' }= link_to 'Stats', stat_path('current'), class: 'nav-link'
       - if logged_in?
         %ul.nav.navbar-nav
           - if current_user.admin_or_elder?
