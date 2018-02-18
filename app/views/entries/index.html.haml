@@ -11,7 +11,14 @@
 - if current_user.admin_or_elder?
   .btn-toolbar.justify-content-end.mb-3{ role: 'toolbar' }
     .btn-group.mr-2{ role: 'group' }
-      = link_to 'Publish', live_publish_path(@live), method: :post, data: { confirm: "本当に公開しますか？\nこの操作は取り消せません。" }, class: 'btn btn-outline-danger'
+      = link_to 'Publish',
+                live_publish_path(@live),
+                method: :post,
+                data: { confirm: "エントリーの受付を終了し，セットリストを公開します。\nこの操作は取り消せません。" },
+                class: 'btn btn-outline-danger',
+                'data-toggle': 'tooltip',
+                'data-placement': 'left',
+                title: 'エントリーの受付を終了し，セットリストを公開します'
     .btn-group{ role: 'group' }
       = link_to icon('pencil') + ' Edit', edit_live_path(@live), class: 'btn btn-outline-primary'
       - unless @live.songs.exists?
