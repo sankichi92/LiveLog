@@ -23,7 +23,7 @@ class Stats
   end
 
   def number_of_artists
-    songs.where.not(artist: '').count
+    songs.where.not(artist: '').distinct.count(:artist)
   end
 
   def artist_to_count
