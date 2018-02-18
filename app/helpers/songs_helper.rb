@@ -27,9 +27,15 @@ module SongsHelper
 
   def status_icon(song)
     if song.open?
-      icon('globe')
+      icon 'globe',
+           'data-toggle': 'tooltip',
+           'data-placement': 'right',
+           title: '公開設定: 公開'
     elsif song.secret?
-      icon('lock')
+      icon 'lock',
+           'data-toggle': 'tooltip',
+           'data-placement': 'right',
+           title: '公開設定: バンド内'
     end
   end
 
