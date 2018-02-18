@@ -13,7 +13,7 @@ class Live < ApplicationRecord
   scope :published, -> { where(published: true) }
 
   def self.years
-    Live.order_by_date.select(:date).map(&:nendo).uniq
+    order_by_date.select(:date).map(&:nendo).uniq
   end
 
   def title
