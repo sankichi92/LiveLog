@@ -1,0 +1,72 @@
+- provide(:title, 'Stats')
+%header.page-header
+  %h1.display-4<
+    Stats
+
+%ul.nav.nav-pills.mb-3
+  - Live.years.each do |year|
+    %li.nav-item
+      = link_to year, stat_path(year), class: "nav-link#{year == @stats.year ? ' active' : ''}"
+
+%article
+  %p.lead<
+    = @stats.year
+    年度は
+    %mark= @stats.number_of_players
+    人のメンバーで
+    %mark= @stats.number_of_songs
+    曲を演奏しました。
+
+  .row
+    .col-lg.mb-3
+      %section.card
+        %h4.card-header 演奏された楽器
+        .card-body
+          %p<
+            %mark= @stats.inst_to_count.size
+            種類の楽器が演奏されました。
+          %ul.list-inline
+            - @stats.inst_to_count.each do |inst, count|
+              %li.list-inline-item.lead
+                = link_to_search inst, instruments: inst, date_range: @stats.date_range
+                %span.badge.badge-pill.badge-secondary= count
+
+    .col-lg.mb-3
+      %section.card
+        %h4.card-header カバーしたアーティスト
+        .card-body
+          %p<
+            %mark= @stats.artist_to_count.size
+            組のアーティストの曲が演奏されました。
+            %br
+            特に次のアーティストが人気です。
+        .list-group.list-group-flush
+          - @stats.artist_to_count.select { |_, count| count >= 5 }.each do |artist, count|
+            = link_to_search({ artist: artist, date_range: @stats.date_range },
+                             class: 'list-group-item list-group-item-action d-flex justify-content-between align-items-center') do
+              = artist
+              %span.badge.badge-pill.badge-secondary= count
+
+    .col-lg.mb-3
+      %section.card
+        %h4.card-header バンドの構成人数
+        .card-body
+          %p<
+            構成人数の平均は
+            %mark= @stats.average_formation
+            人でした。
+        %table.table.table-hover
+          %thead
+            %tr
+              %th 人数
+              %th 割合
+              %th 曲数
+          %tbody
+          - @stats.formation_to_count.each do |formation, count|
+            %tr{ onclick: "location.href='#{search_songs_path(players_lower: formation, players_upper: formation, date_lower: @stats.date_range.begin, date_upper: @stats.date_range.end)}#results';" }
+              %td= "#{formation}人"
+              %td<
+                = (count / @stats.number_of_songs.to_f * 100).round(1)
+                \%
+              %td
+                %span.badge.badge-pill.badge-secondary= count

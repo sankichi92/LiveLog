@@ -13,7 +13,7 @@ RSpec.feature 'Static pages', type: :feature do
       expect(page).to have_link('Song Search', href: songs_path)
       expect(page).to have_link('Live List', href: lives_path)
       expect(page).to have_link('Members', href: users_path)
-      expect(page).to have_link('Stats', href: stats_path)
+      expect(page).to have_link('Stats', href: stat_path('current'))
       expect(page).to have_link('Log in', href: login_path)
       expect(page).not_to have_content("Today's Pickup!")
       expect(page).not_to have_content('Latest Lives')
@@ -48,14 +48,5 @@ RSpec.feature 'Static pages', type: :feature do
         expect(page).not_to have_content(draft_live.name)
       end
     end
-  end
-
-  scenario 'A user can see the Stats page' do
-    visit root_path
-
-    click_on 'Stats'
-
-    expect(page).to have_title(full_title('Stats'))
-    expect(page).to have_content('Stats')
   end
 end

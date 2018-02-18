@@ -2,8 +2,6 @@ Rails.application.routes.draw do
 
   root 'static_pages#home'
 
-  get '/stats', to: 'static_pages#stats'
-
   resources :songs do
     get 'search', on: :collection
   end
@@ -23,6 +21,8 @@ Rails.application.routes.draw do
   resource :profile, only: :edit
 
   resources :password_resets, only: %i[new create edit update]
+
+  resources :stats, only: :show, param: :year
 
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
