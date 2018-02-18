@@ -46,4 +46,8 @@ group :test do
   gem 'selenium-webdriver', '~> 3.5'
 end
 
+group :production do
+  gem 'newrelic_rpm'
+end
+
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
