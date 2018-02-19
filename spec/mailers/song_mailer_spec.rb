@@ -6,11 +6,7 @@ RSpec.describe SongMailer, type: :mailer do
     let(:deactivated_user) { create(:user, activated: false) }
     let(:unsubscribing_user) { create(:user, subscribing: false) }
     let(:song) { create(:song, users: [users, deactivated_user, unsubscribing_user].flatten) }
-    let(:mail) { SongMailer.pickup_song }
-
-    before do
-      allow(Song).to receive(:pickup) { song }
-    end
+    let(:mail) { SongMailer.pickup_song(song) }
 
     it 'renders the headers' do
       expect(mail.subject).to eq("「#{song.name}」が今日のピックアップに選ばれました！")
