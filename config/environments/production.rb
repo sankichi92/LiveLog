@@ -70,8 +70,8 @@ Rails.application.configure do
   end
 
   # Use a real queuing backend for Active Job (and separate queues per environment)
-  # config.active_job.queue_adapter     = :resque
-  # config.active_job.queue_name_prefix = "live_log2_#{Rails.env}"
+  config.active_job.queue_adapter      = :sidekiq
+  config.active_job.queue_name_prefix  = Rails.env
   config.action_mailer.perform_caching = false
 
   # Ignore bad email addresses and do not raise email delivery errors.
