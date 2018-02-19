@@ -22,6 +22,7 @@ gem 'puma', '~> 3.10'
 gem 'sass-rails', '~> 5.0'
 gem 'select2-rails', '~> 4.0.3'
 gem 'sentry-raven'
+gem 'sidekiq'
 gem 'turbolinks', '~> 5'
 gem 'uglifier', '>= 3.2.0'
 
