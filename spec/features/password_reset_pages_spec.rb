@@ -1,9 +1,10 @@
 require 'rails_helper'
 
-RSpec.feature "PasswordResetPages", type: :feature do
+RSpec.feature 'PasswordResetPages', type: :feature do
 
   feature 'Send password reset email' do
     given(:user) { create(:user) }
+    given(:not_activated_user) { create(:user, activated: false) }
     background do
       ActionMailer::Base.deliveries.clear
       visit new_password_reset_path
@@ -24,6 +25,14 @@ RSpec.feature "PasswordResetPages", type: :feature do
       expect(ActionMailer::Base.deliveries.size).to eq 1
       expect(page).to have_selector('.alert-success')
       expect(page).not_to have_title('Forgot Password')
+    end
+
+    scenario 'A not activated user cannot send email' do
+      fill_in 'Email', with: not_activated_user.email
+      click_button 'Send'
+
+      expect(page).to have_title('Forgot Password')
+      expect(page).to have_selector('.alert-warning')
     end
   end
 

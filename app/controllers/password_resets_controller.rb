@@ -9,10 +9,13 @@ class PasswordResetsController < ApplicationController
 
   def create
     @user = User.find_by(email: params[:password_reset][:email].downcase)
-    if @user
+    if @user&.activated?
       @user.send_password_reset
       flash[:success] = 'パスワード再設定のためのメールを送信しました'
       redirect_to root_url
+    elsif @user.present?
+      flash.now[:warning] = 'アカウントが有効化されていません。招待メールを確認してください'
+      render 'new'
     else
       flash.now[:danger] = 'メールアドレスが見つかりませんでした'
       render 'new'
@@ -45,7 +48,7 @@ class PasswordResetsController < ApplicationController
   end
 
   def valid_user
-    redirect_to root_url unless @user && @user.activated? && @user.authenticated?(:reset, params[:id])
+    redirect_to root_url unless @user&.activated? && @user.authenticated?(:reset, params[:id])
   end
 
   def check_expiration
