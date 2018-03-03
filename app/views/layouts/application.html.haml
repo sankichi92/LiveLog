@@ -20,6 +20,7 @@
     #main.container
       = render 'layouts/flash'
       = yield
-      %aside= render 'shared/content-ads' if Rails.env.production? && !logged_in?
+      - if Rails.env.production? && !logged_in?
+        %aside.my-3= render 'shared/content-ads'
     = render 'layouts/footer'
     = debug(params) if Rails.env.development?
