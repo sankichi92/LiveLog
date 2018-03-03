@@ -62,6 +62,11 @@ RSpec.describe User, type: :model do
     it { is_expected.not_to be_valid }
   end
 
+  describe 'when furigana contains any characters other than ひらがな' do
+    before { user.furigana = 'アンプラグド' }
+    it { is_expected.not_to be_valid }
+  end
+
   describe 'when joined is not present' do
     before { user.joined = '' }
     it { is_expected.not_to be_valid }
