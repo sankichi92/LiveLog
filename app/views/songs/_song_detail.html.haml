@@ -20,7 +20,7 @@
             = playing.inst + '.' unless playing.inst.blank?
             = playing.display_name(logged_in?)
             %small.text-muted= playing.joined
-  - if current_page?(song) && logged_in? && current_user.played?(song)
+  - if logged_in? && current_user.played?(song)
     .col-md-6
       %section.card
         %h6.card-header Edit
