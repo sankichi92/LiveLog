@@ -9,6 +9,7 @@ class SongsController < ApplicationController
 
   def index
     @songs = Song.published.includes(playings: :user).page(params[:page]).order_by_live
+    @query = Song::SearchQuery.new
   end
 
   def search

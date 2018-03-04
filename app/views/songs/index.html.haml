@@ -13,7 +13,7 @@
   #basic.tab-pane.fade{ class: advanced ? '' : 'show active', role: 'tabpanel', 'aria-labelledby': 'basicTab' }
     = render 'search_form'
   #advanced.tab-pane.fade{ class: advanced ? 'show active' : '', role: 'tabpanel', 'aria-labelledby': 'advancedTab' }
-    = form_with model: @query || Song::SearchQuery.new, scope: '', url: search_songs_path, method: :get, local: true, class: 'mb-3' do |f|
+    = form_with model: @query, scope: '', url: search_songs_path, method: :get, local: true, class: 'mb-3' do |f|
 
       .form-row
         .form-group.col-sm
