@@ -13,15 +13,11 @@ class Live < ApplicationRecord
   scope :published, -> { where(published: true) }
 
   def self.years
-    order_by_date.select(:date).map(&:nendo).uniq
+    order_by_date.pluck(:date).map(&:nendo).uniq
   end
 
   def title
     "#{date.year} #{name}"
-  end
-
-  def nendo
-    date.mon < 4 ? date.year - 1 : date.year
   end
 
   def nf?

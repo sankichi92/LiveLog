@@ -5,11 +5,6 @@ module ApplicationHelper
     page_title.empty? ? base_title : page_title + ' - ' + base_title
   end
 
-  def current_nendo
-    current = Time.current
-    current.mon < 4 ? current.year - 1 : current.year
-  end
-
   def feedback_url(user)
     uri = URI.parse('https://docs.google.com/forms/d/e/1FAIpQLSfhLHpL54pH_Oh5u7bLN31wGmJdqVUQ8WFSlyOF0A3DEJDzew/viewform?usp=pp_url')
     query = URI.encode_www_form(
