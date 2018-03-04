@@ -4,5 +4,5 @@ json.cache_if! !authenticated?, ['v1', @song] do
   json.youtube_id @song.visible?(@current_user) ? @song.youtube_id : ''
   json.comment @song.visible?(@current_user) ? @song.comment : ''
   json.live @song.live, partial: 'api/v1/lives/live', as: :live
-  json.playings sort_by_inst(@song.playings), partial: 'api/v1/playings/playing', as: :playing
+  json.playings @song.playings.sort_by_inst, partial: 'api/v1/playings/playing', as: :playing
 end

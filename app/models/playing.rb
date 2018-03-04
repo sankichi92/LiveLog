@@ -1,4 +1,6 @@
 class Playing < ApplicationRecord
+  INST_ORDER = %w[Vo Vn Vla Vc Fl Cl Sax Tp Hr Tb Harp Gt Koto Pf Acc 鍵ハ Ba Cj Dr Bongo Perc].freeze
+
   belongs_to :user
   belongs_to :song, touch: true
 
@@ -30,8 +32,16 @@ class Playing < ApplicationRecord
 
   scope :insts_for_suggestion, -> { group(:inst).order(count: :desc).having('playings.count >= 2').count.keys }
 
+  def self.sort_by_inst
+    all.sort_by(&:inst_order)
+  end
+
   def instruments
     inst&.split('&')
+  end
+
+  def inst_order
+    INST_ORDER.index { |i| inst&.include?(i) } || INST_ORDER.size
   end
 
   private

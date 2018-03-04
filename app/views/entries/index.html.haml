@@ -60,7 +60,7 @@
             %td= link_to_search song.artist, artist: song.artist
             %td
               %ul.list-inline.mb-0
-                = render sort_by_inst(song.playings)
+                = render song.playings.sort_by_inst
             %td= link_to icon('pencil'), edit_song_path(song)
 
 - else
