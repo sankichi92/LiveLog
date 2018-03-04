@@ -82,7 +82,7 @@ class SongsController < ApplicationController
   end
 
   def correct_user
-    redirect_to(root_url) unless current_user.played?(@song) || current_user.admin_or_elder?
+    redirect_to(root_url) unless @song.editable?(current_user)
   end
 
   def correct_user_for_draft_song
