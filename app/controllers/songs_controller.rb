@@ -114,6 +114,7 @@ class SongsController < ApplicationController
                                  :youtube_id,
                                  :status,
                                  :comment,
+                                 :original,
                                  playings_attributes: %i[id user_id inst _destroy])
   end
 
