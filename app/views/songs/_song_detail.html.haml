@@ -15,7 +15,7 @@
     %section.card
       %h6.card-header Members
       .list-group.list-group-flush
-        - song.playings.sort_by_inst.each do |playing|
+        - song.playings.sort_by(&:inst_order).each do |playing|
           = link_to_user playing.user, logged_in?, class: 'list-group-item list-group-item-action' do
             = playing.inst + '.' unless playing.inst.blank?
             = playing.display_name(logged_in?)

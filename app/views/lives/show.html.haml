@@ -31,4 +31,4 @@
             = status_icon(song) if logged_in? && current_user.played?(song)
             = link_to icon('pencil'), edit_song_path(song) if song.editable?(current_user)
             %ul.list-inline
-              = render song.playings.sort_by_inst
+              = render song.playings.sort_by(&:inst_order)

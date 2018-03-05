@@ -32,10 +32,6 @@ class Playing < ApplicationRecord
 
   scope :insts_for_suggestion, -> { group(:inst).order(count: :desc).having('playings.count >= 2').count.keys }
 
-  def self.sort_by_inst
-    all.sort_by(&:inst_order)
-  end
-
   def instruments
     inst&.split('&')
   end
