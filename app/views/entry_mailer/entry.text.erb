@@ -2,7 +2,7 @@
 
 ライブ: <%= @entry.live_title %>
 
-曲名 / アーティスト名: <%= @entry.title %>
+曲名 / アーティスト名: <%= @entry.title %><%= @entry.song.original? ? ' （オリジナル曲）' : ''%>
 
 メンバー:
 <% @entry.playings.reverse.each do |playing| %>
