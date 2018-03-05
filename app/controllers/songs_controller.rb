@@ -114,10 +114,12 @@ class SongsController < ApplicationController
                                  :youtube_id,
                                  :status,
                                  :comment,
+                                 :original,
                                  playings_attributes: %i[id user_id inst _destroy])
   end
 
   def search_params
-    params.permit(:q, :name, :artist, :instruments, :players_lower, :players_upper, :date_lower, :date_upper, :video)
+    params.permit(:q, :name, :artist, :instruments, :players_lower, :players_upper, :date_lower, :date_upper, :video,
+                  :original)
   end
 end

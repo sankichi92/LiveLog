@@ -52,6 +52,6 @@ class EntriesController < ApplicationController
   # Strong parameters
 
   def song_params
-    params.require(:song).permit(:name, :artist, :status, playings_attributes: %i[id user_id inst _destroy])
+    params.require(:song).permit(:name, :artist, :original, :status, playings_attributes: %i[id user_id inst _destroy])
   end
 end
