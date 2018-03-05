@@ -20,6 +20,7 @@ RSpec.describe Song, type: :model do
   it { is_expected.to respond_to(:closed?) }
   it { is_expected.to respond_to(:secret?) }
   it { is_expected.to respond_to(:comment) }
+  it { is_expected.to respond_to(:original) }
   it { expect(song.live).to eq live }
 
   it { is_expected.to be_valid }
