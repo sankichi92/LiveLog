@@ -4,7 +4,9 @@
   %td
     = link_to_song(song)
     = status_icon(song) if logged_in? && current_user.played?(song)
-  %td= link_to_search song.artist, artist: song.artist
+  %td
+    = link_to_search song.artist, artist: song.artist
+    = original_icon if song.original?
   %td
     %ul.list-inline.mb-0
       = render song.playings.sort_by(&:inst_order)

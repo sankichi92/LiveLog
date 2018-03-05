@@ -25,10 +25,11 @@
         - cache_unless logged_in?, song do
           %li.mb-3
             = link_to_song(song)
+            = status_icon(song) if logged_in? && current_user.played?(song)
             - if song.artist.present?
               \/
               = link_to_search song.artist, artist: song.artist if song.artist.present?
-            = status_icon(song) if logged_in? && current_user.played?(song)
+            = original_icon if song.original?
             = link_to icon('pencil'), edit_song_path(song) if song.editable?(current_user)
             %ul.list-inline
               = render song.playings.sort_by(&:inst_order)

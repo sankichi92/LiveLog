@@ -33,6 +33,10 @@ module SongsHelper
     end
   end
 
+  def original_icon
+    icon('check-circle', 'data-toggle': 'tooltip', 'data-placement': 'right', title: 'オリジナル曲')
+  end
+
   def link_to_song(song)
     song.watchable?(current_user) ? link_to(song.name, song) : song.name
   end
