@@ -46,6 +46,10 @@
             %span.input-group-text 〜
           = f.date_field :date_upper, value: params[:date_upper], class: 'form-control'
 
+      .custom-control.custom-checkbox.mb-2
+        = f.check_box :original, id: 'original', class: 'custom-control-input'
+        = f.label :original, 'オリジナル曲のみ', class: 'custom-control-label'
+
       .custom-control.custom-checkbox.mb-3
         = f.check_box :video, id: 'video', class: 'custom-control-input'
         = f.label :video, '動画を視聴できる曲のみ', class: 'custom-control-label'

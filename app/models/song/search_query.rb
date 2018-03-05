@@ -4,7 +4,7 @@ class Song
     include Elasticsearch::DSL
 
     attr_accessor :q, :name, :artist, :instruments, :players_lower, :players_upper, :date_lower, :date_upper, :video,
-                  :user_id, :ids, :logged_in
+                  :original, :user_id, :ids, :logged_in
 
     validate :valid_date
     validates :players_lower, :players_upper, numericality: { only_integer: true }, allow_blank: true
@@ -38,6 +38,7 @@ class Song
                 end
                 q.must { |q| q.terms id: ids } if ids.present?
                 q.must { |q| q.term has_video?: video? } if video?
+                q.must { |q| q.term original?: original? } if original?
                 q.must { |q| q.term status: logged_in ? 'closed' : 'open' } if video?
                 q.must { |q| q.term 'players.user_id': user_id.to_i } if user_id.present?
                 q.must_not { |q| q.terms 'players.instruments': excluded_instruments } if excluded_instruments.present?
@@ -77,6 +78,10 @@ class Song
 
     def video?
       video == '1'
+    end
+
+    def original?
+      original == '1'
     end
   end
 end

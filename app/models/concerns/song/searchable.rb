@@ -40,6 +40,7 @@ module Concerns
           indexes :artist, type: 'text'
           indexes :status, type: 'keyword'
           indexes :has_video?, type: 'boolean'
+          indexes :original?, type: 'boolean'
           indexes :players_count, type: 'byte'
           indexes :players do
             indexes :user_id, type: 'integer'
@@ -58,6 +59,7 @@ module Concerns
           artist: artist,
           status: status,
           has_video?: youtube_id?,
+          original?: original?,
           players_count: playings_size,
           players: playings.as_json(only: %i[user_id instruments], methods: [:instruments])
         }
