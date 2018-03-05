@@ -6,15 +6,11 @@ module Concerns
       included do
         include Elasticsearch::Model
 
-        after_commit on: [:create] do
+        after_commit on: %i[create update] do
           __elasticsearch__.index_document if published?
         end
 
-        after_commit on: [:update] do
-          __elasticsearch__.update_document if published?
-        end
-
-        after_commit on: [:destroy] do
+        after_commit on: %i[destroy] do
           __elasticsearch__.delete_document if published?
         end
 
