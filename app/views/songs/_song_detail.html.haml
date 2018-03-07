@@ -26,7 +26,7 @@
         %h6.card-header Edit
         .card-body
           = form_with model: song do |f|
-            = render 'status_form', f: f
+            = render 'songs/status_form', f: f
             .form-group
               = f.label :comment
               = f.text_area :comment, id: 'song_comment', class: 'form-control', rows: 3
