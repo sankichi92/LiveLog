@@ -1,0 +1,48 @@
+- provide(:title, '運営費について')
+
+%header.page-header
+  %h1 LiveLog の運営費について
+
+.row
+  .col-md-8
+    %p
+      LiveLog を運営している2011年度入部の
+      = link_to '三吉', user_path(1)
+      です。
+    %p
+      私は，卒業が近づいてきた2014年の NF 直前，私の代のこれまでの演奏を振り返る目的で LiveLog を作りました。
+      %br
+      しかし，私の代の演奏というのは，私の代のメンバーだけで完結するものではありません。
+      %br
+      むしろ，ほとんどの楽曲を先輩や後輩と一緒に演奏してきました。
+      %br
+      その繋がりは脈々と途切れることなく続いており，結果，LiveLog には2011年度から今日に至るまでのアンプラグドの全ての演奏が記録されています。
+    %p
+      しかし，LiveLog のデータ量が増えるのに伴い，運営費もかさむようになりました。
+      %br
+      2017年度には，現役生からの申し入れもあり，運営費の一部を受け取ることになりました。
+      %br
+      ただ，私はできれば現役生の手を借りず， OB・OG からの寄付で LiveLog を運営したいと考えています。
+      %br
+      もし一度のライブの出演者全員から1000円の寄付をいただければ，一年間 LiveLog を運営することができます。
+    %p
+      ご賛同いただけるのであれば，LiveLog を今後も維持し，さらに発展させていくため，できる範囲での寄付をいただければ幸いです。
+      %br
+      よろしくお願いいたします。
+    %p.text-right
+      2018年3月
+      %br
+      三吉 貴大
+  .col-md
+    .card
+      .card-body
+        %h2.card-title 寄付する
+        %p.card-text
+          Amazon ギフト券を
+          %br
+          =mail_to 'miyoshi@ku-unplugged.net'
+          %br
+          までお送りください。
+        =link_to 'Amazon ギフト券を送る', 'https://www.amazon.co.jp/dp/B004N3APGO/', target: '_blank', class: 'btn btn-primary'
+
+
