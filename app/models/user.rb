@@ -65,6 +65,15 @@ class User < ApplicationRecord
     admin? || elder?
   end
 
+  def graduate?
+    joined <= Time.zone.now.nendo - 4
+  end
+
+  def donated?
+    donated_ids = ENV['LIVELOG_DONATED_USER_IDS']&.split(',')&.map(&:to_i) || []
+    donated_ids.include?(id)
+  end
+
   def played?(song)
     song.playings.pluck(:user_id).include?(id)
   end

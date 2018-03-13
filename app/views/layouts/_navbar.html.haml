@@ -33,6 +33,8 @@
               = link_to icon('cog') + ' Settings', edit_user_path(current_user), class: 'dropdown-item'
               = link_to icon('sign-out') + ' Log out', logout_path, method: :delete, class: 'dropdown-item'
               .dropdown-divider
+              - if current_user.graduate?
+                = link_to icon('gift') + ' Donate', donate_path, class: 'dropdown-item'
               = link_to icon('flag') + ' Report', feedback_url(current_user), target: '_blank', class: 'dropdown-item'
       - else
         = link_to login_path do
