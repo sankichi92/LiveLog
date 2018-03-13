@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
   root 'static_pages#home'
 
+  get '/donate', to: 'static_pages#donate'
+
   resources :songs do
     get 'search', on: :collection
   end
