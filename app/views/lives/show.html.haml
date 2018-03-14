@@ -17,19 +17,5 @@
         - unless @live.songs.present?
           = link_to icon('trash') + ' Delete', @live, method: :delete, class: 'btn btn-outline-danger'
 
-  - if @live.nf?
-    = render 'songs/songs_table', songs: @live.songs.played_order.includes(playings: :user)
-  - else
-    %ol#set-list
-      - @live.songs.played_order.includes(playings: :user).each do |song|
-        - cache_unless logged_in?, song do
-          %li.mb-3
-            = link_to_song(song)
-            = status_icon(song) if logged_in? && current_user.played?(song)
-            - if song.artist.present?
-              \/
-              = link_to_search song.artist, artist: song.artist if song.artist.present?
-            = original_icon if song.original?
-            = link_to icon('pencil'), edit_song_path(song) if song.editable?(current_user)
-            %ul.list-inline
-              = render song.playings.sort_by(&:inst_order)
+  .song-list
+    = render @live.songs.played_order.includes(playings: :user)

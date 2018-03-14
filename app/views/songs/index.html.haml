@@ -60,7 +60,10 @@
   #results
     %p.text-right
       = page_entries_info
-    = render 'songs/songs_table', songs: @songs
+    .song-list.mb-3
+      - @songs.each do |song|
+        - cache_unless logged_in?, song do
+          = render song
     = will_paginate inner_window: 1, outer_window: 0, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer
 
 - else

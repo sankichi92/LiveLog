@@ -81,7 +81,10 @@
           = simple_format(@user.intro)
 
   - if @songs.present?
-    = render 'songs/songs_table', songs: @songs
+    .song-list
+      - @songs.each do |song|
+        - cache_unless logged_in?, song do
+          = render song
 
   - if logged_in? && current_user.admin?
     .btn-toolbar.justify-content-end{ role: 'toolbar' }
