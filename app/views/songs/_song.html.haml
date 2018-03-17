@@ -1,6 +1,8 @@
 .song-item.d-flex.flex-column.flex-md-row.align-items-md-center
   - if song.watchable?(current_user)
-    = image_tag song.youtube_thumbnail, class: 'img-fluid img-thumbnail mb-2 mb-md-0 mr-md-3'
+    .song-thumbnail.text-center.mb-2.mb-md-0.mr-md-3
+      = link_to song_path(song, format: :js), remote: true do
+        = image_tag song.youtube_thumbnail
   .song-info
     = link_to song.live_title, song.live unless current_page?(song.live) || params[:controller] == 'entries'
     = song.time_order

@@ -10,13 +10,14 @@ module SongsHelper
 
   def youtube_embed(song)
     return unless song.youtube_id?
+    embed_uri = URI.parse("https://www.youtube.com/embed/#{song.youtube_id}")
+    embed_uri.query = { enablejsapi: 1, origin: root_url.chop, rel: 0, autoplay: 1 }.to_query
     content_tag :iframe,
                 '',
-                id: 'player',
-                src: "https://www.youtube.com/embed/#{song.youtube_id}?enablejsapi=1&origin=#{root_url.chop}&rel=0",
+                id: "player-#{song.id}",
+                src: embed_uri,
                 frameborder: 0,
-                allowfullscreen: true,
-                'data-song-id': song.id # For logging in youtube.js
+                allowfullscreen: true
   end
 
   def status_icon(song)

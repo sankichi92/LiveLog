@@ -1,0 +1,23 @@
+var player;
+var played = false;
+var ended = false;
+$('<%= escape_javascript(render('modal', song: @song)) %>')
+    .on('shown.bs.modal', function () {
+        player = new YT.Player('player-<%= @song.id %>', {
+            events: {
+                'onStateChange': function (e) {
+                    if (e.data == YT.PlayerState.PLAYING && !played) {
+                        ga('send', 'event', 'Videos', 'play', <%= @song.id %>);
+                        played = true;
+                    } else if (e.data == YT.PlayerState.ENDED && !ended) {
+                        ga('send', 'event', 'Videos', 'end', <%= @song.id %>);
+                        ended = true;
+                    }
+                }
+            }
+        });
+    })
+    .on('hide.bs.modal', function () {
+        player.stopVideo();
+    })
+    .modal();
