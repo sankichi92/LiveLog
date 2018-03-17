@@ -15,4 +15,4 @@
     %ul.list-inline.mb-2
       = render song.playings.sort_by(&:inst_order)
     = simple_format(song.comment) if song.comment?
-    = link_to icon('pencil') + ' Edit', edit_song_path(song) if song.editable?(current_user)
+    %aside= link_to icon('pencil') + ' Edit', edit_song_path(song) if song.editable?(current_user)
