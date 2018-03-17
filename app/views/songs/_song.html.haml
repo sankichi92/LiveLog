@@ -6,7 +6,7 @@
   .song-info
     = link_to song.live_title, song.live unless current_page?(song.live) || params[:controller] == 'entries'
     = song.time_order
-    %h4
+    %h5
       = song.title
       %small= '(オリジナル曲)' if song.original?
       = status_icon(song) if current_user&.played?(song)

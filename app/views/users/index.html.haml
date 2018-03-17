@@ -12,7 +12,7 @@
   - @users.joined_years.each do |year|
     .col-sm-6.col-md-4.col-lg-3.mb-3
       %section.card
-        %h4.card-header= year
+        %h5.card-header= year
         %ul.list-group.list-group-flush
           - if logged_in?
             = render @users.where(joined: year)
