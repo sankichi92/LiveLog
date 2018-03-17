@@ -1,15 +1,17 @@
-.song-item.d-flex.flex-column.flex-md-row.align-items-md-center
+%section.song-item.d-flex.flex-column.flex-md-row.align-items-md-center
   - if song.watchable?(current_user)
     .song-thumbnail.text-center.mb-2.mb-md-0.mr-md-3
       = link_to watch_song_path(song), remote: true do
         = image_tag song.youtube_thumbnail
   .song-info
-    = link_to song.live_title, song.live unless current_page?(song.live) || params[:controller] == 'entries'
-    = song.time_order
-    %h5
-      = song.title
-      %small= '(オリジナル曲)' if song.original?
-      = status_icon(song) if current_user&.played?(song)
+    %header
+      .text-muted
+        = link_to song.live_title, song.live unless current_page?(song.live) || params[:controller] == 'entries'
+        = song.time_order
+      %h5
+        = song.title
+        %small= '(オリジナル曲)' if song.original?
+        = status_icon(song) if current_user&.played?(song)
     %ul.list-inline.mb-2
       = render song.playings.sort_by(&:inst_order)
     = simple_format(song.comment) if song.comment?
