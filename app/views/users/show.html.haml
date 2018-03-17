@@ -1,13 +1,13 @@
 - provide(:title, @user.display_name(logged_in?))
 - total = @user.songs.published.size
-%header.page-header
+%header.page-header.d-flex.flex-column.flex-md-row.justify-content-between.align-items-md-center
   %h1
     = @user.display_name(logged_in?)
     %small.text-muted
       = @user.joined
       = icon('lock') unless @user.public?
-    - if logged_in? && !@user.activated?
-      =link_to icon('envelope') + ' Invite', new_user_activation_path(@user), class: 'btn btn-info btn-lg float-md-right mt-2'
+  - if logged_in? && !@user.activated?
+    =link_to icon('envelope') + ' Invite', new_user_activation_path(@user), class: 'btn btn-info btn-lg'
 
 %article
   .row
@@ -72,7 +72,7 @@
         %h6.card-header 自己紹介
         .card-body
           %dl
-            - if logged_in? && current_user.admin? && @user.email.present?
+            - if current_user&.admin? && @user.email.present?
               %dt Email
               %dd= mail_to @user.email
             - if @user.url.present?
@@ -86,7 +86,7 @@
         - cache_unless logged_in?, song do
           = render song
 
-  - if logged_in? && current_user.admin?
+  - if current_user&.admin?
     .btn-toolbar.justify-content-end{ role: 'toolbar' }
       - if @user.activated? && current_user != @user
         .btn-group{ role: 'group' }

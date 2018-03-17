@@ -1,12 +1,12 @@
 - provide(:title, @live.title)
 %article
-  %header.page-header
+  %header.page-header.d-flex.flex-column.flex-md-row.justify-content-between.align-items-md-center
     %h1
       = @live.name
       %small.text-muted
         = @live.place.present? ? " #{I18n.l(@live.date)} @#{@live.place} " : I18n.l(@live.date)
-      - if logged_in? && @live.album_url.present?
-        = link_to icon('picture-o') + ' Album', @live.album_url, class: 'btn btn-primary btn-lg float-md-right mt-2', target: '_blank', 'data-toggle': 'tooltip', 'data-placement': 'top', title: '写真を共有しよう！'
+    - if logged_in? && @live.album_url.present?
+      = link_to icon('picture-o') + ' Album', @live.album_url, class: 'btn btn-primary btn-lg', target: '_blank', 'data-toggle': 'tooltip', 'data-placement': 'top', title: '写真を共有しよう！'
 
   - if current_user&.admin_or_elder?
     .btn-toolbar.justify-content-end.mb-3{ role: 'toolbar' }

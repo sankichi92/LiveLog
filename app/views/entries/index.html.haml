@@ -1,12 +1,10 @@
 - provide(:title, @live.title)
-%header.page-header
+%header.page-header.d-flex.flex-column.flex-md-row.justify-content-between.align-items-md-center
   %h1<
     = @live.name
     %small.text-muted
       = @live.place.present? ? " #{I18n.l(@live.date)} @#{@live.place} " : I18n.l(@live.date)
-    - if @songs.present?
-      = link_to icon('paper-plane') + ' エントリーする', new_live_entry_path(@live), class: 'btn btn-info btn-lg float-md-right mt-2'
-
+  = link_to icon('paper-plane') + ' エントリーする', new_live_entry_path(@live), class: 'btn btn-info btn-lg'
 
 - if current_user.admin_or_elder?
   .btn-toolbar.justify-content-end.mb-3{ role: 'toolbar' }
@@ -21,7 +19,7 @@
                 title: 'エントリーの受付を終了し，セットリストを公開します'
     .btn-group{ role: 'group' }
       = link_to icon('pencil') + ' Edit', edit_live_path(@live), class: 'btn btn-outline-primary'
-      - unless @live.songs.exists?
+      - if @live.songs.blank?
         = link_to icon('trash') + ' Delete', @live, method: :delete, class: 'btn btn-outline-danger'
   %aside.card.mb-3
     .card-body.form-inline
@@ -32,17 +30,9 @@
                    class: 'form-control',
                    onchange: "location.href='#{request.path}?order=' + $(this).val();"
 
-- if @songs.present?
-  %p.text-right<
-    全
-    %b= @songs.count
-    件
-  .song-list
-    - @songs.each do |song|
-      - cache_unless logged_in?, song do
-        = render song
-
-- else
-  .row.mb-3
-    .col-md-6.ml-auto.mr-auto
-      = link_to icon('paper-plane') + ' エントリーする', new_live_entry_path(@live), class: 'btn btn-info btn-lg btn-block'
+%p.text-right<
+  全
+  %b= @songs.size
+  件
+.song-list
+  = render @songs
