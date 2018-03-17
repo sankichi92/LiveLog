@@ -3,6 +3,8 @@ class SongsController < ApplicationController
   before_action :logged_in_user, only: %i[new create edit update destroy]
   before_action :correct_user, only: %i[edit update]
   before_action :correct_user_for_draft_song, only: :show, if: :draft_song?
+  before_action :xhr_request, only: :show, if: :js_format?
+  before_action :watchable_user, only: :show, if: :js_format?
   before_action :admin_or_elder_user, only: %i[new create destroy]
   before_action :store_referer, only: :edit
   before_action :search_params_validation, only: :search
@@ -80,17 +82,33 @@ class SongsController < ApplicationController
     correct_user
   end
 
-  def store_referer
-    session[:forwarding_url] = request.referer || root_url
+  def xhr_request
+    redirect_to @song unless request.xhr?
   end
 
-  def draft_song?
-    !@song.published?
+  def watchable_user
+    render js: '', status: :forbidden unless @song.watchable?(current_user)
+  end
+
+  def store_referer
+    session[:forwarding_url] = request.referer || root_url
   end
 
   def search_params_validation
     @query = Song::SearchQuery.new(search_params.merge(logged_in: logged_in?))
     render :index, status: :bad_request if @query.invalid?
+  end
+
+  # endregion
+
+  # region Conditions for filters
+
+  def draft_song?
+    !@song.published?
+  end
+
+  def js_format?
+    request.format == :js
   end
 
   # endregion

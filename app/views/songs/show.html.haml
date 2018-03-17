@@ -1,2 +1,5 @@
 - provide(:title, "#{@song.name} | #{@song.live_title}")
 = render @song
+- if @song.watchable?(current_user)
+  :javascript
+    $('.song-thumbnail a').click();

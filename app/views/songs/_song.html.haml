@@ -5,7 +5,7 @@
         = image_tag song.youtube_thumbnail
   .song-info
     = link_to song.live_title, song.live unless current_page?(song.live) || params[:controller] == 'entries'
-    = current_page?(song) ? song.time_order : link_to(song.time_order, song)
+    = song.time_order
     %h4
       = song.title
       %small= '(オリジナル曲)' if song.original?
