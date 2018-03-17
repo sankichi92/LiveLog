@@ -3,7 +3,7 @@ var played = false;
 var ended = false;
 $('<%= escape_javascript(render('modal', song: @song)) %>')
     .on('shown.bs.modal', function () {
-        player = new YT.Player('player-<%= @song.id %>', {
+        player = new YT.Player(this.getElementsByClassName('player')[0], {
             events: {
                 'onStateChange': function (e) {
                     if (e.data == YT.PlayerState.PLAYING && !played) {
