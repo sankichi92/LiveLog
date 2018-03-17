@@ -4,7 +4,7 @@
   %h1 Edit Song
 
 - if @song.persisted? && current_user.admin_or_elder?
-  %aside.text-right
+  .text-right
     = link_to icon('trash') + ' Delete', @song, method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-outline-danger'
 
 = render 'form'

@@ -1,9 +1,9 @@
 %nav.navbar.navbar-expand-lg.sticky-top.navbar-light.bg-primary.mb-4
   .container
     = link_to 'LiveLog', root_path, class: 'navbar-brand'
-    %button.navbar-toggler{  type:'button', 'data-toggle':'collapse', 'data-target':'#navbarNav', 'aria-controls':'navbarNav', 'aria-expanded':'false', 'aria-label':'Toggle navigation'  }
+    %button.navbar-toggler{  type:'button', 'data-toggle':'collapse', 'data-target':'#navbar-nav', 'aria-controls':'navbar-nav', 'aria-expanded':'false', 'aria-label':'Toggle navigation'  }
       %span.navbar-toggler-icon
-    #navbarNav.collapse.navbar-collapse
+    #navbar-nav.collapse.navbar-collapse
       %ul.navbar-nav.mr-auto
         %li.nav-item{ class: current_page?(songs_path) || current_page?(search_songs_path) ? 'active' : '' }= link_to 'Song Search', songs_path, class: 'nav-link'
         %li.nav-item{ class: params[:controller] == 'lives' ? 'active' : '' }= link_to 'Live List', lives_path, class: 'nav-link'
@@ -13,22 +13,22 @@
         %ul.nav.navbar-nav
           - if current_user.admin_or_elder?
             %li.nav-item.dropdown
-              %a#navbarAdminDropdownMenuLink.nav-link.dropdown-toggle{ href: '#', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' }
+              %a#navbar-admin-dropdown-menu-link.nav-link.dropdown-toggle{ href: '#', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' }
                 Admin
-              .dropdown-menu{ 'aria-labellebdy': 'navbarAdminDropdownMenuLink' }
+              .dropdown-menu{ 'aria-labellebdy': 'navbar-admin-dropdown-menu-link' }
                 = link_to 'New Live', new_live_path, class: 'dropdown-item'
                 = link_to 'New Member', new_user_path, class: 'dropdown-item'
           - if Live.drafts.exists?
             %li.nav-item.dropdown{ class: params[:controller] == 'entries' ? 'active' : '' }
-              %a#navbarEntryDropdownMenuLink.nav-link.dropdown-toggle{ href: '#', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' }
+              %a#navbar-entry-dropdown-menu-link.nav-link.dropdown-toggle{ href: '#', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' }
                 = icon('paper-plane') + ' Entry'
-              .dropdown-menu{ 'aria-labellebdy': 'navbarEntryDropdownMenuLink' }
+              .dropdown-menu{ 'aria-labellebdy': 'navbar-entry-dropdown-menu-link' }
                 - Live.drafts.each do |live|
                   = link_to live.name, live_entries_path(live), class: 'dropdown-item'
           %li.nav-item.dropdown
-            %a#navbarUserDropdownMenuLink.nav-link.dropdown-toggle{ href: '#', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' }
+            %a#navbar-user-dropdown-menu-link.nav-link.dropdown-toggle{ href: '#', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' }
               = icon('user-circle') + ' ' + current_user.name
-            .dropdown-menu{ 'aria-labellebdy': 'navbarUserDropdownMenuLink' }
+            .dropdown-menu{ 'aria-labellebdy': 'navbar-user-dropdown-menu-link' }
               = link_to icon('user') + ' Profile',  current_user, class: 'dropdown-item'
               = link_to icon('cog') + ' Settings', edit_user_path(current_user), class: 'dropdown-item'
               = link_to icon('sign-out') + ' Log out', logout_path, method: :delete, class: 'dropdown-item'

@@ -1,14 +1,12 @@
 - provide(:title, 'Stats')
-%header.page-header
-  %h1.display-4<
-    Stats
+%article
+  %header.page-header
+    %h1.display-4 Stats
 
-%ul.nav.nav-pills.mb-3
-  - Live.years.each do |year|
-    %li.nav-item
+  %nav.nav.nav-pills.mb-3
+    - Live.years.each do |year|
       = link_to year, stat_path(year), class: "nav-link#{year == @stats.year ? ' active' : ''}"
 
-%article
   %p.lead<
     = @stats.year
     年度は

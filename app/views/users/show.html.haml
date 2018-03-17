@@ -9,92 +9,91 @@
   - if logged_in? && !@user.activated?
     =link_to icon('envelope') + ' Invite', new_user_activation_path(@user), class: 'btn btn-info btn-lg'
 
-%article
-  .row
+.row
+  .col-lg-2.col-md-3.col-sm-4.mb-3
+    %section.card
+      %h6.card-header 出演数・楽器
+      .card-body.text-center.lead
+        %mark= total
+        曲
+      %ul.list-group.list-group-flush
+        - @user.inst_to_count.each do |inst, count|
+          - unless inst.blank?
+            = link_to search_user_path(instruments: inst),
+                      class: (params[:instruments] == inst ? 'active ' : '') + 'list-group-item list-group-item-action d-flex justify-content-between align-items-center' do
+              = inst
+              %span.badge.badge-pill.badge-secondary= count
+  - unless total == 0
     .col-lg-2.col-md-3.col-sm-4.mb-3
       %section.card
-        %h6.card-header 出演数・楽器
-        .card-body.text-center.lead
-          %mark= total
-          曲
-        %ul.list-group.list-group-flush
-          - @user.inst_to_count.each do |inst, count|
-            - unless inst.blank?
-              = link_to search_user_path(instruments: inst),
-                        class: (params[:instruments] == inst ? 'active ' : '') + 'list-group-item list-group-item-action d-flex justify-content-between align-items-center' do
-                = inst
-                %span.badge.badge-pill.badge-secondary= count
-    - unless total == 0
-      .col-lg-2.col-md-3.col-sm-4.mb-3
-        %section.card
-          %h6.card-header アーティスト
-          .list-group.list-group-flush
-            - last_count = 0
-            - @user.songs.published.where.not('songs.artist': [nil, '']).group(:artist).count.sort { |(_, c1), (_, c2)| c2 <=> c1 }.each_with_index do |(artist, count), i|
-              - break if count < 2 || i >= 5 && count != last_count
-              = link_to search_user_path(artist: artist),
-                        class: (params[:artist] == artist ? 'active ' : '') + 'list-group-item list-group-item-action d-flex justify-content-between align-items-center' do
-                = artist
-                %span.badge.badge-pill.badge-secondary= count
-              - last_count = count
-      .col-lg-2.col-md-3.col-sm-4.mb-3
-        %section.card
-          %h6.card-header 共演者
-          .card-body.text-center.lead
-            %mark= @user.collaborator_to_count.size
-            人
-          .list-group.list-group-flush
-            - last_count = 0
-            - @user.collaborator_to_count.each_with_index do |(user, count), i|
-              - break if count < 5 || i >= 5 && count != last_count
-              = link_to search_user_path(user_id: user.id),
-                        class: (params[:user_id] == user.id.to_s ? 'active ' : '') + 'list-group-item list-group-item-action d-flex justify-content-between align-items-center' do
-                = user.display_name(logged_in?)
-                %span.badge.badge-pill.badge-secondary= count
-              - last_count = count
-      .col-lg-2.col-md-3.col-sm-4.mb-3
-        %section.card
-          %h6.card-header 構成人数
-          %ul.list-group.list-group-flush
-            - sum = 0
-            - @user.formation_to_count.each do |formation, count|
-              = link_to search_user_path(players_lower: formation, players_upper: formation),
-                        class: ((params[:players_lower]&.to_i || 0..params[:players_upper]&.to_i || 0)&.include?(formation) ? 'active ' : '') + 'list-group-item list-group-item-action d-flex justify-content-between align-items-center' do
-                = "#{formation}人"
-                %span.badge.badge-pill.badge-secondary= count
-              - sum += formation * count
-          .card-body
-            平均
-            %mark= (sum.to_f / total).round(2)
-            人
-    .col-lg-4.col-sm-8.mb-3
+        %h6.card-header アーティスト
+        .list-group.list-group-flush
+          - last_count = 0
+          - @user.songs.published.where.not('songs.artist': [nil, '']).group(:artist).count.sort { |(_, c1), (_, c2)| c2 <=> c1 }.each_with_index do |(artist, count), i|
+            - break if count < 2 || i >= 5 && count != last_count
+            = link_to search_user_path(artist: artist),
+                      class: (params[:artist] == artist ? 'active ' : '') + 'list-group-item list-group-item-action d-flex justify-content-between align-items-center' do
+              = artist
+              %span.badge.badge-pill.badge-secondary= count
+            - last_count = count
+    .col-lg-2.col-md-3.col-sm-4.mb-3
       %section.card
-        %h6.card-header 自己紹介
+        %h6.card-header 共演者
+        .card-body.text-center.lead
+          %mark= @user.collaborator_to_count.size
+          人
+        .list-group.list-group-flush
+          - last_count = 0
+          - @user.collaborator_to_count.each_with_index do |(user, count), i|
+            - break if count < 5 || i >= 5 && count != last_count
+            = link_to search_user_path(user_id: user.id),
+                      class: (params[:user_id] == user.id.to_s ? 'active ' : '') + 'list-group-item list-group-item-action d-flex justify-content-between align-items-center' do
+              = user.display_name(logged_in?)
+              %span.badge.badge-pill.badge-secondary= count
+            - last_count = count
+    .col-lg-2.col-md-3.col-sm-4.mb-3
+      %section.card
+        %h6.card-header 構成人数
+        %ul.list-group.list-group-flush
+          - sum = 0
+          - @user.formation_to_count.each do |formation, count|
+            = link_to search_user_path(players_lower: formation, players_upper: formation),
+                      class: ((params[:players_lower]&.to_i || 0..params[:players_upper]&.to_i || 0)&.include?(formation) ? 'active ' : '') + 'list-group-item list-group-item-action d-flex justify-content-between align-items-center' do
+              = "#{formation}人"
+              %span.badge.badge-pill.badge-secondary= count
+            - sum += formation * count
         .card-body
-          %dl
-            - if current_user&.admin? && @user.email.present?
-              %dt Email
-              %dd= mail_to @user.email
-            - if @user.url.present?
-              %dt URL
-              %dd= link_to @user.url, @user.url, target: '_blank'
-          = simple_format(@user.intro)
+          平均
+          %mark= (sum.to_f / total).round(2)
+          人
+  .col-lg-4.col-sm-8.mb-3
+    %section.card
+      %h6.card-header 自己紹介
+      .card-body
+        %dl
+          - if current_user&.admin? && @user.email.present?
+            %dt Email
+            %dd= mail_to @user.email
+          - if @user.url.present?
+            %dt URL
+            %dd= link_to @user.url, @user.url, target: '_blank'
+        = simple_format(@user.intro)
 
-  - if @songs.present?
-    .song-list
-      - @songs.each do |song|
-        - cache_unless logged_in?, song do
-          = render song
+- if @songs.present?
+  .song-list
+    - @songs.each do |song|
+      - cache_unless logged_in?, song do
+        = render song
 
-  - if current_user&.admin?
-    .btn-toolbar.justify-content-end{ role: 'toolbar' }
-      - if @user.activated? && current_user != @user
-        .btn-group{ role: 'group' }
-          - if @user.admin?
-            = link_to '管理者権限を無効にする', user_admin_path(@user), method: :delete, data: { confirm: '本当に管理者権限を無効にしますか？' }, class: 'btn btn-outline-secondary'
-          - else
-            = link_to 'アカウントを無効にする', user_activation_path(@user), method: :delete, data: { confirm: '本当にアカウントを無効にしますか？' }, class: 'btn btn-outline-warning'
-            = link_to '管理者にする', user_admin_path(@user), method: :post, data: { confirm: '本当に管理者にしますか？' }, class: 'btn btn-outline-danger'
-      - elsif !@user.songs.published.present?
-        .btn-group{ role: 'group' }
-          = link_to icon('trash') + ' Delete', @user, method: :delete, class: 'btn btn-outline-danger'
+- if current_user&.admin?
+  %aside.btn-toolbar.justify-content-end{ role: 'toolbar' }
+    - if @user.activated? && current_user != @user
+      .btn-group{ role: 'group' }
+        - if @user.admin?
+          = link_to '管理者権限を無効にする', user_admin_path(@user), method: :delete, data: { confirm: '本当に管理者権限を無効にしますか？' }, class: 'btn btn-outline-secondary'
+        - else
+          = link_to 'アカウントを無効にする', user_activation_path(@user), method: :delete, data: { confirm: '本当にアカウントを無効にしますか？' }, class: 'btn btn-outline-warning'
+          = link_to '管理者にする', user_admin_path(@user), method: :post, data: { confirm: '本当に管理者にしますか？' }, class: 'btn btn-outline-danger'
+    - elsif !@user.songs.published.present?
+      .btn-group{ role: 'group' }
+        = link_to icon('trash') + ' Delete', @user, method: :delete, class: 'btn btn-outline-danger'
