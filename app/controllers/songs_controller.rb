@@ -1,13 +1,13 @@
 class SongsController < ApplicationController
-  before_action :set_song, only: %i[show edit update destroy]
+  before_action :set_song, only: %i[show watch edit update destroy]
   before_action :logged_in_user, only: %i[new create edit update destroy]
   before_action :correct_user, only: %i[edit update]
   before_action :correct_user_for_draft_song, only: :show, if: :draft_song?
-  before_action :xhr_request, only: :show, if: :js_format?
-  before_action :watchable_user, only: :show, if: :js_format?
   before_action :admin_or_elder_user, only: %i[new create destroy]
   before_action :store_referer, only: :edit
   before_action :search_params_validation, only: :search
+  before_action :xhr_request, only: :watch
+  before_action :watchable_user, only: :watch
 
   def index
     @songs = Song.published.includes(playings: :user).page(params[:page]).order_by_live
@@ -21,6 +21,8 @@ class SongsController < ApplicationController
   end
 
   def show; end
+
+  def watch; end
 
   def new
     live = Live.find_by(id: params[:live_id]) || Live.last
@@ -87,7 +89,7 @@ class SongsController < ApplicationController
   end
 
   def watchable_user
-    render js: '', status: :forbidden unless @song.watchable?(current_user)
+    render plain: '', status: :forbidden unless @song.watchable?(current_user)
   end
 
   def store_referer
@@ -105,10 +107,6 @@ class SongsController < ApplicationController
 
   def draft_song?
     !@song.published?
-  end
-
-  def js_format?
-    request.format == :js
   end
 
   # endregion

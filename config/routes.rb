@@ -5,7 +5,12 @@ Rails.application.routes.draw do
   get '/donate', to: 'static_pages#donate'
 
   resources :songs do
-    get 'search', on: :collection
+    collection do
+      get 'search'
+    end
+    member do
+      get 'watch', default: { format: :js }
+    end
   end
 
   resources :lives do
