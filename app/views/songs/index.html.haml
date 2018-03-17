@@ -2,7 +2,7 @@
 %header.page-header
   %h1.display-4 Song Search
 
-%nav#searchTabs.nav.nav-pills.justify-content-end.mb-3{ role: 'tablist' }
+%nav#searchTabs.nav.nav-pills.mb-3{ role: 'tablist' }
   - advanced = current_page?(search_songs_path) && params[:q].nil?
   %a#basicTab.nav-item.nav-link{ class: advanced ? '' : 'active', 'data-toggle': 'pill', href: '#basic', role: 'tab', 'aria-controls': 'basic', 'aria-selected': !advanced }
     Basic
@@ -60,8 +60,11 @@
   #results
     %p.text-right
       = page_entries_info
-    = render 'songs/songs_table', songs: @songs
-    = will_paginate inner_window: 2, outer_window: 0, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer
+    .song-list.mb-3
+      - @songs.each do |song|
+        - cache_unless logged_in?, song do
+          = render song
+    = will_paginate inner_window: 1, outer_window: 0, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer
 
 - else
   .alert.alert-danger{ role: 'alert' }

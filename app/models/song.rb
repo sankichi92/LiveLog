@@ -36,6 +36,8 @@ class Song < ApplicationRecord
     where.not(artist: '').group(:artist).order(count: :desc).having('songs.count >= 2').count.keys
   }
 
+  self.per_page = 20
+
   def self.pickup(date = Time.zone.today)
     random = Random.new(date.to_time.to_i)
     songs = published.where('songs.created_at <= ?', date).where.not(youtube_id: '', status: :secret)
@@ -48,6 +50,10 @@ class Song < ApplicationRecord
 
   def youtube_url
     "https://www.youtube.com/watch?v=#{youtube_id}" if youtube_id.present?
+  end
+
+  def youtube_thumbnail
+    "https://i.ytimg.com/vi/#{youtube_id}/mqdefault.jpg" if youtube_id.present?
   end
 
   def datetime

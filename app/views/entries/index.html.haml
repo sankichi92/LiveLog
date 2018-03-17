@@ -37,33 +37,10 @@
     全
     %b= @songs.count
     件
-  #song-table
-    %table.table.table-striped.table-sm
-      %thead
-        %tr
-          %th Entered
-          %th Updated
-          %th #
-          %th Song
-          %th Artist
-          %th Members
-          %th
-      %tbody
-        - @songs.each do |song|
-          %tr
-            %td= song.created_at.strftime('%m/%d %R')
-            %td= song.updated_at.to_i == song.created_at.to_i ? '' : song.updated_at.strftime('%m/%d %R')
-            %td= song.time_order
-            %td
-              = song.name
-              = status_icon(song) if logged_in? && current_user.played?(song)
-            %td
-              = link_to_search song.artist, artist: song.artist
-              = original_icon if song.original?
-            %td
-              %ul.list-inline.mb-0
-                = render song.playings.sort_by(&:inst_order)
-            %td= link_to icon('pencil'), edit_song_path(song)
+  .song-list
+    - @songs.each do |song|
+      - cache_unless logged_in?, song do
+        = render song
 
 - else
   .row.mb-3

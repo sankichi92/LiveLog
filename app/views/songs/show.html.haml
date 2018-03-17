@@ -1,6 +1,2 @@
 - provide(:title, "#{@song.name} | #{@song.live_title}")
-%article
-  %header.page-header.row
-    %h1= @song.title
-
-  = render 'song_detail', song: @song
+= render @song

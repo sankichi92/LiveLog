@@ -14,30 +14,18 @@
           %img{src: 'https://play.google.com/intl/en_us/badges/images/generic/ja_badge_web_generic.png', alt: 'Google Play で手に入れよう', width: 160}
 
 - if @song.present? && @song.watchable?(current_user)
-  %section
+  %section.mb-3
     %header.page-header
       %h2 Today's Pickup!
-    = render 'songs/song_detail', song: @song
+    .song-list
+      = render @song
 
-- if @lives.exists?
-  %section
-    %header.page-header
-      %h2 Latest Lives
-    .row
-      - @lives.each do |live|
-        .col-lg-3.col-md-4.col-sm-6
-          .card.mb-3
-            .card-body
-              %h4.card-title= live.name
-              %h6.card-subtitle.text-muted.mb-3= live.place.present? ? " #{I18n.l(live.date)} @#{live.place} " : I18n.l(live.date)
-              - if live.songs.present?
-                - song = live.songs.sample
-                %p.card-text
-                  = link_to_song(song)
-                  - if song.artist.present?
-                    \/
-                    = link_to_search song.artist, artist: song.artist
-                  %br
-                  = "など#{live.songs.size}曲"
-              = link_to '詳細へ', live_path(live), class: 'card-link'
-              = link_to 'アルバムへ', live.album_url, class: 'card-link' if logged_in? && live.album_url.present?
+%section
+  %header.page-header
+    %h2 Latest Lives
+.row
+  .col-lg-6
+    .card
+      %table.table.table-hover
+        %tbody
+          = render @lives, cached: true
