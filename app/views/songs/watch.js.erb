@@ -17,7 +17,8 @@ $('<%= escape_javascript(render('modal', song: @song)) %>')
             }
         });
     })
-    .on('hide.bs.modal', function () {
+    .on('hidden.bs.modal', function () {
         player.stopVideo();
+        this.remove();
     })
     .modal();
