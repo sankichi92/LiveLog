@@ -12,7 +12,7 @@ class Song < ApplicationRecord
        )
       )x
 
-  belongs_to :live, touch: true
+  belongs_to :live
   has_many :playings, dependent: :destroy, inverse_of: :song
   accepts_nested_attributes_for :playings, allow_destroy: true
 
