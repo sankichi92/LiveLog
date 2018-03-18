@@ -21,14 +21,6 @@
       = link_to icon('pencil') + ' Edit', edit_live_path(@live), class: 'btn btn-outline-primary'
       - if @live.songs.blank?
         = link_to icon('trash') + ' Delete', @live, method: :delete, class: 'btn btn-outline-danger'
-  %aside.card.mb-3
-    .card-body.form-inline
-      = label_tag :order_select, '並び替え', class: 'mr-2'
-      = select_tag :order,
-                   options_for_select({ '演奏順': 'default', '作成日時': 'created_at', '変更日時': 'updated_at' }, params[:order]),
-                   id: :order_select,
-                   class: 'form-control',
-                   onchange: "location.href='#{request.path}?order=' + $(this).val();"
 
 %p.text-right<
   全
