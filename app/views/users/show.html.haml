@@ -9,9 +9,9 @@
     = @user.display_name(logged_in?)
     %small.text-muted
       = @user.joined
-      = icon('lock') unless @user.public?
+      = icon('fas', 'lock') unless @user.public?
   - if logged_in? && !@user.activated?
-    =link_to icon('envelope') + ' Invite', new_user_activation_path(@user), class: 'btn btn-info btn-lg'
+    =link_to icon('fas', 'envelope') + ' Invite', new_user_activation_path(@user), class: 'btn btn-info btn-lg'
 
 .row
   .col-lg-2.col-md-3.col-sm-4.mb-3
@@ -100,4 +100,4 @@
           = link_to '管理者にする', user_admin_path(@user), method: :post, data: { confirm: '本当に管理者にしますか？' }, class: 'btn btn-outline-danger'
     - elsif !@user.songs.published.present?
       .btn-group{ role: 'group' }
-        = link_to icon('trash') + ' Delete', @user, method: :delete, class: 'btn btn-outline-danger'
+        = link_to icon('fas', 'trash') + ' Delete', @user, method: :delete, class: 'btn btn-outline-danger'

@@ -19,11 +19,11 @@
       - if song.published?
         .btn-group{ role: 'group' }
           %button#share-button.btn.btn-link.btn-sm.dropdown-toggle{ type: 'button', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' }
-            = icon('share') + ' Share'
+            = icon('fas', 'share') + ' Share'
           .dropdown-menu{ 'aria-labelledby': 'share-button' }
             = twitter_share_button(song, class: 'dropdown-item')
-            %button.fb-share.dropdown-item.btn{ type: 'button', 'data-url': song_url(song) }= icon('facebook') + ' Facebook'
-      = link_to icon('pencil') + ' Edit', edit_song_path(song), class: 'btn btn-link btn-sm' if song.editable?(current_user)
+            %button.fb-share.dropdown-item.btn{ type: 'button', 'data-url': song_url(song) }= icon('fab', 'facebook') + ' Facebook'
+      = link_to icon('fas', 'edit') + ' Edit', edit_song_path(song), class: 'btn btn-link btn-sm' if song.editable?(current_user)
     - unless song.published?
       %footer
         %small.text-muted= l song.created_at, format: :short

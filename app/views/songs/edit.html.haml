@@ -5,6 +5,6 @@
 
 - if @song.persisted? && current_user.admin_or_elder?
   .text-right
-    = link_to icon('trash') + ' Delete', @song, method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-outline-danger'
+    = link_to icon('fas', 'trash') + ' Delete', @song, method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-outline-danger'
 
 = render 'form'

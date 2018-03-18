@@ -28,7 +28,7 @@
       = f.check_box :public, class: 'custom-control-input'
       = f.label :public, class: 'custom-control-label' do
         ログインしていないユーザにもプロフィールを公開する
-        = icon 'question-circle',
+        = icon 'fas', 'question-circle',
                'data-toggle': 'tooltip',
                'data-placement': 'right',
                title: '名前とメールアドレスが公開されることはありません。ただし，ニックネームがない場合，姓は公開されます'
@@ -38,7 +38,7 @@
       = f.check_box :subscribing, class: 'custom-control-input'
       = f.label :subscribing, class: 'custom-control-label' do
         LiveLog からのお知らせメールを受け取る
-        = icon 'question-circle',
+        = icon 'fas', 'question-circle',
                'data-toggle': 'tooltip',
                'data-placement': 'right',
                title: '演奏した曲が今日のピックアップに選ばれた時などにお知らせします'

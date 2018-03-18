@@ -4,7 +4,7 @@ module SongsHelper
       render 'songs/playings_fields', f: builder
     end
     content_tag :button,
-                icon('plus') + ' メンバーを追加する',
+                icon('fas', 'plus') + ' メンバーを追加する',
                 id: 'add-member', type: 'button', class: 'btn btn-light', data: { fields: fields.delete("\n") }
   end
 
@@ -20,12 +20,12 @@ module SongsHelper
 
   def status_icon(song)
     if song.open?
-      icon 'globe',
+      icon 'fas', 'globe',
            'data-toggle': 'tooltip',
            'data-placement': 'right',
            title: '公開設定: 公開'
     elsif song.secret?
-      icon 'lock',
+      icon 'fas', 'lock',
            'data-toggle': 'tooltip',
            'data-placement': 'right',
            title: '公開設定: バンド内'
@@ -43,7 +43,7 @@ module SongsHelper
     }.to_query
     options[:target] = '_blank'
     options[:onclick] = "ga('send', 'social', 'Twitter', 'tweet', #{song_url(song)});"
-    link_to(icon('twitter') + ' Twitter', uri.to_s, options)
+    link_to(icon('fab', 'twitter') + ' Twitter', uri.to_s, options)
   end
 
   def link_to_search(name, options = nil, html_options = nil, &block)

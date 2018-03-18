@@ -4,7 +4,7 @@
     = @live.name
     %small.text-muted
       = @live.place.present? ? " #{l(@live.date)} @#{@live.place} " : l(@live.date)
-  = link_to icon('paper-plane') + ' エントリーする', new_live_entry_path(@live), class: 'btn btn-info btn-lg'
+  = link_to icon('fas', 'paper-plane') + ' エントリーする', new_live_entry_path(@live), class: 'btn btn-info btn-lg'
 
 - if current_user.admin_or_elder?
   %aside.btn-toolbar.justify-content-end.mb-3{ role: 'toolbar' }
@@ -18,9 +18,9 @@
                 'data-placement': 'left',
                 title: 'エントリーの受付を終了し，セットリストを公開します'
     .btn-group{ role: 'group' }
-      = link_to icon('pencil') + ' Edit', edit_live_path(@live), class: 'btn btn-outline-primary'
+      = link_to icon('fas', 'edit') + ' Edit', edit_live_path(@live), class: 'btn btn-outline-primary'
       - if @live.songs.blank?
-        = link_to icon('trash') + ' Delete', @live, method: :delete, class: 'btn btn-outline-danger'
+        = link_to icon('fas', 'trash') + ' Delete', @live, method: :delete, class: 'btn btn-outline-danger'
 
 %p.text-right<
   全

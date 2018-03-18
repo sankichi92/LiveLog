@@ -7,16 +7,16 @@
       %small.text-muted
         = @live.place.present? ? " #{l(@live.date)} @#{@live.place} " : l(@live.date)
     - if logged_in? && @live.album_url.present?
-      = link_to icon('picture-o') + ' Album', @live.album_url, class: 'btn btn-primary btn-lg', target: '_blank', 'data-toggle': 'tooltip', 'data-placement': 'top', title: '写真を共有しよう！'
+      = link_to icon('fas', 'images') + ' Album', @live.album_url, class: 'btn btn-primary btn-lg', target: '_blank', 'data-toggle': 'tooltip', 'data-placement': 'top', title: '写真を共有しよう！'
 
   - if current_user&.admin_or_elder?
     %aside.btn-toolbar.justify-content-end.mb-3{ role: 'toolbar' }
       .btn-group.mr-2{ role: 'group' }
-        = link_to icon('plus-circle') + ' Add song', new_song_path(live_id: @live.id), class: 'btn btn-outline-secondary'
+        = link_to icon('fas', 'plus-circle') + ' Add song', new_song_path(live_id: @live.id), class: 'btn btn-outline-secondary'
       .btn-group{ role: 'group' }
-        = link_to icon('pencil') + ' Edit', edit_live_path(@live), class: 'btn btn-outline-primary'
+        = link_to icon('fas', 'edit') + ' Edit', edit_live_path(@live), class: 'btn btn-outline-primary'
         - if @live.songs.blank?
-          = link_to icon('trash') + ' Delete', @live, method: :delete, class: 'btn btn-outline-danger'
+          = link_to icon('fas', 'trash') + ' Delete', @live, method: :delete, class: 'btn btn-outline-danger'
 
   .song-list
     = render @live.songs.played_order.includes(playings: :user)
