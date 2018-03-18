@@ -10,7 +10,7 @@ RSpec.feature 'Static pages', type: :feature do
 
     click_on 'Stats'
 
-    expect(page).to have_title(full_title('Stats'))
+    expect(page).to have_title('Stats')
     expect(page).to have_content('Stats')
   end
 end
