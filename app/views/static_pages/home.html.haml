@@ -26,4 +26,4 @@
     .card
       %table.table.table-hover
         %tbody
-          = render @lives, cached: true
+          = render partial: 'lives/live', collection: @lives, cached: true
