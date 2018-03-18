@@ -1,4 +1,4 @@
 %tr{ onclick: "location.href='#{live_path(live)}';" }
-  %td= I18n.l live.date
+  %td= l live.date
   %td= live.name
   %td= live.place.present? ? "@#{live.place}" : ''

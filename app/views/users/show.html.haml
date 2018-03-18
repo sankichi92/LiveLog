@@ -1,4 +1,8 @@
 - provide(:title, @user.display_name(logged_in?))
+- provide(:description, @user.intro.presence || "#{@user.joined}年度に入部した京大アンプラグドのメンバー")
+- provide(:og_type, 'profile')
+- content_for :additional_meta_fields do
+  %meta{ property: 'profile:username', content: @user.handle }
 - total = @user.songs.published.size
 %header.page-header.d-flex.flex-column.flex-md-row.justify-content-between.align-items-md-center
   %h1

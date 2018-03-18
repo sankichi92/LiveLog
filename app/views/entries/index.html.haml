@@ -3,7 +3,7 @@
   %h1<
     = @live.name
     %small.text-muted
-      = @live.place.present? ? " #{I18n.l(@live.date)} @#{@live.place} " : I18n.l(@live.date)
+      = @live.place.present? ? " #{l(@live.date)} @#{@live.place} " : l(@live.date)
   = link_to icon('paper-plane') + ' エントリーする', new_live_entry_path(@live), class: 'btn btn-info btn-lg'
 
 - if current_user.admin_or_elder?
