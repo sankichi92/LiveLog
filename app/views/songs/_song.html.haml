@@ -15,4 +15,14 @@
     %ul.list-inline.mb-2
       = render song.playings.sort_by(&:inst_order)
     = simple_format(song.comment) if song.comment?
-    %aside= link_to icon('pencil') + ' Edit', edit_song_path(song) if song.editable?(current_user)
+    %aside.btn-group{ role: 'group' }
+      - if song.published?
+        .btn-group{ role: 'group' }
+          %button#share-button.btn.btn-link.btn-sm.dropdown-toggle{ type: 'button', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' }
+            = icon('share') + ' Share'
+          .dropdown-menu{ 'aria-labelledby': 'share-button' }
+            = twitter_share_button(song, class: 'dropdown-item')
+      = link_to icon('pencil') + ' Edit', edit_song_path(song), class: 'btn btn-link btn-sm' if song.editable?(current_user)
+    - unless song.published?
+      %footer
+        %small.text-muted= l song.created_at, format: :short

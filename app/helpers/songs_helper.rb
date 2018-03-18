@@ -32,12 +32,17 @@ module SongsHelper
     end
   end
 
-  def original_icon
-    icon('check-circle', 'data-toggle': 'tooltip', 'data-placement': 'right', title: 'オリジナル曲')
-  end
-
-  def link_to_song(song)
-    song.watchable?(current_user) ? link_to(song.name, song) : song.name
+  def twitter_share_button(song, options)
+    uri = URI.parse('https://twitter.com/intent/tweet')
+    query = {
+      text: "#{song.live_title} - #{song.time_order} #{song.title}",
+      url: song_url(song),
+      hashtags: '京大アンプラグド',
+      via: 'ku_livelog',
+      related: 'kyodaiunplugged:京大アンプラグド公式,sankichi92:LiveLog 開発者'
+    }.to_query
+    uri.query = query
+    link_to(icon('twitter') + ' Twitter', uri.to_s, options.merge(target: '_blank'))
   end
 
   def link_to_search(name, options = nil, html_options = nil, &block)
