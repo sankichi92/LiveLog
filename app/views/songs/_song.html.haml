@@ -14,7 +14,7 @@
         = status_icon(song) if current_user&.played?(song)
     %ul.list-inline.mb-2
       = render song.playings.sort_by(&:inst_order)
-    = simple_format(song.comment) if song.comment?
+    .text-muted= simple_format(song.comment) if song.comment?
     %aside.btn-group{ role: 'group' }
       - if song.published?
         .btn-group{ role: 'group' }
