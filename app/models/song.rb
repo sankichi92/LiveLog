@@ -39,9 +39,11 @@ class Song < ApplicationRecord
   self.per_page = 20
 
   def self.pickup(date = Time.zone.today)
-    random = Random.new(date.to_time.to_i)
-    songs = published.where('songs.created_at <= ?', date).where.not(youtube_id: '', status: :secret)
-    songs.offset(random.rand(songs.count)).first if songs.count.positive?
+    Rails.cache.fetch("Song.pickup/#{date}", expires_in: 1.day) do
+      random = Random.new(date.to_time.to_i)
+      songs = published.where('songs.created_at <= ?', date).where.not(youtube_id: '', status: :secret)
+      songs.offset(random.rand(songs.count)).first if songs.count.positive?
+    end
   end
 
   def title
