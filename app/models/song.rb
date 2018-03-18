@@ -52,8 +52,8 @@ class Song < ApplicationRecord
     "https://www.youtube.com/watch?v=#{youtube_id}" if youtube_id.present?
   end
 
-  def youtube_thumbnail
-    "https://i.ytimg.com/vi/#{youtube_id}/mqdefault.jpg" if youtube_id.present?
+  def youtube_thumbnail(quality = 'mqdefault')
+    "https://i.ytimg.com/vi/#{youtube_id}/#{quality}.jpg" if youtube_id.present?
   end
 
   def datetime

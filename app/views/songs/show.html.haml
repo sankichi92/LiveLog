@@ -1,6 +1,7 @@
 - provide(:title, @song.title)
 - provide(:description, @song.comment.presence || "京大アンプラグドの#{@song.live_title}で#{@song.time_order}に演奏された曲")
 - provide(:og_type, 'music.song')
+- provide(:og_image, @song.youtube_thumbnail('maxresdefault')) if @song.watchable?(current_user)
 - content_for :additional_meta_fields do
   - @song.playings.each do |playing|
     %meta{ property: 'music:musician', content: user_url(playing.user) }
