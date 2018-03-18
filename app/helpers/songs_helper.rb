@@ -35,7 +35,7 @@ module SongsHelper
   def twitter_share_button(song, options)
     uri = URI.parse('https://twitter.com/intent/tweet')
     uri.query = {
-      text: "#{song.live_title} #{song.title}",
+      text: "#{song.live_title} #{song.time_order} #{song.title}",
       url: song_url(song),
       hashtags: '京大アンプラグド',
       via: 'ku_livelog',
