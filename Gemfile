@@ -23,6 +23,7 @@ gem 'sass-rails', '~> 5.0'
 gem 'select2-rails', '~> 4.0.3'
 gem 'sentry-raven'
 gem 'turbolinks', '~> 5'
+gem 'twitter', '~> 6.2'
 gem 'uglifier', '>= 3.2.0'
 
 group :development, :test do
