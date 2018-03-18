@@ -8,7 +8,6 @@
     = csrf_meta_tags
     = stylesheet_link_tag    'application', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
-    %script{ src: 'https://www.youtube.com/iframe_api', async: true }
     - if Rails.env.production?
       %script{ src: 'https://www.google-analytics.com/analytics.js', async: true }
       - if logged_in?
