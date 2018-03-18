@@ -22,6 +22,7 @@
             = icon('share') + ' Share'
           .dropdown-menu{ 'aria-labelledby': 'share-button' }
             = twitter_share_button(song, class: 'dropdown-item')
+            %button.fb-share.dropdown-item.btn{ type: 'button', 'data-url': song_url(song) }= icon('facebook') + ' Facebook'
       = link_to icon('pencil') + ' Edit', edit_song_path(song), class: 'btn btn-link btn-sm' if song.editable?(current_user)
     - unless song.published?
       %footer
