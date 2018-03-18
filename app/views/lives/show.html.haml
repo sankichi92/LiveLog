@@ -1,5 +1,5 @@
 - provide(:title, @live.title)
-- provide(:description, "京大アンプラグドが#{l(@live.date)}に#{@live.place}で行ったライブ")
+- provide(:description, "#{l(@live.date)} @#{@live.place} #{@live.songs.played_order.map.with_index { |s, i| "#{i + 1}.#{s.name}" }.join(' ')}")
 %article
   %header.page-header.d-flex.flex-column.flex-md-row.justify-content-between.align-items-md-center
     %h1

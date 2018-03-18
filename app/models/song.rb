@@ -66,7 +66,7 @@ class Song < ApplicationRecord
   end
 
   def time_order
-    "#{time_str} #{order}"
+    time.present? ? "#{time_str} #{order}" : order
   end
 
   def visible?(user)

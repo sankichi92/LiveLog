@@ -1,5 +1,5 @@
 - provide(:title, @song.title)
-- provide(:description, strip_tags(@song.comment.presence) || "京大アンプラグドで #{@song.live_title} に演奏された曲")
+- provide(:description, strip_tags(@song.comment).presence || "#{@song.live_title} #{@song.time_order} #{@song.playings.sort_by(&:inst_order).map { |p| "#{p.inst}.#{p.handle}" }.join(' ')}")
 - provide(:og_type, 'music.song')
 - provide(:og_image, @song.youtube_thumbnail('maxresdefault')) if @song.watchable?(current_user)
 - content_for :additional_meta_fields do
