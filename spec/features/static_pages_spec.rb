@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.feature 'Static pages', type: :feature do
 
   feature 'Home page' do
+    given!(:song) { create(:song, status: :open, created_at: 1.day.ago) }
+
     before { Rails.cache.clear }
 
     scenario 'A user can see the Home page' do
@@ -18,8 +20,6 @@ RSpec.feature 'Static pages', type: :feature do
     end
 
     feature "Today's Pickup!" do
-      given!(:song) { create(:song, status: :open, created_at: 1.day.ago) }
-
       scenario 'A user can see the pickup song' do
         visit root_path
 
