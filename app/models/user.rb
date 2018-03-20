@@ -8,7 +8,6 @@ class User < ApplicationRecord
   has_secure_password(validations: false)
 
   before_save :downcase_email
-  before_save :remove_spaces_from_furigana
 
   validates :first_name, presence: true
   validates :last_name, presence: true
@@ -155,9 +154,5 @@ class User < ApplicationRecord
 
   def downcase_email
     self.email = email.downcase unless email.nil?
-  end
-
-  def remove_spaces_from_furigana
-    self.furigana = furigana.gsub(/\s+/, '')
   end
 end

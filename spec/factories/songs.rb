@@ -32,5 +32,6 @@ FactoryBot.define do
   factory :playing do
     user
     song
+    inst %w[Gt Vo Cj Ba Pf Gt&Vo Vn Gt&Cho Pf&Cho Fl].sample
   end
 end
