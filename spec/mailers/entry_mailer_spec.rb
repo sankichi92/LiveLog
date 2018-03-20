@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe EntryMailer, type: :mailer do
-
   describe 'entry' do
     let(:applicant) { create(:user) }
     let(:player) { create(:user) }

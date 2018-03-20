@@ -48,5 +48,4 @@ RSpec.describe UserMailer, type: :mailer do
       expect(mail.html_part.body).to match(CGI.escape(user.email))
     end
   end
-
 end
