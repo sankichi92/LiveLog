@@ -5,6 +5,6 @@ namespace :tweet do
     title   = '今日のピックアップ！'
     content = "#{song.live_title} #{song.time_order} #{song.title}"
     url     = Rails.application.routes.url_helpers.song_url(song, host: 'livelog.ku-unplugged.net')
-    TwitterClient.new.update("#{title}\n#{content}\n#{url}")
+    TweetJob.perform_now("#{title}\n#{content}\n#{url}")
   end
 end

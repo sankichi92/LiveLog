@@ -1,4 +1,6 @@
 class TwitterClient
+  include Singleton
+
   attr_reader :client
 
   delegate :update, to: :client

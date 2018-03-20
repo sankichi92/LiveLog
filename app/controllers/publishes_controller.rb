@@ -5,7 +5,7 @@ class PublishesController < ApplicationController
 
   def create
     @live.publish
-    TwitterClient.new.update("#{@live.title} のセットリストが公開されました！\n#{live_url(@live)}")
+    TweetJob.perform_now("#{@live.title} のセットリストが公開されました！\n#{live_url(@live)}")
     flash[:success] = '公開しました'
     redirect_to @live
   end
