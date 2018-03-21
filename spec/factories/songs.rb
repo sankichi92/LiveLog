@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :song do
     live
-    name 'テーマソング'
+    sequence(:name) { |n| "テーマソング #{n}" }
     artist 'アンプラグダー'
     sequence(:order) { |n| n }
     status :closed

@@ -1,126 +1,109 @@
 require 'rails_helper'
 
-RSpec.feature 'LivePages', type: :feature do
-
-  feature 'Show live list' do
-    before do
-      4.times { create(:live) }
+RSpec.feature 'Live pages', type: :feature do
+  feature 'Show the live list' do
+    background do
+      create_list(:live, 2)
+      create(:draft_live, name: 'draft live')
     end
 
-    scenario 'A user can see the live page' do
+    scenario 'A user can see the published live list' do
       visit lives_path
 
       expect(page).to have_title('Live List')
       expect(page).to have_content('Live List')
-      Live.all.each do |live|
-        expect(page).to have_selector('td', text: live.name)
+      Live.published.each do |live|
+        expect(page).to have_content(live.name)
+      end
+      Live.drafts.each do |draft_live|
+        expect(page).not_to have_content(draft_live.name)
       end
     end
   end
 
-  feature 'Show individual live' do
-    given(:live) { create(:live) }
-    given(:song) { create(:song, live: live) }
-    given(:user) { create(:user) }
-    background { create(:playing, user: user, song: song) }
+  feature 'Show a live detail' do
+    given(:live) { create(:live, :with_songs) }
 
-    scenario 'A user can see the individual live page' do
+    scenario 'A non-logged-in user can see a live page' do
       visit live_path(live)
 
-      expect(page).to have_title(live.name)
+      expect(page).to have_title(live.title)
       expect(page).to have_content(live.name)
-      expect(page).to have_content(song.name)
-      expect(page).to have_content(user.handle)
+      expect(page).to have_content(I18n.l(live.date))
+      expect(page).to have_content(live.place)
       expect(page).not_to have_link(href: live.album_url)
+      expect(page).not_to have_css('#admin-tools')
+      live.songs.each do |song|
+        expect(page).to have_content(song.name)
+      end
+    end
+
+    scenario 'A logged-in user can see a live page with an album link' do
+      log_in_as create(:user)
+
+      visit live_path(live)
+
+      expect(page).to have_title(live.title)
+      expect(page).to have_link(href: live.album_url)
+      expect(page).not_to have_css('#admin-tools')
+    end
+
+    scenario 'An admin user can see a live page with admin tools' do
+      log_in_as create(:admin)
+
+      visit live_path(live)
+
+      expect(page).to have_title(live.title)
+      expect(page).to have_link(href: live.album_url)
+      expect(page).to have_css('#admin-tools')
     end
   end
 
-  feature 'Add live' do
-    given(:admin) { create(:admin) }
-    background do
-      log_in_as admin
-      visit new_live_path
-    end
-
-    scenario 'A non-admin user cannot see the add live page' do
-      log_in_as create(:user)
-      visit new_live_path
-
-      expect(page).not_to have_title('New live')
-      expect(page).not_to have_content('New live')
-    end
-
-    scenario 'An admin user cannot create new live with invalid information' do
-      expect { click_button 'Add' }.not_to change(Live, :count)
-      expect(page).to have_selector('.alert-danger')
-    end
+  feature 'Add a live' do
+    background { log_in_as create(:admin) }
 
     scenario 'An admin user can create a new live with valid information' do
-      name = 'テストライブ'
+      visit new_live_path
+
       expect(page).to have_title('New Live')
 
-      fill_in 'ライブ名', with: name
-      fill_in '開催日', with: '2016-11-23'
-      fill_in '場所', with: '4共31'
+      fill_in 'live_name', with: 'テストライブ'
+      fill_in 'live_date', with: '2016-11-23'
+      fill_in 'live_place', with: '4共31'
 
       expect { click_button 'Add' }.to change(Live, :count).by(1)
-      expect(page).to have_selector('.alert-success')
-      expect(page).to have_title(name)
+      expect(page).to have_css('.alert-success')
+      expect(page).to have_title('テストライブ')
     end
   end
 
-  feature 'Edit live' do
+  feature 'Edit a live' do
     given(:live) { create(:live) }
-    given(:admin) { create(:admin) }
-    background do
-      log_in_as admin
-      visit edit_live_path(live)
-    end
 
-    scenario 'A non-admin user cannot see the edit live page' do
-      log_in_as create(:user)
+    background { log_in_as create(:admin) }
+
+    scenario 'An admin user can update a live with valid information' do
       visit edit_live_path(live)
 
-      expect(page).not_to have_title('Edit Live')
-      expect(page).not_to have_content('Edit Live')
-    end
-
-    scenario 'An admin user cannot edit the live with blank name' do
-      fill_in 'ライブ名', with: ''
-      click_button 'Save'
-
-      expect(page).to have_selector('.alert-danger')
       expect(page).to have_title('Edit Live')
-    end
 
-    scenario 'An admin user can edit the live with valid information' do
-      new_name = 'New ライブ'
-      new_date = Time.zone.today
-
-      fill_in 'ライブ名', with: new_name
-      fill_in '開催日', with: new_date
+      fill_in 'live_album_url', with: 'https://example.com/album'
       click_button 'Save'
 
       expect(page).to have_selector('.alert-success')
-      expect(live.reload.name).to eq new_name
-      expect(live.reload.date).to eq new_date
+      expect(live.reload.album_url).to eq 'https://example.com/album'
     end
   end
 
-  feature 'Delete live' do
-    given(:admin) { create(:admin) }
+  feature 'Delete a live' do
     given(:live) { create(:live) }
 
-    scenario 'A user cannot see delete link' do
-      visit live_path(live)
-      expect(page).not_to have_selector('.fa-trash')
-    end
+    background { log_in_as create(:admin) }
 
-    scenario 'An admin user can delete live' do
-      log_in_as admin
+    scenario 'An admin user can delete a live' do
       visit live_path(live)
 
-      expect { click_link('Delete', match: :first) }.to change(Live, :count).by(-1)
+      expect { click_link('Delete') }.to change(Live, :count).by(-1)
     end
   end
 end

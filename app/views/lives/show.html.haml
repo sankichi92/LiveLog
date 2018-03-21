@@ -10,7 +10,7 @@
       = link_to icon('fas', 'images') + ' Album', @live.album_url, class: 'btn btn-primary btn-lg', target: '_blank', 'data-toggle': 'tooltip', 'data-placement': 'top', title: '写真を共有しよう！'
 
   - if current_user&.admin_or_elder?
-    %aside.btn-toolbar.justify-content-end.mb-3{ role: 'toolbar' }
+    %aside#admin-tools.btn-toolbar.justify-content-end.mb-3{ role: 'toolbar' }
       .btn-group.mr-2{ role: 'group' }
         = link_to icon('fas', 'plus-circle') + ' Add song', new_song_path(live_id: @live.id), class: 'btn btn-outline-secondary'
       .btn-group{ role: 'group' }
