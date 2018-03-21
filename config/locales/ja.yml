@@ -1,5 +1,8 @@
 ---
 ja:
+  created: "%{name} を追加しました"
+  updated: "%{name} を更新しました"
+  deleted: "%{name} を削除しました"
   activerecord:
     errors:
       messages:
@@ -8,10 +11,8 @@ ja:
           has_one: "%{record}が存在しているので削除できません"
           has_many: "%{record}が存在しているので削除できません"
     models:
-      song:
-        zero: 曲
-        one: 曲
-        other: 曲
+      song: 曲
+      live: ライブ
     attributes:
       user:
         first_name: 名

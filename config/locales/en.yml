@@ -30,4 +30,10 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  created: "%{name} created"
+  updated: "%{name} updated"
+  deleted: "%{name} deleted"
+  activerecord:
+      models:
+        song: Song
+        live: Live
