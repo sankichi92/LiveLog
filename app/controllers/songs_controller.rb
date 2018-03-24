@@ -1,13 +1,7 @@
 class SongsController < ApplicationController
-  before_action :set_song, only: %i[show watch edit update destroy]
-  before_action :logged_in_user, only: %i[new create edit update destroy]
-  before_action :correct_user, only: %i[edit update]
-  before_action :correct_user_for_draft_song, only: :show, if: :draft_song?
   before_action :admin_or_elder_user, only: %i[new create destroy]
+  before_action :editable_user, only: %i[edit update]
   before_action :store_referer, only: :edit
-  before_action :search_params_validation, only: :search
-  before_action :xhr_request, only: :watch
-  before_action :watchable_user, only: :watch
 
   def index
     @songs = Song.published.includes(playings: :user).page(params[:page]).order_by_live
@@ -15,14 +9,24 @@ class SongsController < ApplicationController
   end
 
   def search
-    response = Song.search(@query).page(params[:page])
-    @songs = response.records(includes: [:live, { playings: :user }])
-    render :index
+    @query = Song::SearchQuery.new(search_params.merge(logged_in: logged_in?))
+    if @query.valid?
+      @songs = Song.search(@query).page(params[:page]).records(includes: [:live, { playings: :user }])
+      render :index
+    else
+      render :index, status: :unprocessable_entity
+    end
   end
 
-  def show; end
+  def show
+    @song = Song.published.includes(playings: :user).find(params[:id])
+  end
 
-  def watch; end
+  def watch
+    return redirect_to song_path(params[:id]) unless request.xhr?
+    @song = Song.published.includes(playings: :user).find(params[:id])
+    render plain: '', status: :forbidden unless @song.watchable?(current_user)
+  end
 
   def new
     live = Live.find_by(id: params[:live_id]) || Live.last
@@ -33,80 +37,49 @@ class SongsController < ApplicationController
   def create
     @song = Song.new(song_params)
     if @song.save
-      flash[:success] = '曲を追加しました'
+      flash[:success] = t(:created, name: @song.title)
       redirect_to @song.live
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   rescue ActiveRecord::RecordNotUnique
     @song.add_error_for_duplicated_user
-    render :new
+    render :new, status: :unprocessable_entity
   end
 
   def edit; end
 
   def update
     if @song.update_attributes(song_params)
-      flash[:success] = '曲を更新しました'
+      flash[:success] = t(:updated, name: @song.title)
       redirect_back_or @song
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   rescue ActiveRecord::RecordNotUnique
     @song.add_error_for_duplicated_user
-    render :edit
+    render :edit, status: :unprocessable_entity
   end
 
   def destroy
+    @song = Song.find(params[:id])
     live = @song.live
     @song.destroy
   rescue ActiveRecord::DeleteRestrictionError => e
     flash.now[:danger] = e.message
     render :show
   else
-    flash[:success] = '曲を削除しました'
-    redirect_back_or live
+    flash[:success] = t(:deleted, name: t(:'activerecord.models.song'))
+    redirect_to live
   end
 
   private
 
   # region Before filters
 
-  def set_song
+  def editable_user
     @song = Song.includes(playings: :user).find(params[:id])
-  end
-
-  def correct_user
-    redirect_to(root_url) unless @song.editable?(current_user)
-  end
-
-  def correct_user_for_draft_song
-    correct_user
-  end
-
-  def xhr_request
-    redirect_to @song unless request.xhr?
-  end
-
-  def watchable_user
-    render plain: '', status: :forbidden unless @song.watchable?(current_user)
-  end
-
-  def store_referer
-    session[:forwarding_url] = request.referer || root_url
-  end
-
-  def search_params_validation
-    @query = Song::SearchQuery.new(search_params.merge(logged_in: logged_in?))
-    render :index, status: :bad_request if @query.invalid?
-  end
-
-  # endregion
-
-  # region Conditions for filters
-
-  def draft_song?
-    !@song.published?
+    raise User::NotAuthorized unless @song.editable?(current_user)
   end
 
   # endregion

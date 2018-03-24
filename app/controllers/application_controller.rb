@@ -26,6 +26,10 @@ class ApplicationController < ActionController::Base
     raise User::NotAuthorized unless current_user&.admin_or_elder?
   end
 
+  def store_referer
+    session[:forwarding_url] = request.referer || root_url
+  end
+
   # endregion
 
   # region Rescue
