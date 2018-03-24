@@ -7,6 +7,16 @@ FactoryBot.define do
     published true
     published_at Time.zone.now
 
+    trait :invalid do
+      name ''
+    end
+
+    trait :with_songs do
+      after(:create) do |live|
+        create_list(:song, 2, live: live)
+      end
+    end
+
     factory :draft_live do
       sequence(:date) { |n| n.month.from_now }
       published false

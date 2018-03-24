@@ -1,20 +1,22 @@
 FactoryBot.define do
   factory :song do
     live
-    name 'テーマソング'
+    sequence(:name) { |n| "テーマソング #{n}" }
     artist 'アンプラグダー'
     sequence(:order) { |n| n }
     status :closed
     youtube_id 'https://www.youtube.com/watch?v=2TL90rxt9bo'
     comment 'アンプラグドのテーマソングです'
 
+    trait :invalid do
+      name ''
+    end
+
     transient do
-      user nil
       users []
     end
 
     after(:create) do |song, evaluator|
-      create(:playing, song: song, user: evaluator.user) if evaluator.user
       evaluator.users.each do |user|
         create(:playing, song: song, user: user)
       end
