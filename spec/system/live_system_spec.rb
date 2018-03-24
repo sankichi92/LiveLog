@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-RSpec.feature 'Live pages', type: :feature do
-  feature 'Show the live list' do
-    background do
+RSpec.describe 'Live', type: :system do
+  describe 'list' do
+    before do
       create_list(:live, 2)
       create(:draft_live, name: 'draft live')
     end
 
-    scenario 'A user can see the published live list' do
+    it 'enables users to see the published lives' do
       visit lives_path
 
       expect(page).to have_title('Live List')
@@ -21,10 +21,10 @@ RSpec.feature 'Live pages', type: :feature do
     end
   end
 
-  feature 'Show a live detail' do
-    given(:live) { create(:live, :with_songs) }
+  describe 'detail' do
+    let(:live) { create(:live, :with_songs) }
 
-    scenario 'A non-logged-in user can see a live page' do
+    it 'enables to non-logged-in users to see individual live pages' do
       visit live_path(live)
 
       expect(page).to have_title(live.title)
@@ -38,7 +38,7 @@ RSpec.feature 'Live pages', type: :feature do
       end
     end
 
-    scenario 'A logged-in user can see a live page with an album link' do
+    it 'enables logged-in users to see individual live pages with an album link' do
       log_in_as create(:user)
 
       visit live_path(live)
@@ -48,7 +48,7 @@ RSpec.feature 'Live pages', type: :feature do
       expect(page).not_to have_css('#admin-tools')
     end
 
-    scenario 'An admin user can see a live page with admin tools' do
+    it 'enables admin users to see individual live page with admin tools' do
       log_in_as create(:admin)
 
       visit live_path(live)
@@ -59,10 +59,10 @@ RSpec.feature 'Live pages', type: :feature do
     end
   end
 
-  feature 'Add a live' do
-    background { log_in_as create(:admin) }
+  describe 'add' do
+    before { log_in_as create(:admin) }
 
-    scenario 'An admin user can create a new live with valid information' do
+    it 'enables admin users to create new lives' do
       visit new_live_path
 
       expect(page).to have_title('New Live')
@@ -77,12 +77,12 @@ RSpec.feature 'Live pages', type: :feature do
     end
   end
 
-  feature 'Edit a live' do
-    given(:live) { create(:live) }
+  describe 'edit' do
+    let(:live) { create(:live) }
 
-    background { log_in_as create(:admin) }
+    before { log_in_as create(:admin) }
 
-    scenario 'An admin user can update a live with valid information' do
+    it 'enables admin users to update lives' do
       visit edit_live_path(live)
 
       expect(page).to have_title('Edit Live')
@@ -95,12 +95,12 @@ RSpec.feature 'Live pages', type: :feature do
     end
   end
 
-  feature 'Delete a live' do
-    given(:live) { create(:live) }
+  describe 'delete' do
+    let(:live) { create(:live) }
 
-    background { log_in_as create(:admin) }
+    before { log_in_as create(:admin) }
 
-    scenario 'An admin user can delete a live' do
+    it 'enables admin users to delete lives' do
       visit live_path(live)
 
       expect { click_link('Delete') }.to change(Live, :count).by(-1)
