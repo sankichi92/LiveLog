@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.feature 'Song pages', type: :feature do
-  feature 'Show the song list' do
-    background { create_list(:song, Song.per_page + 1) }
+RSpec.describe 'Song', type: :system do
+  describe 'list' do
+    before { create_list(:song, Song.per_page + 1) }
 
-    scenario 'A user can see the first page of the published song list and move to the next page' do
+    it 'enables users to see the first page of the published songs and move to the next page' do
       visit songs_path
 
       expect(page).to have_title('Song Search')
@@ -24,12 +24,12 @@ RSpec.feature 'Song pages', type: :feature do
     end
   end
 
-  feature 'Search songs' do
-    given!(:beatles_song) { create(:song, artist: 'The Beatles') }
+  describe 'search' do
+    let!(:beatles_song) { create(:song, artist: 'The Beatles') }
 
-    background { Song.import }
+    before { Song.import }
 
-    scenario 'A use can search songs from the both of basic and advanced forms', js: true do
+    it 'enables users to search songs from the both of basic and advanced forms', js: true do
       visit songs_path
 
       fill_in 'q', with: 'The Beatles'
@@ -51,10 +51,10 @@ RSpec.feature 'Song pages', type: :feature do
     end
   end
 
-  feature 'Show a song detail' do
-    given(:song) { create(:song, users: create_list(:user, 2)) }
+  describe 'detail' do
+    let(:song) { create(:song, users: create_list(:user, 2)) }
 
-    scenario 'A user can see a song detail and watch the video' do
+    it 'enables users to see individual songs' do
       visit song_path(song)
 
       expect(page).to have_title(song.title)
@@ -68,14 +68,14 @@ RSpec.feature 'Song pages', type: :feature do
     end
   end
 
-  feature 'Add a song' do
-    given(:live) { create(:live) }
-    given!(:user1) { create(:user, nickname: '一郎') }
-    given!(:user2) { create(:user, nickname: '二郎') }
+  describe 'add' do
+    let(:live) { create(:live) }
+    let!(:user1) { create(:user, nickname: '一郎') }
+    let!(:user2) { create(:user, nickname: '二郎') }
 
-    background { log_in_as create(:admin) }
+    before { log_in_as create(:admin) }
 
-    scenario 'An admin user can create a new song with valid information', js: true do
+    it 'enables admin users to create new songs', js: true do
       visit live_path(live)
 
       click_link 'Add song'
@@ -101,11 +101,11 @@ RSpec.feature 'Song pages', type: :feature do
     end
   end
 
-  feature 'Edit a song' do
-    given(:user) { create(:user) }
-    given(:song) { create(:song, users: [user]) }
+  describe 'edit' do
+    let(:user) { create(:user) }
+    let(:song) { create(:song, users: [user]) }
 
-    scenario 'An admin user can update a song' do
+    it 'enables admin users to update songs' do
       log_in_as create(:admin)
 
       visit song_path(song)
@@ -121,7 +121,7 @@ RSpec.feature 'Song pages', type: :feature do
       expect(song.reload.youtube_id).to eq 'new_youtube'
     end
 
-    scenario 'A user can update a song he/she played' do
+    it 'enables logged-in users to update songs they played' do
       log_in_as user
 
       visit song_path(song)
@@ -140,12 +140,12 @@ RSpec.feature 'Song pages', type: :feature do
     end
   end
 
-  feature 'Delete a song' do
-    given(:song) { create(:song) }
+  describe 'delete' do
+    let(:song) { create(:song) }
 
-    background { log_in_as create(:admin) }
+    before { log_in_as create(:admin) }
 
-    scenario 'An admin user can delete a song' do
+    it 'enables admin users to delete songs' do
       visit song_path(song)
       click_link 'Edit'
 
