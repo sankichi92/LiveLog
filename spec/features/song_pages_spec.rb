@@ -1,146 +1,154 @@
 require 'rails_helper'
 
-RSpec.feature 'SongPages', type: :feature do
-  given(:song) { create(:song) }
+RSpec.feature 'Song pages', type: :feature do
+  feature 'Show the song list' do
+    background { create_list(:song, Song.per_page + 1) }
 
-  feature 'show song' do
-    given(:user) { create(:user) }
-    given(:open_song) { create(:song, status: :open) }
-    given(:secret_song) { create(:song, status: :secret) }
+    scenario 'A user can see the first page of the published song list and move to the next page' do
+      visit songs_path
 
-    background do
-      create(:playing, user: user, song: secret_song)
-    end
+      expect(page).to have_title('Song Search')
+      expect(page).to have_content('Song Search')
+      Song.published.page(1).each do |song|
+        expect(page).to have_content(song.name)
+      end
+      Song.published.page(2).each do |song|
+        expect(page).not_to have_content(song.name)
+      end
 
-    scenario 'A non-logged-in user can see the open song' do
-      visit song_path(open_song)
+      click_link '2'
 
-      expect(page).to have_title(open_song.name)
-      expect(page).to have_content(open_song.name)
-      expect(page).to have_selector('.song-thumbnail')
-    end
-
-    scenario 'A non-logged-in user cannot watch the closed song video' do
-      visit song_path(song)
-
-      expect(page).to have_title(song.name)
-      expect(page).to have_content(song.name)
-      expect(page).not_to have_selector('.song-thumbnail')
-    end
-
-    scenario 'A logged-in user can see the closed song' do
-      log_in_as user
-      visit song_path(song)
-
-      expect(page).to have_title(song.name)
-      expect(page).to have_content(song.name)
-      expect(page).to have_selector('.song-thumbnail')
-    end
-
-    scenario 'A logged-in user cannot watch the secret song video' do
-      log_in_as create(:user)
-      visit song_path(secret_song)
-
-      expect(page).to have_title(secret_song.name)
-      expect(page).to have_content(secret_song.name)
-      expect(page).not_to have_selector('.song-thumbnail')
+      Song.published.page(2).each do |song|
+        expect(page).to have_content(song.name)
+      end
     end
   end
 
-  feature 'song creation' do
+  feature 'Search songs' do
+    given!(:beatles_song) { create(:song, artist: 'The Beatles') }
+
+    background { Song.import }
+
+    scenario 'A use can search songs from the both of basic and advanced forms', js: true do
+      visit songs_path
+
+      fill_in 'q', with: 'The Beatles'
+      click_button 'Search'
+
+      expect(page).to have_content(beatles_song.name)
+
+      click_on 'Advanced'
+      fill_in 'artist', with: 'The Beatles'
+      click_button 'Search'
+
+      expect(page).to have_content(beatles_song.name)
+
+      fill_in 'name', with: 'No results'
+      click_button 'Search'
+
+      expect(page).not_to have_content(beatles_song.name)
+      expect(page).to have_css('.alert-danger')
+    end
+  end
+
+  feature 'Show a song detail' do
+    given(:song) { create(:song, users: create_list(:user, 2)) }
+
+    scenario 'A user can see a song detail and watch the video' do
+      visit song_path(song)
+
+      expect(page).to have_title(song.title)
+      expect(page).to have_content(song.name)
+      expect(page).to have_content(song.artist)
+      expect(page).to have_content(song.live_name)
+      expect(page).to have_content(song.time_order)
+      song.playings.each do |playing|
+        expect(page).to have_content(playing.handle)
+      end
+    end
+  end
+
+  feature 'Add a song' do
     given(:live) { create(:live) }
-    background do
-      create_list(:user, 3)
-      log_in_as create(:admin)
-    end
+    given!(:user1) { create(:user, nickname: '一郎') }
+    given!(:user2) { create(:user, nickname: '二郎') }
 
-    context 'with invalid information' do
+    background { log_in_as create(:admin) }
 
-      scenario 'An admin user cannot create the song with an empty title' do
-        visit new_song_path(live_id: live.id)
+    scenario 'An admin user can create a new song with valid information', js: true do
+      visit live_path(live)
 
-        expect { click_button 'Add' }.not_to change(Song, :count)
-        expect(page).to have_selector('.alert-danger')
-        expect(page).to have_content('曲名を入力してください')
-      end
-
-      scenario 'An admin user cannot create the song with duplicated players', js: true do
-        visit new_song_path(live_id: live.id)
-
-        fill_in '曲名', with: 'テストソング'
-        click_button id: 'add-member'
-
-        expect { click_button 'Add' }.not_to change(Song, :count)
-        expect(page).to have_selector('.alert-danger')
-        expect(page).to have_content('演者が重複しています')
-      end
-    end
-
-    scenario 'An admin user can create the song with valid information' do
-      visit new_song_path(live_id: live.id)
+      click_link 'Add song'
 
       expect(page).to have_title('Add Song')
+      expect(page).to have_content('Add Song')
 
-      fill_in '曲名', with: 'テストソング'
+      fill_in 'song_order', with: '1'
+      fill_in 'song_name', with: 'テストソング'
+      fill_in 'song_artist', with: 'テストアーティスト'
+
+      click_button 'add-member'
+      click_button 'add-member'
+      click_button class: 'remove-member', match: :first
+
+      [user1, user2].each_with_index do |user, i|
+        all('.inst-field')[i].set('Gt')
+        all('.user-select')[i].find(:option, user.name_with_handle).select_option
+      end
 
       expect { click_button 'Add' }.to change(Song, :count).by(1)
       expect(page).to have_selector('.alert-success')
     end
   end
 
-  feature 'song edition' do
-    given(:admin) { create(:admin, last_name: '管', first_name: '理人') }
-    given(:users) { create_list(:user, 3) }
-    background do
-      users.each do |user|
-        create(:playing, song: song, user: user)
-      end
-      log_in_as admin
-    end
+  feature 'Edit a song' do
+    given(:user) { create(:user) }
+    given(:song) { create(:song, users: [user]) }
 
-    context 'with invalid information' do
+    scenario 'An admin user can update a song' do
+      log_in_as create(:admin)
 
-      scenario 'An admin user cannot save changes with the empty title' do
-        visit edit_song_path(song)
+      visit song_path(song)
+      click_link 'Edit'
 
-        fill_in '曲名', with: ''
-        click_button 'Save'
+      expect(page).to have_title('Edit Song')
+      expect(page).to have_content('Edit Song')
 
-        expect(page).to have_selector('.alert-danger')
-        expect(page).to have_content('曲名を入力してください')
-      end
-
-      scenario 'An admin user cannot save changes with duplicated players' do
-        visit edit_song_path(song)
-
-        select admin.name_with_handle, from: 'song[playings_attributes][0][user_id]'
-        select admin.name_with_handle, from: 'song[playings_attributes][1][user_id]'
-        click_button 'Save'
-
-        expect(page).to have_selector('.alert-danger')
-        expect(page).to have_content('演者が重複しています')
-      end
-    end
-
-    scenario 'An admin user can save changes with valid information' do
-      visit edit_song_path(song)
-
-      fill_in '曲名', with: 'ニューソング'
+      fill_in 'song_youtube_id', with: 'https://www.youtube.com/watch?v=new_youtube'
       click_button 'Save'
 
       expect(page).to have_selector('.alert-success')
-      expect(song.reload.name).to eq 'ニューソング'
+      expect(song.reload.youtube_id).to eq 'new_youtube'
+    end
+
+    scenario 'A user can update a song he/she played' do
+      log_in_as user
+
+      visit song_path(song)
+      click_link 'Edit'
+
+      expect(page).to have_title('Edit Song')
+      expect(page).to have_content('Edit Song')
+
+      select '公開', from: 'song_status'
+      fill_in 'song_comment', with: 'お気に入りの曲です'
+      click_button 'Save'
+
+      expect(page).to have_selector('.alert-success')
+      expect(song.reload.status).to eq 'open'
+      expect(song.comment).to eq 'お気に入りの曲です'
     end
   end
 
-  feature 'song deletion' do
-    given(:admin) { create(:admin) }
-    background do
-      log_in_as admin
-      visit edit_song_path(create(:song))
-    end
+  feature 'Delete a song' do
+    given(:song) { create(:song) }
+
+    background { log_in_as create(:admin) }
 
     scenario 'An admin user can delete a song' do
+      visit song_path(song)
+      click_link 'Edit'
+
       expect { click_link('Delete') }.to change(Song, :count).by(-1)
     end
   end

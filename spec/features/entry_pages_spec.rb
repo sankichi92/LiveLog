@@ -5,7 +5,7 @@ RSpec.feature 'EntryPages', type: :feature do
 
   feature 'Show the entry list for the live' do
     given(:user) { create(:user) }
-    given!(:their_entry) { create(:draft_song, live: live, name: 'Visible song', user: user) }
+    given!(:their_entry) { create(:draft_song, live: live, name: 'Visible song', users: [user]) }
     given!(:other_entry) { create(:draft_song, live: live, name: 'Invisible song') }
     background do
       log_in_as user
