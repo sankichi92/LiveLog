@@ -3,7 +3,7 @@ ruby '2.5.0'
 
 gem 'rails', '~> 5.1.4'
 
-gem 'pg', '~> 0.21'
+gem 'pg', '~> 1.0'
 
 gem 'will_paginate', '~> 3.1.6' # must be added before the Elasticsearch gems
 gem 'elasticsearch-rails', '~> 5.0'
