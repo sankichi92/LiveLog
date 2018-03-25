@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    action_args (2.3.0)
     actioncable (5.1.5)
       actionpack (= 5.1.5)
       nio4r (~> 2.0)
@@ -319,6 +320,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  action_args (~> 2.3)
   bcrypt (~> 3.1.11)
   bootstrap (~> 4.0)
   bootstrap-will_paginate (~> 1.0.0)

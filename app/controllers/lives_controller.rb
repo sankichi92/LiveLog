@@ -1,12 +1,14 @@
 class LivesController < ApplicationController
+  permits :name, :date, :place, :album_url
+
   before_action :admin_or_elder_user, only: %i[new edit create update destroy]
 
   def index
     @lives = Live.published.order_by_date
   end
 
-  def show
-    @live = Live.includes(:songs).find(params[:id])
+  def show(id)
+    @live = Live.includes(:songs).find(id)
     redirect_to live_entries_url(@live) unless @live.published?
   end
 
@@ -14,12 +16,12 @@ class LivesController < ApplicationController
     @live = Live.new.tap { |l| l.date = Time.zone.today }
   end
 
-  def edit
-    @live = Live.find(params[:id])
+  def edit(id)
+    @live = Live.find(id)
   end
 
-  def create
-    @live = Live.new(live_params)
+  def create(live)
+    @live = Live.new(live)
     if @live.save
       flash[:success] = t(:created, name: @live.title)
       redirect_to @live.published? ? @live : live_entries_url(@live)
@@ -28,9 +30,9 @@ class LivesController < ApplicationController
     end
   end
 
-  def update
-    @live = Live.find(params[:id])
-    if @live.update(live_params)
+  def update(id, live)
+    @live = Live.find(id)
+    if @live.update(live)
       flash[:success] = t(:updated, name: @live.title)
       redirect_to @live
     else
@@ -38,8 +40,8 @@ class LivesController < ApplicationController
     end
   end
 
-  def destroy
-    @live = Live.find(params[:id])
+  def destroy(id)
+    @live = Live.find(id)
     @live.destroy
   rescue ActiveRecord::DeleteRestrictionError => e
     flash.now[:danger] = e.message
@@ -47,11 +49,5 @@ class LivesController < ApplicationController
   else
     flash[:success] = t(:deleted, name: t(:'activerecord.models.live'))
     redirect_to lives_url
-  end
-
-  private
-
-  def live_params
-    params.require(:live).permit(:name, :date, :place, :album_url)
   end
 end
