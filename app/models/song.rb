@@ -71,8 +71,12 @@ class Song < ApplicationRecord
     time.present? ? "#{time_str} #{order}" : order
   end
 
+  def player?(user)
+    playings.pluck(:user_id).include?(user&.id)
+  end
+
   def visible?(user)
-    open? || closed? && user || user&.played?(self)
+    open? || closed? && user || player?(user)
   end
 
   def watchable?(user)
@@ -80,7 +84,7 @@ class Song < ApplicationRecord
   end
 
   def editable?(user)
-    user&.admin_or_elder? || user&.played?(self)
+    user&.admin_or_elder? || player?(user)
   end
 
   def add_error_for_duplicated_user
