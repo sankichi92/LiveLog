@@ -75,10 +75,6 @@ class User < ApplicationRecord
     donated_ids.include?(id)
   end
 
-  def played?(song)
-    song.playings.pluck(:user_id).include?(id)
-  end
-
   def inst_to_count
     playings.published.count_insts
   end
