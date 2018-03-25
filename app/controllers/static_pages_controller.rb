@@ -1,5 +1,5 @@
 class StaticPagesController < ApplicationController
-  before_action :logged_in_user, only: :donation
+  before_action :logged_in_user, only: :donate
 
   def home
     @song = Song.includes(playings: :user).pickup
