@@ -35,7 +35,7 @@ group :development do
   gem 'faker'
   gem 'listen', '~> 3.1.5'
   gem 'rails_real_favicon'
-  gem 'rubocop'
+  gem 'meowcop'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.1'
   gem 'web-console', '>= 3.5.1'
