@@ -1,41 +1,43 @@
 class SongsController < ApplicationController
+  permits :live_id, :time, :order, :name, :artist, :youtube_id, :status, :comment, :original, playings_attributes: %i[id user_id inst _destroy]
+
   before_action :admin_or_elder_user, only: %i[new create destroy]
   before_action :editable_user, only: %i[edit update]
   before_action :store_referer, only: :edit
 
-  def index
-    @songs = Song.published.includes(playings: :user).page(params[:page]).order_by_live
+  def index(page = 1)
+    @songs = Song.published.includes(playings: :user).page(page).order_by_live
     @query = Song::SearchQuery.new
   end
 
-  def search
+  def search(page = 1)
     @query = Song::SearchQuery.new(search_params.merge(logged_in: logged_in?))
     if @query.valid?
-      @songs = Song.search(@query).page(params[:page]).records(includes: [:live, { playings: :user }])
+      @songs = Song.search(@query).page(page).records(includes: [:live, { playings: :user }])
       render :index
     else
       render :index, status: :unprocessable_entity
     end
   end
 
-  def show
-    @song = Song.published.includes(playings: :user).find(params[:id])
+  def show(id)
+    @song = Song.published.includes(playings: :user).find(id)
   end
 
-  def watch
-    return redirect_to song_path(params[:id]) unless request.xhr?
-    @song = Song.published.includes(playings: :user).find(params[:id])
+  def watch(id)
+    return redirect_to song_path(id) unless request.xhr?
+    @song = Song.published.includes(playings: :user).find(id)
     render plain: '', status: :forbidden unless @song.watchable?(current_user)
   end
 
-  def new
-    live = Live.find_by(id: params[:live_id]) || Live.last
+  def new(live_id = nil)
+    live = Live.find_by(id: live_id) || Live.last
     @song = live.songs.build
     @song.playings.build
   end
 
-  def create
-    @song = Song.new(song_params)
+  def create(song)
+    @song = Song.new(song)
     if @song.save
       flash[:success] = t(:created, name: @song.title)
       redirect_to @song.live
@@ -49,8 +51,8 @@ class SongsController < ApplicationController
 
   def edit; end
 
-  def update
-    if @song.update_attributes(song_params)
+  def update(song)
+    if @song.update(song)
       flash[:success] = t(:updated, name: @song.title)
       redirect_back_or @song
     else
@@ -61,8 +63,8 @@ class SongsController < ApplicationController
     render :edit, status: :unprocessable_entity
   end
 
-  def destroy
-    @song = Song.find(params[:id])
+  def destroy(id)
+    @song = Song.find(id)
     live = @song.live
     @song.destroy
   rescue ActiveRecord::DeleteRestrictionError => e
@@ -75,34 +77,12 @@ class SongsController < ApplicationController
 
   private
 
-  # region Before filters
-
-  def editable_user
-    @song = Song.includes(playings: :user).find(params[:id])
+  def editable_user(id)
+    @song = Song.includes(playings: :user).find(id)
     raise User::NotAuthorized unless @song.editable?(current_user)
   end
 
-  # endregion
-
-  # region Strong parameters
-
-  def song_params
-    params.require(:song).permit(:live_id,
-                                 :time,
-                                 :order,
-                                 :name,
-                                 :artist,
-                                 :youtube_id,
-                                 :status,
-                                 :comment,
-                                 :original,
-                                 playings_attributes: %i[id user_id inst _destroy])
-  end
-
   def search_params
-    params.permit(:q, :name, :artist, :instruments, :players_lower, :players_upper, :date_lower, :date_upper, :video,
-                  :original)
+    params.permit(:q, :name, :artist, :instruments, :players_lower, :players_upper, :date_lower, :date_upper, :video, :original)
   end
-
-  # endregion
 end
