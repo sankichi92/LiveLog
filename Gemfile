@@ -10,7 +10,7 @@ gem 'elasticsearch-rails', '~> 5.0'
 gem 'elasticsearch-model', '~> 5.0'
 gem 'elasticsearch-dsl', '~> 0.1'
 
-gem 'action_args', '~> 2.3'
+gem 'action_args', '~> 2.3.1'
 gem 'bcrypt', '~> 3.1.11'
 gem 'bootstrap', '~> 4.0'
 gem 'bootstrap-will_paginate', '~> 1.0.0'
