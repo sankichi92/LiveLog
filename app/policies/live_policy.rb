@@ -1,14 +1,4 @@
 class LivePolicy < ApplicationPolicy
-  class Scope < Scope
-    def resolve
-      if logged_in?
-        scope.published
-      else
-        scope.all
-      end
-    end
-  end
-
   def album?
     logged_in?
   end
