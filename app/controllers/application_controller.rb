@@ -1,9 +1,13 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery with: :exception
-  before_action :set_raven_context
-  rescue_from User::NotAuthorized, with: :user_not_authorized
-
   include SessionsHelper
+  include Pundit
+
+  protect_from_forgery with: :exception
+
+  before_action :set_raven_context
+
+  rescue_from User::NotAuthorized, with: :user_not_authorized
+  rescue_from Pundit::NotAuthorizedError, with: :not_authorized
 
   private
 
@@ -35,6 +39,10 @@ class ApplicationController < ActionController::Base
   # region Rescue
 
   def user_not_authorized
+    not_authorized
+  end
+
+  def not_authorized
     if logged_in?
       flash[:danger] = 'アクセス権がありません'
       redirect_back(fallback_location: root_url)
