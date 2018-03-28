@@ -11,6 +11,10 @@ FactoryBot.define do
     activated_at Time.zone.now
     subscribing true
 
+    trait :elder do
+      joined 2010
+    end
+
     factory :admin do
       admin true
     end
