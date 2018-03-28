@@ -14,6 +14,7 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'factory_bot'
+require 'pundit/rspec'
 require 'rspec/json_matcher'
 
 RSpec.configure do |config|
