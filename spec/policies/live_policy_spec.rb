@@ -5,6 +5,16 @@ RSpec.describe LivePolicy do
 
   let(:live) { create(:live) }
 
+  permissions :album? do
+    it 'denies access if user is not logged in' do
+      expect(subject).not_to permit(nil, live)
+    end
+
+    it 'grants access if user is logged in' do
+      expect(subject).to permit(create(:user), live)
+    end
+  end
+
   permissions :create?, :update?, :destroy? do
     it 'denies access if user is not logged in' do
       expect(subject).not_to permit(nil, live)

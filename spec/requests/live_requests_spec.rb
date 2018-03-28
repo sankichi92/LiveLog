@@ -28,6 +28,30 @@ RSpec.describe 'Live requests', type: :request do
     end
   end
 
+  describe 'GET /lives/:id/album' do
+    let(:live) { create(:live) }
+
+    context 'by a logged-in user' do
+      before { log_in_as(create(:user), capybara: false) }
+
+      context 'when the album_url is present' do
+        it 'redirects to album_url' do
+          get album_live_path(live)
+          expect(response).to redirect_to(live.album_url)
+        end
+      end
+
+      context 'when the album_url is blank' do
+        let(:live) { create(:live, album_url: '') }
+
+        it 'redirects to album_url' do
+          get album_live_path(live)
+          expect(response).to redirect_to(live_url(live))
+        end
+      end
+    end
+  end
+
   describe 'GET /lives/new' do
     context 'by an admin user' do
       before { log_in_as(create(:admin), capybara: false) }

@@ -14,6 +14,12 @@ class LivesController < ApplicationController
     redirect_to live_entries_url(@live) unless @live.published?
   end
 
+  def album(id)
+    @live = Live.find(id)
+    authorize @live
+    redirect_to @live.album_url.presence || @live
+  end
+
   def new
     @live = Live.new.tap { |l| l.date = Time.zone.today }
     authorize @live

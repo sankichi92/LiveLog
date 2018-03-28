@@ -6,7 +6,7 @@
       = @live.name
       %small.text-muted
         = @live.place.present? ? " #{l(@live.date)} @#{@live.place} " : l(@live.date)
-    - if logged_in? && @live.album_url.present?
+    - if policy(@live).album? && @live.album_url.present?
       = link_to icon('fas', 'images') + ' Album', @live.album_url, class: 'btn btn-primary btn-lg', target: '_blank', 'data-toggle': 'tooltip', 'data-placement': 'top', title: '写真を共有しよう！'
 
   - if policy(@live).update?

@@ -9,6 +9,10 @@ class LivePolicy < ApplicationPolicy
     end
   end
 
+  def album?
+    logged_in?
+  end
+
   def create?
     user&.admin_or_elder?
   end
