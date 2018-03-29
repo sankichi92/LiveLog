@@ -20,6 +20,7 @@ before_script:
   - sudo /usr/share/elasticsearch/bin/elasticsearch-plugin install -b analysis-kuromoji
   - sudo service elasticsearch restart
   - gem update --system
+  - gem install bundler
   - cp config/database.yml.travis config/database.yml
   - bin/rails db:create
   - sleep 10 # cf. https://docs.travis-ci.com/user/database-setup/#ElasticSearch
