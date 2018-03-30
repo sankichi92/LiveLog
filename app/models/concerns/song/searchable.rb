@@ -14,18 +14,20 @@ module Concerns
           __elasticsearch__.delete_document if published?
         end
 
-        settings index: {
-          number_of_shards: 1,
-          number_of_replicas: 0,
-          analysis: {
-            analyzer: {
-              default: {
-                type: 'kuromoji',
-                stopwords: '_english_'
+        unless Rails.env.test?
+          settings index: {
+            number_of_shards: 1,
+            number_of_replicas: 0,
+            analysis: {
+              analyzer: {
+                default: {
+                  type: 'kuromoji',
+                  stopwords: '_english_'
+                }
               }
             }
           }
-        }
+        end
 
         mapping dynamic: false, _all: { enabled: false } do
           indexes :id, type: 'integer'
