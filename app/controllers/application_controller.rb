@@ -19,7 +19,10 @@ class ApplicationController < ActionController::Base
   # region Before filters
 
   def logged_in_user
-    raise User::NotAuthorized unless logged_in?
+    return if logged_in?
+    store_location
+    flash[:danger] = 'ログインしてください'
+    redirect_to login_url
   end
 
   def admin_user
