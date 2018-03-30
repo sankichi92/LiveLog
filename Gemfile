@@ -39,8 +39,8 @@ group :development do
   gem 'faker'
   gem 'haml_lint', require: false
   gem 'listen', '~> 3.1.5'
-  gem 'rails_real_favicon'
   gem 'meowcop', require: false
+  gem 'rails_real_favicon'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.1'
   gem 'web-console', '>= 3.5.1'
