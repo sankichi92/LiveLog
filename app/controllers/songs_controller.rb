@@ -1,16 +1,14 @@
 class SongsController < ApplicationController
   permits :live_id, :time, :order, :name, :artist, :youtube_id, :status, :comment, :original, playings_attributes: %i[id user_id inst _destroy]
 
-  after_action :verify_authorized
+  after_action :verify_authorized, except: %i[index search show]
 
   def index(page = 1)
-    skip_authorization
     @songs = Song.published.order_by_live.includes(playings: :user).page(page)
     @query = Song::SearchQuery.new
   end
 
   def search(page = 1)
-    skip_authorization
     @query = Song::SearchQuery.new(search_params.merge(logged_in: logged_in?))
     if @query.valid?
       @songs = Song.search(@query).page(page).records(includes: [:live, { playings: :user }])
@@ -21,7 +19,6 @@ class SongsController < ApplicationController
   end
 
   def show(id)
-    skip_authorization
     @song = Song.published.includes(playings: :user).find(id)
   end
 

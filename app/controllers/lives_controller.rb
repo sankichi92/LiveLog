@@ -1,15 +1,13 @@
 class LivesController < ApplicationController
   permits :name, :date, :place, :album_url
 
-  after_action :verify_authorized
+  after_action :verify_authorized, except: %i[index show]
 
   def index
-    skip_authorization
     @lives = Live.published.order_by_date
   end
 
   def show(id)
-    skip_authorization
     @live = Live.includes(:songs).find(id)
     redirect_to live_entries_url(@live) unless @live.published?
   end
