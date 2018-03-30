@@ -15,6 +15,17 @@ FactoryBot.define do
       joined 2010
     end
 
+    transient do
+      songs []
+    end
+
+    after(:create) do |user, evaluator|
+      evaluator.songs.each do |song|
+        create(:playing, song: song, user: user)
+      end
+      user.reload
+    end
+
     factory :admin do
       admin true
     end
