@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   end
 
   resources :users, path: :members do
-    resource :account_activation, path: :activation, as: :activation
+    resource :account_activation, except: :show, path: :activation, as: :activation
     resource :password, only: %i[edit update]
     resource :admin, only: %i[create destroy]
     get 'search', on: :member
