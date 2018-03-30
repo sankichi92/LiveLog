@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   root 'static_pages#home'
 
-  get '/donate', to: 'static_pages#donate'
+  get '/donation', to: 'static_pages#donation'
 
   resources :songs do
     collection do
