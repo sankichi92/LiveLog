@@ -1,4 +1,14 @@
 class SongPolicy < ApplicationPolicy
+  class Scope < Scope
+    def resolve
+      if user&.admin?
+        scope.all
+      else
+        scope.where('playings.user_id': user&.id)
+      end
+    end
+  end
+
   def watch?
     record.open? || record.closed? && logged_in? || record.player?(user)
   end
