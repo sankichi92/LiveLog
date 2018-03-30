@@ -3,7 +3,7 @@ class StaticPagesController < ApplicationController
 
   def home
     @song = Song.includes(playings: :user).pickup
-    @lives = Live.published.order_by_date.limit(5)
+    @lives = Live.latest
   end
 
   def donate; end
