@@ -3,7 +3,7 @@ class Stats
 
   attr_reader :year
 
-  validates :year, inclusion: { in: Live.years }
+  validate :year_must_be_included_in_live_years
 
   def initialize(year)
     @year = year
@@ -42,6 +42,12 @@ class Stats
   end
 
   private
+
+  def year_must_be_included_in_live_years
+    unless Live.years.include?(year)
+      errors.add(:year, :inclusion)
+    end
+  end
 
   def songs
     Song.published.includes(:live).where('lives.date': date_range)
