@@ -34,7 +34,7 @@
               = link_to icon('fas', 'sign-out-alt') + ' Log out', logout_path, method: :delete, class: 'dropdown-item'
               .dropdown-divider
               - if current_user.graduate?
-                = link_to icon('fas', 'gift') + ' Donate', donate_path, class: 'dropdown-item'
+                = link_to icon('fas', 'gift') + ' Donate', donation_path, class: 'dropdown-item'
               = link_to icon('fas', 'flag') + ' Report', feedback_url(current_user), target: '_blank', class: 'dropdown-item'
       - else
         = link_to login_path do
