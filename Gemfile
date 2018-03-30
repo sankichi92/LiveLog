@@ -48,6 +48,7 @@ end
 
 group :test do
   gem 'capybara', '~> 2.15'
+  gem 'chromedriver-helper', '~> 1.2.0'
   gem 'factory_bot_rails', '~> 4.8'
   gem 'rspec-json_matcher', '~> 0.1.6'
   gem 'selenium-webdriver', '~> 3.5'

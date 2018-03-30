@@ -13,7 +13,6 @@ This is the application to manage set lists of the acoustic light music club "[ä
 - PostgreSQL 9.2 or later
 - [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/install-elasticsearch.html) 5.x
   - with [Japanese (kuromoji) Analysis Plugin](https://www.elastic.co/guide/en/elasticsearch/plugins/current/analysis-kuromoji.html)
-- [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/) (for test environment)
 
 ## Getting started
 
