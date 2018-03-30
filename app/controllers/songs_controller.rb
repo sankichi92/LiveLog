@@ -49,7 +49,7 @@ class SongsController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   rescue ActiveRecord::RecordNotUnique
-    @song.add_error_for_duplicated_user
+    @song.errors.add(:playings, 'が重複しています')
     render :new, status: :unprocessable_entity
   end
 
@@ -69,7 +69,7 @@ class SongsController < ApplicationController
       render :edit, status: :unprocessable_entity
     end
   rescue ActiveRecord::RecordNotUnique
-    @song.add_error_for_duplicated_user
+    @song.errors.add(:playings, 'が重複しています')
     render :edit, status: :unprocessable_entity
   end
 

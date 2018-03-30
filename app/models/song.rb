@@ -79,10 +79,6 @@ class Song < ApplicationRecord
     user&.admin_or_elder? || player?(user)
   end
 
-  def add_error_for_duplicated_user
-    errors.add(:playings, 'が重複しています')
-  end
-
   private
 
   def extract_youtube_id
