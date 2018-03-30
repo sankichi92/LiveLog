@@ -13,7 +13,7 @@ class Playing < ApplicationRecord
 
   scope :published, -> { includes(song: :live).where('lives.published': true) }
 
-  scope :count_insts, lambda {
+  def self.count_insts
     inst_to_count = group(:inst).count
     single_inst_to_count = inst_to_count.select { |inst, _| inst.present? && !inst.include?('&') }
     multi_inst_to_count = inst_to_count.select { |inst, _| inst.present? && inst.include?('&') }
@@ -24,13 +24,15 @@ class Playing < ApplicationRecord
       single_count + divided_count
     end
     resolved_inst_to_count.sort_by { |_, count| -count }
-  }
+  end
 
-  scope :count_formations, lambda {
+  def self.count_formations
     group(:song_id).count.each_with_object(Hash.new(0)) { |(_, count), hash| hash[count] += 1 }.sort
-  }
+  end
 
-  scope :insts_for_suggestion, -> { group(:inst).order(count: :desc).having('playings.count >= 2').count.keys }
+  def self.insts_for_suggestion
+    group(:inst).order(count: :desc).having('playings.count >= 2').count.keys
+  end
 
   def instruments
     inst&.split('&')
