@@ -1,5 +1,5 @@
 %section.song-item.d-flex.flex-column.flex-md-row.align-items-md-center
-  - if song.watchable?(current_user)
+  - if song.youtube_id.present? && policy(song).watch?
     .song-thumbnail.text-center.mb-2.mb-md-0.mr-md-3
       = link_to watch_song_path(song), remote: true do
         = image_tag song.youtube_thumbnail
@@ -23,7 +23,7 @@
           .dropdown-menu{ 'aria-labelledby': 'share-button' }
             = twitter_share_button(song, class: 'dropdown-item')
             %button.fb-share.dropdown-item.btn{ type: 'button', 'data-url': song_url(song) }= icon('fab', 'facebook') + ' Facebook'
-      = link_to icon('fas', 'edit') + ' Edit', edit_song_path(song), class: 'btn btn-link btn-sm' if song.editable?(current_user)
+      = link_to icon('fas', 'edit') + ' Edit', edit_song_path(song), class: 'btn btn-link btn-sm' if policy(song).edit?
     - unless song.published?
       %footer
         %small.text-muted= l song.created_at, format: :short
