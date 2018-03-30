@@ -3,6 +3,11 @@ ja:
   created: "%{name} を追加しました"
   updated: "%{name} を更新しました"
   deleted: "%{name} を削除しました"
+  login:
+    inactivated: 'アカウントが有効化されていません。メールを確認してください'
+    invalid: '無効なメールアドレスとパスワードの組み合わせです'
+    success: 'ログインしました'
+  logout: 'ログアウトしました'
   activerecord:
     errors:
       messages:
