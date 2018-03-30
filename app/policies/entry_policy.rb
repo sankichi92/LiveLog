@@ -1,7 +1,9 @@
 class EntryPolicy < ApplicationPolicy
-  class Scope < Scope
-    def resolve
-      scope
-    end
+  def index?
+    logged_in?
+  end
+
+  def create?
+    logged_in?
   end
 end

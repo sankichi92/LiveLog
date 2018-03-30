@@ -1,28 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe EntryPolicy do
-
-  let(:user) { User.new }
-
   subject { described_class }
 
-  permissions ".scope" do
-    pending "add some examples to (or delete) #{__FILE__}"
-  end
+  permissions :index?, :create? do
+    it 'denies access if user is not logged in' do
+      expect(subject).not_to permit(nil, :entry)
+    end
 
-  permissions :show? do
-    pending "add some examples to (or delete) #{__FILE__}"
-  end
-
-  permissions :create? do
-    pending "add some examples to (or delete) #{__FILE__}"
-  end
-
-  permissions :update? do
-    pending "add some examples to (or delete) #{__FILE__}"
-  end
-
-  permissions :destroy? do
-    pending "add some examples to (or delete) #{__FILE__}"
+    it 'grants access if user is logged in' do
+      expect(subject).to permit(create(:user), :entry)
+    end
   end
 end
