@@ -7,7 +7,7 @@ class SongsController < ApplicationController
 
   def index(page = 1)
     skip_authorization
-    @songs = Song.published.includes(playings: :user).page(page).order_by_live
+    @songs = Song.published.order_by_live.includes(playings: :user).page(page)
     @query = Song::SearchQuery.new
   end
 
