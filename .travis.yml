@@ -1,3 +1,6 @@
+sudo: required
+dist: trusty
+
 language: ruby
 
 services:
@@ -9,28 +12,27 @@ addons:
 
 cache: bundler
 
+bundler_args: --without development production
+
 before_install:
-  # cf. https://github.com/teamcapybara/capybara/blob/667faf54677662ecf7a340c8b1c12ab418a17391/.travis.yml#L89-L92
-  - mkdir -p ~/drivers; export PATH=~/drivers:$PATH;
-  - CHROMEDRIVER_VERSION=$(wget -q -O - http://chromedriver.storage.googleapis.com/LATEST_RELEASE);
-    CHROMEDRIVER_URL="http://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip";
-    FILE=`mktemp`; wget "$CHROMEDRIVER_URL" -qO $FILE && unzip $FILE chromedriver -d ~/drivers; rm $FILE; chmod 777 ~/drivers/chromedriver;
+  # https://github.com/travis-ci/travis-ci/issues/8978#issuecomment-354036443
+  - gem update --system
+  - gem install bundler
 
 before_script:
   - sudo /usr/share/elasticsearch/bin/elasticsearch-plugin install -b analysis-kuromoji
   - sudo service elasticsearch restart
-  - gem update --system
-  - gem install bundler
   - cp config/database.yml.travis config/database.yml
   - bin/rails db:create
-  - sleep 10 # cf. https://docs.travis-ci.com/user/database-setup/#ElasticSearch
+  # https://docs.travis-ci.com/user/database-setup/#ElasticSearch
+  - sleep 5
 
 script:
   - bin/rails spec
 
 branches:
   only:
-  - master
+    - master
 
 notifications:
   webhooks:
