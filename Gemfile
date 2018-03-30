@@ -37,9 +37,10 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'faker'
+  gem 'haml_lint', require: false
   gem 'listen', '~> 3.1.5'
   gem 'rails_real_favicon'
-  gem 'meowcop'
+  gem 'meowcop', require: false
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.1'
   gem 'web-console', '>= 3.5.1'
