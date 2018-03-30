@@ -1,11 +1,11 @@
 - provide(:title, @song.title)
 - provide(:description, strip_tags(@song.comment).presence || "#{@song.live_title} #{@song.time_order} #{@song.playings.sort_by(&:inst_order).map { |p| "#{p.inst}.#{p.handle}" }.join(' ')}")
 - provide(:og_type, 'music.song')
-- provide(:og_image, @song.youtube_thumbnail('maxresdefault')) if @song.watchable?(current_user)
+- provide(:og_image, @song.youtube_thumbnail('maxresdefault')) if policy(@song).watch?
 - content_for :additional_meta_fields do
   - @song.playings.each do |playing|
     %meta{ property: 'music:musician', content: user_url(playing.user) }
 = render @song
-- if @song.watchable?(current_user)
+- if policy(@song).watch?
   :javascript
     $('.song-thumbnail a').click();

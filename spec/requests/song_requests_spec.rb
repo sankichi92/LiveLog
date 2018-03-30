@@ -38,26 +38,17 @@ RSpec.describe 'Song requests', type: :request do
   end
 
   context 'GET /songs/:id/watch' do
-    let(:user) { create(:user) }
-    let(:song) { create(:song, users: [user], status: :secret) }
+    let(:song) { create(:song, status: :secret) }
 
     context 'with xhr' do
       let(:xhr) { true }
 
       context 'by a watchable user' do
-        before { log_in_as(user, capybara: false) }
+        before { log_in_as(create(:user, songs: [song]), capybara: false) }
 
         it 'responds 200' do
           get watch_song_path(song), xhr: xhr
           expect(response).to have_http_status(:ok)
-        end
-      end
-
-      context 'by a not watchable user' do
-        it 'responds 403' do
-          get watch_song_path(song), xhr: xhr
-          expect(response).to have_http_status(:forbidden)
-          expect(response.body).to eq ''
         end
       end
     end
@@ -73,45 +64,22 @@ RSpec.describe 'Song requests', type: :request do
   end
 
   describe 'GET /songs/new' do
-    before do
-      log_in_as(user, capybara: false)
-      create(:live)
-    end
-
-    context 'by a non-admin user' do
-      let(:user) { create(:user) }
-
-      it 'redirects to /' do
-        get new_song_path
-        expect(response).to redirect_to(root_url)
-      end
-    end
-
+    let(:live) { create(:live) }
     context 'by an admin user' do
-      let(:user) { create(:admin) }
+      before { log_in_as(create(:admin), capybara: false) }
 
       it 'responds 200' do
-        get new_song_path
+        get new_song_path, params: { live_id: live.id }
         expect(response).to have_http_status(:ok)
       end
     end
   end
 
   describe 'GET /songs/:id/edit' do
-    let(:user) { create(:user) }
-    let(:song) { create(:song, users: [user]) }
-
-    context 'by a non-editable user' do
-      before { log_in_as(create(:user), capybara: false) }
-
-      it 'redirects to /' do
-        get edit_song_path(song)
-        expect(response).to redirect_to(root_url)
-      end
-    end
+    let(:song) { create(:song) }
 
     context 'by an editable user' do
-      before { log_in_as(user, capybara: false) }
+      before { log_in_as(create(:user, songs: [song]), capybara: false) }
 
       it 'responds 200' do
         get edit_song_path(song)
@@ -122,23 +90,13 @@ RSpec.describe 'Song requests', type: :request do
 
   describe 'POST /songs' do
     let(:live) { create(:live) }
-    let(:song_attrs) { attributes_for(:song, live_id: live.id) }
-
-    before { log_in_as(user, capybara: false) }
-
-    context 'by a non-admin user' do
-      let(:user) { create(:user) }
-
-      it 'redirects to /' do
-        expect { post songs_path, params: { song: song_attrs } }.not_to change(Song, :count)
-        expect(response).to redirect_to(root_url)
-      end
-    end
 
     context 'by an admin user' do
-      let(:user) { create(:admin) }
+      before { log_in_as(create(:admin), capybara: false) }
 
       context 'with valid params' do
+        let(:song_attrs) { attributes_for(:song, live_id: live.id) }
+
         it 'creates a song and redirects to /song/:id' do
           expect { post songs_path, params: { song: song_attrs } }.to change(Song, :count).by(1)
           expect(response).to redirect_to(Song.last.live)
@@ -157,26 +115,14 @@ RSpec.describe 'Song requests', type: :request do
   end
 
   describe 'PATCH /songs/:id' do
-    let(:user) { create(:user) }
-    let(:song) { create(:song, users: [user]) }
-    let(:new_song_attrs) { attributes_for(:song, name: 'updated song') }
-
-    before { log_in_as(user, capybara: false) }
-
-    context 'by a non-editable user' do
-      before { log_in_as(create(:user), capybara: false) }
-
-      it 'redirects to /' do
-        patch song_path(song), params: { song: new_song_attrs }
-        expect(response).to redirect_to(root_url)
-        expect(song.reload.name).not_to eq 'updated song'
-      end
-    end
+    let(:song) { create(:song) }
 
     context 'by an editable user' do
-      before { log_in_as(user, capybara: false) }
+      before { log_in_as(create(:user, songs: [song]), capybara: false) }
 
       context 'with valid params' do
+        let(:new_song_attrs) { attributes_for(:song, name: 'updated song') }
+
         it 'updates the song and redirects to /songs/:id' do
           patch song_path(song), params: { song: new_song_attrs }
           expect(response).to redirect_to(song_url(song))
@@ -199,19 +145,8 @@ RSpec.describe 'Song requests', type: :request do
   describe 'DELETE /songs/:id' do
     let!(:song) { create(:song) }
 
-    before { log_in_as(user, capybara: false) }
-
-    context 'by a non-admin user' do
-      let(:user) { create(:user) }
-
-      it 'redirects to /' do
-        expect { delete song_path(song) }.not_to change(Song, :count)
-        expect(response).to redirect_to(root_url)
-      end
-    end
-
     context 'by an admin user' do
-      let(:user) { create(:admin) }
+      before { log_in_as(create(:admin), capybara: false) }
 
       it 'deletes the song and redirects /lives/:id' do
         expect { delete song_path(song) }.to change(Song, :count).by(-1)
