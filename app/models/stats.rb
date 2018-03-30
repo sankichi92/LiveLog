@@ -1,13 +1,16 @@
 class Stats
   include ActiveModel::Validations
 
-  attr_reader :year, :date_range
+  attr_reader :year
 
   validates :year, inclusion: { in: Live.years }
 
   def initialize(year)
     @year = year
-    @date_range = Date.new(year, 4, 1)..Date.new(year + 1, 3, 31)
+  end
+
+  def date_range
+    @date_range ||= Date.new(year, 4, 1)..Date.new(year + 1, 3, 31)
   end
 
   def number_of_songs
