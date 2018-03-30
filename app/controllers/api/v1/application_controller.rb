@@ -5,6 +5,7 @@ module Api::V1
     include ActionController::Caching
     include ActionController::HttpAuthentication::Token::ControllerMethods
     include Api::V1::TokensHelper
+    include Pundit
 
     before_action :check_user_agent if Rails.env == 'production'
     before_action :authenticate
