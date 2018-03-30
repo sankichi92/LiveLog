@@ -3,8 +3,6 @@ class SongsController < ApplicationController
 
   after_action :verify_authorized
 
-  before_action :store_referer, only: :edit
-
   def index(page = 1)
     skip_authorization
     @songs = Song.published.order_by_live.includes(playings: :user).page(page)
@@ -61,6 +59,7 @@ class SongsController < ApplicationController
   def edit(id)
     @song = Song.includes(playings: :user).find(id)
     authorize @song
+    store_referer
   end
 
   def update(id, song)
