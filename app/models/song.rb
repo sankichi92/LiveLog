@@ -75,14 +75,6 @@ class Song < ApplicationRecord
     playings.pluck(:user_id).include?(user&.id)
   end
 
-  def visible?(user)
-    open? || closed? && user || player?(user)
-  end
-
-  def watchable?(user)
-    youtube_id.present? && visible?(user)
-  end
-
   def editable?(user)
     user&.admin_or_elder? || player?(user)
   end
