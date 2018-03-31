@@ -49,6 +49,9 @@ en:
     attributes:
       song:
         playings: Players
+      user:
+        password: Password
   errors:
       messages:
         duplicated: are duplicated
+        wrong_password: is wrong

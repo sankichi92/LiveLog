@@ -189,6 +189,7 @@ ja:
       wrong_length: は%{count}文字で入力してください
       other_than: は%{count}以外の値にしてください
       duplicated: が重複しています
+      wrong_password: が異なります
     template:
       body: 次の項目を確認してください
       header:

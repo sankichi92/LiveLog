@@ -1,37 +1,30 @@
 class PasswordsController < ApplicationController
-  before_action :logged_in_user
-  before_action :correct_user
+  permits :password, :password_confirmation, model_name: 'User'
+
+  before_action :set_user
 
   def edit
-    #
+    authorize @user
   end
 
-  def update
-    if @user.authenticate(params[:user][:current_password])
-      if @user.update(password_params)
-        flash[:success] = 'パスワードを変更しました'
-        redirect_to @user
+  def update(current_password, user)
+    authorize @user
+    if @user.authenticate(current_password)
+      if @user.update(user)
+        flash[:success] = t(:updated, name: t('activerecord.attributes.user.password'))
+        redirect_to user_url(@user)
       else
-        render :edit
+        render :edit, status: :unprocessable_entity
       end
     else
-      @user.errors.add(:current_password, ' が異なります')
-      render :edit
+      @user.errors.add(:password, :wrong_password)
+      render :edit, status: :unprocessable_entity
     end
   end
 
   private
 
-  # Before filters
-
-  def correct_user
-    @user = User.find(params[:user_id])
-    redirect_to(root_url) unless current_user?(@user)
-  end
-
-  # Strong parameters
-
-  def password_params
-    params.require(:user).permit(:password, :password_confirmation)
+  def set_user(user_id)
+    @user = User.find(user_id)
   end
 end
