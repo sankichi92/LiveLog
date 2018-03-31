@@ -10,8 +10,8 @@
   %aside.btn-toolbar.justify-content-end.mb-3{ role: 'toolbar' }
     .btn-group.mr-2{ role: 'group' }
       = link_to 'Publish',
-                live_publish_path(@live),
-                method: :post,
+                publish_live_path(@live),
+                method: :put,
                 data: { confirm: "エントリーの受付を終了し，セットリストを公開します。\nこの操作は取り消せません。" },
                 class: 'btn btn-outline-warning',
                 'data-toggle': 'tooltip',

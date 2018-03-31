@@ -15,9 +15,9 @@ Rails.application.routes.draw do
 
   resources :lives do
     resources :entries, only: %i[index new create]
-    resource :publish, only: :create
     member do
       get 'album'
+      put 'publish'
     end
   end
 

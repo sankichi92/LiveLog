@@ -118,6 +118,33 @@ RSpec.describe 'Live requests', type: :request do
     end
   end
 
+  describe 'PUT /lives/:id/publish by admin' do
+    before { log_in_as(create(:admin), capybara: false) }
+
+    context 'when live is published' do
+      let(:live) { create(:live) }
+
+      it 'redirects to /lives/:id' do
+        expect(TweetJob).not_to receive(:perform_now)
+        put publish_live_url(live)
+        expect(response).to redirect_to(live_url(live))
+      end
+    end
+
+    context 'when live is unpublished' do
+      let(:live) { create(:live, :draft) }
+
+      before { Song.__elasticsearch__.create_index! }
+
+      it 'publishes live, tweet it and redirects to /lives/:id' do
+        expect(TweetJob).to receive(:perform_now)
+        put publish_live_url(live)
+        expect(response).to redirect_to(live_url(live))
+        expect(live.reload.published).to be true
+      end
+    end
+  end
+
   describe 'DELETE /lives/:id by admin' do
     let!(:live) { create(:live) }
 
