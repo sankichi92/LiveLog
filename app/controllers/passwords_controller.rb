@@ -3,6 +3,8 @@ class PasswordsController < ApplicationController
 
   before_action :set_user
 
+  after_action :verify_authorized
+
   def edit
     authorize @user
   end
