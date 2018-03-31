@@ -131,7 +131,7 @@ class User < ApplicationRecord
   end
 
   def reset_password(password_params)
-    update(password_params) && update_column(:reset_digest, nil)
+    update(password_params.merge(reset_digest: nil, reset_sent_at: nil))
   end
 
   def password_reset_expired?
