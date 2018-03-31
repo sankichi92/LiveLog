@@ -30,7 +30,7 @@ class EntriesController < ApplicationController
     end
     redirect_to action: :index
   rescue ActiveRecord::RecordNotUnique
-    @song.errors.add(:playings, 'が重複しています')
+    @song.errors.add(:playings, :duplicated)
   end
 
   private

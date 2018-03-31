@@ -39,6 +39,9 @@ en:
     success: 'You are now logged in'
   logout: 'You are now logged out'
   activerecord:
-      models:
-        song: Song
-        live: Live
+      attributes:
+        song:
+          playings: Players
+  errors:
+      messages:
+        duplicated: are duplicated
