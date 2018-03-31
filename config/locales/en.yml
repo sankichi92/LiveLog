@@ -43,8 +43,9 @@ en:
   profile: Profile
   activerecord:
     models:
-      song: Song
       live: Live
+      song: Song
+      user: Member
     attributes:
       song:
         playings: Players
