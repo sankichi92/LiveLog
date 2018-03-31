@@ -63,8 +63,8 @@ RSpec.describe 'Entry', type: :system do
         all('.user-select')[i].find(:option, user.name_with_handle).select_option
       end
 
-      fill_in 'song_preferred_rehearsal_time', with: '23時以前'
-      fill_in 'song_preferred_performance_time', with: '20時以降'
+      fill_in 'entry_preferred_rehearsal_time', with: '23時以前'
+      fill_in 'entry_preferred_performance_time', with: '20時以降'
 
       accept_confirm do
         click_button 'Send'
