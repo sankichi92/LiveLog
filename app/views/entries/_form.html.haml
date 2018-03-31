@@ -28,14 +28,14 @@
 
   .form-row
     .form-group.col-sm
-      = f.label :preferred_rehearsal_time, 'リハーサル希望時間'
-      = f.text_area :preferred_rehearsal_time, id: 'song_preferred_rehearsal_time', class: 'form-control'
+      = label :entry, :preferred_rehearsal_time, 'リハ希望時間'
+      = text_area :entry, :preferred_rehearsal_time, id: 'entry_preferred_rehearsal_time', class: 'form-control'
     .form-group.col-sm
-      = f.label :preferred_performance_time, '演奏希望時間'
-      = f.text_area :preferred_performance_time, id: 'song_preferred_performance_time', class: 'form-control'
+      = label :entry, :preferred_performance_time, '本番希望時間'
+      = text_area :entry, :preferred_performance_time, id: 'entry_preferred_performance_time', class: 'form-control'
 
   .form-group
-    = f.label :notes, '備考'
-    = f.text_area :notes, id: 'song_notes', class: 'form-control', rows: 3
+    = label :entry, :notes, '備考'
+    = text_area :entry, :notes, id: 'entry_notes', class: 'form-control', rows: 3
 
   = f.submit 'Send', data: { confirm: '本当に送信しますか？' }, class: 'btn btn-primary'

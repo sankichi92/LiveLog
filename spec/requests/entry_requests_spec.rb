@@ -57,6 +57,7 @@ RSpec.describe 'Entry requests', type: :request do
 
     context 'when live is unpublished' do
       let(:live) { create(:live, :draft) }
+      let(:entry_attrs) { { preferred_rehearsal_time: '', preferred_performance_time: '', notes: '' } }
 
       before { ActionMailer::Base.deliveries.clear }
 
@@ -65,7 +66,7 @@ RSpec.describe 'Entry requests', type: :request do
 
         it 'creates a song, send an email and redirects /lives/:id/entries' do
           expect {
-            post live_entries_path(live), params: { song: song_attrs }, xhr: true
+            post live_entries_path(live), params: { song: song_attrs, entry: entry_attrs }, xhr: true
           }.to change(Song, :count).by(1)
           expect(ActionMailer::Base.deliveries.size).to eq 1
           expect(response).to redirect_to(live_entries_url(live))
@@ -77,7 +78,7 @@ RSpec.describe 'Entry requests', type: :request do
 
         it 'responds 422' do
           expect {
-            post live_entries_path(live), params: { song: song_attrs }, xhr: true
+            post live_entries_path(live), params: { song: song_attrs, entry: entry_attrs }, xhr: true
           }.not_to change(Song, :count)
           expect(ActionMailer::Base.deliveries.size).to eq 0
           expect(response).to have_http_status(:unprocessable_entity)

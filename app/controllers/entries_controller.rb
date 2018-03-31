@@ -1,5 +1,5 @@
 class EntriesController < ApplicationController
-  permits :name, :artist, :original, :status, :preferred_rehearsal_time, :preferred_performance_time, :notes, playings_attributes: %i[id user_id inst _destroy], model_name: 'Song'
+  permits :name, :artist, :original, :status, playings_attributes: %i[id user_id inst _destroy], model_name: 'Song'
 
   before_action :set_live
   before_action :draft_live
@@ -18,16 +18,16 @@ class EntriesController < ApplicationController
     @song.playings.build
   end
 
-  def create(song)
+  def create(song, entry)
     authorize Entry
     @song = @live.songs.build(song)
     return render(status: :unprocessable_entity) unless @song.save
     entry = Entry.new(
       applicant: current_user,
       song: @song,
-      preferred_rehearsal_time: song[:preferred_rehearsal_time],
-      preferred_performance_time: song[:preferred_performance_time],
-      notes: song[:notes]
+      preferred_rehearsal_time: entry[:preferred_rehearsal_time],
+      preferred_performance_time: entry[:preferred_performance_time],
+      notes: entry[:notes]
     )
     entry.send_email
     flash[:success] = t(:entered, live: @live.title, song: @song.title)
