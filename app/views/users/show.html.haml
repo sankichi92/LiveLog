@@ -90,7 +90,7 @@
         = render song
 
 - if current_user&.admin?
-  %aside.btn-toolbar.justify-content-end{ role: 'toolbar' }
+  %aside.btn-toolbar.justify-content-end#admin-tools{ role: 'toolbar' }
     - if @user.activated? && current_user != @user
       .btn-group{ role: 'group' }
         - if @user.admin?
