@@ -93,4 +93,26 @@ RSpec.describe 'User', type: :system do
       expect { click_link('Delete') }.to change(User, :count).by(-1)
     end
   end
+
+  describe 'edit password' do
+    let(:user) { create(:user) }
+
+    before { log_in_as user }
+
+    it 'enables users to update their own password' do
+      visit edit_user_path(user)
+      click_link 'パスワードを変更する'
+
+      expect(page).to have_title('Change Password')
+
+      fill_in 'current_password', with: user.password
+      fill_in 'user_password', with: 'new_password'
+      fill_in 'user_password_confirmation', with: 'new_password'
+      click_button 'Save'
+
+      expect(user.password_digest).not_to eq user.reload.password_digest
+      expect(page).to have_css('.alert-success')
+      expect(page).to have_title(user.name_with_handle)
+    end
+  end
 end
