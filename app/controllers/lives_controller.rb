@@ -23,11 +23,6 @@ class LivesController < ApplicationController
     authorize @live
   end
 
-  def edit(id)
-    @live = Live.find(id)
-    authorize @live
-  end
-
   def create(live)
     @live = Live.new(live)
     authorize @live
@@ -37,6 +32,11 @@ class LivesController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
+  end
+
+  def edit(id)
+    @live = Live.find(id)
+    authorize @live
   end
 
   def update(id, live)
