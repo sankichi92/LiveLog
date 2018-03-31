@@ -8,18 +8,18 @@ class EntriesController < ApplicationController
   after_action :verify_policy_scoped, only: :index
 
   def index
-    authorize :entry
+    authorize Entry
     @songs = policy_scope(@live.songs).includes(playings: :user).order(:time, :order, created_at: :desc)
   end
 
   def new
-    authorize :entry
+    authorize Entry
     @song = @live.songs.build
     @song.playings.build
   end
 
   def create(song)
-    authorize :entry
+    authorize Entry
     @song = @live.songs.build(song)
     return render(status: :unprocessable_entity) unless @song.save
     entry = Entry.new(
