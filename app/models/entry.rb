@@ -8,7 +8,7 @@ class Entry
   validates :applicant, presence: true
   validates :song, presence: true
 
-  def deliver
+  def send_email
     EntryMailer.entry(self).deliver_now if valid?
   end
 end

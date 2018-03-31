@@ -1,53 +1,49 @@
 class EntriesController < ApplicationController
-  before_action :logged_in_user
+  permits :name, :artist, :original, :status, playings_attributes: %i[id user_id inst _destroy], model_name: 'Song'
+
   before_action :set_live
   before_action :draft_live
 
+  after_action :verify_authorized
+  after_action :verify_policy_scoped, only: :index
+
   def index
-    songs = @live.songs.order(:time, :order, created_at: :desc).includes(playings: :user)
-    @songs = songs.select { |song| song.editable?(current_user) }
+    authorize :entry
+    @songs = policy_scope(@live.songs).includes(playings: :user).order(:time, :order, created_at: :desc)
   end
 
   def new
+    authorize :entry
     @song = @live.songs.build
     @song.playings.build
   end
 
-  def create
-    @song = @live.songs.build(song_params)
-    return unless @song.save
+  def create(song)
+    authorize :entry
+    @song = @live.songs.build(song)
+    return render(status: :unprocessable_entity) unless @song.save
     entry = Entry.new(
       applicant: current_user,
       song: @song,
-      preferred_rehearsal_time: params[:song][:preferred_rehearsal_time],
-      preferred_performance_time: params[:song][:preferred_performance_time],
-      notes: params[:song][:notes]
+      preferred_rehearsal_time: song[:preferred_rehearsal_time],
+      preferred_performance_time: song[:preferred_performance_time],
+      notes: song[:notes]
     )
-    if entry.deliver
-      flash[:success] = '曲の申請メールを送信しました'
-    else
-      flash[:danger] = 'メールの送信に失敗しました'
-    end
-    redirect_to action: :index
+    entry.send_email
+    flash[:success] = t(:entered, live: @live.title, song: @song.title)
+    redirect_to live_entries_url(@live)
   rescue ActiveRecord::RecordNotUnique
     @song.errors.add(:playings, :duplicated)
+    render status: :unprocessable_entity
   end
 
   private
 
-  # Before filters
-
-  def set_live
-    @live = Live.find(params[:live_id])
+  def set_live(live_id)
+    @live = Live.find(live_id)
   end
 
   def draft_live
-    redirect_to root_url if @live.published?
-  end
-
-  # Strong parameters
-
-  def song_params
-    params.require(:song).permit(:name, :artist, :original, :status, playings_attributes: %i[id user_id inst _destroy])
+    redirect_to live_url(@live), status: :moved_permanently if @live.published?
   end
 end

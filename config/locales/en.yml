@@ -33,15 +33,20 @@ en:
   created: "%{name} created"
   updated: "%{name} updated"
   deleted: "%{name} deleted"
+  entered: "Applied for %{song} to %{live}"
+  published: Published
   login:
     inactivated: 'Account not activated.  Check your email for the activation link'
     invalid: 'Invalid email/password combination'
     success: 'You are now logged in'
   logout: 'You are now logged out'
   activerecord:
-      attributes:
-        song:
-          playings: Players
+    models:
+      song: Song
+      live: Live
+    attributes:
+      song:
+        playings: Players
   errors:
       messages:
         duplicated: are duplicated
