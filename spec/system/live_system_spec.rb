@@ -24,7 +24,7 @@ RSpec.describe 'Live', type: :system do
   describe 'detail' do
     let(:live) { create(:live, :with_songs) }
 
-    it 'enables to non-logged-in users to see individual live pages' do
+    it 'enables non-logged-in users to see individual live pages' do
       visit live_path(live)
 
       expect(page).to have_title(live.title)
@@ -90,8 +90,9 @@ RSpec.describe 'Live', type: :system do
       fill_in 'live_album_url', with: 'https://example.com/album'
       click_button 'Save'
 
-      expect(page).to have_selector('.alert-success')
       expect(live.reload.album_url).to eq 'https://example.com/album'
+      expect(page).to have_css('.alert-success')
+      expect(page).to have_title(live.title)
     end
   end
 

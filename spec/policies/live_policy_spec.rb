@@ -24,7 +24,7 @@ RSpec.describe LivePolicy do
       expect(subject).not_to permit(create(:user), live)
     end
 
-    it 'grants access if user is an admin' do
+    it 'grants access if user is admin' do
       expect(subject).to permit(create(:admin), live)
     end
   end
@@ -38,7 +38,7 @@ RSpec.describe LivePolicy do
       expect(subject).not_to permit(create(:user), live)
     end
 
-    it 'grants access if user is an admin' do
+    it 'grants access if user is admin' do
       expect(subject).to permit(create(:admin), live)
     end
 
