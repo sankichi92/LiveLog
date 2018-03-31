@@ -10,6 +10,7 @@ ja:
     invalid: 無効なメールアドレスとパスワードの組み合わせです
     success: ログインしました
   logout: ログアウトしました
+  profile: プロフィール
   activerecord:
     errors:
       messages:

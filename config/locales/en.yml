@@ -40,6 +40,7 @@ en:
     invalid: Invalid email/password combination
     success: You are now logged in
   logout: You are now logged out
+  profile: Profile
   activerecord:
     models:
       song: Song
