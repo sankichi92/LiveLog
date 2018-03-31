@@ -6,10 +6,10 @@ ja:
   entered: "%{live} に %{song} をエントリーしました"
   published: 公開しました
   login:
-    inactivated: 'アカウントが有効化されていません。メールを確認してください'
-    invalid: '無効なメールアドレスとパスワードの組み合わせです'
-    success: 'ログインしました'
-  logout: 'ログアウトしました'
+    inactivated: アカウントが有効化されていません。メールを確認してください
+    invalid: 無効なメールアドレスとパスワードの組み合わせです
+    success: ログインしました
+  logout: ログアウトしました
   activerecord:
     errors:
       messages:
