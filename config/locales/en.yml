@@ -40,13 +40,21 @@ en:
     invalid: Invalid email/password combination
     success: You are now logged in
   logout: You are now logged out
+  profile: Profile
+  admin:
+    create: Enabled admin authority
+    destroy: Disabled admin authority
   activerecord:
     models:
-      song: Song
       live: Live
+      song: Song
+      user: Member
     attributes:
       song:
         playings: Players
+      user:
+        password: Password
   errors:
       messages:
         duplicated: are duplicated
+        wrong_password: is wrong

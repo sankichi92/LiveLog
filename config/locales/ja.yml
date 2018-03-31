@@ -10,6 +10,10 @@ ja:
     invalid: 無効なメールアドレスとパスワードの組み合わせです
     success: ログインしました
   logout: ログアウトしました
+  profile: プロフィール
+  admin:
+    create: 管理者権限を有効にしました
+    destroy: 管理者権限を無効にしました
   activerecord:
     errors:
       messages:
@@ -18,8 +22,9 @@ ja:
           has_one: "%{record}が存在しているので削除できません"
           has_many: "%{record}が存在しているので削除できません"
     models:
-      song: 曲
       live: ライブ
+      song: 曲
+      user: メンバー
     attributes:
       user:
         first_name: 名
@@ -187,6 +192,7 @@ ja:
       wrong_length: は%{count}文字で入力してください
       other_than: は%{count}以外の値にしてください
       duplicated: が重複しています
+      wrong_password: が異なります
     template:
       body: 次の項目を確認してください
       header:
