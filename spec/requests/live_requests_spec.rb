@@ -19,7 +19,7 @@ RSpec.describe 'Live requests', type: :request do
     end
 
     context 'when the live is unpublished' do
-      let(:live) { create(:draft_live) }
+      let(:live) { create(:live, :draft) }
 
       it 'redirects to /lives/:id/entries' do
         get live_path(live)

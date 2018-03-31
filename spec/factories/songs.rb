@@ -12,6 +12,13 @@ FactoryBot.define do
       name ''
     end
 
+    trait :draft do
+      association :live, factory: %i[live draft]
+      order nil
+      youtube_id nil
+      comment nil
+    end
+
     transient do
       users []
     end
@@ -22,13 +29,6 @@ FactoryBot.define do
       end
       song.reload
     end
-  end
-
-  factory :draft_song, parent: :song do
-    association :live, factory: :draft_live
-    order nil
-    youtube_id nil
-    comment nil
   end
 
   factory :playing do
