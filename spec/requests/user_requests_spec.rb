@@ -145,4 +145,28 @@ RSpec.describe 'User requests', type: :request do
       end
     end
   end
+
+  describe 'POST /members/:id/admin by admin user' do
+    let(:user) { create(:user) }
+
+    before { log_in_as(create(:admin), capybara: false) }
+
+    it 'make the user admin and redirects to /users/:id' do
+      post user_admin_path(user)
+      expect(user.reload.admin).to be true
+      expect(response).to redirect_to user_url(user)
+    end
+  end
+
+  describe 'DELETE /members/:id/admin by admin user' do
+    let(:user) { create(:admin) }
+
+    before { log_in_as(create(:admin), capybara: false) }
+
+    it 'make the user non-admin and redirects to /users/:id' do
+      delete user_admin_path(user)
+      expect(user.reload.admin).to be false
+      expect(response).to redirect_to user_url(user)
+    end
+  end
 end

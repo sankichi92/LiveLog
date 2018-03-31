@@ -115,4 +115,22 @@ RSpec.describe 'User', type: :system do
       expect(page).to have_title(user.name_with_handle)
     end
   end
+
+  describe 'make admin' do
+    let(:user) { create(:user)}
+
+    before { log_in_as create(:admin) }
+
+    it 'enables admin users to make users admin' do
+      visit user_path(user)
+
+      click_link '管理者にする'
+
+      expect(user.reload.admin).to be true
+
+      click_link '管理者権限を無効にする'
+
+      expect(user.reload.admin).to be false
+    end
+  end
 end
