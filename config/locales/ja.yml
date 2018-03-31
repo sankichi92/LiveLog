@@ -11,6 +11,9 @@ ja:
     success: ログインしました
   logout: ログアウトしました
   profile: プロフィール
+  admin:
+    create: 管理者権限を有効にしました
+    destroy: 管理者権限を無効にしました
   activerecord:
     errors:
       messages:

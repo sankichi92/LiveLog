@@ -24,4 +24,8 @@ class UserPolicy < ApplicationPolicy
   def destroy?
     user&.admin_or_elder?
   end
+
+  def make_admin?
+    user&.admin?
+  end
 end

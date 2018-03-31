@@ -41,6 +41,9 @@ en:
     success: You are now logged in
   logout: You are now logged out
   profile: Profile
+  admin:
+    create: Enabled admin authority
+    destroy: Disabled admin authority
   activerecord:
     models:
       live: Live
