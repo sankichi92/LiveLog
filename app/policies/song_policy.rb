@@ -4,7 +4,7 @@ class SongPolicy < ApplicationPolicy
       if user&.admin?
         scope.all
       else
-        scope.where('playings.user_id': user&.id)
+        scope.joins(:playings).where('playings.user_id': user&.id)
       end
     end
   end
