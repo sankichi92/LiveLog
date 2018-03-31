@@ -70,7 +70,7 @@ class LivesController < ApplicationController
     flash.now[:danger] = e.message
     render :show, status: :unprocessable_entity
   else
-    flash[:success] = t(:deleted, name: t(:'activerecord.models.live'))
+    flash[:success] = t(:deleted, name: @live.title)
     redirect_to lives_url
   end
 end
