@@ -50,6 +50,18 @@ class LivesController < ApplicationController
     end
   end
 
+  def publish(id)
+    @live = Live.find(id)
+    if @live.published?
+      skip_authorization
+    else
+      authorize @live
+      @live.publish(live_url(@live))
+      flash[:success] = t(:published)
+    end
+    redirect_to live_url(@live), status: :moved_permanently
+  end
+
   def destroy(id)
     @live = Live.find(id)
     authorize @live

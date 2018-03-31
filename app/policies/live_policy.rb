@@ -11,6 +11,10 @@ class LivePolicy < ApplicationPolicy
     user&.admin_or_elder?
   end
 
+  def publish?
+    user&.admin?
+  end
+
   def destroy?
     user&.admin_or_elder?
   end

@@ -25,9 +25,10 @@ class Live < ApplicationRecord
     name.include?('NF')
   end
 
-  def publish
+  def publish(url)
     update(published: true, published_at: Time.zone.now)
     songs.includes(:playings).import
+    TweetJob.perform_now("#{title} のセットリストが公開されました！\n#{url}")
   end
 
   private

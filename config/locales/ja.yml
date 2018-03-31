@@ -3,6 +3,8 @@ ja:
   created: "%{name} を追加しました"
   updated: "%{name} を更新しました"
   deleted: "%{name} を削除しました"
+  entered: "%{live} に %{song} をエントリーしました"
+  published: 公開しました
   login:
     inactivated: 'アカウントが有効化されていません。メールを確認してください'
     invalid: '無効なメールアドレスとパスワードの組み合わせです'

@@ -75,10 +75,6 @@ class Song < ApplicationRecord
     playings.pluck(:user_id).include?(user&.id)
   end
 
-  def editable?(user)
-    user&.admin_or_elder? || player?(user)
-  end
-
   private
 
   def extract_youtube_id
