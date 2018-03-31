@@ -6,7 +6,8 @@ RSpec.describe 'Entry', type: :system do
 
   describe 'list' do
     let!(:entries) { create_list(:song, 10, :draft, live: live) }
-    let!(:user_entry) { create(:song, :draft, live: live, users: [user], name: 'Song user will play') }
+    let(:player) { create(:user, nickname: '共演者') }
+    let!(:user_entry) { create(:song, :draft, live: live, users: [user, player], name: 'Song user will play') }
 
     it 'enables logged-in users to see individual live entries pages and their applied songs' do
       log_in_as user
@@ -18,6 +19,9 @@ RSpec.describe 'Entry', type: :system do
       expect(page).to have_link('エントリーする', href: new_live_entry_path(live))
       expect(page).not_to have_css('#admin-tools')
       expect(page).to have_content(user_entry.name)
+      user_entry.playings.each do |playing|
+        expect(page).to have_content(playing.handle)
+      end
       entries.each do |entry|
         expect(page).not_to have_content(entry.name)
       end
