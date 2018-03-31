@@ -108,4 +108,41 @@ RSpec.describe 'User requests', type: :request do
       end
     end
   end
+
+  describe 'GET /members/:id/password/edit by correct user' do
+    let(:user) { create(:user) }
+
+    before { log_in_as(user, capybara: false) }
+
+    it 'responds 200' do
+      get edit_user_password_path(user)
+      expect(response).to have_http_status(:ok)
+    end
+  end
+
+  describe 'PATCH /members/:id/password by correct user' do
+    let(:user) { create(:user) }
+
+    before { log_in_as(user, capybara: false) }
+
+    context 'with valid params' do
+      let(:new_password_attrs) { { password: 'new_password' } }
+
+      it 'updates the user and redirects to /members/:id' do
+        patch user_password_path(user), params: { current_password: user.password, user: new_password_attrs }
+        expect(response).to redirect_to(user_url(user))
+        expect(user.password_digest).not_to eq user.reload.password_digest
+      end
+    end
+
+    context 'with invalid params' do
+      let(:new_password_attrs) { { password: '1234' } }
+
+      it 'responds 422' do
+        patch user_password_path(user), params: { current_password: user.password, user: new_password_attrs }
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(user.password_digest).to eq user.reload.password_digest
+      end
+    end
+  end
 end
