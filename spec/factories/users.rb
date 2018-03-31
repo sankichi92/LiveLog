@@ -9,7 +9,12 @@ FactoryBot.define do
     password_confirmation 'foobar'
     activated true
     activated_at Time.zone.now
+    public false
     subscribing true
+
+    trait :invalid do
+      furigana 'キョウダイアンプラタロウ'
+    end
 
     trait :elder do
       joined 2010
