@@ -80,12 +80,9 @@ RSpec.describe 'Entry', type: :system do
   end
 
   describe 'publish' do
-    before do
-      Song.__elasticsearch__.create_index!
-      log_in_as create(:admin)
-    end
+    before { log_in_as create(:admin) }
 
-    it 'enables admin users to publish live' do
+    it 'enables admin users to publish live', elasticsearch: true do
       expect(TweetJob).to receive(:perform_now)
 
       visit live_entries_path(live)

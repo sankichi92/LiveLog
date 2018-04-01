@@ -134,9 +134,7 @@ RSpec.describe 'Live requests', type: :request do
     context 'when live is unpublished' do
       let(:live) { create(:live, :draft) }
 
-      before { Song.__elasticsearch__.create_index! }
-
-      it 'publishes live, tweet it and redirects to /lives/:id' do
+      it 'publishes live, tweet it and redirects to /lives/:id', elasticsearch: true do
         expect(TweetJob).to receive(:perform_now)
         put publish_live_url(live)
         expect(response).to redirect_to(live)
