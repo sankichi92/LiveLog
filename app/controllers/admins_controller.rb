@@ -6,14 +6,14 @@ class AdminsController < ApplicationController
   def create
     authorize @user, :make_admin?
     @user.update_attribute(:admin, true)
-    flash[:success] = t('admin.create')
+    flash[:success] = t('flash.controllers.admins.created')
     redirect_to @user
   end
 
   def destroy
     authorize @user, :make_admin?
     @user.update_attribute(:admin, false)
-    flash[:success] = t('admin.destroy')
+    flash[:success] = t('flash.controllers.admins.deleted')
     redirect_to @user
   end
 

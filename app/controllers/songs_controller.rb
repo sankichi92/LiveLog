@@ -43,7 +43,7 @@ class SongsController < ApplicationController
     @song = Song.new(song)
     authorize @song
     if @song.save
-      flash[:success] = t(:created, name: @song.title)
+      flash[:success] = t('flash.messages.created', name: @song.title)
       redirect_to @song.live
     else
       render :new, status: :unprocessable_entity
@@ -63,7 +63,7 @@ class SongsController < ApplicationController
     @song = Song.find(id)
     authorize @song
     if @song.update(song)
-      flash[:success] = t(:updated, name: @song.title)
+      flash[:success] = t('flash.messages.updated', name: @song.title)
       redirect_back_or @song
     else
       render :edit, status: :unprocessable_entity
@@ -81,7 +81,7 @@ class SongsController < ApplicationController
     flash.now[:danger] = e.message
     render :show
   else
-    flash[:success] = t(:deleted, name: t(:'activerecord.models.song'))
+    flash[:success] = t('flash.messages.deleted', name: @song.title)
     redirect_to @song.live
   end
 

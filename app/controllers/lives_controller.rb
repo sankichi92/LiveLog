@@ -27,7 +27,7 @@ class LivesController < ApplicationController
     @live = Live.new(live)
     authorize @live
     if @live.save
-      flash[:success] = t(:created, name: @live.title)
+      flash[:success] = t('flash.messages.created', name: @live.title)
       redirect_to @live.published? ? @live : live_entries_url(@live)
     else
       render :new, status: :unprocessable_entity
@@ -43,7 +43,7 @@ class LivesController < ApplicationController
     @live = Live.find(id)
     authorize @live
     if @live.update(live)
-      flash[:success] = t(:updated, name: @live.title)
+      flash[:success] = t('flash.messages.updated', name: @live.title)
       redirect_to @live
     else
       render :edit, status: :unprocessable_entity
@@ -57,7 +57,7 @@ class LivesController < ApplicationController
     else
       authorize @live
       @live.publish(live_url(@live))
-      flash[:success] = t(:published)
+      flash[:success] = t('flash.controllers.lives.published')
     end
     redirect_to @live, status: :moved_permanently
   end
@@ -70,7 +70,7 @@ class LivesController < ApplicationController
     flash.now[:danger] = e.message
     render :show, status: :unprocessable_entity
   else
-    flash[:success] = t(:deleted, name: @live.title)
+    flash[:success] = t('flash.messages.deleted', name: @live.title)
     redirect_to lives_url
   end
 end

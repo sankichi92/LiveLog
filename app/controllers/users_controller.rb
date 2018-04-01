@@ -35,7 +35,7 @@ class UsersController < ApplicationController
     @user = User.new(user)
     authorize @user
     if @user.save
-      flash[:success] = t(:created, name: @user.name)
+      flash[:success] = t('flash.messages.created', name: @user.name)
       redirect_to new_user_url
     else
       render :new, status: :unprocessable_entity
@@ -51,7 +51,7 @@ class UsersController < ApplicationController
     @user = User.find(id)
     authorize @user
     if @user.update(user)
-      flash[:success] = t(:updated, name: t(:profile))
+      flash[:success] = t('flash.controllers.users.updated')
       redirect_to @user
     else
       render :edit, status: :unprocessable_entity
@@ -66,7 +66,7 @@ class UsersController < ApplicationController
     flash.now[:danger] = e.message
     render :show, status: :unprocessable_entity
   else
-    flash[:success] = t(:deleted, name: @user.name)
+    flash[:success] = t('flash.messages.deleted', name: @user.name)
     redirect_to users_url
   end
 

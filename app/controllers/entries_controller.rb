@@ -30,7 +30,7 @@ class EntriesController < ApplicationController
       notes: entry[:notes]
     )
     entry.send_email
-    flash[:success] = t(:entered, live: @live.title, song: @song.title)
+    flash[:success] = t('flash.controllers.entries.entered', live: @live.title, song: @song.title)
     redirect_to live_entries_url(@live)
   rescue ActiveRecord::RecordNotUnique
     @song.errors.add(:playings, :duplicated)

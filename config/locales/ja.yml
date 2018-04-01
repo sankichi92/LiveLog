@@ -1,19 +1,24 @@
----
 ja:
-  created: "%{name} を追加しました"
-  updated: "%{name} を更新しました"
-  deleted: "%{name} を削除しました"
-  entered: "%{live} に %{song} をエントリーしました"
-  published: 公開しました
-  login:
-    inactivated: アカウントが有効化されていません。メールを確認してください
-    invalid: 無効なメールアドレスとパスワードの組み合わせです
-    success: ログインしました
-  logout: ログアウトしました
-  profile: プロフィール
-  admin:
-    create: 管理者権限を有効にしました
-    destroy: 管理者権限を無効にしました
+  flash:
+    messages:
+      created: "%{name} を追加しました"
+      updated: "%{name} を更新しました"
+      deleted: "%{name} を削除しました"
+    controllers:
+      admins:
+        created: 管理者権限を有効にしました
+        deleted: 管理者権限を無効にしました
+      entries:
+        entered: "%{live} に %{song} をエントリーしました"
+      lives:
+        published: 公開しました
+      sessions:
+        inactivated: アカウントが有効化されていません。メールを確認してください
+        invalid: 無効なメールアドレスとパスワードの組み合わせです
+        logged_in: ログインしました
+        logged_out: ログアウトしました
+      users:
+        updated: プロフィールを更新しました
   activerecord:
     errors:
       messages:
@@ -21,6 +26,15 @@ ja:
         restrict_dependent_destroy:
           has_one: "%{record}が存在しているので削除できません"
           has_many: "%{record}が存在しているので削除できません"
+      models:
+        song:
+          attributes:
+            playing:
+              duplicated: が重複しています
+        user:
+          attributes:
+            password:
+              wrong: が現在のものと異なります
     models:
       live: ライブ
       song: 曲
@@ -191,8 +205,6 @@ ja:
       too_short: は%{count}文字以上で入力してください
       wrong_length: は%{count}文字で入力してください
       other_than: は%{count}以外の値にしてください
-      duplicated: が重複しています
-      wrong_password: が異なります
     template:
       body: 次の項目を確認してください
       header:

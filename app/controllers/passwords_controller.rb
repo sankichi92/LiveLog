@@ -13,13 +13,13 @@ class PasswordsController < ApplicationController
     authorize @user
     if @user.authenticate(current_password)
       if @user.update(user)
-        flash[:success] = t(:updated, name: t('activerecord.attributes.user.password'))
+        flash[:success] = t('flash.messages.updated', name: User.human_attribute_name(:password))
         redirect_to @user
       else
         render :edit, status: :unprocessable_entity
       end
     else
-      @user.errors.add(:password, :wrong_password)
+      @user.errors.add(:password, :wrong)
       render :edit, status: :unprocessable_entity
     end
   end
