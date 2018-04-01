@@ -34,6 +34,8 @@ en:
               duplicated: are duplicated
         user:
           attributes:
+            furigana:
+              invalid: must be Hiragana
             password:
               wrong: is different from current one
     models:

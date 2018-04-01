@@ -11,32 +11,15 @@ class User < ApplicationRecord
 
   validates :first_name, presence: true
   validates :last_name, presence: true
-  validates :furigana, presence: true, format: { with: /\A[\p{Hiragana}ー]+\z/, message: 'ひらがなのみ使用できます' }
+  validates :furigana, presence: true, format: { with: /\A[\p{Hiragana}ー]+\z/ }
   validates :nickname, length: { maximum: 50 }
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
-  validates :email,
-            presence: true,
-            length: { maximum: 255 },
-            format: { with: VALID_EMAIL_REGEX },
-            uniqueness: { case_sensitive: false },
-            on: :update
-  validates :joined,
-            presence: true,
-            numericality: {
-              only_integer: true,
-              greater_than: 1994,
-              less_than_or_equal_to: Time.zone.today.year
-            }
+  validates :email, presence: true, length: { maximum: 255 }, format: { with: /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i }, uniqueness: { case_sensitive: false }, on: :update
+  validates :joined, presence: true, numericality: { only_integer: true, greater_than: 1994, less_than_or_equal_to: Time.zone.today.year }
   validates :url, format: /\A#{URI.regexp(%w[http https])}\z/, allow_blank: true
-  validates :password,
-            presence: true,
-            confirmation: true,
-            length: { minimum: 6, maximum: 72 },
-            allow_nil: true,
-            on: :update
+  validates :password, presence: true, confirmation: true, length: { minimum: 6, maximum: 72 }, allow_nil: true, on: :update
   validates :password_confirmation, presence: true, allow_nil: true, on: :update
 
-  scope :natural_order, -> { order('joined DESC', 'furigana COLLATE "C"') } # TODO: Remove 'COLLATE "C"'
+  scope :natural_order, -> { order(joined: :desc, furigana: :asc) }
   scope :active, -> { includes(songs: :live).where('lives.date': 1.year.ago..Time.zone.today) }
   scope :joined_years, -> { unscope(:order).order(joined: :desc).distinct.pluck(:joined) }
 
