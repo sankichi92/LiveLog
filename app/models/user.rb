@@ -1,6 +1,4 @@
 class User < ApplicationRecord
-  NotAuthorized = Class.new(StandardError)
-
   has_many :playings, dependent: :restrict_with_exception
   has_many :songs, through: :playings
   has_many :tokens, dependent: :destroy

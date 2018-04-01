@@ -6,7 +6,6 @@ class ApplicationController < ActionController::Base
 
   before_action :set_raven_context
 
-  rescue_from User::NotAuthorized, with: :user_not_authorized
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   private
@@ -15,27 +14,6 @@ class ApplicationController < ActionController::Base
     Raven.user_context(id: current_user.id, name: current_user.name, admin?: current_user.admin?) if logged_in?
     Raven.extra_context(params: params.to_unsafe_h, url: request.url)
   end
-
-  # region Before filters
-
-  def logged_in_user
-    return if logged_in?
-    store_location
-    flash[:danger] = 'ログインしてください'
-    redirect_to login_url
-  end
-
-  def admin_user
-    raise User::NotAuthorized unless current_user&.admin?
-  end
-
-  def admin_or_elder_user
-    raise User::NotAuthorized unless current_user&.admin_or_elder?
-  end
-
-  # endregion
-
-  # region Rescue
 
   def user_not_authorized
     if logged_in?
@@ -46,6 +24,15 @@ class ApplicationController < ActionController::Base
       flash[:danger] = 'ログインしてください'
       redirect_to login_url
     end
+  end
+
+  # region Before filters
+
+  def logged_in_user
+    return if logged_in?
+    store_location
+    flash[:danger] = 'ログインしてください'
+    redirect_to login_url
   end
 
   # endregion
