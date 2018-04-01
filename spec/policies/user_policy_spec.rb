@@ -77,4 +77,14 @@ RSpec.describe UserPolicy do
       expect(subject).to permit(create(:admin), user)
     end
   end
+
+  permissions :invite? do
+    it 'denies access if user is not logged in' do
+      expect(subject).not_to permit(nil, user)
+    end
+
+    it 'grants access if user is logged in' do
+      expect(subject).to permit(create(:user), user)
+    end
+  end
 end

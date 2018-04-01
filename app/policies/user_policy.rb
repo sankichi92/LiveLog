@@ -25,6 +25,10 @@ class UserPolicy < ApplicationPolicy
     user&.admin_or_elder?
   end
 
+  def invite?
+    logged_in?
+  end
+
   def change_status?
     user&.admin?
   end

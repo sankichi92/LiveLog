@@ -19,6 +19,12 @@ en:
         logged_out: You are now logged out
       users:
         updated: Profile updated
+      account_activations:
+        invited: Sent invitaion email
+        activated: Welcome to LiveLog!
+        deactivated: Account deactivatd
+        already_activated: Already activated
+        invalid_url: Invalid URL
   activerecord:
     errors:
       models:
