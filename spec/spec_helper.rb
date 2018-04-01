@@ -97,6 +97,14 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
+
   config.include FactoryBot::Syntax::Methods
   config.include RSpec::JsonMatcher
+
+  config.around(:each, elasticsearch: true) do |example|
+    Song.__elasticsearch__.create_index! force: true
+    Song.__elasticsearch__.refresh_index!
+    example.run
+    Song.__elasticsearch__.delete_index!
+  end
 end

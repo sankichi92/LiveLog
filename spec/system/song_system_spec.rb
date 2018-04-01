@@ -24,15 +24,12 @@ RSpec.describe 'Song', type: :system do
     end
   end
 
-  xdescribe 'search' do
+  describe 'search' do
     let!(:beatles_song) { create(:song, artist: 'The Beatles') }
 
-    before do
-      Song.__elasticsearch__.create_index!
-      Song.import
-    end
+    before { Song.__elasticsearch__.refresh_index! }
 
-    it 'enables users to search songs from the both of basic and advanced forms', js: true do
+    it 'enables users to search songs from the both of basic and advanced forms', js: true, elasticsearch: true do
       visit songs_path
 
       fill_in 'q', with: 'The Beatles'
