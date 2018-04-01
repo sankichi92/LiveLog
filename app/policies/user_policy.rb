@@ -25,7 +25,7 @@ class UserPolicy < ApplicationPolicy
     user&.admin_or_elder?
   end
 
-  def make_admin?
+  def change_status?
     user&.admin?
   end
 end
