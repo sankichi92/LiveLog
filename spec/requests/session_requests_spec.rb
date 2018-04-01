@@ -42,7 +42,8 @@ RSpec.describe 'Session requests', type: :request do
     end
 
     context 'when user is not activated' do
-      let(:user) { create(:user, activated: false) }
+      let(:email) { 'invited@example.com' }
+      let(:user) { create(:user, :inactivated, email: email) }
 
       it 'responds 422' do
         post login_path, params: params

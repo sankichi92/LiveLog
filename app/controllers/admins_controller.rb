@@ -4,14 +4,14 @@ class AdminsController < ApplicationController
   after_action :verify_authorized
 
   def create
-    authorize @user, :make_admin?
+    authorize @user, :change_status?
     @user.update_attribute(:admin, true)
     flash[:success] = t('flash.controllers.admins.created')
     redirect_to @user
   end
 
   def destroy
-    authorize @user, :make_admin?
+    authorize @user, :change_status?
     @user.update_attribute(:admin, false)
     flash[:success] = t('flash.controllers.admins.deleted')
     redirect_to @user

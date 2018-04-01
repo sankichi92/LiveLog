@@ -11,9 +11,19 @@ FactoryBot.define do
     activated_at Time.zone.now
     public false
     subscribing true
+    url 'https://example.com/mypage'
+    intro 'ギターを弾きます'
 
     trait :invalid do
       furigana 'キョウダイアンプラタロウ'
+    end
+
+    trait :inactivated do
+      email nil
+      password nil
+      password_confirmation nil
+      activated false
+      activated_at nil
     end
 
     trait :elder do

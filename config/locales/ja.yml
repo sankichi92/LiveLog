@@ -19,6 +19,12 @@ ja:
         logged_out: ログアウトしました
       users:
         updated: プロフィールを更新しました
+      account_activations:
+        invited: 招待メールを送信しました
+        activated: LiveLog へようこそ！
+        deactivated: アカウントを無効にしました
+        already_activated: アカウントはすでに有効化されています
+        invalid_url: 無効な URL です
   activerecord:
     errors:
       messages:

@@ -1,66 +1,61 @@
 class AccountActivationsController < ApplicationController
-  before_action :logged_in_user, only: %i[new create]
   before_action :set_user
   before_action :check_inactivated, except: :destroy
   before_action :valid_user, only: %i[edit update]
 
+  after_action :verify_authorized, except: %i[edit update]
+
   def new
-    #
+    authorize @user, :invite?
   end
 
-  def create
-    if @user.send_invitation(params[:user][:email], current_user)
-      flash[:success] = '招待メールを送信しました'
-      redirect_to users_url
+  def create(user)
+    authorize @user, :invite?
+    if @user.send_invitation(user[:email], current_user)
+      flash[:success] = t('flash.controllers.account_activations.invited')
+      redirect_to @user
     else
-      render 'new'
+      render 'new', status: :unprocessable_entity
     end
   end
 
-  def edit
-    #
-  end
+  def edit; end
 
-  def update
-    if params[:user][:password].empty?
+  def update(user)
+    if user[:password].empty?
       @user.errors.add(:password, :blank)
-      render 'edit'
-    elsif @user.activate(user_params)
+      render 'edit', status: :unprocessable_entity
+    elsif @user.activate(user.permit(:password, :password_confirmation))
       log_in @user
-      flash[:success] = 'LiveLog へようこそ！'
+      flash[:success] = t('flash.controllers.account_activations.activated')
       redirect_to @user
     else
-      render 'edit'
+      render 'edit', status: :unprocessable_entity
     end
   end
 
   def destroy
+    authorize @user, :change_status?
     @user.deactivate
-    flash[:success] = 'アカウントを無効にしました'
+    flash[:success] = t('flash.controllers.account_activations.deactivated')
     redirect_to @user
   end
 
   private
 
-  # Before filters
-
-  def set_user
-    @user = User.find(params[:user_id])
+  def set_user(user_id)
+    @user = User.find(user_id)
   end
 
   def check_inactivated
-    redirect_to root_url if @user.activated?
+    return unless @user.activated?
+    flash[:info] = t('flash.controllers.account_activations.already_activated')
+    redirect_to @user
   end
 
-  def valid_user
-    return if @user.authenticated?(:activation, params[:t])
-    flash[:danger] = '無効なリンクです'
+  def valid_user(t)
+    return if @user.authenticated?(:activation, t)
+    flash[:danger] = t('flash.controllers.account_activations.invalid_url')
     redirect_to root_url
-  end
-
-  # Strong parameters
-
-  def user_params
-    params.require(:user).permit(:password, :password_confirmation)
   end
 end
