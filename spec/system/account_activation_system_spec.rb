@@ -36,7 +36,7 @@ RSpec.describe 'Account activation', type: :system do
     fill_in 'user_password_confirmation', with: password
     click_button 'Activate'
 
-    expect(page).to have_selector('.alert-success')
+    expect(page).to have_css('.alert-success')
     expect(page).to have_title(user.name_with_handle)
     expect(user.password_digest).not_to eq user.reload.password_digest
     expect(user.activated).to be true

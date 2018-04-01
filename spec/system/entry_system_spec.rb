@@ -74,7 +74,7 @@ RSpec.describe 'Entry', type: :system do
         click_button 'Send'
       end
 
-      expect(page).to have_selector('.alert-success')
+      expect(page).to have_css('.alert-success')
       expect(ActionMailer::Base.deliveries.size).to eq 1
     end
   end
@@ -94,7 +94,7 @@ RSpec.describe 'Entry', type: :system do
 
       expect(live.reload.published).to be true
       expect(live.published_at).to be_present
-      expect(page).to have_selector('.alert-success')
+      expect(page).to have_css('.alert-success')
     end
   end
 end

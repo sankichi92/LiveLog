@@ -100,7 +100,7 @@ RSpec.describe 'Song', type: :system do
       end
 
       expect { click_button 'Add' }.to change(Song, :count).by(1)
-      expect(page).to have_selector('.alert-success')
+      expect(page).to have_css('.alert-success')
     end
   end
 
@@ -120,7 +120,7 @@ RSpec.describe 'Song', type: :system do
       fill_in 'song_youtube_id', with: 'https://www.youtube.com/watch?v=new_youtube'
       click_button 'Save'
 
-      expect(page).to have_selector('.alert-success')
+      expect(page).to have_css('.alert-success')
       expect(song.reload.youtube_id).to eq 'new_youtube'
     end
 
@@ -137,7 +137,7 @@ RSpec.describe 'Song', type: :system do
       fill_in 'song_comment', with: 'お気に入りの曲です'
       click_button 'Save'
 
-      expect(page).to have_selector('.alert-success')
+      expect(page).to have_css('.alert-success')
       expect(song.reload.status).to eq 'open'
       expect(song.comment).to eq 'お気に入りの曲です'
     end
