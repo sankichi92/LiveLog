@@ -23,7 +23,7 @@ RSpec.describe 'Password reset requests', type: :request do
     end
 
     context 'for inactivated user' do
-      let(:user) { create(:user, activated: false) }
+      let(:user) { create(:user, :inactivated) }
 
       it 'responds 422' do
         post password_resets_path, params: { password_reset: { email: user.email } }

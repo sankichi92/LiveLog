@@ -83,7 +83,7 @@ RSpec.describe 'User', type: :system do
   end
 
   describe 'delete' do
-    let(:user) { create(:user, activated: false) }
+    let(:user) { create(:user, :inactivated) }
 
     before { log_in_as create(:admin) }
 
