@@ -45,7 +45,7 @@ RSpec.describe 'Live requests', type: :request do
 
       it 'redirects to album_url' do
         get album_live_path(live)
-        expect(response).to redirect_to(live_url(live))
+        expect(response).to redirect_to(live)
       end
     end
   end
@@ -102,7 +102,7 @@ RSpec.describe 'Live requests', type: :request do
 
       it 'updates the live and redirects to /lives/:id' do
         patch live_path(live), params: { live: new_live_attrs }
-        expect(response).to redirect_to(live_url(live))
+        expect(response).to redirect_to(live)
         expect(live.reload.name).to eq 'updated live'
       end
     end
@@ -127,7 +127,7 @@ RSpec.describe 'Live requests', type: :request do
       it 'redirects to /lives/:id' do
         expect(TweetJob).not_to receive(:perform_now)
         put publish_live_url(live)
-        expect(response).to redirect_to(live_url(live))
+        expect(response).to redirect_to(live)
       end
     end
 
@@ -139,7 +139,7 @@ RSpec.describe 'Live requests', type: :request do
       it 'publishes live, tweet it and redirects to /lives/:id' do
         expect(TweetJob).to receive(:perform_now)
         put publish_live_url(live)
-        expect(response).to redirect_to(live_url(live))
+        expect(response).to redirect_to(live)
         expect(live.reload.published).to be true
       end
     end

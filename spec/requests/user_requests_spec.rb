@@ -71,7 +71,7 @@ RSpec.describe 'User requests', type: :request do
 
       it 'updates the user and redirects to /members/:id' do
         patch user_path(user), params: { user: new_user_attrs }
-        expect(response).to redirect_to(user_url(user))
+        expect(response).to redirect_to(user)
         expect(user.reload.nickname).to eq 'new nickname'
       end
     end
@@ -154,7 +154,7 @@ RSpec.describe 'User requests', type: :request do
     it 'make the user admin and redirects to /users/:id' do
       post user_admin_path(user)
       expect(user.reload.admin).to be true
-      expect(response).to redirect_to user_url(user)
+      expect(response).to redirect_to(user)
     end
   end
 
@@ -166,7 +166,7 @@ RSpec.describe 'User requests', type: :request do
     it 'make the user non-admin and redirects to /users/:id' do
       delete user_admin_path(user)
       expect(user.reload.admin).to be false
-      expect(response).to redirect_to user_url(user)
+      expect(response).to redirect_to(user)
     end
   end
 end

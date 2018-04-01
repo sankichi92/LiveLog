@@ -59,7 +59,7 @@ class LivesController < ApplicationController
       @live.publish(live_url(@live))
       flash[:success] = t(:published)
     end
-    redirect_to live_url(@live), status: :moved_permanently
+    redirect_to @live, status: :moved_permanently
   end
 
   def destroy(id)

@@ -11,7 +11,7 @@ RSpec.describe 'Entry requests', type: :request do
 
       it 'redirects to /lives/:id' do
         get live_entries_path(live)
-        expect(response).to redirect_to(live_url(live))
+        expect(response).to redirect_to(live)
       end
     end
 
@@ -31,7 +31,7 @@ RSpec.describe 'Entry requests', type: :request do
 
       it 'redirects to /lives/:id' do
         get new_live_entry_path(live)
-        expect(response).to redirect_to(live_url(live))
+        expect(response).to redirect_to(live)
       end
     end
 
@@ -51,7 +51,7 @@ RSpec.describe 'Entry requests', type: :request do
 
       it 'redirects to /lives/:id' do
         post live_entries_path(live), xhr: true
-        expect(response).to redirect_to(live_url(live))
+        expect(response).to redirect_to(live)
       end
     end
 

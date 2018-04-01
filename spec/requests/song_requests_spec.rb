@@ -52,7 +52,7 @@ RSpec.describe 'Song requests', type: :request do
     context 'without xhr' do
       it 'redirects to /songs/:id' do
         get watch_song_path(song), xhr: false
-        expect(response).to redirect_to(song_url(song))
+        expect(response).to redirect_to(song)
       end
     end
   end
@@ -113,7 +113,7 @@ RSpec.describe 'Song requests', type: :request do
 
       it 'updates the song and redirects to /songs/:id' do
         patch song_path(song), params: { song: new_song_attrs }
-        expect(response).to redirect_to(song_url(song))
+        expect(response).to redirect_to(song)
         expect(song.reload.name).to eq 'updated song'
       end
     end
@@ -136,7 +136,7 @@ RSpec.describe 'Song requests', type: :request do
 
     it 'deletes the song and redirects /lives/:id' do
       expect { delete song_path(song) }.to change(Song, :count).by(-1)
-      expect(response).to redirect_to(live_url(song.live))
+      expect(response).to redirect_to(song.live)
     end
   end
 end

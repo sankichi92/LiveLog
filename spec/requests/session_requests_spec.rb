@@ -54,7 +54,7 @@ RSpec.describe 'Session requests', type: :request do
       it 'saves user_id in session and redirects to /users/:id' do
         post login_path, params: params
         expect(session[:user_id]).to eq user.id
-        expect(response).to redirect_to(user_url(user))
+        expect(response).to redirect_to(user)
       end
     end
 

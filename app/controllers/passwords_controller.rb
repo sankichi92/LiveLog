@@ -14,7 +14,7 @@ class PasswordsController < ApplicationController
     if @user.authenticate(current_password)
       if @user.update(user)
         flash[:success] = t(:updated, name: t('activerecord.attributes.user.password'))
-        redirect_to user_url(@user)
+        redirect_to @user
       else
         render :edit, status: :unprocessable_entity
       end

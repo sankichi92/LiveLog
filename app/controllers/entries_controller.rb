@@ -44,6 +44,6 @@ class EntriesController < ApplicationController
   end
 
   def draft_live
-    redirect_to live_url(@live), status: :moved_permanently if @live.published?
+    redirect_to @live, status: :moved_permanently if @live.published?
   end
 end
