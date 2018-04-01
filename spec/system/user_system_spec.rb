@@ -83,14 +83,20 @@ RSpec.describe 'User', type: :system do
   end
 
   describe 'delete' do
-    let(:user) { create(:user, :inactivated) }
+    let(:user) { create(:user) }
 
     before { log_in_as create(:admin) }
 
     it 'enables admin users to delete users' do
       visit user_path(user)
 
+      click_link('アカウントを無効にする')
+
+      expect(page).to have_css('.alert-success')
+      expect(user.reload.activated).to be false
+
       expect { click_link('Delete') }.to change(User, :count).by(-1)
+      expect(page).to have_css('.alert-success')
     end
   end
 
