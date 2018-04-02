@@ -1,5 +1,9 @@
 include ApplicationHelper
 
+def t(key, options = {})
+  I18n.translate(key, options)
+end
+
 def log_in_as(user, capybara: true, remember_me: '0')
   if capybara
     visit login_path

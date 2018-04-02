@@ -25,6 +25,13 @@ ja:
         deactivated: アカウントを無効にしました
         already_activated: アカウントはすでに有効化されています
         invalid_url: 無効な URL です
+  views:
+    application:
+      edit: 編集する
+      delete: 削除する
+    lives:
+      album: アルバムへ
+      publish: 公開する
   activerecord:
     errors:
       messages:

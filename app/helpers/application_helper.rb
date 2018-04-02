@@ -15,4 +15,12 @@ module ApplicationHelper
     uri.query += '&' + query
     uri.to_s
   end
+
+  def link_to_edit(options, html_options)
+    link_to icon('fas', 'edit') + ' ' + t('views.application.edit'), options, html_options
+  end
+
+  def link_to_delete(options, html_options)
+    link_to icon('fas', 'trash') + ' ' + t('views.application.delete'), options, html_options.merge(method: :delete)
+  end
 end
