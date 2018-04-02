@@ -25,6 +25,13 @@ en:
         deactivated: Account deactivatd
         already_activated: Already activated
         invalid_url: Invalid URL
+  views:
+    application:
+      edit: Edit
+      delete: Delete
+    lives:
+      album: Album
+      publish: Publish
   activerecord:
     errors:
       models:
@@ -48,3 +55,7 @@ en:
         inst:
           one: Instrument
           other: Instruments
+  helpers:
+    submit:
+      create: Create
+      update: Update

@@ -87,7 +87,7 @@ RSpec.describe 'Entry', type: :system do
 
       visit live_entries_path(live)
 
-      click_link 'Publish'
+      click_link t('views.lives.publish')
 
       expect(live.reload.published).to be true
       expect(live.published_at).to be_present

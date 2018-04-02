@@ -5,18 +5,18 @@
     %h1
       = @live.name
       %small.text-muted
-        = @live.place.present? ? " #{l(@live.date)} @#{@live.place} " : l(@live.date)
+        = @live.date_and_place
     - if policy(@live).album? && @live.album_url.present?
-      = link_to icon('fas', 'images') + ' Album', @live.album_url, class: 'btn btn-primary btn-lg', target: '_blank', 'data-toggle': 'tooltip', 'data-placement': 'top', title: '写真を共有しよう！'
+      = @live.link_to_album class: 'btn btn-primary btn-lg', target: '_blank'
 
   - if current_user&.admin_or_elder?
     %aside#admin-tools.btn-toolbar.justify-content-end.mb-3{ role: 'toolbar' }
       .btn-group.mr-2{ role: 'group' }
         = link_to icon('fas', 'plus-circle') + ' Add song', new_song_path(live_id: @live.id), class: 'btn btn-outline-secondary'
       .btn-group{ role: 'group' }
-        = link_to icon('fas', 'edit') + ' Edit', edit_live_path(@live), class: 'btn btn-outline-primary'
+        = @live.edit_link class: 'btn btn-outline-primary'
         - if @live.songs.blank?
-          = link_to icon('fas', 'trash') + ' Delete', @live, method: :delete, class: 'btn btn-outline-danger'
+          = @live.delete_link class: 'btn btn-outline-danger'
 
   .song-list
     = render @live.songs.played_order.includes(playings: :user)

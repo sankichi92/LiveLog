@@ -16,6 +16,6 @@
   .form-group
     = f.label :album_url
     = f.url_field :album_url, class: 'form-control', placeholder: 'https://goo.gl/photos/o94hbpFHQtcjzjwj6'
-    %small.form-text.text-muted 共同編集・コメント可能な <a href="https://photos.google.com/?hl=ja" target="_blank">Google フォト</a> の共有アルバム推奨です。
+    %small.form-text.text-muted 共同編集・コメント可能な <a href="https://photos.google.com" target="_blank">Google フォト</a> の共有アルバム推奨です。
 
-  = f.submit yield(:button_text), class: 'btn btn-primary'
+  = f.submit class: 'btn btn-primary'
