@@ -1,0 +1,2 @@
+module SongDecorator
+end
