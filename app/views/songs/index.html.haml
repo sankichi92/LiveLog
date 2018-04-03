@@ -51,13 +51,13 @@
 
       .custom-control.custom-checkbox.mb-2
         = f.check_box :original, id: 'original', class: 'custom-control-input'
-        = f.label :original, 'オリジナル曲のみ', class: 'custom-control-label'
+        = f.label :original, class: 'custom-control-label'
 
       .custom-control.custom-checkbox.mb-3
         = f.check_box :video, id: 'video', class: 'custom-control-input'
-        = f.label :video, '動画を視聴できる曲のみ', class: 'custom-control-label'
+        = f.label :video, class: 'custom-control-label'
 
-      = f.submit 'Search', class: 'btn btn-primary'
+      = f.submit t('views.application.search'), class: 'btn btn-primary'
 
 - if @songs.present?
   #results
@@ -71,4 +71,4 @@
 
 - else
   .alert.alert-danger{ role: 'alert' }
-    曲が見つかりませんでした
+    = t('views.songs.no_results')

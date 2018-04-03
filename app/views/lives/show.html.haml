@@ -6,7 +6,7 @@
       = @live.name
       %small.text-muted
         = @live.date_and_place
-    - if policy(@live).album? && @live.album_url.present?
+    - if @live.album_url.present? && policy(@live).album?
       = @live.link_to_album class: 'btn btn-primary btn-lg', target: '_blank'
 
   - if current_user&.admin_or_elder?

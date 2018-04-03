@@ -12,7 +12,7 @@
           %span{ 'aria-hidden': true} &times;
       - if song.youtube_id.present? && policy(song).watch?
         .embed-responsive.embed-responsive-16by9
-          = youtube_embed(song)
+          = song.youtube_embed
       .modal-body
         %ul.list-inline.mb-2
           = render song.playings.sort_by(&:inst_order)

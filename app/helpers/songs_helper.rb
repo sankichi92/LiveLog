@@ -8,44 +8,6 @@ module SongsHelper
                 id: 'add-member', type: 'button', class: 'btn btn-light', data: { fields: fields.delete("\n") }
   end
 
-  def youtube_embed(song)
-    return unless song.youtube_id?
-    content_tag :iframe,
-                '',
-                class: 'player',
-                src: "https://www.youtube.com/embed/#{song.youtube_id}?enablejsapi=1&origin=#{root_url.chop}&rel=0&autoplay=1",
-                frameborder: 0,
-                allowfullscreen: true
-  end
-
-  def status_icon(song)
-    if song.open?
-      icon 'fas', 'globe',
-           'data-toggle': 'tooltip',
-           'data-placement': 'right',
-           title: '公開設定: 公開'
-    elsif song.secret?
-      icon 'fas', 'lock',
-           'data-toggle': 'tooltip',
-           'data-placement': 'right',
-           title: '公開設定: バンド内'
-    end
-  end
-
-  def twitter_share_button(song, options)
-    uri = URI.parse('https://twitter.com/intent/tweet')
-    uri.query = {
-      text: "#{song.live_title} #{song.time_order} #{song.title}",
-      url: song_url(song),
-      hashtags: '京大アンプラグド',
-      via: 'ku_livelog',
-      related: 'kyodaiunplugged:京大アンプラグド公式,sankichi92:LiveLog 開発者'
-    }.to_query
-    options[:target] = '_blank'
-    options[:onclick] = "ga('send', 'social', 'Twitter', 'tweet', #{song_url(song)});"
-    link_to(icon('fab', 'twitter') + ' Twitter', uri.to_s, options)
-  end
-
   def link_to_search(name, options = nil, html_options = nil, &block)
     options, html_options = name, options if block_given?
     options = search_songs_path(

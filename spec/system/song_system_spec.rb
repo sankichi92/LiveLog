@@ -33,18 +33,18 @@ RSpec.describe 'Song', type: :system do
       visit songs_path
 
       fill_in 'q', with: 'The Beatles'
-      click_button 'Search'
+      click_button t('views.application.search')
 
       expect(page).to have_content(beatles_song.name)
 
       click_on 'Advanced'
       fill_in 'artist', with: 'The Beatles'
-      click_button 'Search'
+      click_button t('views.application.search')
 
       expect(page).to have_content(beatles_song.name)
 
       fill_in 'name', with: 'No results'
-      click_button 'Search'
+      click_button t('views.application.search')
 
       expect(page).not_to have_content(beatles_song.name)
       expect(page).to have_css('.alert-danger')
@@ -61,7 +61,7 @@ RSpec.describe 'Song', type: :system do
       expect(page).to have_content(song.name)
       expect(page).to have_content(song.artist)
       expect(page).to have_content(song.live_name)
-      expect(page).to have_content(song.time_order)
+      expect(page).to have_content(song.order)
       song.playings.each do |playing|
         expect(page).to have_content(playing.handle)
       end
@@ -96,7 +96,7 @@ RSpec.describe 'Song', type: :system do
         all('.user-select')[i].find(:option, user.name_with_handle).select_option
       end
 
-      expect { click_button 'Add' }.to change(Song, :count).by(1)
+      expect { click_button t('helpers.submit.create') }.to change(Song, :count).by(1)
       expect(page).to have_css('.alert-success')
     end
   end
@@ -109,13 +109,13 @@ RSpec.describe 'Song', type: :system do
       log_in_as create(:admin)
 
       visit song_path(song)
-      click_link 'Edit'
+      click_link t('views.application.edit')
 
       expect(page).to have_title('Edit Song')
       expect(page).to have_content('Edit Song')
 
       fill_in 'song_youtube_id', with: 'https://www.youtube.com/watch?v=new_youtube'
-      click_button 'Save'
+      click_button t('helpers.submit.update')
 
       expect(page).to have_css('.alert-success')
       expect(song.reload.youtube_id).to eq 'new_youtube'
@@ -125,14 +125,14 @@ RSpec.describe 'Song', type: :system do
       log_in_as user
 
       visit song_path(song)
-      click_link 'Edit'
+      click_link t('views.application.edit')
 
       expect(page).to have_title('Edit Song')
       expect(page).to have_content('Edit Song')
 
       select '公開', from: 'song_status'
       fill_in 'song_comment', with: 'お気に入りの曲です'
-      click_button 'Save'
+      click_button t('helpers.submit.update')
 
       expect(page).to have_css('.alert-success')
       expect(song.reload.status).to eq 'open'
@@ -147,9 +147,9 @@ RSpec.describe 'Song', type: :system do
 
     it 'enables admin users to delete songs' do
       visit song_path(song)
-      click_link 'Edit'
+      click_link t('views.application.edit')
 
-      expect { click_link('Delete') }.to change(Song, :count).by(-1)
+      expect { click_link(t('views.application.delete')) }.to change(Song, :count).by(-1)
     end
   end
 end

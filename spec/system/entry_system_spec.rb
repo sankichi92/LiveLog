@@ -71,7 +71,7 @@ RSpec.describe 'Entry', type: :system do
       fill_in 'entry_preferred_performance_time', with: '20時以降'
 
       accept_confirm do
-        click_button 'Send'
+        click_button t('views.application.send')
       end
 
       expect(page).to have_css('.alert-success')

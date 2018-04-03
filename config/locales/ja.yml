@@ -29,9 +29,21 @@ ja:
     application:
       edit: 編集する
       delete: 削除する
+      delete_confirm: 本当に削除しますか？
+      search: 検索
+      send: 送信する
+      send_confirm: 本当に送信しますか？
+      share: 共有
     lives:
       album: アルバムへ
       publish: 公開する
+    songs:
+      no_results: 曲が見つかりませんでした
+      original: (オリジナル曲)
+      search_placeholder: 曲名・アーティスト名
+      status:
+        public: "公開設定: 公開"
+        secret: "公開設定: バンド内"
   activerecord:
     errors:
       messages:
@@ -94,6 +106,8 @@ ja:
         players_count: 構成人数
         date: ライブ開催日
         user_id: メンバー ID
+        original: オリジナル曲のみ
+        video: 動画を視聴できる曲のみ
   date:
     abbr_day_names:
     - 日

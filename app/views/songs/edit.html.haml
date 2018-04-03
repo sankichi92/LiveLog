@@ -1,10 +1,9 @@
 - provide(:title, 'Edit Song')
-- provide(:button_text, 'Save')
 %header.page-header
   %h1 Edit Song
 
 - if @song.persisted? && policy(@song).destroy?
   .text-right
-    = link_to icon('fas', 'trash') + ' Delete', @song, method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-outline-danger'
+    = @song.delete_link class: 'btn btn-outline-danger'
 
 = render 'form'
