@@ -4,7 +4,7 @@
     = @live.name
     %small.text-muted
       = @live.date_and_place
-  = link_to icon('fas', 'paper-plane') + ' エントリーする', new_live_entry_path(@live), class: 'btn btn-info btn-lg'
+  = @live.new_entry_link class: 'btn btn-info btn-lg'
 
 - if current_user.admin_or_elder?
   %aside.btn-toolbar.justify-content-end.mb-3#admin-tools{ role: 'toolbar' }

@@ -34,8 +34,12 @@ en:
       send: Send
       send_confirm: Are you sure?
       share: Share
+    entries:
+      count: "<b>%{count}</b> in total"
     lives:
+      add_song: Add song
       album: Album
+      entry: Send entry
       publish: Publish
     songs:
       no_results: We couldn't find any songs

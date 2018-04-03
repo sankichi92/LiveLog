@@ -12,7 +12,7 @@
   - if current_user&.admin_or_elder?
     %aside#admin-tools.btn-toolbar.justify-content-end.mb-3{ role: 'toolbar' }
       .btn-group.mr-2{ role: 'group' }
-        = link_to icon('fas', 'plus-circle') + ' Add song', new_song_path(live_id: @live.id), class: 'btn btn-outline-secondary'
+        = @live.new_song_link class: 'btn btn-outline-secondary'
       .btn-group{ role: 'group' }
         = @live.edit_link class: 'btn btn-outline-primary'
         - if @live.songs.blank?

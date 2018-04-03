@@ -78,7 +78,7 @@ RSpec.describe 'Song', type: :system do
     it 'enables admin users to create new songs', js: true do
       visit live_path(live)
 
-      click_link 'Add song'
+      click_link t('views.lives.add_song')
 
       expect(page).to have_title('Add Song')
       expect(page).to have_content('Add Song')

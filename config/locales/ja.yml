@@ -34,8 +34,12 @@ ja:
       send: 送信する
       send_confirm: 本当に送信しますか？
       share: 共有
+    entries:
+      count: "前 <b>%{count}</b> 件"
     lives:
+      add_song: 曲を追加する
       album: アルバムへ
+      entry: エントリーする
       publish: 公開する
     songs:
       no_results: 曲が見つかりませんでした
