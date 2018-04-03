@@ -1,6 +1,6 @@
 = form_tag '/songs/search', method: 'get', class: 'form-inline d-inline-flex mb-3' do
   = label_tag :q, 'Keyword', class: 'sr-only'
   .input-group
-    = search_field_tag :q, params[:q], class: 'form-control', placeholder: '曲名・アーティスト名'
+    = search_field_tag :q, params[:q], class: 'form-control', placeholder: t('views.songs.search_placeholder')
     .input-group-append
-      = button_tag icon('fas', 'search') + ' Search', class: 'btn btn-primary'
+      = button_tag icon('fas', 'search') + ' ' + t('views.application.search'), class: 'btn btn-primary'

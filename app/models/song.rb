@@ -50,25 +50,13 @@ class Song < ApplicationRecord
     artist.blank? ? name : "#{name} / #{artist}"
   end
 
-  def youtube_url
-    "https://www.youtube.com/watch?v=#{youtube_id}" if youtube_id.present?
-  end
-
-  def youtube_thumbnail(quality = 'mqdefault')
-    "https://i.ytimg.com/vi/#{youtube_id}/#{quality}.jpg" if youtube_id.present?
-  end
-
   def datetime
     return date if time.blank?
     date + time.hour.hours + time.min.minutes
   end
 
   def time_str
-    time.strftime('%R') if time.present?
-  end
-
-  def time_order
-    time.present? ? "#{time_str} #{order}" : order
+    time&.strftime('%R')
   end
 
   def player?(user)

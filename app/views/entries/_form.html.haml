@@ -24,7 +24,12 @@
   = render 'songs/playings_form', f: f
 
   .form-group
-    = render 'songs/status_form', f: f
+    = f.label :status
+    = icon 'fas', 'question-circle',
+           'data-toggle': 'tooltip',
+           'data-placement': 'right',
+           title: '動画の公開範囲です。「公開」は全てのユーザ，「サークル内」はログインユーザのみ，「バンド内」は演者のみに公開されます'
+    = f.select :status, { '公開': 'open', 'サークル内': 'closed', 'バンド内': 'secret' }, {}, id: 'song_status', class: 'form-control'
 
   .form-row
     .form-group.col-sm
@@ -38,4 +43,4 @@
     = label :entry, :notes, '備考'
     = text_area :entry, :notes, id: 'entry_notes', class: 'form-control', rows: 3
 
-  = f.submit 'Send', data: { confirm: '本当に送信しますか？' }, class: 'btn btn-primary'
+  = f.submit t('views.application.send'), data: { confirm: t('views.application.send_confirm') }, class: 'btn btn-primary'

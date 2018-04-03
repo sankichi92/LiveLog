@@ -29,9 +29,21 @@ en:
     application:
       edit: Edit
       delete: Delete
+      delete_confirm: Are you sure?
+      search: Search
+      send: Send
+      send_confirm: Are you sure?
+      share: Share
     lives:
       album: Album
       publish: Publish
+    songs:
+      no_results: We couldn't find any songs
+      original: (Original)
+      search_placeholder: Song / Artist
+      status:
+        public: "Shared with: Public"
+        secret: "Shared with: Band members"
   activerecord:
     errors:
       models:
@@ -52,6 +64,9 @@ en:
         youtube_id: YouTube URL
         playings: Players
       playings:
+        user:
+          one: Member
+          other: Members
         inst:
           one: Instrument
           other: Instruments

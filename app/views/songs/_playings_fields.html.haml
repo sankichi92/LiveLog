@@ -7,7 +7,5 @@
     .col
       = f.collection_select :user_id, User.natural_order, :id, :name_with_handle, {}, class: 'user-select select2 form-control'
     .col-2.col-md-1
-      = content_tag :button,
-                    icon('fas', 'minus'),
-                    type: 'button', class: 'remove-member btn btn-block btn-light', data: { prefix: "song_playings_attributes_#{f.index}" }
+      = content_tag :button, icon('fas', 'minus'), type: 'button', class: 'remove-member btn btn-block btn-light', data: { prefix: "song_playings_attributes_#{f.index}" }
 
