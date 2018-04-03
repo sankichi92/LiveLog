@@ -4,7 +4,7 @@ module SongsHelper
       render 'songs/playings_fields', f: builder
     end
     content_tag :button,
-                icon('fas', 'plus') + ' メンバーを追加する',
+                icon('fas', 'plus') + ' ' + t('views.songs.add_member'),
                 id: 'add-member', type: 'button', class: 'btn btn-light', data: { fields: fields.delete("\n") }
   end
 

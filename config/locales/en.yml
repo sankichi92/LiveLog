@@ -42,6 +42,7 @@ en:
       entry: Send entry
       publish: Publish
     songs:
+      add_member: Add a member
       no_results: We couldn't find any songs
       original: (Original)
       search_placeholder: Song / Artist

@@ -42,6 +42,7 @@ ja:
       entry: エントリーする
       publish: 公開する
     songs:
+      add_member: メンバーを追加する
       no_results: 曲が見つかりませんでした
       original: (オリジナル曲)
       search_placeholder: 曲名・アーティスト名
