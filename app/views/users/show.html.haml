@@ -1,4 +1,4 @@
-- provide(:title, @user.display_name(logged_in?))
+- provide(:title, @user.display_name)
 - provide(:description, @user.intro.presence || "#{@user.joined}年度入部 #{@user.inst_to_count.map { |i, _| i }.join(', ')}")
 - provide(:og_type, 'profile')
 - content_for :additional_meta_fields do
@@ -6,7 +6,7 @@
 - total = @user.songs.published.size
 %header.page-header.d-flex.flex-column.flex-md-row.justify-content-between.align-items-md-center
   %h1
-    = @user.display_name(logged_in?)
+    = @user.display_name
     %small.text-muted
       = @user.joined
       = icon('fas', 'lock') unless @user.public?
@@ -52,7 +52,7 @@
             - break if count < 5 || i >= 5 && count != last_count
             = link_to search_user_path(user_id: user.id),
                       class: (params[:user_id] == user.id.to_s ? 'active ' : '') + 'list-group-item list-group-item-action d-flex justify-content-between align-items-center' do
-              = user.display_name(logged_in?)
+              = logged_in? ? user.name_with_handle : user.handle
               %span.badge.badge-pill.badge-secondary= count
             - last_count = count
     .col-lg-2.col-md-3.col-sm-4.mb-3
@@ -100,4 +100,4 @@
           = link_to '管理者にする', user_admin_path(@user), method: :post, data: { confirm: '本当に管理者にしますか？' }, class: 'btn btn-outline-danger'
     - elsif @user.songs.blank?
       .btn-group{ role: 'group' }
-        = link_to icon('fas', 'trash') + ' Delete', @user, method: :delete, class: 'btn btn-outline-danger'
+        = @user.delete_link class: 'btn btn-outline-danger'

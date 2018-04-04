@@ -21,7 +21,7 @@ RSpec.describe 'Account activation', type: :system do
       expect(page).to have_title('Invite')
 
       fill_in 'user_email', with: email
-      click_button 'Send'
+      click_button t('views.application.send')
 
       expect(page).to have_css('.alert-success')
       expect(user.reload.email).to eq email
@@ -34,7 +34,7 @@ RSpec.describe 'Account activation', type: :system do
 
     fill_in 'user_password', with: password
     fill_in 'user_password_confirmation', with: password
-    click_button 'Activate'
+    click_button t('views.users.activate')
 
     expect(page).to have_css('.alert-success')
     expect(page).to have_title(user.name_with_handle)

@@ -57,7 +57,7 @@ RSpec.describe 'User', type: :system do
       fill_in 'user_furigana', with: 'きょうだいあんぷらたろう'
       select '2011', from: 'user_joined'
 
-      expect { click_button 'Add' }.to change(User, :count).by(1)
+      expect { click_button t('helpers.submit.create') }.to change(User, :count).by(1)
       expect(page).to have_css('.alert-success')
       expect(page).to have_title('New Member')
     end
@@ -74,7 +74,7 @@ RSpec.describe 'User', type: :system do
       expect(page).to have_title('Settings')
 
       fill_in 'user_nickname', with: 'アンプラ'
-      click_button 'Save'
+      click_button t('helpers.submit.update')
 
       expect(user.reload.nickname).to eq 'アンプラ'
       expect(page).to have_css('.alert-success')
@@ -95,7 +95,7 @@ RSpec.describe 'User', type: :system do
       expect(page).to have_css('.alert-success')
       expect(user.reload.activated).to be false
 
-      expect { click_link('Delete') }.to change(User, :count).by(-1)
+      expect { click_link(t('views.application.delete')) }.to change(User, :count).by(-1)
       expect(page).to have_css('.alert-success')
     end
   end
@@ -107,14 +107,14 @@ RSpec.describe 'User', type: :system do
 
     it 'enables users to update their own password' do
       visit edit_user_path(user)
-      click_link 'パスワードを変更する'
+      click_link t('views.users.change_password')
 
       expect(page).to have_title('Change Password')
 
       fill_in 'current_password', with: user.password
       fill_in 'user_password', with: 'new_password'
       fill_in 'user_password_confirmation', with: 'new_password'
-      click_button 'Save'
+      click_button t('helpers.submit.update')
 
       expect(user.password_digest).not_to eq user.reload.password_digest
       expect(page).to have_css('.alert-success')

@@ -1,4 +1,10 @@
-= link_to_user user, logged_in?, class: 'list-group-item list-group-item-action' do
-  = user.display_name(logged_in?)
-  - if logged_in? && user.admin?
-    %span *
+- if policy(user).show?
+  = link_to user, class: 'list-group-item list-group-item-action' do
+    = user.display_name
+    - if logged_in? && user.admin?
+      %span *
+- else
+  = content_tag :button, disabled: true, class: 'list-group-item list-group-item-action' do
+    = user.display_name
+    - if logged_in? && user.admin?
+      %span *

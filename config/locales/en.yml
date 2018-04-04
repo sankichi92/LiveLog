@@ -41,6 +41,10 @@ en:
       album: Album
       entry: Send entry
       publish: Publish
+    sessions:
+      forgot_password: Forgot password
+      log_in: Log in
+      remember_me: Remember me
     songs:
       add_member: Add a member
       no_results: We couldn't find any songs
@@ -49,6 +53,12 @@ en:
       status:
         public: "Shared with: Public"
         secret: "Shared with: Band members"
+    users:
+      activate: Activate
+      change_password: Change password
+      password_new: New password
+      password_create: Create password
+      password_current: Current password
   activerecord:
     errors:
       models:
