@@ -103,6 +103,7 @@ ja:
         time: 時間
         status: 公開設定
         comment: コメント
+        original: オリジナル
         playings: 演者
       live:
         name: ライブ名
@@ -123,6 +124,10 @@ ja:
         user_id: メンバー ID
         original: オリジナル曲のみ
         video: 動画を視聴できる曲のみ
+      entry:
+        preferred_rehearsal_time: リハ希望時間
+        preferred_performance_time: 本番希望時間
+        notes: 備考
   date:
     abbr_day_names:
     - 日
