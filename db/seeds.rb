@@ -18,7 +18,7 @@ User.create!(last_name: '京大',
   public = activated ? Faker::Boolean.boolean(0.2) : false
   User.create!(first_name: first_name,
                last_name: last_name,
-               furigana: last_name + first_name,
+               furigana: 'ふりがな',
                email: activated ? Faker::Internet.email : nil,
                joined: Faker::Date.between(4.years.ago, Time.zone.today).year,
                password: 'password',
