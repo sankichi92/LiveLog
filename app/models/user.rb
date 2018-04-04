@@ -23,6 +23,8 @@ class User < ApplicationRecord
   scope :active, -> { includes(songs: :live).where('lives.date': 1.year.ago..Time.zone.today) }
   scope :joined_years, -> { unscope(:order).order(joined: :desc).distinct.pluck(:joined) }
 
+  # region Attributes
+
   def name
     "#{last_name} #{first_name}"
   end
@@ -35,9 +37,9 @@ class User < ApplicationRecord
     nickname.blank? ? name : "#{name} (#{nickname})"
   end
 
-  def display_name(logged_in)
-    logged_in ? name_with_handle : handle
-  end
+  # endregion
+
+  # region Status
 
   def elder?
     joined < 2011
@@ -45,6 +47,10 @@ class User < ApplicationRecord
 
   def admin_or_elder?
     admin? || elder?
+  end
+
+  def enable_to_send_info?
+    activated? && subscribing?
   end
 
   def graduate?
@@ -56,21 +62,27 @@ class User < ApplicationRecord
     donated_ids.include?(id)
   end
 
-  def inst_to_count
-    playings.published.count_insts
+  # endregion
+
+  # region Activation
+
+  def send_invitation(email, inviter)
+    self.activation_token = Token.random
+    return unless update(email: email, activation_digest: Token.digest(activation_token))
+    UserMailer.account_activation(self, inviter).deliver_now
   end
 
-  def related_playings
-    Playing.where(song_id: songs.published.pluck('songs.id'))
+  def activate(password_params)
+    update(password_params.merge(activated: true, activated_at: Time.zone.now))
   end
 
-  def collaborator_to_count
-    related_playings.where.not(user_id: id).group(:user).order(count: :desc).count
+  def deactivate
+    update_columns(activated: false, activated_at: nil, activation_digest: nil)
   end
 
-  def formation_to_count
-    related_playings.count_formations
-  end
+  # endregion
+
+  # region Authentication
 
   def authenticated?(attribute, token)
     digest = send("#{attribute}_digest")
@@ -87,28 +99,24 @@ class User < ApplicationRecord
     update_column(:remember_digest, nil)
   end
 
-  def activate(password_params)
-    update(password_params.merge(activated: true, activated_at: Time.zone.now))
+  def valid_token?(token)
+    digests = tokens.pluck(:digest)
+    digests.any? { |d| BCrypt::Password.new(d).is_password?(token) }
   end
 
-  def deactivate
-    update_columns(activated: false, activated_at: nil, activation_digest: nil)
+  def destroy_token(token)
+    token = tokens.find { |t| BCrypt::Password.new(t.digest).is_password?(token) }
+    token&.destroy
   end
 
-  def send_invitation(email, inviter)
-    self.activation_token = Token.random
-    return unless update(email: email, activation_digest: Token.digest(activation_token))
-    UserMailer.account_activation(self, inviter).deliver_now
-  end
+  # endregion
+
+  # region Password reset
 
   def send_password_reset
     self.reset_token = Token.random
     update_columns(reset_digest: Token.digest(reset_token), reset_sent_at: Time.zone.now)
     UserMailer.password_reset(self).deliver_now
-  end
-
-  def enable_to_send_info?
-    activated? && subscribing?
   end
 
   def reset_password(password_params)
@@ -119,15 +127,7 @@ class User < ApplicationRecord
     reset_sent_at < 2.hours.ago
   end
 
-  def valid_token?(token)
-    digests = tokens.pluck(:digest)
-    digests.any? { |d| BCrypt::Password.new(d).is_password?(token) }
-  end
-
-  def destroy_token(token)
-    token = tokens.find { |t| BCrypt::Password.new(t.digest).is_password?(token) }
-    token&.destroy
-  end
+  # endregion
 
   private
 

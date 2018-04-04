@@ -1,6 +1,6 @@
 json.cache_if! !authenticated?, ['v1', @user] do
   json.extract! @user, :id, :joined, :public, :url, :intro
-  json.name @user.display_name(authenticated?)
+  json.name authenticated? ? @user.name_with_handle : @user.handle
 end
 json.insts do
   json.array! @user.playings.published.count_insts do |inst, count|

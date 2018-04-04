@@ -41,6 +41,10 @@ ja:
       album: アルバムへ
       entry: エントリーする
       publish: 公開する
+    sessions:
+      forgot_password: パスワードを忘れた場合
+      log_in: ログインする
+      remember_me: 保存する
     songs:
       add_member: メンバーを追加する
       no_results: 曲が見つかりませんでした
@@ -49,6 +53,12 @@ ja:
       status:
         public: "公開設定: 公開"
         secret: "公開設定: バンド内"
+    users:
+      activate: アカウントを有効化する
+      change_password: パスワードを変更する
+      password_create: パスワードを作成
+      password_current: 現在のパスワード
+      password_new: 新しいパスワード
   activerecord:
     errors:
       messages:

@@ -25,7 +25,7 @@ RSpec.describe 'Login', type: :system do
     fill_in 'Email', with: user.email
     fill_in 'Password', with: user.password
     within('form') do
-      click_button 'Log in'
+      click_button t('views.sessions.log_in')
     end
 
     expect(page).to have_title('Settings')

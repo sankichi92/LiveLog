@@ -1,14 +1,14 @@
 - provide(:title, 'Change Password')
 %header.page-header
-  %h1 パスワードを変更する
+  %h1 Change Password
 
 = form_for @user, url: user_password_path do |f|
   = render 'shared/error_messages', object: f.object
 
   .form-group
-    = label_tag :current_password, '現在のパスワード'
+    = label_tag :current_password, t('views.users.password_current')
     = password_field_tag :current_password, '', class: 'form-control'
 
-  = render 'passwords/form', f: f, label: '新しいパスワード'
+  = render 'passwords/form', f: f, label: t('views.users.password_new')
 
-  = f.submit 'Save', class: 'btn btn-primary'
+  = f.submit class: 'btn btn-primary'

@@ -16,7 +16,7 @@ RSpec.describe 'Entry', type: :system do
 
       expect(page).to have_title(live.title)
       expect(page).to have_content(live.name)
-      expect(page).to have_link('エントリーする', href: new_live_entry_path(live))
+      expect(page).to have_link(t('views.lives.entry'), href: new_live_entry_path(live))
       expect(page).not_to have_css('#admin-tools')
       expect(page).to have_content(user_entry.name)
       user_entry.playings.each do |playing|
@@ -32,7 +32,7 @@ RSpec.describe 'Entry', type: :system do
       visit live_entries_path(live)
 
       expect(page).to have_title(live.title)
-      expect(page).to have_link('エントリーする', href: new_live_entry_path(live))
+      expect(page).to have_link(t('views.lives.entry'), href: new_live_entry_path(live))
       expect(page).to have_css('#admin-tools')
       live.songs.each do |entry|
         expect(page).to have_content(entry.name)
