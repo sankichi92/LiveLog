@@ -16,5 +16,8 @@
 # Ignore Byebug command history file.
 .byebug_history
 
+# Ignore script to backup database.
+/scripts/backup-db.sh
+
 # Ignore database dump file.
 latest.dump
