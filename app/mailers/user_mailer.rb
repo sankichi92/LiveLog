@@ -1,6 +1,4 @@
 class UserMailer < ApplicationMailer
-  default reply_to: 'sankichi92@ku-unplugged.net'
-
   def account_activation(user, inviter)
     @user = user
     @inviter = inviter

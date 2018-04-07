@@ -12,7 +12,6 @@ RSpec.describe UserMailer, type: :mailer do
       expect(mail.subject).to eq("#{inviter.name} さんが LiveLog に招待しています")
       expect(mail.to).to eq([user.email])
       expect(mail.from).to eq(['noreply@livelog.ku-unplugged.net'])
-      expect(mail.reply_to).to eq(['sankichi92@ku-unplugged.net'])
     end
 
     it 'renders the text body' do
@@ -35,7 +34,6 @@ RSpec.describe UserMailer, type: :mailer do
       expect(mail.subject).to eq('パスワード再設定のご案内')
       expect(mail.to).to eq([user.email])
       expect(mail.from).to eq(['noreply@livelog.ku-unplugged.net'])
-      expect(mail.reply_to).to eq(['sankichi92@ku-unplugged.net'])
     end
 
     it 'renders the text body' do

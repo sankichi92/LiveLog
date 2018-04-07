@@ -13,7 +13,6 @@ RSpec.describe EntryMailer, type: :mailer do
       expect(mail.to).to eq(['pa@ku-unplugged.net'])
       expect(mail.from).to eq(['noreply@livelog.ku-unplugged.net'])
       expect(mail.cc).to eq([applicant.email])
-      expect(mail.reply_to).to eq([applicant.email])
     end
 
     it 'renders the text body' do

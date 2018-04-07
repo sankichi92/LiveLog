@@ -13,7 +13,6 @@ RSpec.describe SongMailer, type: :mailer do
       expect(mail.to).to eq(['sankichi92@ku-unplugged.net'])
       expect(mail.from).to eq(['noreply@livelog.ku-unplugged.net'])
       expect(mail.bcc).to eq(users.map(&:email))
-      expect(mail.reply_to).to eq(['sankichi92@ku-unplugged.net'])
     end
 
     it 'renders the text body' do
