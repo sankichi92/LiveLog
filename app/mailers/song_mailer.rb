@@ -1,6 +1,5 @@
 class SongMailer < ApplicationMailer
   default to: 'sankichi92@ku-unplugged.net'
-  default reply_to: 'sankichi92@ku-unplugged.net'
 
   def pickup_song(song = Song.pickup)
     @song = song

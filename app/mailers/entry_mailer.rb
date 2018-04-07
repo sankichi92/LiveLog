@@ -3,8 +3,8 @@ class EntryMailer < ApplicationMailer
 
   def entry(entry)
     @entry = entry
-    reply_to = %("#{entry.applicant_name}" <#{entry.applicant_email}>)
     from = %("#{entry.applicant_name}" <noreply@livelog.ku-unplugged.net>)
-    mail from: from, reply_to: reply_to, subject: "#{entry.live_name} 曲申請「#{entry.title}」"
+    cc = %("#{entry.applicant_name}" <#{entry.applicant_email}>)
+    mail from: from, cc: cc, subject: "#{entry.live_name} 曲申請「#{entry.title}」"
   end
 end

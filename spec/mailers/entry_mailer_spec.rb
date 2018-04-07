@@ -12,7 +12,7 @@ RSpec.describe EntryMailer, type: :mailer do
       expect(mail.subject).to eq("#{song.live_name} 曲申請「#{song.title}」")
       expect(mail.to).to eq(['pa@ku-unplugged.net'])
       expect(mail.from).to eq(['noreply@livelog.ku-unplugged.net'])
-      expect(mail.reply_to).to eq([applicant.email])
+      expect(mail.cc).to eq([applicant.email])
     end
 
     it 'renders the text body' do
