@@ -32,16 +32,23 @@ $list-group-hover-bg: $theme-bg;
 $breadcrumb-bg: $theme-bg;
 $breadcrumb-divider: ">";
 
+$navbar-brand-font-size: 1.5rem;
+$navbar-toggler-font-size: 1.5rem;
+
 @import "bootstrap";
 
 html {
-  font-size: 0.8rem;
+  font-size: .8rem;
 }
 
 @include media-breakpoint-up(md) {
   html {
     font-size: 1rem;
   }
+}
+
+#navbar {
+  font-size: 1.25rem;
 }
 
 tr[onclick]:hover {
