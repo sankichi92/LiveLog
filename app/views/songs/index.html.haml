@@ -1,6 +1,6 @@
 - provide(:title, 'Song Search')
 - provide(:description, "京大アンプラグドで演奏された曲の「#{params[:q]}」の検索結果") if params[:q].present?
-%header.page-header
+%header.page-header.d-none.d-sm-block
   %h1.display-4 Song Search
 
 %ul#search-tabs.nav.nav-pills.mb-3{ role: 'tablist' }
@@ -61,7 +61,7 @@
 
 - if @songs.present?
   #results
-    %p.text-right
+    %p.text-right.d-none.d-md-block
       = page_entries_info
     .song-list.mb-3
       - @songs.each do |song|

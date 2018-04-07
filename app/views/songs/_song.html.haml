@@ -1,33 +1,34 @@
-%section.song-item.d-flex.flex-column.flex-md-row.align-items-md-center
-  - if song.youtube_id.present? && policy(song).watch?
-    .song-thumbnail.text-center.mb-2.mb-md-0.mr-md-3
-      = link_to watch_song_path(song), remote: true do
-        = image_tag song.youtube_thumbnail
+%section.song-item
+  .row.align-items-center
+    - if song.youtube_id.present? && policy(song).watch?
+      .song-thumbnail.col-4.col-xl-3.pr-0
+        = link_to watch_song_path(song), remote: true do
+          = image_tag song.youtube_thumbnail, class: 'img-fluid'
 
-  .song-info
-    %header
-      .text-muted
-        = link_to song.live_title, song.live unless current_page?(song.live) || params[:controller] == 'entries'
-        = song.time_order
-      %h5
-        = song.title
-        %small= t('views.songs.original') if song.original?
-        = song.status_icon if song.player?(current_user)
+    .song-info.col
+      %header
+        .text-muted
+          = link_to song.live_title, song.live unless current_page?(song.live) || params[:controller] == 'entries'
+          = song.time_order
+        %h5
+          = song.title
+          %small= t('views.songs.original') if song.original?
+          = song.status_icon if song.player?(current_user)
 
-    %ul.list-inline.mb-2
-      = render song.playings.sort_by(&:inst_order)
-    .text-muted= simple_format(song.comment) if song.comment?
+      %ul.list-inline.mb-2
+        = render song.playings.sort_by(&:inst_order)
+      .text-muted= simple_format(song.comment) if song.comment?
 
-    %aside.btn-group{ role: 'group' }
-      - if song.published?
-        .btn-group{ role: 'group' }
-          %button#share-button.btn.btn-link.btn-sm.dropdown-toggle{ type: 'button', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' }
-            = icon('fas', 'share') + ' ' + t('views.application.share')
-          .dropdown-menu{ 'aria-labelledby': 'share-button' }
-            = song.twitter_share_button class: 'dropdown-item'
-            %button.fb-share.dropdown-item.btn{ type: 'button', 'data-url': song_url(song) }= icon('fab', 'facebook') + ' Facebook'
-      = song.edit_link class: 'btn btn-link btn-sm' if policy(song).edit?
+      %aside.btn-group{ role: 'group' }
+        - if song.published?
+          .btn-group{ role: 'group' }
+            %button#share-button.btn.btn-link.btn-sm.dropdown-toggle{ type: 'button', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' }
+              = icon('fas', 'share') + ' ' + t('views.application.share')
+            .dropdown-menu{ 'aria-labelledby': 'share-button' }
+              = song.twitter_share_button class: 'dropdown-item'
+              %button.fb-share.dropdown-item.btn{ type: 'button', 'data-url': song_url(song) }= icon('fab', 'facebook') + ' Facebook'
+        = song.edit_link class: 'btn btn-link btn-sm' if policy(song).edit?
 
-    - unless song.published?
-      %footer
-        %small.text-muted= l(song.created_at, format: :short)
+      - unless song.published?
+        %footer
+          %small.text-muted= l(song.created_at, format: :short)
