@@ -52,9 +52,11 @@ RSpec.describe 'Song', type: :system do
   end
 
   describe 'detail' do
-    let(:song) { create(:song, users: create_list(:user, 2)) }
+    let!(:song) { create(:song, users: create_list(:user, 2)) }
 
-    it 'enables users to see individual songs' do
+    before { Song.__elasticsearch__.refresh_index! }
+
+    it 'enables users to see individual songs', elasticsearch: true do
       visit song_path(song)
 
       expect(page).to have_title(song.title)
@@ -62,6 +64,7 @@ RSpec.describe 'Song', type: :system do
       expect(page).to have_content(song.artist)
       expect(page).to have_content(song.live_name)
       expect(page).to have_content(song.order)
+      expect(page).to have_content('Related Songs')
       song.playings.each do |playing|
         expect(page).to have_content(playing.handle)
       end

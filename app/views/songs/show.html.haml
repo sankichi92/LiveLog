@@ -39,3 +39,12 @@
         - if policy(@song).edit?
           .btn-group
             = @song.edit_link class: 'btn btn-outline-primary'
+
+  %section
+    %header.page-header
+      %h2 Related Songs
+
+    .song-list.mb-3
+      - @song.more_like_this.records(includes: [:live, { playings: :user }]).each do |song|
+        - cache_unless logged_in?, song do
+          = render song
