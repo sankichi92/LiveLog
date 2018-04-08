@@ -57,6 +57,7 @@ RSpec.describe 'Entry', type: :system do
 
       fill_in 'song_name', with: 'テストソング'
       fill_in 'song_artist', with: 'テストアーティスト'
+      select 'サークル内', from: 'song_status'
 
       click_button 'add-member'
       click_button 'add-member'

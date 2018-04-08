@@ -29,7 +29,7 @@
            'data-toggle': 'tooltip',
            'data-placement': 'right',
            title: '動画の公開範囲です。「公開」は全てのユーザ，「サークル内」はログインユーザのみ，「バンド内」は演者のみに公開されます'
-    = f.select :status, { '公開': 'open', 'サークル内': 'closed', 'バンド内': 'secret' }, {}, id: 'song_status', class: 'form-control'
+    = f.select :status, { '公開': 'open', 'サークル内': 'closed', 'バンド内': 'secret' }, { selected: 'open' }, id: 'song_status', class: 'form-control'
 
   .form-row
     .form-group.col-sm
