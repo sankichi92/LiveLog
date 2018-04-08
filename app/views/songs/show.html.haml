@@ -12,7 +12,7 @@
     .embed-responsive.embed-responsive-16by9.mb-3
       = @song.youtube_embed
 
-  %section.card.mb-3
+  %section.song-detail.card.mb-3
     .card-body
       %header
         .card-subtitle.text-muted
@@ -24,10 +24,10 @@
           = @song.status_icon if @song.player?(current_user)
       %dl
         - if @song.playings.present?
-          %dt Members
+          %dt= t('views.songs.members')
           %dd= render @song.playings.sort_by(&:inst_order)
         - if @song.comment.present?
-          %dt Comments
+          %dt= t('views.songs.comment')
           %dd.text-muted= simple_format(@song.comment)
       %aside.btn-toolbar{ role: 'toolbar' }
         .btn-group.mr-2{ role: 'group' }
@@ -41,7 +41,7 @@
             = @song.edit_link class: 'btn btn-outline-primary'
 
   %nav
-    %ul.pagination.justify-content-center
+    %ul.pagination.pagination-lg.justify-content-center
       - if @song.previous.present?
         %li.page-item
           = link_to @song.previous, class: 'page-link' do

@@ -91,3 +91,7 @@ tr[onclick]:hover {
     }
   }
 }
+
+.song-detail {
+  @extend .lead;
+}
