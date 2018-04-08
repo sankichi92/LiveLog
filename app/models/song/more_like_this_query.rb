@@ -15,7 +15,7 @@ class Song
           q.bool do |q|
             q.should do |q|
               q.more_like_this do |q|
-                q.fields fields
+                q.fields mlt_fields
                 q.like _id: song.id
                 q.min_term_freq 1
                 q.min_doc_freq 2
@@ -38,7 +38,7 @@ class Song
 
     private
 
-    def fields
+    def mlt_fields
       %i[name.raw players.instruments].tap do |fields|
         fields << :'artist.raw' if song.artist.present?
       end
