@@ -9,7 +9,7 @@ class SongPolicy < ApplicationPolicy
     end
   end
 
-  def watch?
+  def play?
     record.open? || record.closed? && logged_in? || record.player?(user)
   end
 

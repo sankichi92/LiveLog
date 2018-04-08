@@ -22,16 +22,6 @@ class SongsController < ApplicationController
     @song = Song.published.includes(playings: :user).find(id)
   end
 
-  def watch(id)
-    if request.xhr?
-      @song = Song.published.includes(playings: :user).find(id)
-      authorize @song
-    else
-      skip_authorization
-      redirect_to song_path(id)
-    end
-  end
-
   def new(live_id = nil)
     live = Live.find_by(id: live_id) || Live.last
     @song = live.songs.build
