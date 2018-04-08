@@ -21,7 +21,7 @@
 
       %aside.btn-group{ role: 'group' }
         - if song.published?
-          = link_to '詳細', song, class: 'btn btn-link btn-sm'
+          = link_to t('views.songs.detail'), song, class: 'btn btn-link btn-sm'
           .btn-group{ role: 'group' }
             %button#share-button.btn.btn-link.btn-sm.dropdown-toggle{ type: 'button', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' }
               = icon('fas', 'share') + ' ' + t('views.application.share')

@@ -53,6 +53,7 @@ ja:
       status:
         public: "公開設定: 公開"
         secret: "公開設定: バンド内"
+      detail: "詳細"
     users:
       activate: アカウントを有効化する
       change_password: パスワードを変更する

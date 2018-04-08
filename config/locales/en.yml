@@ -53,6 +53,7 @@ en:
       status:
         public: "Shared with: Public"
         secret: "Shared with: Band members"
+      detail: "Detail"
     users:
       activate: Activate
       change_password: Change password
