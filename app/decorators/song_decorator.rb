@@ -30,7 +30,7 @@ module SongDecorator
   end
 
   def previous
-    live.songs.played_order.where('songs.time < ? or songs.order < ?', time, order).first
+    live.songs.played_order.where('songs.time < ? or songs.order < ?', time, order).last
   end
 
   def next
