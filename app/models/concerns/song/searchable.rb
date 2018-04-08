@@ -60,7 +60,7 @@ module Concerns
           status: status,
           has_video?: youtube_id?,
           original?: original?,
-          players_count: playings_size,
+          players_count: playings.size,
           players: playings.as_json(only: %i[user_id instruments], methods: [:instruments])
         }
       end
