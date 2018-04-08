@@ -33,7 +33,6 @@ module Concerns
 
         mapping dynamic: false, _all: { enabled: false } do
           indexes :id, type: 'integer'
-          indexes :live_name, type: 'text', index: false
           indexes :datetime, type: 'date'
           indexes :order, type: 'short'
           indexes :name, type: 'text'
@@ -52,7 +51,6 @@ module Concerns
       def as_indexed_json(_options = {})
         {
           id: id,
-          live_name: live_name,
           datetime: datetime,
           order: order,
           name: name,
