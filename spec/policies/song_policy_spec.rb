@@ -5,7 +5,7 @@ RSpec.describe SongPolicy do
 
   let(:song) { create(:song) }
 
-  permissions :watch? do
+  permissions :play? do
     context 'when song is open' do
       let(:song) { create(:song, status: :open) }
 

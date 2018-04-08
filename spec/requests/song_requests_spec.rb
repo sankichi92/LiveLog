@@ -37,26 +37,6 @@ RSpec.describe 'Song requests', type: :request do
     end
   end
 
-  describe 'GET /songs/:id/watch by player' do
-    let(:song) { create(:song, status: :secret) }
-
-    before { log_in_as(create(:user, songs: [song]), capybara: false) }
-
-    context 'with xhr' do
-      it 'responds 200' do
-        get watch_song_path(song), xhr: true
-        expect(response).to have_http_status(:ok)
-      end
-    end
-
-    context 'without xhr' do
-      it 'redirects to /songs/:id' do
-        get watch_song_path(song), xhr: false
-        expect(response).to redirect_to(song)
-      end
-    end
-  end
-
   describe 'GET /songs/new by admin' do
     let(:live) { create(:live) }
 

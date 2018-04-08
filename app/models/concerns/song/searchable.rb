@@ -14,6 +14,10 @@ module Concerns
           __elasticsearch__.delete_document if published?
         end
 
+        if Rails.env.test?
+          index_name 'songs-test'
+        end
+
         settings index: {
           number_of_shards: 1,
           number_of_replicas: 0,
@@ -45,7 +49,7 @@ module Concerns
         end
       end
 
-      def as_indexed_json(options = {})
+      def as_indexed_json(_options = {})
         {
           id: id,
           live_name: live_name,
@@ -59,6 +63,10 @@ module Concerns
           players_count: playings_size,
           players: playings.as_json(only: %i[user_id instruments], methods: [:instruments])
         }
+      end
+
+      def more_like_this
+        self.class.search(::Song::MoreLikeThisQuery.new(self))
       end
     end
   end

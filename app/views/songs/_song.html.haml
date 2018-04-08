@@ -1,8 +1,8 @@
 %section.song-item
   .row.align-items-center
-    - if song.youtube_id.present? && policy(song).watch?
+    - if song.youtube_id.present? && policy(song).play?
       .song-thumbnail.col-4.col-xl-3.pr-0
-        = link_to watch_song_path(song), remote: true do
+        = link_to song do
           = image_tag song.youtube_thumbnail, class: 'img-fluid'
 
     .song-info.col
@@ -21,12 +21,13 @@
 
       %aside.btn-group{ role: 'group' }
         - if song.published?
+          = link_to '詳細', song, class: 'btn btn-link btn-sm'
           .btn-group{ role: 'group' }
             %button#share-button.btn.btn-link.btn-sm.dropdown-toggle{ type: 'button', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' }
               = icon('fas', 'share') + ' ' + t('views.application.share')
             .dropdown-menu{ 'aria-labelledby': 'share-button' }
               = song.twitter_share_button class: 'dropdown-item'
-              %button.fb-share.dropdown-item.btn{ type: 'button', 'data-url': song_url(song) }= icon('fab', 'facebook') + ' Facebook'
+              = song.facebook_share_button class: 'dropdown-item btn'
         = song.edit_link class: 'btn btn-link btn-sm' if policy(song).edit?
 
       - unless song.published?

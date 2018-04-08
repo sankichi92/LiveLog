@@ -1,11 +1,50 @@
 - provide(:title, @song.title)
 - provide(:description, strip_tags(@song.comment).presence || "#{@song.live_title} #{@song.time_order} #{@song.playings.sort_by(&:inst_order).map { |p| "#{p.inst}.#{p.handle}" }.join(' ')}")
 - provide(:og_type, 'music.song')
-- provide(:og_image, @song.youtube_thumbnail('maxresdefault')) if policy(@song).watch?
+- provide(:og_image, @song.youtube_thumbnail('maxresdefault')) if policy(@song).play?
 - content_for :additional_meta_fields do
   - @song.playings.each do |playing|
     %meta{ property: 'music:musician', content: user_url(playing.user) }
-= render @song
-- if policy(@song).watch?
-  :javascript
-    $('.song-thumbnail a').click();
+
+%article
+  - if @song.youtube_id.present? && policy(@song).play?
+    %script{ src: 'https://www.youtube.com/iframe_api', async: true }
+    .embed-responsive.embed-responsive-16by9.mb-3
+      = @song.youtube_embed
+
+  %section.card
+    .card-body
+      %header
+        .card-subtitle.text-muted
+          = link_to @song.live_title, @song.live
+          = @song.time_order
+        %h1.card-title
+          = @song.title
+          %small= t('views.songs.original') if @song.original?
+          = @song.status_icon if @song.player?(current_user)
+      %dl
+        - if @song.playings.present?
+          %dt Members
+          %dd= render @song.playings.sort_by(&:inst_order)
+        - if @song.comment.present?
+          %dt Comments
+          %dd.text-muted= simple_format(@song.comment)
+      %aside.btn-toolbar{ role: 'toolbar' }
+        .btn-group.mr-2{ role: 'group' }
+          %button.btn.btn-secondary.dropdown-toggle#share-button{ type: 'button', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' }
+            = icon('fas', 'share') + ' ' + t('views.application.share')
+          .dropdown-menu{ 'aria-labelledby': 'share-button' }
+            = @song.twitter_share_button class: 'dropdown-item'
+            = @song.facebook_share_button class: 'dropdown-item btn'
+        - if policy(@song).edit?
+          .btn-group
+            = @song.edit_link class: 'btn btn-outline-primary'
+
+  %section
+    %header.page-header
+      %h2 Related Songs
+
+    .song-list.mb-3
+      - @song.more_like_this.records(includes: [:live, { playings: :user }]).each do |song|
+        - cache_unless logged_in?, song do
+          = render song

@@ -14,7 +14,8 @@ module SongDecorator
   def youtube_embed
     return unless youtube_id?
     content_tag :iframe, '',
-                class: 'player',
+                id: 'player',
+                data: { 'song-id': id },
                 src: "https://www.youtube.com/embed/#{youtube_id}?enablejsapi=1&origin=#{root_url.chop}&rel=0&autoplay=1",
                 frameborder: 0,
                 allowfullscreen: true
@@ -48,5 +49,10 @@ module SongDecorator
     html_options[:target] = '_blank'
     html_options[:onclick] = "ga('send', 'social', 'Twitter', 'tweet', #{song_url(self)});"
     link_to(icon('fab', 'twitter') + ' Twitter', uri.to_s, html_options)
+  end
+
+  def facebook_share_button(html_options)
+    html_options[:class] = html_options[:class].nil? ? 'fb-share' : html_options[:class] + ' fb-share'
+    button_tag icon('fab', 'facebook') + ' Facebook', html_options.merge(data: { url: song_url(self) }, type: 'button')
   end
 end
