@@ -15,7 +15,7 @@ class Song
       search do |q|
         q.query do |q|
           q.bool do |q|
-            q.must { |q| q.multi_match query: self.q, fields: %i[name artist] } if self.q.present?
+            q.must { |q| q.multi_match query: self.q, fields: %i[name artist comment] } if self.q.present?
             q.must { |q| q.match name: name } if name.present?
             q.must { |q| q.match artist: artist } if artist.present?
             q.filter do |q|
