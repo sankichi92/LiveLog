@@ -40,6 +40,22 @@
           .btn-group
             = @song.edit_link class: 'btn btn-outline-primary'
 
+  %aside.card.mb-3.d-none#itunes
+    .card-body
+      %h5.card-title#itunes-title
+      .d-flex.flex-column.flex-sm-row.align-items-sm-center
+        .artwork.mr-2.mb-2
+          %a.itunes-link
+            %img.img-thumbnail#itunes-artwork{ target: '_blank' }
+        .preview
+          #itunes-track
+          %audio#itunes-preview{ controls: true }
+          %a.itunes-link.d-block{ target: '_blank' }
+            = image_tag 'JP_iTunes_Store_Buy_Badge_RGB.svg'
+  - unless @song.original?
+    :javascript
+      fetchAndShowSongFromITunes("#{@song.name}", "#{@song.artist}");
+
   %nav
     %ul.pagination.pagination-lg.justify-content-center
       - if @song.previous.present?
