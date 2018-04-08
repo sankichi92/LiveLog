@@ -29,6 +29,14 @@ module SongDecorator
     end
   end
 
+  def previous
+    live.songs.played_order.where('songs.time < ? or songs.order < ?', time, order).first
+  end
+
+  def next
+    live.songs.played_order.where('songs.time > ? or songs.order > ?', time, order).first
+  end
+
   def edit_link(html_options)
     link_to_edit edit_song_path(self), html_options
   end

@@ -12,7 +12,7 @@
     .embed-responsive.embed-responsive-16by9.mb-3
       = @song.youtube_embed
 
-  %section.card
+  %section.card.mb-3
     .card-body
       %header
         .card-subtitle.text-muted
@@ -39,6 +39,19 @@
         - if policy(@song).edit?
           .btn-group
             = @song.edit_link class: 'btn btn-outline-primary'
+
+  %nav
+    %ul.pagination.justify-content-center
+      - if @song.previous.present?
+        %li.page-item
+          = link_to @song.previous, class: 'page-link' do
+            %span{ 'aria-hidden': true } &laquo;
+            = @song.previous.title
+      - if @song.next.present?
+        %li.page-item
+          = link_to @song.next, class: 'page-link' do
+            = @song.next.title
+            %span{ 'aria-hidden': true } &raquo;
 
   %section
     %header.page-header
