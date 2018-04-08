@@ -67,7 +67,7 @@
       - @songs.each do |song|
         - cache_unless logged_in?, song do
           = render song
-    = will_paginate inner_window: 1, outer_window: 0, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer
+    = will_paginate inner_window: 1, outer_window: 0, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer, class: 'd-flex justify-content-center'
 
 - else
   .alert.alert-danger{ role: 'alert' }
