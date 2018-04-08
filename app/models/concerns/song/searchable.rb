@@ -35,8 +35,12 @@ module Concerns
           indexes :id, type: 'integer'
           indexes :datetime, type: 'date'
           indexes :order, type: 'short'
-          indexes :name, type: 'text'
-          indexes :artist, type: 'text'
+          indexes :name, type: 'text' do
+            indexes :raw, type: 'keyword'
+          end
+          indexes :artist, type: 'text' do
+            indexes :raw, type: 'keyword'
+          end
           indexes :status, type: 'keyword'
           indexes :has_video?, type: 'boolean'
           indexes :original?, type: 'boolean'
@@ -65,8 +69,8 @@ module Concerns
         }
       end
 
-      def more_like_this
-        self.class.search(::Song::MoreLikeThisQuery.new(self))
+      def more_like_this(size: 10)
+        self.class.search ::Song::MoreLikeThisQuery.new(self, size: size)
       end
     end
   end
