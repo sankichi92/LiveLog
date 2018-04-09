@@ -1,3 +1,5 @@
+var iTunesResponse;
+
 function fetchAndShowSongFromITunes(songName, artistName) {
     $.ajax({
         url: 'https://itunes.apple.com/search',
@@ -10,16 +12,25 @@ function fetchAndShowSongFromITunes(songName, artistName) {
         },
         dataType: 'json'
     }).done(function (json) {
+        iTunesResponse = json;
+
         if (json.resultCount === 0) {
             return;
         }
 
         var results = json.results;
-        var result = results.find(function (result) {
-            return result.trackName === songName && result.artistName === artistName;
+
+        var result = results.find(function (res) {
+            return res.trackName.toUpperCase() === songName.toUpperCase() && res.artistName.toUpperCase() === artistName.toUpperCase();
         });
 
-        if (!result) {
+        if (result === undefined) {
+            result = results.find(function (res) {
+                return res.artistName.toUpperCase() === artistName.toUpperCase();
+            })
+        }
+
+        if (result === undefined) {
             result = results[0];
         }
 

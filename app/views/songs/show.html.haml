@@ -49,7 +49,7 @@
             %img.img-thumbnail#itunes-artwork{ target: '_blank' }
         .preview
           #itunes-track
-          %audio#itunes-preview{ controls: true }
+          %audio#itunes-preview{ controls: true, volume: 0.8 }
           %a.itunes-link.d-block{ target: '_blank' }
             = image_tag 'JP_iTunes_Store_Buy_Badge_RGB.svg'
   - unless @song.original?
