@@ -2,8 +2,6 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
   include Pundit
 
-  protect_from_forgery with: :exception
-
   before_action :set_raven_context
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
