@@ -17,6 +17,7 @@
     - if content_for?(:additional_meta_fields)
       = yield(:additional_meta_fields)
     = csrf_meta_tags
+    = csp_meta_tag
     = stylesheet_link_tag    'application', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
     - if Rails.env.production?
