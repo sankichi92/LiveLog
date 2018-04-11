@@ -1,35 +1,24 @@
-%section.song-item
+= link_to song, class: 'song-item' do
   .row.align-items-center
     - if song.youtube_id.present? && policy(song).play?
       .song-thumbnail.col-4.col-xl-3.pr-0
-        = link_to song do
-          = image_tag song.youtube_thumbnail, class: 'img-fluid'
+        = image_tag song.youtube_thumbnail, class: 'img-fluid'
 
     .song-info.col
-      %header
-        .text-muted
-          = link_to song.live_title, song.live unless current_page?(song.live) || params[:controller] == 'entries'
-          = song.time_order
-        %h5
-          = song.title
-          %small= t('views.songs.original') if song.original?
-          = song.status_icon if song.player?(current_user)
+      .text-muted
+        = song.live_title unless current_page?(song.live) || params[:controller] == 'entries'
+        = song.time_order
+
+      %h5
+        = song.title
+        %small= t('views.songs.original') if song.original?
 
       %ul.list-inline.mb-2
-        = render song.playings.sort_by(&:inst_order)
-      .text-muted= simple_format(song.comment) if song.comment?
+        - song.playings.sort_by(&:inst_order).each do |playing|
+          %li.list-inline-item<
+            = playing.handle_with_inst
 
-      %aside.btn-group{ role: 'group' }
-        - if song.published?
-          = link_to t('views.songs.detail'), song, class: 'btn btn-link btn-sm'
-          .btn-group{ role: 'group' }
-            %button#share-button.btn.btn-link.btn-sm.dropdown-toggle{ type: 'button', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' }
-              = icon('fas', 'share') + ' ' + t('views.application.share')
-            .dropdown-menu{ 'aria-labelledby': 'share-button' }
-              = song.twitter_share_button class: 'dropdown-item'
-              = song.facebook_share_button class: 'dropdown-item btn'
-        = song.edit_link class: 'btn btn-link btn-sm' if policy(song).edit?
+      .text-muted= strip_links(song.comment) if song.comment?
 
       - unless song.published?
-        %footer
-          %small.text-muted= l(song.created_at, format: :short)
+        %small.text-muted= l(song.created_at, format: :short)

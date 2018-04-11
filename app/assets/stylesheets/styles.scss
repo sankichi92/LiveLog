@@ -79,6 +79,7 @@ tr[onclick]:hover {
 
   .song-item {
     @extend .list-group-item;
+    @extend .list-group-item-action;
 
     padding-right: 0;
     padding-left: 0;
