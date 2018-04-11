@@ -21,3 +21,6 @@
 
 # Ignore database dump file.
 latest.dump
+
+# Ignore master key for decrypting credentials and more.
+/config/master.key
