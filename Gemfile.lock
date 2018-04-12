@@ -218,7 +218,7 @@ GEM
     popper_js (1.12.9)
     powerpack (0.1.1)
     public_suffix (3.0.2)
-    puma (3.11.3)
+    puma (3.11.4)
     pundit (1.1.0)
       activesupport (>= 3.0.0)
     rack (2.0.4)
@@ -397,7 +397,7 @@ DEPENDENCIES
   mini_magick (~> 4.8)
   newrelic_rpm
   pg (~> 1.0)
-  puma (~> 3.10)
+  puma (~> 3.11)
   pundit (~> 1.1)
   rails (~> 5.2.0)
   rails_real_favicon
