@@ -3,6 +3,8 @@ class User < ApplicationRecord
   has_many :songs, through: :playings
   has_many :tokens, dependent: :destroy
 
+  has_one_attached :avatar
+
   attr_accessor :remember_token, :activation_token, :reset_token
 
   has_secure_password(validations: false)

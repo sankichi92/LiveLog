@@ -24,7 +24,6 @@ RSpec.describe 'User', type: :system do
       expect(page).to have_title(user.handle)
       expect(page).to have_content(user.handle)
       expect(page).to have_content(user.joined)
-      expect(page).not_to have_content(user.email)
       expect(page).not_to have_css('#admin-tools')
       user.songs.each do |song|
         expect(page).to have_content(song.name)
@@ -38,7 +37,6 @@ RSpec.describe 'User', type: :system do
 
       expect(page).to have_title(user.name_with_handle)
       expect(page).to have_content(user.name_with_handle)
-      expect(page).to have_content(user.email)
       expect(page).to have_css('#admin-tools')
     end
   end

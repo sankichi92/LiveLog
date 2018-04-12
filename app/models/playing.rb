@@ -1,7 +1,7 @@
 class Playing < ApplicationRecord
   INST_ORDER = %w[Vo Vn Vla Vc Fl Cl Sax Tp Hr Tb Harp Gt Koto Pf Acc 鍵ハ Ba Cj Dr Bongo Perc].freeze
 
-  belongs_to :user
+  belongs_to :user, counter_cache: true
   belongs_to :song, touch: true
 
   delegate :handle, :name, :joined, :email, :public?, to: :user

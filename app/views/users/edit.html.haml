@@ -24,6 +24,10 @@
     = f.text_area :intro, class: 'form-control', rows: '3'
 
   .form-group
+    = f.label :avatar
+    = f.file_field :avatar, direct_upload: true, accept: 'image/*', class: 'form-control-file'
+
+  .form-group
     .custom-control.custom-checkbox.custom-control-inline
       = f.check_box :public, class: 'custom-control-input'
       = f.label :public, class: 'custom-control-label' do
@@ -44,5 +48,3 @@
                title: '演奏した曲が今日のピックアップに選ばれた時などにお知らせします'
 
   = f.submit class: 'btn btn-primary'
-
-

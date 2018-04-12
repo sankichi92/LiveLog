@@ -16,7 +16,7 @@ RSpec.describe 'Account activation', type: :system do
     Capybara.using_session("Inviter's session") do
       log_in_as inviter
       visit user_path(user)
-      click_link 'Invite'
+      click_link t('views.users.invite')
 
       expect(page).to have_title('Invite')
 

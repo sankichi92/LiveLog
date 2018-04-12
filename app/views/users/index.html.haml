@@ -1,24 +1,11 @@
 - provide(:title, 'Members')
-- provide(:description, params[:active] != 'false' ? '京大アンプラグドの現役メンバー一覧' : 'OB・OGを含む京大アンプラグドのメンバー一覧')
+- provide(:description, '京大アンプラグドのメンバー一覧')
 %header.page-header.d-none.d-sm-block
   %h1.display-4 Members
 
-%aside.card.mb-3
-  .card-body
-    .custom-control.custom-checkbox
-      = check_box_tag :active, true, false, checked: params[:active] != 'false', class: 'custom-control-input', onchange: "location.href='#{request.path}?active=' + $(this).is(':checked');"
-      = label_tag :active, '1年以内にライブに出演したメンバーのみ表示', class: 'custom-control-label'
+%nav.nav.nav-pills.nav-justified.mb-3
+  - policy_scope(User).joined_years.each do |year|
+    = link_to year, users_path(y: year), class: "nav-item nav-link#{year == @year ? ' active' : ''}"
 
 .row
-  - @users.joined_years.each do |year|
-    .col-sm-6.col-md-4.col-lg-3.mb-3
-      %section.card
-        %h5.card-header= year
-        %ul.list-group.list-group-flush
-          - if logged_in?
-            = render @users.where(joined: year)
-          - else
-            = render partial: 'user', collection: @users.where(joined: year), cached: true
-
-- if logged_in?
-  %p * 印が付いているメンバーは管理者です。
+  = render partial: 'user', collection: @users, cached: true

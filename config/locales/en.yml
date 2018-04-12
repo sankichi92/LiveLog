@@ -62,6 +62,8 @@ en:
       password_new: New password
       password_create: Create password
       password_current: Current password
+      collaborators: "Collaborators"
+      invite: "Invite"
   activerecord:
     errors:
       models:

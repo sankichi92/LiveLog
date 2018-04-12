@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_04_11_122856) do
+ActiveRecord::Schema.define(version: 2018_04_12_121947) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -103,6 +103,7 @@ ActiveRecord::Schema.define(version: 2018_04_11_122856) do
     t.string "url"
     t.text "intro"
     t.boolean "subscribing", default: true, null: false
+    t.integer "playings_count", default: 0, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["furigana"], name: "index_users_on_furigana"
   end

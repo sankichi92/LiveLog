@@ -1,14 +1,12 @@
 class UsersController < ApplicationController
-  permits :first_name, :last_name, :furigana, :joined, :nickname, :email, :url, :intro, :public, :subscribing
+  permits :first_name, :last_name, :furigana, :joined, :nickname, :email, :url, :intro, :public, :subscribing, :avatar
 
   after_action :verify_authorized, except: :index
+  after_action :verify_policy_scoped, only: :index
 
-  def index(active = 'true')
-    @users = if active != 'false'
-               User.active.natural_order
-             else
-               User.natural_order
-             end
+  def index(y = User.joined_years.first)
+    @year = y.to_i
+    @users = policy_scope(User).with_attached_avatar.where(joined: y).order(playings_count: :desc, furigana: :asc)
   end
 
   def show(id)
