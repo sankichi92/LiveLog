@@ -47,6 +47,23 @@ html {
   }
 }
 
+img {
+  &.small {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  &.medium {
+    width: 6rem;
+    height: 6rem;
+  }
+
+  &.large {
+    width: 12rem;
+    height: 12rem;
+  }
+}
+
 #navbar {
   font-size: 1.25rem;
 }
@@ -79,6 +96,7 @@ tr[onclick]:hover {
 
   .song-item {
     @extend .list-group-item;
+    @extend .list-group-item-action;
 
     padding-right: 0;
     padding-left: 0;
@@ -93,5 +111,9 @@ tr[onclick]:hover {
 }
 
 .song-detail {
+  @extend .lead;
+}
+
+.member-detail {
   @extend .lead;
 }

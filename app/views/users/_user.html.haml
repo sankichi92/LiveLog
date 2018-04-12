@@ -1,10 +1,12 @@
-- if policy(user).show?
-  = link_to user, class: 'list-group-item list-group-item-action' do
-    = user.display_name
-    - if logged_in? && user.admin?
-      %span *
-- else
-  = content_tag :button, disabled: true, class: 'list-group-item list-group-item-action' do
-    = user.display_name
-    - if logged_in? && user.admin?
-      %span *
+.col-12.col-sm-6.col-lg-4.mb-3
+  %section.card
+    .card-body
+      %header.d-flex.align-items-center
+        = link_to user, class: 'd-box mr-2 my-1' do
+          = user.avatar_image_tag(:medium)
+        .info
+          %h5.card-title
+            = link_to user.handle, user, class: 'text-dark'
+          .card-subtitle.text-muted
+            = user.instruments.take(3).join(', ')
+      = simple_format user.intro, class: 'card-text text-muted'

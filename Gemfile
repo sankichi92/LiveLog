@@ -12,6 +12,7 @@ gem 'elasticsearch-dsl', '~> 0.1'
 
 gem 'action_args', '~> 2.3.1'
 gem 'active_decorator', '~> 1.0.0'
+gem 'aws-sdk-s3', '~> 1.9.0', require: false
 gem 'bcrypt', '~> 3.1.11'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'bootstrap', '~> 4.0'
@@ -20,6 +21,7 @@ gem 'font-awesome-sass', '~> 5.0.9'
 gem 'haml-rails', '~> 1.0'
 gem 'jbuilder', '~> 2.7'
 gem 'jquery-rails'
+gem 'mini_magick', '~> 4.8'
 gem 'puma', '~> 3.10'
 gem 'pundit', '~> 1.1'
 gem 'redis', '~> 4.0.1'

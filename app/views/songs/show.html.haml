@@ -31,7 +31,7 @@
           %dd.text-muted= simple_format(@song.comment)
       %aside.btn-toolbar{ role: 'toolbar' }
         .btn-group.mr-2{ role: 'group' }
-          %button.btn.btn-secondary.dropdown-toggle#share-button{ type: 'button', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' }
+          %button.btn.btn-primary.dropdown-toggle#share-button{ type: 'button', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' }
             = icon('fas', 'share') + ' ' + t('views.application.share')
           .dropdown-menu{ 'aria-labelledby': 'share-button' }
             = @song.twitter_share_button class: 'dropdown-item'
@@ -73,6 +73,4 @@
     %header.page-header
       %h2 Related Songs
     .song-list.mb-3
-      - @song.more_like_this.records(includes: [:live, { playings: :user }]).each do |song|
-        - cache_unless logged_in?, song do
-          = render song
+      = render partial: 'songs/song', collection: @song.more_like_this.records(includes: [:live, { playings: :user }]), cached: true

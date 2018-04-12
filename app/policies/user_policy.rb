@@ -22,7 +22,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def destroy?
-    user&.admin_or_elder?
+    user&.admin_or_elder? && user != record
   end
 
   def invite?
@@ -30,6 +30,6 @@ class UserPolicy < ApplicationPolicy
   end
 
   def change_status?
-    user&.admin?
+    user&.admin? && user != record
   end
 end
