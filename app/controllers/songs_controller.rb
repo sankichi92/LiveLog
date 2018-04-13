@@ -19,7 +19,7 @@ class SongsController < ApplicationController
   end
 
   def show(id)
-    @song = Song.includes(playings: :user).find(id)
+    @song = Song.includes(playings: { user: { 'avatar_attachment': :blob } }).find(id)
   end
 
   def new(live_id = nil)
