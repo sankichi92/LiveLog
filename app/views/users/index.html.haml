@@ -8,4 +8,7 @@
     = link_to year, users_path(y: year), class: "nav-item nav-link#{year == @year ? ' active' : ''}"
 
 .row
-  = render partial: 'user', collection: @users, cached: true
+  - if logged_in?
+    = render @users
+  - else
+    = render partial: 'user', collection: @users, cached: true

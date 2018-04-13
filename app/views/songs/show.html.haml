@@ -73,4 +73,7 @@
     %header.page-header
       %h2 Related Songs
     .song-list.mb-3
-      = render partial: 'songs/song', collection: @song.more_like_this.records(includes: [:live, { playings: :user }]), cached: true
+      - if logged_in?
+        = render @song.more_like_this.records(includes: [:live, { playings: :user }])
+      - else
+        = render partial: 'songs/song', collection: @song.more_like_this.records(includes: [:live, { playings: :user }]), cached: true
