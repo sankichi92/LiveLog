@@ -1,0 +1,4 @@
+%li.list-inline-item
+  - ActiveDecorator::Decorator.instance.decorate(collaborator)
+  = policy(collaborator).show? ? link_to(collaborator.avatar_image_tag(:small), collaborator) : collaborator.avatar_image_tag(:small)
+  = policy(collaborator).show? ? link_to(collaborator.handle, collaborator) : collaborator.handle

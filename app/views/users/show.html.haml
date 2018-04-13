@@ -26,11 +26,7 @@
         %small.text-muted #{@user.collaborator_to_count.size}人
       %dd
         %ul.list-inline
-          - @user.collaborators.each do |user|
-            - ActiveDecorator::Decorator.instance.decorate(user)
-            %li.list-inline-item
-              = policy(user).show? ? link_to(user.avatar_image_tag(:small), user) : user.avatar_image_tag(:small)
-              = policy(user).show? ? link_to(user.handle, user) : user.handle
+          = render partial: 'users/collaborator', collection: @user.collaborators, cached: true
       - if @user.intro?
         %dt= User.human_attribute_name(:intro)
         %dd= simple_format(@user.intro, class: 'text-muted')

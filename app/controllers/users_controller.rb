@@ -10,7 +10,7 @@ class UsersController < ApplicationController
   end
 
   def show(id)
-    @user = User.includes(songs: :live).find(id)
+    @user = User.includes(:playings, songs: :live).find(id)
     authorize @user
     @songs = @user.songs.published.order_by_live.includes(playings: :user)
   end

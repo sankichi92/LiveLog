@@ -35,11 +35,11 @@ module UserDecorator
   end
 
   def collaborator_to_count
-    related_playings.where.not(user_id: id).group(:user_id).order(count: :desc).count
+    related_playings.where.not(user_id: id).group(:user).order(count: :desc).count
   end
 
   def collaborators
-    User.where(id: collaborator_to_count.to_h.keys.take(10)).with_attached_avatar
+    collaborator_to_count.keys.take(10)
   end
 
   def delete_link(html_options)
