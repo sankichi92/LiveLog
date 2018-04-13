@@ -16,7 +16,7 @@ module UserDecorator
   def avatar_url(size)
     px = IMAGE_PX_BY_SIZE[size]
     if avatar.attached?
-      url_for avatar.variant(resize: "#{px}x#{px}")
+      url_for avatar.variant(resize: "#{px}x#{px}^", gravity: 'center', crop: "#{px}x#{px}+0+0")
     elsif email.present? && activated?
       hash = Digest::MD5.hexdigest(email)
       "https://www.gravatar.com/avatar/#{hash}?s=#{px}&d=mm"
