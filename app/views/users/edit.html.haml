@@ -23,10 +23,9 @@
     = f.label :intro
     = f.text_area :intro, class: 'form-control', rows: '3'
 
-  - if current_user.id == 1
-    .form-group
-      = f.label :avatar
-      = f.file_field :avatar, direct_upload: true, accept: 'image/*', class: 'form-control-file'
+  .form-group
+    = f.label :avatar
+    = f.file_field :avatar, direct_upload: true, accept: 'image/*', class: 'form-control-file'
 
   .form-group
     .custom-control.custom-checkbox.custom-control-inline
