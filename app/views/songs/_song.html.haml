@@ -12,6 +12,7 @@
       %h5
         = song.title
         %small= t('views.songs.original') if song.original?
+        = song.status_icon if song.player?(current_user)
 
       %ul.list-inline.mb-2
         - song.playings.sort_by(&:inst_order).each do |playing|
