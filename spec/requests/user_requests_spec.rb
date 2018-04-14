@@ -104,7 +104,7 @@ RSpec.describe 'User requests', type: :request do
 
       it 'responds 422' do
         expect { delete user_path(user) }.not_to change(User, :count)
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to redirect_to(user)
       end
     end
   end

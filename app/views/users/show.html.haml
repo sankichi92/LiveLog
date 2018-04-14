@@ -16,7 +16,7 @@
           = @user.display_name
           %small.text-muted= icon('fas', 'lock') unless @user.public?
         .card-subtitle.text-muted<
-          #{@user.songs.published.size}曲
+          #{@songs.size}曲
           ・
           = @user.instruments.join(', ')
         = link_to @user.url, @user.url, target: '_blank' if @user.url?
@@ -48,8 +48,11 @@
             - else
               = @user.deactivate_link class: 'btn btn-outline-warning'
               = @user.create_admin_link class: 'btn btn-outline-danger'
-          - elsif @user.songs.blank? && policy(@user).destroy?
+          - elsif @songs.empty? && policy(@user).destroy?
             = @user.delete_link class: 'btn btn-outline-danger'
+
+- if @songs.any?(&:playable?)
+  = render 'songs/playlist', songs: @songs.select(&:playable?)
 
 - if @songs.present?
   .song-list

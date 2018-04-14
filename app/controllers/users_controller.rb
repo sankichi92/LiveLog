@@ -10,9 +10,9 @@ class UsersController < ApplicationController
   end
 
   def show(id)
-    @user = User.includes(:playings, songs: :live).find(id)
+    @user = User.includes(:playings).find(id)
     authorize @user
-    @songs = @user.songs.published.order_by_live.includes(playings: :user)
+    @songs = @user.songs.with_attached_audio.includes(playings: :user).published.order_by_live
   end
 
   def search(id)
@@ -61,8 +61,8 @@ class UsersController < ApplicationController
     authorize @user
     @user.destroy
   rescue ActiveRecord::DeleteRestrictionError => e
-    flash.now[:danger] = e.message
-    render :show, status: :unprocessable_entity
+    flash[:danger] = e.message
+    redirect_to @user
   else
     flash[:success] = t('flash.messages.deleted', name: @user.name)
     redirect_to users_url

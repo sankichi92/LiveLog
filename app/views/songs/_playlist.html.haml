@@ -1,0 +1,7 @@
+%section.card.mb-3
+  .card-body
+    .card-title#playlist-label
+    %audio.d-block.mb-2#playlist{ controls: true, 'data-audios': songs.to_json(only: :order, methods: %i[title audio_url]) }
+    .btn-group
+      %button.btn.btn-secondary#playlist-backward{ type: 'button' }= icon 'fas', 'step-backward'
+      %button.btn.btn-secondary#playlist-forward{ type: 'button' }= icon 'fas', 'step-forward'
