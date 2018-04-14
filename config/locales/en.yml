@@ -55,7 +55,6 @@ en:
         secret: "Shared with: Band members"
       detail: "Detail"
       members: "Members"
-      comment: "Comment"
     users:
       activate: Activate
       change_password: Change password

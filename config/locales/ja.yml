@@ -55,7 +55,6 @@ ja:
         secret: "公開設定: バンド内"
       detail: "詳細"
       members: "メンバー"
-      comment: "コメント"
     users:
       activate: アカウントを有効化する
       change_password: パスワードを変更する
