@@ -50,4 +50,7 @@
 
 - if @songs.present?
   .song-list
-    = render partial: 'songs/song', collection: @songs, cached: true
+    - if logged_in?
+      = render @songs
+    - else
+      = render partial: 'songs/song', collection: @songs, cached: true
