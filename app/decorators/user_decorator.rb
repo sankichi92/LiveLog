@@ -30,16 +30,18 @@ module UserDecorator
     image_tag avatar_source(size), options
   end
 
-  def related_playings
-    Playing.where(song_id: songs.published.pluck('songs.id'))
+  def collaborated_playings
+    Playing.where(song_id: songs.published.pluck('songs.id')).where.not(user_id: id)
   end
 
-  def collaborator_to_count
-    related_playings.where.not(user_id: id).group(:user).order(count: :desc).count
+  def collaborators_count
+    collaborated_playings.distinct.count(:user_id)
   end
 
-  def collaborators
-    collaborator_to_count.keys.take(10)
+  def top_10_collaborators
+    collaborators = collaborated_playings.group(:user).order(count: :desc).limit(10).count.keys
+    ActiveRecord::Associations::Preloader.new.preload(collaborators, 'avatar_attachment': :blob)
+    collaborators.tap { |collaborator| ActiveDecorator::Decorator.instance.decorate(collaborator) }
   end
 
   def delete_link(html_options)

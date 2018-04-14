@@ -23,10 +23,13 @@
     %dl
       %dt
         = t('views.users.collaborators')
-        %small.text-muted #{@user.collaborator_to_count.size}人
+        %small.text-muted #{@user.collaborators_count}人
       %dd
         %ul.list-inline
-          = render partial: 'users/collaborator', collection: @user.collaborators, cached: true
+          - @user.top_10_collaborators.each do |collaborator|
+            %li.list-inline-item
+              = policy(collaborator).show? ? link_to(collaborator.avatar_image_tag(:small), collaborator) : collaborator.avatar_image_tag(:small)
+              = policy(collaborator).show? ? link_to(collaborator.handle, collaborator) : collaborator.handle
       - if @user.intro?
         %dt= User.human_attribute_name(:intro)
         %dd= simple_format(@user.intro, class: 'text-muted')
