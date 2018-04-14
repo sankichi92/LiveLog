@@ -16,6 +16,8 @@ class Song < ApplicationRecord
   has_many :playings, dependent: :destroy, inverse_of: :song
   accepts_nested_attributes_for :playings, allow_destroy: true
 
+  has_one_attached :audio
+
   delegate :title, :name, to: :live, prefix: true
   delegate :date, :published?, :nf?, to: :live
 
