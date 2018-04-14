@@ -27,7 +27,7 @@
           %dt= t('views.songs.members')
           %dd= render @song.playings.sort_by(&:inst_order)
         - if @song.comment.present?
-          %dt= t('views.songs.comment')
+          %dt= Song.human_attribute_name(:comment)
           %dd.text-muted= simple_format(@song.comment)
       %aside.btn-toolbar{ role: 'toolbar' }
         - if @song.published?
