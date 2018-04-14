@@ -37,6 +37,9 @@
       - if !@user.activated? && policy(@user).invite?
         .btn-group
           = @user.invite_link class: 'btn btn-info'
+      - if policy(@user).edit?
+        .btn-group
+          = @user.edit_link class: 'btn btn-outline-primary'
       - if current_user&.admin_or_elder?
         .btn-group#admin-tools
           - if @user.activated? && policy(@user).change_status?

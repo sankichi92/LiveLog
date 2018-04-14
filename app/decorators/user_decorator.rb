@@ -44,6 +44,10 @@ module UserDecorator
     collaborators.tap { |collaborator| ActiveDecorator::Decorator.instance.decorate(collaborator) }
   end
 
+  def edit_link(html_options)
+    link_to_edit edit_user_path(self), html_options
+  end
+
   def delete_link(html_options)
     link_to_delete self, html_options.merge(data: { confirm: t('views.application.delete_confirm') })
   end
