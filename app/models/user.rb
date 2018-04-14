@@ -75,7 +75,7 @@ class User < ApplicationRecord
   end
 
   def activate(password_params)
-    update(password_params.merge(activated: true, activated_at: Time.zone.now))
+    update(password_params.merge(activated: true, activated_at: Time.zone.now, public: true))
   end
 
   def deactivate
