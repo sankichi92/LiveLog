@@ -25,6 +25,10 @@ class Live < ApplicationRecord
     name.include?('NF')
   end
 
+  def nendo
+    date.nendo
+  end
+
   def publish(url)
     update_columns(published: true, published_at: Time.zone.now)
     songs.includes(:playings).import

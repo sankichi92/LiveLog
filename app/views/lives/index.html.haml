@@ -4,11 +4,10 @@
   %h1.display-4 Live List
 
 .row
-  - Live.years.each do |year|
-    - lives = @lives.nendo(year)
+  - @lives.group_by(&:nendo).each do |nendo, lives|
     .col-lg-6.mb-3
       %section.card
-        %h5.card-header= year
+        %h5.card-header= nendo
         %table.table.table-hover
           %tbody
             = render partial: 'lives/live', collection: lives, cached: true
