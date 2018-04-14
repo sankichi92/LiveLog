@@ -18,5 +18,14 @@
         - if @live.songs.blank?
           = @live.delete_link class: 'btn btn-outline-danger'
 
+  - if @live.songs.to_a.any?(&:playable?)
+    %section.card.mb-3
+      .card-body
+        .card-title#playlist-label
+        %audio.d-block.mb-2#playlist{ controls: true, 'data-audios': @live.audios_json }
+        .btn-group
+          %button.btn.btn-secondary#playlist-backward{ type: 'button' }= icon 'fas', 'step-backward'
+          %button.btn.btn-secondary#playlist-forward{ type: 'button' }= icon 'fas', 'step-forward'
+
   .song-list
     = render @live.songs.played_order.includes(playings: :user)
