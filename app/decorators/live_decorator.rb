@@ -7,10 +7,6 @@ module LiveDecorator
     "#{l date} #{at_place}"
   end
 
-  def audios_json
-    songs.select(&:playable?).to_json(only: :order, methods: %i[title audio_url])
-  end
-
   def edit_link(html_options)
     link_to_edit edit_live_path(self), html_options
   end

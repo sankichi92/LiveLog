@@ -1,5 +1,5 @@
 - provide(:title, @live.title)
-- provide(:description, "#{l(@live.date)} @#{@live.place} #{@live.songs.played_order.map.with_index { |s, i| "#{i + 1}.#{s.name}" }.join(' ')}")
+- provide(:description, "#{l(@live.date)} @#{@live.place} #{@songs.map.with_index { |s, i| "#{i + 1}.#{s.name}" }.join(' ')}")
 %article
   %header.page-header.d-flex.flex-column.flex-md-row.justify-content-between.align-items-md-center
     %h1
@@ -15,17 +15,17 @@
         = @live.new_song_link class: 'btn btn-outline-secondary'
       .btn-group{ role: 'group' }
         = @live.edit_link class: 'btn btn-outline-primary'
-        - if @live.songs.blank?
+        - if @songs.empty?
           = @live.delete_link class: 'btn btn-outline-danger'
 
-  - if @live.songs.to_a.any?(&:playable?)
+  - if @songs.to_a.any?(&:playable?)
     %section.card.mb-3
       .card-body
         .card-title#playlist-label
-        %audio.d-block.mb-2#playlist{ controls: true, 'data-audios': @live.audios_json }
+        %audio.d-block.mb-2#playlist{ controls: true, 'data-audios': @songs.select(&:playable?).to_json(only: :order, methods: %i[title audio_url]) }
         .btn-group
           %button.btn.btn-secondary#playlist-backward{ type: 'button' }= icon 'fas', 'step-backward'
           %button.btn.btn-secondary#playlist-forward{ type: 'button' }= icon 'fas', 'step-forward'
 
   .song-list
-    = render @live.songs.played_order.includes(playings: :user)
+    = render @songs

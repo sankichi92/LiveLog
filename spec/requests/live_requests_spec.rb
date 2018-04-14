@@ -160,7 +160,7 @@ RSpec.describe 'Live requests', type: :request do
 
       it 'responds 422' do
         expect { delete live_path(live) }.not_to change(Live, :count)
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to redirect_to(live)
       end
     end
   end

@@ -8,8 +8,9 @@ class LivesController < ApplicationController
   end
 
   def show(id)
-    @live = Live.includes(:songs).find(id)
+    @live = Live.find(id)
     redirect_to live_entries_url(@live) unless @live.published?
+    @songs = @live.songs.with_attached_audio.includes(playings: :user).played_order
   end
 
   def album(id)
@@ -67,8 +68,8 @@ class LivesController < ApplicationController
     authorize @live
     @live.destroy
   rescue ActiveRecord::DeleteRestrictionError => e
-    flash.now[:danger] = e.message
-    render :show, status: :unprocessable_entity
+    flash[:danger] = e.message
+    redirect_to @live
   else
     flash[:success] = t('flash.messages.deleted', name: @live.title)
     redirect_to lives_url
