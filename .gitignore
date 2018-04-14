@@ -15,12 +15,13 @@
 
 # Ignore uploaded files in development
 /storage/*
+!/storage/.keep
 
 # Ignore Byebug command history file.
 .byebug_history
 
-# Ignore script to backup database.
-/scripts/backup-db.sh
+# Ignore script to create backup.
+/scripts/backup.sh
 
 # Ignore database dump file.
 latest.dump
