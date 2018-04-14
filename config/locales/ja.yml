@@ -109,6 +109,7 @@ ja:
         status: 公開設定
         comment: コメント
         original: オリジナル
+        audio: 音源
         playings: 演者
       live:
         name: ライブ名

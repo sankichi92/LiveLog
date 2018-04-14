@@ -3,6 +3,10 @@ module SongDecorator
     time.present? ? "#{time_str} #{order}" : order
   end
 
+  def audio_url
+    url_for audio
+  end
+
   def youtube_url
     "https://www.youtube.com/watch?v=#{youtube_id}" if youtube_id.present?
   end
