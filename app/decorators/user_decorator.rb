@@ -13,10 +13,10 @@ module UserDecorator
     inst_to_count.to_h.keys
   end
 
-  def avatar_url(size)
+  def avatar_source(size)
     px = IMAGE_PX_BY_SIZE[size]
     if avatar.attached? && avatar.variable?
-      url_for avatar.variant(combine_options: { resize: "#{px}x#{px}^", gravity: 'Center', crop: "#{px}x#{px}+0+0" }).processed
+      avatar.variant(auto_orient: true, combine_options: { thumbnail: "#{px}x#{px}^", gravity: 'center', crop: "#{px}x#{px}+0+0" })
     elsif email.present? && activated?
       hash = Digest::MD5.hexdigest(email)
       "https://www.gravatar.com/avatar/#{hash}?s=#{px}&d=mm"
@@ -27,7 +27,7 @@ module UserDecorator
 
   def avatar_image_tag(size = :small, options = {})
     options[:class] = options[:class].nil? ? "rounded-circle #{size}" : options[:class] + " rounded-circle #{size}"
-    image_tag avatar_url(size), options
+    image_tag avatar_source(size), options
   end
 
   def related_playings
