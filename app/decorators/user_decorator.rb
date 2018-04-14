@@ -5,12 +5,8 @@ module UserDecorator
     logged_in? ? name_with_handle : handle
   end
 
-  def inst_to_count
-    playings.published.count_insts
-  end
-
   def instruments
-    inst_to_count.to_h.keys
+    playings.published.count_insts.to_h.keys
   end
 
   def avatar_source(size)
