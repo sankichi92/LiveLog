@@ -29,7 +29,7 @@
         - if @song.comment.present?
           %dt= Song.human_attribute_name(:comment)
           %dd.text-muted= simple_format(@song.comment)
-        - if policy(@song).play? && @song.audio.attached?
+        - if @song.playable?
           %dt= Song.human_attribute_name(:audio)
           %dd= audio_tag @song.audio_url, controls: true
       %aside.btn-toolbar{ role: 'toolbar' }

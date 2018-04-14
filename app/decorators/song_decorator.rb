@@ -3,6 +3,10 @@ module SongDecorator
     time.present? ? "#{time_str} #{order}" : order
   end
 
+  def playable?
+    policy(self).play? && audio.attached?
+  end
+
   def audio_url
     url_for audio
   end
