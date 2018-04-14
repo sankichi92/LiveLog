@@ -67,7 +67,7 @@
       - if logged_in?
         = render @songs
       - else
-        = render partial: 'songs/song', collection: @songs, cached: true
+        = render partial: 'song', collection: @songs, cached: true
     = will_paginate inner_window: 1, outer_window: 0, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer, class: 'd-flex justify-content-center'
 
 - else
