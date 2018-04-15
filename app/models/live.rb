@@ -31,7 +31,7 @@ class Live < ApplicationRecord
 
   def publish(url)
     update_columns(published: true, published_at: Time.zone.now)
-    songs.includes(:playings).import
+    songs.includes(:'audio_attachment', :playings).import
     TweetJob.perform_now("#{title} のセットリストが公開されました！\n#{url}")
   end
 

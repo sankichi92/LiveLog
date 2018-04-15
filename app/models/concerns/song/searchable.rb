@@ -43,6 +43,7 @@ module Concerns
           end
           indexes :status, type: 'keyword'
           indexes :has_video?, type: 'boolean'
+          indexes :audio_attached?, type: 'boolean'
           indexes :original?, type: 'boolean'
           indexes :players_count, type: 'byte'
           indexes :comment, type: 'text'
@@ -62,6 +63,7 @@ module Concerns
           artist: artist,
           status: status,
           has_video?: youtube_id?,
+          audio_attached?: audio.attached?,
           original?: original?,
           comment: comment,
           players_count: playings.size,

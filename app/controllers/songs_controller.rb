@@ -78,6 +78,6 @@ class SongsController < ApplicationController
   private
 
   def search_params
-    params.permit(:q, :name, :artist, :instruments, :players_lower, :players_upper, :date_lower, :date_upper, :video, :original)
+    params.permit(:q, :name, :artist, :instruments, :players_lower, :players_upper, :date_lower, :date_upper, :media, :original)
   end
 end

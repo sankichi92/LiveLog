@@ -19,7 +19,7 @@ RSpec.describe 'Song requests', type: :request do
     end
 
     context 'with invalid params' do
-      let(:search_params) { { video: 'invalid' } }
+      let(:search_params) { { media: 'invalid' } }
 
       it 'responds 422' do
         get search_songs_path, params: search_params
