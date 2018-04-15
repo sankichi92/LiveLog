@@ -63,7 +63,7 @@ module SongDecorator
       related: 'kyodaiunplugged:京大アンプラグド公式,sankichi92:LiveLog 開発者'
     }.to_query
     html_options[:target] = '_blank'
-    html_options[:onclick] = "ga('send', 'social', 'Twitter', 'tweet', #{song_url(self)});"
+    html_options[:onclick] = "ga('send', 'social', 'Twitter', 'share', #{song_path(self)});"
     link_to(icon('fab', 'twitter') + ' Twitter', uri.to_s, html_options)
   end
 

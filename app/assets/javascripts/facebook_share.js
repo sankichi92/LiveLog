@@ -8,7 +8,8 @@ $(document).on('turbolinks:load', function () {
             href: url
         }, function (response) {
             if (response && !response.error_message) {
-                ga('send', 'social', 'Facebook', 'share', url);
+                var path = new URL(url).pathname;
+                ga('send', 'social', 'Facebook', 'share', path);
             }
         });
     });
