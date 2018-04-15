@@ -63,6 +63,16 @@ class SongsController < ApplicationController
     render :edit, status: :unprocessable_entity
   end
 
+  def upload(id, song)
+    @song = Song.find(id)
+    authorize @song, :update?
+    if @song.update(song.permit(:audio))
+      render js: "alert('アップロードしました')"
+    else
+      render js: "alert('アップロードに失敗しました')"
+    end
+  end
+
   def destroy(id)
     @song = Song.find(id)
     authorize @song

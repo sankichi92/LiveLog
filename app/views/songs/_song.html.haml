@@ -23,3 +23,9 @@
 
       - unless song.published?
         %small.text-muted= l(song.created_at, format: :short)
+
+- if params[:upload].present? && policy(song).edit?
+  = form_with model: song, url: upload_song_path(song), method: :put, class: 'form-inline my-3' do |f|
+    = f.label :audio, class: 'sr-only'
+    = f.file_field :audio, direct_upload: true, accept: 'audio/mpeg', class: 'mr-2'
+    = f.submit 'Upload', class: 'btn btn-primary'
