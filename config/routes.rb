@@ -22,7 +22,6 @@ Rails.application.routes.draw do
     resource :account_activation, except: :show, path: :activation, as: :activation
     resource :password, only: %i[edit update]
     resource :admin, only: %i[create destroy]
-    get 'search', on: :member
   end
 
   resource :profile, only: :edit

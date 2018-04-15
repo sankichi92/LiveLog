@@ -15,15 +15,6 @@ class UsersController < ApplicationController
     @songs = @user.songs.with_attached_audio.includes(playings: :user).published.order_by_live
   end
 
-  def search(id)
-    @user = User.includes(songs: :live).find(id)
-    authorize @user, :show?
-    query = Song::SearchQuery.new(search_params.merge(ids: @user.songs.pluck(:id), logged_in: logged_in?))
-    return render :show, status: :unprocessable_entity if query.invalid?
-    @songs = Song.search(query).records(includes: { playings: :user })
-    render :show
-  end
-
   def new
     @user = User.new
     authorize @user
