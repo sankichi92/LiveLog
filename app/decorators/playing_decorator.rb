@@ -4,6 +4,6 @@ module PlayingDecorator
   end
 
   def handle_with_inst
-    inst_dot&.+ handle
+    "#{inst_dot}#{handle}"
   end
 end
