@@ -67,9 +67,9 @@ class SongsController < ApplicationController
     @song = Song.find(id)
     authorize @song, :update?
     if @song.update(song.permit(:audio))
-      render js: "alert('アップロードしました')"
+      render js: "console.info('#{@song.title} uploaded')"
     else
-      render js: "alert('アップロードに失敗しました')"
+      render js: "console.error('#{@song.title} upload failed')"
     end
   end
 
