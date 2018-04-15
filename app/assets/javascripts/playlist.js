@@ -28,10 +28,11 @@ $(document).on('turbolinks:load', function () {
         },
         init: function () {
             var song = this.songs[this.i];
+            var link_to_song = $('<a></a>', {href: '/songs/' + song.id, text: song.title});
             if (this.label.data('show-live') === undefined) {
-                this.label.text(song.order + ' ' + song.title);
+                this.label.text(song.time_order + ' ').append(link_to_song);
             } else {
-                this.label.html(song.live_title + ' ' + song.order + '<br>' + song.title);
+                this.label.html(song.live_title + ' ' + song.time_order + '<br>').append(link_to_song);
             }
             this.player.src = song.audio_url;
             this.player.load()
