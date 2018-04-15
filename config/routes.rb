@@ -8,9 +8,6 @@ Rails.application.routes.draw do
     collection do
       get 'search'
     end
-    member do
-      put 'upload'
-    end
   end
 
   resources :lives do
