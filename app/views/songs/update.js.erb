@@ -1,0 +1,8 @@
+$('#form-song-<%= @song.id %> > .alert').remove();
+var alert;
+<% if @song.errors.any? %>
+  alert = $('<%= escape_javascript(render 'shared/error_messages', object: @song) %>');
+<% else %>
+  alert = $('<div class="alert alert-success"><%= t('flash.messages.updated', name: @song.title) %></div>');
+<% end %>
+alert.prependTo('#form-song-<%= @song.id %>').hide().fadeIn();
