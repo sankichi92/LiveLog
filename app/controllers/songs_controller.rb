@@ -46,17 +46,24 @@ class SongsController < ApplicationController
   def edit(id)
     @song = Song.includes(playings: :user).find(id)
     authorize @song
-    store_referer
   end
 
   def update(id, song)
     @song = Song.find(id)
     authorize @song
     if @song.update(song)
-      flash[:success] = t('flash.messages.updated', name: @song.title)
-      redirect_back_or @song
+      respond_to do |format|
+        format.html do
+          flash[:success] = t('flash.messages.updated', name: @song.title)
+          redirect_to @song
+        end
+        format.js { }
+      end
     else
-      render :edit, status: :unprocessable_entity
+      respond_to do |format|
+        format.html { render :edit, status: :unprocessable_entity }
+        format.js { render status: :unprocessable_entity }
+      end
     end
   rescue ActiveRecord::RecordNotUnique
     @song.errors.add(:playings, :duplicated)
