@@ -32,7 +32,7 @@
     #main.container
       = render 'layouts/flash'
       - if current_user&.graduate? && !current_user&.donated? && cookies[:close_alert_donation] != '1'
-        = render 'layouts/alert_donation'
+        = render 'shared/alert_donation'
       = yield
       - if Rails.env.production? && !logged_in?
         %aside.my-3= render 'shared/content-ads'
