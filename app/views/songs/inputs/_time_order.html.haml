@@ -1,0 +1,8 @@
+.form-row
+  - if f.object.nf?
+    .form-group.col
+      = f.label :time, class: 'col-form-label'
+      = f.time_field :time, class: 'form-control', placeholder: '10:00'
+  .form-group.col
+    = f.label :order, class: 'col-form-label'
+    = f.number_field :order, class: 'form-control', placeholder: '1'
