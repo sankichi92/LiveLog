@@ -9,7 +9,7 @@ RSpec.describe 'User', type: :system do
 
       expect(page).to have_title('Members')
       expect(page).to have_content('Members')
-      User.active.each do |user|
+      User.all.each do |user|
         expect(page).to have_content(user.handle)
       end
     end
