@@ -22,7 +22,6 @@ class User < ApplicationRecord
   validates :password_confirmation, presence: true, allow_nil: true, on: :update
 
   scope :natural_order, -> { order(joined: :desc, furigana: :asc) }
-  scope :active, -> { includes(songs: :live).where('lives.date': 1.year.ago..Time.zone.today) }
   scope :joined_years, -> { unscope(:order).order(joined: :desc).distinct.pluck(:joined) }
 
   # region Attributes

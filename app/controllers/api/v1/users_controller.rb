@@ -5,7 +5,7 @@ class Api::V1::UsersController < Api::V1::ApplicationController
     @users = if params[:active] != 'true'
                User.natural_order
              else
-               User.active.natural_order
+               User.includes(songs: :live).where('lives.date': 1.year.ago..Time.zone.today).natural_order
              end
   end
 
