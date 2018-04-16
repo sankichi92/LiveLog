@@ -1,35 +1,12 @@
 = form_with model: @song, url: live_entries_path do |f|
 
-  .form-row
-    .form-group.col-sm
-      = f.label :name, class: 'col-form-label'
-      = f.text_field :name, id: 'song_name', class: 'form-control', placeholder: 'Tears in Heaven'
-    .form-group.col-sm
-      = f.label :artist, class: 'col-form-label'
-      = f.text_field :artist, id: 'song_artist', class: 'form-control', placeholder: 'Eric Clapton', list: 'artists'
-      %datalist#artists
-        - Song.artists_for_suggestion.each do |artist|
-          %option{ value: artist }
+  = render 'songs/inputs/name', f: f
 
-  .form-group
-    .custom-control.custom-checkbox.custom-control-inline
-      = f.check_box :original, id: 'song_original', class: 'custom-control-input'
-      = f.label :original, class: 'custom-control-label' do
-        = Song.human_attribute_name(:original)
-        = icon 'fas', 'question-circle',
-               'data-toggle': 'tooltip',
-               'data-placement': 'right',
-               title: '京大アンプラグドのメンバーが作詞・作曲した曲の場合にチェックしてください'
+  = render 'songs/inputs/original', f: f
 
-  = render 'songs/playings_form', f: f
+  = render 'songs/inputs/playings', f: f
 
-  .form-group
-    = f.label :status
-    = icon 'fas', 'question-circle',
-           'data-toggle': 'tooltip',
-           'data-placement': 'right',
-           title: '動画・音源の公開範囲です。「公開」は全てのユーザ，「サークル内」はログインユーザのみ，「バンド内」は演者のみに公開されます'
-    = f.select :status, { '公開': 'open', 'サークル内': 'closed', 'バンド内': 'secret' }, { selected: 'open' }, id: 'song_status', class: 'form-control'
+  = render 'songs/inputs/status', f: f
 
   .form-row
     .form-group.col-sm

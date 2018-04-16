@@ -14,17 +14,17 @@
 
 #search-tabs-content.tab-content
   #basic.tab-pane.fade{ class: advanced ? '' : 'show active', role: 'tabpanel', 'aria-labelledby': 'basic-tab' }
-    = render 'search_form'
+    = render 'form_search'
   #advanced.tab-pane.fade{ class: advanced ? 'show active' : '', role: 'tabpanel', 'aria-labelledby': 'advanced-tab' }
     = form_with model: @query, scope: '', url: search_songs_path, method: :get, local: true, class: 'mb-3' do |f|
 
       .form-row
         .form-group.col-sm
           = f.label :name, class: 'col-form-label'
-          = f.text_field :name, id: 'name', class: 'form-control', placeholder: '楓'
+          = f.text_field :name, class: 'form-control', placeholder: '楓'
         .form-group.col-sm
           = f.label :artist, class: 'col-form-label'
-          = f.text_field :artist, id: 'artist', class: 'form-control', placeholder: 'スピッツ', list: 'artists'
+          = f.text_field :artist, class: 'form-control', placeholder: 'スピッツ', list: 'artists'
           %datalist#artists
             - Song.artists_for_suggestion.each do |artist|
               %option{ value: artist }
@@ -32,7 +32,7 @@
       .form-row
         .form-group.col-sm
           = f.label :instruments, class: 'col-form-label'
-          = f.text_field :instruments, id: 'instruments', class: 'form-control', placeholder: 'Vo Gt Ba Cj -Vn'
+          = f.text_field :instruments, class: 'form-control', placeholder: 'Vo Gt Ba Cj -Vn'
         .form-group.col-sm
           = f.label :players_count, class: 'col-form-label'
           .input-group
@@ -50,11 +50,11 @@
           = f.date_field :date_upper, value: params[:date_upper], class: 'form-control'
 
       .custom-control.custom-checkbox.mb-2
-        = f.check_box :original, id: 'original', class: 'custom-control-input'
+        = f.check_box :original, class: 'custom-control-input'
         = f.label :original, class: 'custom-control-label'
 
       .custom-control.custom-checkbox.mb-3
-        = f.check_box :media, id: 'media', class: 'custom-control-input'
+        = f.check_box :media, class: 'custom-control-input'
         = f.label :media, class: 'custom-control-label'
 
       = f.submit t('views.application.search'), class: 'btn btn-primary'

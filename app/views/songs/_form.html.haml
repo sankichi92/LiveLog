@@ -6,55 +6,19 @@
       = f.label :live_id
       = f.collection_select :live_id, Live.order_by_date, :id, :title, {}, class: 'form-control'
 
-  .form-row
-    - if @song.nf?
-      .form-group.col
-        = f.label :time, class: 'col-form-label'
-        = f.time_field :time, class: 'form-control', placeholder: '10:00'
-    .form-group.col
-      = f.label :order, class: 'col-form-label'
-      = f.number_field :order, class: 'form-control', placeholder: '1'
+  = render 'songs/inputs/time_order', f: f
 
-  .form-row
-    .form-group.col-sm
-      = f.label :name, class: 'col-form-label'
-      = f.text_field :name, class: 'form-control', placeholder: 'Tears in Heaven'
-    .form-group.col-sm
-      = f.label :artist, class: 'col-form-label'
-      = f.text_field :artist, class: 'form-control', placeholder: 'Eric Clapton', list: 'artists'
-      %datalist#artists
-        - Song.artists_for_suggestion.each do |artist|
-          %option{ value: artist }
+  = render 'songs/inputs/name', f: f
 
-  .form-group
-    .custom-control.custom-checkbox.custom-control-inline
-      = f.check_box :original, class: 'custom-control-input'
-      = f.label :original, class: 'custom-control-label' do
-        = Song.human_attribute_name(:original)
-        = icon 'fas', 'question-circle',
-               'data-toggle': 'tooltip',
-               'data-placement': 'right',
-               title: '京大アンプラグドのメンバーが作詞・作曲した曲の場合にチェックしてください'
+  = render 'songs/inputs/original', f: f
 
-  = render 'playings_form', f: f
+  = render 'songs/inputs/playings', f: f
 
-  - if current_user.admin?
-    .form-group
-      = f.label :youtube_id
-      = f.url_field :youtube_id, value: @song.youtube_url, class: 'form-control', placeholder: 'https://www.youtube.com/watch?v=sSbqm7ZK_9s'
+  = render 'songs/inputs/media', f: f
 
-  .form-group
-    = f.label :audio
-    = f.file_field :audio, direct_upload: true, accept: 'audio/mpeg', class: 'form-control-file'
+  - if f.object.player?(current_user)
+    = render 'songs/inputs/status', f: f
 
-  - if @song.player?(current_user)
-    .form-group
-      = f.label :status
-      = icon 'fas', 'question-circle',
-             'data-toggle': 'tooltip',
-             'data-placement': 'right',
-             title: '動画・音源の公開範囲です。「公開」は全てのユーザ，「サークル内」はログインユーザのみ，「バンド内」は演者のみに公開されます'
-      = f.select :status, { '公開': 'open', 'サークル内': 'closed', 'バンド内': 'secret' }, {}, class: 'form-control'
     .form-group
       = f.label :comment
       = f.text_area :comment, class: 'form-control', rows: 3
