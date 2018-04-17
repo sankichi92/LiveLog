@@ -15,7 +15,7 @@ gem 'active_decorator', '~> 1.0.0'
 gem 'aws-sdk-s3', '~> 1.9.0', require: false
 gem 'bcrypt', '~> 3.1.11'
 gem 'bootsnap', '>= 1.1.0', require: false
-gem 'bootstrap', '~> 4.0'
+gem 'bootstrap', '~> 4.1'
 gem 'bootstrap-will_paginate', '~> 1.0.0'
 gem 'font-awesome-sass', '~> 5.0.9'
 gem 'haml-rails', '~> 1.0'
