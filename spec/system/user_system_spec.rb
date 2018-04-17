@@ -2,14 +2,23 @@ require 'rails_helper'
 
 RSpec.describe 'User', type: :system do
   describe 'list' do
-    before { create_list(:user, 5) }
+    before do
+      create_list(:user, 5, joined: 2018, public: true)
+      create_list(:user, 5, joined: 2017, public: true)
+    end
 
     it 'enables users to see the member list' do
       visit users_path
 
       expect(page).to have_title('Members')
       expect(page).to have_content('Members')
-      User.all.each do |user|
+      User.where(joined: 2018).each do |user|
+        expect(page).to have_content(user.handle)
+      end
+
+      click_on '2017'
+
+      User.where(joined: 2017).each do |user|
         expect(page).to have_content(user.handle)
       end
     end

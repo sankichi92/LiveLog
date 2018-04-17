@@ -2,9 +2,32 @@ require 'rails_helper'
 
 RSpec.describe 'User requests', type: :request do
   describe 'GET /members' do
-    it 'responds 200' do
-      get users_path
-      expect(response).to have_http_status(:ok)
+    before { create_list(:user, 5, joined: 2018) }
+
+    context 'with no params' do
+      let(:params) { {} }
+
+      it 'responds 200' do
+        get users_path, params: params
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context 'with valid year' do
+      let(:params) { { y: 2018 } }
+
+      it 'responds 200' do
+        get users_path, params: params
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context 'with invalid year' do
+      let(:params) { { y: 2019 } }
+
+      it 'raise ActionController::RoutingError' do
+        expect { get users_path, params: params }.to raise_error ActionController::RoutingError
+      end
     end
   end
 

@@ -6,6 +6,7 @@ class UsersController < ApplicationController
 
   def index(y = User.joined_years.first)
     @year = y.to_i
+    raise ActionController::RoutingError, 'Not Found' unless User.joined_years.include?(@year)
     @users = policy_scope(User).with_attached_avatar.where(joined: y).order(playings_count: :desc, furigana: :asc)
   end
 
