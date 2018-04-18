@@ -21,7 +21,7 @@ RSpec.describe SongMailer, type: :mailer do
     end
 
     it 'renders the html body' do
-      expect(mail.html_part.body).to match(song.title)
+      expect(mail.html_part.body).to match(CGI.escapeHTML(song.title))
       expect(mail.html_part.body).to match(root_url)
     end
   end

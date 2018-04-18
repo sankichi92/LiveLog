@@ -6,8 +6,7 @@ RSpec.describe 'Entry', type: :system do
 
   describe 'list' do
     let!(:entries) { create_list(:song, 10, :draft, live: live) }
-    let(:player) { create(:user, nickname: '共演者') }
-    let!(:user_entry) { create(:song, :draft, live: live, users: [user, player], name: 'Song user will play') }
+    let!(:user_entry) { create(:song, :draft, live: live, users: [user, create(:user)]) }
 
     it 'enables logged-in users to see individual live entries pages and their applied songs' do
       log_in_as user
@@ -41,8 +40,7 @@ RSpec.describe 'Entry', type: :system do
   end
 
   describe 'add' do
-    let!(:player1) { create(:user, nickname: '一郎') }
-    let!(:player2) { create(:user, nickname: '二郎') }
+    let!(:users) { create_list(:user, 5) }
 
     before do
       ActionMailer::Base.deliveries.clear
@@ -59,11 +57,12 @@ RSpec.describe 'Entry', type: :system do
       fill_in 'song_artist', with: 'テストアーティスト'
       select 'サークル内', from: 'song_status'
 
-      click_button 'add-member'
-      click_button 'add-member'
+      2.times do
+        click_button 'add-member'
+      end
       click_button class: 'remove-member', match: :first
 
-      [player1, player2].each_with_index do |user, i|
+      [user, users.first].each_with_index do |user, i|
         all('.inst-field')[i].set('Gt')
         all('.user-select')[i].find(:option, user.name_with_handle).select_option
       end

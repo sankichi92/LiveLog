@@ -26,7 +26,7 @@ RSpec.describe EntryMailer, type: :mailer do
 
     it 'renders the html body' do
       expect(mail.html_part.body).to match(applicant.name)
-      expect(mail.html_part.body).to match(song.name)
+      expect(mail.html_part.body).to match(CGI.escapeHTML(song.name))
       expect(mail.html_part.body).to match(player.name)
       expect(mail.html_part.body).to match(entry.notes)
       expect(mail.html_part.body).to match(entry.preferred_rehearsal_time)

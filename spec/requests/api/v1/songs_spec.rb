@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Api::V1::Songs', type: :request do
   let(:live) { create(:live) }
-  let!(:song) { create(:song, live: live) }
+  let!(:song) { create(:song, live: live, status: :closed) }
   let(:token) { create(:token) }
 
   describe 'GET /api/v1/songs' do

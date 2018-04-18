@@ -57,7 +57,7 @@ RSpec.describe 'Api::V1::Users', type: :request do
 
   describe 'GET /api/v1/members/:id' do
     let(:live) { create(:live) }
-    let(:song) { create(:song, live: live) }
+    let(:song) { create(:song, live: live, status: :closed) }
     let!(:playing) { create(:playing, user: user, song: song, inst: 'Gt') }
     let(:expected_body) do
       {

@@ -73,9 +73,7 @@ RSpec.describe 'Song', type: :system do
 
   describe 'add' do
     let(:live) { create(:live) }
-    let!(:user1) { create(:user, nickname: '一郎') }
-    let!(:user2) { create(:user, nickname: '二郎') }
-
+    let!(:users) { create_list(:user, 5) }
     before { log_in_as create(:admin) }
 
     it 'enables admin users to create new songs', js: true do
@@ -90,11 +88,12 @@ RSpec.describe 'Song', type: :system do
       fill_in 'song_name', with: 'テストソング'
       fill_in 'song_artist', with: 'テストアーティスト'
 
-      click_button 'add-member'
-      click_button 'add-member'
+      2.times do
+        click_button 'add-member'
+      end
       click_button class: 'remove-member', match: :first
 
-      [user1, user2].each_with_index do |user, i|
+      users.take(2).each_with_index do |user, i|
         all('.inst-field')[i].set('Gt')
         all('.user-select')[i].find(:option, user.name_with_handle).select_option
       end

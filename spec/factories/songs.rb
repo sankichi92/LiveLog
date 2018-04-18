@@ -1,12 +1,12 @@
 FactoryBot.define do
   factory :song do
     live
-    sequence(:name) { |n| "テーマソング #{n}" }
-    artist 'アンプラグダー'
+    name { Faker::UmphreysMcgee.song }
+    artist { Faker::RockBand.name }
     sequence(:order) { |n| n }
-    status :closed
+    status { %i[open closed secret].sample }
     youtube_id 'https://www.youtube.com/watch?v=2TL90rxt9bo'
-    comment 'アンプラグドのテーマソングです'
+    comment { Faker::Lorem.paragraph }
 
     trait :invalid do
       name ''
@@ -34,6 +34,6 @@ FactoryBot.define do
   factory :playing do
     user
     song
-    inst %w[Gt Vo Cj Ba Pf Gt&Vo Vn Gt&Cho Pf&Cho Fl].sample
+    inst { %w[Gt Vo Cj Ba Pf Gt&Vo Vn Gt&Cho Pf&Cho Fl].sample }
   end
 end

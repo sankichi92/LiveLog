@@ -25,7 +25,7 @@ RSpec.describe 'Api::V1::Lives', type: :request do
 
   describe 'GET /api/v1/lives/:id' do
     let(:user) { create(:user) }
-    let(:song) { create(:song, live: live) }
+    let(:song) { create(:song, live: live, status: :closed) }
     let!(:playing) { create(:playing, user: user, song: song) }
     let(:expected_body) do
       {
