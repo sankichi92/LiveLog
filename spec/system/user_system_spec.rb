@@ -7,7 +7,7 @@ RSpec.describe 'User', type: :system do
       create_list(:user, 5, joined: 2017, public: true)
     end
 
-    it 'enables users to see the member list' do
+    it 'enables users to see the member list for each year' do
       visit users_path
 
       expect(page).to have_title('Members')

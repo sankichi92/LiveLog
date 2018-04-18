@@ -1,21 +1,21 @@
 FactoryBot.define do
   factory :user do
-    last_name '京大'
-    first_name 'アンプラ太郎'
-    furigana 'きょうだいあんぷらたろう'
-    sequence(:email) { |n| "livelog_#{n}@ku-unplugged.net" }
-    joined Time.current.year
+    last_name { Faker::Name.last_name }
+    first_name { Faker::Name.first_name }
+    furigana 'ふりがな'
+    email { Faker::Internet.email }
+    joined { Faker::Date.between(Date.new(2011), Time.zone.today).year }
     password 'foobar'
     password_confirmation 'foobar'
     activated true
     activated_at Time.zone.now
     public false
     subscribing true
-    url 'https://example.com/mypage'
-    intro 'ギターを弾きます'
+    url { Faker::Internet.url }
+    intro { Faker::Lorem.sentence }
 
     trait :invalid do
-      furigana 'キョウダイアンプラタロウ'
+      furigana 'フリガナ'
     end
 
     trait :inactivated do

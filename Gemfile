@@ -34,13 +34,13 @@ gem 'uglifier', '>= 3.2.0'
 
 group :development, :test do
   gem 'byebug', platform: :mri
+  gem 'faker'
   gem 'rspec-rails', '~> 3.7'
 end
 
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'faker'
   gem 'haml_lint', require: false
   gem 'listen', '~> 3.1.5'
   gem 'meowcop', require: false
