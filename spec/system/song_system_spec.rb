@@ -12,9 +12,6 @@ RSpec.describe 'Song', type: :system do
       Song.published.order_by_live.page(1).each do |song|
         expect(page).to have_content(song.name)
       end
-      Song.published.order_by_live.page(2).each do |song|
-        expect(page).not_to have_content(song.name)
-      end
 
       click_link '2'
 
