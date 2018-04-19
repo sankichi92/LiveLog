@@ -13,6 +13,7 @@ FactoryBot.define do
     subscribing true
     url { Faker::Internet.url }
     intro { Faker::Lorem.sentence }
+    avatar nil
 
     trait :invalid do
       furigana 'フリガナ'

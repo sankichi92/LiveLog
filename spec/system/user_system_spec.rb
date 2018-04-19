@@ -81,11 +81,13 @@ RSpec.describe 'User', type: :system do
       expect(page).to have_title('Settings')
 
       fill_in 'user_nickname', with: 'アンプラ'
+      attach_file 'user_avatar', "#{Rails.root}/spec/fixtures/files/avatar.png"
       click_button t('helpers.submit.update')
 
-      expect(user.reload.nickname).to eq 'アンプラ'
       expect(page).to have_css('.alert-success')
       expect(page).to have_title(user.name_with_handle)
+      expect(user.reload.nickname).to eq 'アンプラ'
+      expect(user.avatar.attached?).to be true
     end
   end
 
