@@ -1,12 +1,7 @@
 = form_for @song do |f|
   = render 'shared/error_messages', object: f.object
 
-  - if current_user.admin?
-    .form-group
-      = f.label :live_id
-      = f.collection_select :live_id, Live.order_by_date, :id, :title, {}, class: 'form-control'
-
-  = render 'songs/inputs/time_order', f: f
+  = render 'songs/inputs/live_time_order', f: f
 
   = render 'songs/inputs/name', f: f
 

@@ -25,7 +25,7 @@
   件
 
 - if params[:edit].present? && current_user&.admin?
-  = render partial: 'songs/form_easy', collection: @songs, as: :song
+  = render partial: 'form_easy', collection: @songs, as: :song
 - else
   .song-list
     = render @songs
