@@ -105,7 +105,7 @@ RSpec.describe 'Song', type: :system do
 
   describe 'edit' do
     let(:user) { create(:user) }
-    let(:song) { create(:song, users: [user]) }
+    let(:song) { create(:song, users: [user], audio: nil) }
 
     it 'enables admin users to update songs' do
       log_in_as create(:admin)
@@ -117,10 +117,12 @@ RSpec.describe 'Song', type: :system do
       expect(page).to have_content('Edit Song')
 
       fill_in 'song_youtube_id', with: 'https://www.youtube.com/watch?v=new_youtube'
+      attach_file 'song_audio', "#{Rails.root}/spec/fixtures/files/audio.mp3"
       click_button t('helpers.submit.update')
 
       expect(page).to have_css('.alert-success')
       expect(song.reload.youtube_id).to eq 'new_youtube'
+      expect(song.audio.attached?).to be true
     end
 
     it 'enables logged-in users to update songs they played' do

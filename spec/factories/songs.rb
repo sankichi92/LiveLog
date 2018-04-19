@@ -7,6 +7,7 @@ FactoryBot.define do
     status { %i[open closed secret].sample }
     youtube_id 'https://www.youtube.com/watch?v=2TL90rxt9bo'
     comment { Faker::Lorem.paragraph }
+    audio { Rack::Test::UploadedFile.new("#{::Rails.root}/spec/fixtures/files/audio.mp3", 'audio/mpeg') }
 
     trait :invalid do
       name ''
@@ -17,6 +18,7 @@ FactoryBot.define do
       order nil
       youtube_id nil
       comment nil
+      audio nil
     end
 
     transient do

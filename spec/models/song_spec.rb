@@ -14,6 +14,7 @@ RSpec.describe Song, type: :model do
   it { is_expected.to respond_to(:status) }
   it { is_expected.to respond_to(:comment) }
   it { is_expected.to respond_to(:original) }
+  it { is_expected.to respond_to(:audio) }
   it { is_expected.to respond_to(:playings) }
 
   it { is_expected.to be_valid }
