@@ -1,13 +1,15 @@
-window.ga = window.ga || function () {
-    (ga.q = ga.q || []).push(arguments)
-};
+window.dataLayer = window.dataLayer || [];
 
-ga.l = +new Date;
+function gtag() {
+    dataLayer.push(arguments);
+}
 
-ga('create', 'UA-56294602-1', 'auto');
-ga('require', 'linkid');
+gtag('js', new Date());
 
-$(document).on('turbolinks:load', function (e) {
-    ga('set', 'location', e.originalEvent.data.url);
-    ga('send', 'pageview');
+$(document).on('turbolinks:load', function () {
+    gtag('config', 'UA-56294602-1', {
+        'page_path': window.location.pathname,
+        'link_attribution': true,
+        'user_id': $('body').data('user-id')
+    });
 });

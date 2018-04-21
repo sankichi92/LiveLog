@@ -12,8 +12,6 @@ $(document).on('turbolinks:load', function () {
         play: function () {
             this.player.play()
         },
-        played: false,
-        ended: false,
         backward: function () {
             this.i--;
             if (this.i < 0) {
@@ -41,21 +39,9 @@ $(document).on('turbolinks:load', function () {
 
             this.player.src = song.audio_url;
             this.player.load();
-
-            this.played = false;
-            this.ended = false;
         },
-        sendPlayLog: function () {
-            if (!this.played) {
-                ga('send', 'event', 'Audio', 'play', this.songs[this.i]);
-                this.played = true
-            }
-        },
-        sendEndLog: function () {
-            if (!this.ended) {
-                ga('send', 'event', 'Audio', 'end', this.songs[this.i]);
-                this.ended = true
-            }
+        currentSongId: function () {
+            return this.songs[this.i].id
         }
     };
 
@@ -69,13 +55,19 @@ $(document).on('turbolinks:load', function () {
         playlist.forward()
     });
 
-    player.on('play', function () {
-        playlist.sendPlayLog();
-    });
-
-    player.on('ended', function () {
-        playlist.sendEndLog();
-        playlist.forward();
-        playlist.play()
-    });
+    player
+        .on('play', function () {
+            gtag('event', 'audio_play', {
+                'event_category': 'engagement',
+                'event_label': playlist.currentSongId()
+            });
+        })
+        .on('ended', function () {
+            gtag('event', 'audio_end', {
+                'event_category': 'engagement',
+                'event_label': playlist.currentSongId()
+            });
+            playlist.forward();
+            playlist.play()
+        });
 });
