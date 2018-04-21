@@ -81,14 +81,14 @@ RSpec.describe 'Song', type: :system do
       expect(page).to have_title('Add Song')
       expect(page).to have_content('Add Song')
 
-      fill_in 'song_order', with: '1'
-      fill_in 'song_name', with: 'テストソング'
-      fill_in 'song_artist', with: 'テストアーティスト'
-
       2.times do
         click_button 'add-member'
       end
       click_button class: 'remove-member', match: :first
+
+      fill_in 'song_order', with: '1'
+      fill_in 'song_name', with: 'テストソング'
+      fill_in 'song_artist', with: 'テストアーティスト'
 
       users.take(2).each_with_index do |user, i|
         all('.inst-field')[i].set('Gt')

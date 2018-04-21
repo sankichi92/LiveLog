@@ -53,14 +53,14 @@ RSpec.describe 'Entry', type: :system do
       expect(page).to have_title('Entry')
       expect(page).to have_content('Entry')
 
-      fill_in 'song_name', with: 'テストソング'
-      fill_in 'song_artist', with: 'テストアーティスト'
-      select 'サークル内', from: 'song_status'
-
       2.times do
         click_button 'add-member'
       end
       click_button class: 'remove-member', match: :first
+
+      fill_in 'song_name', with: 'テストソング'
+      fill_in 'song_artist', with: 'テストアーティスト'
+      select 'サークル内', from: 'song_status'
 
       [user, users.first].each_with_index do |user, i|
         all('.inst-field')[i].set('Gt')
