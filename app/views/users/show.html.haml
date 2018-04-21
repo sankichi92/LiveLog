@@ -1,6 +1,7 @@
 - provide(:title, @user.display_name)
 - provide(:description, @user.intro.presence || "#{@user.joined}年度入部 #{@user.instruments}")
 - provide(:og_type, 'profile')
+- provide(:og_image, @user.avatar_source(:large))
 - content_for :additional_meta_fields do
   %meta{ property: 'profile:username', content: @user.handle }
 
