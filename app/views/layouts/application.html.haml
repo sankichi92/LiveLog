@@ -24,7 +24,7 @@
       %script{ src: 'https://www.googletagmanager.com/gtag/js?id=UA-56294602-1', async: true }
       - unless logged_in?
         %script{ src: '//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js', async: true }
-  %body{ data: { 'user-id': current_user&.id } }
+  %body{ data: { user_id: current_user&.id } }
     = render 'layouts/navbar'
     #main.container
       = render 'layouts/flash'

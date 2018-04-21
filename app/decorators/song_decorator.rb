@@ -23,7 +23,7 @@ module SongDecorator
     return unless youtube_id?
     content_tag :iframe, '',
                 id: 'youtube-player',
-                data: { 'song-id': id },
+                data: { song_id: id },
                 src: "https://www.youtube.com/embed/#{youtube_id}?enablejsapi=1&origin=#{root_url.chop}&rel=0&autoplay=1",
                 frameborder: 0,
                 allowfullscreen: true
@@ -63,11 +63,11 @@ module SongDecorator
       related: 'kyodaiunplugged:京大アンプラグド公式,sankichi92:LiveLog 開発者'
     }.to_query
     html_options[:class] = html_options[:class].nil? ? 'twitter-share' : html_options[:class] + ' twitter-share'
-    link_to(icon('fab', 'twitter') + ' Twitter', uri.to_s, html_options.merge(target: '_blank', data: { 'content-type': 'song', 'content-id': id }))
+    link_to(icon('fab', 'twitter') + ' Twitter', uri.to_s, html_options.merge(target: '_blank', data: { content_type: 'song', content_id: id }))
   end
 
   def facebook_share_button(html_options)
     html_options[:class] = html_options[:class].nil? ? 'fb-share' : html_options[:class] + ' fb-share'
-    button_tag icon('fab', 'facebook') + ' Facebook', html_options.merge(data: { url: song_url(self), 'content-type': 'song', 'content-id': id }, type: 'button')
+    button_tag icon('fab', 'facebook') + ' Facebook', html_options.merge(data: { url: song_url(self), content_type: 'song', content_id: id }, type: 'button')
   end
 end
