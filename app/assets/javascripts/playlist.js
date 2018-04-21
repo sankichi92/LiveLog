@@ -1,51 +1,58 @@
+function Playlist(player, songs, callback) {
+    this.player = player;
+    this.songs = songs;
+    this.callback = callback;
+    this.current = 0;
+    this.load()
+}
+
+Playlist.prototype = {
+    load: function () {
+        var song = this.songs[this.current];
+
+        this.player.src = song.audio_url;
+        this.player.load();
+
+        this.callback(song);
+    },
+    play: function () {
+        this.player.play()
+    },
+    backward: function () {
+        this.current--;
+        if (this.current < 0) {
+            this.current = this.songs.length - 1;
+        }
+        this.load()
+    },
+    forward: function () {
+        this.current++;
+        if (this.current >= this.songs.length) {
+            this.current = 0;
+        }
+        this.load()
+    },
+    getCurrentSong: function () {
+        return this.songs[this.current]
+    }
+};
+
 $(document).on('turbolinks:load', function () {
     var player = $('#playlist');
     if (player.length === 0) {
         return
     }
 
-    var playlist = {
-        player: player.get(0),
-        label: $('#playlist-label'),
-        songs: player.data('songs'),
-        i: 0,
-        play: function () {
-            this.player.play()
-        },
-        backward: function () {
-            this.i--;
-            if (this.i < 0) {
-                this.i = this.songs.length - 1;
-            }
-            this.init()
-        },
-        forward: function () {
-            this.i++;
-            if (this.i >= this.songs.length) {
-                this.i = 0;
-            }
-            this.init()
-        },
-        init: function () {
-            var song = this.songs[this.i];
+    var label = $('#playlist-label');
 
-            var link_to_song = $('<a></a>', {href: '/songs/' + song.id, text: song.title});
-
-            if (this.label.data('show-live') === undefined) {
-                this.label.text(song.time_order + ' ').append(link_to_song);
-            } else {
-                this.label.html(song.live_title + ' ' + song.time_order + '<br>').append(link_to_song);
-            }
-
-            this.player.src = song.audio_url;
-            this.player.load();
-        },
-        currentSongId: function () {
-            return this.songs[this.i].id
+    var playlist = new Playlist(player.get(0), player.data('songs'), function (song) {
+        var link_to_song = $('<a></a>', {href: '/songs/' + song.id, text: song.title});
+        if (label.data('show-live') === undefined) {
+            label.text(song.time_order + ' ').append(link_to_song);
+        } else {
+            label.html(song.live_title + ' ' + song.time_order + '<br>').append(link_to_song);
         }
-    };
-
-    playlist.init();
+    });
 
     $('#playlist-backward').on('click', function () {
         playlist.backward()
@@ -57,15 +64,17 @@ $(document).on('turbolinks:load', function () {
 
     player
         .on('play', function () {
+            var song = playlist.getCurrentSong();
             gtag('event', 'audio_play', {
                 'event_category': 'engagement',
-                'event_label': playlist.currentSongId()
+                'event_label': song.id
             });
         })
         .on('ended', function () {
+            var song = playlist.getCurrentSong();
             gtag('event', 'audio_end', {
                 'event_category': 'engagement',
-                'event_label': playlist.currentSongId()
+                'event_label': song.id
             });
             playlist.forward();
             playlist.play()

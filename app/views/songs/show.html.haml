@@ -45,7 +45,7 @@
             = @song.edit_link class: 'btn btn-outline-primary'
 
   - unless @song.original?
-    %aside.card.mb-3.d-none#itunes{ data: { track_name: @song.name, artist_name: @song.artist} }
+    %aside.card.mb-3.d-none#itunes{ data: { song_id: @song.id, track_name: @song.name, artist_name: @song.artist} }
       .card-body
         %h5.card-title
         .d-flex.align-items-center
