@@ -1,7 +1,7 @@
 - provide(:title, @user.display_name)
 - provide(:description, strip_tags(@user.intro).presence || "#{@user.joined}年度入部 #{@user.instruments}")
 - provide(:og_type, 'profile')
-- provide(:og_image, @user.avatar_source(:large))
+- provide(:og_image, @user.avatar_source(:large)) if @user.avatar.attached?
 - content_for :additional_meta_fields do
   %meta{ property: 'profile:username', content: @user.handle }
 
@@ -52,7 +52,7 @@
           - elsif @songs.empty? && policy(@user).destroy?
             = @user.delete_link class: 'btn btn-outline-danger'
 
-- if @songs.any?(&:playable?)
+- if @songs.to_a.any?(&:playable?)
   = render 'songs/playlist', songs: @songs.select(&:playable?)
 
 - if @songs.present?
