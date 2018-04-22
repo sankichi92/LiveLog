@@ -53,7 +53,7 @@ class AccountActivationsController < ApplicationController
     redirect_to @user
   end
 
-  def valid_user(t)
+  def valid_user(t = nil)
     return if @user.authenticated?(:activation, t)
     flash[:danger] = t('flash.controllers.account_activations.invalid_url')
     redirect_to root_url
