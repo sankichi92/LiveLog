@@ -29,8 +29,17 @@ class Stats
     songs.where.not(artist: '').distinct.count(:artist)
   end
 
-  def artist_to_count
-    songs.where.not(artist: '').group(:artist).having('songs.count >= 5').count.sort { |(_, c1), (_, c2)| c2 <=> c1 }
+  def top10_artist_to_count
+    return @top10_artists unless @top10_artists.nil?
+    results = []
+    previous_count = 0
+    # FIXME: Use ActiveRecord::QueryMethods#order instead of Enumerable#sort
+    songs.where.not(artist: '').group(:artist).having('songs.count >= 2').count.sort { |(_, c1), (_, c2)| c2 <=> c1 }.each_with_index do |(artist, count), i|
+      break if i >= 10 && count < previous_count
+      results << [artist, count]
+      previous_count = count
+    end
+    @top10_artists = results.to_h
   end
 
   def formation_to_count

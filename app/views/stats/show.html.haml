@@ -37,10 +37,11 @@
           %p<
             %mark= @stats.number_of_artists
             組のアーティストの曲が演奏されました。
-            %br
-            特に次のアーティストが人気です。
+            - unless @stats.top10_artist_to_count.empty?
+              %br
+              特に次のアーティストが人気です。
         .list-group.list-group-flush
-          - @stats.artist_to_count.select { |_, count| count >= 5 }.each do |artist, count|
+          - @stats.top10_artist_to_count.each do |artist, count|
             = link_to_search({ artist: artist, date_range: @stats.date_range },
                              class: 'list-group-item list-group-item-action d-flex justify-content-between align-items-center') do
               = artist
