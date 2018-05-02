@@ -18,6 +18,5 @@ module LiveLog2
     # the framework and any gems in your application.
     config.time_zone = 'Tokyo'
     config.active_record.time_zone_aware_types = %i[datetime time]
-    config.autoload_paths << Rails.root.join('lib', 'autoload')
   end
 end

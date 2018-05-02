@@ -5,7 +5,7 @@ RSpec.describe TweetJob, type: :job do
     let(:twitter_client) { double('twitter_client') }
 
     before do
-      allow(TwitterClient).to receive(:instance) { twitter_client }
+      allow(Twitter::REST::Client).to receive(:new) { twitter_client }
     end
 
     it 'should tweet' do
