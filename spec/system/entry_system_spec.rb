@@ -6,7 +6,7 @@ RSpec.describe 'Entry', type: :system do
 
   describe 'list' do
     let!(:entries) { create_list(:song, 10, :draft, live: live) }
-    let!(:user_entry) { create(:song, :draft, live: live, users: [user, create(:user)]) }
+    let!(:user_entry) { create(:song, :draft, name: 'applied song', live: live, users: [user, create(:user)]) }
 
     it 'enables logged-in users to see individual live entries pages and their applied songs' do
       log_in_as user
