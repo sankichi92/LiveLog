@@ -17,7 +17,7 @@ gem 'bcrypt', '~> 3.1.11'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'bootstrap', '~> 4.1'
 gem 'bootstrap-will_paginate', '~> 1.0.0'
-gem 'font-awesome-sass', '~> 5.0.9'
+gem 'font-awesome-sass', '~> 5.0.13'
 gem 'haml-rails', '~> 1.0'
 gem 'jbuilder', '~> 2.7'
 gem 'jquery-rails'
