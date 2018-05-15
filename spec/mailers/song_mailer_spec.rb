@@ -10,7 +10,6 @@ RSpec.describe SongMailer, type: :mailer do
 
     it 'renders the headers' do
       expect(mail.subject).to eq("「#{song.name}」が今日のピックアップに選ばれました！")
-      expect(mail.to).to eq(['sankichi92@ku-unplugged.net'])
       expect(mail.from).to eq(['noreply@livelog.ku-unplugged.net'])
       expect(mail.bcc).to eq(users.map(&:email))
     end
