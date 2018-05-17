@@ -66,7 +66,7 @@ GEM
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.0)
     aws-sigv4 (1.0.2)
-    bcrypt (3.1.11)
+    bcrypt (3.1.12)
     better_errors (2.4.0)
       coderay (>= 1.0.0)
       erubi (>= 1.0.0)
@@ -377,7 +377,7 @@ DEPENDENCIES
   action_args (~> 2.3.1)
   active_decorator (~> 1.0.0)
   aws-sdk-s3 (~> 1.10.0)
-  bcrypt (~> 3.1.11)
+  bcrypt (~> 3.1.12)
   better_errors
   binding_of_caller
   bootsnap (>= 1.1.0)
