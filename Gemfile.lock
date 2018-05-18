@@ -53,16 +53,18 @@ GEM
     autoprefixer-rails (8.4.1)
       execjs
     awesome_print (1.8.0)
-    aws-partitions (1.84.0)
-    aws-sdk-core (3.20.2)
+    aws-eventstream (1.0.0)
+    aws-partitions (1.87.0)
+    aws-sdk-core (3.21.0)
+      aws-eventstream (~> 1.0)
       aws-partitions (~> 1.0)
       aws-sigv4 (~> 1.0)
       jmespath (~> 1.0)
     aws-sdk-kms (1.5.0)
       aws-sdk-core (~> 3)
       aws-sigv4 (~> 1.0)
-    aws-sdk-s3 (1.10.0)
-      aws-sdk-core (~> 3)
+    aws-sdk-s3 (1.11.0)
+      aws-sdk-core (~> 3, >= 3.21.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.0)
     aws-sigv4 (1.0.2)
@@ -376,7 +378,7 @@ PLATFORMS
 DEPENDENCIES
   action_args (~> 2.3.1)
   active_decorator (~> 1.0.0)
-  aws-sdk-s3 (~> 1.10.0)
+  aws-sdk-s3 (~> 1.11.0)
   bcrypt (~> 3.1.12)
   better_errors
   binding_of_caller
