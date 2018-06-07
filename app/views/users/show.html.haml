@@ -18,28 +18,28 @@
           %small.text-muted= icon('fas', 'lock') unless @user.public?
         .card-subtitle.text-muted<
           #{@songs.size}曲
-          ・
-          = @user.instruments.join(', ')
+          = "・#{@user.instruments.join(', ')}" unless @user.instruments.empty?
         = link_to @user.url, @user.url, target: '_blank' if @user.url?
     %dl
-      %dt
-        = t('views.users.collaborators')
-        %small.text-muted #{@user.collaborators_count}人
-      %dd
-        %ul.list-inline
-          - @user.top_10_collaborators.each do |collaborator|
-            %li.list-inline-item
-              = policy(collaborator).show? ? link_to(collaborator.avatar_image_tag(:small), collaborator) : collaborator.avatar_image_tag(:small)
-              = policy(collaborator).show? ? link_to(collaborator.handle, collaborator) : collaborator.handle
+      - if @user.collaborators_count > 0
+        %dt
+          = t('views.users.collaborators')
+          %small.text-muted #{@user.collaborators_count}人
+        %dd
+          %ul.list-inline
+            - @user.top_10_collaborators.each do |collaborator|
+              %li.list-inline-item
+                = policy(collaborator).show? ? link_to(collaborator.avatar_image_tag(:small), collaborator) : collaborator.avatar_image_tag(:small)
+                = policy(collaborator).show? ? link_to(collaborator.handle, collaborator) : collaborator.handle
       - if @user.intro?
         %dt= User.human_attribute_name(:intro)
         %dd= simple_format(@user.intro, class: 'text-muted')
     %aside.btn-toolbar{ role: 'toolbar' }
       - if !@user.activated? && policy(@user).invite?
-        .btn-group
+        .btn-group.mr-2
           = @user.invite_link class: 'btn btn-info'
       - if policy(@user).edit?
-        .btn-group
+        .btn-group.mr-2
           = @user.edit_link class: 'btn btn-outline-primary'
       - if current_user&.admin_or_elder?
         .btn-group#admin-tools
