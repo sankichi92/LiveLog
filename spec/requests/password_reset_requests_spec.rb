@@ -50,6 +50,13 @@ RSpec.describe 'Password reset requests', type: :request do
     let(:token) { Token.random }
     let(:user) { create(:user, reset_digest: Token.digest(token), reset_sent_at: reset_sent_at) }
 
+    context 'without email' do
+      it 'redirects to /' do
+        get edit_password_reset_path(token)
+        expect(response).to redirect_to(root_url)
+      end
+    end
+
     context 'with invalid token' do
       it 'redirects to /' do
         get edit_password_reset_path(Token.random, email: user.email)

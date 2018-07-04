@@ -39,8 +39,13 @@ class PasswordResetsController < ApplicationController
 
   private
 
-  def set_user(email)
-    @user = User.find_by(email: email)
+  def set_user(email = nil)
+    if email.blank?
+      flash[:danger] = t('flash.controllers.password_resets.invalid_url')
+      redirect_to root_url
+    else
+      @user = User.find_by(email: email)
+    end
   end
 
   def valid_user(id)
@@ -49,7 +54,7 @@ class PasswordResetsController < ApplicationController
 
   def check_expiration
     return unless @user.password_reset_expired?
-    flash[:danger] = 'パスワード再設定の有効期限が過ぎてきます'
+    flash[:danger] = t('flash.controllers.password_resets.token_expired')
     redirect_to new_password_reset_url
   end
 end
