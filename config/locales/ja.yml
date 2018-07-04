@@ -26,6 +26,11 @@ ja:
         already_activated: アカウントはすでに有効化されています
         invalid_url: 無効な URL です
       password_resets:
+        sent: "パスワード再設定のためのメールを送信しました"
+        inactivated: "アカウントが有効化されていません。招待メールを確認してください"
+        email_not_found: "メールアドレスが見つかりませんでした"
+        succeeded: "パスワードが再設定されました"
+        token_expired: "パスワード再設定の有効期限が過ぎてきます"
         invalid_url: "無効な URL です"
   views:
     application:
