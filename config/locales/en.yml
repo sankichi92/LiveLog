@@ -26,6 +26,11 @@ en:
         already_activated: Already activated
         invalid_url: Invalid URL
       password_resets:
+        sent: Sent password reset email
+        inactivated: Account not activated.  Check your email for the activation link
+        email_not_found: Email not found
+        succeeded: Password updated
+        token_expired: Expired URL
         invalid_url: Invalid URL
   views:
     application:

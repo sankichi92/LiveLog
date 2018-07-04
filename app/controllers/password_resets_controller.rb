@@ -11,13 +11,13 @@ class PasswordResetsController < ApplicationController
     @user = User.find_by(email: password_reset[:email])
     if @user&.activated?
       @user.send_password_reset
-      flash[:success] = 'パスワード再設定のためのメールを送信しました'
+      flash[:success] = t('flash.controllers.password_resets.sent')
       redirect_to root_url
     elsif @user.present?
-      flash.now[:warning] = 'アカウントが有効化されていません。招待メールを確認してください'
+      flash.now[:warning] = t('flash.controllers.password_resets.inactivated')
       render 'new', status: :unprocessable_entity
     else
-      flash.now[:danger] = 'メールアドレスが見つかりませんでした'
+      flash.now[:danger] = t('flash.controllers.password_resets.email_not_found')
       render 'new', status: :unprocessable_entity
     end
   end
@@ -30,7 +30,7 @@ class PasswordResetsController < ApplicationController
       render 'edit', status: :unprocessable_entity
     elsif @user.reset_password(user)
       log_in @user
-      flash[:success] = 'パスワードが再設定されました'
+      flash[:success] = t('flash.controllers.password_resets.succeeded')
       redirect_to @user
     else
       render 'edit', status: :unprocessable_entity
