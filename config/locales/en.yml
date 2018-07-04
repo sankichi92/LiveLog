@@ -25,6 +25,8 @@ en:
         deactivated: Account deactivatd
         already_activated: Already activated
         invalid_url: Invalid URL
+      password_resets:
+        invalid_url: Invalid URL
   views:
     application:
       edit: Edit
