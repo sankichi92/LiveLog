@@ -116,7 +116,7 @@ GEM
       activesupport (> 3)
       elasticsearch (~> 5)
       hashie
-    elasticsearch-rails (5.0.2)
+    elasticsearch-rails (5.1.0)
     elasticsearch-transport (5.0.4)
       faraday
       multi_json
@@ -392,7 +392,7 @@ DEPENDENCIES
   chromedriver-helper (~> 1.2.0)
   elasticsearch-dsl (~> 0.1)
   elasticsearch-model (~> 5.0)
-  elasticsearch-rails (~> 5.0)
+  elasticsearch-rails (~> 5.1)
   factory_bot_rails (~> 4.10)
   faker
   font-awesome-sass (~> 5.0.13)
