@@ -55,7 +55,7 @@ group :test do
   gem 'chromedriver-helper', '~> 1.2.0'
   gem 'factory_bot_rails', '~> 4.10'
   gem 'rspec-json_matcher', '~> 0.1.6'
-  gem 'selenium-webdriver', '~> 3.13'
+  gem 'selenium-webdriver', '~> 3.14'
 end
 
 group :production do
