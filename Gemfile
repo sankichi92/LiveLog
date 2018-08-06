@@ -35,7 +35,7 @@ gem 'uglifier', '>= 3.2.0'
 group :development, :test do
   gem 'byebug', platform: :mri
   gem 'faker'
-  gem 'rspec-rails', '~> 3.7'
+  gem 'rspec-rails', '~> 3.8'
 end
 
 group :development do
