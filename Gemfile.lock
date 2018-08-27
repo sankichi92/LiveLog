@@ -217,7 +217,7 @@ GEM
     parallel (1.12.1)
     parser (2.5.1.0)
       ast (~> 2.4.0)
-    pg (1.0.0)
+    pg (1.1.0)
     popper_js (1.14.3)
     powerpack (0.1.2)
     public_suffix (3.0.2)
@@ -403,7 +403,7 @@ DEPENDENCIES
   meowcop
   mini_magick (~> 4.8)
   newrelic_rpm
-  pg (~> 1.0)
+  pg (~> 1.1)
   puma (~> 3.12)
   pundit (~> 2.0)
   rails (~> 5.2.1)
