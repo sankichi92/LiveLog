@@ -40,7 +40,7 @@ RSpec.describe 'Song', type: :system do
 
       expect(page).to have_content(beatles_song.name)
 
-      fill_in 'name', with: 'No results'
+      fill_in 'name', with: 'NoResultsQuery'
       click_button t('views.application.search')
 
       expect(page).not_to have_content(beatles_song.name)
