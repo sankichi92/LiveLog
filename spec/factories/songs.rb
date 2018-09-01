@@ -5,24 +5,24 @@ FactoryBot.define do
     artist { Faker::RockBand.name }
     sequence(:order) { |n| n }
     status { %i[open closed secret].sample }
-    youtube_id 'https://www.youtube.com/watch?v=2TL90rxt9bo'
+    youtube_id { 'https://www.youtube.com/watch?v=2TL90rxt9bo' }
     comment { Faker::Lorem.paragraph }
     audio { Rack::Test::UploadedFile.new("#{::Rails.root}/spec/fixtures/files/audio.mp3", 'audio/mpeg') }
 
     trait :invalid do
-      name ''
+      name { '' }
     end
 
     trait :draft do
       association :live, factory: %i[live draft]
-      order nil
-      youtube_id nil
-      comment nil
-      audio nil
+      order { nil }
+      youtube_id { nil }
+      comment { nil }
+      audio { nil }
     end
 
     transient do
-      users []
+      users { [] }
     end
 
     after(:create) do |song, evaluator|

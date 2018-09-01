@@ -4,17 +4,17 @@ FactoryBot.define do
     name { "#{date.mon}月ライブ" }
     place { %w[4共11 4共21 4共31].sample }
     album_url { Faker::Internet.url }
-    published true
-    published_at Time.zone.now
+    published { true }
+    published_at { Time.zone.now }
 
     trait :invalid do
-      name ''
+      name { '' }
     end
 
     trait :draft do
       sequence(:date) { |n| n.month.from_now }
-      published false
-      published_at nil
+      published { false }
+      published_at { nil }
     end
 
     trait :with_songs do
