@@ -63,7 +63,7 @@ GEM
     aws-sdk-kms (1.9.0)
       aws-sdk-core (~> 3, >= 3.26.0)
       aws-sigv4 (~> 1.0)
-    aws-sdk-s3 (1.19.0)
+    aws-sdk-s3 (1.20.0)
       aws-sdk-core (~> 3, >= 3.26.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.0)
@@ -379,7 +379,7 @@ PLATFORMS
 DEPENDENCIES
   action_args (~> 2.3.1)
   active_decorator (~> 1.0.0)
-  aws-sdk-s3 (~> 1.19.0)
+  aws-sdk-s3 (~> 1.20.0)
   bcrypt (~> 3.1.12)
   better_errors
   binding_of_caller
