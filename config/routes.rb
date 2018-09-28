@@ -4,6 +4,8 @@ Rails.application.routes.draw do
 
   get '/donation', to: 'static_pages#donation'
 
+  get '/privacy', to: 'static_pages#privacy'
+
   resources :songs do
     collection do
       get 'search'
