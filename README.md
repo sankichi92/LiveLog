@@ -3,9 +3,9 @@
 [![Build Status](https://travis-ci.org/sankichi92/LiveLog.svg?branch=master)](https://travis-ci.org/sankichi92/LiveLog)
 [![Gitter chat](https://badges.gitter.im/sankichi92/LiveLog.svg)](https://gitter.im/ku-unplugged-livelog/Lobby)
 
-<img src="https://github.com/sankichi92/LiveLog/blob/master/app/assets/images/logo.png" alt="Logo" width="200px">
+<img src="app/assets/images/logo.png" alt="Logo" width="200px">
 
-This is the application to manage set lists of the acoustic light music club "[京大アンプラグド](http://ku-unplugged.net/)."
+This is the Ruby on Rails application to manage set lists of the acoustic light music club "[京大アンプラグド](http://ku-unplugged.net/)."
 
 ## Requirements
 
@@ -16,29 +16,17 @@ This is the application to manage set lists of the acoustic light music club "[�
 
 ## Getting started
 
-To get started with the app, clone the repo and then install the needed gems:
+To get started with the app, clone the repo and then execute:
 
-```
-$ bundle install
-```
+    $ bin/setup
 
-Next, setup the database:
+Next, run the test suite to verify that everything is working correctly:
 
-```
-$ rails db:setup
-```
-
-Finally, run the test suite to verify that everything is working correctly:
-
-```
-$ rails spec
-```
+    $ bin/rails spec
 
 If the test suite passes, you'll be ready to run the app in a local server:
 
-```
-$ rails server
-```
+    $ bin/rails server
 
 ## Contributing
 
