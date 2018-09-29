@@ -48,4 +48,8 @@ Rails.application.routes.draw do
       delete '/logout', to: 'tokens#destroy'
     end
   end
+
+  direct :homepage do
+    'https://ku-unplugged.net/'
+  end
 end
