@@ -1,0 +1,36 @@
+#!/bin/sh -e
+
+# cf. https://devcenter.heroku.com/articles/heroku-postgres-import-export#export
+
+backup_and_download_db () {
+    heroku pg:backups:capture
+    rm -vf latest.dump
+    heroku pg:backups:download
+}
+
+reset_and_restore_db () {
+    bin/rails db:migrate:reset
+    set +e
+    pg_restore --verbose --data-only --no-acl --no-owner -h localhost -d LiveLog2_development latest.dump
+    pg_restore --verbose --data-only --no-acl --no-owner -h localhost -d LiveLog2_development latest.dump
+    set -e
+    rails runner "User.find(1).update_column(:admin, true)"
+}
+
+sync_and_restructure_storage () {
+    storage_dir="./storage"
+    backup_dir="${storage_dir}/_backup"
+
+    aws s3 sync s3://ku-unplugged ${backup_dir} --delete --exclude 'variants/*'
+
+    for file in `find ${backup_dir} -type f -maxdepth 1`; do
+        base=`basename ${file}`
+        dir=${storage_dir}/${base:0:2}/${base:2:2}
+        mkdir -p ${dir}
+        ln -vfs ../../../${file} ${dir}/${base}
+    done
+}
+
+backup_and_download_db
+reset_and_restore_db
+sync_and_restructure_storage
