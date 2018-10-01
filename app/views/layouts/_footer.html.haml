@@ -1,2 +1,6 @@
 %footer.text-center.my-3
-  %small= "&copy; 2014-#{Time.current.year} 京大アンプラグド".html_safe
+  %ul.list-inline
+    %li.list-inline-item
+      %small &copy; 2014-#{Time.zone.now.year} #{link_to '京大アンプラグド', homepage_url, target: '_blank', class: 'text-dark'}.
+    %li.list-inline-item
+      %small= link_to 'プライバシーポリシー', privacy_path, class: 'text-dark'

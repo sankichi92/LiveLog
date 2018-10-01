@@ -25,4 +25,11 @@ RSpec.describe 'Static pages requests', type: :request do
       end
     end
   end
+
+  describe 'GET /privacy' do
+    it 'responds 200' do
+      get privacy_path
+      expect(response).to have_http_status(:ok)
+    end
+  end
 end

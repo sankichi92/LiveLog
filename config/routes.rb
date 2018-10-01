@@ -4,6 +4,8 @@ Rails.application.routes.draw do
 
   get '/donation', to: 'static_pages#donation'
 
+  get '/privacy', to: 'static_pages#privacy'
+
   resources :songs do
     collection do
       get 'search'
@@ -45,5 +47,9 @@ Rails.application.routes.draw do
       post '/login', to: 'tokens#create'
       delete '/logout', to: 'tokens#destroy'
     end
+  end
+
+  direct :homepage do
+    'https://ku-unplugged.net/'
   end
 end
