@@ -7,14 +7,14 @@ module Api::V1
     include Api::V1::TokensHelper
     include Pundit
 
-    before_action :check_user_agent if Rails.env == 'production'
+    before_action :check_user_agent if Rails.env.production?
     before_action :authenticate
 
     private
 
     def check_user_agent
       user_agent = request.user_agent
-      render status: :forbidden unless user_agent.match?(ANDROID_UA_PAT)
+      render json: { status: 403, error: 'Forbidden' }, status: :forbidden unless user_agent.match?(ANDROID_UA_PAT)
     end
 
     def authenticate
