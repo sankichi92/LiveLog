@@ -23,7 +23,7 @@
               %a#navbar-entry-dropdown-menu-link.nav-link.dropdown-toggle{ href: '#', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' }
                 = icon('fas', 'paper-plane') + ' Entry'
               .dropdown-menu{ 'aria-labellebdy': 'navbar-entry-dropdown-menu-link' }
-                - Live.drafts.each do |live|
+                - Live.drafts.order_by_date.reverse.each do |live|
                   = link_to live.name, live_entries_path(live), class: 'dropdown-item'
           %li.nav-item.dropdown
             %a#navbar-user-dropdown-menu-link.nav-link.dropdown-toggle{ href: '#', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' }
