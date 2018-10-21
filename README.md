@@ -9,7 +9,7 @@ This is the Ruby on Rails application to manage set lists of the acoustic light 
 
 ## Requirements
 
-- Ruby 2.5.1
+- Ruby 2.5
 - PostgreSQL 9.2 or later
 - [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/install-elasticsearch.html) 5.x
   - with [Japanese (kuromoji) Analysis Plugin](https://www.elastic.co/guide/en/elasticsearch/plugins/current/analysis-kuromoji.html)
