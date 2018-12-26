@@ -1,17 +1,10 @@
-# To use the MeowCop gem.
 inherit_gem:
   meowcop:
     - config/rubocop.yml
 
 AllCops:
   TargetRubyVersion: 2.6
-  TargetRailsVersion: 5.1
+  TargetRailsVersion: 5.2
 
 Rails:
   Enabled: true
-
-# You can customize rubocop settings.
-# For example.
-# Style/FrozenStringLiteralComment:
-#   Enabled: true
-#   EnforcedStyle: always
