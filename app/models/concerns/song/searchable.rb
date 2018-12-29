@@ -31,7 +31,7 @@ module Concerns
           }
         }
 
-        mapping dynamic: false, _all: { enabled: false } do
+        mapping dynamic: false do
           indexes :id, type: 'integer'
           indexes :datetime, type: 'date'
           indexes :order, type: 'short'
