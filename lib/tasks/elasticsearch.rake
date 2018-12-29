@@ -10,8 +10,8 @@ namespace :elasticsearch do
       Force rebuilding the index (delete and create):
         $ rake environment elasticsearch:import:song FORCE=y
     DESC
-    task :song do
-      total_errors = Song.includes(:'audio_attachment', :playings).published.import force: ENV.fetch('FORCE', false)
+    task song: :environment do
+      total_errors = Song.includes(:playings, 'audio_attachment': :blob).published.import force: ENV.fetch('FORCE', false)
 
       puts "[IMPORT] #{total_errors} errors occurred" unless total_errors.zero?
       puts '[IMPORT] Done'
