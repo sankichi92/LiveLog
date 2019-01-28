@@ -10,7 +10,7 @@ gem 'elasticsearch-rails', '~> 6.0'
 gem 'elasticsearch-model', '~> 6.0'
 gem 'elasticsearch-dsl', '~> 0.1'
 
-gem 'action_args', '~> 2.3.1'
+gem 'action_args', '~> 2.3.2'
 gem 'active_decorator', '~> 1.1.1'
 gem 'aws-sdk-s3', '~> 1.30.1', require: false
 gem 'bcrypt', '~> 3.1.12'
