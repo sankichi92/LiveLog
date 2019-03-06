@@ -18,7 +18,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'bootstrap', '~> 4.3'
 gem 'bootstrap-will_paginate', '~> 1.0.0'
 gem 'font-awesome-sass', '~> 5.6.1'
-gem 'haml-rails', '~> 1.0'
+gem 'haml-rails', '~> 2.0'
 gem 'jbuilder', '~> 2.8'
 gem 'jquery-rails'
 gem 'mini_magick', '~> 4.9'
