@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :song do
     live
-    name { Faker::Music.album }
+    name { Faker::Music::UmphreysMcgee.song }
     artist { Faker::Music.band }
     sequence(:order) { |n| n }
     status { %i[open closed secret].sample }

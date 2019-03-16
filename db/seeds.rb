@@ -48,7 +48,11 @@ end
 
   song_count = live_name.include?('NF') ? 30 : 10
   song_count.times do |n|
-    name, artist = [Faker::Music.album, Faker::Music.band]
+    name, artist = if Faker::Boolean.boolean
+                     [Faker::BossaNova.song, Faker::BossaNova.artist]
+                   else
+                     [Faker::Music::UmphreysMcgee.song, Faker::Music.band]
+                   end
     time = Time.zone.parse('10:00') + ((n / 3) * 30).minutes if live_name.include?('NF')
     song = live.songs.create!(name: name, artist: artist, order: n + 1, time: time, status: Faker::Number.between(0, 2))
 
