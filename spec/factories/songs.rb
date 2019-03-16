@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :song do
     live
-    name { Faker::UmphreysMcgee.song }
-    artist { Faker::RockBand.name }
+    name { Faker::Music.album }
+    artist { Faker::Music.band }
     sequence(:order) { |n| n }
     status { %i[open closed secret].sample }
     youtube_id { 'https://www.youtube.com/watch?v=2TL90rxt9bo' }
