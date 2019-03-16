@@ -24,6 +24,7 @@ before_install:
   - gem install bundler
 
 before_script:
+  - sleep 10 # For Elasticsearch
   - cp config/database.yml.travis config/database.yml && bin/rails db:create
 
 branches:
