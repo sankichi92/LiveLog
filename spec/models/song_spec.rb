@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Song, type: :model do
-  let(:song) { build(:song) }
+  let(:song) { build(:song, live: create(:live)) }
 
   subject { song }
 
