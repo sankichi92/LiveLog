@@ -47,5 +47,28 @@ RSpec.describe 'Auth requests', type: :request do
         end
       end
     end
+
+    context 'with invalid credentials' do
+      let(:auth) { :invalid_credentials }
+
+      it 'redirects to /auth/failure' do
+        get auth_google_oauth2_callback_path
+
+        expect(response).to redirect_to(auth_failure_url(message: 'invalid_credentials', strategy: 'google_oauth2'))
+      end
+    end
+  end
+
+  describe 'GET /auth/failure' do
+    let(:message) { 'error message' }
+    let(:params) { { message: message, strategy: 'google_oauth2' } }
+
+    it 'sends error message to Sentry and redirects' do
+      expect(Raven).to receive(:capture_message).with(message)
+
+      get auth_failure_path, params: params
+
+      expect(response).to redirect_to(login_url)
+    end
   end
 end

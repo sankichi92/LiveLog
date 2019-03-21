@@ -37,6 +37,7 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
 
   get '/auth/google_oauth2/callback', to: 'auth#create'
+  get '/auth/failure', to: 'auth#failure'
 
   namespace :api, format: 'json' do
     namespace :v1 do

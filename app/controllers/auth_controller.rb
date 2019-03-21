@@ -22,4 +22,9 @@ class AuthController < ApplicationController
 
     redirect_back_or user
   end
+
+  def failure(message)
+    Raven.capture_message(message)
+    redirect_to current_user || login_url
+  end
 end
