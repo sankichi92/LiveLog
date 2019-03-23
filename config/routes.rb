@@ -38,6 +38,7 @@ Rails.application.routes.draw do
 
   get '/auth/google_oauth2/callback', to: 'auth#create'
   get '/auth/failure', to: 'auth#failure'
+  delete '/auth/google_oauth2', to: 'auth#destroy'
 
   namespace :api, format: 'json' do
     namespace :v1 do

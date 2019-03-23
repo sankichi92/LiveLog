@@ -1,4 +1,6 @@
 class AuthController < ApplicationController
+  before_action :logged_in_user, only: :destroy
+
   def create
     auth = request.env['omniauth.auth']
 
@@ -21,6 +23,14 @@ class AuthController < ApplicationController
     end
 
     redirect_back_or user
+  end
+
+  def destroy
+    if (identity = current_user.identities.google_oauth2.take)
+      identity.destroy!
+      flash[:success] = 'Google アカウントとの紐付けを解除しました'
+    end
+    redirect_to current_user
   end
 
   def failure(message)
