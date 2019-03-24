@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_04_12_121947) do
+ActiveRecord::Schema.define(version: 2019_03_21_124828) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,27 @@ ActiveRecord::Schema.define(version: 2018_04_12_121947) do
     t.string "checksum", null: false
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "google_credentials", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "token", null: false
+    t.string "refresh_token", null: false
+    t.datetime "expires_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_google_credentials_on_user_id", unique: true
+  end
+
+  create_table "identities", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "provider", null: false
+    t.string "uid", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["provider", "uid"], name: "index_identities_on_provider_and_uid", unique: true
+    t.index ["user_id", "provider"], name: "index_identities_on_user_id_and_provider", unique: true
+    t.index ["user_id"], name: "index_identities_on_user_id"
   end
 
   create_table "lives", id: :serial, force: :cascade do |t|
@@ -108,6 +129,8 @@ ActiveRecord::Schema.define(version: 2018_04_12_121947) do
     t.index ["furigana"], name: "index_users_on_furigana"
   end
 
+  add_foreign_key "google_credentials", "users"
+  add_foreign_key "identities", "users"
   add_foreign_key "playings", "songs"
   add_foreign_key "playings", "users"
   add_foreign_key "songs", "lives"
