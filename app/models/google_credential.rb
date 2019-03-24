@@ -3,7 +3,6 @@ class GoogleCredential < ApplicationRecord
 
   validates :user, presence: true
   validates :token, presence: true
-  validates :refresh_token, presence: true
   validates :expires_at, presence: true
 
   def update_with_omniauth!(credentials)
