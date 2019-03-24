@@ -2,49 +2,57 @@
 %header.page-header
   %h1 Settings
 
-%p= link_to t('views.users.change_password'), edit_user_password_path(@user)
+%section.mb-3
+  - if @user.identities.google_oauth2.exists?
+    = link_to 'Google アカウントとの紐付けを解除する', '/auth/google_oauth2', method: :delete, class: 'btn btn-light btn-google'
+  - else
+    = link_to 'Google アカウントと紐付ける', '/auth/google_oauth2', class: 'btn btn-light btn-google'
 
-= form_for @user do |f|
-  = render 'shared/error_messages', object: f.object
+%section.mb-3
+  = form_for @user do |f|
+    = render 'shared/error_messages', object: f.object
 
-  = render 'name_form', f: f
+    = render 'name_form', f: f
 
-  .form-group
-    = f.label :nickname
-    = f.text_field :nickname, class: 'form-control'
+    .form-group
+      = f.label :nickname
+      = f.text_field :nickname, class: 'form-control'
 
-  = render 'email_form', f: f
+    = render 'email_form', f: f
 
-  .form-group
-    = f.label :url
-    = f.url_field :url, class: 'form-control', placeholder: 'http://ku-unplugged.net/'
+    .form-group
+      = f.label :url
+      = f.url_field :url, class: 'form-control', placeholder: 'http://ku-unplugged.net/'
 
-  .form-group
-    = f.label :intro
-    = f.text_area :intro, class: 'form-control', rows: '3'
+    .form-group
+      = f.label :intro
+      = f.text_area :intro, class: 'form-control', rows: '3'
 
-  .form-group
-    = f.label :avatar
-    = f.file_field :avatar, direct_upload: true, accept: 'image/png,image/gif,image/jpeg', class: 'form-control-file'
+    .form-group
+      = f.label :avatar
+      = f.file_field :avatar, direct_upload: true, accept: 'image/png,image/gif,image/jpeg', class: 'form-control-file'
 
-  .form-group
-    .custom-control.custom-checkbox.custom-control-inline
-      = f.check_box :public, class: 'custom-control-input'
-      = f.label :public, class: 'custom-control-label' do
-        ログインしていないユーザにもプロフィールを公開する
-        = icon 'fas', 'question-circle',
-               'data-toggle': 'tooltip',
-               'data-placement': 'right',
-               title: '名前とメールアドレスが公開されることはありません。ただし，ニックネームがない場合，姓は公開されます'
+    .form-group
+      .custom-control.custom-checkbox.custom-control-inline
+        = f.check_box :public, class: 'custom-control-input'
+        = f.label :public, class: 'custom-control-label' do
+          ログインしていないユーザにもプロフィールを公開する
+          = icon 'fas', 'question-circle',
+                 'data-toggle': 'tooltip',
+                 'data-placement': 'right',
+                 title: '名前とメールアドレスが公開されることはありません。ただし，ニックネームがない場合，姓は公開されます'
 
-  .form-group
-    .custom-control.custom-checkbox
-      = f.check_box :subscribing, class: 'custom-control-input'
-      = f.label :subscribing, class: 'custom-control-label' do
-        LiveLog からのお知らせメールを受け取る
-        = icon 'fas', 'question-circle',
-               'data-toggle': 'tooltip',
-               'data-placement': 'right',
-               title: '演奏した曲が今日のピックアップに選ばれた時などにお知らせします'
+    .form-group
+      .custom-control.custom-checkbox
+        = f.check_box :subscribing, class: 'custom-control-input'
+        = f.label :subscribing, class: 'custom-control-label' do
+          LiveLog からのお知らせメールを受け取る
+          = icon 'fas', 'question-circle',
+                 'data-toggle': 'tooltip',
+                 'data-placement': 'right',
+                 title: '演奏した曲が今日のピックアップに選ばれた時などにお知らせします'
 
-  = f.submit class: 'btn btn-primary'
+    = f.submit class: 'btn btn-primary'
+
+%section
+  %p= link_to t('views.users.change_password'), edit_user_password_path(@user)

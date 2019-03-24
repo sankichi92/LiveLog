@@ -7,17 +7,21 @@
   %br
   会員の方は，すでにアカウントを持っている人に招待してもらってください。
 
-= form_for :session, url: login_path do |f|
+%section.mb-3
+  = form_for :session, url: login_path do |f|
 
-  = render 'users/email_form', f: f
+    = render 'users/email_form', f: f
 
-  .form-group
-    = f.label :password
-    = f.password_field :password, class: 'form-control'
-    %small.form-text= link_to t('views.sessions.forgot_password'), new_password_reset_path
+    .form-group
+      = f.label :password
+      = f.password_field :password, class: 'form-control'
+      %small.form-text= link_to t('views.sessions.forgot_password'), new_password_reset_path
 
-  .custom-control.custom-checkbox.mb-3
-    = f.check_box :remember_me, class: 'custom-control-input'
-    = f.label :remember_me, t('views.sessions.remember_me'), class: 'custom-control-label'
+    .custom-control.custom-checkbox.mb-3
+      = f.check_box :remember_me, class: 'custom-control-input'
+      = f.label :remember_me, t('views.sessions.remember_me'), class: 'custom-control-label'
 
-  = f.submit t('views.sessions.log_in'), class: 'btn btn-primary'
+    = f.submit t('views.sessions.log_in'), class: 'btn btn-primary'
+
+%section
+  = link_to 'Google でログイン', '/auth/google_oauth2', class: 'btn-google-signin'
