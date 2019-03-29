@@ -35,7 +35,7 @@ module UserDecorator
   end
 
   def top_10_collaborators
-    collaborators = collaborated_playings.group(:user).order(count: :desc).limit(10).count.keys
+    collaborators = collaborated_playings.group(:user).order(count_all: :desc).limit(10).count.keys
     ActiveRecord::Associations::Preloader.new.preload(collaborators, 'avatar_attachment': :blob)
     collaborators.tap { |collaborator| ActiveDecorator::Decorator.instance.decorate(collaborator) }
   end
