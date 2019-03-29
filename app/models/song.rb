@@ -45,7 +45,7 @@ class Song < ApplicationRecord
   end
 
   def self.artists_for_suggestion
-    where.not(artist: '').group(:artist).order(count: :desc).having('songs.count >= 2').count.keys
+    where.not(artist: '').group(:artist).order(count_all: :desc).having('count(*) >= 2').count.keys
   end
 
   def title

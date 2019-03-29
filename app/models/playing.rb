@@ -31,7 +31,7 @@ class Playing < ApplicationRecord
   end
 
   def self.insts_for_suggestion
-    group(:inst).order(count: :desc).having('playings.count >= 2').count.keys
+    group(:inst).order(count_all: :desc).having('count(*) >= 2').count.keys
   end
 
   def instruments
