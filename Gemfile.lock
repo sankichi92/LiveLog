@@ -136,7 +136,7 @@ GEM
     faraday (0.15.4)
       multipart-post (>= 1.2, < 3)
     ffi (1.10.0)
-    font-awesome-sass (5.8.0)
+    font-awesome-sass (5.8.1)
       sassc (>= 1.11)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
@@ -412,7 +412,7 @@ DEPENDENCIES
   elasticsearch-rails (~> 6.0)
   factory_bot_rails (~> 5.0)
   faker
-  font-awesome-sass (~> 5.8.0)
+  font-awesome-sass (~> 5.8.1)
   haml-rails (~> 2.0)
   haml_lint
   jbuilder (~> 2.8)
