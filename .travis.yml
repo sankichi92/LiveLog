@@ -1,7 +1,9 @@
-sudo: required
 dist: xenial
 
 language: ruby
+
+env:
+  - ES_VERSION=6.2.4
 
 services:
   - postgresql
@@ -14,18 +16,17 @@ cache: bundler
 bundler_args: --without development production
 
 before_install:
-  # Install Elasticsearch 6.x
-  - wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
-  - echo "deb https://artifacts.elastic.co/packages/6.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-6.x.list
-  - sudo apt-get update && sudo apt-get install elasticsearch
-  - sudo /usr/share/elasticsearch/bin/elasticsearch-plugin install --verbose --batch analysis-kuromoji
-  - sudo service elasticsearch start
+  # Install Elasticsearch
+  - wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${ES_VERSION}.tar.gz
+  - tar -xzf elasticsearch-${ES_VERSION}.tar.gz
+  - ./elasticsearch-${ES_VERSION}/bin/elasticsearch-plugin install --verbose --batch analysis-kuromoji
+  - ./elasticsearch-${ES_VERSION}/bin/elasticsearch &
   # Update Bundler
   - gem install bundler
 
 before_script:
-  - sleep 10 # For Elasticsearch
   - cp config/database.yml.travis config/database.yml && bin/rails db:create
+  - wget -q --waitretry=1 --retry-connrefused -T 10 -O - http://127.0.0.1:9200 # Wait for Elasticsearch
 
 branches:
   only:
