@@ -54,10 +54,10 @@ end
 
 group :test do
   gem 'capybara', '~> 3.16'
-  gem 'chromedriver-helper', '~> 2.1.1'
   gem 'factory_bot_rails', '~> 5.0'
   gem 'rspec-json_matcher', '~> 0.1.6'
   gem 'selenium-webdriver', '~> 3.141'
+  gem 'webdrivers', '~> 3.0'
 end
 
 group :production do
