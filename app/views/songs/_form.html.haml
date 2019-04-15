@@ -11,12 +11,17 @@
 
   = render 'songs/inputs/media', f: f
 
-  - if f.object.player?(current_user)
-    = render 'songs/inputs/status', f: f
+  .form-group
+    = f.label :status
+    = icon 'fas', 'question-circle',
+               'data-toggle': 'tooltip',
+               'data-placement': 'right',
+               title: '動画・音源の公開範囲です。「公開」は全てのユーザ，「サークル内」はログインユーザのみ，「バンド内」は演者のみに公開されます'
+    = f.select :status, { '公開': 'open', 'サークル内': 'closed', 'バンド内': 'secret' }, { selected: 'open' }, class: 'form-control', disabled: !f.object.player?(current_user)
 
-    .form-group
-      = f.label :comment
-      = f.text_area :comment, class: 'form-control', rows: 3
+  .form-group
+    = f.label :comment
+    = f.text_area :comment, class: 'form-control', rows: 3, disabled: !f.object.player?(current_user)
 
   = f.submit class: 'btn btn-primary'
 
