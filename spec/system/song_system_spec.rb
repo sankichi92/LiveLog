@@ -61,7 +61,6 @@ RSpec.describe 'Song', type: :system do
       expect(page).to have_content(song.artist)
       expect(page).to have_content(song.live_name)
       expect(page).to have_content(song.order)
-      expect(page).to have_content('Related Songs')
       song.playings.each do |playing|
         expect(page).to have_content(playing.handle)
       end

@@ -70,12 +70,12 @@
             = @song.next.title
             %span{ 'aria-hidden': true } &raquo;
 
-  - if @song.published?
+  - if @related_songs.present?
     %section
       %header.page-header
         %h2 Related Songs
       .song-list.mb-3
         - if logged_in?
-          = render @song.more_like_this.records(includes: [:live, { playings: :user }])
+          = render @related_songs
         - else
-          = render partial: 'song', collection: @song.more_like_this.records(includes: [:live, { playings: :user }]), cached: true
+          = render partial: 'song', collection: @related_songs, cached: true
