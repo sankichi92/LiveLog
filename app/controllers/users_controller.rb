@@ -32,6 +32,10 @@ class UsersController < ApplicationController
     end
   end
 
+  def csv(csv)
+    # TODO
+  end
+
   def edit(id)
     @user = User.find(id)
     authorize @user
