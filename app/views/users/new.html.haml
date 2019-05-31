@@ -2,16 +2,38 @@
 %header.page-header
   %h1 New Member
 
-= form_for @user do |f|
-  = render 'shared/error_messages', object: f.object
+%nav
+  .nav.nav-tabs.mb-3
+    = link_to '一人ずつ登録する', '#normal', class: 'nav-item nav-link active', data: { toggle: 'tab'}
+    = link_to 'CSVで一括登録する', '#csv', class: 'nav-item nav-link', data: { toggle: 'tab'}
 
-  = render 'name_form', f: f
+.tab-content
 
-  .form-group
-    = f.label :joined
-    = f.select :joined, (1995..Time.current.nendo).to_a.reverse, {}, {class: 'form-control'}
-    %small.form-text.text-muted<
-      初めてライブに出演した年度を選択してください。
-      %strong 入部年度は後から変更することができません。
+  .tab-pane.fade.show.active#normal
+    = form_with model: @user, local: true do |f|
+      = render 'shared/error_messages', object: f.object
 
-  = f.submit class: 'btn btn-primary'
+      = render 'name_form', f: f
+
+      .form-group
+        = f.label :joined
+        = f.select :joined, (1995..Time.current.nendo).to_a.reverse, {}, {class: 'form-control'}
+        %small.form-text.text-muted<
+          初めてライブに出演した年度を選択してください。
+          %strong 入部年度は後から変更することができません。
+
+      = f.submit class: 'btn btn-primary'
+
+  .tab-pane.fade#csv
+    = form_with url: csv_users_path do |f|
+
+      .form-group
+        = f.label :csv, 'CSV'
+        = f.file_field :csv, accept: 'text/csv', class: 'form-control-file'
+        %small.form-text.text-muted<
+          各行が
+          %code 入部年度,姓,名,ふりがな
+          となるようにしてください。
+          ヘッダーは不要です。
+
+      = f.submit '一括登録する', class: 'btn btn-primary'
