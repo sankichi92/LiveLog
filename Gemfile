@@ -57,7 +57,7 @@ group :test do
   gem 'factory_bot_rails', '~> 5.0'
   gem 'rspec-json_matcher', '~> 0.1.6'
   gem 'selenium-webdriver', '~> 3.142'
-  gem 'webdrivers', '~> 3.9'
+  gem 'webdrivers', '~> 4.0'
 end
 
 group :production do
