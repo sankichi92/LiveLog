@@ -1,3 +1,5 @@
+require 'csv'
+
 class UsersController < ApplicationController
   permits :first_name, :last_name, :furigana, :joined, :nickname, :email, :url, :intro, :public, :subscribing, :avatar
 
@@ -33,7 +35,23 @@ class UsersController < ApplicationController
   end
 
   def csv(csv)
-    # TODO
+    @user = User.new
+    authorize @user, :create?
+
+    attrs = %w[joined last_name first_name furigana]
+    CSV.new(csv.to_io.set_encoding('UTF-8'), headers: attrs).each do |row|
+      user = User.new(row.to_h.slice(*attrs))
+      unless user.save
+        @user.errors.add(:base, %("#{row}" の登録に失敗しました))
+      end
+    end
+
+    if @user.errors.empty?
+      flash[:success] = '登録しました'
+      redirect_to users_path
+    else
+      render status: :unprocessable_entity
+    end
   end
 
   def edit(id)
