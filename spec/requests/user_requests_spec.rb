@@ -73,6 +73,28 @@ RSpec.describe 'User requests', type: :request do
     end
   end
 
+  describe 'POST /members/csv by admin' do
+    before { log_in_as(create(:admin), capybara: false) }
+
+    context 'with valid csv' do
+      let(:csv) { fixture_file_upload('files/users.csv') }
+
+      it 'creates users and redirects to /members' do
+        expect { post csv_users_path, params: { csv: csv } }.to change(User, :count).by(2)
+        expect(response).to redirect_to users_path
+      end
+    end
+
+    context 'with invalid csv' do
+      let(:csv) { fixture_file_upload('files/users_invalid.csv') }
+
+      it 'creates valid users but does not create invalid users, and responds 422' do
+        expect { post csv_users_path, params: { csv: csv } }.to change(User, :count).by(1)
+        expect(response).to have_http_status :unprocessable_entity
+      end
+    end
+  end
+
   describe 'GET /members/:id/edit by correct user' do
     let(:user) { create(:user) }
 

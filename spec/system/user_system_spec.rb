@@ -53,7 +53,7 @@ RSpec.describe 'User', type: :system do
   describe 'add' do
     before { log_in_as create(:admin) }
 
-    it 'enables admin users to create new lives' do
+    it 'enables admin users to create new users' do
       visit root_path
       click_link 'New Member'
 
@@ -67,6 +67,18 @@ RSpec.describe 'User', type: :system do
       expect { click_button t('helpers.submit.create') }.to change(User, :count).by(1)
       expect(page).to have_css('.alert-success')
       expect(page).to have_title('New Member')
+    end
+
+    it 'enable admin users to create new users by csv' do
+      visit new_user_path
+
+      click_on 'CSVで一括登録する'
+
+      attach_file 'csv', "#{Rails.root}/spec/fixtures/files/users.csv"
+      click_button '一括登録する'
+
+      expect(page).to have_content('登録しました')
+      expect(page).to have_title('Members')
     end
   end
 
