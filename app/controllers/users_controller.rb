@@ -50,7 +50,7 @@ class UsersController < ApplicationController
       flash[:success] = '登録しました'
       redirect_to users_path
     else
-      render status: :unprocessable_entity
+      render :new, status: :unprocessable_entity
     end
   end
 

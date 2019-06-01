@@ -80,7 +80,7 @@ RSpec.describe 'User requests', type: :request do
       let(:csv) { fixture_file_upload('files/users.csv') }
 
       it 'creates users and redirects to /members' do
-        expect { post csv_users_path, params: { csv: csv }, xhr: true }.to change(User, :count).by(2)
+        expect { post csv_users_path, params: { csv: csv } }.to change(User, :count).by(2)
         expect(response).to redirect_to users_path
       end
     end
@@ -89,7 +89,7 @@ RSpec.describe 'User requests', type: :request do
       let(:csv) { fixture_file_upload('files/users_invalid.csv') }
 
       it 'creates valid users but does not create invalid users, and responds 422' do
-        expect { post csv_users_path, params: { csv: csv }, xhr: true }.to change(User, :count).by(1)
+        expect { post csv_users_path, params: { csv: csv } }.to change(User, :count).by(1)
         expect(response).to have_http_status :unprocessable_entity
       end
     end

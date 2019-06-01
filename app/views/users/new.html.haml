@@ -25,7 +25,8 @@
       = f.submit class: 'btn btn-primary'
 
   .tab-pane.fade#csv
-    = form_with url: csv_users_path do |f|
+    = form_with url: csv_users_path, local: true do |f|
+      = render 'shared/error_messages', object: @user
 
       .form-group
         = f.label :csv, 'CSV'
