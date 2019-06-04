@@ -39,11 +39,15 @@ class UsersController < ApplicationController
     authorize @user, :create?
 
     attrs = %w[joined last_name first_name furigana]
-    CSV.new(csv.to_io.set_encoding('UTF-8'), headers: attrs).each do |row|
-      user = User.new(row.to_h.slice(*attrs))
-      unless user.save
-        @user.errors.add(:base, %("#{row}" の登録に失敗しました))
+    begin
+      CSV.new(csv.to_io.set_encoding('UTF-8'), headers: attrs).each do |row|
+        user = User.new(row.to_h.slice(*attrs))
+        unless user.save
+          @user.errors.add(:base, %("#{row}" の登録に失敗しました))
+        end
       end
+    rescue CSV::MalformedCSVError
+      @user.errors.add(:base, "不正な CSV です")
     end
 
     if @user.errors.empty?
