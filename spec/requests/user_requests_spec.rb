@@ -93,6 +93,15 @@ RSpec.describe 'User requests', type: :request do
         expect(response).to have_http_status :unprocessable_entity
       end
     end
+
+    context 'with malformed csv' do
+      let(:csv) { fixture_file_upload('files/users_malformed.csv') }
+
+      it 'responds 422' do
+        expect { post csv_users_path, params: { csv: csv } }.not_to change(User, :count)
+        expect(response).to have_http_status :unprocessable_entity
+      end
+    end
   end
 
   describe 'GET /members/:id/edit by correct user' do
