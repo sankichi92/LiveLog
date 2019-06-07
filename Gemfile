@@ -13,7 +13,7 @@ gem 'elasticsearch-dsl', '~> 0.1'
 gem 'action_args', '~> 2.4.0'
 gem 'active_decorator', '~> 1.2.0'
 gem 'aws-sdk-s3', '~> 1.42.0', require: false
-gem 'bcrypt', '~> 3.1.12'
+gem 'bcrypt', '~> 3.1.13'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'bootstrap', '~> 4.3'
 gem 'bootstrap-will_paginate', '~> 1.0.0'
