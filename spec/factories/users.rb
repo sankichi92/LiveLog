@@ -4,7 +4,7 @@ FactoryBot.define do
     first_name { Faker::Name.first_name }
     furigana { 'ふりがな' }
     email { Faker::Internet.email }
-    joined { Faker::Date.between(Date.new(2011), Time.zone.today).year }
+    joined { Faker::Date.between(from: Date.new(2011), to: Time.zone.today).year }
     password { 'foobar' }
     password_confirmation { 'foobar' }
     activated { true }

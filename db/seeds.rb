@@ -14,13 +14,13 @@ User.create!(last_name: '京大',
 99.times do
   first_name = Faker::Name.first_name
   last_name = Faker::Name.last_name
-  activated = Faker::Boolean.boolean(0.9)
-  public = activated ? Faker::Boolean.boolean(0.2) : false
+  activated = Faker::Boolean.boolean(true_ratio: 0.9)
+  public = activated ? Faker::Boolean.boolean(true_ratio: 0.2) : false
   User.create!(first_name: first_name,
                last_name: last_name,
                furigana: 'ふりがな',
                email: activated ? Faker::Internet.email : nil,
-               joined: Faker::Date.between(4.years.ago, Time.zone.today).year,
+               joined: Faker::Date.between(from: 4.years.ago, to: Time.zone.today).year,
                password: 'password',
                password_confirmation: 'password',
                activated: activated,
@@ -56,7 +56,7 @@ end
     time = Time.zone.parse('10:00') + ((n / 3) * 30).minutes if live_name.include?('NF')
     song = live.songs.create!(name: name, artist: artist, order: n + 1, time: time, status: Faker::Number.between(0, 2))
 
-    Faker::Number.normal(5, 2).to_i.times do
+    Faker::Number.normal(mean: 5, standard_deviation: 2).to_i.times do
       random = Faker::Number.unique.between(0, User.count - 1)
       song.playings.create!(user: User.offset(random).first,
                             inst: %w[Vo Vo Vo Gt Gt Gt Pf Pf Ba Ba Cj Cj Vn Fl Perc Gt&Vo Pf&Cho].sample)
