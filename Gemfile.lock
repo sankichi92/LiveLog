@@ -229,7 +229,7 @@ GEM
     pg (1.1.4)
     popper_js (1.14.5)
     public_suffix (3.1.1)
-    puma (4.0.1)
+    puma (4.1.0)
       nio4r (~> 2.0)
     pundit (2.0.1)
       activesupport (>= 3.0.0)
@@ -418,7 +418,7 @@ DEPENDENCIES
   omniauth (~> 1.9.0)
   omniauth-google-oauth2 (~> 0.7.0)
   pg (~> 1.1)
-  puma (~> 4.0)
+  puma (~> 4.1)
   pundit (~> 2.0)
   rails (~> 5.2.3)
   rails_real_favicon
