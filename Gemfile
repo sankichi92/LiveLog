@@ -12,7 +12,7 @@ gem 'elasticsearch-model', '~> 6.0'
 gem 'elasticsearch-dsl', '~> 0.1'
 
 gem 'action_args', '~> 2.4.0'
-gem 'active_decorator', '~> 1.3.0'
+gem 'active_decorator', '~> 1.3.1'
 gem 'aws-sdk-s3', '~> 1.46.0', require: false
 gem 'bcrypt', '~> 3.1.13'
 gem 'bootsnap', '>= 1.1.0', require: false
