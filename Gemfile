@@ -7,7 +7,7 @@ gem 'rails', '~> 5.2.3'
 gem 'pg', '~> 1.1'
 
 gem 'will_paginate', '~> 3.1.8' # must be added before the Elasticsearch gems
-gem 'elasticsearch', '~> 6.1'
+gem 'elasticsearch', '~> 7.3'
 gem 'elasticsearch-rails', '~> 6.1'
 gem 'elasticsearch-model', '~> 6.1'
 gem 'elasticsearch-dsl', '~> 0.1'
