@@ -55,7 +55,7 @@ group :development do
 end
 
 group :test do
-  gem 'capybara', '~> 3.28'
+  gem 'capybara', '~> 3.29'
   gem 'factory_bot_rails', '~> 5.0'
   gem 'rspec-json_matcher', '~> 0.1.6'
   gem 'selenium-webdriver', '~> 3.142'
