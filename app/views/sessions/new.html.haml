@@ -24,4 +24,4 @@
     = f.submit t('views.sessions.log_in'), class: 'btn btn-primary'
 
 %section
-  = link_to 'Google でログイン', '/auth/google_oauth2', class: 'btn-google-signin'
+  = link_to 'Google でログイン', '/auth/google_oauth2', method: :post, class: 'btn-google-signin'
