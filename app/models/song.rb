@@ -1,5 +1,5 @@
 class Song < ApplicationRecord
-  include Concerns::Song::Searchable
+  include Searchable
 
   VALID_YOUTUBE_REGEX =
     %r(\A

@@ -50,6 +50,8 @@ RSpec.describe 'Entry requests', type: :request do
       let(:live) { create(:live) }
 
       it 'redirects to /lives/:id' do
+        pending 'https://github.com/rails/rails/issues/36989'
+
         post live_entries_path(live), xhr: true
         expect(response).to redirect_to(live)
       end
@@ -65,6 +67,8 @@ RSpec.describe 'Entry requests', type: :request do
         let(:song_attrs) { attributes_for(:song, :draft) }
 
         it 'creates a song, send an email and redirects /lives/:id/entries' do
+          pending 'https://github.com/rails/rails/issues/36989'
+
           expect {
             post live_entries_path(live), params: { song: song_attrs, entry: entry_attrs }, xhr: true
           }.to change(Song, :count).by(1)
