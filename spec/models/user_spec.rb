@@ -28,7 +28,6 @@ RSpec.describe User, type: :model do
   it { is_expected.to respond_to(:avatar) }
   it { is_expected.to respond_to(:subscribing) }
   it { is_expected.to respond_to(:playings) }
-  it { is_expected.to respond_to(:tokens) }
 
   it { is_expected.to be_valid }
   it { is_expected.not_to be_admin }

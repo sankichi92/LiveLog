@@ -42,19 +42,6 @@ Rails.application.routes.draw do
   get '/auth/failure', to: 'auth#failure'
   delete '/auth/google_oauth2', to: 'auth#destroy'
 
-  namespace :api, format: 'json' do
-    namespace :v1 do
-      resources :regular_meetings, only: :show
-      resources :pickups, only: :show
-      resources :users, only: %i[index show], path: :members
-      resources :lives, only: %i[index show]
-      resources :songs, only: %i[index show]
-      resource :profile, only: %i[show update]
-      post '/login', to: 'tokens#create'
-      delete '/logout', to: 'tokens#destroy'
-    end
-  end
-
   direct :homepage do
     'https://ku-unplugged.net/'
   end

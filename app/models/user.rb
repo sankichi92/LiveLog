@@ -2,7 +2,6 @@ class User < ApplicationRecord
   has_many :playings, dependent: :restrict_with_exception
   has_many :songs, through: :playings
   has_many :identities, dependent: :destroy
-  has_many :tokens, dependent: :destroy
 
   has_one :google_credential, dependent: :destroy
 
@@ -71,8 +70,8 @@ class User < ApplicationRecord
   # region Activation
 
   def send_invitation(email, inviter)
-    self.activation_token = Token.random
-    return unless update(email: email, activation_digest: Token.digest(activation_token))
+    self.activation_token = SecureRandom.base64
+    return unless update(email: email, activation_digest: encrypt(activation_token))
     UserMailer.account_activation(self, inviter).deliver_now
   end
 
@@ -95,8 +94,8 @@ class User < ApplicationRecord
   end
 
   def remember
-    self.remember_token = Token.random
-    update_column(:remember_digest, Token.digest(remember_token))
+    self.remember_token = SecureRandom.base64
+    update_column(:remember_digest, encrypt(remember_token))
   end
 
   def forget
@@ -118,8 +117,8 @@ class User < ApplicationRecord
   # region Password reset
 
   def send_password_reset
-    self.reset_token = Token.random
-    update_columns(reset_digest: Token.digest(reset_token), reset_sent_at: Time.zone.now)
+    self.reset_token = SecureRandom.base64
+    update_columns(reset_digest: encrypt(reset_token), reset_sent_at: Time.zone.now)
     UserMailer.password_reset(self).deliver_now
   end
 
@@ -134,6 +133,10 @@ class User < ApplicationRecord
   # endregion
 
   private
+  
+  def encrypt(unencrypted_str)
+    BCrypt::Password.create(unencrypted_str)
+  end
 
   def downcase_email
     self.email = email.downcase unless email.nil?

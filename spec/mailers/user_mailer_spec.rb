@@ -6,7 +6,7 @@ RSpec.describe UserMailer, type: :mailer do
     let(:inviter) { create(:user) }
     let(:mail) { UserMailer.account_activation(user, inviter) }
 
-    before { user.activation_token = Token.random }
+    before { user.activation_token = 'token' }
 
     it 'renders the headers' do
       expect(mail.subject).to eq("#{inviter.name} さんが LiveLog に招待しています")
@@ -28,7 +28,7 @@ RSpec.describe UserMailer, type: :mailer do
   describe 'password_reset' do
     let(:user) { create(:user) }
     let(:mail) { UserMailer.password_reset(user) }
-    before { user.reset_token = Token.random }
+    before { user.reset_token = 'token' }
 
     it 'renders the headers' do
       expect(mail.subject).to eq('パスワード再設定のご案内')
