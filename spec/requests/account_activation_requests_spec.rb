@@ -57,7 +57,7 @@ RSpec.describe 'Account activation requests', type: :request do
   end
 
   describe 'GET /users/:user_id/activation/edit' do
-    let(:token) { Token.random }
+    let(:token) { 'token' }
     let(:user) { create(:user, :inactivated, email: 'invited@example.com', activation_digest: BCrypt::Password.create(token)) }
 
     context 'with valid token' do
@@ -69,14 +69,14 @@ RSpec.describe 'Account activation requests', type: :request do
 
     context 'with invalid token' do
       it 'redirects to /' do
-        get edit_user_activation_path(user, t: Token.random)
+        get edit_user_activation_path(user, t: 'invalid_token')
         expect(response).to redirect_to(root_url)
       end
     end
   end
 
   describe 'PATCH /users/:user_id/activation' do
-    let(:token) { Token.random }
+    let(:token) { 'token' }
     let(:user) { create(:user, :inactivated, email: 'invited@example.com', activation_digest: BCrypt::Password.create(token)) }
 
     context 'with valid password' do

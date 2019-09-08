@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.describe 'Password reset', type: :system do
   let(:user) { create(:user) }
-  let!(:token) { Token.random }
+  let!(:token) { 'token' }
 
   before do
     ActionMailer::Base.deliveries.clear
-    allow(Token).to receive(:random) { token }
+    allow(SecureRandom).to receive(:base64) { token }
   end
 
   it 'enable users to reset password' do

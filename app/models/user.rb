@@ -70,7 +70,7 @@ class User < ApplicationRecord
   # region Activation
 
   def send_invitation(email, inviter)
-    self.activation_token = Token.random
+    self.activation_token = SecureRandom.base64
     return unless update(email: email, activation_digest: encrypt(activation_token))
     UserMailer.account_activation(self, inviter).deliver_now
   end
@@ -94,7 +94,7 @@ class User < ApplicationRecord
   end
 
   def remember
-    self.remember_token = Token.random
+    self.remember_token = SecureRandom.base64
     update_column(:remember_digest, encrypt(remember_token))
   end
 
@@ -117,7 +117,7 @@ class User < ApplicationRecord
   # region Password reset
 
   def send_password_reset
-    self.reset_token = Token.random
+    self.reset_token = SecureRandom.base64
     update_columns(reset_digest: encrypt(reset_token), reset_sent_at: Time.zone.now)
     UserMailer.password_reset(self).deliver_now
   end

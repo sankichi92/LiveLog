@@ -47,7 +47,7 @@ RSpec.describe 'Password reset requests', type: :request do
 
   describe 'GET /password_resets/edit' do
     let(:reset_sent_at) { 1.hour.ago }
-    let(:token) { Token.random }
+    let(:token) { 'token' }
     let(:user) { create(:user, reset_digest: BCrypt::Password.create(token), reset_sent_at: reset_sent_at) }
 
     context 'without email' do
@@ -59,7 +59,7 @@ RSpec.describe 'Password reset requests', type: :request do
 
     context 'with invalid token' do
       it 'redirects to /' do
-        get edit_password_reset_path(Token.random, email: user.email)
+        get edit_password_reset_path('invalid_token', email: user.email)
         expect(response).to redirect_to(root_url)
       end
     end
@@ -82,7 +82,7 @@ RSpec.describe 'Password reset requests', type: :request do
   end
 
   describe 'PATCH /password_resets' do
-    let(:token) { Token.random }
+    let(:token) { 'token' }
     let(:user) { create(:user, reset_digest: BCrypt::Password.create(token), reset_sent_at: 1.hour.ago) }
 
     context 'with empty password' do
