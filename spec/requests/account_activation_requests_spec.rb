@@ -58,7 +58,7 @@ RSpec.describe 'Account activation requests', type: :request do
 
   describe 'GET /users/:user_id/activation/edit' do
     let(:token) { Token.random }
-    let(:user) { create(:user, :inactivated, email: 'invited@example.com', activation_digest: Token.digest(token)) }
+    let(:user) { create(:user, :inactivated, email: 'invited@example.com', activation_digest: BCrypt::Password.create(token)) }
 
     context 'with valid token' do
       it 'responds 200' do
@@ -77,7 +77,7 @@ RSpec.describe 'Account activation requests', type: :request do
 
   describe 'PATCH /users/:user_id/activation' do
     let(:token) { Token.random }
-    let(:user) { create(:user, :inactivated, email: 'invited@example.com', activation_digest: Token.digest(token)) }
+    let(:user) { create(:user, :inactivated, email: 'invited@example.com', activation_digest: BCrypt::Password.create(token)) }
 
     context 'with valid password' do
       let(:password) { 'new_password' }
