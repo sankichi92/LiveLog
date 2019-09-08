@@ -2,7 +2,6 @@ class User < ApplicationRecord
   has_many :playings, dependent: :restrict_with_exception
   has_many :songs, through: :playings
   has_many :identities, dependent: :destroy
-  has_many :tokens, dependent: :destroy
 
   has_one :google_credential, dependent: :destroy
 
