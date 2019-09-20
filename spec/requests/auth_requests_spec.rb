@@ -26,7 +26,7 @@ RSpec.describe 'Auth requests', type: :request do
     end
 
     context 'with non-logged-in user' do
-      context 'who has google_oauth2 identity' do
+      context 'who has google_oauth2 identity' do # rubocop:disable RSpec/ContextWording
         let!(:identity) { create(:identity, provider: 'google_oauth2', uid: auth.uid) }
 
         it 'make the user logged-in and redirects to /users/:id' do
@@ -38,7 +38,7 @@ RSpec.describe 'Auth requests', type: :request do
         end
       end
 
-      context 'who does not have google_oauth2 identity' do
+      context 'who does not have google_oauth2 identity' do # rubocop:disable RSpec/ContextWording
         it 'redirects to /login' do
           get auth_google_oauth2_callback_path
 
@@ -91,9 +91,7 @@ RSpec.describe 'Auth requests', type: :request do
     let(:message) { 'error message' }
     let(:params) { { message: message, strategy: 'google_oauth2' } }
 
-    it 'sends error message to Sentry and redirects' do
-      expect(Raven).to receive(:capture_message).with(message)
-
+    it 'redirects to /login' do
       get auth_failure_path, params: params
 
       expect(response).to redirect_to(login_url)

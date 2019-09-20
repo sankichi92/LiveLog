@@ -1,16 +1,8 @@
-module SessionsHelper
-  def log_in(user)
-    session[:user_id] = user.id
-  end
+module Session
+  extend ActiveSupport::Concern
 
-  def log_out
-    forget(current_user)
-    session.delete(:user_id)
-    @current_user = nil
-  end
-
-  def logged_in?
-    !current_user.nil?
+  included do
+    helper_method :current_user, :logged_in?
   end
 
   def current_user
@@ -23,6 +15,20 @@ module SessionsHelper
         @current_user = user
       end
     end
+  end
+
+  def logged_in?
+    !current_user.nil?
+  end
+
+  def log_in(user)
+    session[:user_id] = user.id
+  end
+
+  def log_out
+    forget(current_user)
+    session.delete(:user_id)
+    @current_user = nil
   end
 
   def remember(user)

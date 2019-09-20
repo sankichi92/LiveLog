@@ -47,10 +47,6 @@ RSpec.describe Song, type: :model do
         end
       end
     end
-
-    describe 'when youtube url format is valid' do
-
-    end
   end
 
   describe '#save' do

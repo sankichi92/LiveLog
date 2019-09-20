@@ -31,3 +31,20 @@ Rails:
 
 RSpec:
   Enabled: true
+
+RSpec/ExampleLength:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Max: 4
+
+RSpec/RepeatedDescription:
+  Exclude:
+    - spec/policies/**/*
+
+RSpec/RepeatedExample:
+  Exclude:
+    - spec/policies/**/*

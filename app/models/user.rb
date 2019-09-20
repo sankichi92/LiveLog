@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  EMAIL_REGEXP = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i.freeze
+
   has_many :playings, dependent: :restrict_with_exception
   has_many :songs, through: :playings
   has_many :identities, dependent: :destroy
@@ -17,7 +19,7 @@ class User < ApplicationRecord
   validates :last_name, presence: true
   validates :furigana, presence: true, format: { with: /\A[\p{Hiragana}ー]+\z/ }
   validates :nickname, length: { maximum: 50 }
-  validates :email, presence: true, length: { maximum: 255 }, format: { with: /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i }, uniqueness: { case_sensitive: false }, on: :update
+  validates :email, presence: true, length: { maximum: 255 }, format: { with: EMAIL_REGEXP }, uniqueness: { case_sensitive: false }, on: :update
   validates :joined, presence: true, numericality: { only_integer: true, greater_than: 1994, less_than_or_equal_to: Time.zone.today.year }
   validates :url, format: /\A#{URI.regexp(%w[http https])}\z/, allow_blank: true
   validates :password, presence: true, confirmation: true, length: { minimum: 6, maximum: 72 }, allow_nil: true, on: :update
@@ -80,7 +82,7 @@ class User < ApplicationRecord
   end
 
   def deactivate
-    update_columns(activated: false, activated_at: nil, activation_digest: nil)
+    update(activated: false, activated_at: nil, activation_digest: nil)
   end
 
   # endregion
@@ -95,11 +97,11 @@ class User < ApplicationRecord
 
   def remember
     self.remember_token = SecureRandom.base64
-    update_column(:remember_digest, encrypt(remember_token))
+    update(remember_digest: encrypt(remember_token))
   end
 
   def forget
-    update_column(:remember_digest, nil)
+    update(remember_digest: nil)
   end
 
   def valid_token?(token)
@@ -118,7 +120,7 @@ class User < ApplicationRecord
 
   def send_password_reset
     self.reset_token = SecureRandom.base64
-    update_columns(reset_digest: encrypt(reset_token), reset_sent_at: Time.zone.now)
+    update!(reset_digest: encrypt(reset_token), reset_sent_at: Time.zone.now)
     UserMailer.password_reset(self).deliver_now
   end
 

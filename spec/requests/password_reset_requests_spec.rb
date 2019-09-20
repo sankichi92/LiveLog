@@ -22,7 +22,7 @@ RSpec.describe 'Password reset requests', type: :request do
       end
     end
 
-    context 'for inactivated user' do
+    context 'with inactivated user' do
       let(:user) { create(:user, :inactivated) }
 
       it 'responds 422' do

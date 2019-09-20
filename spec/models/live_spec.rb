@@ -65,9 +65,10 @@ RSpec.describe Live, type: :model do
   end
 
   describe 'song associations' do
-    before { live.save }
-
-    let!(:song) { create(:song, live: live) }
+    before do
+      live.save
+      create(:song, live: live)
+    end
 
     it 'raises an exception when live is deleted with songs' do
       expect { live.destroy }.to raise_exception ActiveRecord::DeleteRestrictionError

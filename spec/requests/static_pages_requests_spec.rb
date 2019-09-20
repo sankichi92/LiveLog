@@ -9,14 +9,14 @@ RSpec.describe 'Static pages requests', type: :request do
   end
 
   describe 'GET /donation' do
-    context 'by a non-logged-in user' do
+    context 'with non-logged-in user' do
       it 'redirects to /login' do
         get donation_path
         expect(response).to redirect_to(login_url)
       end
     end
 
-    context 'by a logged-in user' do
+    context 'with logged-in user' do
       before { log_in_as(create(:user), capybara: false) }
 
       it 'responds 200' do
