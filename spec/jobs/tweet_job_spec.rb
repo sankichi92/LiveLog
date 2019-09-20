@@ -8,9 +8,9 @@ RSpec.describe TweetJob, type: :job do
       allow(Twitter::REST::Client).to receive(:new) { twitter_client }
     end
 
-    it 'should tweet' do
+    it 'tweets' do
       expect(twitter_client).to receive(:update)
-      TweetJob.perform_now('tweet')
+      described_class.perform_now('tweet')
     end
   end
 end

@@ -144,7 +144,7 @@ RSpec.describe 'User', type: :system do
   end
 
   describe 'make admin' do
-    let(:user) { create(:user)}
+    let(:user) { create(:user) }
 
     before { log_in_as create(:admin) }
 

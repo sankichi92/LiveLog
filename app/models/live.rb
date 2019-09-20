@@ -17,16 +17,14 @@ class Live < ApplicationRecord
     published.order_by_date.pluck(:date).map(&:nendo).uniq
   end
 
+  delegate :nendo, to: :date
+
   def title
     "#{date.year} #{name}"
   end
 
   def nf?
     name.include?('NF')
-  end
-
-  def nendo
-    date.nendo
   end
 
   def publish(url)

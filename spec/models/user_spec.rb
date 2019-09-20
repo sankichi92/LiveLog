@@ -1,9 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  subject { user }
+
   let(:user) { build(:user) }
 
-  subject { user }
 
   it { is_expected.to respond_to(:first_name) }
   it { is_expected.to respond_to(:last_name) }
@@ -44,42 +45,50 @@ RSpec.describe User, type: :model do
   describe 'validation' do
     describe 'when first name is not present' do
       before { user.first_name = '' }
+
       it { is_expected.not_to be_valid }
     end
 
     describe 'when last name is not present' do
       before { user.last_name = '' }
+
       it { is_expected.not_to be_valid }
     end
 
     describe 'when furigana is not present' do
       before { user.furigana = '' }
+
       it { is_expected.not_to be_valid }
     end
 
     describe 'when furigana contains any characters other than ひらがな' do
       before { user.furigana = 'アンプラグド' }
+
       it { is_expected.not_to be_valid }
     end
 
     describe 'when joined is not present' do
       before { user.joined = '' }
+
       it { is_expected.not_to be_valid }
     end
 
     describe 'when nickname is too long' do
       before { user.nickname = 'a' * 51 }
+
       it { is_expected.not_to be_valid }
     end
 
     describe 'when email is too long' do
       before { user.email = 'a' * 244 + '@ku-unplugged.net' }
+
       it { is_expected.not_to be_valid(:update) }
     end
 
     describe 'when email format is invalid' do
       let(:addresses) { %w[user@foo,com user_at_foo.org example.user@foo. foo@bar_baz.com foo@bar+baz.com] }
-      it 'should be invalid' do
+
+      it 'is invalid' do
         addresses.each do |invalid_address|
           user.email = invalid_address
           expect(user).not_to be_valid(:update)
@@ -89,7 +98,8 @@ RSpec.describe User, type: :model do
 
     describe 'when email format is valid' do
       let(:addresses) { %w[user@foo.COM A_US-ER@f.b.org frst.lst@foo.jp a+b@baz.cn] }
-      it 'should be valid' do
+
+      it 'is valid' do
         addresses.each do |valid_address|
           user.email = valid_address
           expect(user).to be_valid(:update)
@@ -109,16 +119,19 @@ RSpec.describe User, type: :model do
 
     describe 'when password is not present' do
       before { user.password = user.password_confirmation = ' ' * 6 }
+
       it { is_expected.not_to be_valid(:update) }
     end
 
     describe 'when password does not match confirmation' do
       before { user.password_confirmation = 'mismatch' }
+
       it { is_expected.not_to be_valid(:update) }
     end
 
     describe 'when password is too short' do
       before { user.password = user.password_confirmation = 'a' * 5 }
+
       it { is_expected.not_to be_valid(:update) }
     end
   end
@@ -126,9 +139,10 @@ RSpec.describe User, type: :model do
   describe '#save' do
     describe 'with email address including upper-case' do
       let(:mixed_case_email) { 'Foo@ExAMPle.CoM' }
+
       before { user.email = mixed_case_email }
 
-      it 'should be saved as all lower-case' do
+      it 'is saved as all lower-case' do
         user.save
         expect(user.reload.email).to eq mixed_case_email.downcase
       end
@@ -137,7 +151,8 @@ RSpec.describe User, type: :model do
 
   describe '#authenticate' do
     before { user.save }
-    let(:found_user) { User.find_by(email: user.email) }
+
+    let(:found_user) { described_class.find_by(email: user.email) }
 
     describe 'with valid password' do
       it { is_expected.to eq found_user.authenticate(user.password) }
@@ -152,8 +167,8 @@ RSpec.describe User, type: :model do
   end
 
   describe '#authenticated?' do
-    it 'should return false for a user with nil digest' do
-      expect(user.authenticated?(:remember, '')).to be_falsey
+    it 'returns false for a user with nil digest' do
+      expect(user).not_to be_authenticated(:remember, '')
     end
   end
 end

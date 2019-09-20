@@ -10,7 +10,7 @@ class Song < ApplicationRecord
           |youtu\.be/)
          (?<id>\S{11})
        )
-      )x
+      )x.freeze
 
   belongs_to :live
   has_many :playings, dependent: :destroy, inverse_of: :song

@@ -60,7 +60,7 @@ module SongDecorator
       url: song_url(self),
       hashtags: '京大アンプラグド',
       via: 'ku_livelog',
-      related: 'kyodaiunplugged:京大アンプラグド公式,sankichi92:LiveLog 開発者'
+      related: 'kyodaiunplugged:京大アンプラグド公式,sankichi92:LiveLog 開発者',
     }.to_query
     html_options[:class] = html_options[:class].nil? ? 'twitter-share' : html_options[:class] + ' twitter-share'
     link_to(icon('fab', 'twitter') + ' Twitter', uri.to_s, html_options.merge(target: '_blank', data: { content_type: 'song', content_id: id }))

@@ -8,7 +8,7 @@ class GoogleCredential < ApplicationRecord
   def update_with_omniauth!(credentials)
     self.token = credentials.token if credentials.token.present?
     self.refresh_token = credentials.refresh_token if credentials.refresh_token.present?
-    self.expires_at = Time.at(credentials.expires_at) if credentials.expires_at.present?
+    self.expires_at = Time.zone.at(credentials.expires_at) if credentials.expires_at.present?
     save! if changed?
   end
 end

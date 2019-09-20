@@ -10,7 +10,7 @@ module ApplicationHelper
     query = URI.encode_www_form(
       'entry.1322390882' => user.joined,
       'entry.1102506699' => "#{user.last_name} #{user.first_name}",
-      'entry.724954072' => user.email
+      'entry.724954072' => user.email,
     )
     uri.query += '&' + query
     uri.to_s

@@ -70,6 +70,7 @@ RSpec.describe 'Song', type: :system do
   describe 'add' do
     let(:live) { create(:live) }
     let!(:users) { create_list(:user, 5) }
+
     before { log_in_as create(:admin) }
 
     it 'enables admin users to create new songs', js: true do

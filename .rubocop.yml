@@ -8,6 +8,9 @@ require:
 AllCops:
   TargetRubyVersion: 2.6
 
+Metrics/LineLength:
+  Max: 160
+
 Style/MutableConstant:
   Enabled: true
 

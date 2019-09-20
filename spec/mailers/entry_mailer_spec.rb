@@ -6,7 +6,7 @@ RSpec.describe EntryMailer, type: :mailer do
     let(:player) { create(:user) }
     let(:song) { create(:song, users: [applicant, player]) }
     let(:entry) { build(:entry, applicant: applicant, song: song) }
-    let(:mail) { EntryMailer.entry(entry) }
+    let(:mail) { described_class.entry(entry) }
 
     it 'renders the headers' do
       expect(mail.subject).to eq("#{song.live_name} 曲申請「#{song.title}」")

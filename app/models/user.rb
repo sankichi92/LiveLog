@@ -133,7 +133,7 @@ class User < ApplicationRecord
   # endregion
 
   private
-  
+
   def encrypt(unencrypted_str)
     BCrypt::Password.create(unencrypted_str)
   end

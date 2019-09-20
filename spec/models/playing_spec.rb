@@ -2,11 +2,12 @@ require 'rails_helper'
 
 RSpec.describe Playing, type: :model do
 
+  subject { playing }
+
   let(:user) { create(:user) }
   let(:song) { create(:song) }
   let(:playing) { user.playings.build(song: song) }
 
-  subject { playing }
 
   it { is_expected.to respond_to(:user) }
   it { is_expected.to respond_to(:song) }
@@ -17,16 +18,19 @@ RSpec.describe Playing, type: :model do
   describe 'validation' do
     describe 'when user id is not present' do
       before { playing.user_id = nil }
+
       it { is_expected.not_to be_valid }
     end
 
     describe 'when song id is not present' do
       before { playing.song_id = nil }
+
       it { is_expected.not_to be_valid }
     end
 
     xdescribe 'when the combination of user and song is already taken' do
       before { playing.dup.save }
+
       it { is_expected.not_to be_valid }
     end
   end
@@ -35,7 +39,7 @@ RSpec.describe Playing, type: :model do
     describe 'when inst includes fill-width alphabets' do
       before { playing.inst = 'Ｇｔ＆Ｖｏ' }
 
-      it 'should convert them into half-width alphabets' do
+      it 'converts them into half-width alphabets' do
         playing.save
         expect(playing.inst).to eq 'Gt&Vo'
       end
@@ -44,7 +48,7 @@ RSpec.describe Playing, type: :model do
     describe 'when inst includes dot' do
       before { playing.inst = 'Ba&Cho.' }
 
-      it 'should trim the dot' do
+      it 'trims the dot' do
         playing.save
         expect(playing.inst).to eq 'Ba&Cho'
       end
@@ -59,7 +63,7 @@ RSpec.describe Playing, type: :model do
     end
 
     it 'returns the number of occurrences of each instrument' do
-      expect(Playing.all.count_insts).to match_array [['Gt', 3], ['Vo', 2], ['Cho', 2], ['Ba', 1], ['Cj', 1]]
+      expect(described_class.all.count_insts).to match_array [['Gt', 3], ['Vo', 2], ['Cho', 2], ['Ba', 1], ['Cj', 1]]
     end
   end
 
@@ -71,7 +75,7 @@ RSpec.describe Playing, type: :model do
     end
 
     it 'returns the number of occurrences of each formation' do
-      expect(Playing.all.count_formations).to match [[1, 3], [2, 2], [3, 1]]
+      expect(described_class.all.count_formations).to match [[1, 3], [2, 2], [3, 1]]
     end
   end
 end
