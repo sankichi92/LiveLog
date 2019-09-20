@@ -13,10 +13,6 @@
 # it.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
-require 'factory_bot'
-require 'pundit/rspec'
-require 'rspec/json_matcher'
-
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
@@ -98,14 +94,4 @@ RSpec.configure do |config|
   # test failures related to randomization by passing the same `--seed` value
   # as the one that triggered the failure.
   Kernel.srand config.seed
-
-  config.include FactoryBot::Syntax::Methods
-  config.include RSpec::JsonMatcher
-
-  config.around(:each, elasticsearch: true) do |example|
-    Song.__elasticsearch__.create_index! force: true
-    Song.__elasticsearch__.refresh_index!
-    example.run
-    Song.__elasticsearch__.delete_index!
-  end
 end

@@ -6,6 +6,7 @@ require File.expand_path('../../config/environment', __FILE__)
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
+require 'pundit/rspec'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -28,6 +29,32 @@ ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
   config.include ActionDispatch::TestProcess::FixtureFile
+  config.include FactoryBot::Syntax::Methods
+  config.include RSpec::JsonMatcher, type: :request
+
+  # region System spec driver
+
+  config.before type: :system do
+    driven_by :rack_test
+  end
+
+  config.before type: :system, js: true do
+    driven_by :selenium_chrome_headless
+  end
+
+  # endregion
+
+  # region Elasticsearch
+
+  config.around elasticsearch: true do |example|
+    Song.__elasticsearch__.create_index! force: true
+    Song.__elasticsearch__.refresh_index!
+    example.run
+  ensure
+    Song.__elasticsearch__.delete_index!
+  end
+
+  # endregion
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
@@ -56,11 +83,4 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
-
-  config.before(:each, type: :system) do
-    driven_by :rack_test
-  end
-  config.before(:each, type: :system, js: true) do
-    driven_by :selenium_chrome_headless
-  end
 end
