@@ -6,14 +6,14 @@
     = render 'application/favicon'
     %title= full_title(yield(:title))
     - default_description = '京都大学を中心に活動するアコースティック軽音サークル「京大アンプラグド」のセットリスト管理アプリ'
-    %meta{ name: 'description',         content: yield(:description).presence || default_description }
-    %meta{ property: 'og:url',          content: request.original_url }
-    %meta{ property: 'og:type',         content: yield(:og_type).presence     || 'website' }
-    %meta{ property: 'og:title',        content: yield(:title).presence       || 'LiveLog'}
-    %meta{ property: 'og:description',  content: yield(:description).presence || default_description }
-    %meta{ property: 'og:image',        content: yield(:og_image).presence    || image_url('logo.png') }
-    %meta{ property: 'fb:app_id',       content: '555963681451627' }
-    %meta{ name: 'twitter:site',        content: '@ku_livelog' }
+    %meta{ name: 'description', content: yield(:description).presence || default_description }
+    %meta{ property: 'og:url', content: request.original_url }
+    %meta{ property: 'og:type', content: yield(:og_type).presence || 'website' }
+    %meta{ property: 'og:title', content: yield(:title).presence || 'LiveLog' }
+    %meta{ property: 'og:description', content: yield(:description).presence || default_description }
+    %meta{ property: 'og:image', content: yield(:og_image).presence || image_url('logo.png') }
+    %meta{ property: 'fb:app_id', content: '555963681451627' }
+    %meta{ name: 'twitter:site', content: '@ku_livelog' }
     - if content_for?(:additional_meta_fields)
       = yield(:additional_meta_fields)
     = csrf_meta_tags
@@ -26,7 +26,7 @@
         %script{ src: '//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js', async: true }
   %body{ data: { user_id: current_user&.id } }
     = render 'layouts/navbar'
-    #main.container
+    .container#main
       = render 'layouts/flash'
       - if current_user&.graduate? && !current_user&.donated? && cookies[:close_alert_donation] != '1'
         = render 'shared/alert_donation'

@@ -4,8 +4,8 @@
 
 %nav
   .nav.nav-tabs.mb-3
-    = link_to '一人ずつ登録する', '#normal', class: 'nav-item nav-link active', data: { toggle: 'tab'}
-    = link_to 'CSVで一括登録する', '#csv', class: 'nav-item nav-link', data: { toggle: 'tab'}
+    = link_to '一人ずつ登録する', '#normal', class: 'nav-item nav-link active', data: { toggle: 'tab' }
+    = link_to 'CSVで一括登録する', '#csv', class: 'nav-item nav-link', data: { toggle: 'tab' }
 
 .tab-content
 
@@ -17,7 +17,7 @@
 
       .form-group
         = f.label :joined
-        = f.select :joined, (1995..Time.current.nendo).to_a.reverse, {}, {class: 'form-control'}
+        = f.select :joined, (1995..Time.current.nendo).to_a.reverse, {}, class: 'form-control'
         %small.form-text.text-muted<
           初めてライブに出演した年度を選択してください。
           %strong 入部年度は後から変更することができません。

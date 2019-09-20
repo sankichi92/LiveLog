@@ -10,8 +10,8 @@
     = ' （オリジナル曲）' if @entry.song.original?
   %dt メンバー
   %dd
-    - @entry.playings.reverse.each do |playing|
-      = "#{playing.inst}."
+    - @entry.playings.reverse_each do |playing|
+      #{playing.inst}.
       = link_to "#{playing.name} (#{playing.joined})", user_url(playing.user)
       %br
   %dt リハーサル希望時間

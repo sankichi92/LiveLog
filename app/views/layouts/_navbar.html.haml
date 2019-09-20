@@ -1,9 +1,9 @@
 %nav.navbar.navbar-expand-lg.sticky-top.navbar-light.bg-primary.mb-4#navbar
   .container
     = link_to 'LiveLog', root_path, class: 'navbar-brand'
-    %button.navbar-toggler{  type:'button', 'data-toggle':'collapse', 'data-target':'#navbar-nav', 'aria-controls':'navbar-nav', 'aria-expanded':'false', 'aria-label':'Toggle navigation'  }
+    %button.navbar-toggler{ type: 'button', 'data-toggle': 'collapse', 'data-target': '#navbar-nav', 'aria-controls': 'navbar-nav', 'aria-expanded': 'false', 'aria-label': 'Toggle navigation' }
       %span.navbar-toggler-icon
-    #navbar-nav.collapse.navbar-collapse
+    .collapse.navbar-collapse#navbar-nav
       %ul.navbar-nav.mr-auto
         %li.nav-item{ class: current_page?(songs_path) || current_page?(search_songs_path) ? 'active' : '' }= link_to 'Song Search', songs_path, class: 'nav-link'
         %li.nav-item{ class: params[:controller] == 'lives' ? 'active' : '' }= link_to 'Live List', lives_path, class: 'nav-link'
@@ -13,20 +13,20 @@
         %ul.nav.navbar-nav
           - if current_user.admin_or_elder?
             %li.nav-item.dropdown
-              %a#navbar-admin-dropdown-menu-link.nav-link.dropdown-toggle{ href: '#', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' }
+              %a.nav-link.dropdown-toggle#navbar-admin-dropdown-menu-link{ href: '#', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' }
                 Admin
               .dropdown-menu{ 'aria-labellebdy': 'navbar-admin-dropdown-menu-link' }
                 = link_to 'New Live', new_live_path, class: 'dropdown-item'
                 = link_to 'New Member', new_user_path, class: 'dropdown-item'
           - if Live.drafts.exists?
             %li.nav-item.dropdown{ class: params[:controller] == 'entries' ? 'active' : '' }
-              %a#navbar-entry-dropdown-menu-link.nav-link.dropdown-toggle{ href: '#', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' }
+              %a.nav-link.dropdown-toggle#navbar-entry-dropdown-menu-link{ href: '#', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' }
                 = icon('fas', 'paper-plane') + ' Entry'
               .dropdown-menu{ 'aria-labellebdy': 'navbar-entry-dropdown-menu-link' }
-                - Live.drafts.order_by_date.reverse.each do |live|
+                - Live.drafts.order_by_date.reverse_each do |live|
                   = link_to live.name, live_entries_path(live), class: 'dropdown-item'
           %li.nav-item.dropdown
-            %a#navbar-user-dropdown-menu-link.nav-link.dropdown-toggle{ href: '#', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' }
+            %a.nav-link.dropdown-toggle#navbar-user-dropdown-menu-link{ href: '#', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' }
               = current_user.avatar_image_tag(:small)
               = current_user.name
             .dropdown-menu{ 'aria-labellebdy': 'navbar-user-dropdown-menu-link' }
@@ -36,7 +36,7 @@
               .dropdown-divider
               - if current_user.graduate?
                 = link_to icon('fas', 'gift') + ' Donate', donation_path, class: 'dropdown-item'
-              = link_to icon('fas', 'flag') + ' Report', feedback_url(current_user), target: '_blank', class: 'dropdown-item'
+              = link_to icon('fas', 'flag') + ' Report', feedback_url(current_user), target: '_blank', class: 'dropdown-item', rel: 'noopener'
       - else
         = link_to login_path do
           %button.btn.btn-outline-info= icon('fas', 'sign-in-alt') + ' Log in'

@@ -64,7 +64,7 @@
           %tbody
           - @stats.formation_to_count.each do |formation, count|
             %tr{ onclick: "location.href='#{search_songs_path(players_lower: formation, players_upper: formation, date_lower: @stats.date_range.begin, date_upper: @stats.date_range.end)}#results';" }
-              %td= "#{formation}人"
+              %td #{formation}人
               %td<
                 = (count / @stats.number_of_songs.to_f * 100).round(1)
                 \%

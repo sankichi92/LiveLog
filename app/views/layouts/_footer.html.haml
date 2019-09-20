@@ -1,6 +1,6 @@
-%footer#footer.text-center.my-3
+%footer.text-center.my-3#footer
   %ul.list-inline
     %li.list-inline-item
-      %small &copy; 2014-#{Time.zone.now.year} #{link_to '京大アンプラグド', homepage_url, target: '_blank', class: 'text-dark'}
+      %small &copy; 2014-#{Time.zone.now.year} #{link_to '京大アンプラグド', homepage_url, target: '_blank', class: 'text-dark', rel: 'noopener' }
     %li.list-inline-item
       %small= link_to 'プライバシーポリシー', privacy_path, class: 'text-dark'

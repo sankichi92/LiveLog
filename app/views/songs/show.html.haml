@@ -1,7 +1,9 @@
-- provide(:title, @song.title)
-- provide(:description, strip_tags(@song.comment).presence || "#{@song.live_title} #{@song.time_order} #{@song.playings.sort_by(&:inst_order).map { |p| "#{p.inst}.#{p.handle}" }.join(' ')}")
-- provide(:og_type, 'music.song')
-- provide(:og_image, @song.youtube_thumbnail('maxresdefault')) if policy(@song).play?
+:ruby
+  provide(:title, @song.title)
+  provide(:description, strip_tags(@song.comment).presence || "#{@song.live_title} #{@song.time_order} #{@song.playings.sort_by(&:inst_order).map { |p| "#{p.inst}.#{p.handle}" }.join(' ')}")
+  provide(:og_type, 'music.song')
+  provide(:og_image, @song.youtube_thumbnail('maxresdefault')) if policy(@song).play?
+
 - content_for :additional_meta_fields do
   - @song.playings.each do |playing|
     %meta{ property: 'music:musician', content: user_url(playing.user) }
@@ -45,7 +47,7 @@
             = @song.edit_link class: 'btn btn-outline-primary'
 
   - unless @song.original?
-    %aside.card.mb-3.d-none#itunes{ data: { song_id: @song.id, track_name: @song.name, artist_name: @song.artist} }
+    %aside.card.mb-3.d-none#itunes{ data: { song_id: @song.id, track_name: @song.name, artist_name: @song.artist } }
       .card-body
         %h5.card-title
         .d-flex.align-items-center

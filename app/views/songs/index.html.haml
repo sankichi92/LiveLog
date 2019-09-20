@@ -3,19 +3,19 @@
 %header.page-header.d-none.d-sm-block
   %h1.display-4 Song Search
 
-%ul#search-tabs.nav.nav-pills.mb-3{ role: 'tablist' }
+%ul.nav.nav-pills.mb-3#search-tabs{ role: 'tablist' }
   - advanced = current_page?(search_songs_path) && params[:q].nil?
   %li.nav-item
-    %a#basic-tab.nav-item.nav-link{ class: advanced ? '' : 'active', 'data-toggle': 'pill', href: '#basic', role: 'tab', 'aria-controls': 'basic', 'aria-selected': !advanced }
+    %a.nav-link.nav-item#basic-tab{ class: advanced ? '' : 'active', 'data-toggle': 'pill', href: '#basic', role: 'tab', 'aria-controls': 'basic', 'aria-selected': !advanced }
       Basic
   %li.nav-item
-    %a#advanced-tab.nav-item.nav-link{ class: advanced ? 'active' : '', 'data-toggle': 'pill', href: '#advanced', role: 'tab', 'aria-controls': 'advanced', 'aria-selected': advanced }
+    %a.nav-item.nav-link#advanced-tab{ class: advanced ? 'active' : '', 'data-toggle': 'pill', href: '#advanced', role: 'tab', 'aria-controls': 'advanced', 'aria-selected': advanced }
       Advanced
 
-#search-tabs-content.tab-content
-  #basic.tab-pane.fade{ class: advanced ? '' : 'show active', role: 'tabpanel', 'aria-labelledby': 'basic-tab' }
+.tab-content#search-tabs-content
+  .tab-pane.fade#basic{ class: advanced ? '' : 'show active', role: 'tabpanel', 'aria-labelledby': 'basic-tab' }
     = render 'form_search'
-  #advanced.tab-pane.fade{ class: advanced ? 'show active' : '', role: 'tabpanel', 'aria-labelledby': 'advanced-tab' }
+  .tab-pane.fade#advanced{ class: advanced ? 'show active' : '', role: 'tabpanel', 'aria-labelledby': 'advanced-tab' }
     = form_with model: @query, scope: '', url: search_songs_path, method: :get, local: true, class: 'mb-3' do |f|
 
       .form-row

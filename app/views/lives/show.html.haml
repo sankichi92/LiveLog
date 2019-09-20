@@ -10,7 +10,7 @@
       = @live.link_to_album class: 'btn btn-primary btn-lg', target: '_blank'
 
   - if current_user&.admin_or_elder?
-    %aside#admin-tools.btn-toolbar.justify-content-end.mb-3{ role: 'toolbar' }
+    %aside.btn-toolbar.justify-content-end.mb-3#admin-tools{ role: 'toolbar' }
       .btn-group.mr-2{ role: 'group' }
         = @live.new_song_link class: 'btn btn-outline-secondary'
         = link_to icon('fas', 'edit') + ' ' + '曲を編集する', live_path(@live, edit: true), class: 'btn btn-outline-secondary'

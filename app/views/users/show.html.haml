@@ -1,7 +1,9 @@
-- provide(:title, @user.display_name)
-- provide(:description, strip_tags(@user.intro).presence || "#{@user.joined}年度入部 #{@user.instruments}")
-- provide(:og_type, 'profile')
-- provide(:og_image, @user.avatar_source(:large)) if @user.avatar.attached?
+:ruby
+  provide(:title, @user.display_name)
+  provide(:description, strip_tags(@user.intro).presence || "#{@user.joined}年度入部 #{@user.instruments}")
+  provide(:og_type, 'profile')
+  provide(:og_image, @user.avatar_source(:large)) if @user.avatar.attached?
+
 - content_for :additional_meta_fields do
   %meta{ property: 'profile:username', content: @user.handle }
 
@@ -19,7 +21,7 @@
         .card-subtitle.text-muted<
           #{@songs.size}曲
           = "・#{@user.instruments.join(', ')}" unless @user.instruments.empty?
-        = link_to @user.url, @user.url, target: '_blank' if @user.url?
+        = link_to @user.url, @user.url, target: '_blank', rel: 'noopener' if @user.url?
     %dl
       - if @user.collaborators_count > 0
         %dt
