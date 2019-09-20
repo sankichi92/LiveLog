@@ -2,68 +2,62 @@ source 'https://rubygems.org'
 
 ruby '2.6.4'
 
-gem 'rails', '~> 6.0.0'
+gem 'rails'
 
-gem 'pg', '~> 1.1'
+gem 'pg'
+gem 'puma'
 
-gem 'will_paginate', '~> 3.1.8' # must be added before the Elasticsearch gems
-gem 'elasticsearch', '~> 6.1'
+gem 'will_paginate' # must be added before the Elasticsearch gems
 gem 'elasticsearch-rails', '~> 6.1'
 gem 'elasticsearch-model', '~> 6.1'
-gem 'elasticsearch-dsl', '~> 0.1'
+gem 'elasticsearch-dsl'
 
-gem 'action_args', '~> 2.4.0'
-gem 'active_decorator', '~> 1.3.1'
-gem 'aws-sdk-s3', '~> 1.48.0', require: false
-gem 'bcrypt', '~> 3.1.13'
-gem 'bootsnap', '>= 1.1.0', require: false
-gem 'bootstrap', '~> 4.3'
-gem 'bootstrap-will_paginate', '~> 1.0.0'
-gem 'font-awesome-sass', '~> 5.9.0'
-gem 'haml-rails', '~> 2.0'
+gem 'action_args'
+gem 'active_decorator'
+gem 'aws-sdk-s3', require: false
+gem 'bcrypt'
+gem 'bootsnap', require: false
+gem 'bootstrap'
+gem 'bootstrap-will_paginate'
+gem 'font-awesome-sass'
+gem 'haml-rails'
 gem 'jquery-rails'
-gem 'mini_magick', '~> 4.9'
-gem 'omniauth', '~> 1.9.0'
-gem 'omniauth-google-oauth2', '~> 0.8.0'
+gem 'mini_magick'
+gem 'newrelic_rpm'
+gem 'omniauth'
+gem 'omniauth-google-oauth2'
 gem 'omniauth-rails_csrf_protection'
-gem 'puma', '~> 4.1'
-gem 'pundit', '~> 2.1'
-gem 'redis', '~> 4.1.2'
-gem 'sass-rails', '~> 6.0'
-gem 'select2-rails', '~> 4.0.3'
+gem 'pundit'
+gem 'redis'
+gem 'sass-rails'
+gem 'select2-rails'
 gem 'sentry-raven'
-gem 'turbolinks', '~> 5'
-gem 'twitter', '~> 6.2'
-gem 'uglifier', '>= 3.2.0'
+gem 'turbolinks'
+gem 'twitter'
+gem 'uglifier'
 
 group :development, :test do
   gem 'byebug', platform: :mri
   gem 'faker'
-  gem 'rspec-rails', '~> 3.8'
+  gem 'rspec-rails'
 end
 
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'haml_lint', require: false
-  gem 'listen', '~> 3.1.5'
+  gem 'listen'
   gem 'meowcop', require: false
-  gem 'rails_real_favicon'
+  gem 'rails_real_favicon', require: false
   gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.1'
-  gem 'web-console', '>= 3.5.1'
+  gem 'spring-watcher-listen'
+  gem 'web-console'
 end
 
 group :test do
-  gem 'capybara', '~> 3.29'
-  gem 'factory_bot_rails', '~> 5.0'
-  gem 'rspec-json_matcher', '~> 0.1.6'
-  gem 'selenium-webdriver', '~> 3.142'
-  gem 'webdrivers', '~> 4.1'
+  gem 'capybara'
+  gem 'factory_bot_rails'
+  gem 'rspec-json_matcher'
+  gem 'selenium-webdriver'
+  gem 'webdrivers'
 end
-
-group :production do
-  gem 'newrelic_rpm'
-end
-
-gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
