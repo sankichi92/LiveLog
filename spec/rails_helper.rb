@@ -31,30 +31,9 @@ RSpec.configure do |config|
   config.include ActionDispatch::TestProcess::FixtureFile
   config.include FactoryBot::Syntax::Methods
   config.include RSpec::JsonMatcher, type: :request
-
-  # region System spec driver
-
-  config.before type: :system do
-    driven_by :rack_test
-  end
-
-  config.before type: :system, js: true do
-    driven_by :selenium_chrome_headless
-  end
-
-  # endregion
-
-  # region Elasticsearch
-
-  config.around elasticsearch: true do |example|
-    Song.__elasticsearch__.create_index! force: true
-    Song.__elasticsearch__.refresh_index!
-    example.run
-  ensure
-    Song.__elasticsearch__.delete_index!
-  end
-
-  # endregion
+  config.include I18nHelper
+  config.include LoginHelper, type: :request
+  config.include LoginHelper, type: :system
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
