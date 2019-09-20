@@ -62,7 +62,7 @@ class SongsController < ApplicationController
           flash[:success] = t('flash.messages.updated', name: @song.title)
           redirect_to @song
         end
-        format.js { }
+        format.js {}
       end
     else
       respond_to do |format|

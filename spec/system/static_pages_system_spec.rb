@@ -28,7 +28,9 @@ RSpec.describe 'Static pages', type: :system do
     end
 
     describe 'Latest Lives' do
-      let!(:lives) { create_list(:live, 10) }
+      before do
+        create_list(:live, 10)
+      end
 
       it 'enables users to see Latest Lives' do
         visit root_path

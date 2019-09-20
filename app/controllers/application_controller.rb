@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
-  include SessionsHelper
   include Pundit
+  include Session
 
   before_action :set_raven_context
 

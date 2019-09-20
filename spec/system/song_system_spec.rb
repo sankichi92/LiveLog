@@ -70,6 +70,7 @@ RSpec.describe 'Song', type: :system do
   describe 'add' do
     let(:live) { create(:live) }
     let!(:users) { create_list(:user, 5) }
+
     before { log_in_as create(:admin) }
 
     it 'enables admin users to create new songs', js: true do
@@ -113,7 +114,7 @@ RSpec.describe 'Song', type: :system do
       expect(page).to have_content('Edit Song')
 
       fill_in 'song_youtube_id', with: 'https://www.youtube.com/watch?v=new_youtube'
-      attach_file 'song_audio', "#{Rails.root}/spec/fixtures/files/audio.mp3"
+      attach_file 'song_audio', Rails.root.join('spec', 'fixtures', 'files', 'audio.mp3')
       click_button t('helpers.submit.update')
 
       expect(page).to have_css('.alert-success')

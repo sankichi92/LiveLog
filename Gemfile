@@ -47,8 +47,11 @@ group :development do
   gem 'binding_of_caller'
   gem 'haml_lint', require: false
   gem 'listen'
-  gem 'meowcop', require: false
   gem 'rails_real_favicon', require: false
+  gem 'rubocop', require: false
+  gem 'rubocop-performance', require: false
+  gem 'rubocop-rails', require: false
+  gem 'rubocop-rspec', require: false
   gem 'spring'
   gem 'spring-watcher-listen'
   gem 'web-console'

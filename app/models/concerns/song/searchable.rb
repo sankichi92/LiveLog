@@ -24,10 +24,10 @@ class Song
               analyzer: {
                   default: {
                       type: 'kuromoji',
-                      stopwords: '_english_'
-                  }
-              }
-          }
+                      stopwords: '_english_',
+                  },
+              },
+          },
       }
 
       mapping dynamic: false do
@@ -66,7 +66,7 @@ class Song
           original?: original?,
           comment: comment,
           players_count: playings.size,
-          players: playings.as_json(only: %i[user_id instruments], methods: [:instruments])
+          players: playings.as_json(only: %i[user_id instruments], methods: [:instruments]),
       }
     end
 

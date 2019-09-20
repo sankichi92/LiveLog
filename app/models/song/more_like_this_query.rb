@@ -30,7 +30,7 @@ class Song
         end
         q.sort(
           _score: { order: :desc },
-          datetime: { order: :desc }
+          datetime: { order: :desc },
         )
         q.size size
       end.to_hash

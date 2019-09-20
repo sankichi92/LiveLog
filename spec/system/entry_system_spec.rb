@@ -80,15 +80,20 @@ RSpec.describe 'Entry', type: :system do
   end
 
   describe 'publish' do
-    before { log_in_as create(:admin) }
+    let(:tweet_job) { class_spy(TweetJob) }
+
+    before do
+      stub_const('TweetJob', tweet_job)
+
+      log_in_as create(:admin)
+    end
 
     it 'enables admin users to publish live', elasticsearch: true do
-      expect(TweetJob).to receive(:perform_now)
-
       visit live_entries_path(live)
 
       click_link t('views.lives.publish')
 
+      expect(tweet_job).to have_received(:perform_now)
       expect(live.reload.published).to be true
       expect(live.published_at).to be_present
       expect(page).to have_css('.alert-success')

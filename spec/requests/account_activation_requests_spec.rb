@@ -4,7 +4,7 @@ RSpec.describe 'Account activation requests', type: :request do
   describe 'GET /users/:user_id/activation/new by logged-in user' do
     before { log_in_as create(:user), capybara: false }
 
-    context 'for inactivated user' do
+    context 'with inactivated user' do
       let(:user) { create(:user, :inactivated) }
 
       it 'responds 200' do
@@ -13,7 +13,7 @@ RSpec.describe 'Account activation requests', type: :request do
       end
     end
 
-    context 'for activated user' do
+    context 'with activated user' do
       let(:user) { create(:user) }
 
       it 'redirects /users/:id' do

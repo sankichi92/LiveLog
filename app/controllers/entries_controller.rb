@@ -27,7 +27,7 @@ class EntriesController < ApplicationController
       song: @song,
       preferred_rehearsal_time: entry[:preferred_rehearsal_time],
       preferred_performance_time: entry[:preferred_performance_time],
-      notes: entry[:notes]
+      notes: entry[:notes],
     )
     entry.send_email
     flash[:success] = t('flash.controllers.entries.entered', live: @live.title, song: @song.title)

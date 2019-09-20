@@ -18,8 +18,8 @@ RSpec.describe 'Session requests', type: :request do
         session: {
           email: email,
           password: password,
-          remember_me: remember_me
-        }
+          remember_me: remember_me,
+        },
       }
     end
 

@@ -1,5 +1,5 @@
 module UserDecorator
-  IMAGE_PX_BY_SIZE = { small: 64, medium: 192, large: 384 }
+  IMAGE_PX_BY_SIZE = { small: 64, medium: 192, large: 384 }.freeze
 
   def display_name
     logged_in? ? name_with_handle : handle

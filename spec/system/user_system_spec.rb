@@ -74,7 +74,7 @@ RSpec.describe 'User', type: :system do
 
       click_on 'CSVで一括登録する'
 
-      attach_file 'csv', "#{Rails.root}/spec/fixtures/files/users.csv"
+      attach_file 'csv', Rails.root.join('spec', 'fixtures', 'files', 'users.csv')
       click_button '一括登録する'
 
       expect(page).to have_content('登録しました')
@@ -93,7 +93,7 @@ RSpec.describe 'User', type: :system do
       expect(page).to have_title('Settings')
 
       fill_in 'user_nickname', with: 'アンプラ'
-      attach_file 'user_avatar', "#{Rails.root}/spec/fixtures/files/avatar.png"
+      attach_file 'user_avatar', Rails.root.join('spec', 'fixtures', 'files', 'avatar.png')
       click_button t('helpers.submit.update')
 
       expect(page).to have_css('.alert-success')
@@ -144,7 +144,7 @@ RSpec.describe 'User', type: :system do
   end
 
   describe 'make admin' do
-    let(:user) { create(:user)}
+    let(:user) { create(:user) }
 
     before { log_in_as create(:admin) }
 

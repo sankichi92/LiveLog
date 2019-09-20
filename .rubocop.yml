@@ -1,10 +1,50 @@
-inherit_gem:
-  meowcop:
-    - config/rubocop.yml
+inherit_from: https://raw.githubusercontent.com/cookpad/styleguide/master/.rubocop.yml
+
+require:
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-rspec
 
 AllCops:
   TargetRubyVersion: 2.6
-  TargetRailsVersion: 5.2
+
+Metrics/LineLength:
+  Max: 160
+
+Style/MutableConstant:
+  Enabled: true
+
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: consistent_comma
+
+# rubocop-performance
+
+Performance:
+  Enabled: true
+
+# rubocop-rails
 
 Rails:
   Enabled: true
+
+# rubocop-rspec
+
+RSpec:
+  Enabled: true
+
+RSpec/ExampleLength:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Max: 4
+
+RSpec/RepeatedDescription:
+  Exclude:
+    - spec/policies/**/*
+
+RSpec/RepeatedExample:
+  Exclude:
+    - spec/policies/**/*
