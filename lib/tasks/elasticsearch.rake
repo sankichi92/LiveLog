@@ -2,16 +2,16 @@ require 'elasticsearch/rails/tasks/import'
 
 namespace :elasticsearch do
   namespace :import do
-    desc <<-DESC.gsub(/    /, '')
+    desc <<~DESC
       Import published songs.
 
-        $ rake environment elasticsearch:import:song
+        $ rake elasticsearch:import:song
 
       Force rebuilding the index (delete and create):
-        $ rake environment elasticsearch:import:song FORCE=y
+        $ rake elasticsearch:import:song FORCE=y
     DESC
     task song: :environment do
-      total_errors = Song.includes(:playings, 'audio_attachment': :blob).published.import force: ENV.fetch('FORCE', false)
+      total_errors = Song.includes(:playings, 'audio_attachment': :blob).published.import(force: ENV.fetch('FORCE', false))
 
       puts "[IMPORT] #{total_errors} errors occurred" unless total_errors.zero?
       puts '[IMPORT] Done'
