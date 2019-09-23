@@ -13,6 +13,4 @@ test:
 
 production:
   <<: *default
-  database: LiveLog2_production
-  username: LiveLog2
-  password: <%= ENV['LIVELOG2_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
