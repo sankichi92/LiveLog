@@ -3,17 +3,17 @@ FactoryBot.define do
     last_name { Faker::Name.last_name }
     first_name { Faker::Name.first_name }
     furigana { 'ふりがな' }
-    email { Faker::Internet.email }
-    joined { Faker::Date.between(from: Date.new(2011), to: Time.zone.today).year }
-    password { 'foobar' }
-    password_confirmation { 'foobar' }
+    nickname { Faker::Boolean.boolean(true_ratio: 0.2) ? Faker::Games::Pokemon.name : nil }
+    email { Faker::Internet.unique.email }
+    joined { Faker::Number.within(range: 3.years.ago.year..Time.zone.today.year) }
+    password { Faker::Internet.password }
+    password_confirmation { password }
     activated { true }
-    activated_at { Time.zone.now }
-    public { false }
-    subscribing { true }
-    url { Faker::Internet.url }
-    intro { Faker::Lorem.sentence }
-    avatar { nil }
+    activated_at { activated ? Faker::Time.between(from: Time.zone.local(joined), to: Time.zone.now) : nil }
+    public { Faker::Boolean.boolean }
+    subscribing { Faker::Boolean.boolean(true_ratio: 0.8) }
+    url { Faker::Boolean.boolean(true_ratio: 0.2) ? Faker::Internet.url : nil }
+    intro { Faker::Boolean.boolean ? Faker::Lorem.sentence : nil }
 
     trait :invalid do
       furigana { 'フリガナ' }
@@ -22,9 +22,7 @@ FactoryBot.define do
     trait :inactivated do
       email { nil }
       password { nil }
-      password_confirmation { nil }
       activated { false }
-      activated_at { nil }
     end
 
     trait :elder do
@@ -39,15 +37,10 @@ FactoryBot.define do
       evaluator.songs.each do |song|
         create(:playing, song: song, user: user)
       end
-      user.reload
     end
 
     factory :admin do
       admin { true }
     end
-  end
-
-  factory :token do
-    user
   end
 end

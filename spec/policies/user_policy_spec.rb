@@ -4,7 +4,7 @@ RSpec.describe UserPolicy do
   let(:user) { create(:user) }
 
   permissions '.scope' do
-    let!(:restricted_user) { create(:user) }
+    let!(:restricted_user) { create(:user, public: false) }
     let!(:public_user) { create(:user, public: true) }
 
     it 'returns all if user is logged in' do
@@ -21,6 +21,7 @@ RSpec.describe UserPolicy do
 
   permissions :show? do
     it 'denies access if user is not logged in and record is not public' do
+      user.update!(public: false)
       expect(described_class).not_to permit(nil, user)
     end
 
