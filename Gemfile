@@ -39,6 +39,7 @@ gem 'uglifier'
 
 group :development, :test do
   gem 'byebug', platform: :mri
+  gem 'factory_bot_rails'
   gem 'faker'
   gem 'rspec-rails'
 end
@@ -60,7 +61,6 @@ end
 
 group :test do
   gem 'capybara'
-  gem 'factory_bot_rails'
   gem 'rspec-json_matcher'
   gem 'selenium-webdriver'
   gem 'webdrivers'
