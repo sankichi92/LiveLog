@@ -32,7 +32,7 @@ RSpec.describe 'Live requests', type: :request do
     before { log_in_as(create(:user), capybara: false) }
 
     context 'when the album_url is present' do
-      let(:live) { create(:live) }
+      let(:live) { create(:live, album_url: 'https://example.com/album') }
 
       it 'redirects to album_url' do
         get album_live_path(live)

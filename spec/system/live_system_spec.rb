@@ -22,7 +22,7 @@ RSpec.describe 'Live', type: :system do
   end
 
   describe 'detail' do
-    let(:live) { create(:live, :with_songs) }
+    let(:live) { create(:live, :with_songs, album_url: 'https://example.com/album') }
 
     it 'enables non-logged-in users to see individual live pages' do
       visit live_path(live)

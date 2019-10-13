@@ -1,66 +1,40 @@
+return $stdout.puts 'Records already exist.' if User.exists?
+
 Faker::Config.random = Random.new(42)
 
-User.create!(last_name: '京大',
-             first_name: 'アンプラ太郎',
-             furigana: 'きょうだいあんぷらたろう',
-             email: 'admin@livelog.ku-unplugged.net',
-             joined: 1.year.ago.year,
-             password: 'foobar',
-             password_confirmation: 'foobar',
-             admin: true,
-             activated: true,
-             activated_at: Time.zone.now)
+admin = FactoryBot.create(
+  :admin,
+  last_name: '開発',
+  first_name: '管理者',
+  email: 'admin@dev.ku-unplugged.net',
+  password: 'password',
+)
 
-99.times do
-  first_name = Faker::Name.first_name
-  last_name = Faker::Name.last_name
-  activated = Faker::Boolean.boolean(true_ratio: 0.9)
-  public = activated ? Faker::Boolean.boolean(true_ratio: 0.2) : false
-  User.create!(first_name: first_name,
-               last_name: last_name,
-               furigana: 'ふりがな',
-               email: activated ? Faker::Internet.email : nil,
-               joined: Faker::Date.between(from: 4.years.ago, to: Time.zone.today).year,
-               password: 'password',
-               password_confirmation: 'password',
-               activated: activated,
-               activated_at: activated ? Time.zone.now : nil,
-               public: public,
-               url: public ? Faker::Internet.url : nil,
-               intro: public ? Faker::Lorem.sentence : nil)
+non_admin = FactoryBot.create(
+  :user,
+  last_name: '開発',
+  first_name: 'ユーザー',
+  email: 'user@dev.ku-unplugged.net',
+  password: 'password',
+)
+
+users = [admin, non_admin] + FactoryBot.create_list(:user, 20)
+
+FactoryBot.create_list(:live, 20).each do |live|
+  song_count = live.nf? ? 30 : 10
+  FactoryBot.create_list(:song, song_count, live: live).each do |song|
+    playing_count = Faker::Number.normal(mean: 5, standard_deviation: 2).round
+    users.sample(playing_count.abs, random: Faker::Config.random).each do |user|
+      FactoryBot.create(:playing, song: song, user: user)
+    end
+  end
 end
 
-20.times do
-  date = Faker::Date.unique.between(4.years.ago, Time.zone.today)
-  month = date.mon
-  live_name = case month
-              when 4..5
-                '新歓ライブ'
-              when 11
-                'NF'
-              when 12
-                'クリスマスライブ'
-              else
-                "#{month}月ライブ"
-              end
-  place = live_name.include?('NF') ? '共北駐輪場' : %w[4共11 4共21 4共31].sample
-  live = Live.create!(name: live_name, date: date, place: place, published: true, published_at: date)
-
-  song_count = live_name.include?('NF') ? 30 : 10
-  song_count.times do |n|
-    name, artist = if Faker::Boolean.boolean
-                     [Faker::BossaNova.song, Faker::BossaNova.artist]
-                   else
-                     [Faker::Music::UmphreysMcgee.song, Faker::Music.band]
-                   end
-    time = Time.zone.parse('10:00') + ((n / 3) * 30).minutes if live_name.include?('NF')
-    song = live.songs.create!(name: name, artist: artist, order: n + 1, time: time, status: Faker::Number.between(0, 2))
-
-    Faker::Number.normal(mean: 5, standard_deviation: 2).to_i.times do
-      random = Faker::Number.unique.between(0, User.count - 1)
-      song.playings.create!(user: User.offset(random).first,
-                            inst: %w[Vo Vo Vo Gt Gt Gt Pf Pf Ba Ba Cj Cj Vn Fl Perc Gt&Vo Pf&Cho].sample)
+FactoryBot.create(:live, :draft).tap do |live|
+  FactoryBot.create_list(:song, 5, live: live).each do |song|
+    playing_count = Faker::Number.normal(mean: 5, standard_deviation: 2).round
+    users.sample(playing_count.abs, random: Faker::Config.random).each do |user|
+      FactoryBot.create(:playing, song: song, user: user)
     end
-    Faker::Number.unique.clear
   end
 end

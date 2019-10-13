@@ -16,21 +16,21 @@ RSpec.describe EntryMailer, type: :mailer do
     end
 
     it 'renders the text body' do
-      expect(mail.text_part.body).to match(applicant.name)
-      expect(mail.text_part.body).to match(song.title)
-      expect(mail.text_part.body).to match(player.name)
-      expect(mail.text_part.body).to match(entry.notes)
-      expect(mail.text_part.body).to match(entry.preferred_rehearsal_time)
-      expect(mail.text_part.body).to match(entry.preferred_performance_time)
+      expect(mail.text_part.body).to include(applicant.name)
+      expect(mail.text_part.body).to include(song.title)
+      expect(mail.text_part.body).to include(player.name)
+      expect(mail.text_part.body).to include(entry.notes)
+      expect(mail.text_part.body).to include(entry.preferred_rehearsal_time)
+      expect(mail.text_part.body).to include(entry.preferred_performance_time)
     end
 
     it 'renders the html body' do
-      expect(mail.html_part.body).to match(applicant.name)
-      expect(mail.html_part.body).to match(CGI.escapeHTML(song.name))
-      expect(mail.html_part.body).to match(player.name)
-      expect(mail.html_part.body).to match(entry.notes)
-      expect(mail.html_part.body).to match(entry.preferred_rehearsal_time)
-      expect(mail.html_part.body).to match(entry.preferred_performance_time)
+      expect(mail.html_part.body).to include(applicant.name)
+      expect(mail.html_part.body).to include(CGI.escapeHTML(song.name))
+      expect(mail.html_part.body).to include(player.name)
+      expect(mail.html_part.body).to include(entry.notes)
+      expect(mail.html_part.body).to include(entry.preferred_rehearsal_time)
+      expect(mail.html_part.body).to include(entry.preferred_performance_time)
     end
   end
 end
