@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :live, class: 'Live' do
-    date { Faker::Date.unique.between(from: 3.years.ago, to: Time.zone.today) }
+    date { Faker::Date.unique.between(from: 3.years.ago.to_date, to: Time.zone.today) }
     name do
       case date.month
       when 4..5
