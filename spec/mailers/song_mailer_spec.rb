@@ -15,13 +15,13 @@ RSpec.describe SongMailer, type: :mailer do
     end
 
     it 'renders the text body' do
-      expect(mail.text_part.body).to match(song.title)
-      expect(mail.text_part.body).to match(root_url)
+      expect(mail.text_part.body).to include(song.title)
+      expect(mail.text_part.body).to include(root_url)
     end
 
     it 'renders the html body' do
-      expect(mail.html_part.body).to match(CGI.escapeHTML(song.title))
-      expect(mail.html_part.body).to match(root_url)
+      expect(mail.html_part.body).to include(CGI.escapeHTML(song.title))
+      expect(mail.html_part.body).to include(root_url)
     end
   end
 end

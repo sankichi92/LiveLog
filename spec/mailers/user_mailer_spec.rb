@@ -15,13 +15,13 @@ RSpec.describe UserMailer, type: :mailer do
     end
 
     it 'renders the text body' do
-      expect(mail.text_part.body).to match(user.name_with_handle)
-      expect(mail.text_part.body).to match(user.activation_token)
+      expect(mail.text_part.body).to include(user.name)
+      expect(mail.text_part.body).to include(user.activation_token)
     end
 
     it 'renders the html body' do
-      expect(mail.html_part.body).to match(user.name_with_handle)
-      expect(mail.html_part.body).to match(user.activation_token)
+      expect(mail.html_part.body).to include(user.name)
+      expect(mail.html_part.body).to include(user.activation_token)
     end
   end
 
@@ -38,13 +38,13 @@ RSpec.describe UserMailer, type: :mailer do
     end
 
     it 'renders the text body' do
-      expect(mail.text_part.body).to match(user.reset_token)
-      expect(mail.text_part.body).to match(CGI.escape(user.email))
+      expect(mail.text_part.body).to include(user.reset_token)
+      expect(mail.text_part.body).to include(CGI.escape(user.email))
     end
 
     it 'renders the html body' do
-      expect(mail.html_part.body).to match(user.reset_token)
-      expect(mail.html_part.body).to match(CGI.escape(user.email))
+      expect(mail.html_part.body).to include(user.reset_token)
+      expect(mail.html_part.body).to include(CGI.escape(user.email))
     end
   end
 end
