@@ -1,6 +1,4 @@
 class Song < ApplicationRecord
-  include Searchable
-
   VALID_YOUTUBE_REGEX =
     %r(\A
        (?:
@@ -11,6 +9,8 @@ class Song < ApplicationRecord
          (?<id>\S{11})
        )
       )x.freeze
+
+  include SongSearchable
 
   belongs_to :live
   has_many :playings, dependent: :destroy, inverse_of: :song
