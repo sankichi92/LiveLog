@@ -21,7 +21,7 @@ class SongsController < ApplicationController
   def show(id)
     @song = Song.includes(playings: { user: { 'avatar_attachment': :blob } }).find(id)
     begin
-      @related_songs = @song.more_like_this.records(includes: [:live, { playings: :user }]).to_a if @song.published?
+      @related_songs = @song.more_like_this.records(includes: [:live, { playings: :user }]).to_a if @song.live.published?
     rescue => e
       Raven.capture_exception(e)
     end
