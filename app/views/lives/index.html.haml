@@ -4,7 +4,7 @@
   %h1.display-4 Live List
 
 .row
-  - @lives.group_by(&:nendo).each do |nendo, lives|
+  - @lives.group_by { |live| live.date.nendo }.each do |nendo, lives|
     .col-lg-6.mb-3
       %section.card
         %h5.card-header= nendo
