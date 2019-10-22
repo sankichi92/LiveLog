@@ -1,6 +1,6 @@
 :ruby
   provide(:title, @song.title)
-  provide(:description, strip_tags(@song.comment).presence || "#{@song.live_title} #{@song.time_order} #{@song.playings.sort_by(&:inst_order).map { |p| "#{p.inst}.#{p.handle}" }.join(' ')}")
+  provide(:description, strip_tags(@song.comment).presence || "#{@song.live.title} #{@song.time_order} #{@song.playings.sort_by(&:inst_order).map { |p| "#{p.inst}.#{p.handle}" }.join(' ')}")
   provide(:og_type, 'music.song')
   provide(:og_image, @song.youtube_thumbnail('maxresdefault')) if policy(@song).play?
 
@@ -18,7 +18,7 @@
     .card-body
       %header
         .card-subtitle.text-muted
-          = link_to @song.live_title, @song.live
+          = link_to @song.live.title, @song.live
           = @song.time_order
         %h1.card-title
           = @song.title

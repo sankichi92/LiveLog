@@ -18,7 +18,6 @@ class Song < ApplicationRecord
 
   has_one_attached :audio
 
-  delegate :title, :name, to: :live, prefix: true
   delegate :date, :published?, :nf?, to: :live
 
   enum status: { secret: 0, closed: 1, open: 2 }

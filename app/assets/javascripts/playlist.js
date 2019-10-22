@@ -45,7 +45,7 @@ $(document).on('turbolinks:load', function () {
         if (label.data('show-live') === undefined) {
             label.text(song.time_order + ' ').append(link_to_song)
         } else {
-            label.html(song.live_title + ' ' + song.time_order + '<br>').append(link_to_song)
+            label.html(song.live.title + ' ' + song.time_order + '<br>').append(link_to_song)
         }
     });
 

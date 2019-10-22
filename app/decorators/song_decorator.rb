@@ -56,7 +56,7 @@ module SongDecorator
   def twitter_share_button(html_options)
     uri = URI.parse('https://twitter.com/intent/tweet')
     uri.query = {
-      text: "#{live_title} #{time_order} #{title}",
+      text: "#{live.title} #{time_order} #{title}",
       url: song_url(self),
       hashtags: '京大アンプラグド',
       via: 'ku_livelog',

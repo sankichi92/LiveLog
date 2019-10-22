@@ -9,7 +9,7 @@ RSpec.describe EntryMailer, type: :mailer do
     let(:mail) { described_class.entry(entry) }
 
     it 'renders the headers' do
-      expect(mail.subject).to eq("#{song.live_name} 曲申請「#{song.title}」")
+      expect(mail.subject).to eq("#{song.live.name} 曲申請「#{song.title}」")
       expect(mail.to).to eq(['pa@ku-unplugged.net'])
       expect(mail.from).to eq(['noreply@livelog.ku-unplugged.net'])
       expect(mail.cc).to eq([applicant.email])
