@@ -4,8 +4,6 @@ class Playing < ApplicationRecord
   belongs_to :user, counter_cache: true
   belongs_to :song, touch: true
 
-  delegate :handle, :name, :joined, :email, :public?, to: :user
-
   before_save :format_inst
 
   validates :user_id, presence: true
