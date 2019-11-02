@@ -136,6 +136,7 @@ ja:
         preferred_rehearsal_time: リハ希望時間
         preferred_performance_time: 本番希望時間
         notes: 備考
+  # https://github.com/tigrish/will-paginate-i18n/blob/v0.1.15/locales/ja.yml
   will_paginate:
     next_label: "次へ &#8594;"
     page_entries_info:
