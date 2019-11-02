@@ -22,7 +22,7 @@ RSpec.describe 'Song', type: :system do
   end
 
   describe 'search' do
-    let!(:beatles_song) { create(:song, artist: 'The Beatles') }
+    let!(:beatles_song) { create(:song, artist: 'The Beatles', name: 'Yesterday') }
 
     before { Song.__elasticsearch__.refresh_index! }
 
