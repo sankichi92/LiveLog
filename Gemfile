@@ -45,8 +45,6 @@ group :development, :test do
 end
 
 group :development do
-  gem 'better_errors'
-  gem 'binding_of_caller'
   gem 'haml_lint', require: false
   gem 'listen'
   gem 'rails_real_favicon', require: false
