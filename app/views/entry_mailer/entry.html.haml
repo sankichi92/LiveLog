@@ -1,6 +1,6 @@
 %dl
   %dt 申請者
-  %dd= link_to "#{@entry.applicant_name} (#{@entry.applicant_joined})", user_url(@entry.applicant)
+  %dd= link_to "#{@entry.applicant.name} (#{@entry.applicant.joined})", user_url(@entry.applicant)
   %dt ライブ
   %dd= link_to @entry.live.title, live_url(@entry.live)
   %dt 曲名 / アーティスト名
