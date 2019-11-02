@@ -40,6 +40,7 @@ gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-rails_csrf_protection'
 gem 'pundit'
+gem 'rails-i18n'
 gem 'ridgepole', require: false
 gem 'select2-rails'
 gem 'sentry-raven'
