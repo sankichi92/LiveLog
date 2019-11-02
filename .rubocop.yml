@@ -32,6 +32,9 @@ Rails:
 RSpec:
   Enabled: true
 
+RSpec/DescribedClass:
+  EnforcedStyle: explicit
+
 RSpec/ExampleLength:
   Enabled: false
 

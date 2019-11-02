@@ -4,7 +4,7 @@ RSpec.describe UserMailer, type: :mailer do
   describe 'account_activation' do
     let(:user) { create(:user) }
     let(:inviter) { create(:user) }
-    let(:mail) { described_class.account_activation(user, inviter) }
+    let(:mail) { UserMailer.account_activation(user, inviter) }
 
     before { user.activation_token = 'token' }
 
@@ -27,7 +27,7 @@ RSpec.describe UserMailer, type: :mailer do
 
   describe 'password_reset' do
     let(:user) { create(:user) }
-    let(:mail) { described_class.password_reset(user) }
+    let(:mail) { UserMailer.password_reset(user) }
 
     before { user.reset_token = 'token' }
 

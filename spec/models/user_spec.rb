@@ -152,7 +152,7 @@ RSpec.describe User, type: :model do
   describe '#authenticate' do
     before { user.save }
 
-    let(:found_user) { described_class.find_by(email: user.email) }
+    let(:found_user) { User.find_by(email: user.email) }
 
     describe 'with valid password' do
       it { is_expected.to eq found_user.authenticate(user.password) }

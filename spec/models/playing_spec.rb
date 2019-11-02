@@ -63,7 +63,7 @@ RSpec.describe Playing, type: :model do
     end
 
     it 'returns the number of occurrences of each instrument' do
-      expect(described_class.all.count_insts).to match_array [['Gt', 3], ['Vo', 2], ['Cho', 2], ['Ba', 1], ['Cj', 1]]
+      expect(Playing.all.count_insts).to match_array [['Gt', 3], ['Vo', 2], ['Cho', 2], ['Ba', 1], ['Cj', 1]]
     end
   end
 
@@ -75,7 +75,7 @@ RSpec.describe Playing, type: :model do
     end
 
     it 'returns the number of occurrences of each formation' do
-      expect(described_class.all.count_formations).to match [[1, 3], [2, 2], [3, 1]]
+      expect(Playing.all.count_formations).to match [[1, 3], [2, 2], [3, 1]]
     end
   end
 end

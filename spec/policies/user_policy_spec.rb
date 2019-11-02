@@ -22,68 +22,68 @@ RSpec.describe UserPolicy do
   permissions :show? do
     it 'denies access if user is not logged in and record is not public' do
       user.update!(public: false)
-      expect(described_class).not_to permit(nil, user)
+      expect(UserPolicy).not_to permit(nil, user)
     end
 
     it 'grants access if record is public' do
       user.update!(public: true)
-      expect(described_class).to permit(nil, user)
+      expect(UserPolicy).to permit(nil, user)
     end
 
     it 'grants access if user is logged in' do
-      expect(described_class).to permit(create(:user), user)
+      expect(UserPolicy).to permit(create(:user), user)
     end
   end
 
   permissions :update? do
     it 'denies access if user is wrong' do
-      expect(described_class).not_to permit(create(:user), user)
+      expect(UserPolicy).not_to permit(create(:user), user)
     end
 
     it 'grants access if user is correct' do
-      expect(described_class).to permit(user, user)
+      expect(UserPolicy).to permit(user, user)
     end
   end
 
   permissions :create?, :destroy? do
     it 'denies access if user is not logged in' do
-      expect(described_class).not_to permit(nil, user)
+      expect(UserPolicy).not_to permit(nil, user)
     end
 
     it 'denies access if user is logged in but not admin' do
-      expect(described_class).not_to permit(create(:user), user)
+      expect(UserPolicy).not_to permit(create(:user), user)
     end
 
     it 'grants access if user is admin' do
-      expect(described_class).to permit(create(:admin), user)
+      expect(UserPolicy).to permit(create(:admin), user)
     end
 
     it 'grants access if user is elder' do
-      expect(described_class).to permit(create(:user, :elder), user)
+      expect(UserPolicy).to permit(create(:user, :elder), user)
     end
   end
 
   permissions :change_status? do
     it 'denies access if user is not logged in' do
-      expect(described_class).not_to permit(nil, user)
+      expect(UserPolicy).not_to permit(nil, user)
     end
 
     it 'denies access if user is logged in but not admin' do
-      expect(described_class).not_to permit(create(:user), user)
+      expect(UserPolicy).not_to permit(create(:user), user)
     end
 
     it 'grants access if user is admin' do
-      expect(described_class).to permit(create(:admin), user)
+      expect(UserPolicy).to permit(create(:admin), user)
     end
   end
 
   permissions :invite? do
     it 'denies access if user is not logged in' do
-      expect(described_class).not_to permit(nil, user)
+      expect(UserPolicy).not_to permit(nil, user)
     end
 
     it 'grants access if user is logged in' do
-      expect(described_class).to permit(create(:user), user)
+      expect(UserPolicy).to permit(create(:user), user)
     end
   end
 end
