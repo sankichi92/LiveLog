@@ -45,11 +45,11 @@ module UserDecorator
   end
 
   def delete_link(html_options)
-    link_to_delete self, html_options.merge(data: { confirm: t('views.application.delete_confirm') })
+    link_to_delete self, html_options.merge(data: { confirm: '本当に削除しますか？' })
   end
 
   def invite_link(html_options)
-    link_to icon('fas', 'envelope') + ' ' + t('views.users.invite'), new_user_activation_path(self), html_options
+    link_to icon('fas', 'envelope') + ' ' + '招待する', new_user_activation_path(self), html_options
   end
 
   def deactivate_link(html_options)

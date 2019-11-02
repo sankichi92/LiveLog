@@ -27,7 +27,7 @@ class UsersController < ApplicationController
     @user = User.new(user)
     authorize @user
     if @user.save
-      flash[:success] = t('flash.messages.created', name: @user.name)
+      flash[:success] = "#{@user.name} を追加しました"
       redirect_to new_user_url
     else
       render :new, status: :unprocessable_entity
@@ -67,7 +67,7 @@ class UsersController < ApplicationController
     @user = User.find(id)
     authorize @user
     if @user.update(user)
-      flash[:success] = t('flash.controllers.users.updated')
+      flash[:success] = 'プロフィールを更新しました'
       redirect_to @user
     else
       render :edit, status: :unprocessable_entity
@@ -82,7 +82,7 @@ class UsersController < ApplicationController
     flash[:danger] = e.message
     redirect_to @user
   else
-    flash[:success] = t('flash.messages.deleted', name: @user.name)
+    flash[:success] = "#{@user.name} を削除しました"
     redirect_to users_url
   end
 

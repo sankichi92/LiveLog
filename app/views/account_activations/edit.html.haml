@@ -18,6 +18,6 @@
         = f.label :first_name, class: 'col-form-label'
         = f.text_field :first_name, class: 'form-control'
 
-  = render 'passwords/form', f: f, label: t('views.users.password_create')
+  = render 'passwords/form', f: f, label: 'パスワードを作成'
 
-  = f.submit t('views.users.activate'), class: 'btn btn-primary'
+  = f.submit 'アカウントを有効化する', class: 'btn btn-primary'

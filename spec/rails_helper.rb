@@ -31,7 +31,6 @@ RSpec.configure do |config|
   config.include ActionDispatch::TestProcess::FixtureFile
   config.include FactoryBot::Syntax::Methods
   config.include RSpec::JsonMatcher, type: :request
-  config.include I18nHelper
   config.include LoginHelper, type: :request
   config.include LoginHelper, type: :system
 

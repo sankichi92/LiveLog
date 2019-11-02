@@ -26,4 +26,4 @@
     = label :entry, :notes, Entry.human_attribute_name(:notes)
     = text_area :entry, :notes, id: 'entry_notes', class: 'form-control', rows: 3
 
-  = f.submit t('views.application.send'), data: { confirm: t('views.application.send_confirm') }, class: 'btn btn-primary'
+  = f.submit '送信する', data: { confirm: '本当に送信しますか？' }, class: 'btn btn-primary'

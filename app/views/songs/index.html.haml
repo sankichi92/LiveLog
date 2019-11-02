@@ -57,7 +57,7 @@
         = f.check_box :media, class: 'custom-control-input'
         = f.label :media, class: 'custom-control-label'
 
-      = f.submit t('views.application.search'), class: 'btn btn-primary'
+      = f.submit '検索', class: 'btn btn-primary'
 
 - if @songs.present?
   #results
@@ -72,4 +72,4 @@
 
 - else
   .alert.alert-danger{ role: 'alert' }
-    = t('views.songs.no_results')
+    = '曲が見つかりませんでした'

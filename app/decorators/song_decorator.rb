@@ -31,9 +31,9 @@ module SongDecorator
 
   def status_icon
     if open?
-      icon 'fas', 'globe', 'data-toggle': 'tooltip', 'data-placement': 'right', title: t('views.songs.status.public')
+      icon 'fas', 'globe', 'data-toggle': 'tooltip', 'data-placement': 'right', title: '公開設定: 公開'
     elsif secret?
-      icon 'fas', 'lock', 'data-toggle': 'tooltip', 'data-placement': 'right', title: t('views.songs.status.secret')
+      icon 'fas', 'lock', 'data-toggle': 'tooltip', 'data-placement': 'right', title: '公開設定: バンド内'
     end
   end
 
@@ -50,7 +50,7 @@ module SongDecorator
   end
 
   def delete_link(html_options)
-    link_to_delete self, html_options.merge(data: { confirm: t('views.application.delete_confirm') })
+    link_to_delete self, html_options.merge(data: { confirm: '本当に削除しますか？' })
   end
 
   def twitter_share_button(html_options)
