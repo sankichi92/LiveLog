@@ -17,6 +17,9 @@ gem 'bcrypt'
 
 gem 'redis'
 
+gem 'aws-sdk-s3', require: false
+gem 'image_processing'
+
 gem 'bootsnap', require: false
 
 gem 'haml-rails'
@@ -29,11 +32,9 @@ gem 'elasticsearch-dsl'
 
 gem 'action_args'
 gem 'active_decorator'
-gem 'aws-sdk-s3', require: false
 gem 'bootstrap'
 gem 'bootstrap-will_paginate'
 gem 'font-awesome-sass'
-gem 'mini_magick'
 gem 'newrelic_rpm'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
