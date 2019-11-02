@@ -38,7 +38,7 @@ class SongsController < ApplicationController
     @song = Song.new(song)
     authorize @song
     if @song.save
-      flash[:success] = t('flash.messages.created', name: @song.title)
+      flash[:success] = "#{@song.title} を追加しました"
       redirect_to @song.live
     else
       render :new, status: :unprocessable_entity
@@ -59,7 +59,7 @@ class SongsController < ApplicationController
     if @song.update(song)
       respond_to do |format|
         format.html do
-          flash[:success] = t('flash.messages.updated', name: @song.title)
+          flash[:success] = "#{@song.title} を更新しました"
           redirect_to @song
         end
         format.js {}
@@ -83,7 +83,7 @@ class SongsController < ApplicationController
     flash.now[:danger] = e.message
     render :show
   else
-    flash[:success] = t('flash.messages.deleted', name: @song.title)
+    flash[:success] = "#{@song.title} を削除しました"
     redirect_to @song.live
   end
 

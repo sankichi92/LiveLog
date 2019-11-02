@@ -12,7 +12,7 @@ class AccountActivationsController < ApplicationController
   def create(user)
     authorize @user, :invite?
     if @user.send_invitation(user[:email], current_user)
-      flash[:success] = t('flash.controllers.account_activations.invited')
+      flash[:success] = '招待メールを送信しました'
       redirect_to @user
     else
       render 'new', status: :unprocessable_entity
@@ -27,7 +27,7 @@ class AccountActivationsController < ApplicationController
       render 'edit', status: :unprocessable_entity
     elsif @user.activate(user.permit(:password, :password_confirmation))
       log_in @user
-      flash[:success] = t('flash.controllers.account_activations.activated')
+      flash[:success] = 'LiveLog へようこそ！'
       redirect_to @user
     else
       render 'edit', status: :unprocessable_entity
@@ -37,7 +37,7 @@ class AccountActivationsController < ApplicationController
   def destroy
     authorize @user, :change_status?
     @user.deactivate
-    flash[:success] = t('flash.controllers.account_activations.deactivated')
+    flash[:success] = 'アカウントを無効にしました'
     redirect_to @user
   end
 
@@ -49,13 +49,13 @@ class AccountActivationsController < ApplicationController
 
   def check_inactivated
     return unless @user.activated?
-    flash[:info] = t('flash.controllers.account_activations.already_activated')
+    flash[:info] = 'アカウントはすでに有効化されています'
     redirect_to @user
   end
 
   def valid_user(t = nil)
     return if @user.authenticated?(:activation, t)
-    flash[:danger] = t('flash.controllers.account_activations.invalid_url')
+    flash[:danger] = '無効な URL です'
     redirect_to root_url
   end
 end

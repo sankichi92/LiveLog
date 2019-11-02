@@ -71,7 +71,7 @@ RSpec.describe 'Live', type: :system do
       fill_in 'live_date', with: '2016-11-23'
       fill_in 'live_place', with: '4共31'
 
-      expect { click_button t('helpers.submit.create') }.to change(Live, :count).by(1)
+      expect { click_button '登録する' }.to change(Live, :count).by(1)
       expect(page).to have_css('.alert-success')
       expect(page).to have_title('テストライブ')
     end
@@ -88,7 +88,7 @@ RSpec.describe 'Live', type: :system do
       expect(page).to have_title('Edit Live')
 
       fill_in 'live_album_url', with: 'https://example.com/album'
-      click_button t('helpers.submit.update')
+      click_button '更新する'
 
       expect(live.reload.album_url).to eq 'https://example.com/album'
       expect(page).to have_css('.alert-success')
@@ -104,7 +104,7 @@ RSpec.describe 'Live', type: :system do
     it 'enables admin users to delete lives' do
       visit live_path(live)
 
-      expect { click_link t('views.application.delete') }.to change(Live, :count).by(-1)
+      expect { click_link '削除する' }.to change(Live, :count).by(-1)
     end
   end
 end

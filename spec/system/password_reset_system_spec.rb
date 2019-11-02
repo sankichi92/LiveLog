@@ -11,12 +11,12 @@ RSpec.describe 'Password reset', type: :system do
 
   it 'enable users to reset password' do
     visit login_path
-    click_link t('views.sessions.forgot_password')
+    click_link 'パスワードを忘れた場合'
 
     expect(page).to have_title('Forgot Password')
 
     fill_in 'password_reset_email', with: user.email
-    click_button t('views.application.send')
+    click_button '送信する'
 
     expect(ActionMailer::Base.deliveries.size).to eq 1
     expect(page).to have_css('.alert-success')
@@ -27,7 +27,7 @@ RSpec.describe 'Password reset', type: :system do
 
     fill_in 'user_password', with: 'new_password'
     fill_in 'user_password_confirmation', with: 'new_password'
-    click_button t('helpers.submit.update')
+    click_button '更新する'
 
     expect(user.password_digest).not_to eq user.reload.password_digest
     expect(page).to have_css('.alert-success')

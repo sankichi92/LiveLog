@@ -6,9 +6,9 @@
   = render 'shared/error_messages', object: f.object
 
   .form-group
-    = label_tag :current_password, t('views.users.password_current')
+    = label_tag :current_password, '現在のパスワード'
     = password_field_tag :current_password, '', class: 'form-control'
 
-  = render 'passwords/form', f: f, label: t('views.users.password_new')
+  = render 'passwords/form', f: f, label: '新しいパスワード'
 
   = f.submit class: 'btn btn-primary'

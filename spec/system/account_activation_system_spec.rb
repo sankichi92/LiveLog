@@ -16,12 +16,12 @@ RSpec.describe 'Account activation', type: :system do
     Capybara.using_session("Inviter's session") do
       log_in_as inviter
       visit user_path(user)
-      click_link t('views.users.invite')
+      click_link '招待する'
 
       expect(page).to have_title('Invite')
 
       fill_in 'user_email', with: email
-      click_button t('views.application.send')
+      click_button '送信する'
 
       expect(page).to have_css('.alert-success')
       expect(user.reload.email).to eq email
@@ -34,7 +34,7 @@ RSpec.describe 'Account activation', type: :system do
 
     fill_in 'user_password', with: password
     fill_in 'user_password_confirmation', with: password
-    click_button t('views.users.activate')
+    click_button 'アカウントを有効化する'
 
     expect(page).to have_css('.alert-success')
     expect(page).to have_title(user.name_with_handle)

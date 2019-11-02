@@ -7,6 +7,6 @@
 
   = hidden_field_tag :email, @user.email
 
-  = render 'passwords/form', f: f, label: t('views.users.password_new')
+  = render 'passwords/form', f: f, label: '新しいパスワード'
 
   = f.submit class: 'btn btn-primary'

@@ -11,13 +11,13 @@ class PasswordResetsController < ApplicationController
     @user = User.find_by(email: password_reset[:email])
     if @user&.activated?
       @user.send_password_reset
-      flash[:success] = t('flash.controllers.password_resets.sent')
+      flash[:success] = 'パスワード再設定のためのメールを送信しました'
       redirect_to root_url
     elsif @user.present?
-      flash.now[:warning] = t('flash.controllers.password_resets.inactivated')
+      flash.now[:warning] = 'アカウントが有効化されていません。招待メールを確認してください'
       render 'new', status: :unprocessable_entity
     else
-      flash.now[:danger] = t('flash.controllers.password_resets.email_not_found')
+      flash.now[:danger] = 'メールアドレスが見つかりませんでした'
       render 'new', status: :unprocessable_entity
     end
   end
@@ -30,7 +30,7 @@ class PasswordResetsController < ApplicationController
       render 'edit', status: :unprocessable_entity
     elsif @user.reset_password(user)
       log_in @user
-      flash[:success] = t('flash.controllers.password_resets.succeeded')
+      flash[:success] = 'パスワードが再設定されました'
       redirect_to @user
     else
       render 'edit', status: :unprocessable_entity
@@ -41,7 +41,7 @@ class PasswordResetsController < ApplicationController
 
   def set_user(email = nil)
     if email.blank?
-      flash[:danger] = t('flash.controllers.password_resets.invalid_url')
+      flash[:danger] = '無効な URL です'
       redirect_to root_url
     else
       @user = User.find_by(email: email)
@@ -54,7 +54,7 @@ class PasswordResetsController < ApplicationController
 
   def check_expiration
     return unless @user.password_reset_expired?
-    flash[:danger] = t('flash.controllers.password_resets.token_expired')
+    flash[:danger] = 'パスワード再設定の有効期限が過ぎてきます'
     redirect_to new_password_reset_url
   end
 end

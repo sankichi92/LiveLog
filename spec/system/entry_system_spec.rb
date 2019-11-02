@@ -15,7 +15,7 @@ RSpec.describe 'Entry', type: :system do
 
       expect(page).to have_title(live.title)
       expect(page).to have_content(live.name)
-      expect(page).to have_link(t('views.lives.entry'), href: new_live_entry_path(live))
+      expect(page).to have_link('エントリーする', href: new_live_entry_path(live))
       expect(page).not_to have_css('#admin-tools')
       expect(page).to have_content(user_song.name)
       user_song.playings.each do |playing|
@@ -29,7 +29,7 @@ RSpec.describe 'Entry', type: :system do
       visit live_entries_path(live)
 
       expect(page).to have_title(live.title)
-      expect(page).to have_link(t('views.lives.entry'), href: new_live_entry_path(live))
+      expect(page).to have_link('エントリーする', href: new_live_entry_path(live))
       expect(page).to have_css('#admin-tools')
       live.songs.each do |entry|
         expect(page).to have_content(entry.name)
@@ -69,7 +69,7 @@ RSpec.describe 'Entry', type: :system do
       fill_in 'entry_preferred_performance_time', with: '20時以降'
 
       accept_confirm do
-        click_button t('views.application.send')
+        click_button '送信する'
       end
 
       expect(page).to have_css('.alert-success')
@@ -89,7 +89,7 @@ RSpec.describe 'Entry', type: :system do
     it 'enables admin users to publish live', elasticsearch: true do
       visit live_entries_path(live)
 
-      click_link t('views.lives.publish')
+      click_link '公開する'
 
       expect(tweet_job).to have_received(:perform_now)
       expect(live.reload.published).to be true

@@ -22,11 +22,11 @@
           = @song.time_order
         %h1.card-title
           = @song.title
-          %small= t('views.songs.original') if @song.original?
+          %small= '(オリジナル曲)' if @song.original?
           = @song.status_icon if @song.player?(current_user)
       %dl
         - if @song.playings.present?
-          %dt= t('views.songs.members')
+          %dt= 'メンバー'
           %dd= render @song.playings.sort_by(&:inst_order)
         - if @song.comment.present?
           %dt= Song.human_attribute_name(:comment)
@@ -38,7 +38,7 @@
         - if @song.live.published?
           .btn-group.mr-2{ role: 'group' }
             %button.btn.btn-primary.dropdown-toggle#share-button{ type: 'button', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' }
-              = icon('fas', 'share') + ' ' + t('views.application.share')
+              = icon('fas', 'share') + ' ' + '共有'
             .dropdown-menu{ 'aria-labelledby': 'share-button' }
               = @song.twitter_share_button class: 'dropdown-item'
               = @song.facebook_share_button class: 'dropdown-item btn'

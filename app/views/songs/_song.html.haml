@@ -11,7 +11,7 @@
 
       %h5
         = song.title
-        %small= t('views.songs.original') if song.original?
+        %small= '(オリジナル曲)' if song.original?
         = song.status_icon if song.player?(current_user)
 
       %ul.list-inline.mb-2
