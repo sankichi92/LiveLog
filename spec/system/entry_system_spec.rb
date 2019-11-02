@@ -5,8 +5,8 @@ RSpec.describe 'Entry', type: :system do
   let(:user) { create(:user) }
 
   describe 'list' do
-    let!(:entries) { create_list(:song, 10, :draft, live: live) }
-    let!(:user_entry) { create(:song, :draft, name: 'applied song', live: live, users: [user, create(:user)]) }
+    let!(:user_song) { create(:song, :draft, name: 'applied song', live: live, users: [user, create(:user)]) }
+    let!(:other_song) { create(:song, :draft, name: 'other song', live: live) }
 
     it 'enables logged-in users to see individual live entries pages and their applied songs' do
       log_in_as user
@@ -17,13 +17,11 @@ RSpec.describe 'Entry', type: :system do
       expect(page).to have_content(live.name)
       expect(page).to have_link(t('views.lives.entry'), href: new_live_entry_path(live))
       expect(page).not_to have_css('#admin-tools')
-      expect(page).to have_content(user_entry.name)
-      user_entry.playings.each do |playing|
+      expect(page).to have_content(user_song.name)
+      user_song.playings.each do |playing|
         expect(page).to have_content(playing.handle)
       end
-      entries.each do |entry|
-        expect(page).not_to have_content(entry.name)
-      end
+      expect(page).not_to have_content(other_song.name)
     end
 
     it 'enables admin users to see individual live entries pages and all applied songs' do
