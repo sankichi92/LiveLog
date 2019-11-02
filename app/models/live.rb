@@ -17,8 +17,6 @@ class Live < ApplicationRecord
     published.order_by_date.pluck(:date).map(&:nendo).uniq
   end
 
-  delegate :nendo, to: :date
-
   def title
     "#{date.year} #{name}"
   end

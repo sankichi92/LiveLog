@@ -19,7 +19,7 @@ RSpec.describe 'Entry', type: :system do
       expect(page).not_to have_css('#admin-tools')
       expect(page).to have_content(user_song.name)
       user_song.playings.each do |playing|
-        expect(page).to have_content(playing.handle)
+        expect(page).to have_content(playing.user.handle)
       end
       expect(page).not_to have_content(other_song.name)
     end

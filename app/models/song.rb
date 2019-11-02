@@ -18,9 +18,6 @@ class Song < ApplicationRecord
 
   has_one_attached :audio
 
-  delegate :title, :name, to: :live, prefix: true
-  delegate :date, :published?, :nf?, to: :live
-
   enum status: { secret: 0, closed: 1, open: 2 }
 
   before_save :extract_youtube_id
@@ -53,8 +50,8 @@ class Song < ApplicationRecord
   end
 
   def datetime
-    return date if time.blank?
-    date + time.hour.hours + time.min.minutes
+    return live.date if time.blank?
+    live.date + time.hour.hours + time.min.minutes
   end
 
   def time_str

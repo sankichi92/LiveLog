@@ -4,7 +4,7 @@
     = f.collection_select :live_id, Live.order_by_date, :id, :title, {}, class: 'form-control'
 
 .form-row
-  - if f.object.nf?
+  - if f.object.live.nf?
     .form-group.col
       = f.label :time, class: 'col-form-label'
       = f.time_field :time, class: 'form-control', placeholder: '10:00'

@@ -5,11 +5,11 @@ module SongSearchable
     include Elasticsearch::Model
 
     after_commit on: %i[create update] do
-      __elasticsearch__.index_document if published?
+      __elasticsearch__.index_document if live.published?
     end
 
     after_commit on: %i[destroy] do
-      __elasticsearch__.delete_document if published?
+      __elasticsearch__.delete_document if live.published?
     end
 
     if Rails.env.test?
