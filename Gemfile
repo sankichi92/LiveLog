@@ -12,6 +12,7 @@ gem 'jquery-rails'
 gem 'sass-rails'
 gem 'turbolinks'
 gem 'uglifier'
+gem 'webpacker'
 
 gem 'bcrypt'
 

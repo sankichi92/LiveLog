@@ -11,7 +11,11 @@ services:
 addons:
   chrome: stable
 
-cache: bundler
+cache:
+  bundler: true
+  yarn: true
+  directories:
+    - node_modules
 
 bundler_args: --without development production
 
@@ -25,6 +29,8 @@ before_install:
   - gem install bundler
 
 before_script:
+  - bin/yarn
+  # Setup database
   - cp config/database.yml.travis config/database.yml
   - bin/rake db:create
   - bin/rake ridgepole:apply
