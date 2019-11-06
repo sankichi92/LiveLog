@@ -24,7 +24,7 @@ before_install:
   - wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${ES_VERSION}.tar.gz
   - tar -xzf elasticsearch-${ES_VERSION}.tar.gz
   - ./elasticsearch-${ES_VERSION}/bin/elasticsearch-plugin install --verbose --batch analysis-kuromoji
-  - ./elasticsearch-${ES_VERSION}/bin/elasticsearch &
+  - ./elasticsearch-${ES_VERSION}/bin/elasticsearch --quiet &
   # Update Bundler
   - gem install bundler
 
