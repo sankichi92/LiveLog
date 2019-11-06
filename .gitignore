@@ -13,18 +13,12 @@
 !/log/.keep
 !/tmp/.keep
 
-# Ignore uploaded files in development
+# Ignore uploaded files in development.
 /storage/*
 !/storage/.keep
 
-# Ignore Byebug command history file.
+/public/assets
 .byebug_history
-
-# Ignore script to create backup.
-/scripts/backup.sh
-
-# Ignore database dump file.
-latest.dump
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
