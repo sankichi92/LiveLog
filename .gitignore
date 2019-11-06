@@ -28,3 +28,10 @@
 
 # Rubocop
 /.rubocop-https---raw-githubusercontent-com-cookpad-styleguide-master--rubocop-yml
+
+/public/packs
+/public/packs-test
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity
