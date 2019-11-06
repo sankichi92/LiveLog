@@ -1,0 +1,188 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ *= require select2
+ *= require select2-bootstrap
+ */
+
+// region Bootstrap variables
+
+$white: #fff;
+$black: #000;
+
+$orange: #fd7e14;
+$yellow: #ffc107;
+
+$theme-color-interval: 8%;
+
+$primary: $yellow;
+$warning: $orange;
+
+$theme-colors: (
+        "primary": $primary,
+        "warning": $warning
+);
+
+$theme-border-color: mix($white, $primary, 5 * 8%);
+$theme-bg: #fcf8e3;
+
+$link-color: mix($black, $primary, 1 * 8%);
+$table-accent-bg: $theme-bg;
+$table-hover-bg: $theme-bg;
+$table-border-color: $theme-border-color;
+$pagination-border-color: $theme-border-color;
+$pagination-hover-bg: $theme-bg;
+$pagination-hover-border-color: $theme-border-color;
+$pagination-disabled-border-color: $theme-border-color;
+$jumbotron-bg: $theme-bg;
+$card-border-color: $theme-border-color;
+$card-cap-bg: $theme-bg;
+$list-group-border-color: $theme-border-color;
+$list-group-hover-bg: $theme-bg;
+$breadcrumb-bg: $theme-bg;
+$breadcrumb-divider: ">";
+
+$enable-responsive-font-sizes: true;
+
+// endregion
+
+// region Imports
+
+@import "bootstrap";
+
+@import "font-awesome-sprockets";
+@import "font-awesome";
+
+// endregion
+
+// region Shared
+
+.card {
+  .table {
+    margin-bottom: 0;
+
+    tr:first-child {
+      td {
+        border-top: 0;
+      }
+    }
+  }
+}
+
+img {
+  &.small {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  &.medium {
+    width: 6rem;
+    height: 6rem;
+  }
+
+  &.large {
+    width: 12rem;
+    height: 12rem;
+  }
+}
+
+#footer {
+  li.list-inline-item {
+    margin-right: 0;
+
+    &:not(:last-child):after {
+      @extend small;
+
+      content: "|";
+    }
+  }
+}
+
+.link:hover {
+  cursor: pointer;
+}
+
+.page-header {
+  padding-bottom: ($spacer * .5);
+  margin: ($spacer * 3) 0 ($spacer * 1.5);
+  border-bottom: 1px solid $theme-border-color;
+}
+
+// endregion
+
+// region Song
+
+.song-list {
+  @extend .list-group;
+  @extend .list-group-flush;
+
+  .song-item {
+    @extend .list-group-item;
+    @extend .list-group-item-action;
+
+    padding-right: 0;
+    padding-left: 0;
+
+    &:first-child {
+      border-top: 0;
+    }
+
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
+}
+
+.song-detail {
+  @extend .lead;
+}
+
+// endregion
+
+// region Member
+
+.member-detail {
+  @extend .lead;
+}
+
+// endregion
+
+// region Google sign-in button
+
+a.btn-google-signin {
+  display: block;
+  width: 191px;
+  height: 46px;
+  background-image: image-url('auth/btn_google_signin_normal.png');
+  background-repeat: no-repeat;
+  background-size: 191px 46px;
+  font-size: 0;
+
+  &:hover {
+    background-image: image-url('auth/btn_google_signin_focus.png');
+  }
+
+  &:active {
+    background-image: image-url('auth/btn_google_signin_pressed.png');
+  }
+}
+
+a.btn-google {
+  padding-left: 3rem;
+  background-image: image-url('auth/btn_google_normal.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+// endregion
