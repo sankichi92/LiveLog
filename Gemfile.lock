@@ -113,7 +113,7 @@ GEM
       elasticsearch-transport (= 6.8.0)
     elasticsearch-api (6.8.0)
       multi_json
-    elasticsearch-dsl (0.1.8)
+    elasticsearch-dsl (0.1.9)
     elasticsearch-model (6.1.0)
       activesupport (> 3)
       elasticsearch (> 1)
