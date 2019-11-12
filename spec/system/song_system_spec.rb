@@ -81,10 +81,7 @@ RSpec.describe 'Song', type: :system do
       expect(page).to have_title('Add Song')
       expect(page).to have_content('Add Song')
 
-      2.times do
-        click_button 'add-member'
-      end
-      click_button class: 'remove-member', match: :first
+      click_button 'add-member'
 
       fill_in 'song_order', with: '1'
       fill_in 'song_name', with: 'テストソング'
