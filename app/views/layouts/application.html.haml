@@ -19,7 +19,7 @@
     = csrf_meta_tags
     = csp_meta_tag
     = stylesheet_link_tag    'application', 'data-turbolinks-track': 'reload'
-    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
     - if Rails.env.production?
       %script{ src: 'https://www.googletagmanager.com/gtag/js?id=UA-56294602-1', async: true }
       - unless logged_in?
