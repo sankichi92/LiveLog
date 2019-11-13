@@ -11,7 +11,6 @@ gem 'puma'
 gem 'jquery-rails'
 gem 'sass-rails'
 gem 'turbolinks'
-gem 'uglifier'
 gem 'webpacker'
 
 gem 'redis'
@@ -39,10 +38,8 @@ gem 'elasticsearch-rails', '~> 6.1'
 gem 'elasticsearch-model', '~> 6.1'
 gem 'elasticsearch-dsl'
 
-gem 'bootstrap'
 gem 'bootstrap-will_paginate'
 gem 'font-awesome-sass'
-gem 'select2-rails'
 
 gem 'newrelic_rpm'
 gem 'sentry-raven'

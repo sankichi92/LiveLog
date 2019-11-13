@@ -1,5 +1,13 @@
-$('form > .alert.alert-danger').remove()
-$('<%= escape_javascript(render 'shared/error_messages', object: @song) %>')
-    .prependTo('form')
-    .hide()
-    .fadeIn();
+var form = document.getElementById('form-entry-new')
+
+var currentAlerts = form.getElementsByClassName('alert')
+if (currentAlerts[0]) {
+  form.removeChild(currentAlerts[0]);
+}
+
+var newAlert = document.createElement('div')
+newAlert.classList.add('alert');
+newAlert.classList.add('alert-danger');
+newAlert.textContent = '<%= @song.errors.full_messages.join(' / ') %>'
+
+form.insertBefore(newAlert, form.firstChild);

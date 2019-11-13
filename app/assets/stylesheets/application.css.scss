@@ -12,8 +12,8 @@
  *
  *= require_tree .
  *= require_self
- *= require select2
- *= require select2-bootstrap
+ *= require select2/dist/css/select2
+ *= require @ttskch/select2-bootstrap4-theme/dist/select2-bootstrap4
  */
 
 // region Bootstrap variables
@@ -59,7 +59,7 @@ $enable-responsive-font-sizes: true;
 
 // region Imports
 
-@import "bootstrap";
+@import "bootstrap/scss/bootstrap";
 
 @import "font-awesome-sprockets";
 @import "font-awesome";

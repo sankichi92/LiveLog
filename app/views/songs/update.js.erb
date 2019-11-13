@@ -1,8 +1,19 @@
-$('#form-song-<%= @song.id %> > .alert').remove();
-var alert;
+var form = document.getElementById('form-song-<%= @song.id %>')
+
+var currentAlerts = form.getElementsByClassName('alert')
+if (currentAlerts[0]) {
+  form.removeChild(currentAlerts[0]);
+}
+
+var newAlert = document.createElement('div')
+newAlert.classList.add('alert');
+
 <% if @song.errors.any? %>
-  alert = $('<%= escape_javascript(render 'shared/error_messages', object: @song) %>');
+newAlert.classList.add('alert-danger');
+newAlert.textContent = '<%= @song.errors.full_messages.join(' / ') %>'
 <% else %>
-  alert = $('<div class="alert alert-success"><%= t('flash.messages.updated', name: @song.title) %></div>');
+newAlert.classList.add('alert-success');
+newAlert.textContent = '<%= @song.title %>　を更新しました'
 <% end %>
-alert.prependTo('#form-song-<%= @song.id %>').hide().fadeIn();
+
+form.insertBefore(newAlert, form.firstChild);

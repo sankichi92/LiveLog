@@ -1,5 +1,5 @@
 $(document).on('turbolinks:load', function () {
-    $('.select2').select2({theme: 'bootstrap'});
+    $('.select2').select2({theme: 'bootstrap4'});
 
     $('form').on('click', '#add-member', function () {
         var reg = /(song_playings_attributes_|song\[playings_attributes]\[)\d+/gi;
@@ -8,7 +8,7 @@ $(document).on('turbolinks:load', function () {
         fields = fields.replace(reg, '$1' + mSec);
         $(fields)
             .appendTo('#playings-fields').hide().slideDown()
-            .find('.select2').select2({theme: 'bootstrap'});
+            .find('.select2').select2({theme: 'bootstrap4'});
     });
 
     $('#playings-fields').on('click', '.remove-member', function () {
