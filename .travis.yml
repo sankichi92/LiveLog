@@ -1,4 +1,4 @@
-dist: xenial
+dist: bionic
 
 language: ruby
 
@@ -9,6 +9,7 @@ services:
   - postgresql
 
 addons:
+  postgresql: '9.6'
   chrome: stable
 
 cache:
@@ -17,7 +18,7 @@ cache:
   directories:
     - node_modules
 
-bundler_args: --without development production
+bundler_args: --without development
 
 before_install:
   # Install Elasticsearch
