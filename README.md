@@ -1,21 +1,19 @@
 # LiveLog
 
-[![Build Status](https://travis-ci.org/sankichi92/LiveLog.svg?branch=master)](https://travis-ci.org/sankichi92/LiveLog)
-[![Gitter chat](https://badges.gitter.im/sankichi92/LiveLog.svg)](https://gitter.im/ku-unplugged-livelog/Lobby)
+https://livelog.ku-unplugged.net/
 
-<img src="app/assets/images/logo.png" alt="Logo" width="200px">
-
-This is the Ruby on Rails application to manage set lists of the acoustic light music club "[京大アンプラグド](http://ku-unplugged.net/)."
+The Ruby on Rails application to manage set lists of the acoustic light music club "[京大アンプラグド](http://ku-unplugged.net/)."
 
 ## Requirements
 
 - Ruby 2.6
-- PostgreSQL 9.2 or later
+- Node.js
+- PostgreSQL
 - [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/install-elasticsearch.html) 6.x
   - with [Japanese (kuromoji) Analysis Plugin](https://www.elastic.co/guide/en/elasticsearch/plugins/current/analysis-kuromoji.html)
 - [ImageMagick](https://imagemagick.org/)
 
-## Getting started
+## Development
 
 To get started with the app, clone the repo and then execute:
 
