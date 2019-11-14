@@ -33,7 +33,3 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/sankic
 Please check out the [Contributing to LiveLog](https://github.com/sankichi92/LiveLog/blob/master/CONTRIBUTING.md) for guidelines about how to proceed.
 
 Everyone interacting in the LiveLog project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/sankichi92/LiveLog/blob/master/CODE_OF_CONDUCT.md).
-
-## License
-
-The application is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
