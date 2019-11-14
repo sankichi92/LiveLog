@@ -1,4 +1,4 @@
-dist: xenial
+dist: bionic
 
 language: ruby
 
@@ -9,6 +9,7 @@ services:
   - postgresql
 
 addons:
+  postgresql: '9.6'
   chrome: stable
 
 cache:
