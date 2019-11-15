@@ -43,6 +43,7 @@ branches:
     - master
 
 notifications:
-  webhooks:
-    urls:
-      - https://webhooks.gitter.im/e/f5e88c507b05f867f94a
+  slack:
+    on_pull_requests: false
+    rooms:
+      - secure: npgc7xTsJvtJSOtOzISpWI5B2zYc5rJ81ljXzmIvOqOFDKBQDfJaokTfF5BWCb7S7YH0jfNKhrsKavPMXnSm3eLEWJO5glD92xSpAXe0IqD+0e6/set9SkccPbhSzBoG554z/qqTBbrQxStVR4PH+Iez/YZ9fkmArvljSEQofHz4df9u4R5nQvWsN1j7Z/iVwKRhhJ6qxR0MTwlTAT8zuUnrGK3AkzJicK7CO0Q6be2E7GpInktTOkt0M7qpoAd45DKz/U5FQZf29x/cYnr5Fodo8SJgUQcgj9dboSS6Hs6ibEDKIYTM+uGOddtQ0n+iPthFUiwrd28W+fLxILFBwg7UAnHUyHpx4he97bI/5yljKBteAnU7edZV6SIJxHFjv2QzHotoj3OuAcvhSfuktpUpfhs5vH1g9CC4AwkchYQkvbfGIFFHGiPUrqGOk13CYdY9BzKzmb6me3a+qu2bx4OGjLRC2mcHw+uLfuKZjAS9hvpzNQD0VqZC//B1nufCZf5FK+O047nBjxSmxFy5U+za/SpuF2XW1IMScBDT+yluDVLDbvDoC/eQvP6nIid5mz/5ahnSynV3Zg22ZlojJnJofgNMYYsjeeE4irNQYfKFgIFj7eznTq+2CNJAh8wLHyIwBr0YPeSqmiuUVzJM0RIjkRVdGs9tfBIxDjoia2U=
