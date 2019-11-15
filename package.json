@@ -1,4 +1,5 @@
 {
+  "private": true,
   "dependencies": {
     "@rails/activestorage": "^6.0.1",
     "@rails/ujs": "^6.0.1",
