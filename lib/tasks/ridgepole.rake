@@ -5,6 +5,7 @@ namespace :ridgepole do
     environments << 'test' if Rails.env.development?
 
     environments.each do |env|
+      puts "For #{env}" if environments.size > 1
       ActiveRecord::Base.configurations.configs_for(env_name: env).each do |db_config|
         system 'ridgepole', '--config', db_config.config.to_json, '--file', Rails.root.join('db', 'Schemafile').to_s, '--apply'
       end
