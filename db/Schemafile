@@ -49,7 +49,6 @@ create_table :members, force: :cascade do |t|
   t.timestamps
 
   t.index :user_id, unique: true
-  t.index %i[joined_year furigana]
 end
 
 create_table :playings, id: :serial, force: :cascade do |t|
