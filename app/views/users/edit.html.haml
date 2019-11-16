@@ -3,12 +3,6 @@
   %h1 Settings
 
 %section.mb-3
-  - if @user.identities.google_oauth2.exists?
-    = link_to 'Google アカウントとの紐付けを解除する', '/auth/google_oauth2', method: :delete, class: 'btn btn-light btn-google'
-  - else
-    = link_to 'Google アカウントと紐付ける', '/auth/google_oauth2', method: :post, class: 'btn btn-light btn-google'
-
-%section.mb-3
   = form_for @user do |f|
     = render 'shared/error_messages', object: f.object
 

@@ -19,27 +19,6 @@ create_table "active_storage_blobs", force: :cascade do |t|
   t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
 end
 
-create_table "google_credentials", force: :cascade do |t|
-  t.bigint "user_id", null: false
-  t.string "token", null: false
-  t.string "refresh_token"
-  t.datetime "expires_at", null: false
-  t.datetime "created_at", null: false
-  t.datetime "updated_at", null: false
-  t.index ["user_id"], name: "index_google_credentials_on_user_id", unique: true
-end
-
-create_table "identities", force: :cascade do |t|
-  t.bigint "user_id", null: false
-  t.string "provider", null: false
-  t.string "uid", null: false
-  t.datetime "created_at", null: false
-  t.datetime "updated_at", null: false
-  t.index ["provider", "uid"], name: "index_identities_on_provider_and_uid", unique: true
-  t.index ["user_id", "provider"], name: "index_identities_on_user_id_and_provider", unique: true
-  t.index ["user_id"], name: "index_identities_on_user_id"
-end
-
 create_table "lives", id: :serial, force: :cascade do |t|
   t.string "name", null: false
   t.date "date", null: false
@@ -106,8 +85,6 @@ create_table "users", id: :serial, force: :cascade do |t|
 end
 
 add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-add_foreign_key "google_credentials", "users"
-add_foreign_key "identities", "users"
 add_foreign_key "playings", "songs"
 add_foreign_key "playings", "users"
 add_foreign_key "songs", "lives", column: "live_id"
