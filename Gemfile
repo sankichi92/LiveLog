@@ -25,9 +25,6 @@ gem 'bootsnap', require: false
 gem 'action_args'
 gem 'active_decorator'
 gem 'haml-rails'
-gem 'omniauth'
-gem 'omniauth-google-oauth2'
-gem 'omniauth-rails_csrf_protection'
 gem 'pundit'
 gem 'rails-i18n'
 gem 'ridgepole', require: false

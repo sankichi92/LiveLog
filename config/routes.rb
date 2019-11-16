@@ -38,10 +38,6 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 
-  get '/auth/google_oauth2/callback', to: 'auth#create'
-  get '/auth/failure', to: 'auth#failure'
-  delete '/auth/google_oauth2', to: 'auth#destroy'
-
   direct :homepage do
     'https://ku-unplugged.net/'
   end
