@@ -1,5 +1,5 @@
 class Member < ApplicationRecord
-  MINIMUM_JOINED_YEAR = 1994
+  MINIMUM_JOINED_YEAR = 1995
 
   belongs_to :user, optional: true
   has_many :playings, dependent: :restrict_with_exception, foreign_key: :user_id, inverse_of: :member
