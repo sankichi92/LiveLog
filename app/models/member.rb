@@ -17,7 +17,7 @@ class Member < ApplicationRecord
 
   scope :regular_order, -> { order(joined_year: :desc, furigana: :asc) }
 
-  def name
+  def full_name
     "#{last_name} #{first_name}"
   end
 
@@ -26,6 +26,6 @@ class Member < ApplicationRecord
   end
 
   def long_name
-    nickname.present? ? "#{name} (#{nickname})" : name
+    nickname.present? ? "#{full_name} (#{nickname})" : full_name
   end
 end

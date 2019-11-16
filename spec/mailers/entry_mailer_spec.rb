@@ -16,18 +16,18 @@ RSpec.describe EntryMailer, type: :mailer do
     end
 
     it 'renders the text body' do
-      expect(mail.text_part.body).to include(applicant.member.name)
+      expect(mail.text_part.body).to include(applicant.member.full_name)
       expect(mail.text_part.body).to include(song.title)
-      expect(mail.text_part.body).to include(player.member.name)
+      expect(mail.text_part.body).to include(player.member.full_name)
       expect(mail.text_part.body).to include(entry.notes)
       expect(mail.text_part.body).to include(entry.preferred_rehearsal_time)
       expect(mail.text_part.body).to include(entry.preferred_performance_time)
     end
 
     it 'renders the html body' do
-      expect(mail.html_part.body).to include(applicant.member.name)
+      expect(mail.html_part.body).to include(applicant.member.full_name)
       expect(mail.html_part.body).to include(CGI.escapeHTML(song.name))
-      expect(mail.html_part.body).to include(player.member.name)
+      expect(mail.html_part.body).to include(player.member.full_name)
       expect(mail.html_part.body).to include(entry.notes)
       expect(mail.html_part.body).to include(entry.preferred_rehearsal_time)
       expect(mail.html_part.body).to include(entry.preferred_performance_time)
