@@ -14,6 +14,8 @@ class Song < ApplicationRecord
 
   belongs_to :live
   has_many :playings, dependent: :destroy, inverse_of: :song
+  has_many :members, through: :playings
+
   accepts_nested_attributes_for :playings, allow_destroy: true
 
   has_one_attached :audio
@@ -58,8 +60,8 @@ class Song < ApplicationRecord
     time&.strftime('%R')
   end
 
-  def player?(user)
-    playings.pluck(:user_id).include?(user&.id)
+  def player?(member)
+    playings.map(&:member_id).include?(member&.id)
   end
 
   private

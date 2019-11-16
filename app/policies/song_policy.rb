@@ -4,13 +4,13 @@ class SongPolicy < ApplicationPolicy
       if user&.admin?
         scope.all
       else
-        scope.joins(:playings).where('playings.user_id': user&.id)
+        scope.joins(:playings).where('playings.member_id': user&.member&.id)
       end
     end
   end
 
   def play?
-    record.open? || record.closed? && logged_in? || record.player?(user)
+    record.open? || record.closed? && logged_in? || record.player?(user&.member)
   end
 
   def create?
@@ -18,7 +18,7 @@ class SongPolicy < ApplicationPolicy
   end
 
   def update?
-    user&.admin_or_elder? || record.player?(user)
+    user&.admin_or_elder? || record.player?(user&.member)
   end
 
   def destroy?

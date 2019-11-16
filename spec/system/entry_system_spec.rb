@@ -5,7 +5,7 @@ RSpec.describe 'Entry', type: :system do
   let(:user) { create(:user) }
 
   describe 'list' do
-    let!(:user_song) { create(:song, :draft, name: 'applied song', live: live, users: [user, create(:user)]) }
+    let!(:user_song) { create(:song, :draft, name: 'applied song', live: live, members: [user.member, create(:member)]) }
     let!(:other_song) { create(:song, :draft, name: 'other song', live: live) }
 
     it 'enables logged-in users to see individual live entries pages and their applied songs' do
@@ -19,7 +19,7 @@ RSpec.describe 'Entry', type: :system do
       expect(page).not_to have_css('#admin-tools')
       expect(page).to have_content(user_song.name)
       user_song.playings.each do |playing|
-        expect(page).to have_content(playing.user.handle)
+        expect(page).to have_content(playing.member.short_name)
       end
       expect(page).not_to have_content(other_song.name)
     end
@@ -38,7 +38,7 @@ RSpec.describe 'Entry', type: :system do
   end
 
   describe 'add' do
-    let!(:users) { create_list(:user, 5) }
+    let!(:members) { create_list(:member, 5) }
 
     before do
       ActionMailer::Base.deliveries.clear
@@ -60,9 +60,9 @@ RSpec.describe 'Entry', type: :system do
       fill_in 'song_artist', with: 'テストアーティスト'
       select 'サークル内', from: 'song_status'
 
-      [user, users.first].each_with_index do |user, i|
+      [user.member, members.first].each_with_index do |member, i|
         all('.inst-field')[i].set('Gt')
-        all('.user-select')[i].find(:option, user.name_with_handle).select_option
+        all('.member-select')[i].find(:option, member.long_name).select_option
       end
 
       fill_in 'entry_preferred_rehearsal_time', with: '23時以前'

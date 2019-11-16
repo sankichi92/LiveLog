@@ -23,12 +23,12 @@ FactoryBot.define do
     end
 
     transient do
-      users { [] }
+      members { [] }
     end
 
     after(:create) do |song, evaluator|
-      evaluator.users.each do |user|
-        create(:playing, song: song, user: user)
+      evaluator.members.each do |member|
+        create(:playing, song: song, member: member)
       end
       song.reload
     end

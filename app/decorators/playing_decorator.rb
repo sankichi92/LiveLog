@@ -1,9 +1,9 @@
 module PlayingDecorator
-  def inst_dot
-    "#{inst}." if inst.present?
-  end
-
-  def handle_with_inst
-    "#{inst_dot}#{user.handle}"
+  def instrument_and_name
+    if inst.present?
+      "#{inst}.#{member.short_name}"
+    else
+      member.short_name
+    end
   end
 end

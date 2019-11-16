@@ -4,6 +4,7 @@ RSpec.describe 'Live requests', type: :request do
   describe 'GET /lives' do
     it 'responds 200' do
       get lives_path
+
       expect(response).to have_http_status(:ok)
     end
   end
@@ -12,8 +13,13 @@ RSpec.describe 'Live requests', type: :request do
     context 'when the live is published' do
       let(:live) { create(:live) }
 
+      before do
+        create_pair(:song, live: live, members: create_pair(:member))
+      end
+
       it 'responds 200' do
         get live_path(live)
+
         expect(response).to have_http_status(:ok)
       end
     end
@@ -23,6 +29,7 @@ RSpec.describe 'Live requests', type: :request do
 
       it 'redirects to /lives/:id/entries' do
         get live_path(live)
+
         expect(response).to redirect_to(live_entries_url(live))
       end
     end

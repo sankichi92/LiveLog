@@ -4,6 +4,8 @@ class User < ApplicationRecord
   has_many :playings, dependent: :restrict_with_exception
   has_many :songs, through: :playings
 
+  has_one :member, dependent: :nullify
+
   has_one_attached :avatar
 
   attr_accessor :remember_token, :activation_token, :reset_token

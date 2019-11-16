@@ -12,7 +12,8 @@
   %dd
     - @entry.playings.reverse_each do |playing|
       #{playing.inst}.
-      = link_to "#{playing.user.name} (#{playing.user.joined})", user_url(playing.user)
+      -# TODO
+      = link_to "#{playing.member.name} (#{playing.member.joined_year})", user_url(playing.member_id)
       %br
   %dt リハーサル希望時間
   %dd= @entry.preferred_rehearsal_time
