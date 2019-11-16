@@ -5,7 +5,7 @@
     .col-3.col-md-2
       = f.text_field :inst, class: 'inst-field form-control', placeholder: 'Gt&Vo', list: 'instruments'
     .col
-      = f.collection_select :user_id, User.natural_order, :id, :name_with_handle, {}, class: 'user-select select2 form-control'
+      = f.collection_select :member_id, Member.regular_order, :id, :long_name, {}, class: 'member-select select2 form-control'
     .col-2.col-md-1
       = content_tag :button, icon('fas', 'minus'), type: 'button', class: 'remove-member btn btn-block btn-light', data: { prefix: "song_playings_attributes_#{f.index}" }
 

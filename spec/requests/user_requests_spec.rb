@@ -32,12 +32,15 @@ RSpec.describe 'User requests', type: :request do
   end
 
   describe 'GET /members/:id by logged-in user' do
-    let(:user) { create(:user) }
+    let(:user) { create(:user, songs: create_pair(:song)) }
 
-    before { log_in_as(create(:user), capybara: false) }
+    before do
+      log_in_as(create(:user), capybara: false)
+    end
 
     it 'responds 200' do
       get user_path(user)
+
       expect(response).to have_http_status(:ok)
     end
   end
@@ -154,9 +157,13 @@ RSpec.describe 'User requests', type: :request do
     end
 
     context 'when the user has one or more songs' do
-      before { create(:song, users: [user]) }
+      before do
+        create(:song, members: [user.member])
+      end
 
       it 'responds 422' do
+        pending
+
         expect { delete user_path(user) }.not_to change(User, :count)
         expect(response).to redirect_to(user)
       end

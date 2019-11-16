@@ -49,7 +49,7 @@ RSpec.describe 'Song', type: :system do
   end
 
   describe 'detail' do
-    let!(:song) { create(:song, users: create_list(:user, 2)) }
+    let!(:song) { create(:song, members: create_list(:member, 2)) }
 
     before { Song.__elasticsearch__.refresh_index! }
 
@@ -62,14 +62,14 @@ RSpec.describe 'Song', type: :system do
       expect(page).to have_content(song.live.name)
       expect(page).to have_content(song.order)
       song.playings.each do |playing|
-        expect(page).to have_content(playing.user.handle)
+        expect(page).to have_content(playing.member.short_name)
       end
     end
   end
 
   describe 'add' do
     let(:live) { create(:live) }
-    let!(:users) { create_list(:user, 5) }
+    let!(:members) { create_list(:member, 5) }
 
     before { log_in_as create(:admin) }
 
@@ -87,9 +87,9 @@ RSpec.describe 'Song', type: :system do
       fill_in 'song_name', with: 'テストソング'
       fill_in 'song_artist', with: 'テストアーティスト'
 
-      users.take(2).each_with_index do |user, i|
+      members.take(2).each_with_index do |member, i|
         all('.inst-field')[i].set('Gt')
-        all('.user-select')[i].find(:option, user.name_with_handle).select_option
+        all('.member-select')[i].find(:option, member.long_name).select_option
       end
 
       expect { click_button '登録する' }.to change(Song, :count).by(1)
@@ -99,7 +99,7 @@ RSpec.describe 'Song', type: :system do
 
   describe 'edit' do
     let(:user) { create(:user) }
-    let(:song) { create(:song, users: [user], audio: nil) }
+    let(:song) { create(:song, members: [user.member], audio: nil) }
 
     it 'enables admin users to update songs' do
       log_in_as create(:admin)

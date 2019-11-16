@@ -2,18 +2,30 @@ require 'rails_helper'
 
 RSpec.describe 'Song requests', type: :request do
   describe 'GET /songs' do
+    before do
+      create_pair(:song, members: create_pair(:member))
+    end
+
     it 'responds 200' do
       get songs_path
+
       expect(response).to have_http_status(:ok)
     end
   end
 
   describe 'GET /songs/search' do
     context 'with valid params' do
-      let(:search_params) { { artist: 'The Beatles' } }
+      let(:query) { 'The Beatles' }
+      let(:params) { { q: query } }
+
+      before do
+        create(:song, artist: query)
+        create(:song)
+      end
 
       it 'responds 200' do
-        get search_songs_path, params: search_params
+        get search_songs_path, params: params
+
         expect(response).to have_http_status(:ok)
       end
     end
@@ -23,16 +35,18 @@ RSpec.describe 'Song requests', type: :request do
 
       it 'responds 422' do
         get search_songs_path, params: search_params
+
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
   end
 
   describe 'GET /songs/:id' do
-    let(:song) { create(:song) }
+    let(:song) { create(:song, members: create_pair(:member)) }
 
     it 'responds 200' do
       get search_songs_path(song)
+
       expect(response).to have_http_status(:ok)
     end
   end
@@ -73,12 +87,16 @@ RSpec.describe 'Song requests', type: :request do
   end
 
   describe 'GET /songs/:id/edit by player' do
-    let(:song) { create(:song) }
+    let(:song) { create(:song, members: [user.member]) }
+    let(:user) { create(:user) }
 
-    before { log_in_as(create(:user, songs: [song]), capybara: false) }
+    before do
+      log_in_as(user, capybara: false)
+    end
 
     it 'responds 200' do
       get edit_song_path(song)
+
       expect(response).to have_http_status(:ok)
     end
   end

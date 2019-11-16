@@ -1,4 +1,5 @@
 %li.list-inline-item
   %span.badge.badge-pill.badge-secondary= playing.inst
-  = policy(playing.user).show? ? link_to(playing.user.avatar_image_tag(:small), playing.user) : playing.user.avatar_image_tag(:small)
-  = policy(playing.user).show? ? link_to(playing.user.handle, playing.user) : playing.user.handle
+  -# TODO: Link to the member detail page
+  = playing.member.avatar_image_tag(:small)
+  = playing.member.short_name

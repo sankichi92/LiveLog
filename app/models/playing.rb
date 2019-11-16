@@ -1,13 +1,14 @@
 class Playing < ApplicationRecord
   INST_ORDER = %w[Vo Vn Vla Vc Fl Cl Sax Tp Hr Tb Harp Gt Koto Pf Acc 鍵ハ Ba Cj Dr Bongo Perc].freeze
 
-  belongs_to :user, counter_cache: true
+  alias_attribute :member_id, :user_id
+
+  belongs_to :member, counter_cache: true, foreign_key: :user_id, inverse_of: :playings
   belongs_to :song, touch: true
 
-  before_save :format_inst
+  validates :member_id, uniqueness: { scope: :song_id }
 
-  validates :user_id, presence: true
-  validates :song, presence: true
+  before_save :format_inst
 
   scope :published, -> { includes(song: :live).where('lives.published': true) }
 

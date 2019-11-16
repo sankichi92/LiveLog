@@ -5,7 +5,7 @@ RSpec.describe SongMailer, type: :mailer do
     let(:users) { create_list(:user, 3, subscribing: true) }
     let(:inactivated_user) { create(:user, :inactivated) }
     let(:unsubscribing_user) { create(:user, subscribing: false) }
-    let(:song) { create(:song, users: [users, inactivated_user, unsubscribing_user].flatten) }
+    let(:song) { create(:song, members: [users.map(&:member), inactivated_user.member, unsubscribing_user.member].flatten) }
     let(:mail) { SongMailer.pickup_song(song) }
 
     it 'renders the headers' do

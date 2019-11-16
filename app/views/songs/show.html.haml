@@ -1,12 +1,13 @@
 :ruby
   provide(:title, @song.title)
-  provide(:description, strip_tags(@song.comment).presence || "#{@song.live.title} #{@song.time_order} #{@song.playings.sort_by(&:inst_order).map { |p| "#{p.inst}.#{p.user.handle}" }.join(' ')}")
+  provide(:description, strip_tags(@song.comment).presence || "#{@song.live.title} #{@song.time_order} #{@song.playings.sort_by(&:inst_order).map { |p| "#{p.instrument_and_name}" }.join(' ')}")
   provide(:og_type, 'music.song')
   provide(:og_image, @song.youtube_thumbnail('maxresdefault')) if policy(@song).play?
 
 - content_for :additional_meta_fields do
   - @song.playings.each do |playing|
-    %meta{ property: 'music:musician', content: user_url(playing.user) }
+    -# TODO
+    %meta{ property: 'music:musician', content: user_url(playing.member_id) }
 
 %article
   - if @song.youtube_id.present? && policy(@song).play?
@@ -23,7 +24,7 @@
         %h1.card-title
           = @song.title
           %small= '(オリジナル曲)' if @song.original?
-          = @song.status_icon if @song.player?(current_user)
+          = @song.status_icon if @song.player?(current_user&.member)
       %dl
         - if @song.playings.present?
           %dt= 'メンバー'

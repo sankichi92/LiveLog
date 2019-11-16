@@ -4,7 +4,7 @@ RSpec.describe EntryMailer, type: :mailer do
   describe 'entry' do
     let(:applicant) { create(:user) }
     let(:player) { create(:user) }
-    let(:song) { create(:song, users: [applicant, player]) }
+    let(:song) { create(:song, members: [applicant.member, player.member]) }
     let(:entry) { build(:entry, applicant: applicant, song: song) }
     let(:mail) { EntryMailer.entry(entry) }
 
@@ -16,18 +16,18 @@ RSpec.describe EntryMailer, type: :mailer do
     end
 
     it 'renders the text body' do
-      expect(mail.text_part.body).to include(applicant.name)
+      expect(mail.text_part.body).to include(applicant.member.name)
       expect(mail.text_part.body).to include(song.title)
-      expect(mail.text_part.body).to include(player.name)
+      expect(mail.text_part.body).to include(player.member.name)
       expect(mail.text_part.body).to include(entry.notes)
       expect(mail.text_part.body).to include(entry.preferred_rehearsal_time)
       expect(mail.text_part.body).to include(entry.preferred_performance_time)
     end
 
     it 'renders the html body' do
-      expect(mail.html_part.body).to include(applicant.name)
+      expect(mail.html_part.body).to include(applicant.member.name)
       expect(mail.html_part.body).to include(CGI.escapeHTML(song.name))
-      expect(mail.html_part.body).to include(player.name)
+      expect(mail.html_part.body).to include(player.member.name)
       expect(mail.html_part.body).to include(entry.notes)
       expect(mail.html_part.body).to include(entry.preferred_rehearsal_time)
       expect(mail.html_part.body).to include(entry.preferred_performance_time)

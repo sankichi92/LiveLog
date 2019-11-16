@@ -1,5 +1,5 @@
 class EntriesController < ApplicationController
-  permits :name, :artist, :original, :status, playings_attributes: %i[id user_id inst _destroy], model_name: 'Song'
+  permits :name, :artist, :original, :status, playings_attributes: %i[id member_id inst _destroy], model_name: 'Song'
 
   before_action :set_live
   before_action :draft_live
@@ -9,7 +9,7 @@ class EntriesController < ApplicationController
 
   def index
     authorize Entry
-    @songs = policy_scope(@live.songs).with_attached_audio.includes(playings: :user).order(:time, :order, created_at: :desc)
+    @songs = policy_scope(@live.songs).with_attached_audio.includes(playings: :member).order(:time, :order, created_at: :desc)
   end
 
   def new

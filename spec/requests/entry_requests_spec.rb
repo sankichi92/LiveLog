@@ -11,6 +11,7 @@ RSpec.describe 'Entry requests', type: :request do
 
       it 'redirects to /lives/:id' do
         get live_entries_path(live)
+
         expect(response).to redirect_to(live)
       end
     end
@@ -18,8 +19,13 @@ RSpec.describe 'Entry requests', type: :request do
     context 'when live is unpublished' do
       let(:live) { create(:live, :draft) }
 
+      before do
+        create_pair(:song, :draft, live: live, members: create_pair(:member))
+      end
+
       it 'responds 200' do
         get live_entries_path(live)
+
         expect(response).to have_http_status(:ok)
       end
     end

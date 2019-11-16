@@ -12,12 +12,12 @@
       %h5
         = song.title
         %small= '(オリジナル曲)' if song.original?
-        = song.status_icon if song.player?(current_user)
+        = song.status_icon if song.player?(current_user&.member)
 
       %ul.list-inline.mb-2
         - song.playings.sort_by(&:inst_order).each do |playing|
           %li.list-inline-item<
-            = playing.handle_with_inst
+            = playing.instrument_and_name
 
       .text-muted= strip_links(song.comment) if song.comment?
 

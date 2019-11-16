@@ -1,17 +1,17 @@
 class SongsController < ApplicationController
-  permits :live_id, :time, :order, :name, :artist, :original, :youtube_id, :audio, :status, :comment, playings_attributes: %i[id user_id inst _destroy]
+  permits :live_id, :time, :order, :name, :artist, :original, :youtube_id, :audio, :status, :comment, playings_attributes: %i[id member_id inst _destroy]
 
   after_action :verify_authorized, except: %i[index search show]
 
   def index(page = 1)
-    @songs = Song.published.order_by_live.includes(playings: :user).page(page)
+    @songs = Song.published.order_by_live.includes(playings: :member).page(page)
     @query = Song::SearchQuery.new
   end
 
   def search(page = 1)
     @query = Song::SearchQuery.new(search_params.merge(logged_in: logged_in?))
     if @query.valid?
-      @songs = Song.search(@query).page(page).records(includes: [:live, { playings: :user }])
+      @songs = Song.search(@query).page(page).records(includes: [:live, { playings: :member }])
       render :index
     else
       render :index, status: :unprocessable_entity
@@ -19,9 +19,9 @@ class SongsController < ApplicationController
   end
 
   def show(id)
-    @song = Song.includes(playings: { user: { 'avatar_attachment': :blob } }).find(id)
+    @song = Song.includes(playings: { member: { 'avatar_attachment': :blob } }).find(id)
     begin
-      @related_songs = @song.more_like_this.records(includes: [:live, { playings: :user }]).to_a if @song.live.published?
+      @related_songs = @song.more_like_this.records(includes: [:live, { playings: :member }]).to_a if @song.live.published?
     rescue => e
       Raven.capture_exception(e)
     end
@@ -49,7 +49,7 @@ class SongsController < ApplicationController
   end
 
   def edit(id)
-    @song = Song.includes(playings: :user).find(id)
+    @song = Song.includes(playings: :member).find(id)
     authorize @song
   end
 

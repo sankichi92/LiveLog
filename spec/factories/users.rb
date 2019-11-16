@@ -1,5 +1,6 @@
 FactoryBot.define do
   factory :user do
+    member
     last_name { Faker::Name.last_name }
     first_name { Faker::Name.first_name }
     furigana { 'ふりがな' }
@@ -35,7 +36,7 @@ FactoryBot.define do
 
     after(:create) do |user, evaluator|
       evaluator.songs.each do |song|
-        create(:playing, song: song, user: user)
+        create(:playing, song: song, member: user.member)
       end
     end
 

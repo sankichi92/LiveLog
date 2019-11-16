@@ -6,7 +6,7 @@
 
 メンバー:
 <% @entry.playings.reverse.each do |playing| %>
-    <%= "#{playing.inst}. #{playing.user.name} (#{playing.user.joined})" %>
+    <%= "#{playing.inst}. #{playing.member.name} (#{playing.member.joined_year})" %>
 <% end %>
 
 リハーサル希望時間:
