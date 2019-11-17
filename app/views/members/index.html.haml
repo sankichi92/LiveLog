@@ -1,0 +1,12 @@
+- provide(:title, 'Members')
+- provide(:description, '京大アンプラグドのメンバー一覧')
+
+%header.page-header.d-none.d-sm-block
+  %h1.display-4 Members
+
+%nav.nav.nav-pills.nav-justified.mb-3
+  - Member.joined_years.each do |year|
+    = link_to year, year_members_path(year: year), class: "nav-item nav-link#{year == @year ? ' active' : ''}"
+
+.row
+  = render partial: 'member', collection: @members, cached: true

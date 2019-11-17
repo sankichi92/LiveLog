@@ -15,8 +15,11 @@ RSpec.describe 'Account activation', type: :system do
   it 'enables users to activate their account' do
     Capybara.using_session("Inviter's session") do
       log_in_as inviter
-      visit user_path(user)
-      click_link '招待する'
+
+      # TODO
+      # visit member_path(member)
+      # click_link '招待する'
+      visit new_user_activation_path(user)
 
       expect(page).to have_title('Invite')
 
@@ -37,7 +40,7 @@ RSpec.describe 'Account activation', type: :system do
     click_button 'アカウントを有効化する'
 
     expect(page).to have_css('.alert-success')
-    expect(page).to have_title(user.name_with_handle)
+    expect(page).to have_content(user.member.full_name)
     expect(user.password_digest).not_to eq user.reload.password_digest
     expect(user.activated).to be true
   end

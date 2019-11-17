@@ -49,7 +49,7 @@ RSpec.describe Playing, type: :model do
     end
   end
 
-  describe '.count_insts' do
+  describe '.count_by_divided_instrument' do
     before do
       %w[Gt Gt Vo Gt&Vo Ba&Cho Cj&Cho].each do |inst|
         create(:playing, inst: inst)
@@ -57,7 +57,7 @@ RSpec.describe Playing, type: :model do
     end
 
     it 'returns the number of occurrences of each instrument' do
-      expect(Playing.all.count_insts).to match_array [['Gt', 3], ['Vo', 2], ['Cho', 2], ['Ba', 1], ['Cj', 1]]
+      expect(Playing.all.count_by_divided_instrument).to match_array [['Gt', 3], ['Vo', 2], ['Cho', 2], ['Ba', 1], ['Cj', 1]]
     end
   end
 

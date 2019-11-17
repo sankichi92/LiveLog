@@ -1,0 +1,12 @@
+.col-12.col-sm-6.col-lg-4.mb-3
+  %section.card
+    .card-body
+      %header.d-flex.align-items-center
+        = link_to member, class: 'd-box mr-2 my-1' do
+          = member.avatar_image_tag(:medium)
+        .info
+          %h5.card-title
+            = link_to member.short_name, member, class: 'text-dark'
+          .card-subtitle.text-muted
+            = member.played_instruments.take(3).join(', ')
+      = simple_format member.bio, class: 'card-text text-muted'

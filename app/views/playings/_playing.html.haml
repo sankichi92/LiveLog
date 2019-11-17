@@ -1,5 +1,4 @@
 %li.list-inline-item
   %span.badge.badge-pill.badge-secondary= playing.inst
-  -# TODO: Link to the member detail page
-  = playing.member.avatar_image_tag(:small)
-  = playing.member.short_name
+  = link_to playing.member.avatar_image_tag(:small), playing.member
+  = link_to playing.member.short_name, playing.member

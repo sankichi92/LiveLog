@@ -2,13 +2,16 @@ require 'rails_helper'
 
 RSpec.describe 'Account activation requests', type: :request do
   describe 'GET /users/:user_id/activation/new by logged-in user' do
-    before { log_in_as create(:user), capybara: false }
+    before do
+      log_in_as create(:user), capybara: false
+    end
 
     context 'with inactivated user' do
       let(:user) { create(:user, :inactivated) }
 
       it 'responds 200' do
         get new_user_activation_path(user)
+
         expect(response).to have_http_status(:ok)
       end
     end
@@ -18,6 +21,7 @@ RSpec.describe 'Account activation requests', type: :request do
 
       it 'redirects /users/:id' do
         get new_user_activation_path(user)
+
         expect(response).to redirect_to(user)
       end
     end
@@ -36,10 +40,11 @@ RSpec.describe 'Account activation requests', type: :request do
 
       it 'sends invitation email and redirects to /users/:id' do
         post user_activation_path(user), params: { user: { email: email } }
+
         expect(user.reload.email).to eq email
         expect(user.activation_digest).to be_present
         expect(ActionMailer::Base.deliveries.size).to eq 1
-        expect(response).to redirect_to(user)
+        expect(response).to redirect_to user.member
       end
     end
 
@@ -48,6 +53,7 @@ RSpec.describe 'Account activation requests', type: :request do
 
       it 'responds 422' do
         post user_activation_path(user), params: { user: { email: email } }
+
         expect(user.reload.email).not_to eq email
         expect(user.activation_digest).to be_blank
         expect(ActionMailer::Base.deliveries.size).to eq 0
@@ -63,6 +69,7 @@ RSpec.describe 'Account activation requests', type: :request do
     context 'with valid token' do
       it 'responds 200' do
         get edit_user_activation_path(user, t: token)
+
         expect(response).to have_http_status(:ok)
       end
     end
@@ -70,6 +77,7 @@ RSpec.describe 'Account activation requests', type: :request do
     context 'with invalid token' do
       it 'redirects to /' do
         get edit_user_activation_path(user, t: 'invalid_token')
+
         expect(response).to redirect_to(root_url)
       end
     end
@@ -84,11 +92,12 @@ RSpec.describe 'Account activation requests', type: :request do
 
       it 'activates user, sets session and redirects to /users/:id' do
         patch user_activation_path(user), params: { t: token, user: { password: password, password_confirmation: password } }
+
         expect(user.password_digest).not_to eq user.reload.password_digest
         expect(user.activated).to be true
         expect(user.activated_at).to be_present
         expect(session[:user_id]).to eq user.id
-        expect(response).to redirect_to(user)
+        expect(response).to redirect_to user.member
       end
     end
 
@@ -97,6 +106,7 @@ RSpec.describe 'Account activation requests', type: :request do
 
       it 'responds 422' do
         patch user_activation_path(user), params: { t: token, user: { password: password, password_confirmation: password } }
+
         expect(user.password_digest).to eq user.reload.password_digest
         expect(user.activated).to be false
         expect(user.activated_at).to be_blank
@@ -110,6 +120,7 @@ RSpec.describe 'Account activation requests', type: :request do
 
       it 'responds 422' do
         patch user_activation_path(user), params: { t: token, user: { password: password, password_confirmation: password } }
+
         expect(user.password_digest).to eq user.reload.password_digest
         expect(user.activated).to be false
         expect(user.activated_at).to be_blank
@@ -126,10 +137,11 @@ RSpec.describe 'Account activation requests', type: :request do
 
     it 'deactivates the user and redirects to /users/:id' do
       delete user_activation_path(user)
+
       expect(user.reload.activated).to be false
       expect(user.activated_at).to be_nil
       expect(user.activation_digest).to be_nil
-      expect(response).to redirect_to(user)
+      expect(response).to redirect_to user.member
     end
   end
 end

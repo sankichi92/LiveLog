@@ -88,6 +88,7 @@ RSpec.describe 'Password reset requests', type: :request do
     context 'with empty password' do
       it 'responds 422' do
         patch password_reset_path(token), params: { email: user.email, user: { password: '', password_confirmation: '' } }
+
         expect(user.password_digest).to eq user.reload.password_digest
         expect(session[:user_id]).to be_nil
         expect(response).to have_http_status(:unprocessable_entity)
@@ -97,6 +98,7 @@ RSpec.describe 'Password reset requests', type: :request do
     context 'with invalid password' do
       it 'responds 422' do
         patch password_reset_path(token), params: { email: user.email, user: { password: '1234', password_confirmation: '1234' } }
+
         expect(user.password_digest).to eq user.reload.password_digest
         expect(session[:user_id]).to be_nil
         expect(response).to have_http_status(:unprocessable_entity)
@@ -106,9 +108,10 @@ RSpec.describe 'Password reset requests', type: :request do
     context 'with valid password' do
       it 'updates password, sets session and redirects to /users/:id' do
         patch password_reset_path(token), params: { email: user.email, user: { password: 'new_password', password_confirmation: 'new_password' } }
+
         expect(user.password_digest).not_to eq user.reload.password_digest
         expect(session[:user_id]).to eq user.id
-        expect(response).to redirect_to(user)
+        expect(response).to redirect_to(user.member)
       end
     end
   end

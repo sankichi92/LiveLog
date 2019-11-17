@@ -1,0 +1,51 @@
+:ruby
+  provide(:title, @member.short_name)
+  provide(:description, strip_tags(@member.bio).presence || "#{@member.joined_year}年度入部 #{@member.played_instruments}")
+  provide(:og_type, 'profile')
+  provide(:og_image, @member.avatar_source(:large)) if @member.avatar.attached?
+
+- content_for :additional_meta_fields do
+  %meta{ property: 'profile:username', content: @member.short_name }
+
+%section.member-detail.card.mb-3
+  .card-body
+    .d-flex.flex-column.flex-sm-row.align-items-sm-center.mb-2
+      .member-thumbnail.text-center
+        = @member.avatar_image_tag(:large, class: 'm-3')
+      .member-info
+        .card-subtitle.text-muted
+          = @member.joined_year
+        %h1
+          = current_user ? @member.long_name : @member.short_name
+        .card-subtitle.text-muted<
+          #{@member.published_songs.size}曲
+          = "・#{@member.played_instruments.join(', ')}" unless @member.played_instruments.empty?
+        = link_to @member.url, @member.url, target: '_blank', rel: 'noopener' if @member.url?
+    %dl
+      - unless @collaborators.empty?
+        %dt
+          = '共演者'
+          %small.text-muted #{@collaborators.size}人
+        %dd
+          %ul.list-inline
+            - @collaborators.take(10).each do |collaborator|
+              %li.list-inline-item
+                = link_to collaborator.avatar_image_tag(:small), collaborator
+                = link_to collaborator.short_name, collaborator
+      - if @member.bio?
+        %dt= Member.human_attribute_name(:bio)
+        %dd= simple_format(@member.bio, class: 'text-muted')
+    %aside.btn-toolbar{ role: 'toolbar' }
+      - if current_user && @member.user_id.nil?
+        .btn-group.mr-2
+          = link_to icon('fas', 'envelope') + ' ' + '招待する', new_user_activation_path(@member.id), class: 'btn btn-info'
+
+- unless (playable_songs = @member.published_songs.select(&:playable?)).empty?
+  = render 'songs/playlist', songs: playable_songs
+
+- unless (songs = @member.published_songs).empty?
+  .song-list
+    - if logged_in?
+      = render songs
+    - else
+      = render partial: 'songs/song', collection: songs, cached: true

@@ -18,18 +18,9 @@ ja:
       user: メンバー
     attributes:
       user:
-        first_name: 名
-        last_name: 姓
-        furigana: ふりがな
-        nickname: ニックネーム
-        joined: 入部年度
         email: メールアドレス
         password: パスワード
         password_confirmation: パスワードを再入力
-        public: 公開
-        url: URL
-        intro: 自己紹介
-        avatar: プロフィール画像
       song:
         name: 曲名
         artist: アーティスト名
@@ -47,6 +38,15 @@ ja:
         date: 開催日
         place: 場所
         album_url: アルバム URL
+      member:
+        joined_year: 入部年度
+        first_name: 名
+        last_name: 姓
+        furigana: ふりがな
+        nickname: ニックネーム
+        url: URL
+        bio: 自己紹介
+        avatar: プロフィール画像
       playing:
         user: メンバー
         inst: 楽器

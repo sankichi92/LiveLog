@@ -6,7 +6,7 @@ RSpec.describe 'Login', type: :system do
   it 'enables users to login and logout' do
     log_in_as user, remember_me: '1'
 
-    expect(page).to have_content(user.name_with_handle)
+    expect(page).to have_content(user.member.full_name)
     expect(page).to have_link('Profile', href: user_path(user))
     expect(page).to have_link('Settings', href: edit_user_path(user))
     expect(page).to have_link('Log out', href: logout_path)

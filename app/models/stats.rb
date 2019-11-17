@@ -22,7 +22,7 @@ class Stats
   end
 
   def inst_to_count
-    playings.count_insts
+    playings.count_by_divided_instrument
   end
 
   def number_of_artists
@@ -62,6 +62,6 @@ class Stats
   end
 
   def playings
-    Playing.published.includes(song: :live).where('lives.date': date_range)
+    Playing.includes(song: :live).merge(Live.published).where('lives.date': date_range)
   end
 end
