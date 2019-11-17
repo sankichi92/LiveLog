@@ -3,8 +3,7 @@ class Member < ApplicationRecord
 
   belongs_to :user, optional: true
   has_many :playings, dependent: :restrict_with_exception, foreign_key: :user_id, inverse_of: :member
-  has_many :songs, through: :playings
-  has_many :published_songs, -> { published.newest_live_order }, through: :playings, source: :song
+  has_many :published_songs, -> { published }, through: :playings, source: :song
 
   has_one_attached :avatar
 
@@ -17,7 +16,7 @@ class Member < ApplicationRecord
   validates :url, format: /\A#{URI.regexp(%w[http https])}\z/, allow_blank: true
 
   scope :regular_order, -> { order(joined_year: :desc, furigana: :asc) }
-  scope :collaborated_with, ->(member) { joins(playings: :song).merge(member.songs.published).where.not(id: member.id) }
+  scope :collaborated_with, ->(member) { joins(playings: :song).merge(member.published_songs).where.not(id: member.id) }
   scope :with_played_count, -> { joins(playings: :song).select('members.*', 'count(distinct songs.id) as played_count').group(:id).order('played_count desc') }
 
   def self.joined_years

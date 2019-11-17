@@ -12,7 +12,8 @@ class MembersController < ApplicationController
   end
 
   def show(id)
-    @member = Member.includes(published_songs: [:live, { playings: :member }, { 'audio_attachment': :blob }]).find(id)
+    @member = Member.find(id)
     @collaborators = Member.with_attached_avatar.collaborated_with(@member).with_played_count.to_a
+    @songs = @member.published_songs.includes(:live, { playings: :member }, { 'audio_attachment': :blob }).newest_live_order
   end
 end
