@@ -20,9 +20,13 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :users, path: :members do
-    post 'csv', on: :collection
+  resources :members, only: %i[index show] do
+    collection do
+      get 'year/:year', action: :year, as: :year, constraints: { year: /\d{4}/ }
+    end
+  end
 
+  resources :users, only: %i[edit update], path: :members do
     resource :account_activation, except: :show, path: :activation, as: :activation
     resource :password, only: %i[edit update]
     resource :admin, only: %i[create destroy]

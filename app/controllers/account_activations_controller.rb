@@ -13,7 +13,7 @@ class AccountActivationsController < ApplicationController
     authorize @user, :invite?
     if @user.send_invitation(user[:email], current_user)
       flash[:success] = '招待メールを送信しました'
-      redirect_to @user
+      redirect_to @user.member
     else
       render 'new', status: :unprocessable_entity
     end
@@ -28,7 +28,7 @@ class AccountActivationsController < ApplicationController
     elsif @user.activate(user.permit(:password, :password_confirmation))
       log_in @user
       flash[:success] = 'LiveLog へようこそ！'
-      redirect_to @user
+      redirect_to @user.member
     else
       render 'edit', status: :unprocessable_entity
     end
@@ -38,7 +38,7 @@ class AccountActivationsController < ApplicationController
     authorize @user, :change_status?
     @user.deactivate
     flash[:success] = 'アカウントを無効にしました'
-    redirect_to @user
+    redirect_to @user.member
   end
 
   private

@@ -52,10 +52,11 @@ RSpec.describe 'Session requests', type: :request do
     end
 
     context 'with valid information and when user is activated' do
-      it 'saves user_id in session and redirects to /users/:id' do
+      it 'saves user_id in session and redirects to /members/:id' do
         post login_path, params: params
+
         expect(session[:user_id]).to eq user.id
-        expect(response).to redirect_to(user)
+        expect(response).to redirect_to(user.member)
       end
     end
 

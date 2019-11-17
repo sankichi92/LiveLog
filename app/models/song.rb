@@ -29,8 +29,8 @@ class Song < ApplicationRecord
   validates :youtube_id, format: { with: VALID_YOUTUBE_REGEX }, allow_blank: true
 
   scope :played_order, -> { order(:time, :order) }
-  scope :order_by_live, -> { includes(:live).order('lives.date DESC', :time, :order) }
-  scope :published, -> { eager_load(:live).where('lives.published': true) }
+  scope :order_by_live, -> { joins(:live).order('lives.date desc', :time, :order) } # TODO: Rename to `newest_live_order`.
+  scope :published, -> { joins(:live).merge(Live.published) }
 
   self.per_page = 20
 

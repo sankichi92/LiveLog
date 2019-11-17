@@ -7,7 +7,7 @@
       %ul.navbar-nav.mr-auto
         %li.nav-item{ class: current_page?(songs_path) || current_page?(search_songs_path) ? 'active' : '' }= link_to 'Song Search', songs_path, class: 'nav-link'
         %li.nav-item{ class: params[:controller] == 'lives' ? 'active' : '' }= link_to 'Live List', lives_path, class: 'nav-link'
-        %li.nav-item{ class: params[:controller] == 'users' ? 'active' : '' }= link_to 'Members', users_path, class: 'nav-link'
+        %li.nav-item{ class: params[:controller] == 'members' ? 'active' : '' }= link_to 'Members', members_path, class: 'nav-link'
         %li.nav-item{ class: params[:controller] == 'stats' ? 'active' : '' }= link_to 'Stats', stat_path('current'), class: 'nav-link'
       - if logged_in?
         %ul.nav.navbar-nav
@@ -17,7 +17,6 @@
                 Admin
               .dropdown-menu{ 'aria-labellebdy': 'navbar-admin-dropdown-menu-link' }
                 = link_to 'New Live', new_live_path, class: 'dropdown-item'
-                = link_to 'New Member', new_user_path, class: 'dropdown-item'
           - if Live.drafts.exists?
             %li.nav-item.dropdown{ class: params[:controller] == 'entries' ? 'active' : '' }
               %a.nav-link.dropdown-toggle#navbar-entry-dropdown-menu-link{ href: '#', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' }

@@ -20,7 +20,7 @@ class SessionsController < ApplicationController
       log_in user
       session[:remember_me] == '1' ? remember(user) : forget(user)
       flash[:success] = 'ログインしました'
-      redirect_back_or user
+      redirect_back_or user.member
     else
       flash.now[:danger] = '無効なメールアドレスとパスワードの組み合わせです'
       render 'new', status: :unprocessable_entity

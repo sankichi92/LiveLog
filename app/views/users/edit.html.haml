@@ -6,35 +6,7 @@
   = form_for @user do |f|
     = render 'shared/error_messages', object: f.object
 
-    = render 'name_form', f: f
-
-    .form-group
-      = f.label :nickname
-      = f.text_field :nickname, class: 'form-control'
-
     = render 'email_form', f: f
-
-    .form-group
-      = f.label :url
-      = f.url_field :url, class: 'form-control', placeholder: 'http://ku-unplugged.net/'
-
-    .form-group
-      = f.label :intro
-      = f.text_area :intro, class: 'form-control', rows: '3'
-
-    .form-group
-      = f.label :avatar
-      = f.file_field :avatar, direct_upload: true, accept: 'image/png,image/gif,image/jpeg', class: 'form-control-file'
-
-    .form-group
-      .custom-control.custom-checkbox.custom-control-inline
-        = f.check_box :public, class: 'custom-control-input'
-        = f.label :public, class: 'custom-control-label' do
-          ログインしていないユーザにもプロフィールを公開する
-          = icon 'fas', 'question-circle',
-                 'data-toggle': 'tooltip',
-                 'data-placement': 'right',
-                 title: '名前とメールアドレスが公開されることはありません。ただし，ニックネームがない場合，姓は公開されます'
 
     .form-group
       .custom-control.custom-checkbox

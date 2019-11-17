@@ -6,8 +6,7 @@
 
 - content_for :additional_meta_fields do
   - @song.playings.each do |playing|
-    -# TODO
-    %meta{ property: 'music:musician', content: user_url(playing.member_id) }
+    %meta{ property: 'music:musician', content: member_url(playing.member) }
 
 %article
   - if @song.youtube_id.present? && policy(@song).play?

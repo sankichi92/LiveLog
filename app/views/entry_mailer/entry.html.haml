@@ -1,6 +1,6 @@
 %dl
   %dt 申請者
-  %dd= link_to "#{@entry.applicant.name} (#{@entry.applicant.joined})", user_url(@entry.applicant)
+  %dd= link_to "#{@entry.applicant.name} (#{@entry.applicant.joined})", member_url(@entry.applicant.member)
   %dt ライブ
   %dd= link_to @entry.live.title, live_url(@entry.live)
   %dt 曲名 / アーティスト名
@@ -12,8 +12,7 @@
   %dd
     - @entry.playings.reverse_each do |playing|
       #{playing.inst}.
-      -# TODO
-      = link_to "#{playing.member.full_name} (#{playing.member.joined_year})", user_url(playing.member_id)
+      = link_to "#{playing.member.full_name} (#{playing.member.joined_year})", member_url(playing.member)
       %br
   %dt リハーサル希望時間
   %dd= @entry.preferred_rehearsal_time

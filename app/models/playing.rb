@@ -10,9 +10,7 @@ class Playing < ApplicationRecord
 
   before_save :format_inst
 
-  scope :published, -> { includes(song: :live).where('lives.published': true) }
-
-  def self.count_insts
+  def self.count_by_divided_instrument
     inst_to_count = group(:inst).count
     single_inst_to_count = inst_to_count.select { |inst, _| inst.present? && !inst.include?('&') }
     multi_inst_to_count = inst_to_count.select { |inst, _| inst.present? && inst.include?('&') }
@@ -22,7 +20,7 @@ class Playing < ApplicationRecord
     resolved_inst_to_count = single_inst_to_count.merge(divided_inst_to_count) do |_, single_count, divided_count|
       single_count + divided_count
     end
-    resolved_inst_to_count.sort_by { |_, count| -count }
+    resolved_inst_to_count.sort_by { |_, count| -count }.to_h
   end
 
   def self.count_formations
@@ -43,9 +41,13 @@ class Playing < ApplicationRecord
 
   private
 
+  # region Callbacks
+
   def format_inst
     return if inst.blank?
     self.inst = inst.tr('ａ-ｚＡ-Ｚ＆．', 'a-zA-Z&.')
     self.inst = inst.gsub(/(\s|\.)/, '')
   end
+
+  # endregion
 end

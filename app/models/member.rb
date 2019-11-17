@@ -4,6 +4,7 @@ class Member < ApplicationRecord
   belongs_to :user, optional: true
   has_many :playings, dependent: :restrict_with_exception, foreign_key: :user_id, inverse_of: :member
   has_many :songs, through: :playings
+  has_many :published_songs, -> { published.order_by_live }, through: :playings, source: :song
 
   has_one_attached :avatar
 
@@ -16,6 +17,14 @@ class Member < ApplicationRecord
   validates :url, format: /\A#{URI.regexp(%w[http https])}\z/, allow_blank: true
 
   scope :regular_order, -> { order(joined_year: :desc, furigana: :asc) }
+  scope :collaborated_with, ->(member) { joins(playings: :song).merge(member.songs.published).where.not(id: member.id) }
+  scope :with_played_count, -> { joins(playings: :song).select('members.*', 'count(distinct songs.id) as played_count').group(:id).order('played_count desc') }
+
+  def self.joined_years
+    order(joined_year: :desc).distinct.pluck(:joined_year)
+  end
+
+  # region Names
 
   def full_name
     "#{last_name} #{first_name}"
@@ -28,4 +37,14 @@ class Member < ApplicationRecord
   def long_name
     nickname.present? ? "#{full_name} (#{nickname})" : full_name
   end
+
+  # endregion
+
+  # region Aggregation Queries
+
+  def played_instruments
+    @played_instruments ||= playings.joins(song: :live).merge(Live.published).count_by_divided_instrument.keys
+  end
+
+  # endregion
 end
