@@ -45,7 +45,7 @@
 
 - unless @songs.empty?
   .song-list
-    - if logged_in?
+    - if current_user
       = render @songs
     - else
       = render partial: 'songs/song', collection: @songs, cached: true

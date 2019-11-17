@@ -2,8 +2,12 @@ module Session
   extend ActiveSupport::Concern
 
   included do
-    helper_method :current_user, :logged_in?
+    helper_method :current_user
   end
+
+  private
+
+  # region Helpers
 
   def current_user
     if (user_id = session[:user_id])
@@ -17,9 +21,19 @@ module Session
     end
   end
 
-  def logged_in?
-    !current_user.nil?
+  # endregion
+
+  # region Filters
+
+  def require_current_user
+    return if current_user
+
+    store_location
+    flash[:danger] = 'ログインしてください'
+    redirect_to login_path
   end
+
+  # endregion
 
   def log_in(user)
     session[:user_id] = user.id
@@ -43,12 +57,11 @@ module Session
     cookies.delete(:remember_token)
   end
 
-  def redirect_back_or(default)
-    redirect_to(session[:forwarding_url] || default)
-    session.delete(:forwarding_url)
+  def store_location
+    session[:forwarding_path] = request.fullpath if request.get?
   end
 
-  def store_location
-    session[:forwarding_url] = request.original_url if request.get?
+  def pop_stored_location
+    session.delete(:forwarding_path)
   end
 end

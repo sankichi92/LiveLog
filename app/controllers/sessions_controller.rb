@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  before_action :logged_in_user, only: :destroy
+  before_action :require_current_user, only: :destroy
 
   def new; end
 
@@ -20,7 +20,7 @@ class SessionsController < ApplicationController
       log_in user
       session[:remember_me] == '1' ? remember(user) : forget(user)
       flash[:success] = 'ログインしました'
-      redirect_back_or user.member
+      redirect_to pop_stored_location || member_path(user.member)
     else
       flash.now[:danger] = '無効なメールアドレスとパスワードの組み合わせです'
       render 'new', status: :unprocessable_entity

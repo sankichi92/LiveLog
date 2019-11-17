@@ -64,7 +64,7 @@
     %p.text-right.d-none.d-md-block
       = page_entries_info
     .song-list.mb-3
-      - if logged_in?
+      - if current_user
         = render @songs
       - else
         = render partial: 'song', collection: @songs, cached: true

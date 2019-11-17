@@ -9,7 +9,7 @@ class SongsController < ApplicationController
   end
 
   def search(page = 1)
-    @query = Song::SearchQuery.new(search_params.merge(logged_in: logged_in?))
+    @query = Song::SearchQuery.new(search_params.merge(logged_in: !current_user.nil?))
     if @query.valid?
       @songs = Song.search(@query).page(page).records(includes: [:live, { playings: :member }])
       render :index

@@ -77,7 +77,7 @@
       %header.page-header
         %h2 Related Songs
       .song-list.mb-3
-        - if logged_in?
+        - if current_user
           = render @related_songs
         - else
           = render partial: 'song', collection: @related_songs, cached: true

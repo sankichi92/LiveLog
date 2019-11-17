@@ -9,7 +9,7 @@
         %li.nav-item{ class: params[:controller] == 'lives' ? 'active' : '' }= link_to 'Live List', lives_path, class: 'nav-link'
         %li.nav-item{ class: params[:controller] == 'members' ? 'active' : '' }= link_to 'Members', members_path, class: 'nav-link'
         %li.nav-item{ class: params[:controller] == 'stats' ? 'active' : '' }= link_to 'Stats', stat_path('current'), class: 'nav-link'
-      - if logged_in?
+      - if current_user
         %ul.nav.navbar-nav
           - if current_user.admin_or_elder?
             %li.nav-item.dropdown
