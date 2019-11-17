@@ -7,6 +7,13 @@ FactoryBot.define do
     nickname { Faker::Boolean.boolean(true_ratio: 0.2) ? Faker::Games::Pokemon.name : nil }
     url { Faker::Boolean.boolean(true_ratio: 0.2) ? Faker::Internet.url : nil }
     bio { Faker::Boolean.boolean ? Faker::Lorem.sentence : nil }
+    avatar do
+      if Faker::Boolean.boolean(true_ratio: 0.2)
+        Rack::Test::UploadedFile.new("#{::Rails.root}/spec/fixtures/files/avatar.png", 'image/png')
+      else
+        nil
+      end
+    end
 
     trait :with_user do
       user
