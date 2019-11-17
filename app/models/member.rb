@@ -4,7 +4,7 @@ class Member < ApplicationRecord
   belongs_to :user, optional: true
   has_many :playings, dependent: :restrict_with_exception, foreign_key: :user_id, inverse_of: :member
   has_many :songs, through: :playings
-  has_many :published_songs, -> { published.order_by_live }, through: :playings, source: :song
+  has_many :published_songs, -> { published.newest_live_order }, through: :playings, source: :song
 
   has_one_attached :avatar
 

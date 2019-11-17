@@ -9,13 +9,13 @@ RSpec.describe 'Song', type: :system do
 
       expect(page).to have_title('Song Search')
       expect(page).to have_content('Song Search')
-      Song.published.order_by_live.page(1).each do |song|
+      Song.published.newest_live_order.page(1).each do |song|
         expect(page).to have_content(song.name)
       end
 
       click_link '2'
 
-      Song.published.order_by_live.page(2).each do |song|
+      Song.published.newest_live_order.page(2).each do |song|
         expect(page).to have_content(song.name)
       end
     end

@@ -4,7 +4,7 @@ class SongsController < ApplicationController
   after_action :verify_authorized, except: %i[index search show]
 
   def index(page = 1)
-    @songs = Song.published.order_by_live.includes(playings: :member).page(page)
+    @songs = Song.published.newest_live_order.includes(playings: :member).page(page)
     @query = Song::SearchQuery.new
   end
 
