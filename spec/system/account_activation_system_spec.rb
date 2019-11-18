@@ -13,13 +13,13 @@ RSpec.describe 'Account activation', type: :system do
   end
 
   it 'enables users to activate their account' do
+    pending
+
     Capybara.using_session("Inviter's session") do
       log_in_as inviter
 
-      # TODO
-      # visit member_path(member)
-      # click_link '招待する'
-      visit new_user_activation_path(user)
+      visit member_path(member)
+      click_link '招待する'
 
       expect(page).to have_title('Invite')
 

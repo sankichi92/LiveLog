@@ -26,6 +26,7 @@ class AccountActivationsController < ApplicationController
       @user.errors.add(:password, :blank)
       render 'edit', status: :unprocessable_entity
     elsif @user.activate(user.permit(:password, :password_confirmation))
+      Member.find(@user.id).update!(user_id: @user.id) # TODO
       log_in @user
       flash[:success] = 'LiveLog へようこそ！'
       redirect_to @user.member

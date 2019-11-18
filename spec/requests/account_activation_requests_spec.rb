@@ -90,6 +90,14 @@ RSpec.describe 'Account activation requests', type: :request do
     context 'with valid password' do
       let(:password) { 'new_password' }
 
+      # TODO
+      before do
+        instance_double(Member).tap do |m|
+          allow(m).to receive(:update!)
+          allow(Member).to receive(:find).with(user.id).and_return(m)
+        end
+      end
+
       it 'activates user, sets session and redirects to /users/:id' do
         patch user_activation_path(user), params: { t: token, user: { password: password, password_confirmation: password } }
 
