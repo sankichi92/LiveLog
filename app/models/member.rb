@@ -13,7 +13,7 @@ class Member < ApplicationRecord
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :nickname, length: { maximum: 50 }
-  validates :url, format: /\A#{URI.regexp(%w[http https])}\z/, allow_blank: true
+  validates :url, format: { with: /\A#{URI::DEFAULT_PARSER.make_regexp(%w[http https])}\z/ }, allow_blank: true
 
   scope :regular_order, -> { order(joined_year: :desc, furigana: :asc) }
   scope :collaborated_with, ->(member) { joins(playings: :song).merge(member.published_songs).where.not(id: member.id) }
