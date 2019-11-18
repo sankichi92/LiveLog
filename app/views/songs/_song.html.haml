@@ -1,4 +1,4 @@
-= link_to song, class: 'song-item' do
+= link_to song, class: 'song-item px-0 px-md-3' do
   .row.align-items-center
     - if song.youtube_id.present? && policy(song).play?
       .song-thumbnail.col-4.col-xl-3.pr-0
