@@ -24,16 +24,12 @@
           = @song.title
           %small= '(オリジナル曲)' if @song.original?
           = @song.status_icon if @song.player?(current_user&.member)
-      %dl
-        - if @song.playings.present?
-          %dt= 'メンバー'
-          %dd= render @song.playings.sort_by(&:inst_order)
-        - if @song.comment.present?
-          %dt= Song.human_attribute_name(:comment)
-          %dd.text-muted= simple_format(@song.comment)
-        - if @song.playable?
-          %dt= Song.human_attribute_name(:audio)
-          %dd= audio_tag @song.audio_url, controls: true, class: 'gtag-audio', data: { song_id: @song.id }
+      - if @song.playings.present?
+        .mb-3= render @song.playings.sort_by(&:inst_order)
+      - if @song.comment.present?
+        = simple_format(@song.comment, class: 'text-muted')
+      - if @song.playable?
+        .mb-3= audio_tag @song.audio_url, controls: true, class: 'gtag-audio', data: { song_id: @song.id }
       %aside.btn-toolbar{ role: 'toolbar' }
         - if @song.live.published?
           .btn-group.mr-2{ role: 'group' }

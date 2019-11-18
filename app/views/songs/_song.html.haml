@@ -19,7 +19,5 @@
           %li.list-inline-item<
             = playing.instrument_and_name
 
-      .text-muted= strip_links(song.comment) if song.comment?
-
       - unless song.live.published?
         %small.text-muted= l(song.created_at, format: :short)

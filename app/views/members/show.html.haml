@@ -21,20 +21,17 @@
           #{@songs.size}曲
           = "・#{@member.played_instruments.join(', ')}" unless @member.played_instruments.empty?
         = link_to @member.url, @member.url, target: '_blank', rel: 'noopener' if @member.url?
-    %dl
-      - unless @collaborators.empty?
-        %dt
-          = '共演者'
-          %small.text-muted #{@collaborators.size}人
-        %dd
-          %ul.list-inline
-            - @collaborators.take(10).each do |collaborator|
-              %li.list-inline-item
-                = link_to collaborator.avatar_image_tag(:small), collaborator
-                = link_to collaborator.short_name, collaborator
-      - if @member.bio?
-        %dt= Member.human_attribute_name(:bio)
-        %dd= simple_format(@member.bio, class: 'text-muted')
+    - if @member.bio?
+      = simple_format(@member.bio, class: 'text-muted')
+    - unless @collaborators.empty?
+      %h5
+        = '共演者'
+        %small.text-muted #{@collaborators.size}人
+      %ul.list-inline
+        - @collaborators.take(10).each do |collaborator|
+          %li.list-inline-item
+            = link_to collaborator.avatar_image_tag(:small), collaborator
+            = link_to collaborator.short_name, collaborator
     %aside.btn-toolbar{ role: 'toolbar' }
       - if current_user && @member.user_id.nil?
         .btn-group.mr-2
