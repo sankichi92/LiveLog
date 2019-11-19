@@ -39,7 +39,7 @@ end
 create_table :members, force: :cascade do |t|
   t.bigint :user_id
   t.integer :joined_year, null: false, limit: 2
-  t.string :name, null: false, renamed_from: 'nickname'
+  t.string :name, null: false
   t.string :url
   t.string :bio
   t.integer :playings_count, null: false, default: 0, limit: 2
@@ -47,7 +47,7 @@ create_table :members, force: :cascade do |t|
   t.timestamps
 
   t.index :user_id, unique: true
-  t.index %i[joined_year name], unique: true
+  t.index %i[name joined_year], unique: true
   t.index %i[joined_year playings_count]
 end
 
