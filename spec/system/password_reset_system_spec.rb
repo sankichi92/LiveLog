@@ -31,6 +31,5 @@ RSpec.describe 'Password reset', type: :system do
 
     expect(user.password_digest).not_to eq user.reload.password_digest
     expect(page).to have_css('.alert-success')
-    expect(page).to have_content(user.member.full_name)
   end
 end

@@ -62,7 +62,7 @@ RSpec.describe 'Song', type: :system do
       expect(page).to have_content(song.live.name)
       expect(page).to have_content(song.order)
       song.playings.each do |playing|
-        expect(page).to have_content(playing.member.short_name)
+        expect(page).to have_content(playing.member.name)
       end
     end
   end
@@ -89,7 +89,7 @@ RSpec.describe 'Song', type: :system do
 
       members.take(2).each_with_index do |member, i|
         all('.inst-field')[i].set('Gt')
-        all('.member-select')[i].find(:option, member.long_name).select_option
+        all('.member-select')[i].find(:option, member.joined_year_and_name).select_option
       end
 
       expect { click_button '登録する' }.to change(Song, :count).by(1)

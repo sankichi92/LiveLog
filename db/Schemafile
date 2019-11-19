@@ -39,10 +39,7 @@ end
 create_table :members, force: :cascade do |t|
   t.bigint :user_id
   t.integer :joined_year, null: false, limit: 2
-  t.string :first_name, null: false
-  t.string :last_name, null: false
-  t.string :furigana, null: false
-  t.string :nickname
+  t.string :name, null: false, renamed_from: 'nickname'
   t.string :url
   t.string :bio
   t.integer :playings_count, null: false, default: 0, limit: 2
@@ -50,8 +47,8 @@ create_table :members, force: :cascade do |t|
   t.timestamps
 
   t.index :user_id, unique: true
-  t.index :joined_year
-  # t.index %i[joined_year furigana], order: { joined_year: :desc, furigana: :asc } # FIXME: This makes `apply` command not idempotent (maybe ridgepole's bug).
+  t.index %i[joined_year name], unique: true
+  t.index %i[joined_year playings_count]
 end
 
 create_table :playings, id: :serial, force: :cascade do |t|

@@ -40,7 +40,6 @@ RSpec.describe 'Account activation', type: :system do
     click_button 'アカウントを有効化する'
 
     expect(page).to have_css('.alert-success')
-    expect(page).to have_content(user.member.full_name)
     expect(user.password_digest).not_to eq user.reload.password_digest
     expect(user.activated).to be true
   end
