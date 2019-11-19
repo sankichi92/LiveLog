@@ -1,6 +1,6 @@
 - unless errors.empty?
   .alert.alert-danger
-    #{errors.size} 件のエラーがあります。
-    %ul
-      - errors.each do |message|
+    %strong #{errors.size} 件のエラーがあります
+    %ul.mb-0
+      - errors.to_a.each do |message|
         %li= message
