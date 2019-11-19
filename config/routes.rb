@@ -32,7 +32,9 @@ Rails.application.routes.draw do
     resource :admin, only: %i[create destroy]
   end
 
-  resource :profile, only: :edit
+  scope :settings do
+    resource :profile, only: %i[show update]
+  end
 
   resources :password_resets, only: %i[new create edit update]
 

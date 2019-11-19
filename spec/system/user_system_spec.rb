@@ -9,7 +9,7 @@ RSpec.describe 'User', type: :system do
     it 'enables users to update their own profile' do
       visit edit_user_path(user)
 
-      expect(page).to have_title('Settings')
+      expect(page).to have_title('メールアドレス設定')
 
       fill_in 'user_email', with: 'after@example.com'
       click_button '更新する'
@@ -26,9 +26,9 @@ RSpec.describe 'User', type: :system do
 
     it 'enables users to update their own password' do
       visit edit_user_path(user)
-      click_link 'パスワードを変更する'
+      click_link 'パスワード'
 
-      expect(page).to have_title('Change Password')
+      expect(page).to have_title('パスワード変更')
 
       fill_in 'current_password', with: user.password
       fill_in 'user_password', with: 'new_password'

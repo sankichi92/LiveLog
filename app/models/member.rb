@@ -10,8 +10,9 @@ class Member < ApplicationRecord
   validates :joined_year,
             presence: true,
             numericality: { only_integer: true, greater_than_or_equal_to: MINIMUM_JOINED_YEAR, less_than_or_equal_to: Time.zone.now.year }
-  validates :name, length: { maximum: 20 }, uniqueness: { scope: :joined_year }
+  validates :name, presence: true, length: { maximum: 20 }, uniqueness: { scope: :joined_year }
   validates :url, format: { with: /\A#{URI::DEFAULT_PARSER.make_regexp(%w[http https])}\z/ }, allow_blank: true
+  validates :bio, length: { maximum: 200 }
 
   scope :regular_order, -> { order(joined_year: :desc, playings_count: :desc) }
   scope :collaborated_with, ->(member) { joins(playings: :song).merge(member.published_songs).where.not(id: member.id) }

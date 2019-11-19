@@ -40,10 +40,7 @@ ja:
         album_url: アルバム URL
       member:
         joined_year: 入部年度
-        first_name: 名
-        last_name: 姓
-        furigana: ふりがな
-        nickname: ニックネーム
+        name: 名前
         url: URL
         bio: 自己紹介
         avatar: プロフィール画像
