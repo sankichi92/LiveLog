@@ -41,6 +41,8 @@ $enable-responsive-font-sizes: true;
 
 $link-color: mix($black, $primary, 1 * $theme-color-interval);
 
+$hr-border-color: $theme-border-color;
+
 $table-accent-bg: $theme-bg;
 $table-hover-bg: $theme-bg;
 $table-border-color: $theme-border-color;

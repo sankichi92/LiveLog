@@ -1,8 +1,13 @@
-- provide(:title, 'Settings')
-%header.page-header
-  %h1 Settings
+- provide(:title, 'メールアドレス設定')
 
-%section.mb-3
+%header
+  %h1 設定
+
+%hr
+
+= render 'settings/nav'
+
+%section
   = form_for @user do |f|
     = render 'shared/error_messages', errors: f.object.errors
 
@@ -19,6 +24,3 @@
                  title: '演奏した曲が今日のピックアップに選ばれた時などにお知らせします'
 
     = f.submit class: 'btn btn-primary'
-
-%section
-  %p= link_to 'パスワードを変更する', edit_user_password_path(@user)

@@ -7,7 +7,6 @@ RSpec.describe 'Login', type: :system do
     log_in_as user, remember_me: '1'
 
     expect(page).to have_link('Profile', href: user_path(user))
-    expect(page).to have_link('Settings', href: edit_user_path(user))
     expect(page).to have_link('Log out', href: logout_path)
     expect(page).to have_link('Report')
     expect(page).not_to have_link('Log in', href: login_path)
@@ -27,6 +26,6 @@ RSpec.describe 'Login', type: :system do
       click_button 'ログインする'
     end
 
-    expect(page).to have_title('Settings')
+    expect(page).to have_title('メールアドレス設定')
   end
 end

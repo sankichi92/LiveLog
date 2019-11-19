@@ -9,20 +9,25 @@
 
 %section.member-detail.card.mb-3
   .card-body
+
     .d-flex.flex-column.flex-sm-row.align-items-sm-center.mb-2
-      .member-thumbnail.text-center
+      .text-center
         = @member.avatar_image_tag(:large, class: 'm-3')
-      .member-info
-        .card-subtitle.text-muted
-          = @member.joined_year
-        %h1
-          = @member.name
+      %div
+        .card-subtitle.text-muted= @member.joined_year
+        %h1= @member.name
         .card-subtitle.text-muted<
           #{@songs.size}曲
           = "・#{@member.played_instruments.join(', ')}" unless @member.played_instruments.empty?
         = link_to @member.url, @member.url, target: '_blank', rel: 'noopener' if @member.url?
+
     - if @member.bio?
       = simple_format(@member.bio, class: 'text-muted')
+
+    - if current_user&.member == @member
+      .mb-3
+        = link_to 'プロフィールを編集する', profile_path, class: 'btn btn-outline-primary'
+
     - unless @collaborators.empty?
       %h5
         = '共演者'
@@ -32,6 +37,7 @@
           %li.list-inline-item
             = link_to collaborator.avatar_image_tag(:small), collaborator
             = link_to collaborator.name, collaborator
+
     %aside.btn-toolbar{ role: 'toolbar' }
       - if current_user && @member.user_id.nil?
         .btn-group.mr-2
