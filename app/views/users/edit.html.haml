@@ -4,7 +4,7 @@
 
 %section.mb-3
   = form_for @user do |f|
-    = render 'shared/error_messages', object: f.object
+    = render 'shared/error_messages', errors: f.object.errors
 
     = render 'email_form', f: f
 

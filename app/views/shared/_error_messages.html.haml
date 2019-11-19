@@ -1,7 +1,6 @@
-- if object.errors.any?
-  .alert.alert-danger<
-    = object.errors.count
-    件のエラーがあります
+- unless errors.empty?
+  .alert.alert-danger
+    #{errors.size} 件のエラーがあります。
     %ul
-      - object.errors.full_messages.each do |msg|
-        %li= msg
+      - errors.each do |message|
+        %li= message

@@ -3,7 +3,7 @@
   %h1 Activation
 
 = form_for @user, url: user_activation_path do |f|
-  = render 'shared/error_messages', object: f.object
+  = render 'shared/error_messages', errors: f.object.errors
   = hidden_field_tag :t, params[:t]
 
   %fieldset{ disabled: true }

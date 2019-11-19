@@ -3,7 +3,7 @@
   %h1 Change Password
 
 = form_for @user, url: user_password_path do |f|
-  = render 'shared/error_messages', object: f.object
+  = render 'shared/error_messages', errors: f.object.errors
 
   .form-group
     = label_tag :current_password, '現在のパスワード'
