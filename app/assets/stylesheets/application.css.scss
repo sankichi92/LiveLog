@@ -24,8 +24,6 @@ $black: #000;
 $orange: #fd7e14;
 $yellow: #ffc107;
 
-$theme-color-interval: 8%;
-
 $primary: $yellow;
 $warning: $orange;
 
@@ -34,26 +32,33 @@ $theme-colors: (
         "warning": $warning
 );
 
-$theme-border-color: mix($white, $primary, 5 * 8%);
+$theme-color-interval: 8%;
+
+$theme-border-color: mix($white, $primary, 5 * $theme-color-interval);
 $theme-bg: #fcf8e3;
 
-$link-color: mix($black, $primary, 1 * 8%);
+$enable-responsive-font-sizes: true;
+
+$link-color: mix($black, $primary, 1 * $theme-color-interval);
+
 $table-accent-bg: $theme-bg;
 $table-hover-bg: $theme-bg;
 $table-border-color: $theme-border-color;
+
 $pagination-border-color: $theme-border-color;
 $pagination-hover-bg: $theme-bg;
 $pagination-hover-border-color: $theme-border-color;
 $pagination-disabled-border-color: $theme-border-color;
+
 $jumbotron-bg: $theme-bg;
+
 $card-border-color: $theme-border-color;
 $card-cap-bg: $theme-bg;
+
 $list-group-border-color: $theme-border-color;
 $list-group-hover-bg: $theme-bg;
-$breadcrumb-bg: $theme-bg;
-$breadcrumb-divider: ">";
 
-$enable-responsive-font-sizes: true;
+$breadcrumb-bg: $theme-bg;
 
 // endregion
 
