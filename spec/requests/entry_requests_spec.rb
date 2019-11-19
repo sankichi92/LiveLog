@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Entry requests', type: :request do
   let(:user) { create(:user) }
 
-  before { log_in_as user, capybara: false }
+  before { log_in_as user }
 
   describe 'GET /lives/:live_id/entries' do
     context 'when live is published' do

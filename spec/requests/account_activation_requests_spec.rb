@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Account activation requests', type: :request do
   describe 'GET /users/:user_id/activation/new by logged-in user' do
     before do
-      log_in_as create(:user), capybara: false
+      log_in_as create(:user)
     end
 
     context 'with inactivated user' do
@@ -32,7 +32,7 @@ RSpec.describe 'Account activation requests', type: :request do
 
     before do
       ActionMailer::Base.deliveries.clear
-      log_in_as create(:user), capybara: false
+      log_in_as create(:user)
     end
 
     context 'with valid email' do
@@ -141,7 +141,7 @@ RSpec.describe 'Account activation requests', type: :request do
   describe 'DELETE /users/:user_id/activation by admin user' do
     let(:user) { create(:user) }
 
-    before { log_in_as(create(:admin), capybara: false) }
+    before { log_in_as(create(:admin)) }
 
     it 'deactivates the user and redirects to /users/:id' do
       delete user_activation_path(user)

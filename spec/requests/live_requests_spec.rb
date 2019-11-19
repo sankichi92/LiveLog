@@ -36,7 +36,7 @@ RSpec.describe 'Live requests', type: :request do
   end
 
   describe 'GET /lives/:id/album by logged-in user' do
-    before { log_in_as(create(:user), capybara: false) }
+    before { log_in_as(create(:user)) }
 
     context 'when the album_url is present' do
       let(:live) { create(:live, album_url: 'https://example.com/album') }
@@ -58,7 +58,7 @@ RSpec.describe 'Live requests', type: :request do
   end
 
   describe 'GET /lives/new by admin' do
-    before { log_in_as(create(:admin), capybara: false) }
+    before { log_in_as(create(:admin)) }
 
     it 'responds 200' do
       get new_live_path
@@ -67,7 +67,7 @@ RSpec.describe 'Live requests', type: :request do
   end
 
   describe 'POST /lives by admin' do
-    before { log_in_as(create(:admin), capybara: false) }
+    before { log_in_as(create(:admin)) }
 
     context 'with valid params' do
       let(:live_attrs) { attributes_for(:live) }
@@ -91,7 +91,7 @@ RSpec.describe 'Live requests', type: :request do
   describe 'GET /lives/:id/edit by admin' do
     let(:live) { create(:live) }
 
-    before { log_in_as(create(:admin), capybara: false) }
+    before { log_in_as(create(:admin)) }
 
     it 'responds 200' do
       get edit_live_path(live)
@@ -102,7 +102,7 @@ RSpec.describe 'Live requests', type: :request do
   describe 'PATCH /lives/:id by admin' do
     let(:live) { create(:live) }
 
-    before { log_in_as(create(:admin), capybara: false) }
+    before { log_in_as(create(:admin)) }
 
     context 'with valid params' do
       let(:new_live_attrs) { attributes_for(:live, name: 'updated live') }
@@ -131,7 +131,7 @@ RSpec.describe 'Live requests', type: :request do
     before do
       stub_const('TweetJob', tweet_job)
 
-      log_in_as(create(:admin), capybara: false)
+      log_in_as(create(:admin))
     end
 
     context 'when live is published' do
@@ -159,7 +159,7 @@ RSpec.describe 'Live requests', type: :request do
   describe 'DELETE /lives/:id by admin' do
     let!(:live) { create(:live) }
 
-    before { log_in_as(create(:admin), capybara: false) }
+    before { log_in_as(create(:admin)) }
 
     context 'when the live has no songs' do
       it 'deletes the song and redirects to /lives' do

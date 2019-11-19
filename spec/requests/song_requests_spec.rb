@@ -54,7 +54,7 @@ RSpec.describe 'Song requests', type: :request do
   describe 'GET /songs/new by admin' do
     let(:live) { create(:live) }
 
-    before { log_in_as(create(:admin), capybara: false) }
+    before { log_in_as(create(:admin)) }
 
     it 'responds 200' do
       get new_song_path, params: { live_id: live.id }
@@ -65,7 +65,7 @@ RSpec.describe 'Song requests', type: :request do
   describe 'POST /songs by admin' do
     let(:live) { create(:live) }
 
-    before { log_in_as(create(:admin), capybara: false) }
+    before { log_in_as(create(:admin)) }
 
     context 'with valid params' do
       let(:song_attrs) { attributes_for(:song, live_id: live.id) }
@@ -91,7 +91,7 @@ RSpec.describe 'Song requests', type: :request do
     let(:user) { create(:user) }
 
     before do
-      log_in_as(user, capybara: false)
+      log_in_as(user)
     end
 
     it 'responds 200' do
@@ -104,7 +104,7 @@ RSpec.describe 'Song requests', type: :request do
   describe 'PATCH /songs/:id by player' do
     let(:song) { create(:song) }
 
-    before { log_in_as(create(:user, songs: [song]), capybara: false) }
+    before { log_in_as(create(:user, songs: [song])) }
 
     context 'with valid params' do
       let(:new_song_attrs) { attributes_for(:song, name: 'updated song') }
@@ -130,7 +130,7 @@ RSpec.describe 'Song requests', type: :request do
   describe 'DELETE /songs/:id by admin' do
     let!(:song) { create(:song) }
 
-    before { log_in_as(create(:admin), capybara: false) }
+    before { log_in_as(create(:admin)) }
 
     it 'deletes the song and redirects /lives/:id' do
       expect { delete song_path(song) }.to change(Song, :count).by(-1)

@@ -22,7 +22,7 @@ RSpec.describe 'Static pages requests', type: :request do
     end
 
     context 'with logged-in user' do
-      before { log_in_as(create(:user), capybara: false) }
+      before { log_in_as(create(:user)) }
 
       it 'responds 200' do
         get donation_path

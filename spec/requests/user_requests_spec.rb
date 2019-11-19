@@ -5,7 +5,7 @@ RSpec.describe 'User requests', type: :request do
     let(:user) { create(:user) }
 
     before do
-      log_in_as(user, capybara: false)
+      log_in_as(user)
     end
 
     it 'responds 200' do
@@ -19,7 +19,7 @@ RSpec.describe 'User requests', type: :request do
     let(:user) { create(:user, email: 'before@example.com') }
 
     before do
-      log_in_as(user, capybara: false)
+      log_in_as(user)
     end
 
     context 'with valid params' do
@@ -48,7 +48,7 @@ RSpec.describe 'User requests', type: :request do
   describe 'GET /members/:id/password/edit by correct user' do
     let(:user) { create(:user) }
 
-    before { log_in_as(user, capybara: false) }
+    before { log_in_as(user) }
 
     it 'responds 200' do
       get edit_user_password_path(user)
@@ -59,7 +59,7 @@ RSpec.describe 'User requests', type: :request do
   describe 'PATCH /members/:id/password by correct user' do
     let(:user) { create(:user) }
 
-    before { log_in_as(user, capybara: false) }
+    before { log_in_as(user) }
 
     context 'with valid params' do
       let(:new_password_attrs) { { password: 'new_password' } }
@@ -87,7 +87,7 @@ RSpec.describe 'User requests', type: :request do
   describe 'POST /members/:id/admin by admin user' do
     let(:user) { create(:user) }
 
-    before { log_in_as(create(:admin), capybara: false) }
+    before { log_in_as(create(:admin)) }
 
     it 'make the user admin and redirects to /users/:id' do
       post user_admin_path(user)
@@ -99,7 +99,7 @@ RSpec.describe 'User requests', type: :request do
   describe 'DELETE /members/:id/admin by admin user' do
     let(:user) { create(:admin) }
 
-    before { log_in_as(create(:admin), capybara: false) }
+    before { log_in_as(create(:admin)) }
 
     it 'make the user non-admin and redirects to /users/:id' do
       delete user_admin_path(user)

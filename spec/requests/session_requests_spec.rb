@@ -75,7 +75,7 @@ RSpec.describe 'Session requests', type: :request do
   describe 'DELETE /logout' do
     let(:user) { create(:user) }
 
-    before { log_in_as(user, capybara: false, remember_me: '1') }
+    before { log_in_as(user, remember_me: true) }
 
     it 'deletes session and cookies' do
       delete logout_path

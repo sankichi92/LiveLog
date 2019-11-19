@@ -5,7 +5,7 @@ RSpec.describe 'Profile requests:', type: :request do
     let(:user) { create(:user) }
 
     before do
-      log_in_as user, capybara: false
+      log_in_as user
     end
 
     it 'responds 200' do
@@ -20,7 +20,7 @@ RSpec.describe 'Profile requests:', type: :request do
     let(:user) { create(:user, member: member) }
 
     before do
-      log_in_as user, capybara: false
+      log_in_as user
     end
 
     context 'with valid params' do
