@@ -1,9 +1,9 @@
 module PlayingDecorator
   def instrument_and_name
     if inst.present?
-      "#{inst}.#{member.short_name}"
+      "#{inst}.#{member.name}"
     else
-      member.short_name
+      member.name
     end
   end
 end

@@ -19,7 +19,7 @@ RSpec.describe 'Entry', type: :system do
       expect(page).not_to have_css('#admin-tools')
       expect(page).to have_content(user_song.name)
       user_song.playings.each do |playing|
-        expect(page).to have_content(playing.member.short_name)
+        expect(page).to have_content(playing.member.name)
       end
       expect(page).not_to have_content(other_song.name)
     end
@@ -62,7 +62,7 @@ RSpec.describe 'Entry', type: :system do
 
       [user.member, members.first].each_with_index do |member, i|
         all('.inst-field')[i].set('Gt')
-        all('.member-select')[i].find(:option, member.long_name).select_option
+        all('.member-select')[i].find(:option, member.joined_year_and_name).select_option
       end
 
       fill_in 'entry_preferred_rehearsal_time', with: '23時以前'

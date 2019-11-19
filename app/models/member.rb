@@ -10,12 +10,10 @@ class Member < ApplicationRecord
   validates :joined_year,
             presence: true,
             numericality: { only_integer: true, greater_than_or_equal_to: MINIMUM_JOINED_YEAR, less_than_or_equal_to: Time.zone.now.year }
-  validates :first_name, presence: true
-  validates :last_name, presence: true
-  validates :nickname, length: { maximum: 50 }
+  validates :name, length: { maximum: 20 }, uniqueness: { scope: :joined_year }
   validates :url, format: { with: /\A#{URI::DEFAULT_PARSER.make_regexp(%w[http https])}\z/ }, allow_blank: true
 
-  scope :regular_order, -> { order(joined_year: :desc, furigana: :asc) }
+  scope :regular_order, -> { order(joined_year: :desc, playings_count: :desc) }
   scope :collaborated_with, ->(member) { joins(playings: :song).merge(member.published_songs).where.not(id: member.id) }
   scope :with_played_count, -> { joins(playings: :song).select('members.*', 'count(distinct songs.id) as played_count').group(:id).order('played_count desc') }
 
@@ -23,18 +21,11 @@ class Member < ApplicationRecord
     order(joined_year: :desc).distinct.pluck(:joined_year)
   end
 
-  # region Names
+  # region Attributes
 
-  def full_name
-    "#{last_name} #{first_name}"
-  end
-
-  def short_name
-    nickname.presence || last_name
-  end
-
-  def long_name
-    nickname.present? ? "#{full_name} (#{nickname})" : full_name
+  # For #collection_select option values
+  def joined_year_and_name
+    "#{joined_year} #{name}"
   end
 
   # endregion

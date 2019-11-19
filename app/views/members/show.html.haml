@@ -1,11 +1,11 @@
 :ruby
-  provide(:title, @member.short_name)
+  provide(:title, @member.name)
   provide(:description, strip_tags(@member.bio).presence || "#{@member.joined_year}年度入部 #{@member.played_instruments}")
   provide(:og_type, 'profile')
   provide(:og_image, @member.avatar_url(:large)) if @member.avatar.attached?
 
 - content_for :additional_meta_fields do
-  %meta{ property: 'profile:username', content: @member.short_name }
+  %meta{ property: 'profile:username', content: @member.name }
 
 %section.member-detail.card.mb-3
   .card-body
@@ -16,7 +16,7 @@
         .card-subtitle.text-muted
           = @member.joined_year
         %h1
-          = current_user ? @member.long_name : @member.short_name
+          = @member.name
         .card-subtitle.text-muted<
           #{@songs.size}曲
           = "・#{@member.played_instruments.join(', ')}" unless @member.played_instruments.empty?
@@ -31,7 +31,7 @@
         - @collaborators.take(10).each do |collaborator|
           %li.list-inline-item
             = link_to collaborator.avatar_image_tag(:small), collaborator
-            = link_to collaborator.short_name, collaborator
+            = link_to collaborator.name, collaborator
     %aside.btn-toolbar{ role: 'toolbar' }
       - if current_user && @member.user_id.nil?
         .btn-group.mr-2

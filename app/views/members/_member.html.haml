@@ -5,6 +5,6 @@
         = member.avatar_image_tag(:medium, class: 'align-self-center mr-2')
         .media-body
           %h5.card-title
-            = link_to member.short_name, member, class: 'stretched-link text-dark'
+            = link_to member.name, member, class: 'stretched-link text-dark'
           .card-subtitle.text-muted
             = member.played_instruments.take(3).join(', ')
