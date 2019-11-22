@@ -37,6 +37,6 @@ RSpec.describe 'Invitation System:', type: :system do
     click_button '登録する'
 
     # Then
-    # expect(page).to have_content 'LiveLog へようこそ！'
+    expect(page).to have_content 'LiveLog へようこそ！'
   end
 end
