@@ -3,12 +3,12 @@ class Song
     include ActiveModel::Model
     include Elasticsearch::DSL
 
-    attr_accessor :q, :name, :artist, :instruments, :players_lower, :players_upper, :date_lower, :date_upper, :media, :original, :user_id, :ids, :logged_in
+    attr_accessor :q, :name, :artist, :instruments, :players_lower, :players_upper, :date_lower, :date_upper, :media, :original, :member_id, :ids, :logged_in
 
     validate :valid_date
     validates :players_lower, :players_upper, numericality: { only_integer: true }, allow_blank: true
     validates :media, inclusion: { in: %w[0 1] }, allow_blank: true
-    validates :user_id, numericality: { only_integer: true }, allow_blank: true
+    validates :member_id, numericality: { only_integer: true }, allow_blank: true
 
     def to_hash
       return {} if invalid?
@@ -42,7 +42,7 @@ class Song
                 end
                 q.must { |q| q.term original?: true } if original?
                 q.must { |q| q.term status: logged_in ? 'closed' : 'open' } if media?
-                q.must { |q| q.term 'players.user_id': user_id.to_i } if user_id.present?
+                q.must { |q| q.term 'players.member_id': member_id.to_i } if member_id.present?
                 q.must_not { |q| q.terms 'players.instruments': excluded_instruments } if excluded_instruments.present?
               end
             end

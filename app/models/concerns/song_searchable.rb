@@ -46,7 +46,7 @@ module SongSearchable
       indexes :players_count, type: 'byte'
       indexes :comment, type: 'text'
       indexes :players do
-        indexes :user_id, type: 'integer'
+        indexes :member_id, type: 'integer'
         indexes :instruments, type: 'keyword'
       end
     end
@@ -65,7 +65,7 @@ module SongSearchable
       original?: original?,
       comment: comment,
       players_count: playings.size,
-      players: playings.as_json(only: %i[user_id instruments], methods: [:instruments]),
+      players: playings.as_json(only: %i[member_id instruments], methods: [:instruments]),
     }
   end
 

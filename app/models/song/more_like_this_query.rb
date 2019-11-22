@@ -22,7 +22,7 @@ class Song
               end
             end
             q.should { |q| q.term players_count: song.playings.size }
-            q.should { |q| q.terms 'players.user_id': song.playings.map(&:member_id) }
+            q.should { |q| q.terms 'players.member_id': song.playings.map(&:member_id) }
             q.should { |q| q.term original?: song.original? } if song.original?
             q.must_not { |q| q.term id: song.id }
             q.must_not { |q| q.term status: 'secret' }
