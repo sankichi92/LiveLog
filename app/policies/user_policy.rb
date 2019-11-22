@@ -25,10 +25,6 @@ class UserPolicy < ApplicationPolicy
     user&.admin_or_elder? && user != record
   end
 
-  def invite?
-    logged_in?
-  end
-
   def change_status?
     user&.admin? && user != record
   end

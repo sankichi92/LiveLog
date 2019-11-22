@@ -30,7 +30,6 @@ Rails.application.routes.draw do
   end
 
   resources :users, only: %i[edit update], path: :members do
-    resource :account_activation, except: :show, path: :activation, as: :activation
     resource :password, only: %i[edit update]
     resource :admin, only: %i[create destroy]
   end
