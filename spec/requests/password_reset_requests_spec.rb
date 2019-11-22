@@ -22,17 +22,6 @@ RSpec.describe 'Password reset requests', type: :request do
       end
     end
 
-    context 'with inactivated user' do
-      let(:user) { create(:user, :inactivated) }
-
-      it 'responds 422' do
-        post password_resets_path, params: { password_reset: { email: user.email } }
-        expect(user.reload.reset_digest).to be_blank
-        expect(ActionMailer::Base.deliveries.size).to eq 0
-        expect(response).to have_http_status(:unprocessable_entity)
-      end
-    end
-
     context 'with existent email for activated user' do
       let(:user) { create(:user) }
 

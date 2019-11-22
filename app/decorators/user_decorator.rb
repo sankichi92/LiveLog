@@ -9,7 +9,7 @@ module UserDecorator
     px = IMAGE_PX_BY_SIZE[size]
     if avatar.attached? && avatar.variable?
       avatar.variant(auto_orient: true, combine_options: { thumbnail: "#{px}x#{px}^", gravity: 'center', crop: "#{px}x#{px}+0+0" })
-    elsif email.present? && activated?
+    elsif email.present?
       hash = Digest::MD5.hexdigest(email)
       "https://www.gravatar.com/avatar/#{hash}?s=#{px}&d=mm"
     else
@@ -42,14 +42,6 @@ module UserDecorator
 
   def delete_link(html_options)
     link_to_delete self, html_options.merge(data: { confirm: '本当に削除しますか？' })
-  end
-
-  def invite_link(html_options)
-    link_to icon('fas', 'envelope') + ' ' + '招待する', new_user_activation_path(self), html_options
-  end
-
-  def deactivate_link(html_options)
-    link_to 'アカウントを無効にする', user_activation_path(self), html_options.merge(method: :delete, data: { confirm: '本当にアカウントを無効にしますか？' })
   end
 
   def create_admin_link(html_options)

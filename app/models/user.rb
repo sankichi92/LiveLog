@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  self.ignored_columns = %i[first_name last_name furigana nickname joined url intro]
+  self.ignored_columns = %i[first_name last_name furigana nickname joined url intro activation_digest activated activated_at]
 
   has_many :playings, dependent: :restrict_with_exception
   has_many :songs, through: :playings
@@ -8,7 +8,7 @@ class User < ApplicationRecord
 
   has_one_attached :avatar
 
-  attr_accessor :remember_token, :activation_token, :reset_token
+  attr_accessor :remember_token, :reset_token
 
   has_secure_password
 
@@ -18,31 +18,9 @@ class User < ApplicationRecord
 
   # region Status
 
-  def enable_to_send_info?
-    activated? && subscribing?
-  end
-
   def donated?
     donated_ids = ENV['LIVELOG_DONATED_USER_IDS']&.split(',')&.map(&:to_i) || []
     donated_ids.include?(id)
-  end
-
-  # endregion
-
-  # region Activation
-
-  def send_invitation(email, inviter)
-    self.activation_token = SecureRandom.base64
-    return unless update(email: email, activation_digest: encrypt(activation_token))
-    UserMailer.account_activation(self, inviter).deliver_now
-  end
-
-  def activate(password_params)
-    update(password_params.merge(activated: true, activated_at: Time.zone.now, public: true))
-  end
-
-  def deactivate
-    update(activated: false, activated_at: nil, activation_digest: nil)
   end
 
   # endregion

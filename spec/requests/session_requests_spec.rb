@@ -41,16 +41,6 @@ RSpec.describe 'Session requests', type: :request do
       end
     end
 
-    context 'when user is not activated' do
-      let(:email) { 'invited@example.com' }
-      let(:user) { create(:user, :inactivated, email: email) }
-
-      it 'responds 422' do
-        post login_path, params: params
-        expect(response).to have_http_status(:unprocessable_entity)
-      end
-    end
-
     context 'with valid information and when user is activated' do
       it 'saves user_id in session and redirects to /members/:id' do
         post login_path, params: params

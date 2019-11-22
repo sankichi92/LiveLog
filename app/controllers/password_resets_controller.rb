@@ -9,13 +9,10 @@ class PasswordResetsController < ApplicationController
 
   def create(password_reset)
     @user = User.find_by(email: password_reset[:email])
-    if @user&.activated?
+    if @user
       @user.send_password_reset
       flash[:success] = 'パスワード再設定のためのメールを送信しました'
       redirect_to root_url
-    elsif @user.present?
-      flash.now[:warning] = 'アカウントが有効化されていません。招待メールを確認してください'
-      render 'new', status: :unprocessable_entity
     else
       flash.now[:danger] = 'メールアドレスが見つかりませんでした'
       render 'new', status: :unprocessable_entity
@@ -49,7 +46,7 @@ class PasswordResetsController < ApplicationController
   end
 
   def valid_user(id)
-    redirect_to root_url unless @user&.activated? && @user.authenticated?(:reset, id)
+    redirect_to root_url unless @user.authenticated?(:reset, id)
   end
 
   def check_expiration
