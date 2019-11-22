@@ -90,8 +90,8 @@ create_table :songs, id: :serial, force: :cascade do |t|
 end
 
 create_table :users, id: :serial, force: :cascade do |t|
-  t.string :email
-  t.string :password_digest
+  t.string :email, null: false
+  t.string :password_digest, null: false
   t.string :remember_digest
   t.boolean :admin, default: false, null: false
   t.string :reset_digest
