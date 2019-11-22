@@ -1,0 +1,9 @@
+京大アンプラグド <%= @invitation.member.joined_year %>年度入部
+<%= @invitation.member.name %> さん
+
+<%= @invitation.inviter.member.joined_year %>年度入部の <%= @invitation.inviter.member.name %> さんが LiveLog に招待しています。
+以下のURLにアクセスし、ユーザー登録を完了してください。
+
+<%= new_member_user_url(@invitation.member, token: @invitation.token) %>
+
+お心あたりのない場合は、このメールを無視してください。

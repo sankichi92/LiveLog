@@ -28,8 +28,8 @@
     = render 'layouts/navbar'
     .container#main
       = render 'layouts/flash'
-      - if current_user&.graduate? && !current_user&.donated? && cookies[:close_alert_donation] != '1'
-        = render 'shared/alert_donation'
+      -#- if current_user&.graduate? && !current_user&.donated? && cookies[:close_alert_donation] != '1'
+      -#  = render 'shared/alert_donation'
       = yield
       - if Rails.env.production? && current_user.nil?
         %aside.my-3= render 'shared/content-ads'

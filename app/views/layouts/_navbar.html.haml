@@ -11,7 +11,7 @@
         %li.nav-item{ class: params[:controller] == 'stats' ? 'active' : '' }= link_to 'Stats', stat_path('current'), class: 'nav-link'
       - if current_user
         %ul.nav.navbar-nav
-          - if current_user.admin_or_elder?
+          - if current_user.admin?
             %li.nav-item.dropdown
               %a.nav-link.dropdown-toggle#navbar-admin-dropdown-menu-link{ href: '#', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' }
                 Admin
@@ -27,14 +27,13 @@
           %li.nav-item.dropdown
             %a.nav-link.dropdown-toggle#navbar-user-dropdown-menu-link{ href: '#', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' }
               = current_user.avatar_image_tag(:small)
-              = current_user.name
+              = current_user.member.name
             .dropdown-menu{ 'aria-labellebdy': 'navbar-user-dropdown-menu-link' }
               = link_to icon('fas', 'user') + ' Profile',  current_user, class: 'dropdown-item'
               = link_to icon('fas', 'cog') + ' Settings', profile_path, class: 'dropdown-item'
               = link_to icon('fas', 'sign-out-alt') + ' Log out', logout_path, method: :delete, class: 'dropdown-item'
               .dropdown-divider
-              - if current_user.graduate?
-                = link_to icon('fas', 'gift') + ' Donate', donation_path, class: 'dropdown-item'
+              = link_to icon('fas', 'gift') + ' Donate', donation_path, class: 'dropdown-item'
               = link_to icon('fas', 'flag') + ' Report', feedback_url(current_user), target: '_blank', class: 'dropdown-item', rel: 'noopener'
       - else
         = link_to login_path do

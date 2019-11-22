@@ -24,10 +24,12 @@ Rails.application.routes.draw do
     collection do
       get 'year/:year', action: :year, as: :year, constraints: { year: /\d{4}/ }
     end
+
+    resource :invitation, only: %i[new create]
+    resource :user, only: %i[new create]
   end
 
   resources :users, only: %i[edit update], path: :members do
-    resource :account_activation, except: :show, path: :activation, as: :activation
     resource :password, only: %i[edit update]
     resource :admin, only: %i[create destroy]
   end

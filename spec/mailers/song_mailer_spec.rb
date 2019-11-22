@@ -3,9 +3,9 @@ require 'rails_helper'
 RSpec.describe SongMailer, type: :mailer do
   describe 'pickup_song' do
     let(:users) { create_list(:user, 3, subscribing: true) }
-    let(:inactivated_user) { create(:user, :inactivated) }
+    let(:no_user_member) { create(:member) }
     let(:unsubscribing_user) { create(:user, subscribing: false) }
-    let(:song) { create(:song, members: [users.map(&:member), inactivated_user.member, unsubscribing_user.member].flatten) }
+    let(:song) { create(:song, members: [users.map(&:member), no_user_member, unsubscribing_user.member].flatten) }
     let(:mail) { SongMailer.pickup_song(song) }
 
     it 'renders the headers' do

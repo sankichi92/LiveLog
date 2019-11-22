@@ -14,14 +14,14 @@ class SongPolicy < ApplicationPolicy
   end
 
   def create?
-    user&.admin_or_elder?
+    user&.admin?
   end
 
   def update?
-    user&.admin_or_elder? || record.player?(user&.member)
+    user&.admin? || record.player?(user&.member)
   end
 
   def destroy?
-    user&.admin_or_elder?
+    user&.admin?
   end
 end

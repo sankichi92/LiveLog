@@ -57,10 +57,6 @@ RSpec.describe UserPolicy do
     it 'grants access if user is admin' do
       expect(UserPolicy).to permit(create(:admin), user)
     end
-
-    it 'grants access if user is elder' do
-      expect(UserPolicy).to permit(create(:user, :elder), user)
-    end
   end
 
   permissions :change_status? do
@@ -74,16 +70,6 @@ RSpec.describe UserPolicy do
 
     it 'grants access if user is admin' do
       expect(UserPolicy).to permit(create(:admin), user)
-    end
-  end
-
-  permissions :invite? do
-    it 'denies access if user is not logged in' do
-      expect(UserPolicy).not_to permit(nil, user)
-    end
-
-    it 'grants access if user is logged in' do
-      expect(UserPolicy).to permit(create(:user), user)
     end
   end
 end

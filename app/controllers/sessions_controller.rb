@@ -11,11 +11,6 @@ class SessionsController < ApplicationController
       return render 'new', status: :unprocessable_entity
     end
 
-    unless user.activated?
-      flash.now[:warning] = 'アカウントが有効化されていません。メールを確認してください'
-      return render 'new', status: :unprocessable_entity
-    end
-
     if user.authenticate(session[:password])
       log_in user
       session[:remember_me] == '1' ? remember(user) : forget(user)

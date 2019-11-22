@@ -39,9 +39,5 @@ RSpec.describe LivePolicy do
     it 'grants access if user is admin' do
       expect(LivePolicy).to permit(create(:admin), live)
     end
-
-    it 'grants access if user is elder' do
-      expect(LivePolicy).to permit(create(:user, :elder), live)
-    end
   end
 end

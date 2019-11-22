@@ -20,7 +20,7 @@ ja:
       user:
         email: メールアドレス
         password: パスワード
-        password_confirmation: パスワードを再入力
+        password_confirmation: パスワード確認用
       song:
         name: 曲名
         artist: アーティスト名
@@ -47,6 +47,8 @@ ja:
       playing:
         user: メンバー
         inst: 楽器
+      invitation:
+        email: メールアドレス
   activemodel:
     attributes:
       song/search_query:

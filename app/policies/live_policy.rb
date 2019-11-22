@@ -4,11 +4,11 @@ class LivePolicy < ApplicationPolicy
   end
 
   def create?
-    user&.admin_or_elder?
+    user&.admin?
   end
 
   def update?
-    user&.admin_or_elder?
+    user&.admin?
   end
 
   def publish?
@@ -16,6 +16,6 @@ class LivePolicy < ApplicationPolicy
   end
 
   def destroy?
-    user&.admin_or_elder?
+    user&.admin?
   end
 end
