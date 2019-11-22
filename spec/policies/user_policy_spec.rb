@@ -13,7 +13,7 @@ RSpec.describe UserPolicy do
     end
   end
 
-  permissions :create?, :destroy? do
+  permissions :destroy? do
     it 'denies access if user is not logged in' do
       expect(UserPolicy).not_to permit(nil, user)
     end

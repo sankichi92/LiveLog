@@ -1,8 +1,4 @@
 class UserPolicy < ApplicationPolicy
-  def create?
-    user&.admin?
-  end
-
   def update?
     record == user
   end
