@@ -1,13 +1,11 @@
 class User < ApplicationRecord
-  self.ignored_columns = %i[first_name last_name furigana nickname joined url intro activation_digest activated activated_at]
+  self.ignored_columns = %i[first_name last_name furigana nickname joined url intro activation_digest activated activated_at playings_count]
 
-  has_one :member, dependent: :nullify
-
-  has_one_attached :avatar
+  has_secure_password
 
   attr_accessor :remember_token, :reset_token
 
-  has_secure_password
+  has_one :member, dependent: :nullify
 
   before_save :downcase_email
 
