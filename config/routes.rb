@@ -26,7 +26,7 @@ Rails.application.routes.draw do
     end
 
     resource :invitation, only: %i[new create]
-    resource :user, only: %i[new]
+    resource :user, only: %i[new create]
   end
 
   resources :users, only: %i[edit update], path: :members do

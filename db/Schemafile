@@ -90,12 +90,12 @@ create_table :songs, id: :serial, force: :cascade do |t|
 end
 
 create_table :users, id: :serial, force: :cascade do |t|
-  t.string :first_name, null: false
-  t.string :last_name, null: false
-  t.string :furigana, null: false
+  t.string :first_name
+  t.string :last_name
+  t.string :furigana
   t.string :nickname
   t.string :email
-  t.integer :joined, null: false
+  t.integer :joined
   t.string :password_digest
   t.string :remember_digest
   t.boolean :admin, default: false, null: false
