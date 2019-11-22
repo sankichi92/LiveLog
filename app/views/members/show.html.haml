@@ -41,7 +41,7 @@
     %aside.btn-toolbar{ role: 'toolbar' }
       - if current_user && @member.user_id.nil?
         .btn-group.mr-2
-          = link_to icon('fas', 'envelope') + ' ' + '招待する', new_user_activation_path(@member.id), class: 'btn btn-info'
+          = link_to 'LiveLog に招待する', new_member_invitation_path(@member), class: 'btn btn-info'
 
 - unless (playable_songs = @songs.select(&:playable?)).empty?
   = render 'songs/playlist', songs: playable_songs
