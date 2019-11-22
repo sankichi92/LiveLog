@@ -1,9 +1,6 @@
 class User < ApplicationRecord
   self.ignored_columns = %i[first_name last_name furigana nickname joined url intro activation_digest activated activated_at]
 
-  has_many :playings, dependent: :restrict_with_exception
-  has_many :songs, through: :playings
-
   has_one :member, dependent: :nullify
 
   has_one_attached :avatar

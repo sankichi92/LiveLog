@@ -36,7 +36,9 @@ RSpec.describe SongPolicy do
       end
 
       it 'grants access if user is player' do
-        expect(SongPolicy).to permit(create(:user, songs: [song]), song)
+        user = create(:user)
+        create(:playing, member: user.member, song: song)
+        expect(SongPolicy).to permit(user, song)
       end
     end
   end
@@ -65,7 +67,9 @@ RSpec.describe SongPolicy do
     end
 
     it 'grants access if user is player' do
-      expect(SongPolicy).to permit(create(:user, songs: [song]), song)
+      user = create(:user)
+      create(:playing, member: user.member, song: song)
+      expect(SongPolicy).to permit(user, song)
     end
 
     it 'grants access if user is admin' do
