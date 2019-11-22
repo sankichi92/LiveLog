@@ -8,8 +8,6 @@ FactoryBot.define do
     activated_at { activated ? Faker::Time.between(from: 1.year.ago, to: Time.zone.now) : nil }
     public { Faker::Boolean.boolean }
     subscribing { Faker::Boolean.boolean(true_ratio: 0.8) }
-    url { Faker::Boolean.boolean(true_ratio: 0.2) ? Faker::Internet.url : nil }
-    intro { Faker::Boolean.boolean ? Faker::Lorem.sentence : nil }
 
     trait :inactivated do
       activated { false }
