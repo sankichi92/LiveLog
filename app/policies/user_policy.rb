@@ -14,7 +14,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def create?
-    user&.admin_or_elder?
+    user&.admin?
   end
 
   def update?
@@ -22,7 +22,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def destroy?
-    user&.admin_or_elder? && user != record
+    user&.admin? && user != record
   end
 
   def change_status?

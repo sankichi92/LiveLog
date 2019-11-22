@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  self.ignored_columns = %i[first_name last_name furigana nickname]
+  self.ignored_columns = %i[first_name last_name furigana nickname joined]
 
   has_many :playings, dependent: :restrict_with_exception
   has_many :songs, through: :playings
@@ -16,24 +16,10 @@ class User < ApplicationRecord
 
   validates :email, presence: true, length: { maximum: 255 }, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: { case_sensitive: false }
 
-  scope :joined_years, -> { unscope(:order).order(joined: :desc).distinct.pluck(:joined) }
-
   # region Status
-
-  def elder?
-    joined < 2011
-  end
-
-  def admin_or_elder?
-    admin? || elder?
-  end
 
   def enable_to_send_info?
     activated? && subscribing?
-  end
-
-  def graduate?
-    joined <= Time.zone.now.nendo - 4
   end
 
   def donated?

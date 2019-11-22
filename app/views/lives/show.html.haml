@@ -9,7 +9,7 @@
     - if @live.album_url.present? && policy(@live).album?
       = @live.link_to_album class: 'btn btn-primary btn-lg', target: '_blank'
 
-  - if current_user&.admin_or_elder?
+  - if current_user&.admin?
     %aside.btn-toolbar.justify-content-end.mb-3#admin-tools{ role: 'toolbar' }
       .btn-group.mr-2{ role: 'group' }
         = @live.new_song_link class: 'btn btn-outline-secondary'

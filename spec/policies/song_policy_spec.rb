@@ -53,10 +53,6 @@ RSpec.describe SongPolicy do
     it 'grants access if user is an admin' do
       expect(SongPolicy).to permit(create(:admin), song)
     end
-
-    it 'grants access if user is elder' do
-      expect(SongPolicy).to permit(create(:user, :elder), song)
-    end
   end
 
   permissions :update? do
@@ -74,10 +70,6 @@ RSpec.describe SongPolicy do
 
     it 'grants access if user is admin' do
       expect(SongPolicy).to permit(create(:admin), song)
-    end
-
-    it 'grants access if user is elder' do
-      expect(SongPolicy).to permit(create(:user, :elder), song)
     end
   end
 end
