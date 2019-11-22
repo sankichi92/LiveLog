@@ -32,6 +32,7 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   config.include LoginRequestHelper, type: :request
   config.include LoginSystemHelper, type: :system
+  config.include FixtureMailerHelper, type: :mailer
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"

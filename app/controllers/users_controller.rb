@@ -5,6 +5,9 @@ class UsersController < ApplicationController
 
   after_action :verify_authorized
 
+  def new
+  end
+
   def edit(id)
     @user = User.find(id)
     authorize @user

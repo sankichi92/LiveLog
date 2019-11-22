@@ -24,6 +24,8 @@ Rails.application.routes.draw do
     collection do
       get 'year/:year', action: :year, as: :year, constraints: { year: /\d{4}/ }
     end
+
+    resource :user, only: %i[new]
   end
 
   resources :users, only: %i[edit update], path: :members do
