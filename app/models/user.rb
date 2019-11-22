@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  self.ignored_columns = %i[first_name last_name furigana nickname]
+
   has_many :playings, dependent: :restrict_with_exception
   has_many :songs, through: :playings
 
@@ -14,24 +16,7 @@ class User < ApplicationRecord
 
   validates :email, presence: true, length: { maximum: 255 }, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: { case_sensitive: false }
 
-  scope :natural_order, -> { order(joined: :desc, furigana: :asc) }
   scope :joined_years, -> { unscope(:order).order(joined: :desc).distinct.pluck(:joined) }
-
-  # region Attributes
-
-  def name
-    "#{last_name} #{first_name}"
-  end
-
-  def handle
-    nickname.presence || last_name
-  end
-
-  def name_with_handle
-    nickname.blank? ? name : "#{name} (#{nickname})"
-  end
-
-  # endregion
 
   # region Status
 

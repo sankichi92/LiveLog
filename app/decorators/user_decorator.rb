@@ -1,10 +1,6 @@
 module UserDecorator
   IMAGE_PX_BY_SIZE = { small: 64, medium: 192, large: 384 }.freeze
 
-  def display_name
-    current_user ? name_with_handle : handle
-  end
-
   def instruments
     playings.published.count_insts.to_h.keys
   end

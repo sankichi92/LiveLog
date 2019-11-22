@@ -1,10 +1,6 @@
 FactoryBot.define do
   factory :user do
     member
-    last_name { Faker::Name.last_name }
-    first_name { Faker::Name.first_name }
-    furigana { 'ふりがな' }
-    nickname { Faker::Boolean.boolean(true_ratio: 0.2) ? Faker::Games::Pokemon.name : nil }
     email { Faker::Internet.unique.email }
     joined { Faker::Number.within(range: 3.years.ago.year..Time.zone.today.year) }
     password { Faker::Internet.password }

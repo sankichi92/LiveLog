@@ -6,10 +6,6 @@ RSpec.describe User, type: :model do
   let(:user) { build(:user) }
 
 
-  it { is_expected.to respond_to(:first_name) }
-  it { is_expected.to respond_to(:last_name) }
-  it { is_expected.to respond_to(:furigana) }
-  it { is_expected.to respond_to(:nickname) }
   it { is_expected.to respond_to(:email) }
   it { is_expected.to respond_to(:joined) }
   it { is_expected.to respond_to(:password_digest) }
