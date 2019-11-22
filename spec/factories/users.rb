@@ -4,7 +4,6 @@ FactoryBot.define do
     email { Faker::Internet.unique.email }
     password { Faker::Internet.password }
     password_confirmation { password }
-    public { Faker::Boolean.boolean }
     subscribing { Faker::Boolean.boolean(true_ratio: 0.8) }
 
     factory :admin do

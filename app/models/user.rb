@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  self.ignored_columns = %i[first_name last_name furigana nickname joined url intro activation_digest activated activated_at playings_count]
+  self.ignored_columns = %i[first_name last_name furigana nickname joined url intro activation_digest activated activated_at playings_count public]
 
   has_secure_password
 

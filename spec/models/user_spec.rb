@@ -14,7 +14,6 @@ RSpec.describe User, type: :model do
   it { is_expected.to respond_to(:admin) }
   it { is_expected.to respond_to(:reset_digest) }
   it { is_expected.to respond_to(:reset_sent_at) }
-  it { is_expected.to respond_to(:public) }
   it { is_expected.to respond_to(:subscribing) }
 
   it { is_expected.to be_valid }
