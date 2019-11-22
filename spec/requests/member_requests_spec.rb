@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Member requests', type: :request do
+RSpec.describe 'Member requests:', type: :request do
   describe 'GET /members' do
     before do
       create_pair(:member)
