@@ -63,14 +63,14 @@ create_table :members, force: :cascade do |t|
 end
 
 create_table :playings, id: :serial, force: :cascade do |t|
-  t.integer :user_id, null: false
+  t.integer :member_id, null: false, renamed_from: :user_id
   t.integer :song_id, null: false
   t.string :inst
 
   t.timestamps
 
   t.index :song_id
-  t.index %i[user_id song_id], unique: true
+  t.index %i[member_id song_id], unique: true
 end
 
 create_table :songs, id: :serial, force: :cascade do |t|
@@ -119,5 +119,6 @@ end
 add_foreign_key :invitations, :members
 add_foreign_key :active_storage_attachments, :active_storage_blobs, column: :blob_id
 add_foreign_key :members, :users
+add_foreign_key :playings, :members
 add_foreign_key :playings, :songs
 add_foreign_key :songs, :lives, column: :live_id
