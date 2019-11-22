@@ -63,7 +63,7 @@ create_table :members, force: :cascade do |t|
 end
 
 create_table :playings, id: :serial, force: :cascade do |t|
-  t.integer :member_id, null: false, renamed_from: :user_id
+  t.integer :member_id, null: false
   t.integer :song_id, null: false
   t.string :inst
 
@@ -90,30 +90,17 @@ create_table :songs, id: :serial, force: :cascade do |t|
 end
 
 create_table :users, id: :serial, force: :cascade do |t|
-  t.string :first_name
-  t.string :last_name
-  t.string :furigana
-  t.string :nickname
   t.string :email
-  t.integer :joined
   t.string :password_digest
   t.string :remember_digest
   t.boolean :admin, default: false, null: false
-  t.string :activation_digest
-  t.boolean :activated, default: false, null: false
-  t.datetime :activated_at
   t.string :reset_digest
   t.datetime :reset_sent_at
-  t.boolean :public, default: false, null: false
-  t.string :url
-  t.text :intro
   t.boolean :subscribing, default: true, null: false
-  t.integer :playings_count, default: 0, null: false
 
   t.timestamps
 
   t.index :email, unique: true
-  t.index :furigana
 end
 
 add_foreign_key :invitations, :members
