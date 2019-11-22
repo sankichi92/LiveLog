@@ -4,18 +4,7 @@ FactoryBot.define do
     email { Faker::Internet.unique.email }
     password { Faker::Internet.password }
     password_confirmation { password }
-    public { Faker::Boolean.boolean }
     subscribing { Faker::Boolean.boolean(true_ratio: 0.8) }
-
-    transient do
-      songs { [] }
-    end
-
-    after(:create) do |user, evaluator|
-      evaluator.songs.each do |song|
-        create(:playing, song: song, member: user.member)
-      end
-    end
 
     factory :admin do
       admin { true }

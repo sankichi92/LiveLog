@@ -26,7 +26,7 @@
                   = link_to live.name, live_entries_path(live), class: 'dropdown-item'
           %li.nav-item.dropdown
             %a.nav-link.dropdown-toggle#navbar-user-dropdown-menu-link{ href: '#', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' }
-              = current_user.avatar_image_tag(:small)
+              = current_user.member.avatar_image_tag(:small)
               = current_user.member.name
             .dropdown-menu{ 'aria-labellebdy': 'navbar-user-dropdown-menu-link' }
               = link_to icon('fas', 'user') + ' Profile',  current_user, class: 'dropdown-item'

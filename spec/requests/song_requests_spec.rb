@@ -104,7 +104,11 @@ RSpec.describe 'Song requests', type: :request do
   describe 'PATCH /songs/:id by player' do
     let(:song) { create(:song) }
 
-    before { log_in_as(create(:user, songs: [song])) }
+    before do
+      user = create(:user)
+      create(:playing, member: user.member, song: song)
+      log_in_as user
+    end
 
     context 'with valid params' do
       let(:new_song_attrs) { attributes_for(:song, name: 'updated song') }

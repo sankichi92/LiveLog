@@ -3,7 +3,7 @@ class Member < ApplicationRecord
 
   belongs_to :user, optional: true
   has_one :invitation, dependent: :delete
-  has_many :playings, dependent: :restrict_with_exception, foreign_key: :user_id, inverse_of: :member
+  has_many :playings, dependent: :restrict_with_error
   has_many :published_songs, -> { published }, through: :playings, source: :song
 
   has_one_attached :avatar

@@ -18,7 +18,7 @@ class Stats
   end
 
   def number_of_players
-    playings.distinct.count(:user_id)
+    playings.distinct.count(:member_id)
   end
 
   def inst_to_count

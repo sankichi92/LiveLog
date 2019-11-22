@@ -1,9 +1,7 @@
 class Playing < ApplicationRecord
   INST_ORDER = %w[Vo Vn Vla Vc Fl Cl Sax Tp Hr Tb Harp Gt Koto Pf Acc 鍵ハ Ba Cj Dr Bongo Perc].freeze
 
-  alias_attribute :member_id, :user_id
-
-  belongs_to :member, counter_cache: true, foreign_key: :user_id, inverse_of: :playings
+  belongs_to :member, counter_cache: true
   belongs_to :song, touch: true
 
   validates :member_id, uniqueness: { scope: :song_id }
