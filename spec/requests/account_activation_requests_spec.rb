@@ -124,10 +124,8 @@ RSpec.describe 'Account activation requests', type: :request do
     end
 
     context 'with invalid password' do
-      let(:password) { '1234' }
-
       it 'responds 422' do
-        patch user_activation_path(user), params: { t: token, user: { password: password, password_confirmation: password } }
+        patch user_activation_path(user), params: { t: token, user: { password: 'new_password', password_confirmation: 'wrong_password' } }
 
         expect(user.password_digest).to eq user.reload.password_digest
         expect(user.activated).to be false

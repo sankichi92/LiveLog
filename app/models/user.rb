@@ -1,6 +1,4 @@
 class User < ApplicationRecord
-  EMAIL_REGEXP = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i.freeze
-
   has_many :playings, dependent: :restrict_with_exception
   has_many :songs, through: :playings
 
@@ -10,19 +8,11 @@ class User < ApplicationRecord
 
   attr_accessor :remember_token, :activation_token, :reset_token
 
-  has_secure_password(validations: false)
+  has_secure_password
 
   before_save :downcase_email
 
-  validates :first_name, presence: true
-  validates :last_name, presence: true
-  validates :furigana, presence: true, format: { with: /\A[\p{Hiragana}ー]+\z/ }
-  validates :nickname, length: { maximum: 50 }
-  validates :email, presence: true, length: { maximum: 255 }, format: { with: EMAIL_REGEXP }, uniqueness: { case_sensitive: false }, on: :update
-  validates :joined, presence: true, numericality: { only_integer: true, greater_than: 1994, less_than_or_equal_to: Time.zone.today.year }
-  validates :url, format: /\A#{URI.regexp(%w[http https])}\z/, allow_blank: true
-  validates :password, presence: true, confirmation: true, length: { minimum: 6, maximum: 72 }, allow_nil: true, on: :update
-  validates :password_confirmation, presence: true, allow_nil: true, on: :update
+  validates :email, presence: true, length: { maximum: 255 }, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: { case_sensitive: false }
 
   scope :natural_order, -> { order(joined: :desc, furigana: :asc) }
   scope :joined_years, -> { unscope(:order).order(joined: :desc).distinct.pluck(:joined) }

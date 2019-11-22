@@ -16,13 +16,7 @@ FactoryBot.define do
     url { Faker::Boolean.boolean(true_ratio: 0.2) ? Faker::Internet.url : nil }
     intro { Faker::Boolean.boolean ? Faker::Lorem.sentence : nil }
 
-    trait :invalid do
-      furigana { 'フリガナ' }
-    end
-
     trait :inactivated do
-      email { nil }
-      password { nil }
       activated { false }
     end
 

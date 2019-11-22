@@ -62,7 +62,7 @@ RSpec.describe 'User requests', type: :request do
     before { log_in_as(user) }
 
     context 'with valid params' do
-      let(:new_password_attrs) { { password: 'new_password' } }
+      let(:new_password_attrs) { { password: 'new_password', password_confirmation: 'new_password' } }
 
       it 'updates the user and redirects to /members/:id' do
         patch user_password_path(user), params: { current_password: user.password, user: new_password_attrs }
@@ -73,7 +73,7 @@ RSpec.describe 'User requests', type: :request do
     end
 
     context 'with invalid params' do
-      let(:new_password_attrs) { { password: '1234' } }
+      let(:new_password_attrs) { { password: 'new_password', password_confirmation: 'wrong_password' } }
 
       it 'responds 422' do
         patch user_password_path(user), params: { current_password: user.password, user: new_password_attrs }

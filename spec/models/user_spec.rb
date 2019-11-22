@@ -43,42 +43,6 @@ RSpec.describe User, type: :model do
   end
 
   describe 'validation' do
-    describe 'when first name is not present' do
-      before { user.first_name = '' }
-
-      it { is_expected.not_to be_valid }
-    end
-
-    describe 'when last name is not present' do
-      before { user.last_name = '' }
-
-      it { is_expected.not_to be_valid }
-    end
-
-    describe 'when furigana is not present' do
-      before { user.furigana = '' }
-
-      it { is_expected.not_to be_valid }
-    end
-
-    describe 'when furigana contains any characters other than ひらがな' do
-      before { user.furigana = 'アンプラグド' }
-
-      it { is_expected.not_to be_valid }
-    end
-
-    describe 'when joined is not present' do
-      before { user.joined = '' }
-
-      it { is_expected.not_to be_valid }
-    end
-
-    describe 'when nickname is too long' do
-      before { user.nickname = 'a' * 51 }
-
-      it { is_expected.not_to be_valid }
-    end
-
     describe 'when email is too long' do
       before { user.email = 'a' * 244 + '@ku-unplugged.net' }
 
@@ -113,24 +77,6 @@ RSpec.describe User, type: :model do
         user_with_same_email.email = user.email.upcase
         user_with_same_email.save
       end
-
-      it { is_expected.not_to be_valid(:update) }
-    end
-
-    describe 'when password is not present' do
-      before { user.password = user.password_confirmation = ' ' * 6 }
-
-      it { is_expected.not_to be_valid(:update) }
-    end
-
-    describe 'when password does not match confirmation' do
-      before { user.password_confirmation = 'mismatch' }
-
-      it { is_expected.not_to be_valid(:update) }
-    end
-
-    describe 'when password is too short' do
-      before { user.password = user.password_confirmation = 'a' * 5 }
 
       it { is_expected.not_to be_valid(:update) }
     end

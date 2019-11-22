@@ -97,7 +97,7 @@ RSpec.describe 'Password reset requests', type: :request do
 
     context 'with invalid password' do
       it 'responds 422' do
-        patch password_reset_path(token), params: { email: user.email, user: { password: '1234', password_confirmation: '1234' } }
+        patch password_reset_path(token), params: { email: user.email, user: { password: 'new_password', password_confirmation: 'wrong_password' } }
 
         expect(user.password_digest).to eq user.reload.password_digest
         expect(session[:user_id]).to be_nil
