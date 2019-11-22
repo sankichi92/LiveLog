@@ -11,7 +11,7 @@ namespace :elasticsearch do
         $ rake elasticsearch:import:song FORCE=y
     DESC
     task song: :environment do
-      total_errors = Song.includes(:playings, 'audio_attachment': :blob).published.import(force: ENV.fetch('FORCE', false))
+      total_errors = Song.includes(:live, :playings, 'audio_attachment': :blob).published.import(force: ENV.fetch('FORCE', false))
 
       puts "[IMPORT] #{total_errors} errors occurred" unless total_errors.zero?
       puts '[IMPORT] Done'
