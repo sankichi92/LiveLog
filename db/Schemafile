@@ -45,6 +45,7 @@ create_table :lives, id: :serial, force: :cascade do |t|
   t.timestamps
 
   t.index %i[date name], unique: true
+  t.index %i[published date]
 end
 
 create_table :members, force: :cascade do |t|
