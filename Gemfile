@@ -56,6 +56,7 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen'
 
+  gem 'dotenv-rails'
   gem 'haml_lint', require: false
   gem 'rails_real_favicon', require: false
   gem 'rubocop', require: false

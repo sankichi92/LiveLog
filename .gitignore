@@ -26,6 +26,9 @@
 # RSpec
 /spec/examples.txt
 
+# dotenv
+.env
+
 # Rubocop
 /.rubocop-https---raw-githubusercontent-com-cookpad-styleguide-master--rubocop-yml
 

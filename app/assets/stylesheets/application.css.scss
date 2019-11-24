@@ -107,18 +107,6 @@ img {
   }
 }
 
-#footer {
-  li.list-inline-item {
-    margin-right: 0;
-
-    &:not(:last-child):after {
-      @extend small;
-
-      content: "|";
-    }
-  }
-}
-
 .link:hover {
   cursor: pointer;
 }

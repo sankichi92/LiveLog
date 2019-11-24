@@ -102,6 +102,10 @@ GEM
     diffy (3.3.0)
     domain_name (0.5.20180417)
       unf (>= 0.0.5, < 1.0.0)
+    dotenv (2.7.5)
+    dotenv-rails (2.7.5)
+      dotenv (= 2.7.5)
+      railties (>= 3.2, < 6.1)
     elasticsearch (6.8.0)
       elasticsearch-api (= 6.8.0)
       elasticsearch-transport (= 6.8.0)
@@ -380,6 +384,7 @@ DEPENDENCIES
   bootstrap-will_paginate
   byebug
   capybara
+  dotenv-rails
   elasticsearch-dsl
   elasticsearch-model (~> 6.1)
   elasticsearch-rails (~> 6.1)

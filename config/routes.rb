@@ -46,8 +46,20 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 
-  direct :homepage do
+  direct :organization do
     'https://ku-unplugged.net/'
+  end
+
+  direct :github do
+    'https://github.com/sankichi92/LiveLog'
+  end
+
+  direct :twitter do
+    'https://twitter.com/ku_livelog'
+  end
+
+  direct :slack_invitation do
+    "https://join.slack.com/t/ku-livelog/shared_invite/#{ENV['SLACK_INVITATION_TOKEN']}"
   end
 
   direct :feedback do |user|
