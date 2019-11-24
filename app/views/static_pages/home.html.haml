@@ -7,21 +7,23 @@
       %p.lead<
         京都大学を中心に活動するアコースティック軽音サークル
         %br
-        「#{link_to '京大アンプラグド', homepage_url, target: '_blank', rel: 'noopener' }」のセットリスト管理アプリ
+        「#{link_to '京大アンプラグド', organization_url, target: '_blank', rel: 'noopener' }」のセットリスト管理アプリ
       = render 'songs/form_search'
 
 %section.mb-3
-  %header.page-header
+  %header
     %h2.h3 今日のピックアップ
+  %hr
   .song-list
     = render @song if @song
 
-%section
-  %header.page-header
+%section.mb-3
+  %header
     %h2.h3 最近のライブ
-.row
-  .col-lg-6
-    .card
-      %table.table.table-hover
-        %tbody
-          = render partial: 'lives/live', collection: @lives, cached: true
+  %hr
+  .row
+    .col-lg-6
+      .card
+        %table.table.table-hover
+          %tbody
+            = render partial: 'lives/live', collection: @lives, cached: true

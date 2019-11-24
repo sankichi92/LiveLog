@@ -11,7 +11,6 @@ class Live < ApplicationRecord
   scope :nendo, ->(year) { where(date: Date.new(year, 4, 1)...Date.new(year + 1, 4, 1)) }
   scope :drafts, -> { where(published: false) }
   scope :published, -> { where(published: true) }
-  scope :latest, -> { published.order_by_date.limit(5) }
 
   def self.years
     published.order_by_date.pluck(:date).map(&:nendo).uniq
