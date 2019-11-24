@@ -75,15 +75,15 @@ create_table :playings, id: :serial, force: :cascade do |t|
 end
 
 create_table :songs, id: :serial, force: :cascade do |t|
-  t.string :name, null: false
-  t.string :artist
-  t.string :youtube_id
   t.integer :live_id, null: false
   t.integer :order
   t.time :time
-  t.integer :status, default: 1
-  t.text :comment
+  t.string :name, null: false
+  t.string :artist
   t.boolean :original, default: false, null: false
+  t.integer :status, default: 1
+  t.string :youtube_id
+  t.text :comment
 
   t.timestamps
 

@@ -12,6 +12,8 @@ class Song < ApplicationRecord
 
   include SongSearchable
 
+  self.per_page = 20
+
   belongs_to :live
   has_many :playings, dependent: :destroy, inverse_of: :song
   has_many :members, through: :playings
@@ -22,17 +24,14 @@ class Song < ApplicationRecord
 
   enum status: { secret: 0, closed: 1, open: 2 }
 
-  before_save :extract_youtube_id
-
-  validates :live_id, presence: true
   validates :name, presence: true
   validates :youtube_id, format: { with: VALID_YOUTUBE_REGEX }, allow_blank: true
+
+  before_save :extract_youtube_id
 
   scope :played_order, -> { order(:time, :order) }
   scope :newest_live_order, -> { joins(:live).order('lives.date desc', :time, :order) }
   scope :published, -> { joins(:live).merge(Live.published) }
-
-  self.per_page = 20
 
   def self.pickup(date: Time.zone.today)
     song_id = Rails.cache.fetch("#{name.underscore}/pickup/#{date}/song_id", expires_in: 1.day) do
@@ -68,8 +67,6 @@ class Song < ApplicationRecord
   private
 
   def extract_youtube_id
-    return if youtube_id.blank?
-    m = youtube_id.match(VALID_YOUTUBE_REGEX)
-    self.youtube_id = m[:id]
+    self.youtube_id = youtube_id.match(VALID_YOUTUBE_REGEX)[:id] unless youtube_id.blank?
   end
 end
