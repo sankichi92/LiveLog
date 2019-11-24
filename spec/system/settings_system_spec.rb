@@ -9,7 +9,7 @@ RSpec.describe 'Settings:', type: :system do
 
     # When
     visit root_path
-    click_on 'Settings'
+    click_on '設定'
 
     # Then
     expect(page).to have_title 'プロフィール設定'

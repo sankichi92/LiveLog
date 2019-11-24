@@ -1,6 +1,6 @@
-- provide(:title, 'Forgot Password')
-%header.page-header
-  %h1 Forgot Password
+- provide(:title, 'パスワード再設定')
+
+%p 入力したメールアドレスにパスワード再設定に進むURLを送信します。
 
 = form_for :password_reset, url: password_resets_path do |f|
 

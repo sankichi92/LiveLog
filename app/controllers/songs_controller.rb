@@ -38,8 +38,7 @@ class SongsController < ApplicationController
     @song = Song.new(song)
     authorize @song
     if @song.save
-      flash[:success] = "#{@song.title} を追加しました"
-      redirect_to @song.live
+      redirect_to @song.live, notice: "#{@song.title} を追加しました"
     else
       render :new, status: :unprocessable_entity
     end
@@ -59,8 +58,7 @@ class SongsController < ApplicationController
     if @song.update(song)
       respond_to do |format|
         format.html do
-          flash[:success] = "#{@song.title} を更新しました"
-          redirect_to @song
+          redirect_to @song, notice: "#{@song.title} を更新しました"
         end
         format.js {}
       end
@@ -80,11 +78,10 @@ class SongsController < ApplicationController
     authorize @song
     @song.destroy
   rescue ActiveRecord::DeleteRestrictionError => e
-    flash.now[:danger] = e.message
+    flash.now.alert = e.message
     render :show
   else
-    flash[:success] = "#{@song.title} を削除しました"
-    redirect_to @song.live
+    redirect_to @song.live, notice: "#{@song.title} を削除しました"
   end
 
   private

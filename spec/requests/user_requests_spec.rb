@@ -25,7 +25,7 @@ RSpec.describe 'User requests', type: :request do
         get new_member_user_path(member, token: token)
 
         expect(response).to redirect_to root_path
-        expect(flash[:danger]).to eq '無効な URL です'
+        expect(flash.alert).to eq '無効な URL です'
       end
     end
 
@@ -40,7 +40,7 @@ RSpec.describe 'User requests', type: :request do
         get new_member_user_path(member, token: 'token')
 
         expect(response).to redirect_to root_path
-        expect(flash[:danger]).to eq 'すでにユーザー登録が完了しています'
+        expect(flash.alert).to eq 'すでにユーザー登録が完了しています'
       end
     end
   end
@@ -107,7 +107,7 @@ RSpec.describe 'User requests', type: :request do
         post member_user_path(member), params: params
 
         expect(response).to redirect_to root_path
-        expect(flash[:danger]).to eq '無効な URL です'
+        expect(flash.alert).to eq '無効な URL です'
       end
     end
 
@@ -130,7 +130,7 @@ RSpec.describe 'User requests', type: :request do
         post member_user_path(member), params: params
 
         expect(response).to redirect_to root_path
-        expect(flash[:danger]).to eq 'すでにユーザー登録が完了しています'
+        expect(flash.alert).to eq 'すでにユーザー登録が完了しています'
       end
     end
   end

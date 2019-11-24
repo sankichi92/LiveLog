@@ -18,8 +18,7 @@ class UsersController < ApplicationController
 
     if @user.save
       log_in @user
-      flash[:success] = 'LiveLog へようこそ！'
-      redirect_to root_path
+      redirect_to root_path, notice: 'LiveLog へようこそ！'
     else
       render :new, status: :unprocessable_entity
     end
@@ -34,8 +33,7 @@ class UsersController < ApplicationController
     @user = User.find(id)
     authorize @user
     if @user.update(params.require(:user).permit(:email, :subscribing))
-      flash[:success] = '設定を更新しました'
-      redirect_to edit_user_path(@user)
+      redirect_to edit_user_path(@user), notice: '設定を更新しました'
     else
       render :edit, status: :unprocessable_entity
     end
@@ -45,16 +43,12 @@ class UsersController < ApplicationController
 
   def require_not_user_member(member_id)
     @member = Member.find(member_id)
-    if @member.user_id
-      flash[:danger] = 'すでにユーザー登録が完了しています'
-      redirect_to root_path
-    end
+    redirect_to root_path, alert: 'すでにユーザー登録が完了しています' if @member.user_id
   end
 
   def require_valid_token(token)
     if @member.invitation.nil? || token != @member.invitation.token
-      flash[:danger] = '無効な URL です'
-      redirect_to root_path
+      redirect_to root_path, alert: '無効な URL です'
     end
   end
 end

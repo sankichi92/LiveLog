@@ -7,24 +7,22 @@ class SessionsController < ApplicationController
     user = User.find_by(email: session[:email].downcase)
 
     if user.nil?
-      flash.now[:danger] = '無効なメールアドレスとパスワードの組み合わせです'
+      flash.now.alert = '無効なメールアドレスとパスワードの組み合わせです'
       return render 'new', status: :unprocessable_entity
     end
 
     if user.authenticate(session[:password])
       log_in user
       session[:remember_me] == '1' ? remember(user) : forget(user)
-      flash[:success] = 'ログインしました'
-      redirect_to pop_stored_location || member_path(user.member)
+      redirect_to pop_stored_location || member_path(user.member), notice: 'ログインしました'
     else
-      flash.now[:danger] = '無効なメールアドレスとパスワードの組み合わせです'
+      flash.now.alert = '無効なメールアドレスとパスワードの組み合わせです'
       render 'new', status: :unprocessable_entity
     end
   end
 
   def destroy
     log_out
-    flash[:success] = 'ログアウトしました'
-    redirect_to root_url
+    redirect_to root_url, notice: 'ログアウトしました'
   end
 end

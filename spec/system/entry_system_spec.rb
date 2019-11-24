@@ -72,7 +72,7 @@ RSpec.describe 'Entry', type: :system do
         click_button '送信する'
       end
 
-      expect(page).to have_css('.alert-success')
+      expect(page).to have_css('.alert-info')
       expect(ActionMailer::Base.deliveries.size).to eq 1
     end
   end
@@ -94,7 +94,7 @@ RSpec.describe 'Entry', type: :system do
       expect(tweet_job).to have_received(:perform_now)
       expect(live.reload.published).to be true
       expect(live.published_at).to be_present
-      expect(page).to have_css('.alert-success')
+      expect(page).to have_css('.alert-info')
     end
   end
 end

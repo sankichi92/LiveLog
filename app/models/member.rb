@@ -32,6 +32,14 @@ class Member < ApplicationRecord
 
   # endregion
 
+  # region Status
+
+  def graduate?
+    joined_year <= Time.zone.now.nendo - 4
+  end
+
+  # endregion
+
   # region Aggregation Queries
 
   def played_instruments

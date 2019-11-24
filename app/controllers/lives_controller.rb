@@ -28,8 +28,7 @@ class LivesController < ApplicationController
     @live = Live.new(live)
     authorize @live
     if @live.save
-      flash[:success] = "#{@live.title} を追加しました"
-      redirect_to @live.published? ? @live : live_entries_url(@live)
+      redirect_to @live.published? ? @live : live_entries_url(@live), notice: "#{@live.title} を追加しました"
     else
       render :new, status: :unprocessable_entity
     end
@@ -44,8 +43,7 @@ class LivesController < ApplicationController
     @live = Live.find(id)
     authorize @live
     if @live.update(live)
-      flash[:success] = "#{@live.title} を更新しました"
-      redirect_to @live
+      redirect_to @live, notice: "#{@live.title} を更新しました"
     else
       render :edit, status: :unprocessable_entity
     end
@@ -58,7 +56,7 @@ class LivesController < ApplicationController
     else
       authorize @live
       @live.publish(live_url(@live))
-      flash[:success] = '公開しました'
+      flash.notice = '公開しました'
     end
     redirect_to @live, status: :moved_permanently
   end
@@ -68,10 +66,8 @@ class LivesController < ApplicationController
     authorize @live
     @live.destroy
   rescue ActiveRecord::DeleteRestrictionError => e
-    flash[:danger] = e.message
-    redirect_to @live
+    redirect_to @live, alert: e.message
   else
-    flash[:success] = "#{@live.title} を削除しました"
-    redirect_to lives_url
+    redirect_to lives_url, notice: "#{@live.title} を削除しました"
   end
 end

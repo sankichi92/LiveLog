@@ -21,14 +21,17 @@
 $white: #fff;
 $black: #000;
 
+$blue: #007bff;
 $orange: #fd7e14;
 $yellow: #ffc107;
 
 $primary: $yellow;
+$info: $blue;
 $warning: $orange;
 
 $theme-colors: (
         "primary": $primary,
+        "info": $info,
         "warning": $warning
 );
 

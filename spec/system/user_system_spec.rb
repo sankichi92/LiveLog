@@ -14,7 +14,7 @@ RSpec.describe 'User', type: :system do
       fill_in 'user_email', with: 'after@example.com'
       click_button '更新する'
 
-      expect(page).to have_css('.alert-success')
+      expect(page).to have_css('.alert-info')
       expect(user.reload.email).to eq 'after@example.com'
     end
   end
@@ -36,7 +36,7 @@ RSpec.describe 'User', type: :system do
       click_button '更新する'
 
       expect(user.password_digest).not_to eq user.reload.password_digest
-      expect(page).to have_css('.alert-success')
+      expect(page).to have_css('.alert-info')
     end
   end
 end

@@ -3,35 +3,102 @@
   %head
     %meta{ charset: 'utf-8' }
     %meta{ name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no' }
-    = render 'application/favicon'
-    %title= full_title(yield(:title))
-    - default_description = '京都大学を中心に活動するアコースティック軽音サークル「京大アンプラグド」のセットリスト管理アプリ'
-    %meta{ name: 'description', content: yield(:description).presence || default_description }
-    %meta{ property: 'og:url', content: request.original_url }
-    %meta{ property: 'og:type', content: yield(:og_type).presence || 'website' }
-    %meta{ property: 'og:title', content: yield(:title).presence || 'LiveLog' }
-    %meta{ property: 'og:description', content: yield(:description).presence || default_description }
-    %meta{ property: 'og:image', content: yield(:og_image).presence || image_url('logo.png') }
-    %meta{ property: 'fb:app_id', content: '555963681451627' }
-    %meta{ name: 'twitter:site', content: '@ku_livelog' }
-    - if content_for?(:additional_meta_fields)
-      = yield(:additional_meta_fields)
+
+    %title= content_for?(:title) ? "#{content_for(:title)} | #{t('app.title')}" : t('app.title')
+    %meta{ name: 'description', content: content_for(:description).presence || t('app.description') }
+
     = csrf_meta_tags
     = csp_meta_tag
-    = stylesheet_link_tag    'application', 'data-turbolinks-track': 'reload'
-    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
-    - if Rails.env.production?
-      %script{ src: 'https://www.googletagmanager.com/gtag/js?id=UA-56294602-1', async: true }
-      - if current_user.nil?
-        %script{ src: '//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js', async: true }
+
+    %meta{ property: 'og:url', content: request.original_url }
+    %meta{ property: 'og:type', content: content_for(:og_type).presence || 'website' }
+    %meta{ property: 'og:title', content: content_for(:title).presence || t('app.title') }
+    %meta{ property: 'og:description', content: content_for(:description).presence || t('app.description') }
+    %meta{ property: 'og:image', content: content_for(:og_image).presence || image_url('logo.png') }
+
+    %meta{ property: 'fb:app_id', content: '555963681451627' }
+    %meta{ name: 'twitter:site', content: '@ku_livelog' }
+
+    - if content_for?(:additional_meta_fields)
+      = content_for(:additional_meta_fields)
+
+    = render 'application/favicon'
+
+    = stylesheet_link_tag 'application', data: { 'turbolinks-track': 'reload' }
+    = javascript_pack_tag 'application', defer: true, data: { 'turbolinks-track': 'reload' }
+
+    %script{ src: 'https://www.googletagmanager.com/gtag/js?id=UA-56294602-1', async: true }
+
   %body{ data: { user_id: current_user&.id } }
-    = render 'layouts/navbar'
-    .container#main
-      = render 'layouts/flash'
-      -#- if current_user&.graduate? && !current_user&.donated? && cookies[:close_alert_donation] != '1'
-      -#  = render 'shared/alert_donation'
-      = yield
+    %nav.navbar.navbar-expand-lg.sticky-top.navbar-light.bg-primary.mb-4#navbar
+      .container
+        = link_to t('app.title'), root_path, class: 'navbar-brand'
+        %button.navbar-toggler{ type: 'button', 'data-toggle': 'collapse', 'data-target': '#navbar-content', 'aria-controls': 'navbar-content', 'aria-expanded': 'false', 'aria-label': 'Toggle navigation' }
+          %span.navbar-toggler-icon
+
+        .collapse.navbar-collapse#navbar-content
+          %ul.navbar-nav.mr-auto
+            %li.nav-item{ class: current_page?(songs_path) || current_page?(search_songs_path) ? 'active' : '' }= link_to '曲検索', songs_path, class: 'nav-link'
+            %li.nav-item{ class: params[:controller] == 'lives' ? 'active' : '' }= link_to 'ライブ', lives_path, class: 'nav-link'
+            %li.nav-item{ class: params[:controller] == 'members' ? 'active' : '' }= link_to 'メンバー', members_path, class: 'nav-link'
+            %li.nav-item{ class: params[:controller] == 'stats' ? 'active' : '' }= link_to '統計', stat_path('current'), class: 'nav-link'
+
+          - if current_user
+            %ul.nav.navbar-nav
+              - if current_user.admin?
+                %li.nav-item.dropdown
+                  %a.nav-link.dropdown-toggle#navbar-admin-dropdown-menu-link{ href: '#', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' }
+                    Admin
+                  .dropdown-menu.dropdown-menu-right{ 'aria-labellebdy': 'navbar-admin-dropdown-menu-link' }
+                    = link_to 'New Live', new_live_path, class: 'dropdown-item'
+
+              - if Live.drafts.exists?
+                %li.nav-item.dropdown{ class: params[:controller] == 'entries' ? 'active' : '' }
+                  %a.nav-link.dropdown-toggle#navbar-entry-dropdown-menu-link{ href: '#', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' }
+                    = 'エントリー'
+                  .dropdown-menu.dropdown-menu-right{ 'aria-labellebdy': 'navbar-entry-dropdown-menu-link' }
+                    - Live.drafts.order_by_date.reverse_each do |live|
+                      = link_to live.name, live_entries_path(live), class: 'dropdown-item'
+
+              %li.nav-item.dropdown
+                %a.nav-link.dropdown-toggle#navbar-user-dropdown-menu-link{ href: '#', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' }
+                  = current_user.member.name
+                .dropdown-menu.dropdown-menu-right{ 'aria-labellebdy': 'navbar-user-dropdown-menu-link' }
+                  = link_to 'プロフィール', current_user.member, class: 'dropdown-item'
+                  = link_to '設定', profile_path, class: 'dropdown-item'
+                  = link_to 'ログアウト', logout_path, method: :delete, class: 'dropdown-item'
+                  .dropdown-divider
+                  - if current_user.member.graduate?
+                    = link_to 'カンパ', donation_path, class: 'dropdown-item'
+                  = link_to 'フィードバック', feedback_url(current_user), target: '_blank', class: 'dropdown-item', rel: 'noopener'
+
+          - else
+            = link_to login_path do
+              %button.btn.btn-outline-info= 'ログイン'
+
+    .container
+      - if flash.notice
+        %aside.alert.alert-info.alert-dismissible.fade.show{ role: 'alert' }
+          = flash.notice
+          %button.close{ type: 'button', 'aria-label': 'Close', data: { dismiss: 'alert' } }
+            %span{ 'aria-hidden': true } &times;
+      - if flash.alert
+        %aside.alert.alert-danger.alert-dismissible.fade.show{ role: 'alert' }
+          = flash.alert
+          %button.close{ type: 'button', 'aria-label': 'Close', data: { dismiss: 'alert' } }
+            %span{ 'aria-hidden': true } &times;
+
+      %main
+        = yield
+
       - if Rails.env.production? && current_user.nil?
+        %script{ src: '//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js', async: true }
         %aside.my-3= render 'shared/content-ads'
-    = render 'layouts/footer'
-    = debug(params) if Rails.env.development?
+
+    %footer.text-center.my-3#footer
+      %ul.list-inline
+        %li.list-inline-item
+          %small &copy; 2014-#{Time.zone.now.year} #{link_to '京大アンプラグド', homepage_url, target: '_blank', class: 'text-dark', rel: 'noopener' }
+        %li.list-inline-item
+          %small= link_to 'プライバシーポリシー', privacy_path, class: 'text-dark'
+

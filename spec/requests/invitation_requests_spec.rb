@@ -25,7 +25,7 @@ RSpec.describe 'Invitation requests:', type: :request do
         get new_member_invitation_path(member)
 
         expect(response).to redirect_to member
-        expect(flash[:danger]).to eq 'すでに招待が完了しています'
+        expect(flash.alert).to eq 'すでに招待が完了しています'
       end
     end
   end
@@ -52,7 +52,7 @@ RSpec.describe 'Invitation requests:', type: :request do
         end.to change { ActionMailer::Base.deliveries.size }.by(1)
 
         expect(response).to redirect_to member
-        expect(flash[:success]).to eq '招待メールを送信しました'
+        expect(flash.notice).to eq '招待メールを送信しました'
       end
     end
 
@@ -89,7 +89,7 @@ RSpec.describe 'Invitation requests:', type: :request do
         post member_invitation_path(member), params: params
 
         expect(response).to redirect_to member
-        expect(flash[:danger]).to eq 'すでに招待が完了しています'
+        expect(flash.alert).to eq 'すでに招待が完了しています'
       end
     end
   end

@@ -11,8 +11,7 @@ class InvitationsController < ApplicationController
 
     if @invitation.save
       InvitationMailer.invited(@invitation).deliver_now
-      flash[:success] = '招待メールを送信しました'
-      redirect_to @member
+      redirect_to @member, notice: '招待メールを送信しました'
     else
       render :new, status: :unprocessable_entity
     end
@@ -24,10 +23,7 @@ class InvitationsController < ApplicationController
 
   def require_not_user_member(member_id)
     @member = Member.find(member_id)
-    unless @member.user_id.nil?
-      flash[:danger] = 'すでに招待が完了しています'
-      redirect_to @member
-    end
+    redirect_to @member, alert: 'すでに招待が完了しています' unless @member.user_id.nil?
   end
 
   # endregion

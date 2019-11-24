@@ -6,15 +6,13 @@ class AdminsController < ApplicationController
   def create
     authorize @user, :change_status?
     @user.update!(admin: true)
-    flash[:success] = '管理者権限を有効にしました'
-    redirect_to @user
+    redirect_to @user, notice: '管理者権限を有効にしました'
   end
 
   def destroy
     authorize @user, :change_status?
     @user.update!(admin: false)
-    flash[:success] = '管理者権限を無効にしました'
-    redirect_to @user
+    redirect_to @user, notice: '管理者権限を無効にしました'
   end
 
   private

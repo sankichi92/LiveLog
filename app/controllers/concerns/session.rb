@@ -29,8 +29,7 @@ module Session
     return if current_user
 
     store_location
-    flash[:danger] = 'ログインしてください'
-    redirect_to login_path
+    redirect_to login_path, alert: 'ログインしてください'
   end
 
   # endregion

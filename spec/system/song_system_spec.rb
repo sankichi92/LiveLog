@@ -7,8 +7,7 @@ RSpec.describe 'Song', type: :system do
     it 'enables users to see the first page of the published songs and move to the next page' do
       visit songs_path
 
-      expect(page).to have_title('Song Search')
-      expect(page).to have_content('Song Search')
+      expect(page).to have_title('曲検索')
       Song.published.newest_live_order.page(1).each do |song|
         expect(page).to have_content(song.name)
       end
@@ -34,7 +33,7 @@ RSpec.describe 'Song', type: :system do
 
       expect(page).to have_content(beatles_song.name)
 
-      click_on 'Advanced'
+      click_on '詳細'
       fill_in 'artist', with: 'The Beatles'
       click_button '検索'
 
@@ -93,7 +92,7 @@ RSpec.describe 'Song', type: :system do
       end
 
       expect { click_button '登録する' }.to change(Song, :count).by(1)
-      expect(page).to have_css('.alert-success')
+      expect(page).to have_css('.alert-info')
     end
   end
 
@@ -107,14 +106,13 @@ RSpec.describe 'Song', type: :system do
       visit song_path(song)
       click_link '編集する'
 
-      expect(page).to have_title('Edit Song')
-      expect(page).to have_content('Edit Song')
+      expect(page).to have_title('曲の編集')
 
       fill_in 'song_youtube_id', with: 'https://www.youtube.com/watch?v=new_youtube'
       attach_file 'song_audio', Rails.root.join('spec', 'fixtures', 'files', 'audio.mp3')
       click_button '更新する'
 
-      expect(page).to have_css('.alert-success')
+      expect(page).to have_css('.alert-info')
       expect(song.reload.youtube_id).to eq 'new_youtube'
       expect(song.audio.attached?).to be true
     end
@@ -125,14 +123,13 @@ RSpec.describe 'Song', type: :system do
       visit song_path(song)
       click_link '編集する'
 
-      expect(page).to have_title('Edit Song')
-      expect(page).to have_content('Edit Song')
+      expect(page).to have_title('曲の編集')
 
       select '公開', from: 'song_status'
       fill_in 'song_comment', with: 'お気に入りの曲です'
       click_button '更新する'
 
-      expect(page).to have_css('.alert-success')
+      expect(page).to have_css('.alert-info')
       expect(song.reload.status).to eq 'open'
       expect(song.comment).to eq 'お気に入りの曲です'
     end
