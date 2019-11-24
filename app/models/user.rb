@@ -5,9 +5,9 @@ class User < ApplicationRecord
 
   has_one :member, dependent: :nullify
 
-  before_save :downcase_email
-
   validates :email, presence: true, length: { maximum: 255 }, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: { case_sensitive: false }
+
+  before_save :downcase_email
 
   # region Status
 
