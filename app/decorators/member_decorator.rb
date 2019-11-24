@@ -4,7 +4,7 @@ module MemberDecorator
   def avatar_url(size = :small)
     px = IMAGE_PX_BY_SIZE[size]
     if avatar.attached? && avatar.variable?
-      avatar.variant(auto_orient: true, combine_options: { thumbnail: "#{px}x#{px}^", gravity: 'center', crop: "#{px}x#{px}+0+0" })
+      avatar.variant(resize_to_fill: [px, px])
     else
       "https://www.gravatar.com/avatar/?s=#{px}&d=mm&f=t"
     end
