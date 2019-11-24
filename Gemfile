@@ -8,7 +8,6 @@ gem 'pg'
 
 gem 'puma'
 
-gem 'jquery-rails'
 gem 'sass-rails'
 gem 'turbolinks'
 gem 'webpacker'
