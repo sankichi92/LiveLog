@@ -1,10 +1,12 @@
 Rails.application.routes.draw do
-
   root 'static_pages#home'
 
   get '/donation', to: 'static_pages#donation'
-
   get '/privacy', to: 'static_pages#privacy'
+
+  get '/login', to: 'sessions#new'
+  post '/login', to: 'sessions#create'
+  delete '/logout', to: 'sessions#destroy'
 
   resources :songs do
     collection do
@@ -29,22 +31,18 @@ Rails.application.routes.draw do
     resource :user, only: %i[new create]
   end
 
+  scope :settings do
+    resource :profile, only: %i[show update]
+  end
+
   resources :users, only: %i[edit update], path: :members do
     resource :password, only: %i[edit update]
     resource :admin, only: %i[create destroy]
   end
 
-  scope :settings do
-    resource :profile, only: %i[show update]
-  end
-
   resources :password_resets, only: %i[new create edit update]
 
   resources :stats, only: :show, param: :year
-
-  get '/login', to: 'sessions#new'
-  post '/login', to: 'sessions#create'
-  delete '/logout', to: 'sessions#destroy'
 
   direct :organization do
     'https://ku-unplugged.net/'
