@@ -34,13 +34,14 @@ class Song < ApplicationRecord
 
   self.per_page = 20
 
-  def self.pickup(date = Time.zone.today)
-    Rails.cache.fetch("Song.pickup/#{date}", expires_in: 1.day) do
+  def self.pickup(date: Time.zone.today)
+    song_id = Rails.cache.fetch("#{name.underscore}/pickup/#{date}/song_id", expires_in: 1.day) do
       random = Random.new(date.to_time.to_i)
-      songs = published.where('songs.created_at < ? and lives.date < ?', date, date).where.not(status: :secret)
-      count = songs.count
-      songs.offset(random.rand(count)).first if count.positive?
+      candidate_songs = joins(:live).merge(Live.published.where('date < ?', date)).where.not(status: :secret)
+      count = candidate_songs.count
+      candidate_songs.offset(random.rand(count)).first.id if count.positive?
     end
+    find_by(id: song_id)
   end
 
   def self.artists_for_suggestion
