@@ -19,7 +19,7 @@ RSpec.describe 'Password reset', type: :system do
     click_button '送信する'
 
     expect(ActionMailer::Base.deliveries.size).to eq 1
-    expect(page).to have_css('.alert-success')
+    expect(page).to have_css('.alert-info')
 
     visit edit_password_reset_path(token, email: user.email)
 
@@ -30,6 +30,6 @@ RSpec.describe 'Password reset', type: :system do
     click_button '更新する'
 
     expect(user.password_digest).not_to eq user.reload.password_digest
-    expect(page).to have_css('.alert-success')
+    expect(page).to have_css('.alert-info')
   end
 end

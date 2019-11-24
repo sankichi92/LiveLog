@@ -30,8 +30,7 @@ class EntriesController < ApplicationController
       notes: entry[:notes],
     )
     entry.send_email
-    flash[:success] = "#{@live.title} に #{@song.title} をエントリーしました"
-    redirect_to live_entries_url(@live)
+    redirect_to live_entries_url(@live), notice: "#{@live.title} に #{@song.title} をエントリーしました"
   rescue ActiveRecord::RecordNotUnique
     @song.errors.add(:playings, :duplicated)
     render status: :unprocessable_entity

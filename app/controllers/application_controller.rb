@@ -15,12 +15,10 @@ class ApplicationController < ActionController::Base
 
   def user_not_authorized
     if current_user
-      flash[:danger] = 'アクセス権がありません'
-      redirect_back(fallback_location: root_url)
+      redirect_back fallback_location: root_url, alert: 'アクセス権がありません'
     else
       store_location
-      flash[:danger] = 'ログインしてください'
-      redirect_to login_url
+      redirect_to login_url, alert: 'ログインしてください'
     end
   end
 end

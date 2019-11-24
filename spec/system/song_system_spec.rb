@@ -92,7 +92,7 @@ RSpec.describe 'Song', type: :system do
       end
 
       expect { click_button '登録する' }.to change(Song, :count).by(1)
-      expect(page).to have_css('.alert-success')
+      expect(page).to have_css('.alert-info')
     end
   end
 
@@ -112,7 +112,7 @@ RSpec.describe 'Song', type: :system do
       attach_file 'song_audio', Rails.root.join('spec', 'fixtures', 'files', 'audio.mp3')
       click_button '更新する'
 
-      expect(page).to have_css('.alert-success')
+      expect(page).to have_css('.alert-info')
       expect(song.reload.youtube_id).to eq 'new_youtube'
       expect(song.audio.attached?).to be true
     end
@@ -129,7 +129,7 @@ RSpec.describe 'Song', type: :system do
       fill_in 'song_comment', with: 'お気に入りの曲です'
       click_button '更新する'
 
-      expect(page).to have_css('.alert-success')
+      expect(page).to have_css('.alert-info')
       expect(song.reload.status).to eq 'open'
       expect(song.comment).to eq 'お気に入りの曲です'
     end

@@ -77,7 +77,16 @@
               %button.btn.btn-outline-info= 'ログイン'
 
     .container
-      = render 'layouts/flash'
+      - if flash.notice
+        %aside.alert.alert-info.alert-dismissible.fade.show{ role: 'alert' }
+          = flash.notice
+          %button.close{ type: 'button', 'aria-label': 'Close', data: { dismiss: 'alert' } }
+            %span{ 'aria-hidden': true } &times;
+      - if flash.alert
+        %aside.alert.alert-danger.alert-dismissible.fade.show{ role: 'alert' }
+          = flash.alert
+          %button.close{ type: 'button', 'aria-label': 'Close', data: { dismiss: 'alert' } }
+            %span{ 'aria-hidden': true } &times;
 
       %main
         = yield

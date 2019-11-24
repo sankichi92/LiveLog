@@ -71,7 +71,7 @@ RSpec.describe 'Live', type: :system do
       fill_in 'live_place', with: '4共31'
 
       expect { click_button '登録する' }.to change(Live, :count).by(1)
-      expect(page).to have_css('.alert-success')
+      expect(page).to have_css('.alert-info')
       expect(page).to have_title('テストライブ')
     end
   end
@@ -90,7 +90,7 @@ RSpec.describe 'Live', type: :system do
       click_button '更新する'
 
       expect(live.reload.album_url).to eq 'https://example.com/album'
-      expect(page).to have_css('.alert-success')
+      expect(page).to have_css('.alert-info')
       expect(page).to have_title(live.title)
     end
   end

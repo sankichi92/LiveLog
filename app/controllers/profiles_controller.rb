@@ -10,8 +10,7 @@ class ProfilesController < ApplicationController
   def update(member)
     @member = current_user.member
     if @member.update(member)
-      flash[:success] = 'プロフィールを更新しました'
-      redirect_to @member
+      redirect_to @member, notice: 'プロフィールを更新しました'
     else
       render :show, status: :unprocessable_entity
     end
