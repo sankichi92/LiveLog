@@ -1,16 +1,14 @@
-- provide(:title, 'Song Search')
+- provide(:title, '曲検索')
 - provide(:description, "京大アンプラグドで演奏された曲の「#{params[:q]}」の検索結果") if params[:q].present?
-%header.page-header.d-none.d-sm-block
-  %h1.display-4 Song Search
 
 %ul.nav.nav-pills.mb-3#search-tabs{ role: 'tablist' }
   - advanced = current_page?(search_songs_path) && params[:q].nil?
   %li.nav-item
     %a.nav-link.nav-item#basic-tab{ class: advanced ? '' : 'active', 'data-toggle': 'pill', href: '#basic', role: 'tab', 'aria-controls': 'basic', 'aria-selected': !advanced }
-      Basic
+      簡単
   %li.nav-item
     %a.nav-item.nav-link#advanced-tab{ class: advanced ? 'active' : '', 'data-toggle': 'pill', href: '#advanced', role: 'tab', 'aria-controls': 'advanced', 'aria-selected': advanced }
-      Advanced
+      詳細
 
 .tab-content#search-tabs-content
   .tab-pane.fade#basic{ class: advanced ? '' : 'show active', role: 'tabpanel', 'aria-labelledby': 'basic-tab' }

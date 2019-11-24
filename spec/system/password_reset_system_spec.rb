@@ -13,7 +13,7 @@ RSpec.describe 'Password reset', type: :system do
     visit login_path
     click_link 'パスワードを忘れた場合'
 
-    expect(page).to have_title('Forgot Password')
+    expect(page).to have_title('パスワード再設定')
 
     fill_in 'password_reset_email', with: user.email
     click_button '送信する'

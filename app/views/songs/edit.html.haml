@@ -1,6 +1,4 @@
-- provide(:title, 'Edit Song')
-%header.page-header
-  %h1 Edit Song
+- provide(:title, "曲の編集 (#{@song.id})")
 
 - if @song.persisted? && policy(@song).destroy?
   .text-right

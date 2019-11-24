@@ -1,11 +1,9 @@
-- provide(:title, 'Log in')
-%header.page-header
-  %h1 Log in
+- provide(:title, 'ログイン')
 
 %p
-  京大アンプラグドの会員のみアカウントを作成することができます。
+  京大アンプラグドの会員のみユーザー登録できます。
   %br
-  会員の方は，すでにアカウントを持っている人に招待してもらってください。
+  会員の方は，すでにユーザー登録が済んでいる人に招待してもらってください。
 
 %section.mb-3
   = form_for :session, url: login_path do |f|

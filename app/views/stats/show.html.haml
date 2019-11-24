@@ -1,9 +1,7 @@
-- provide(:title, "Stats #{@stats.year}")
+- provide(:title, "統計 #{@stats.year}")
 - provide(:description, "#{@stats.year}年度に京大アンプラグドで行った演奏の統計情報")
-%article
-  %header.page-header.d-none.d-sm-block
-    %h1.display-4 Stats
 
+%article
   %nav.nav.nav-pills.mb-3
     - Live.years.each do |year|
       = link_to year, stat_path(year), class: "nav-link#{year == @stats.year ? ' active' : ''}"

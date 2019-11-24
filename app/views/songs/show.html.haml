@@ -70,8 +70,9 @@
 
   - if @related_songs.present?
     %section
-      %header.page-header
-        %h2 Related Songs
+      %header
+        %h2.h3 似ている曲
+      %hr
       .song-list.mb-3
         - if current_user
           = render @related_songs

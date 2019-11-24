@@ -10,8 +10,7 @@ RSpec.describe 'Live', type: :system do
     it 'enables users to see the published lives' do
       visit lives_path
 
-      expect(page).to have_title('Live List')
-      expect(page).to have_content('Live List')
+      expect(page).to have_title('ライブ')
       Live.published.each do |live|
         expect(page).to have_content(live.name)
       end
