@@ -52,10 +52,10 @@ end
 group :development do
   gem 'listen'
   gem 'web-console'
-
   gem 'spring'
   gem 'spring-watcher-listen'
 
+  gem 'bullet'
   gem 'dotenv-rails'
   gem 'haml_lint', require: false
   gem 'rails_real_favicon', require: false
