@@ -1,4 +1,8 @@
+require 'app_auth0_client'
+
 class User < ApplicationRecord
+  AUTH0_UP_AUTH_CONNECTION = 'Username-Password-Authentication'.freeze
+
   has_secure_password validations: false
 
   attr_accessor :remember_token, :reset_token
@@ -7,7 +11,19 @@ class User < ApplicationRecord
 
   before_save :downcase_email
 
+  # region Attributes
+
+  def auth0_id
+    "auth0|#{id}"
+  end
+
+  # endregion
+
   # region Status
+
+  def activate!
+    update!(activated: true)
+  end
 
   def donated?
     donated_ids = ENV['LIVELOG_DONATED_USER_IDS']&.split(',')&.map(&:to_i) || []
@@ -59,6 +75,38 @@ class User < ApplicationRecord
 
   def password_reset_expired?
     reset_sent_at < 2.hours.ago
+  end
+
+  # endregion
+
+  # region Auth0
+
+  def auth0_user
+    @auth0_user ||= fetch_auth0_user!
+  end
+
+  def fetch_auth0_user!
+    @auth0_user = AppAuth0Client.instance.user(auth0_id)
+  end
+
+  def create_auth0_user!(email)
+    @auth0_user = AppAuth0Client.instance.create_user(
+      member.name,
+      connection: AUTH0_UP_AUTH_CONNECTION,
+      user_id: id.to_s,
+      email: email,
+      password: "0aA#{SecureRandom.base58}", # Prefix "0aA" is to pass the validation.
+      verify_email: false,
+      user_metadata: {
+        livelog_member_id: member.id,
+        joined_year: member.joined_year,
+        subscribing: subscribing,
+      },
+    )
+  end
+
+  def update_auth0_user!(options)
+    AppAuth0Client.instance.patch_user(auth0_id, options)
   end
 
   # endregion

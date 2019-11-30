@@ -51,3 +51,6 @@ RSpec/RepeatedDescription:
 RSpec/RepeatedExample:
   Exclude:
     - spec/policies/**/*
+
+RSpec/VerifiedDoubles:
+  IgnoreSymbolicNames: true
