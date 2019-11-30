@@ -39,7 +39,7 @@
             = link_to collaborator.name, collaborator
 
     %aside.btn-toolbar{ role: 'toolbar' }
-      - if current_user && @member.user_id.nil?
+      -#- if current_user && @member.user_id.nil?
         .btn-group.mr-2
           = link_to 'LiveLog に招待する', new_member_invitation_path(@member), class: 'btn btn-info'
 

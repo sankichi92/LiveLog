@@ -2,7 +2,6 @@ class Member < ApplicationRecord
   MINIMUM_JOINED_YEAR = 1995
 
   belongs_to :user, optional: true
-  has_one :invitation, dependent: :delete
   has_many :playings, dependent: :restrict_with_error
   has_many :published_songs, -> { published }, through: :playings, source: :song
 

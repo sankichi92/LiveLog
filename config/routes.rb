@@ -27,7 +27,6 @@ Rails.application.routes.draw do
       get 'year/:year', action: :year, as: :year, constraints: { year: /\d{4}/ }
     end
 
-    resource :invitation, only: %i[new create]
     resource :user, only: %i[new create]
   end
 

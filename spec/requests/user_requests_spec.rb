@@ -4,34 +4,7 @@ RSpec.describe 'User requests', type: :request do
   describe 'GET /members/:member_id/user/new' do
     let(:member) { create(:member) }
 
-    before do
-      create(:invitation, member: member)
-    end
-
-    context 'with the valid token' do
-      let(:token) { member.invitation.token }
-
-      it 'responds 200' do
-        get new_member_user_path(member, token: token)
-
-        expect(response).to have_http_status :ok
-      end
-    end
-
-    context 'with an invalid token' do
-      let(:token) { 'invalid' }
-
-      it 'redirects to / with alert' do
-        get new_member_user_path(member, token: token)
-
-        expect(response).to redirect_to root_path
-        expect(flash.alert).to eq '無効な URL です'
-      end
-    end
-
     context 'when a user associated with the member exists' do
-      let(:token) { member.invitation.token }
-
       before do
         create(:user, member: member)
       end
@@ -47,69 +20,6 @@ RSpec.describe 'User requests', type: :request do
 
   describe 'POST /members/:member_id/user/new' do
     let(:member) { create(:member) }
-
-    before do
-      create(:invitation, member: member)
-    end
-
-    context 'with a valid password' do
-      let(:params) do
-        {
-          token: member.invitation.token,
-          user: {
-            password: 'password',
-            password_confirmation: 'password',
-          },
-        }
-      end
-
-      it 'creates a user, logs-in as them and redirects to / with a notice' do
-        post member_user_path(member), params: params
-
-        expect(member.reload.user).to be_persisted
-        expect(session[:user_id]).to eq member.user.id
-        expect(response).to redirect_to root_path
-      end
-    end
-
-    xcontext 'with an invalid password' do
-      let(:params) do
-        {
-          token: member.invitation.token,
-          user: {
-            password: 'password',
-            password_confirmation: 'wront_password',
-          },
-        }
-      end
-
-      it 'responds 422' do
-        post member_user_path(member), params: params
-
-        expect(member.reload_user).to be_nil
-        expect(session[:user_id]).to be_nil
-        expect(response).to have_http_status :unprocessable_entity
-      end
-    end
-
-    context 'with an invalid token' do
-      let(:params) do
-        {
-          token: 'invalid',
-          user: {
-            password: 'password',
-            password_confirmation: 'password',
-          },
-        }
-      end
-
-      it 'redirects to / with alert' do
-        post member_user_path(member), params: params
-
-        expect(response).to redirect_to root_path
-        expect(flash.alert).to eq '無効な URL です'
-      end
-    end
 
     context 'when a user associated with the member exists' do
       let(:params) do
