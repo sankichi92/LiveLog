@@ -9,7 +9,6 @@ RSpec.describe User, type: :model do
   it { is_expected.to respond_to(:email) }
   it { is_expected.to respond_to(:password_digest) }
   it { is_expected.to respond_to(:password) }
-  it { is_expected.to respond_to(:password_confirmation) }
   it { is_expected.to respond_to(:remember_digest) }
   it { is_expected.to respond_to(:admin) }
   it { is_expected.to respond_to(:reset_digest) }
@@ -26,46 +25,6 @@ RSpec.describe User, type: :model do
     end
 
     it { is_expected.to be_admin }
-  end
-
-  describe 'validation' do
-    describe 'when email is too long' do
-      before { user.email = 'a' * 244 + '@ku-unplugged.net' }
-
-      it { is_expected.not_to be_valid(:update) }
-    end
-
-    describe 'when email format is invalid' do
-      let(:addresses) { %w[user@foo,com user_at_foo.org example.user@foo. foo@bar_baz.com foo@bar+baz.com] }
-
-      it 'is invalid' do
-        addresses.each do |invalid_address|
-          user.email = invalid_address
-          expect(user).not_to be_valid(:update)
-        end
-      end
-    end
-
-    describe 'when email format is valid' do
-      let(:addresses) { %w[user@foo.COM A_US-ER@f.b.org frst.lst@foo.jp a+b@baz.cn] }
-
-      it 'is valid' do
-        addresses.each do |valid_address|
-          user.email = valid_address
-          expect(user).to be_valid(:update)
-        end
-      end
-    end
-
-    describe 'when email address is already taken' do
-      before do
-        user_with_same_email = user.dup
-        user_with_same_email.email = user.email.upcase
-        user_with_same_email.save
-      end
-
-      it { is_expected.not_to be_valid(:update) }
-    end
   end
 
   describe '#save' do

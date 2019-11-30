@@ -1,11 +1,9 @@
 class User < ApplicationRecord
-  has_secure_password
+  has_secure_password validations: false
 
   attr_accessor :remember_token, :reset_token
 
   has_one :member, dependent: :nullify
-
-  validates :email, presence: true, length: { maximum: 255 }, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: { case_sensitive: false }
 
   before_save :downcase_email
 
