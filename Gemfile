@@ -27,12 +27,14 @@ gem 'haml-rails'
 gem 'pundit'
 gem 'rails-i18n'
 gem 'ridgepole', require: false
-gem 'twitter'
 gem 'will_paginate' # must be added before the Elasticsearch gems
 
 gem 'elasticsearch-rails', '~> 6.1'
 gem 'elasticsearch-model', '~> 6.1'
 gem 'elasticsearch-dsl'
+
+gem 'auth0'
+gem 'twitter'
 
 gem 'bootstrap-will_paginate'
 gem 'font-awesome-sass'
