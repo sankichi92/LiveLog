@@ -14,8 +14,6 @@ gem 'webpacker'
 
 gem 'redis'
 
-gem 'bcrypt'
-
 gem 'aws-sdk-s3', require: false
 gem 'image_processing'
 
