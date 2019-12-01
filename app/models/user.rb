@@ -7,8 +7,6 @@ class User < ApplicationRecord
 
   has_one :member, dependent: :nullify
 
-  before_save :downcase_email
-
   def self.find_auth0_id(auth0_id)
     id = auth0_id.match(/auth0\|(?<id>\d+)/)[:id]
     find(id)
@@ -66,10 +64,4 @@ class User < ApplicationRecord
   end
 
   # endregion
-
-  private
-
-  def downcase_email
-    self.email = email.downcase unless email.nil?
-  end
 end

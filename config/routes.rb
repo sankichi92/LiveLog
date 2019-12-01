@@ -34,7 +34,7 @@ Rails.application.routes.draw do
     resource :profile, only: %i[show update]
   end
 
-  resources :users, only: %i[edit update], path: :members do
+  resources :users, only: [], path: :members do
     resource :admin, only: %i[create destroy]
   end
 
