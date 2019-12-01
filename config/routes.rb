@@ -30,15 +30,11 @@ Rails.application.routes.draw do
     resource :user, only: %i[new create]
   end
 
+  resources :stats, only: :show, param: :year
+
   scope :settings do
     resource :profile, only: %i[show update]
   end
-
-  resources :users, only: [], path: :members do
-    resource :admin, only: %i[create destroy]
-  end
-
-  resources :stats, only: :show, param: :year
 
   direct :organization do
     'https://ku-unplugged.net/'

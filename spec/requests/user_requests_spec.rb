@@ -121,28 +121,4 @@ RSpec.describe 'User requests', type: :request do
       end
     end
   end
-
-  xdescribe 'POST /members/:id/admin by admin user' do
-    let(:user) { create(:user) }
-
-    before { log_in_as(create(:admin)) }
-
-    it 'make the user admin and redirects to /users/:id' do
-      post user_admin_path(user)
-      expect(user.reload.admin).to be true
-      expect(response).to redirect_to(user)
-    end
-  end
-
-  xdescribe 'DELETE /members/:id/admin by admin user' do
-    let(:user) { create(:admin) }
-
-    before { log_in_as(create(:admin)) }
-
-    it 'make the user non-admin and redirects to /users/:id' do
-      delete user_admin_path(user)
-      expect(user.reload.admin).to be false
-      expect(response).to redirect_to(user)
-    end
-  end
 end
