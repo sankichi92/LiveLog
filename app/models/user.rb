@@ -3,9 +3,11 @@ require 'app_auth0_client'
 class User < ApplicationRecord
   AUTH0_UP_AUTH_CONNECTION = 'Username-Password-Authentication'.freeze
 
+  self.ignored_columns = %i[remember_digest]
+
   has_secure_password validations: false
 
-  attr_accessor :remember_token, :reset_token
+  attr_accessor :reset_token
 
   has_one :member, dependent: :nullify
 
@@ -43,25 +45,6 @@ class User < ApplicationRecord
     digest = send("#{attribute}_digest")
     return false if digest.nil?
     BCrypt::Password.new(digest).is_password?(token)
-  end
-
-  def remember
-    self.remember_token = SecureRandom.base64
-    update(remember_digest: encrypt(remember_token))
-  end
-
-  def forget
-    update(remember_digest: nil)
-  end
-
-  def valid_token?(token)
-    digests = tokens.pluck(:digest)
-    digests.any? { |d| BCrypt::Password.new(d).is_password?(token) }
-  end
-
-  def destroy_token(token)
-    token = tokens.find { |t| BCrypt::Password.new(t.digest).is_password?(token) }
-    token&.destroy
   end
 
   # endregion

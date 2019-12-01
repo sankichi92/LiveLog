@@ -9,7 +9,6 @@ RSpec.describe User, type: :model do
   it { is_expected.to respond_to(:email) }
   it { is_expected.to respond_to(:password_digest) }
   it { is_expected.to respond_to(:password) }
-  it { is_expected.to respond_to(:remember_digest) }
   it { is_expected.to respond_to(:admin) }
   it { is_expected.to respond_to(:reset_digest) }
   it { is_expected.to respond_to(:reset_sent_at) }
@@ -54,12 +53,6 @@ RSpec.describe User, type: :model do
 
       it { is_expected.not_to eq user_for_invalid_password }
       specify { expect(user_for_invalid_password).to be_falsey }
-    end
-  end
-
-  describe '#authenticated?' do
-    it 'returns false for a user with nil digest' do
-      expect(user).not_to be_authenticated(:remember, '')
     end
   end
 end
