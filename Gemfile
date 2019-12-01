@@ -29,6 +29,10 @@ gem 'rails-i18n'
 gem 'ridgepole', require: false
 gem 'will_paginate' # must be added before the Elasticsearch gems
 
+gem 'omniauth'
+gem 'omniauth-auth0'
+gem 'omniauth-rails_csrf_protection'
+
 gem 'elasticsearch-rails', '~> 6.1'
 gem 'elasticsearch-model', '~> 6.1'
 gem 'elasticsearch-dsl'

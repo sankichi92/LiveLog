@@ -14,20 +14,11 @@ RSpec.describe 'Static pages requests', type: :request do
   end
 
   describe 'GET /donation' do
-    context 'with non-logged-in user' do
-      it 'redirects to /login' do
-        get donation_path
-        expect(response).to redirect_to(login_url)
-      end
-    end
+    before { log_in_as(create(:user)) }
 
-    context 'with logged-in user' do
-      before { log_in_as(create(:user)) }
-
-      it 'responds 200' do
-        get donation_path
-        expect(response).to have_http_status(:ok)
-      end
+    it 'responds 200' do
+      get donation_path
+      expect(response).to have_http_status(:ok)
     end
   end
 

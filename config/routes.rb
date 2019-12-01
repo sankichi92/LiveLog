@@ -4,8 +4,8 @@ Rails.application.routes.draw do
   get '/donation', to: 'static_pages#donation'
   get '/privacy', to: 'static_pages#privacy'
 
-  get '/login', to: 'sessions#new'
-  post '/login', to: 'sessions#create'
+  get '/auth/auth0/callback', to: 'sessions#create'
+  get '/auth/failure', to: 'sessions#failure'
   delete '/logout', to: 'sessions#destroy'
 
   resources :songs do

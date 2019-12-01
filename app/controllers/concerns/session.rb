@@ -29,7 +29,7 @@ module Session
     return if current_user
 
     store_location
-    redirect_to login_path, alert: 'ログインしてください'
+    redirect_to root_path, alert: 'ログインしてください'
   end
 
   # endregion
@@ -40,8 +40,8 @@ module Session
 
   def log_out
     forget(current_user)
-    session.delete(:user_id)
     @current_user = nil
+    reset_session
   end
 
   def remember(user)

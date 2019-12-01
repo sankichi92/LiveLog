@@ -11,6 +11,11 @@ class User < ApplicationRecord
 
   before_save :downcase_email
 
+  def self.find_auth0_id(auth0_id)
+    id = auth0_id.match(/auth0\|(?<id>\d+)/)[:id]
+    find(id)
+  end
+
   # region Attributes
 
   def auth0_id
