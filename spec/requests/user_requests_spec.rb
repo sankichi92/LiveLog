@@ -166,45 +166,6 @@ RSpec.describe 'User requests', type: :request do
     end
   end
 
-  describe 'GET /members/:id/password/edit by correct user' do
-    let(:user) { create(:user) }
-
-    before { log_in_as(user) }
-
-    it 'responds 200' do
-      get edit_user_password_path(user)
-      expect(response).to have_http_status(:ok)
-    end
-  end
-
-  describe 'PATCH /members/:id/password by correct user' do
-    let(:user) { create(:user) }
-
-    before { log_in_as(user) }
-
-    context 'with valid params' do
-      let(:new_password_attrs) { { password: 'new_password', password_confirmation: 'new_password' } }
-
-      it 'updates the user and redirects to /members/:id' do
-        patch user_password_path(user), params: { current_password: user.password, user: new_password_attrs }
-
-        expect(response).to redirect_to user.member
-        expect(user.password_digest).not_to eq user.reload.password_digest
-      end
-    end
-
-    xcontext 'with invalid params' do
-      let(:new_password_attrs) { { password: 'new_password', password_confirmation: 'wrong_password' } }
-
-      it 'responds 422' do
-        patch user_password_path(user), params: { current_password: user.password, user: new_password_attrs }
-
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(user.password_digest).to eq user.reload.password_digest
-      end
-    end
-  end
-
   describe 'POST /members/:id/admin by admin user' do
     let(:user) { create(:user) }
 

@@ -18,25 +18,4 @@ RSpec.describe 'User', type: :system do
       expect(user.reload.email).to eq 'after@example.com'
     end
   end
-
-  describe 'edit password' do
-    let(:user) { create(:user) }
-
-    before { log_in_as user }
-
-    it 'enables users to update their own password' do
-      visit edit_user_path(user)
-      click_link 'パスワード'
-
-      expect(page).to have_title('パスワード変更')
-
-      fill_in 'current_password', with: user.password
-      fill_in 'user_password', with: 'new_password'
-      fill_in 'user_password_confirmation', with: 'new_password'
-      click_button '更新する'
-
-      expect(user.password_digest).not_to eq user.reload.password_digest
-      expect(page).to have_css('.alert-info')
-    end
-  end
 end
