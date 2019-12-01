@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Session requests:', type: :request do
   describe 'GET /auth/auth0/callback' do
-    let(:user) { create(:user) }
+    let(:user) { create(:user, :inactivated) }
 
     context 'with valid auth' do
       before do
@@ -18,6 +18,7 @@ RSpec.describe 'Session requests:', type: :request do
         expect(response).to redirect_to root_path
         expect(flash.notice).to eq 'ログインしました'
         expect(session[:user_id]).to eq user.id
+        expect(user.reload).to be_activated
       end
     end
 
@@ -56,9 +57,11 @@ RSpec.describe 'Session requests:', type: :request do
 
     before { log_in_as(user) }
 
-    it 'deletes session and cookies' do
+    it 'resets session and redirects with notice' do
       delete logout_path
 
+      expect(response).to have_http_status :redirect
+      expect(flash.notice).to eq 'ログアウトしました'
       expect(session[:user_id]).to be_nil
     end
   end

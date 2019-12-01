@@ -4,6 +4,7 @@ class SessionsController < ApplicationController
   def create
     auth = request.env['omniauth.auth']
     user = User.find_auth0_id(auth.uid)
+    user.activate! unless user.activated?
     log_in user
     redirect_to pop_stored_location || root_path, notice: 'ログインしました'
   rescue ActiveRecord::RecordNotFound => e
