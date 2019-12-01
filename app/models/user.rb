@@ -3,11 +3,9 @@ require 'app_auth0_client'
 class User < ApplicationRecord
   AUTH0_UP_AUTH_CONNECTION = 'Username-Password-Authentication'.freeze
 
-  self.ignored_columns = %i[remember_digest]
+  self.ignored_columns = %i[remember_digest reset_digest reset_sent_at]
 
   has_secure_password validations: false
-
-  attr_accessor :reset_token
 
   has_one :member, dependent: :nullify
 
@@ -35,34 +33,6 @@ class User < ApplicationRecord
   def donated?
     donated_ids = ENV['LIVELOG_DONATED_USER_IDS']&.split(',')&.map(&:to_i) || []
     donated_ids.include?(id)
-  end
-
-  # endregion
-
-  # region Authentication
-
-  def authenticated?(attribute, token)
-    digest = send("#{attribute}_digest")
-    return false if digest.nil?
-    BCrypt::Password.new(digest).is_password?(token)
-  end
-
-  # endregion
-
-  # region Password reset
-
-  def send_password_reset
-    self.reset_token = SecureRandom.base64
-    update!(reset_digest: encrypt(reset_token), reset_sent_at: Time.zone.now)
-    UserMailer.password_reset(self).deliver_now
-  end
-
-  def reset_password(password_params)
-    update(password_params.merge(reset_digest: nil, reset_sent_at: nil))
-  end
-
-  def password_reset_expired?
-    reset_sent_at < 2.hours.ago
   end
 
   # endregion
@@ -100,10 +70,6 @@ class User < ApplicationRecord
   # endregion
 
   private
-
-  def encrypt(unencrypted_str)
-    BCrypt::Password.create(unencrypted_str)
-  end
 
   def downcase_email
     self.email = email.downcase unless email.nil?

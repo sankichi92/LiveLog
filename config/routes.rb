@@ -39,8 +39,6 @@ Rails.application.routes.draw do
     resource :admin, only: %i[create destroy]
   end
 
-  resources :password_resets, only: %i[new create edit update]
-
   resources :stats, only: :show, param: :year
 
   direct :organization do
