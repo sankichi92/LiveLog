@@ -1,17 +1,19 @@
-- provide(:title, 'ユーザー登録')
+- provide(:title, "#{@member.name}を招待する")
 
-= form_with model: @user, url: member_user_path(@member), local: true do |form|
+%header
+  %h1.h2 #{@member.name}さんを招待する
 
-  = render 'shared/error_messages', errors: @user.errors
+%hr
 
-  = hidden_field_tag :token, params[:token]
+.row
+  = render @member
 
-  .form-group
-    = form.label :password
-    = form.password_field :password, required: true, class: 'form-control'
+%section
+  = form_with model: @user, scope: '', url: member_user_path(@member), method: :post, local: true do |form|
+    = render 'shared/error_messages', errors: @user.errors
 
-  .form-group
-    = form.label :password_confirmation
-    = form.password_field :password_confirmation, required: true, class: 'form-control'
+    .form-group
+      = form.label :email
+      = form.email_field :email, required: true, class: 'form-control'
 
-  = form.submit class: 'btn btn-primary'
+    = form.submit '招待する', class: 'btn btn-primary'

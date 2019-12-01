@@ -50,8 +50,6 @@ ja:
       playing:
         user: メンバー
         inst: 楽器
-      invitation:
-        email: メールアドレス
   activemodel:
     attributes:
       song/search_query:

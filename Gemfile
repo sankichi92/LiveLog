@@ -27,12 +27,18 @@ gem 'haml-rails'
 gem 'pundit'
 gem 'rails-i18n'
 gem 'ridgepole', require: false
-gem 'twitter'
 gem 'will_paginate' # must be added before the Elasticsearch gems
+
+gem 'omniauth'
+gem 'omniauth-auth0'
+gem 'omniauth-rails_csrf_protection'
 
 gem 'elasticsearch-rails', '~> 6.1'
 gem 'elasticsearch-model', '~> 6.1'
 gem 'elasticsearch-dsl'
+
+gem 'auth0'
+gem 'twitter'
 
 gem 'bootstrap-will_paginate'
 gem 'font-awesome-sass'
@@ -68,4 +74,6 @@ group :test do
   gem 'capybara'
   gem 'selenium-webdriver'
   gem 'webdrivers'
+
+  gem 'webmock'
 end

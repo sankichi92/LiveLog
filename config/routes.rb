@@ -4,8 +4,8 @@ Rails.application.routes.draw do
   get '/donation', to: 'static_pages#donation'
   get '/privacy', to: 'static_pages#privacy'
 
-  get '/login', to: 'sessions#new'
-  post '/login', to: 'sessions#create'
+  get '/auth/auth0/callback', to: 'sessions#create'
+  get '/auth/failure', to: 'sessions#failure'
   delete '/logout', to: 'sessions#destroy'
 
   resources :songs do
@@ -27,22 +27,14 @@ Rails.application.routes.draw do
       get 'year/:year', action: :year, as: :year, constraints: { year: /\d{4}/ }
     end
 
-    resource :invitation, only: %i[new create]
     resource :user, only: %i[new create]
   end
+
+  resources :stats, only: :show, param: :year
 
   scope :settings do
     resource :profile, only: %i[show update]
   end
-
-  resources :users, only: %i[edit update], path: :members do
-    resource :password, only: %i[edit update]
-    resource :admin, only: %i[create destroy]
-  end
-
-  resources :password_resets, only: %i[new create edit update]
-
-  resources :stats, only: :show, param: :year
 
   direct :organization do
     'https://ku-unplugged.net/'

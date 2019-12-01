@@ -1,9 +1,0 @@
-- provide(:title, 'パスワード再設定')
-
-%p 入力したメールアドレスにパスワード再設定に進むURLを送信します。
-
-= form_for :password_reset, url: password_resets_path do |f|
-
-  = render 'users/email_form', f: f
-
-  = f.submit '送信する', class: 'btn btn-primary'

@@ -1,15 +1,30 @@
-class User < ApplicationRecord
-  has_secure_password
+require 'app_auth0_client'
 
-  attr_accessor :remember_token, :reset_token
+class User < ApplicationRecord
+  AUTH0_UP_AUTH_CONNECTION = 'Username-Password-Authentication'.freeze
+
+  self.ignored_columns = %i[password_digest remember_digest reset_digest reset_sent_at]
 
   has_one :member, dependent: :nullify
 
-  validates :email, presence: true, length: { maximum: 255 }, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: { case_sensitive: false }
+  def self.find_auth0_id(auth0_id)
+    id = auth0_id.match(/auth0\|(?<id>\d+)/)[:id]
+    find(id)
+  end
 
-  before_save :downcase_email
+  # region Attributes
+
+  def auth0_id
+    "auth0|#{id}"
+  end
+
+  # endregion
 
   # region Status
+
+  def activate!
+    update!(activated: true)
+  end
 
   def donated?
     donated_ids = ENV['LIVELOG_DONATED_USER_IDS']&.split(',')&.map(&:to_i) || []
@@ -18,60 +33,35 @@ class User < ApplicationRecord
 
   # endregion
 
-  # region Authentication
+  # region Auth0
 
-  def authenticated?(attribute, token)
-    digest = send("#{attribute}_digest")
-    return false if digest.nil?
-    BCrypt::Password.new(digest).is_password?(token)
+  def auth0_user
+    @auth0_user ||= fetch_auth0_user!
   end
 
-  def remember
-    self.remember_token = SecureRandom.base64
-    update(remember_digest: encrypt(remember_token))
+  def fetch_auth0_user!
+    @auth0_user = AppAuth0Client.instance.user(auth0_id)
   end
 
-  def forget
-    update(remember_digest: nil)
+  def create_auth0_user!(email)
+    @auth0_user = AppAuth0Client.instance.create_user(
+      member.name,
+      connection: AUTH0_UP_AUTH_CONNECTION,
+      user_id: id.to_s,
+      email: email,
+      password: "0aA#{SecureRandom.base58}", # Prefix "0aA" is to pass the validation.
+      verify_email: false,
+      user_metadata: {
+        livelog_member_id: member.id,
+        joined_year: member.joined_year,
+        subscribing: subscribing,
+      },
+    )
   end
 
-  def valid_token?(token)
-    digests = tokens.pluck(:digest)
-    digests.any? { |d| BCrypt::Password.new(d).is_password?(token) }
-  end
-
-  def destroy_token(token)
-    token = tokens.find { |t| BCrypt::Password.new(t.digest).is_password?(token) }
-    token&.destroy
-  end
-
-  # endregion
-
-  # region Password reset
-
-  def send_password_reset
-    self.reset_token = SecureRandom.base64
-    update!(reset_digest: encrypt(reset_token), reset_sent_at: Time.zone.now)
-    UserMailer.password_reset(self).deliver_now
-  end
-
-  def reset_password(password_params)
-    update(password_params.merge(reset_digest: nil, reset_sent_at: nil))
-  end
-
-  def password_reset_expired?
-    reset_sent_at < 2.hours.ago
+  def update_auth0_user!(options)
+    AppAuth0Client.instance.patch_user(auth0_id, options)
   end
 
   # endregion
-
-  private
-
-  def encrypt(unencrypted_str)
-    BCrypt::Password.create(unencrypted_str)
-  end
-
-  def downcase_email
-    self.email = email.downcase unless email.nil?
-  end
 end

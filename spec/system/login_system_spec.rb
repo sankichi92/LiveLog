@@ -1,28 +1,23 @@
 require 'rails_helper'
 
-RSpec.describe 'Login', type: :system do
-  let(:user) { create(:user) }
+RSpec.describe 'Login:', type: :system do
+  specify 'A user is requested to log-in on a protected page, and after login, they are redirected to the protected page' do
+    # Given
+    user = create(:user)
+    OmniAuth.config.mock_auth[:auth0] = OmniAuth::AuthHash.new(provide: 'auth0', uid: user.auth0_id)
 
-  it 'enables users to login and logout' do
-    log_in_as user, remember_me: true
+    # When
+    visit profile_path
 
-    expect(page).not_to have_link('ログイン', href: login_path)
-    expect(user.reload.remember_digest).to be_present
+    # Then
+    expect(page).to have_content 'ログインしてください'
+    expect(page).not_to have_title 'プロフィール設定'
 
-    click_link 'ログアウト'
+    # When
+    click_button 'ログイン'
 
-    expect(page).to have_link('ログイン', href: login_path)
-  end
-
-  it 'enables users to redirect to the protected page after logging in (friendly forwarding)' do
-    visit edit_user_path(user)
-
-    fill_in 'Email', with: user.email
-    fill_in 'Password', with: user.password
-    within('form') do
-      click_button 'ログインする'
-    end
-
-    expect(page).to have_title('メールアドレス設定')
+    # Then
+    expect(page).to have_content 'ログインしました'
+    expect(page).to have_title 'プロフィール設定'
   end
 end
