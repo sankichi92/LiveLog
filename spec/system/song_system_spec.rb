@@ -48,7 +48,7 @@ RSpec.describe 'Song', type: :system do
   end
 
   describe 'detail' do
-    let!(:song) { create(:song, members: create_list(:member, 2)) }
+    let!(:song) { create(:song, name: 'アンプラグドのテーマ', artist: 'アンプラグダーズ', members: create_list(:member, 2)) }
 
     before { Song.__elasticsearch__.refresh_index! }
 
