@@ -3,8 +3,6 @@ require 'app_auth0_client'
 class User < ApplicationRecord
   AUTH0_UP_AUTH_CONNECTION = 'Username-Password-Authentication'.freeze
 
-  self.ignored_columns = %i[password_digest]
-
   has_one :member, dependent: :nullify
 
   def self.find_auth0_id(auth0_id)
