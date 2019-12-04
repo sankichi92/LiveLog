@@ -5,9 +5,7 @@ class Auth0BulkUserImportBatch < ApplicationBatch
     connections = AppAuth0Client.instance.connections(fields: %w[id name])
     connection_id = connections.find { |con| con.fetch('name') == User::AUTH0_UP_AUTH_CONNECTION }.fetch('id')
 
-    job_ids = []
-
-    User.includes(:member).where.not(password_digest: nil, email: nil).find_in_batches(batch_size: 50) do |users|
+    User.includes(:member).where.not(password_digest: nil, email: nil).find_in_batches(batch_size: 50, start: 103) do |users|
       target_users = []
       skipped_users = []
 
@@ -18,7 +16,7 @@ class Auth0BulkUserImportBatch < ApplicationBatch
         rescue Auth0::NotFound
           target_users << user
         end
-        sleep 0.1
+        sleep 0.5
       end
 
       logger.info "Skipped users: #{skipped_users.map(&:id).join(',')}"
@@ -33,7 +31,6 @@ class Auth0BulkUserImportBatch < ApplicationBatch
       File.open(file_name, 'rb') do |users_file|
         job = AppAuth0Client.instance.import_users(users_file, connection_id)
         logger.info "Created job: #{job}"
-        job_ids << job['id']
       end
 
       sleep 1
