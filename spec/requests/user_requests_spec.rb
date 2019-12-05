@@ -60,7 +60,7 @@ RSpec.describe 'User requests', type: :request do
       let(:user) { create(:user, :inactivated, member: member) }
 
       before do
-        allow(auth0_client).to receive(:user).with(user.auth0_id).and_return('email' => 'previous@example.com')
+        allow(auth0_client).to receive(:user).with(user.auth0_id, anything).and_return('email' => 'previous@example.com')
       end
 
       it 'requests to update Auth0 user and change their password, and redirects to /members/:id' do
@@ -78,7 +78,7 @@ RSpec.describe 'User requests', type: :request do
       let(:user) { create(:user, :inactivated, member: member) }
 
       before do
-        allow(auth0_client).to receive(:user).with(user.auth0_id).and_return('email' => email)
+        allow(auth0_client).to receive(:user).with(user.auth0_id, anything).and_return('email' => email)
       end
 
       it 'requests to change Auth0 user password, and redirects to /members/:id' do
