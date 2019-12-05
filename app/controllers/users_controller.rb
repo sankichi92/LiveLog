@@ -1,10 +1,8 @@
 require 'app_auth0_client'
 
 class UsersController < ApplicationController
-  before_action :require_current_user, only: %i[new create]
-  before_action :require_not_logged_in_member, only: %i[new create]
-
-  permits :email
+  before_action :require_current_user
+  before_action :require_not_logged_in_member
 
   def new
     @user = @member.build_user
@@ -15,10 +13,10 @@ class UsersController < ApplicationController
 
     if @user.nil?
       User.transaction do
-        @user = @member.create_user!
+        @user = @member.create_user!(email: email)
         @user.create_auth0_user!(email)
       end
-    elsif @user.auth0_user['email'] != email.downcase
+    elsif @user.auth0_user.email != email.downcase
       @user.update_auth0_user!(email: email, verify_email: false)
     end
 
@@ -37,7 +35,7 @@ class UsersController < ApplicationController
 
   def require_not_logged_in_member(member_id)
     @member = Member.find(member_id)
-    if @member.user && (@member.user.activated || @member.user.auth0_user['email_verified'] || @member.user.auth0_user['last_login'])
+    if @member.user && (@member.user.activated || @member.user.auth0_user.email_verified? || @member.user.auth0_user.has_logged_in?)
       @member.user.activate! unless @member.user.activated?
       redirect_to @member, alert: 'すでにユーザー登録が完了しています'
     end

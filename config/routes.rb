@@ -54,11 +54,10 @@ Rails.application.routes.draw do
 
   direct :feedback do |user|
     uri = URI.parse('https://docs.google.com/forms/d/e/1FAIpQLSfhLHpL54pH_Oh5u7bLN31wGmJdqVUQ8WFSlyOF0A3DEJDzew/viewform')
-    uri.query = URI.encode_www_form(
+    uri.query = {
       'entry.1322390882' => user.member.joined_year,
       'entry.1102506699' => user.member.name,
-      'entry.724954072' => user.email,
-    )
+    }.to_query
     uri.to_s
   end
 end

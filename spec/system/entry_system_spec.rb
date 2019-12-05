@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Entry', type: :system do
+  include Auth0UserHelper
+
   let(:live) { create(:live, :draft) }
   let(:user) { create(:user) }
 
@@ -43,6 +45,7 @@ RSpec.describe 'Entry', type: :system do
     before do
       ActionMailer::Base.deliveries.clear
       log_in_as user
+      stub_auth0_user(user)
     end
 
     it 'enables logged-in users to create new entries', js: true do

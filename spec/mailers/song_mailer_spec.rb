@@ -1,17 +1,26 @@
 require 'rails_helper'
 
 RSpec.describe SongMailer, type: :mailer do
+  include Auth0UserHelper
+
   describe 'pickup_song' do
-    let(:users) { create_list(:user, 3, subscribing: true) }
+    let(:users) { create_list(:user, 3) }
     let(:no_user_member) { create(:member) }
-    let(:unsubscribing_user) { create(:user, subscribing: false) }
+    let(:unsubscribing_user) { create(:user) }
     let(:song) { create(:song, members: [users.map(&:member), no_user_member, unsubscribing_user.member].flatten) }
     let(:mail) { SongMailer.pickup_song(song) }
+
+    before do
+      users.each do |user|
+        stub_auth0_user(user, subscribing: true)
+      end
+      stub_auth0_user(unsubscribing_user, subscribing: false)
+    end
 
     it 'renders the headers' do
       expect(mail.subject).to eq("「#{song.name}」が今日のピックアップに選ばれました！")
       expect(mail.from).to eq(['noreply@livelog.ku-unplugged.net'])
-      expect(mail.bcc).to eq(users.map(&:email))
+      expect(mail.bcc.size).to eq users.size
     end
 
     it 'renders the text body' do
