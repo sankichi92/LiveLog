@@ -32,8 +32,8 @@ class User < ApplicationRecord
     Auth0User.new(id)
   end
 
-  def create_auth0_user!(email)
-    @auth0_user = Auth0User.create!(user: self, email: email)
+  def create_auth0_user!(email, password: nil)
+    @auth0_user = Auth0User.create!(user: self, email: email, password: password)
   end
 
   def update_auth0_user!(options)

@@ -15,13 +15,13 @@ class Auth0User
       new(id, response)
     end
 
-    def create!(user:, email:)
+    def create!(user:, email:, password: nil)
       response = AppAuth0Client.instance.create_user(
         user.member.name,
         connection: CONNECTION_NAME,
         user_id: user.id.to_s,
         email: email,
-        password: "0aA#{SecureRandom.base58}", # Prefix "0aA" is to pass the validation.
+        password: password ? password : ENV['AUTH0_CLIENT_SECRET'], # Prefix "0aA" is to pass the validation.
         verify_email: false,
         user_metadata: {
           livelog_member_id: user.member.id,
