@@ -22,8 +22,6 @@ ja:
     attributes:
       user:
         email: メールアドレス
-        password: パスワード
-        password_confirmation: パスワード確認用
       song:
         name: 曲名
         artist: アーティスト名

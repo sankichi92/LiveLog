@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Entry requests', type: :request do
+  include Auth0UserHelper
+
   let(:user) { create(:user) }
 
   before { log_in_as user }
@@ -65,7 +67,11 @@ RSpec.describe 'Entry requests', type: :request do
       let(:live) { create(:live, :draft) }
       let(:entry_attrs) { { preferred_rehearsal_time: '', preferred_performance_time: '', notes: '' } }
 
-      before { ActionMailer::Base.deliveries.clear }
+      before do
+        ActionMailer::Base.deliveries.clear
+
+        stub_auth0_user(user)
+      end
 
       context 'with valid params' do
         let(:song_attrs) { attributes_for(:song, :draft) }
