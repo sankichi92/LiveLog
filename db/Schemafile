@@ -83,6 +83,7 @@ create_table :users, id: :serial, force: :cascade do |t|
   t.boolean :activated, default: false, null: false
   t.boolean :admin, default: false, null: false
 
+  # TODO: Remove these columns after Auth0 migration finished.
   t.string :email
   t.string :password_digest
   t.boolean :subscribing, default: true, null: false
