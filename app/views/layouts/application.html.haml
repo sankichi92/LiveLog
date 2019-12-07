@@ -70,7 +70,7 @@
                   = link_to 'ログアウト', logout_path, method: :delete, class: 'dropdown-item'
 
           - else
-            = button_to 'ログイン', 'auth/auth0', method: :post, class: 'btn btn-outline-info'
+            = link_to 'ログイン', 'auth/auth0', method: :post, class: 'btn btn-outline-info'
 
     .container
       - if flash.notice

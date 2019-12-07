@@ -14,7 +14,7 @@ RSpec.describe 'Login:', type: :system do
     expect(page).not_to have_title 'プロフィール設定'
 
     # When
-    click_button 'ログイン'
+    click_on 'ログイン'
 
     # Then
     expect(page).to have_content 'ログインしました'
