@@ -80,6 +80,7 @@ create_table :songs, id: :serial, force: :cascade do |t|
 end
 
 create_table :users, id: :serial, force: :cascade do |t|
+  t.bigint :member_id
   t.boolean :activated, default: false, null: false
   t.boolean :admin, default: false, null: false
 
@@ -98,3 +99,4 @@ add_foreign_key :members, :users
 add_foreign_key :playings, :members
 add_foreign_key :playings, :songs
 add_foreign_key :songs, :lives, column: :live_id
+add_foreign_key :users, :members
