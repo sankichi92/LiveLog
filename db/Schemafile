@@ -38,7 +38,6 @@ create_table :lives, id: :serial, force: :cascade do |t|
 end
 
 create_table :members, force: :cascade do |t|
-  t.bigint :user_id
   t.integer :joined_year, null: false, limit: 2
   t.string :name, null: false
   t.string :url
@@ -47,7 +46,6 @@ create_table :members, force: :cascade do |t|
 
   t.timestamps
 
-  t.index :user_id, unique: true
   t.index %i[name joined_year], unique: true
   t.index %i[joined_year playings_count]
 end
@@ -80,7 +78,7 @@ create_table :songs, id: :serial, force: :cascade do |t|
 end
 
 create_table :users, id: :serial, force: :cascade do |t|
-  t.bigint :member_id
+  t.bigint :member_id, null: false
   t.boolean :activated, default: false, null: false
   t.boolean :admin, default: false, null: false
 
@@ -91,11 +89,11 @@ create_table :users, id: :serial, force: :cascade do |t|
 
   t.timestamps
 
+  t.index :member_id, unique: true
   t.index :email, unique: true
 end
 
 add_foreign_key :active_storage_attachments, :active_storage_blobs, column: :blob_id
-add_foreign_key :members, :users
 add_foreign_key :playings, :members
 add_foreign_key :playings, :songs
 add_foreign_key :songs, :lives, column: :live_id

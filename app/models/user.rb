@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   self.ignored_columns = %i[email subscribing]
 
-  has_one :member, dependent: :nullify
+  belongs_to :member
 
   attr_accessor :email
 
