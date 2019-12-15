@@ -1,10 +1,14 @@
 require 'rails_helper'
+require 'app_auth0_client'
 
 RSpec.describe 'Settings:', type: :system do
   specify 'A logged-in user can edits their profile' do
     # Given
     member = create(:member, name: 'ベス', url: nil, bio: nil, avatar: nil)
     user = create(:user, member: member)
+    auth0_client = double(:auth0_client)
+    allow(auth0_client).to receive(:patch_user).with(user.auth0_id, anything)
+    allow(AppAuth0Client).to receive(:instance).and_return(auth0_client)
     log_in_as user
 
     # When

@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'app_auth0_client'
 
 RSpec.describe 'Profile requests:', type: :request do
   describe 'GET /settings/profile' do
@@ -23,26 +24,51 @@ RSpec.describe 'Profile requests:', type: :request do
       log_in_as user
     end
 
-    context 'with valid params' do
+    context 'with valid params including current name' do
       let(:params) do
         {
           member: {
-            name: 'ベス',
+            name: 'ギータ',
             url: 'https://example.com/profile',
-            bio: 'ベースに転向しました',
+            bio: 'ギターを弾きます',
             avatar: Rack::Test::UploadedFile.new("#{::Rails.root}/spec/fixtures/files/avatar.png", 'image/png'),
           },
         }
       end
 
-      it "updates the logged-in user's profile and redirect to their profile" do
+      it "updates the logged-in user's profile and redirects to their profile" do
+        patch profile_path, params: params
+
+        expect(response).to redirect_to user.member
+        expect(member.reload.url).to eq 'https://example.com/profile'
+        expect(member.bio).to eq 'ギターを弾きます'
+        expect(member.avatar).to be_attached
+      end
+    end
+
+    context 'with valid params including new name' do
+      let(:params) do
+        {
+          member: {
+            name: 'ベス',
+            url: '',
+            bio: 'ベースに転向しました',
+          },
+        }
+      end
+      let(:auth0_client) { spy(:app_auth0_client) }
+
+      before do
+        allow(AppAuth0Client).to receive(:instance).and_return(auth0_client)
+      end
+
+      it "updates the logged-in user's profile, requests to update Auth0 user and redirect to their profile" do
         patch profile_path, params: params
 
         expect(response).to redirect_to user.member
         expect(member.reload.name).to eq 'ベス'
-        expect(member.url).to eq 'https://example.com/profile'
         expect(member.bio).to eq 'ベースに転向しました'
-        expect(member.avatar).to be_attached
+        expect(auth0_client).to have_received(:patch_user).with(user.auth0_id, name: 'ベス')
       end
     end
 

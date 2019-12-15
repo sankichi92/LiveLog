@@ -10,6 +10,7 @@ class ProfilesController < ApplicationController
   def update(member)
     @member = current_user.member
     if @member.update(member)
+      current_user.update_auth0_user!(name: @member.name) if @member.previous_changes.key?(:name)
       redirect_to @member, notice: 'プロフィールを更新しました'
     else
       render :show, status: :unprocessable_entity
