@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'app_auth0_client'
 
 RSpec.describe 'Profile requests:', type: :request do
   describe 'GET /settings/profile' do

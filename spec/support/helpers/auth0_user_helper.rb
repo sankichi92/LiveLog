@@ -1,3 +1,5 @@
+require 'app_auth0_client'
+
 module Auth0UserHelper
   def stub_auth0_user(user, fields: Auth0User::DEFAULT_FIELDS, email: Faker::Internet.email, subscribing: true)
     allow(auth0_client_double).to receive(:user).with(

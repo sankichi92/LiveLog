@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'app_auth0_client'
 
 RSpec.describe 'Settings:', type: :system do
   specify 'A logged-in user can edits their profile' do
