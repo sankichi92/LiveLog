@@ -24,7 +24,8 @@ class UsersController < ApplicationController
     AppAuth0Client.instance.change_password(email, nil)
 
     redirect_to @member, notice: '招待しました'
-  rescue Auth0::BadRequest
+  rescue Auth0::BadRequest => e
+    Raven.capture_exception(e, level: :debug)
     @user.errors.add(:email, :invalid)
     render :new, status: :unprocessable_entity
   end

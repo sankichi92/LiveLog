@@ -19,7 +19,7 @@ class SessionsController < ApplicationController
   end
 
   def failure(message, strategy)
-    Raven.capture_message(message, extra: { strategy: strategy }, level: :warn)
+    Raven.capture_message(message, extra: { strategy: strategy }, level: :debug)
     redirect_to root_path, alert: message
   end
 
