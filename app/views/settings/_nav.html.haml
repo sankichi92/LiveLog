@@ -1,2 +1,3 @@
--#%nav.nav.nav-pills.mb-3
+%nav.nav.nav-pills.mb-3
   = link_to 'プロフィール', profile_path, class: "nav-item nav-link #{current_page?(profile_path) ? ' active' : ''}"
+  = link_to 'メール・通知', email_path, class: "nav-item nav-link #{current_page?(email_path) ? ' active' : ''}"
