@@ -67,7 +67,7 @@ RSpec.describe 'Profile requests:', type: :request do
         expect(response).to redirect_to user.member
         expect(member.reload.name).to eq 'ベス'
         expect(member.bio).to eq 'ベースに転向しました'
-        expect(auth0_client).to have_received(:patch_user).with(user.auth0_id, name: 'ベス')
+        expect(auth0_client).to have_received(:patch_user).with(user.auth0_id, name: 'ベス').once
       end
     end
 

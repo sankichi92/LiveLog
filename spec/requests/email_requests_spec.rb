@@ -34,8 +34,7 @@ RSpec.describe 'Email requests:', type: :request do
       it 'requests to update Auth0 user and redirects /settings/email' do
         patch email_path, params: { email: email, subscribing: '1' }
 
-        expect(auth0_client).to have_received(:patch_user)
-                                  .with(user.auth0_id, email: email, verify_email: true, user_metadata: { subscribing: true })
+        expect(auth0_client).to have_received(:patch_user).with(user.auth0_id, email: email, verify_email: true, user_metadata: { subscribing: true }).once
         expect(flash.notice).to eq '確認メールを送信しました'
         expect(response).to redirect_to email_path
       end
@@ -47,7 +46,7 @@ RSpec.describe 'Email requests:', type: :request do
       it 'requests to update Auth0 user and redirects /settings/email' do
         patch email_path, params: { email: email, subscribing: '0' }
 
-        expect(auth0_client).to have_received(:patch_user).with(user.auth0_id, user_metadata: { subscribing: false })
+        expect(auth0_client).to have_received(:patch_user).with(user.auth0_id, user_metadata: { subscribing: false }).once
         expect(flash.notice).to eq '更新しました'
         expect(response).to redirect_to email_path
       end
