@@ -21,6 +21,7 @@ gem 'bootsnap', require: false
 
 gem 'action_args'
 gem 'active_decorator'
+gem 'font-awesome-sass'
 gem 'haml-rails'
 gem 'kaminari'
 gem 'kaminari-i18n'
@@ -38,8 +39,6 @@ gem 'elasticsearch-dsl'
 
 gem 'auth0'
 gem 'twitter'
-
-gem 'font-awesome-sass'
 
 gem 'newrelic_rpm'
 gem 'sentry-raven'
