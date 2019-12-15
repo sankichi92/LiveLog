@@ -22,10 +22,11 @@ gem 'bootsnap', require: false
 gem 'action_args'
 gem 'active_decorator'
 gem 'haml-rails'
+gem 'kaminari'
+gem 'kaminari-i18n'
 gem 'pundit'
 gem 'rails-i18n'
 gem 'ridgepole', require: false
-gem 'will_paginate' # must be added before the Elasticsearch gems
 
 gem 'omniauth'
 gem 'omniauth-auth0'
@@ -38,7 +39,6 @@ gem 'elasticsearch-dsl'
 gem 'auth0'
 gem 'twitter'
 
-gem 'bootstrap-will_paginate'
 gem 'font-awesome-sass'
 
 gem 'newrelic_rpm'

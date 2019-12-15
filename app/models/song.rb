@@ -12,8 +12,6 @@ class Song < ApplicationRecord
 
   include SongSearchable
 
-  self.per_page = 20
-
   belongs_to :live
   has_many :playings, dependent: :destroy, inverse_of: :song
   has_many :members, through: :playings
