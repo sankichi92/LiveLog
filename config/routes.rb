@@ -34,6 +34,7 @@ Rails.application.routes.draw do
 
   scope :settings do
     resource :profile, only: %i[show update]
+    resource :email, only: %i[show update]
   end
 
   direct :organization do
