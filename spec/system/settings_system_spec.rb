@@ -1,13 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe 'Settings:', type: :system do
-  specify 'A logged-in user can edits their profile' do
+  include Auth0UserHelper
+
+  specify 'A logged-in user can edit their profile' do
     # Given
     member = create(:member, name: 'ベス', url: nil, bio: nil, avatar: nil)
     user = create(:user, member: member)
-    auth0_client = double(:auth0_client)
-    allow(auth0_client).to receive(:patch_user).with(user.auth0_id, anything)
-    allow(AppAuth0Client).to receive(:instance).and_return(auth0_client)
+    allow(auth0_client_double).to receive(:patch_user).with(user.auth0_id, anything)
     log_in_as user
 
     # When
@@ -29,5 +29,31 @@ RSpec.describe 'Settings:', type: :system do
     expect(page).to have_title 'ギータ'
     expect(page).to have_link href: 'https://example.com/profile'
     expect(page).to have_content 'ギターに転向しました'
+  end
+
+  specify 'A logged-in user can edit their email and notification settings' do
+    # Given
+    user = create(:user)
+    stub_auth0_user(user, email: 'current@example.com', subscribing: true)
+    allow(auth0_client_double).to receive(:patch_user)
+    log_in_as user
+
+    # When
+    visit root_path
+    click_on '設定'
+    click_on 'メール・通知'
+
+    # Then
+    expect(page).to have_title 'メール・通知設定'
+    expect(page).to have_field('メールアドレス', with: 'current@example.com')
+    expect(page).to have_checked_field('LiveLog からのお知らせメールを受け取る')
+
+    # When
+    uncheck 'LiveLog からのお知らせメールを受け取る'
+    click_button '更新する'
+
+    # Then
+    expect(page).to have_content '更新しました'
+    expect(auth0_client_double).to have_received(:patch_user).with(user.auth0_id, user_metadata: { subscribing: false }).once
   end
 end

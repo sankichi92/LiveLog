@@ -19,8 +19,6 @@ module Auth0UserHelper
     )
   end
 
-  private
-
   def auth0_client_double
     @auth0_client_double ||= double(:auth0_client).tap do |auth0_client|
       allow(AppAuth0Client).to receive(:instance).and_return(auth0_client)
