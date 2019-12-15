@@ -1,25 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'Song', type: :system do
-  describe 'list' do
-    before { create_list(:song, Song.per_page + 1) }
-
-    it 'enables users to see the first page of the published songs and move to the next page' do
-      visit songs_path
-
-      expect(page).to have_title('曲検索')
-      Song.published.newest_live_order.page(1).each do |song|
-        expect(page).to have_content(song.name)
-      end
-
-      click_link '2'
-
-      Song.published.newest_live_order.page(2).each do |song|
-        expect(page).to have_content(song.name)
-      end
-    end
-  end
-
   describe 'search' do
     let!(:beatles_song) { create(:song, artist: 'The Beatles', name: 'Yesterday') }
 

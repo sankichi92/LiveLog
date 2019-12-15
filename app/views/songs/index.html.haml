@@ -59,14 +59,12 @@
 
 - if @songs.present?
   #results
-    %p.text-right.d-none.d-md-block
-      = page_entries_info
     .song-list.mb-3
       - if current_user
         = render @songs
       - else
         = render partial: 'song', collection: @songs, cached: true
-    = will_paginate inner_window: 1, outer_window: 0, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer, class: 'd-flex justify-content-center'
+    = paginate @songs
 
 - else
   .alert.alert-danger{ role: 'alert' }
