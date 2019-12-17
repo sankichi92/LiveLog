@@ -37,6 +37,10 @@ Rails.application.routes.draw do
     resource :email, only: %i[show update]
   end
 
+  namespace :admin do
+    root to: 'home#show'
+  end
+
   direct :organization do
     'https://ku-unplugged.net/'
   end

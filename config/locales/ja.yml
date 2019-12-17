@@ -2,6 +2,8 @@ ja:
   app:
     title: LiveLog
     description: 京都大学を中心に活動するアコースティック軽音サークル「京大アンプラグド」のセットリスト管理アプリ
+  admin:
+    title: LiveLog Admin
   activerecord:
     errors:
       models:

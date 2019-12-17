@@ -1,0 +1,34 @@
+!!!
+%html{ lang: 'ja' }
+  %head
+    %meta{ charset: 'utf-8' }
+    %meta{ name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no' }
+
+    %title= t('admin.title')
+
+    = csrf_meta_tags
+    = csp_meta_tag
+
+    = stylesheet_link_tag 'admin', data: { 'turbolinks-track': 'reload' }
+    = javascript_pack_tag 'admin', defer: true, data: { 'turbolinks-track': 'reload' }
+
+  %body
+    .wrapper
+      %nav.main-header.navbar.navbar-expand.navbar-light.navbar-white
+        %ul.navbar-nav
+          %li.nav-item= link_to icon('fas', 'bars'), '#', class: 'nav-link', data: { widget: 'pushmenu' }
+        %ul.navbar-nav.ml-auto
+          %li.nav-item= link_to 'Back to App', root_path, class: 'nav-link'
+
+      %aside.main-sidebar.sidebar-dark-primary.elevation-4
+        = link_to admin_root_path, class: 'brand-link' do
+          = image_tag 'logo.png', class: 'brand-image'
+          %span.brand-text.font-weight-light= t('admin.title')
+
+        .sidebar
+          .user-panel.d-flex.pb-3.my-3
+            .image= image_tag current_user.member.avatar_url, class: 'img-circle'
+            .info= link_to current_user.member.name, '#', class: 'd-block'
+
+      %main.content-wrapper
+        = yield
