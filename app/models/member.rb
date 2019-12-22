@@ -23,28 +23,23 @@ class Member < ApplicationRecord
     order(joined_year: :desc).distinct.pluck(:joined_year)
   end
 
-  # region Attributes
+  def create_user_with_auth0!(email)
+    transaction do
+      create_user!(email: email)
+      user.create_auth0_user!
+    end
+  end
 
   # For #collection_select option values
   def joined_year_and_name
     "#{joined_year} #{name}"
   end
 
-  # endregion
-
-  # region Status
-
   def graduate?
     joined_year <= Time.zone.now.nendo - 4
   end
 
-  # endregion
-
-  # region Aggregation Queries
-
   def played_instruments
     @played_instruments ||= playings.joins(song: :live).merge(Live.published).count_by_divided_instrument.keys
   end
-
-  # endregion
 end
