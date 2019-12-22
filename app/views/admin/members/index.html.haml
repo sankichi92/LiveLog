@@ -10,6 +10,8 @@
 
 %section.content
   .container-fluid
+    %p= link_to icon('fas', 'user-plus', 'メンバーを追加する'), new_admin_member_path, class: 'btn btn-outline-primary'
+
     %section.card
       .card-header
         = render 'admin/members/nav'

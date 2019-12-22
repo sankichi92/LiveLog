@@ -1,0 +1,35 @@
+%header.content-header
+  .container-fluid
+    .row.mb-3
+      .col-sm-6
+        %h1
+          = Member.model_name.human
+          新規作成
+
+      .col-sm-6
+        %ol.breadcrumb.float-sm-right
+          %li.breadcrumb-item= link_to 'Home', admin_root_path
+          %li.breadcrumb-item= link_to Member.model_name.human, admin_members_path
+          %li.breadcrumb-item.active 新規作成
+
+%section.content
+  .container-fluid
+    %section.card
+      = form_with model: @member, url: admin_members_path, local: true do |form|
+        .card-body
+          = render 'shared/error_messages', errors: @member.errors
+
+          .form-group
+            = form.label :joined_year
+            = form.number_field :joined_year, min: Member::MINIMUM_JOINED_YEAR, max: Time.zone.now.year, required: true, class: 'form-control'
+
+          .form-group
+            = form.label :name
+            = form.text_field :name, maxlength: Member::MAXIMUM_NAME_LENGTH, required: true, class: 'form-control'
+
+          .form-group
+            = label_tag :email, 'メールアドレス'
+            = email_field_tag :email, nil, class: 'form-control'
+
+        .card-footer
+          = form.submit class: 'btn btn-primary'

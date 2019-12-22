@@ -12,10 +12,7 @@ class UsersController < ApplicationController
     @user = @member.user
 
     if @user.nil?
-      User.transaction do
-        @user = @member.create_user!(email: email)
-        @user.create_auth0_user!(email)
-      end
+      @user = @member.create_user_with_auth0!(email)
     elsif @user.auth0_user.email != email.downcase
       @user.update_auth0_user!(email: email, verify_email: false)
     end
@@ -26,6 +23,7 @@ class UsersController < ApplicationController
     redirect_to @member, notice: '招待しました'
   rescue Auth0::BadRequest => e
     Raven.capture_exception(e, level: :debug)
+    @user ||= @member.build_user
     @user.errors.add(:email, :invalid)
     render :new, status: :unprocessable_entity
   end
