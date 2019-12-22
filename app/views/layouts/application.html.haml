@@ -64,13 +64,13 @@
                 %a.nav-link.dropdown-toggle#navbar-user-dropdown-menu-link{ href: '#', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' }
                   = current_user.member.name
                 .dropdown-menu.dropdown-menu-right{ 'aria-labellebdy': 'navbar-user-dropdown-menu-link' }
-                  = link_to 'プロフィール', current_user.member, class: 'dropdown-item'
-                  = link_to '設定', profile_path, class: 'dropdown-item'
+                  = link_to icon('fas', 'user', 'プロフィール'), current_user.member, class: 'dropdown-item'
+                  = link_to icon('fas', 'cog', '設定'), profile_path, class: 'dropdown-item'
                   .dropdown-divider
-                  = link_to 'ログアウト', logout_path, method: :delete, class: 'dropdown-item'
+                  = link_to icon('fas', 'sign-out-alt', 'ログアウト'), logout_path, method: :delete, class: 'dropdown-item'
 
           - else
-            = link_to 'ログイン', '/auth/auth0', method: :post, class: 'btn btn-outline-info'
+            = link_to icon('fas', 'sign-in-alt', 'ログイン'), '/auth/auth0', method: :post, class: 'btn btn-outline-info'
 
     .container
       = render 'layouts/flash'
@@ -89,12 +89,12 @@
           %li.list-inline-item
             %small= link_to 'プライバシーポリシー', privacy_path, class: 'text-muted'
           %li.list-inline-item
-            %small= link_to 'Twitter', twitter_url, class: 'text-muted', target: '_blank', rel: 'noopener'
+            %small= link_to icon('fab', 'twitter', 'Twitter'), twitter_url, class: 'text-muted', target: '_blank', rel: 'noopener'
           %li.list-inline-item
-            %small= link_to 'GitHub', github_url, class: 'text-muted', target: '_blank', rel: 'noopener'
+            %small= link_to icon('fab', 'github', 'GitHub'), github_url, class: 'text-muted', target: '_blank', rel: 'noopener'
           - if current_user
             %li.list-inline-item
-              %small= link_to 'Slack', slack_invitation_url, class: 'text-muted', target: '_blank', rel: 'noopener'
+              %small= link_to icon('fab', 'slack', 'Slack'), slack_invitation_url, class: 'text-muted', target: '_blank', rel: 'noopener'
             %li.list-inline-item
               %small= link_to 'フィードバック', feedback_url(current_user), class: 'text-muted', target: '_blank', rel: 'noopener'
             - if current_user.member.graduate?
