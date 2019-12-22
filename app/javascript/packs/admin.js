@@ -3,6 +3,7 @@ import Turbolinks from 'turbolinks'
 
 import * as Sentry from '@sentry/browser'
 
+import 'bootstrap/dist/js/bootstrap.bundle'
 import 'admin-lte/dist/js/adminlte'
 
 Rails.start()
