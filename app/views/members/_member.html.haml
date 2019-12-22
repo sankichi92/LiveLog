@@ -1,10 +1,11 @@
 .col-12.col-sm-6.col-lg-4.mb-3
   %section.card
     .card-body
-      .media.align-items-center
+      .media.align-items-center.mb-2
         = member.avatar_image_tag(:medium, class: 'align-self-center mr-2')
         .media-body
           %h5.card-title
             = link_to member.name, member, class: 'stretched-link text-dark'
           .card-subtitle.text-muted
             = member.played_instruments.take(3).join(', ')
+      %p.card-text.text-muted= truncate strip_tags(member.bio)
