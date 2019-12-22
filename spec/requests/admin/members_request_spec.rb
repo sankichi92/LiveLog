@@ -19,4 +19,12 @@ RSpec.describe 'admin/members requests:', type: :request do
       expect(response).to have_http_status :ok
     end
   end
+
+  describe 'GET /admin/members/new' do
+    it 'responds 200' do
+      get new_admin_member_path
+
+      expect(response).to have_http_status :ok
+    end
+  end
 end
