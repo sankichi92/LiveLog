@@ -30,5 +30,27 @@
             .image= image_tag current_user.member.avatar_url, class: 'img-circle'
             .info= link_to current_user.member.name, '#', class: 'd-block'
 
+          %nav.mt-3
+            %ul.nav-sidebar.nav.nav-pills.flex-column{ role: 'menu', data: { widget: 'treeview' } }
+              %li.nav-header TOOLS
+              %li.nav-item
+                = link_to slack_invitation_url, class: 'nav-link' do
+                  = icon('fab', 'slack', 'Slack', class: 'nav-icon')
+              %li.nav-item
+                = link_to github_url, class: 'nav-link' do
+                  = icon('fab', 'github', 'GitHub', class: 'nav-icon')
+              %li.nav-item
+                = link_to heroku_url, class: 'nav-link' do
+                  = icon('far', 'circle', 'Heroku', class: 'nav-icon')
+              %li.nav-item
+                = link_to google_analytics_url, class: 'nav-link' do
+                  = icon('fab', 'google', 'Analytics', class: 'nav-icon')
+              %li.nav-item
+                = link_to google_search_console_url, class: 'nav-link' do
+                  = icon('fab', 'google', 'Search Console', class: 'nav-icon')
+              %li.nav-item
+                = link_to twitter_url, class: 'nav-link' do
+                  = icon('fab', 'twitter', 'Twitter', class: 'nav-icon')
+
       %main.content-wrapper
         = yield
