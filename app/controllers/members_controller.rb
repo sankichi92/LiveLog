@@ -1,6 +1,6 @@
 class MembersController < ApplicationController
-  def index(year = Member.joined_years.first)
-    @year = year
+  def index(year = Member.maximum(:joined_year))
+    @year = year.to_i
     @members = Member.with_attached_avatar.where(joined_year: @year).order(playings_count: :desc)
     raise ActionController::RoutingError, "No members on #{@year}" if @members.empty?
   end
