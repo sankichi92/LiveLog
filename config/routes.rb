@@ -24,7 +24,7 @@ Rails.application.routes.draw do
 
   resources :members, only: %i[index show] do
     collection do
-      get 'year/:year', action: :year, as: :year, constraints: { year: /\d{4}/ }
+      get 'year/:year', action: :index, as: :year, constraints: { year: /\d{4}/ }
     end
 
     resource :user, only: %i[new create]
