@@ -1,0 +1,29 @@
+%header.content-header
+  .container-fluid
+    .row.mb-3
+      .col-sm-6
+        %h1= Member.model_name.human
+      .col-sm-6
+        %ol.breadcrumb.float-sm-right
+          %li.breadcrumb-item= link_to 'Home', admin_root_path
+          %li.breadcrumb-item.active= Member.model_name.human
+
+%section.content
+  .container-fluid
+    %section.card
+      .card-body.p-0
+        %table.table.table-striped
+          %thead
+            %tr
+              - %i[id joined_year name playings_count].each do |attr|
+                %th{ scope: 'col' }= Member.human_attribute_name(attr)
+              %th{ scope: 'col' } ステータス
+          %tbody
+            - @members.each do |member|
+              %tr
+                %td= member.id
+                %td= member.joined_year
+                %td= member.name
+                %td= member.playings_count
+                %td= member.user&.status_badge
+

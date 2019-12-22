@@ -37,12 +37,29 @@ Rails.application.routes.draw do
     resource :email, only: %i[show update]
   end
 
+  namespace :admin do
+    root to: 'home#show'
+    resources :members, only: %i[index]
+  end
+
   direct :organization do
     'https://ku-unplugged.net/'
   end
 
   direct :github do
     'https://github.com/sankichi92/LiveLog'
+  end
+
+  direct :heroku do
+    'https://dashboard.heroku.com/apps/livelog2'
+  end
+
+  direct :google_analytics do
+    'https://analytics.google.com/analytics/web/#/report-home/a56294602w89689985p93232021'
+  end
+
+  direct :google_search_console do
+    'https://search.google.com/search-console?resource_id=https%3A%2F%2Flivelog.ku-unplugged.net%2F'
   end
 
   direct :twitter do

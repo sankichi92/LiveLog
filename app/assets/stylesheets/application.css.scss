@@ -10,7 +10,6 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
  *= require_self
  *= require select2/dist/css/select2
  *= require @ttskch/select2-bootstrap4-theme/dist/select2-bootstrap4
