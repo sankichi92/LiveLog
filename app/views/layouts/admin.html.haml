@@ -12,7 +12,7 @@
     = stylesheet_link_tag 'admin', data: { 'turbolinks-track': 'reload' }
     = javascript_pack_tag 'admin', defer: true, data: { 'turbolinks-track': 'reload' }
 
-  %body
+  %body.hold-transition.sidebar-mini
     .wrapper
       %nav.main-header.navbar.navbar-expand.navbar-light.navbar-white
         %ul.navbar-nav
@@ -34,27 +34,34 @@
             %ul.nav-sidebar.nav.nav-pills.flex-column{ role: 'menu', data: { widget: 'treeview' } }
               %li.nav-item
                 = link_to admin_members_path, class: "nav-link#{params[:controller] == 'admin/members' ? ' active' : ''}" do
-                  = icon('fas', 'users', Member.model_name.human, class: 'nav-icon')
+                  = icon('fas', 'users', class: 'nav-icon')
+                  %p= Member.model_name.human
 
               %li.nav-header TOOLS
               %li.nav-item
                 = link_to slack_invitation_url, class: 'nav-link' do
-                  = icon('fab', 'slack', 'Slack', class: 'nav-icon')
+                  = icon('fab', 'slack', class: 'nav-icon')
+                  %p Slack
               %li.nav-item
                 = link_to github_url, class: 'nav-link' do
-                  = icon('fab', 'github', 'GitHub', class: 'nav-icon')
+                  = icon('fab', 'github', class: 'nav-icon')
+                  %p GitHub
               %li.nav-item
                 = link_to heroku_url, class: 'nav-link' do
-                  = icon('far', 'circle', 'Heroku', class: 'nav-icon')
+                  = icon('far', 'circle', class: 'nav-icon')
+                  %p Heroku
               %li.nav-item
                 = link_to google_analytics_url, class: 'nav-link' do
-                  = icon('fab', 'google', 'Analytics', class: 'nav-icon')
+                  = icon('fab', 'google', class: 'nav-icon')
+                  %p Analytics
               %li.nav-item
                 = link_to google_search_console_url, class: 'nav-link' do
-                  = icon('fab', 'google', 'Search Console', class: 'nav-icon')
+                  = icon('fab', 'google', class: 'nav-icon')
+                  %p Search Console
               %li.nav-item
                 = link_to twitter_url, class: 'nav-link' do
-                  = icon('fab', 'twitter', 'Twitter', class: 'nav-icon')
+                  = icon('fab', 'twitter', class: 'nav-icon')
+                  %p Twitter
 
       %main.content-wrapper
         = yield
