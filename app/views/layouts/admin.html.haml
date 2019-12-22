@@ -32,6 +32,10 @@
 
           %nav.mt-3
             %ul.nav-sidebar.nav.nav-pills.flex-column{ role: 'menu', data: { widget: 'treeview' } }
+              %li.nav-item
+                = link_to admin_members_path, class: "nav-link#{params[:controller] == 'admin/members' ? ' active' : ''}" do
+                  = icon('fas', 'users', Member.model_name.human, class: 'nav-icon')
+
               %li.nav-header TOOLS
               %li.nav-item
                 = link_to slack_invitation_url, class: 'nav-link' do

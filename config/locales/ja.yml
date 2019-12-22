@@ -4,6 +4,8 @@ ja:
     description: 京都大学を中心に活動するアコースティック軽音サークル「京大アンプラグド」のセットリスト管理アプリ
   admin:
     title: LiveLog Admin
+  attributes:
+    id: ID
   activerecord:
     errors:
       models:
@@ -19,8 +21,9 @@ ja:
               wrong: が現在のものと異なります
     models:
       live: ライブ
+      member: メンバー
       song: 曲
-      user: メンバー
+      user: ユーザー
     attributes:
       user:
         email: メールアドレス
@@ -46,6 +49,7 @@ ja:
         name: 名前
         url: URL
         bio: 自己紹介
+        playings_count: 出演数
         avatar: プロフィール画像
       playing:
         user: メンバー
