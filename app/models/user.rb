@@ -40,5 +40,10 @@ class User < ApplicationRecord
     Auth0User.new(id).update!(options)
   end
 
+  def destroy_with_auth0_user!
+    Auth0User.new(id).delete!
+    destroy!
+  end
+
   # endregion
 end

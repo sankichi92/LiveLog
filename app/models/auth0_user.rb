@@ -44,6 +44,10 @@ class Auth0User
     AppAuth0Client.instance.patch_user("auth0|#{livelog_id}", options)
   end
 
+  def delete!
+    AppAuth0Client.instance.delete_user("auth0|#{livelog_id}")
+  end
+
   def [](key)
     @response[key]
   end

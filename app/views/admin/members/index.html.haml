@@ -36,6 +36,8 @@
                       = link_to icon('fas', 'eye'), member_path(member), class: 'btn btn-secondary'
                       - if member.user.nil? && !member.playings.empty?
                         = link_to icon('fas', 'envelope'), new_member_user_path(member), class: 'btn btn-primary'
+                      - if !member.user.nil? && !member.user.admin?
+                        = link_to icon('fas', 'user-times'), admin_member_user_path(member), method: :delete, class: 'btn btn-danger', data: { confirm: "本当に #{member.joined_year_and_name} のログイン情報を削除しますか" }
                       - if member.playings.empty? && member.user.nil?
                         = link_to icon('fas', 'trash'), admin_member_path(member), method: :delete, class: 'btn btn-warning', data: { confirm: "本当に #{member.joined_year_and_name} を削除しますか" }
 

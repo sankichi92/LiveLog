@@ -39,7 +39,9 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root to: 'home#show'
-    resources :members, only: %i[index new create destroy]
+    resources :members, only: %i[index new create destroy] do
+      resource :user, only: :destroy
+    end
   end
 
   direct :organization do
