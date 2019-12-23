@@ -23,6 +23,7 @@
                 - %i[id name playings_count].each do |attr|
                   %th{ scope: 'col' }= Member.human_attribute_name(attr)
                 %th{ scope: 'col' } ステータス
+                %th{ scope: 'col' } 操作
             %tbody
               - @members.each do |member|
                 %tr
@@ -30,5 +31,13 @@
                   %td= member.name
                   %td= member.playings_count
                   %td= member.user&.status_badge
+                  %td
+                    .btn-group
+                      = link_to icon('fas', 'eye'), member_path(member), class: 'btn btn-secondary'
+                      - if member.user.nil? && !member.playings.empty?
+                        = link_to icon('fas', 'envelope'), new_member_user_path(member), class: 'btn btn-primary'
+                      - if member.playings.empty? && member.user.nil?
+                        = link_to icon('fas', 'trash'), admin_member_path(member), method: :delete, class: 'btn btn-warning', data: { confirm: "本当に #{member.joined_year_and_name} を削除しますか" }
+
       .card-footer
         = render 'admin/members/nav'

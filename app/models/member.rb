@@ -2,8 +2,8 @@ class Member < ApplicationRecord
   MINIMUM_JOINED_YEAR = 1995
   MAXIMUM_NAME_LENGTH = 20
 
-  has_one :user, dependent: :restrict_with_error
-  has_many :playings, dependent: :restrict_with_error
+  has_one :user, dependent: :restrict_with_exception
+  has_many :playings, dependent: :restrict_with_exception
   has_many :published_songs, -> { published }, through: :playings, source: :song
 
   has_one_attached :avatar
