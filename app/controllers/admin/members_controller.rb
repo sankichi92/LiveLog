@@ -17,6 +17,8 @@ module Admin
       @member = Member.new(member)
 
       if @member.save
+        AdminActivityNotifyJob.perform_later(current_user, "メンバー #{@member.joined_year_and_name} を追加しました")
+
         if email.present?
           begin
             @member.create_user_with_auth0!(email)

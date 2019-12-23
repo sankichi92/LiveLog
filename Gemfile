@@ -38,6 +38,7 @@ gem 'elasticsearch-model', '~> 6.1'
 gem 'elasticsearch-dsl'
 
 gem 'auth0'
+gem 'slack-ruby-client'
 gem 'twitter'
 
 gem 'newrelic_rpm'
