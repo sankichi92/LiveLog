@@ -5,3 +5,7 @@
 
 @import "font-awesome-sprockets";
 @import "font-awesome";
+
+.table-admin > tbody > tr > td {
+  vertical-align: middle;
+}

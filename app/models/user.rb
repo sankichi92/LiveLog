@@ -3,6 +3,8 @@ class User < ApplicationRecord
 
   belongs_to :member
 
+  validate :admin_must_be_activated
+
   attr_accessor :email
 
   def self.find_auth0_id(auth0_id)
@@ -40,5 +42,18 @@ class User < ApplicationRecord
     Auth0User.new(id).update!(options)
   end
 
+  def destroy_with_auth0_user!
+    Auth0User.new(id).delete!
+    destroy!
+  end
+
   # endregion
+
+  private
+
+  def admin_must_be_activated
+    if admin? && !activated
+      errors.add(:base, '管理者にするにはログイン済みでなければなりません')
+    end
+  end
 end

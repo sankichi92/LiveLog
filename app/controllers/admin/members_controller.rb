@@ -29,10 +29,17 @@ module Admin
           end
         end
 
-        redirect_to admin_members_path(year: @member.joined_year), notice: "#{@member.joined_year} #{@member.name} を追加しました"
+        redirect_to admin_members_path(year: @member.joined_year), notice: "#{@member.joined_year_and_name} を追加しました"
       else
         render :new, status: :unprocessable_entity
       end
+    end
+
+    def destroy(id)
+      member = Member.find(id)
+      member.destroy!
+      AdminActivityNotifyJob.perform_later(current_user, "メンバー #{member.joined_year_and_name} を削除しました")
+      redirect_to admin_members_path(year: member.joined_year), notice: "#{member.joined_year_and_name} を削除しました"
     end
   end
 end

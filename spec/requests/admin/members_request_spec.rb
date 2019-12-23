@@ -95,4 +95,15 @@ RSpec.describe 'admin/members requests:', type: :request do
       end
     end
   end
+
+  describe 'DELETE /admin/members/:id' do
+    let(:member) { create(:member) }
+
+    it 'destroys the member and redirects to /admin/members' do
+      delete admin_member_path(member)
+
+      expect(response).to redirect_to admin_members_path(year: member.joined_year)
+      expect { member.reload }.to raise_error ActiveRecord::RecordNotFound
+    end
+  end
 end
