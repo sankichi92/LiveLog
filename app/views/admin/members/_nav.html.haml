@@ -1,6 +1,3 @@
-%nav
-  %ul.pagination.mb-0
-    - Member.joined_years.each do |year|
-      %li.page-item{ class: year == @year ? 'active' : '' }
-        = link_to_if year != @year, year, admin_members_path(year: year), class: 'page-link' do
-          %span.page-link= year
+%nav.nav.nav-pills
+  - Member.joined_years.each do |year|
+    = link_to year, admin_members_path(year: year), class: "nav-item nav-link#{year == @year ? ' active' : ''}"

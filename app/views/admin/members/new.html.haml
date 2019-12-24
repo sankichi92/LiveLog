@@ -30,6 +30,7 @@
           .form-group
             = label :user, :email
             = email_field :user, :email, class: 'form-control'
+            %small.form-text.text-muted 登録と同時に招待することができます
 
         .card-footer
           = form.submit class: 'btn btn-primary'

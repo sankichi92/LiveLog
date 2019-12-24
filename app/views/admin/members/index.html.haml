@@ -13,11 +13,11 @@
     %p= link_to icon('fas', 'user-plus', 'メンバーを追加する'), new_admin_member_path, class: 'btn btn-outline-primary'
 
     %section.card
-      .card-header
+      .card-header.border-bottom-0
         = render 'admin/members/nav'
       .card-body.p-0
         .table-responsive
-          %table.table-admin.table.table-striped.text-nowrap
+          %table.table-admin.table.table-striped.text-nowrap.mb-0
             %thead
               %tr
                 - %i[id name playings_count].each do |attr|
@@ -46,6 +46,5 @@
                         - if member.user.activated?
                           = link_to icon('fas', 'users-cog', '管理者にする'), admin_member_admin_path(member), method: :post, class: 'btn btn-danger', data: { confirm: "本当に #{member.joined_year_and_name} を管理者にしますか" }
 
-
-      .card-footer
+      .card-footer.border-top
         = render 'admin/members/nav'
