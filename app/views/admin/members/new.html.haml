@@ -28,8 +28,8 @@
             = form.text_field :name, maxlength: Member::MAXIMUM_NAME_LENGTH, required: true, class: 'form-control'
 
           .form-group
-            = label_tag :email, 'メールアドレス'
-            = email_field_tag :email, nil, class: 'form-control'
+            = label :user, :email
+            = email_field :user, :email, class: 'form-control'
 
         .card-footer
           = form.submit class: 'btn btn-primary'

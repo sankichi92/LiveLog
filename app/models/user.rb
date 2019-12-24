@@ -1,11 +1,14 @@
 class User < ApplicationRecord
+  AlreadyCreatedError = Class.new(StandardError)
+
   self.ignored_columns = %i[email subscribing]
 
   belongs_to :member
 
+  validates :email, format: { with: /[^\s]@[^\s]/ }, on: :create
   validate :admin_must_be_activated
 
-  attr_accessor :email
+  attr_accessor :email, :password
 
   def self.find_auth0_id(auth0_id)
     id = auth0_id.match(/auth0\|(?<id>\d+)/)[:id]
@@ -34,8 +37,13 @@ class User < ApplicationRecord
     Auth0User.new(id)
   end
 
-  def create_auth0_user!(email: nil, password: nil)
-    @auth0_user = Auth0User.create!(user: self, email: email || self.email, password: password)
+  def create_with_auth0_user!
+    raise AlreadyCreatedError, "User id #{id} is persisted" if persisted?
+
+    transaction do
+      save!
+      @auth0_user = Auth0User.create!(self)
+    end
   end
 
   def update_auth0_user!(options)

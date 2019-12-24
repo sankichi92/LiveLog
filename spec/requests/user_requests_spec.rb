@@ -32,6 +32,13 @@ RSpec.describe 'User requests', type: :request do
 
   describe 'POST /members/:member_id/user' do
     let(:member) { create(:member) }
+    let(:params) do
+      {
+        user: {
+          email: email,
+        },
+      }
+    end
     let(:email) { 'new@example.com' }
 
     let(:auth0_client) { spy(:app_auth0_client) }
@@ -44,14 +51,14 @@ RSpec.describe 'User requests', type: :request do
 
     context 'when there is no user associated with the given member' do
       it 'creates a user, requests to create Auth0 user and change their password' do
-        post member_user_path(member), params: { email: email }
+        post member_user_path(member), params: params
 
-        expect(response).to redirect_to member
-        expect(flash.notice).to eq '招待しました'
         expect(member.reload.user).to be_persisted
         expect(auth0_client).to have_received(:create_user).with(anything, hash_including(email: email)).once
         expect(auth0_client).not_to have_received(:patch_user)
         expect(auth0_client).to have_received(:change_password).with(email, nil).once
+        expect(response).to redirect_to member
+        expect(flash.notice).to eq '招待しました'
       end
     end
 
@@ -63,13 +70,13 @@ RSpec.describe 'User requests', type: :request do
       end
 
       it 'requests to update Auth0 user and change their password, and redirects to /members/:id' do
-        post member_user_path(member), params: { email: email }
+        post member_user_path(member), params: params
 
-        expect(response).to redirect_to member
-        expect(flash.notice).to eq '招待しました'
         expect(auth0_client).not_to have_received(:create_user)
         expect(auth0_client).to have_received(:patch_user).with(user.auth0_id, hash_including(email: email)).once
         expect(auth0_client).to have_received(:change_password).with(email, nil).once
+        expect(response).to redirect_to member
+        expect(flash.notice).to eq '招待しました'
       end
     end
 
@@ -81,16 +88,30 @@ RSpec.describe 'User requests', type: :request do
       end
 
       it 'requests to change Auth0 user password, and redirects to /members/:id' do
-        post member_user_path(member), params: { email: email }
+        post member_user_path(member), params: params
 
-        expect(response).to redirect_to member
-        expect(flash.notice).to eq '招待しました'
         expect(auth0_client).not_to have_received(:create_user)
         expect(auth0_client).not_to have_received(:patch_user)
         expect(auth0_client).to have_received(:change_password).with(email, nil).once
+        expect(response).to redirect_to member
+        expect(flash.notice).to eq '招待しました'
       end
     end
 
+    context 'with invalid email' do
+      let(:email) { 'invalid' }
+
+      it 'does not create user and responds 422' do
+        post member_user_path(member), params: params
+
+        expect(member.reload.user).to be_nil
+        expect(auth0_client).not_to have_received(:create_user)
+        expect(auth0_client).not_to have_received(:patch_user)
+        expect(auth0_client).not_to have_received(:change_password)
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(auth0_client).not_to have_received(:change_password)
+      end
+    end
 
     context 'when Auth0 responds bad_request' do
       before do
@@ -98,8 +119,9 @@ RSpec.describe 'User requests', type: :request do
       end
 
       it 'does not create user and responds 422' do
-        expect { post member_user_path(member), params: { email: email } }.not_to change(User, :count)
+        post member_user_path(member), params: params
 
+        expect(member.reload.user).to be_nil
         expect(response).to have_http_status(:unprocessable_entity)
         expect(auth0_client).not_to have_received(:change_password)
       end
@@ -113,7 +135,7 @@ RSpec.describe 'User requests', type: :request do
       end
 
       it 'redirects to /members/:id with alert' do
-        post member_user_path(member), params: { email: email }
+        post member_user_path(member), params: params
 
         expect(response).to redirect_to member
         expect(flash.alert).to eq 'すでにユーザー登録が完了しています'

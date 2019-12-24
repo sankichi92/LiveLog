@@ -6,8 +6,10 @@ admin = FactoryBot.create(:admin)
 non_admin = FactoryBot.create(:user)
 
 if ENV['AUTH0_CLIENT_ID'].present? && ENV['AUTH0_CLIENT_SECRET'].present?
-  admin.create_auth0_user!(email: 'admin@example.com', password: 'password')
-  non_admin.create_auth0_user!(email: 'user@example.com', password: 'password')
+  admin.assign_attributes(email: 'admin@example.com', password: 'password')
+  Auth0User.create!(admin)
+  non_admin.assign_attributes(email: 'user@example.com', password: 'password')
+  Auth0User.create!(admin)
 end
 
 members = [admin.member, non_admin.member] + FactoryBot.create_list(:member, 18)

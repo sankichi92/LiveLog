@@ -35,23 +35,13 @@ RSpec.describe 'admin/members requests:', type: :request do
           joined_year: joined_year,
           name: 'ギータ',
         },
-        email: email,
+        user: {
+          email: email,
+        },
       }
     end
 
-    context 'with valid member params and without email' do
-      let(:joined_year) { Time.zone.now.year.to_s }
-      let(:email) { '' }
-
-      it 'creates a member and redirects to /admin/members' do
-        expect { post admin_members_path, params: params }.to change(Member, :count).by(1).and change(User, :count).by(0)
-
-        expect(response).to redirect_to admin_members_path(year: joined_year)
-        expect(flash.notice).to include '追加しました'
-      end
-    end
-
-    context 'with valid member params and email' do
+    context 'with valid member and user params' do
       let(:joined_year) { Time.zone.now.year.to_s }
       let(:email) { 'guitar@example.com' }
 
@@ -81,6 +71,18 @@ RSpec.describe 'admin/members requests:', type: :request do
           expect(response).to redirect_to admin_members_path(year: joined_year)
           expect(flash.alert).to include '招待メールの送信に失敗しました'
         end
+      end
+    end
+
+    context 'with valid member params and invalid user params' do
+      let(:joined_year) { Time.zone.now.year.to_s }
+      let(:email) { '' }
+
+      it 'creates a member and redirects to /admin/members' do
+        expect { post admin_members_path, params: params }.to change(Member, :count).by(1).and change(User, :count).by(0)
+
+        expect(response).to redirect_to admin_members_path(year: joined_year)
+        expect(flash.notice).to include '追加しました'
       end
     end
 

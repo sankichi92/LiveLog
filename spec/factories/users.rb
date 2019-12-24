@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :user do
     member
+    email { Faker::Internet.safe_email }
     activated { true }
 
     trait :inactivated do

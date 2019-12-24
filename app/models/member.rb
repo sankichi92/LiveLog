@@ -23,13 +23,6 @@ class Member < ApplicationRecord
     order(joined_year: :desc).distinct.pluck(:joined_year)
   end
 
-  def create_user_with_auth0!(email)
-    transaction do
-      create_user!(email: email)
-      user.create_auth0_user!
-    end
-  end
-
   # For #collection_select option values
   def joined_year_and_name
     "#{joined_year} #{name}"

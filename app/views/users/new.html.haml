@@ -9,7 +9,7 @@
   = render @member
 
 %section
-  = form_with model: @user, scope: '', url: member_user_path(@member), method: :post, local: true do |form|
+  = form_with model: @user, url: member_user_path(@member), method: :post, local: true do |form|
     = render 'shared/error_messages', errors: @user.errors
 
     .form-group
