@@ -7,7 +7,7 @@ namespace :ridgepole do
     environments.each do |env|
       puts "For #{env}" if environments.size > 1
       ActiveRecord::Base.configurations.configs_for(env_name: env).each do |db_config|
-        system 'ridgepole', '--config', db_config.config.to_json, '--file', Rails.root.join('db/Schemafile').to_s, '--allow-pk-change', '--apply'
+        system 'ridgepole', '--config', db_config.config.to_json, '--file', Rails.root.join('db/Schemafile').to_s, '--apply'
       end
     end
   end
@@ -15,7 +15,7 @@ namespace :ridgepole do
   desc 'Dry-run applying db/Schemafile'
   task dry_run: 'db:load_config' do
     ActiveRecord::Base.configurations.configs_for(env_name: Rails.env).each do |db_config|
-      system 'ridgepole', '--config', db_config.config.to_json, '--file', Rails.root.join('db/Schemafile').to_s, '--allow-pk-change', '--apply', '--dry-run'
+      system 'ridgepole', '--config', db_config.config.to_json, '--file', Rails.root.join('db/Schemafile').to_s, '--apply', '--dry-run'
     end
   end
 end
