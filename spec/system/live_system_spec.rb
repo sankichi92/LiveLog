@@ -14,7 +14,7 @@ RSpec.describe 'Live', type: :system do
       Live.published.each do |live|
         expect(page).to have_content(live.name)
       end
-      Live.drafts.each do |draft_live|
+      Live.unpublished.each do |draft_live|
         expect(page).not_to have_content(draft_live.name)
       end
     end

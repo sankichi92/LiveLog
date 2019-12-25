@@ -28,8 +28,8 @@ create_table :lives, force: :cascade do |t|
   t.date :date, null: false
   t.string :place
   t.string :album_url
-  t.datetime :published_at
   t.boolean :published, default: false, null: false
+  t.datetime :published_at
 
   t.timestamps
 

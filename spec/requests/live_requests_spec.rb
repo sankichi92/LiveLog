@@ -126,11 +126,7 @@ RSpec.describe 'Live requests', type: :request do
   end
 
   describe 'PUT /lives/:id/publish by admin' do
-    let(:tweet_job) { class_spy(TweetJob) }
-
     before do
-      stub_const('TweetJob', tweet_job)
-
       log_in_as(create(:admin))
     end
 
@@ -139,7 +135,6 @@ RSpec.describe 'Live requests', type: :request do
 
       it 'redirects to /lives/:id' do
         put publish_live_url(live)
-        expect(tweet_job).not_to have_received(:perform_now)
         expect(response).to redirect_to(live)
       end
     end
@@ -149,7 +144,6 @@ RSpec.describe 'Live requests', type: :request do
 
       it 'publishes live, tweet it and redirects to /lives/:id', elasticsearch: true do
         put publish_live_url(live)
-        expect(tweet_job).to have_received(:perform_now)
         expect(response).to redirect_to(live)
         expect(live.reload.published).to be true
       end

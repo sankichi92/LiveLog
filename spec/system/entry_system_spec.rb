@@ -81,11 +81,7 @@ RSpec.describe 'Entry', type: :system do
   end
 
   describe 'publish' do
-    let(:tweet_job) { class_spy(TweetJob) }
-
     before do
-      stub_const('TweetJob', tweet_job)
-
       log_in_as create(:admin)
     end
 
@@ -94,7 +90,6 @@ RSpec.describe 'Entry', type: :system do
 
       click_link '公開する'
 
-      expect(tweet_job).to have_received(:perform_now)
       expect(live.reload.published).to be true
       expect(live.published_at).to be_present
       expect(page).to have_css('.alert-info')

@@ -4,7 +4,7 @@ class LivesController < ApplicationController
   after_action :verify_authorized, except: %i[index show]
 
   def index
-    @lives = Live.published.order_by_date
+    @lives = Live.published.newest_order
   end
 
   def show(id)
@@ -55,8 +55,9 @@ class LivesController < ApplicationController
       skip_authorization
     else
       authorize @live
-      @live.publish(live_url(@live))
+      @live.publish!
       flash.notice = '公開しました'
+      TweetJob.perform_later("#{@live.title} のセットリストが公開されました！\n#{live_url(@live)}")
     end
     redirect_to @live, status: :moved_permanently
   end
