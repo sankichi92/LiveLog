@@ -23,7 +23,7 @@ create_table :active_storage_blobs, force: :cascade do |t|
   t.index :key, unique: true
 end
 
-create_table :lives, id: :serial, force: :cascade do |t|
+create_table :lives, force: :cascade do |t|
   t.string :name, null: false
   t.date :date, null: false
   t.string :place
@@ -50,9 +50,9 @@ create_table :members, force: :cascade do |t|
   t.index %i[joined_year playings_count]
 end
 
-create_table :playings, id: :serial, force: :cascade do |t|
-  t.integer :member_id, null: false
-  t.integer :song_id, null: false
+create_table :playings, force: :cascade do |t|
+  t.bigint :member_id, null: false
+  t.bigint :song_id, null: false
   t.string :inst
 
   t.timestamps
@@ -61,8 +61,8 @@ create_table :playings, id: :serial, force: :cascade do |t|
   t.index %i[member_id song_id], unique: true
 end
 
-create_table :songs, id: :serial, force: :cascade do |t|
-  t.integer :live_id, null: false
+create_table :songs, force: :cascade do |t|
+  t.bigint :live_id, null: false
   t.integer :order
   t.time :time
   t.string :name, null: false
@@ -77,7 +77,7 @@ create_table :songs, id: :serial, force: :cascade do |t|
   t.index :live_id
 end
 
-create_table :users, id: :serial, force: :cascade do |t|
+create_table :users, force: :cascade do |t|
   t.bigint :member_id, null: false
   t.boolean :activated, default: false, null: false
   t.boolean :admin, default: false, null: false
