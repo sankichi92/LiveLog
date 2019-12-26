@@ -12,7 +12,7 @@ class Song < ApplicationRecord
 
   include SongSearchable
 
-  belongs_to :live
+  belongs_to :live, counter_cache: true
   has_many :playings, dependent: :destroy, inverse_of: :song
   has_many :members, through: :playings
 

@@ -30,6 +30,7 @@ create_table :lives, force: :cascade do |t|
   t.string :album_url
   t.boolean :published, default: false, null: false
   t.datetime :published_at
+  t.integer :songs_count, null: false, default: 0, limit: 2
 
   t.timestamps
 
