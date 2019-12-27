@@ -33,6 +33,7 @@ gem 'omniauth'
 gem 'omniauth-auth0'
 gem 'omniauth-rails_csrf_protection'
 
+gem 'elasticsearch', '~> 6.8'
 gem 'elasticsearch-rails', '~> 6.1'
 gem 'elasticsearch-model', '~> 6.1'
 gem 'elasticsearch-dsl'
