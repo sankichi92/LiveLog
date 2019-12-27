@@ -18,7 +18,7 @@ RSpec.describe 'Settings:', type: :system do
     expect(page).to have_title 'プロフィール設定'
 
     # When
-    attach_file 'プロフィール画像', Rails.root.join('spec', 'fixtures', 'files', 'avatar.png')
+    attach_file 'プロフィール画像', Rails.root.join('spec/fixtures/files/avatar.png')
     fill_in '名前', with: 'ギータ'
     fill_in 'URL', with: 'https://example.com/profile'
     fill_in '自己紹介', with: 'ギターに転向しました'

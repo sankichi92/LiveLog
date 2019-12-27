@@ -65,6 +65,6 @@ class Song < ApplicationRecord
   private
 
   def extract_youtube_id
-    self.youtube_id = youtube_id.match(VALID_YOUTUBE_REGEX)[:id] unless youtube_id.blank?
+    self.youtube_id = youtube_id.match(VALID_YOUTUBE_REGEX)[:id] if youtube_id.present?
   end
 end

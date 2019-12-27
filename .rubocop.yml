@@ -5,7 +5,7 @@ require:
   - rubocop-rails
   - rubocop-rspec
 
-Metrics/LineLength:
+Layout/LineLength:
   Max: 160
 
 Style/MutableConstant:
