@@ -1,0 +1,44 @@
+%header.content-header
+  .container-fluid
+    .row.mb-3
+      .col-sm-6
+        %h1= Live.model_name.human
+      .col-sm-6
+        %ol.breadcrumb.float-sm-right
+          %li.breadcrumb-item= link_to 'Home', admin_root_path
+          %li.breadcrumb-item.active= Live.model_name.human
+
+%section.content
+  .container-fluid
+    %section.card
+      .card-header.border-bottom-0
+        %nav.nav.nav-pills
+          - Live.years.each do |year|
+            = link_to year, admin_lives_path(year: year), class: "nav-item nav-link#{year == @year ? ' active' : ''}"
+      .card-body.p-0
+        .table-responsive
+          %table.table-admin.table.table-striped.text-nowrap.mb-0
+            %thead
+              %tr
+                - %i[id date name place album songs_count published_at].each do |attr|
+                  %th{ scope: 'col' }= Live.human_attribute_name(attr)
+                %th{ scope: 'col' } 操作
+            %tbody
+              - @lives.each do |live|
+                %tr
+                  %td= live.id
+                  %td= l live.date
+                  %td= live.name
+                  %td= live.place
+                  %td
+                    = link_to_if live.album_url.present?, 'あり', live.album_url do
+                      なし
+                  %td= live.songs_count
+                  %td
+                    - if live.published_at.present?
+                      = l live.published_at
+                    - else
+                      %span.badge.badge-warning 未公開
+                  %td
+                    - if live.published?
+                      = link_to icon('fas', 'eye'), live_path(live), class: 'btn btn-secondary'
