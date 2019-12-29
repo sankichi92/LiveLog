@@ -25,7 +25,7 @@ RSpec.describe 'lives request:', type: :request do
     end
 
     context 'when the live is unpublished' do
-      let(:live) { create(:live, :draft) }
+      let(:live) { create(:live, :unpublished) }
 
       it 'redirects to /lives/:id/entries' do
         get live_path(live)
@@ -140,7 +140,7 @@ RSpec.describe 'lives request:', type: :request do
     end
 
     context 'when live is unpublished' do
-      let(:live) { create(:live, :draft) }
+      let(:live) { create(:live, :unpublished) }
 
       it 'publishes live, tweet it and redirects to /lives/:id', elasticsearch: true do
         put publish_live_url(live)

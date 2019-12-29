@@ -10,7 +10,7 @@ RSpec.describe 'admin/lives request:', type: :request do
   describe 'GET /admin/lives' do
     before do
       create_pair(:live)
-      create_pair(:live, :draft)
+      create_pair(:live, :unpublished)
     end
 
     it 'responds 200' do

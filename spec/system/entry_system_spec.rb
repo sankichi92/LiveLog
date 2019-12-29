@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Entry', type: :system do
   include Auth0UserHelper
 
-  let(:live) { create(:live, :draft) }
+  let(:live) { create(:live, :unpublished) }
   let(:user) { create(:user) }
 
   describe 'list' do

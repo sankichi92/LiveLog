@@ -4,7 +4,7 @@ RSpec.describe 'Live', type: :system do
   describe 'list' do
     before do
       create_list(:live, 2)
-      create(:live, :draft, name: 'draft live')
+      create(:live, :unpublished, name: 'draft live')
     end
 
     it 'enables users to see the published lives' do
