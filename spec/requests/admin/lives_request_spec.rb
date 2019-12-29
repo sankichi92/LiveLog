@@ -68,4 +68,15 @@ RSpec.describe 'admin/lives request:', type: :request do
       end
     end
   end
+
+  describe 'DELETE /admin/lives/:id' do
+    let(:live) { create(:live) }
+
+    it 'destroys the live and redirects to /admin/lives' do
+      delete admin_live_path(live)
+
+      expect(response).to redirect_to admin_lives_path(year: live.date.nendo)
+      expect { live.reload }.to raise_error ActiveRecord::RecordNotFound
+    end
+  end
 end
