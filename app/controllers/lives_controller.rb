@@ -1,5 +1,5 @@
 class LivesController < ApplicationController
-  after_action :verify_authorized, except: %i[index show]
+  before_action :require_current_user, only: :album
 
   def index
     @lives = Live.published.newest_order
@@ -13,7 +13,6 @@ class LivesController < ApplicationController
 
   def album(id)
     @live = Live.find(id)
-    authorize @live
     redirect_to @live.album_url.presence || @live
   end
 end
