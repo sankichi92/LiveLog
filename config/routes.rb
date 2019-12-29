@@ -14,10 +14,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :lives do
+  resources :lives, only: %i[index show] do
     member do
-      get 'album'
-      put 'publish'
+      get :album
     end
 
     resources :entries, only: %i[index new create]

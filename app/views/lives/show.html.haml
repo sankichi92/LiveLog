@@ -14,10 +14,6 @@
       .btn-group.mr-2{ role: 'group' }
         = @live.new_song_link class: 'btn btn-outline-secondary'
         = link_to icon('fas', 'edit') + ' ' + '曲を編集する', live_path(@live, edit: true), class: 'btn btn-outline-secondary'
-      .btn-group{ role: 'group' }
-        = @live.edit_link class: 'btn btn-outline-primary'
-        - if @songs.empty?
-          = @live.delete_link class: 'btn btn-outline-danger'
 
   - if @songs.to_a.any?(&:playable?)
     = render 'songs/playlist', songs: @songs.select(&:playable?)

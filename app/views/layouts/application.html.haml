@@ -45,13 +45,6 @@
 
           - if current_user
             %ul.nav.navbar-nav
-              - if current_user.admin?
-                %li.nav-item.dropdown
-                  %a.nav-link.dropdown-toggle#navbar-admin-dropdown-menu-link{ href: '#', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' }
-                    Admin
-                  .dropdown-menu.dropdown-menu-right{ 'aria-labellebdy': 'navbar-admin-dropdown-menu-link' }
-                    = link_to 'New Live', new_live_path, class: 'dropdown-item'
-
               - if Live.unpublished.exists?
                 %li.nav-item.dropdown{ class: params[:controller] == 'entries' ? 'active' : '' }
                   %a.nav-link.dropdown-toggle#navbar-entry-dropdown-menu-link{ href: '#', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' }

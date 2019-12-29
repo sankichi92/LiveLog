@@ -79,20 +79,4 @@ RSpec.describe 'Entry', type: :system do
       expect(ActionMailer::Base.deliveries.size).to eq 1
     end
   end
-
-  describe 'publish' do
-    before do
-      log_in_as create(:admin)
-    end
-
-    it 'enables admin users to publish live', elasticsearch: true do
-      visit live_entries_path(live)
-
-      click_link '公開する'
-
-      expect(live.reload.published).to be true
-      expect(live.published_at).to be_present
-      expect(page).to have_css('.alert-info')
-    end
-  end
 end
