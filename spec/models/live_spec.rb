@@ -31,28 +31,6 @@ RSpec.describe Live, type: :model do
     end
   end
 
-  describe 'before_save callbacks' do
-    subject(:live) { build(:live, published: false) }
-
-    describe 'when date is earlier than today' do
-      before { live.date = 1.month.ago }
-
-      it 'is published' do
-        live.save
-        expect(live.published).to be true
-      end
-    end
-
-    describe 'when date is later than today' do
-      before { live.date = 1.month.from_now }
-
-      it 'is unpublished' do
-        live.save
-        expect(live.published).to be false
-      end
-    end
-  end
-
   describe 'song associations' do
     let(:live) { create(:live) }
 

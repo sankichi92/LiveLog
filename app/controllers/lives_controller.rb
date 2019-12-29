@@ -1,7 +1,5 @@
 class LivesController < ApplicationController
-  permits :name, :date, :place, :album_url
-
-  after_action :verify_authorized, except: %i[index show]
+  before_action :require_current_user, only: :album
 
   def index
     @lives = Live.published.newest_order
@@ -15,60 +13,11 @@ class LivesController < ApplicationController
 
   def album(id)
     @live = Live.find(id)
-    authorize @live
-    redirect_to @live.album_url.presence || @live
-  end
 
-  def new
-    @live = Live.new.tap { |l| l.date = Time.zone.today }
-    authorize @live
-  end
-
-  def create(live)
-    @live = Live.new(live)
-    authorize @live
-    if @live.save
-      redirect_to @live.published? ? @live : live_entries_url(@live), notice: "#{@live.title} を追加しました"
+    if @live.album_url.present?
+      redirect_to @live.album_url
     else
-      render :new, status: :unprocessable_entity
+      raise ActionController::RoutingError, "Live id #{id} does not have album_url"
     end
-  end
-
-  def edit(id)
-    @live = Live.find(id)
-    authorize @live
-  end
-
-  def update(id, live)
-    @live = Live.find(id)
-    authorize @live
-    if @live.update(live)
-      redirect_to @live, notice: "#{@live.title} を更新しました"
-    else
-      render :edit, status: :unprocessable_entity
-    end
-  end
-
-  def publish(id)
-    @live = Live.find(id)
-    if @live.published?
-      skip_authorization
-    else
-      authorize @live
-      @live.publish!
-      flash.notice = '公開しました'
-      TweetJob.perform_later("#{@live.title} のセットリストが公開されました！\n#{live_url(@live)}")
-    end
-    redirect_to @live, status: :moved_permanently
-  end
-
-  def destroy(id)
-    @live = Live.find(id)
-    authorize @live
-    @live.destroy
-  rescue ActiveRecord::DeleteRestrictionError => e
-    redirect_to @live, alert: e.message
-  else
-    redirect_to lives_url, notice: "#{@live.title} を削除しました"
   end
 end

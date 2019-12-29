@@ -24,7 +24,7 @@ FactoryBot.create_list(:live, 10).each do |live|
   end
 end
 
-FactoryBot.create(:live, :draft).tap do |live|
+FactoryBot.create(:live, :unpublished).tap do |live|
   FactoryBot.create_list(:song, 5, live: live).each do |song|
     playing_count = Faker::Number.normal(mean: 5, standard_deviation: 2).round
     members.sample(playing_count.abs, random: Faker::Config.random).each do |member|

@@ -19,7 +19,7 @@ RSpec.describe 'entries request:', type: :request do
     end
 
     context 'when live is unpublished' do
-      let(:live) { create(:live, :draft) }
+      let(:live) { create(:live, :unpublished) }
 
       before do
         create_pair(:song, :draft, live: live, members: create_pair(:member))
@@ -44,7 +44,7 @@ RSpec.describe 'entries request:', type: :request do
     end
 
     context 'when live is unpublished' do
-      let(:live) { create(:live, :draft) }
+      let(:live) { create(:live, :unpublished) }
 
       it 'responds 200' do
         get new_live_entry_path(live)
@@ -64,7 +64,7 @@ RSpec.describe 'entries request:', type: :request do
     end
 
     context 'when live is unpublished' do
-      let(:live) { create(:live, :draft) }
+      let(:live) { create(:live, :unpublished) }
       let(:entry_attrs) { { preferred_rehearsal_time: '', preferred_performance_time: '', notes: '' } }
 
       before do

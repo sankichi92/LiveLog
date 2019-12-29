@@ -1,0 +1,18 @@
+%header.content-header
+  .container-fluid
+    .row.mb-3
+      .col-sm-6
+        %h1
+          = Live.model_name.human
+          新規作成
+
+      .col-sm-6
+        %ol.breadcrumb.float-sm-right
+          %li.breadcrumb-item= link_to 'Home', admin_root_path
+          %li.breadcrumb-item= link_to Live.model_name.human, admin_lives_path
+          %li.breadcrumb-item.active 新規作成
+
+%section.content
+  .container-fluid
+    %section.card
+      = render 'admin/lives/form', model: @live, url: admin_lives_path

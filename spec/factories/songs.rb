@@ -15,7 +15,7 @@ FactoryBot.define do
     end
 
     trait :draft do
-      association :live, factory: %i[live draft]
+      association :live, factory: %i[live unpublished]
       order { nil }
       youtube_id { nil }
       comment { nil }

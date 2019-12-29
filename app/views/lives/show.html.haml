@@ -6,7 +6,7 @@
       = @live.name
       %small.text-muted
         = @live.date_and_place
-    - if @live.album_url.present? && policy(@live).album?
+    - if current_user && @live.album_url.present?
       = @live.link_to_album class: 'btn btn-primary btn-lg', target: '_blank'
 
   - if current_user&.admin?
@@ -14,10 +14,6 @@
       .btn-group.mr-2{ role: 'group' }
         = @live.new_song_link class: 'btn btn-outline-secondary'
         = link_to icon('fas', 'edit') + ' ' + '曲を編集する', live_path(@live, edit: true), class: 'btn btn-outline-secondary'
-      .btn-group{ role: 'group' }
-        = @live.edit_link class: 'btn btn-outline-primary'
-        - if @songs.empty?
-          = @live.delete_link class: 'btn btn-outline-danger'
 
   - if @songs.to_a.any?(&:playable?)
     = render 'songs/playlist', songs: @songs.select(&:playable?)

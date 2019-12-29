@@ -14,10 +14,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :lives do
+  resources :lives, only: %i[index show] do
     member do
-      get 'album'
-      put 'publish'
+      get :album
     end
 
     resources :entries, only: %i[index new create]
@@ -40,6 +39,13 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root to: 'home#show'
+
+    resources :lives do
+      member do
+        put :publish
+      end
+    end
+
     resources :members, only: %i[index new create destroy] do
       resource :user, only: :destroy
       resource :admin, only: %i[create destroy]
