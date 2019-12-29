@@ -69,6 +69,62 @@ RSpec.describe 'admin/lives request:', type: :request do
     end
   end
 
+  describe 'GET /admin/lives/:id/edit' do
+    let(:live) { create(:live) }
+
+    it 'responds 200' do
+      get edit_admin_live_path(live)
+
+      expect(response).to have_http_status :ok
+    end
+  end
+
+  describe 'PATCH /admin/lives/:id' do
+    let(:live) { create(:live, album_url: '') }
+
+    context 'with valid params' do
+      let(:params) do
+        {
+          live: {
+            date: live.date.to_s,
+            name: live.name,
+            place: live.place,
+            album_url: new_album_url,
+          },
+        }
+      end
+      let(:new_album_url) { 'https://goo.gl/photos/album' }
+
+      it 'updates the live and redirects to /admin/lives' do
+        patch admin_live_path(live), params: params
+
+        expect(live.reload.album_url).to eq new_album_url
+        expect(response).to redirect_to admin_lives_path(year: live.date.nendo)
+      end
+    end
+
+    context 'with invalid params' do
+      let(:params) do
+        {
+          live: {
+            date: live.date.to_s,
+            name: invalid_name,
+            place: live.place,
+            album_url: live.album_url,
+          },
+        }
+      end
+      let(:invalid_name) { 'a' * 21 }
+
+      it 'responds 422' do
+        patch admin_live_path(live), params: params
+
+        expect(live.reload.name).not_to eq invalid_name
+        expect(response).to have_http_status :unprocessable_entity
+      end
+    end
+  end
+
   describe 'DELETE /admin/lives/:id' do
     let(:live) { create(:live) }
 

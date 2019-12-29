@@ -22,6 +22,21 @@ module Admin
       end
     end
 
+    def edit(id)
+      @live = Live.find(id)
+    end
+
+    def update(id, live)
+      @live = Live.find(id)
+
+      if @live.update(live)
+        AdminActivityNotifyJob.perform_later(current_user, "#{Live.model_name.human} #{@live.title} を更新しました")
+        redirect_to admin_lives_path(year: @live.date.nendo), notice: "#{@live.title} を更新しました"
+      else
+        render :edit, status: :unprocessable_entity
+      end
+    end
+
     def destroy(id)
       live = Live.find(id)
       live.destroy!

@@ -1,0 +1,23 @@
+= form_with model: model, url: url, local: true do |form|
+  .card-body
+    = render 'shared/error_messages', errors: model.errors
+
+    .form-group
+      = form.label :date
+      = form.date_field :date, required: true, class: 'form-control'
+
+    .form-group
+      = form.label :name
+      = form.text_field :name, required: true, class: 'form-control'
+
+    .form-group
+      = form.label :place
+      = form.text_field :place, class: 'form-control'
+
+    .form-group
+      = form.label :album_url
+      = form.url_field :album_url, class: 'form-control', placeholder: 'https://goo.gl/photos/o94hbpFHQtcjzjwj6'
+      %small.form-text.text-muted 共同編集・コメント可能な <a href="https://photos.google.com" target="_blank">Google フォト</a> の共有アルバム推奨です
+
+  .card-footer
+    = form.submit class: 'btn btn-primary'
