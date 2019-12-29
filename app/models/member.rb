@@ -1,6 +1,5 @@
 class Member < ApplicationRecord
   MINIMUM_JOINED_YEAR = 1995
-  MAXIMUM_NAME_LENGTH = 20
 
   has_one :user, dependent: :restrict_with_exception
   has_many :playings, dependent: :restrict_with_exception
@@ -11,7 +10,7 @@ class Member < ApplicationRecord
   validates :joined_year,
             presence: true,
             numericality: { only_integer: true, greater_than_or_equal_to: MINIMUM_JOINED_YEAR, less_than_or_equal_to: Time.zone.now.year }
-  validates :name, presence: true, length: { maximum: MAXIMUM_NAME_LENGTH }, uniqueness: { scope: :joined_year }
+  validates :name, presence: true, length: { maximum: 20 }, uniqueness: { scope: :joined_year }
   validates :url, format: { with: /\A#{URI::DEFAULT_PARSER.make_regexp(%w[http https])}\z/ }, allow_blank: true
   validates :bio, length: { maximum: 200 }
 
