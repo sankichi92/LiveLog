@@ -135,4 +135,15 @@ RSpec.describe 'admin/lives request:', type: :request do
       expect { live.reload }.to raise_error ActiveRecord::RecordNotFound
     end
   end
+
+  describe 'PUT /admin/lives/:id/publish' do
+    let(:live) { create(:live, :unpublished) }
+
+    it 'publishes the live and redirects to /admin/lives' do
+      put publish_admin_live_path(live)
+
+      expect(live.reload).to be_published
+      expect(response).to redirect_to admin_lives_path(year: live.date.nendo)
+    end
+  end
 end

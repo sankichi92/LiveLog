@@ -43,5 +43,13 @@ module Admin
       AdminActivityNotifyJob.perform_later(current_user, "#{Live.model_name.human} #{live.title} を削除しました")
       redirect_to admin_lives_path(year: live.date.nendo), notice: "#{live.title} を削除しました"
     end
+
+    def publish(id)
+      live = Live.find(id)
+      live.publish!
+      TweetJob.perform_later("#{live.title} のセットリストが公開されました！\n#{live_url(live)}")
+      AdminActivityNotifyJob.perform_later(current_user, "#{Live.model_name.human} #{live.title} を公開しました")
+      redirect_to admin_lives_path(year: live.date.nendo), notice: "#{live.title} を公開しました"
+    end
   end
 end

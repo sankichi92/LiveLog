@@ -1,4 +1,6 @@
 class Live < ApplicationRecord
+  AlreadyPublishedError = Class.new(StandardError)
+
   has_many :songs, dependent: :restrict_with_exception
 
   validates :date, presence: true
@@ -24,6 +26,8 @@ class Live < ApplicationRecord
   end
 
   def publish!
+    raise AlreadyPublishedError, "Live id #{id} has already been published" if published?
+
     update!(published: true, published_at: Time.zone.now)
     songs.includes(:audio_attachment, :playings).import
   end

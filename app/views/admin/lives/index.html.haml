@@ -47,3 +47,5 @@
                     = link_to icon('fas', 'edit'), edit_admin_live_path(live), class: 'btn btn-info'
                     - if live.songs_count.zero?
                       = link_to icon('fas', 'trash', '削除する'), admin_live_path(live), method: :delete, class: 'btn btn-warning', data: { confirm: "本当に #{live.title} を削除しますか" }
+                    - elsif !live.published?
+                      = link_to icon('fas', 'unlock', '公開する'), publish_admin_live_path(live), method: :put, class: 'btn btn-danger', data: { confirm: "本当に #{live.title} を公開しますか" }
