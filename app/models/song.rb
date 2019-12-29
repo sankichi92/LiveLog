@@ -28,6 +28,7 @@ class Song < ApplicationRecord
   validates :youtube_id, format: { with: VALID_YOUTUBE_REGEX }, allow_blank: true
 
   before_save :extract_youtube_id
+  before_save :assign_default_order
 
   scope :played_order, -> { order(:time, :order) }
   scope :newest_live_order, -> { joins(:live).order('lives.date desc', :time, :order) }
@@ -75,5 +76,9 @@ class Song < ApplicationRecord
 
   def extract_youtube_id
     self.youtube_id = youtube_id.match(VALID_YOUTUBE_REGEX)[:id] if youtube_id.present?
+  end
+
+  def assign_default_order
+    self.order = live.songs.count + 1 if order.blank?
   end
 end
