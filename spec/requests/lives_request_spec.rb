@@ -74,7 +74,7 @@ RSpec.describe 'lives request:', type: :request do
 
       it 'creates a live and redirects to /live/:id' do
         expect { post lives_path, params: { live: live_attrs } }.to change(Live, :count).by(1)
-        expect(response).to redirect_to(Live.last)
+        expect(response).to redirect_to live_entries_path(Live.last)
       end
     end
 
