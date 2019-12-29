@@ -13,6 +13,11 @@ class LivesController < ApplicationController
 
   def album(id)
     @live = Live.find(id)
-    redirect_to @live.album_url.presence || @live
+
+    if @live.album_url.present?
+      redirect_to @live.album_url
+    else
+      raise ActionController::RoutingError, "Live id #{id} does not have album_url"
+    end
   end
 end

@@ -35,24 +35,26 @@ RSpec.describe 'lives request:', type: :request do
     end
   end
 
-  describe 'GET /lives/:id/album by logged-in user' do
-    before { log_in_as(create(:user)) }
+  describe 'GET /lives/:id/album' do
+    before do
+      log_in_as create(:user)
+    end
 
     context 'when the album_url is present' do
       let(:live) { create(:live, album_url: 'https://example.com/album') }
 
       it 'redirects to album_url' do
         get album_live_path(live)
-        expect(response).to redirect_to(live.album_url)
+
+        expect(response).to redirect_to live.album_url
       end
     end
 
     context 'when the album_url is blank' do
       let(:live) { create(:live, album_url: '') }
 
-      it 'redirects to album_url' do
-        get album_live_path(live)
-        expect(response).to redirect_to(live)
+      it 'raises ActionController::RoutingError' do
+        expect { get album_live_path(live) }.to raise_error(ActionController::RoutingError)
       end
     end
   end
