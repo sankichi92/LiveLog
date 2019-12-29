@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Profile requests:', type: :request do
+RSpec.describe 'profiles request:', type: :request do
   describe 'GET /settings/profile' do
     let(:user) { create(:user) }
 

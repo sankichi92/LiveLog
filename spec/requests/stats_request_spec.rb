@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Stats requests', type: :request do
+RSpec.describe 'stats request:', type: :request do
   before { create_list(:live, 5, :with_songs) }
 
   describe 'GET /stats/:year' do

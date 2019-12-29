@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Static pages requests', type: :request do
+RSpec.describe 'static_pages request:', type: :request do
   describe 'GET /' do
     before do
       create(:song)

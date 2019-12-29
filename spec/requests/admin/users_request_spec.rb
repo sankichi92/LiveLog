@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'admin/users requests:', type: :request do
+RSpec.describe 'admin/users request:', type: :request do
   let(:admin) { create(:admin) }
 
   before do

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Entry requests', type: :request do
+RSpec.describe 'entries request:', type: :request do
   include Auth0UserHelper
 
   let(:user) { create(:user) }
