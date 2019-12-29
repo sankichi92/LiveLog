@@ -14,7 +14,9 @@
 
     %section.card
       .card-header.border-bottom-0
-        = render 'admin/members/nav'
+        %nav.nav.nav-pills
+          - Member.joined_years.each do |year|
+            = link_to year, admin_members_path(year: year), class: "nav-item nav-link#{year == @year ? ' active' : ''}"
       .card-body.p-0
         .table-responsive
           %table.table-admin.table.table-striped.text-nowrap.mb-0
@@ -45,6 +47,3 @@
                         = link_to icon('fas', 'user-slash', 'ログイン情報を削除する'), admin_member_user_path(member), method: :delete, class: 'btn btn-warning', data: { confirm: "本当に #{member.joined_year_and_name} のログイン情報を削除しますか" }
                         - if member.user.activated?
                           = link_to icon('fas', 'users-cog', '管理者にする'), admin_member_admin_path(member), method: :post, class: 'btn btn-danger', data: { confirm: "本当に #{member.joined_year_and_name} を管理者にしますか" }
-
-      .card-footer.border-top
-        = render 'admin/members/nav'
