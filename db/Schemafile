@@ -64,14 +64,14 @@ end
 
 create_table :songs, force: :cascade do |t|
   t.bigint :live_id, null: false
-  t.integer :order
-  t.time :time
+  t.integer :order, limit: 2
   t.string :name, null: false
   t.string :artist
-  t.boolean :original, default: false, null: false
-  t.integer :status, default: 1
+  t.boolean :original, null: false, default: false
+  t.integer :status, null: false, default: 1, limit: 2
   t.string :youtube_id
   t.text :comment
+  t.time :time
 
   t.timestamps
 

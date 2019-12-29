@@ -1,24 +1,26 @@
 class Song < ApplicationRecord
-  VALID_YOUTUBE_REGEX =
-    %r(\A
-       (?:
-        (?<id>\S{11})\z
-        |(?:https?://)?
-         (?:www\.youtube\.com/watch\?(?:\S*&)*v=
-          |youtu\.be/)
-         (?<id>\S{11})
-       )
-      )x.freeze
+  VALID_YOUTUBE_REGEX = %r{
+    \A(?:
+      (?<id>\S{11})\z
+      |
+      (?:https?://)?
+      (?:
+        www\.youtube\.com/watch\?(?:\S*&)*v=
+        |
+        youtu\.be/
+      )
+      (?<id>\S{11})
+    )
+  }x.freeze
 
   include SongSearchable
 
   belongs_to :live, counter_cache: true
   has_many :playings, dependent: :destroy, inverse_of: :song
   has_many :members, through: :playings
+  has_one_attached :audio
 
   accepts_nested_attributes_for :playings, allow_destroy: true
-
-  has_one_attached :audio
 
   enum status: { secret: 0, closed: 1, open: 2 }
 
@@ -46,12 +48,19 @@ class Song < ApplicationRecord
   end
 
   def title
-    artist.blank? ? name : "#{name} / #{artist}"
+    if artist.present?
+      "#{name} / #{artist}"
+    else
+      name
+    end
   end
 
   def datetime
-    return live.date if time.blank?
-    live.date + time.hour.hours + time.min.minutes
+    if time.nil?
+      live.date
+    else
+      live.date + time.hour.hours + time.min.minutes
+    end
   end
 
   def time_str
