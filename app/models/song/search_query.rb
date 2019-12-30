@@ -51,7 +51,7 @@ class Song
         q.sort(
           _score: { order: :desc },
           datetime: { order: :desc },
-          order: { order: :asc },
+          position: { order: :asc },
         )
         q.size ids.size if ids.present?
       end.to_hash

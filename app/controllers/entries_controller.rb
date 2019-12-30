@@ -9,7 +9,7 @@ class EntriesController < ApplicationController
 
   def index
     authorize Entry
-    @songs = policy_scope(@live.songs).with_attached_audio.includes(playings: :member).order(:time, :order, created_at: :desc)
+    @songs = policy_scope(@live.songs).with_attached_audio.includes(playings: :member).order(:time, :position, created_at: :desc)
   end
 
   def new

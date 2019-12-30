@@ -1,6 +1,6 @@
 :ruby
   provide(:title, @song.title)
-  provide(:description, strip_tags(@song.comment).presence || "#{@song.live.title} #{@song.time_order} #{@song.playings.sort_by(&:inst_order).map { |p| "#{p.instrument_and_name}" }.join(' ')}")
+  provide(:description, strip_tags(@song.comment).presence || "#{@song.live.title} #{@song.time_and_position} #{@song.playings.sort_by(&:inst_order).map { |p| "#{p.instrument_and_name}" }.join(' ')}")
   provide(:og_type, 'music.song')
   provide(:og_image, @song.youtube_thumbnail('maxresdefault')) if policy(@song).play?
 
@@ -19,7 +19,7 @@
       %header
         .card-subtitle.text-muted
           = link_to @song.live.title, @song.live
-          = @song.time_order
+          = @song.time_and_position
         %h1.card-title
           = @song.title
           %small= '(オリジナル曲)' if @song.original?
