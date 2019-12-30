@@ -40,7 +40,7 @@ RSpec.describe 'Song', type: :system do
       expect(page).to have_content(song.name)
       expect(page).to have_content(song.artist)
       expect(page).to have_content(song.live.name)
-      expect(page).to have_content(song.order)
+      expect(page).to have_content(song.position)
       song.playings.each do |playing|
         expect(page).to have_content(playing.member.name)
       end
@@ -63,7 +63,7 @@ RSpec.describe 'Song', type: :system do
 
       click_button 'add-member'
 
-      fill_in 'song_order', with: '1'
+      fill_in 'song_position', with: '1'
       fill_in 'song_name', with: 'テストソング'
       fill_in 'song_artist', with: 'テストアーティスト'
 

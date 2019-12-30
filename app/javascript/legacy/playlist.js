@@ -43,9 +43,9 @@ $(document).on('turbolinks:load', function () {
     var playlist = new Playlist(player.get(0), player.data('songs'), function (song) {
         var link_to_song = $('<a></a>', {href: '/songs/' + song.id, text: song.title});
         if (label.data('show-live') === undefined) {
-            label.text(song.time_order + ' ').append(link_to_song)
+            label.text(song.time_and_position + ' ').append(link_to_song)
         } else {
-            label.html(song.live.title + ' ' + song.time_order + '<br>').append(link_to_song)
+            label.html(song.live.title + ' ' + song.time_and_position + '<br>').append(link_to_song)
         }
     });
 

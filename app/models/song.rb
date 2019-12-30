@@ -15,8 +15,6 @@ class Song < ApplicationRecord
 
   include SongSearchable
 
-  alias_attribute :order, :position
-
   belongs_to :live, counter_cache: true
   has_many :playings, dependent: :destroy, inverse_of: :song
   has_many :members, through: :playings
@@ -30,10 +28,10 @@ class Song < ApplicationRecord
   validates :youtube_id, format: { with: VALID_YOUTUBE_REGEX }, allow_blank: true
 
   before_save :extract_youtube_id
-  before_save :assign_default_order
+  before_save :assign_default_position
 
-  scope :played_order, -> { order(:time, :order) }
-  scope :newest_live_order, -> { joins(:live).order('lives.date desc', :time, :order) }
+  scope :played_order, -> { order(:time, :position) }
+  scope :newest_live_order, -> { joins(:live).order('lives.date desc', :time, :position) }
   scope :published, -> { joins(:live).merge(Live.published) }
 
   def self.pickup(date: Time.zone.today)
@@ -80,7 +78,7 @@ class Song < ApplicationRecord
     self.youtube_id = youtube_id.match(VALID_YOUTUBE_REGEX)[:id] if youtube_id.present?
   end
 
-  def assign_default_order
-    self.order = live.songs.count + 1 if order.blank?
+  def assign_default_position
+    self.position = live.songs.count + 1 if position.blank?
   end
 end

@@ -1,6 +1,6 @@
 module SongDecorator
-  def time_order
-    time.present? ? "#{time_str} #{order}" : order
+  def time_and_position
+    time.present? ? "#{time_str} #{position}" : position
   end
 
   def playable?
@@ -56,7 +56,7 @@ module SongDecorator
   def twitter_share_button(html_options)
     uri = URI.parse('https://twitter.com/intent/tweet')
     uri.query = {
-      text: "#{live.title} #{time_order} #{title}",
+      text: "#{live.title} #{time_and_position} #{title}",
       url: song_url(self),
       hashtags: '京大アンプラグド',
       via: 'ku_livelog',

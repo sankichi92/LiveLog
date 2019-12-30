@@ -32,7 +32,7 @@ module SongSearchable
     mapping dynamic: false do
       indexes :id, type: 'integer'
       indexes :datetime, type: 'date'
-      indexes :order, type: 'short'
+      indexes :position, type: 'short'
       indexes :name, type: 'text' do
         indexes :raw, type: 'keyword'
       end
@@ -56,7 +56,7 @@ module SongSearchable
     {
       id: id,
       datetime: datetime,
-      order: order,
+      position: position,
       name: name,
       artist: artist,
       status: status,
