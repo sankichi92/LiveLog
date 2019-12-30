@@ -1,7 +1,7 @@
 - if current_user.admin?
   .form-group
-    = f.label :youtube_id
-    = f.url_field :youtube_id, value: f.object.youtube_url, class: 'form-control', placeholder: 'https://www.youtube.com/watch?v=sSbqm7ZK_9s'
+    = f.label :youtube_url
+    = f.url_field :youtube_url, value: f.object.youtube_url, class: 'form-control', placeholder: 'https://www.youtube.com/watch?v=sSbqm7ZK_9s', pattern: 'https?://(www\.youtube\.com|youtu\.be)/.*'
 
 .form-group
   = f.label :audio

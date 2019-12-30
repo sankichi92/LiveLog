@@ -89,8 +89,8 @@ RSpec.describe 'Song', type: :system do
 
       expect(page).to have_title('曲の編集')
 
-      fill_in 'song_youtube_id', with: 'https://www.youtube.com/watch?v=new_youtube'
-      attach_file 'song_audio', Rails.root.join('spec/fixtures/files/audio.mp3')
+      fill_in 'YouTube URL', with: 'https://www.youtube.com/watch?v=new_youtube'
+      attach_file '音源', Rails.root.join('spec/fixtures/files/audio.mp3')
       click_button '更新する'
 
       expect(page).to have_css('.alert-info')

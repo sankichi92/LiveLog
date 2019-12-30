@@ -1,18 +1,4 @@
 class Song < ApplicationRecord
-  VALID_YOUTUBE_REGEX = %r{
-    \A(?:
-      (?<id>\S{11})\z
-      |
-      (?:https?://)?
-      (?:
-        www\.youtube\.com/watch\?(?:\S*&)*v=
-        |
-        youtu\.be/
-      )
-      (?<id>\S{11})
-    )
-  }x.freeze
-
   include SongSearchable
 
   belongs_to :live, counter_cache: true
@@ -27,9 +13,6 @@ class Song < ApplicationRecord
   enum status: { secret: 0, closed: 1, open: 2 }
 
   validates :name, presence: true
-  validates :youtube_id, format: { with: VALID_YOUTUBE_REGEX }, allow_blank: true
-
-  before_save :extract_youtube_id
 
   scope :played_order, -> { order(:time, :position) }
   scope :newest_live_order, -> { joins(:live).order('lives.date desc', :time, :position) }
@@ -69,13 +52,27 @@ class Song < ApplicationRecord
     time&.strftime('%R')
   end
 
-  def player?(member)
-    playings.map(&:member_id).include?(member&.id)
+  def youtube_url=(url_str)
+    uri = URI.parse(url_str)
+    self.youtube_id = case uri.host
+                      when 'www.youtube.com'
+                        Rack::Utils.parse_query(uri.query)['v']
+                      when 'youtu.be'
+                        uri.path[1..]
+                      else
+                        nil
+                      end
   end
 
-  private
+  def youtube_url
+    if youtube_id.present?
+      "https://www.youtube.com/watch?v=#{youtube_id}"
+    else
+      ''
+    end
+  end
 
-  def extract_youtube_id
-    self.youtube_id = youtube_id.match(VALID_YOUTUBE_REGEX)[:id] if youtube_id.present?
+  def player?(member)
+    playings.map(&:member_id).include?(member&.id)
   end
 end

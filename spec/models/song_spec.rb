@@ -1,43 +1,55 @@
 require 'rails_helper'
 
 RSpec.describe Song, type: :model do
-  describe '#valid?' do
-    subject(:song) { build(:song) }
+  describe '#youtube_url=' do
+    let(:song) { build(:song) }
+    let(:youtube_id) { '-gKPuxV3MkY' }
 
-    context 'when youtube_id is not valid format' do
-      let(:invalid_urls) do
-        %w[
-          https://livelog.ku-unplugged.net/songs/1
-          https://www.youtube.com/
-          https://www.youtube.com/watch?v=aaa
+    context 'with www.youtube.com url' do
+      let(:urls) do
+        %W[
+          https://www.youtube.com/watch?v=#{youtube_id}
+          https://www.youtube.com/watch?list=PLJNbijG2M7OzYyflxDhucn2aaro613QPI&v=#{youtube_id}
         ]
       end
 
-      it 'returns false' do
-        invalid_urls.each do |url|
-          song.youtube_id = url
-          expect(song).not_to be_valid
+      it 'extracts and assigns youtube_id' do
+        urls.each do |url|
+          song.youtube_url = url
+          expect(song.youtube_id).to eq youtube_id
         end
       end
     end
-  end
 
-  describe 'before_save callback: extract_youtube_id' do
-    let(:urls) do
-      %w[
-        https://www.youtube.com/watch?v=-gKPuxV3MkY
-        https://youtu.be/-gKPuxV3MkY
-        https://www.youtube.com/watch?list=PLJNbijG2M7OzYyflxDhucn2aaro613QPI&v=-gKPuxV3MkY
-        https://youtu.be/-gKPuxV3MkY?list=PLJNbijG2M7OzYyflxDhucn2aaro613QPI
-      ]
+    context 'with youtu.be url' do
+      let(:urls) do
+        %W[
+          https://youtu.be/#{youtube_id}
+          https://youtu.be/#{youtube_id}?list=PLJNbijG2M7OzYyflxDhucn2aaro613QPI
+        ]
+      end
+
+      it 'extracts and assigns youtube_id' do
+        urls.each do |url|
+          song.youtube_url = url
+          expect(song.youtube_id).to eq youtube_id
+        end
+      end
     end
 
-    it 'extracts the video id from youtube url' do
-      song = create(:song)
+    context 'with invalid url' do
+      let(:urls) do
+        %w[
+          https://livelog.ku-unplugged.net/songs/1
+          -gKPuxV3MkY
+        ]
+      end
 
-      urls.each do |url|
-        song.update!(youtube_id: url)
-        expect(song.youtube_id).to eq '-gKPuxV3MkY'
+      it 'does not assign youtube_id' do
+        urls.each do |url|
+          song.youtube_url = url
+          expect(song.youtube_id).to be_nil
+        end
       end
     end
   end

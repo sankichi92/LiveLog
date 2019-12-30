@@ -34,17 +34,18 @@ ja:
       user:
         email: メールアドレス
       song:
+        live_id: ライブ
+        time: 時間
+        position: 曲順
         name: 曲名
         artist: アーティスト名
-        youtube_id: YouTube URL
-        live_id: ライブ
-        position: 曲順
-        time: 時間
-        status: 公開設定
-        comment: コメント
         original: オリジナル
-        audio: 音源
+        status: 公開設定
+        youtube_id: YouTube ID
+        comment: コメント
         playings: 演者
+        audio: 音源
+        youtube_url: YouTube URL
       live:
         name: ライブ名
         date: 開催日

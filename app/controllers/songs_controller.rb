@@ -1,5 +1,5 @@
 class SongsController < ApplicationController
-  permits :live_id, :time, :position, :name, :artist, :original, :youtube_id, :audio, :status, :comment, playings_attributes: %i[id member_id inst _destroy]
+  permits :live_id, :time, :position, :name, :artist, :original, :youtube_url, :audio, :status, :comment, playings_attributes: %i[id member_id inst _destroy]
 
   after_action :verify_authorized, except: %i[index search show]
 

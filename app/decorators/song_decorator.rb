@@ -11,10 +11,6 @@ module SongDecorator
     url_for audio
   end
 
-  def youtube_url
-    "https://www.youtube.com/watch?v=#{youtube_id}" if youtube_id.present?
-  end
-
   def youtube_thumbnail(quality = 'mqdefault')
     "https://i.ytimg.com/vi/#{youtube_id}/#{quality}.jpg" if youtube_id.present?
   end
