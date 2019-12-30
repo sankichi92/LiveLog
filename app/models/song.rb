@@ -22,13 +22,14 @@ class Song < ApplicationRecord
 
   accepts_nested_attributes_for :playings, allow_destroy: true
 
+  acts_as_list scope: :live
+
   enum status: { secret: 0, closed: 1, open: 2 }
 
   validates :name, presence: true
   validates :youtube_id, format: { with: VALID_YOUTUBE_REGEX }, allow_blank: true
 
   before_save :extract_youtube_id
-  before_save :assign_default_position
 
   scope :played_order, -> { order(:time, :position) }
   scope :newest_live_order, -> { joins(:live).order('lives.date desc', :time, :position) }
@@ -76,9 +77,5 @@ class Song < ApplicationRecord
 
   def extract_youtube_id
     self.youtube_id = youtube_id.match(VALID_YOUTUBE_REGEX)[:id] if youtube_id.present?
-  end
-
-  def assign_default_position
-    self.position = live.songs.count + 1 if position.blank?
   end
 end
