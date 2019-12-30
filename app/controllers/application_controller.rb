@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
       redirect_back fallback_location: root_url, alert: 'アクセス権がありません'
     else
       store_location
-      redirect_to login_url, alert: 'ログインしてください'
+      redirect_to root_path, alert: 'ログインしてください'
     end
   end
 end
