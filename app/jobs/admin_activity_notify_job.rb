@@ -1,6 +1,6 @@
 class AdminActivityNotifyJob < ApplicationJob
   CHANNEL = if Rails.env.production?
-              '#admin-activities'.freeze
+              '#notif-admin'.freeze
             else
               '#sandbox'.freeze
             end
