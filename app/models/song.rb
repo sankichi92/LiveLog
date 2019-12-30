@@ -15,6 +15,8 @@ class Song < ApplicationRecord
 
   include SongSearchable
 
+  alias_attribute :order, :position
+
   belongs_to :live, counter_cache: true
   has_many :playings, dependent: :destroy, inverse_of: :song
   has_many :members, through: :playings

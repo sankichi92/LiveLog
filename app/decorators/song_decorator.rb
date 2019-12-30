@@ -38,11 +38,11 @@ module SongDecorator
   end
 
   def previous
-    live.songs.played_order.where('songs.time < ? or songs.order < ?', time, order).last
+    live.songs.played_order.where('songs.time < ? or songs.position < ?', time, position).last
   end
 
   def next
-    live.songs.played_order.where('songs.time > ? or songs.order > ?', time, order).first
+    live.songs.played_order.where('songs.time > ? or songs.position > ?', time, position).first
   end
 
   def edit_link(html_options)
