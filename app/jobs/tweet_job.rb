@@ -4,6 +4,6 @@ class TweetJob < ApplicationJob
   queue_as :default
 
   def perform(tweet)
-    TwitterClient.update(tweet)
+    TwitterClient.instance.update(tweet)
   end
 end
