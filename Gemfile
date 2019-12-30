@@ -21,6 +21,7 @@ gem 'bootsnap', require: false
 
 gem 'action_args'
 gem 'active_decorator'
+gem 'acts_as_list'
 gem 'font-awesome-sass'
 gem 'haml-rails'
 gem 'kaminari'
