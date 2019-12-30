@@ -7,6 +7,11 @@ module Admin
       @lives = Live.nendo(@year).newest_order
     end
 
+    def show(id)
+      @live = Live.find(id)
+      @songs = @live.songs.with_attached_audio.includes(playings: :member).played_order
+    end
+
     def new
       @live = Live.new(date: Time.zone.today)
     end
