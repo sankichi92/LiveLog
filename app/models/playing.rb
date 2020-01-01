@@ -4,7 +4,8 @@ class Playing < ApplicationRecord
   belongs_to :member, counter_cache: true
   belongs_to :song, touch: true
 
-  validates :member_id, uniqueness: { scope: :song_id }
+  # FIXME: https://github.com/sankichi92/LiveLog/issues/118
+  # validates :member_id, uniqueness: { scope: :song_id }
 
   before_save :format_inst
 

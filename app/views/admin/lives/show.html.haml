@@ -12,6 +12,8 @@
 
 %section.content
   .container-fluid
+    %p= link_to icon('fas', 'plus', '曲を追加する'), new_admin_live_song_path(@live), class: 'btn btn-outline-primary'
+
     %section.card
       .card-body.p-0
         .table-responsive

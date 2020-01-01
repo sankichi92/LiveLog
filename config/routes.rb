@@ -44,6 +44,8 @@ Rails.application.routes.draw do
       member do
         put :publish
       end
+
+      resources :songs, only: %i[new create]
     end
 
     resources :members, only: %i[index new create destroy] do

@@ -7,28 +7,6 @@ RSpec.describe Playing, type: :model do
   let(:song) { create(:song) }
   let(:member) { create(:member) }
 
-  it { is_expected.to be_valid }
-
-  describe 'validation' do
-    describe 'when member is nil' do
-      before { playing.member = nil }
-
-      it { is_expected.not_to be_valid }
-    end
-
-    describe 'when song is nil' do
-      before { playing.song = nil }
-
-      it { is_expected.not_to be_valid }
-    end
-
-    describe 'when the combination of user_id and song_id is already taken' do
-      before { create(:playing, song: song, member: member) }
-
-      it { is_expected.not_to be_valid }
-    end
-  end
-
   describe '#save' do
     describe 'when inst includes fill-width alphabets' do
       before { playing.inst = 'Ｇｔ＆Ｖｏ' }
