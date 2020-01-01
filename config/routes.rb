@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   get '/auth/failure', to: 'sessions#failure'
   delete '/logout', to: 'sessions#destroy'
 
-  resources :songs do
+  resources :songs, only: %i[index show edit update] do
     collection do
       get 'search'
     end

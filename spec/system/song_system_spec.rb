@@ -47,56 +47,9 @@ RSpec.describe 'Song', type: :system do
     end
   end
 
-  describe 'add' do
-    let(:live) { create(:live) }
-    let!(:members) { create_list(:member, 5) }
-
-    before { log_in_as create(:admin) }
-
-    it 'enables admin users to create new songs', js: true do
-      visit live_path(live)
-
-      click_link '曲を追加する'
-
-      expect(page).to have_title('Add Song')
-      expect(page).to have_content('Add Song')
-
-      click_button 'add-member'
-
-      fill_in 'song_position', with: '1'
-      fill_in 'song_name', with: 'テストソング'
-      fill_in 'song_artist', with: 'テストアーティスト'
-
-      members.take(2).each_with_index do |member, i|
-        all('.inst-field')[i].set('Gt')
-        all('.member-select')[i].find(:option, member.joined_year_and_name).select_option
-      end
-
-      expect { click_button '登録する' }.to change(Song, :count).by(1)
-      expect(page).to have_css('.alert-info')
-    end
-  end
-
   describe 'edit' do
     let(:user) { create(:user) }
     let(:song) { create(:song, members: [user.member], audio: nil) }
-
-    it 'enables admin users to update songs' do
-      log_in_as create(:admin)
-
-      visit song_path(song)
-      click_link '編集する'
-
-      expect(page).to have_title('曲の編集')
-
-      fill_in 'YouTube URL', with: 'https://www.youtube.com/watch?v=new_youtube'
-      attach_file '音源', Rails.root.join('spec/fixtures/files/audio.mp3')
-      click_button '更新する'
-
-      expect(page).to have_css('.alert-info')
-      expect(song.reload.youtube_id).to eq 'new_youtube'
-      expect(song.audio.attached?).to be true
-    end
 
     it 'enables logged-in users to update songs they played' do
       log_in_as user
@@ -113,19 +66,6 @@ RSpec.describe 'Song', type: :system do
       expect(page).to have_css('.alert-info')
       expect(song.reload.status).to eq 'open'
       expect(song.comment).to eq 'お気に入りの曲です'
-    end
-  end
-
-  describe 'delete' do
-    let(:song) { create(:song) }
-
-    before { log_in_as create(:admin) }
-
-    it 'enables admin users to delete songs' do
-      visit song_path(song)
-      click_link '編集する'
-
-      expect { click_link('削除する') }.to change(Song, :count).by(-1)
     end
   end
 end

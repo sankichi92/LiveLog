@@ -13,15 +13,7 @@ class SongPolicy < ApplicationPolicy
     record.open? || record.closed? && logged_in? || record.player?(user&.member)
   end
 
-  def create?
-    user&.admin?
-  end
-
   def update?
     user&.admin? || record.player?(user&.member)
-  end
-
-  def destroy?
-    user&.admin?
   end
 end

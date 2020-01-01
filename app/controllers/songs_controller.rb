@@ -1,5 +1,5 @@
 class SongsController < ApplicationController
-  permits :live_id, :time, :position, :name, :artist, :original, :youtube_url, :audio, :status, :comment, playings_attributes: %i[id member_id inst _destroy]
+  permits :time, :position, :name, :artist, :original, :audio, :status, :comment, playings_attributes: %i[id member_id inst _destroy]
 
   after_action :verify_authorized, except: %i[index search show]
 
@@ -27,26 +27,6 @@ class SongsController < ApplicationController
     end
   end
 
-  def new(live_id = nil)
-    live = Live.find_by(id: live_id) || Live.last
-    @song = live.songs.build
-    @song.playings.build
-    authorize @song
-  end
-
-  def create(song)
-    @song = Song.new(song)
-    authorize @song
-    if @song.save
-      redirect_to @song.live, notice: "#{@song.title} を追加しました"
-    else
-      render :new, status: :unprocessable_entity
-    end
-  rescue ActiveRecord::RecordNotUnique
-    @song.errors.add(:playings, :duplicated)
-    render :new, status: :unprocessable_entity
-  end
-
   def edit(id)
     @song = Song.includes(playings: :member).find(id)
     authorize @song
@@ -56,32 +36,13 @@ class SongsController < ApplicationController
     @song = Song.find(id)
     authorize @song
     if @song.update(song)
-      respond_to do |format|
-        format.html do
-          redirect_to @song, notice: "#{@song.title} を更新しました"
-        end
-        format.js {}
-      end
+      redirect_to @song, notice: "#{@song.title} を更新しました"
     else
-      respond_to do |format|
-        format.html { render :edit, status: :unprocessable_entity }
-        format.js { render status: :unprocessable_entity }
-      end
+      render :edit, status: :unprocessable_entity
     end
   rescue ActiveRecord::RecordNotUnique
     @song.errors.add(:playings, :duplicated)
     render :edit, status: :unprocessable_entity
-  end
-
-  def destroy(id)
-    @song = Song.find(id)
-    authorize @song
-    @song.destroy
-  rescue ActiveRecord::DeleteRestrictionError => e
-    flash.now.alert = e.message
-    render :show
-  else
-    redirect_to @song.live, notice: "#{@song.title} を削除しました"
   end
 
   private
