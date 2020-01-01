@@ -32,6 +32,14 @@ class Song < ApplicationRecord
     where.not(artist: '').group(:artist).order(count_all: :desc).having('count(*) >= 2').count.keys
   end
 
+  # FIXME: https://github.com/sankichi92/LiveLog/issues/118
+  def save_with_playings_attributes
+    save
+  rescue ActiveRecord::RecordNotUnique
+    errors.add(:playings, :duplicated)
+    false
+  end
+
   def title
     if artist.present?
       "#{name} / #{artist}"

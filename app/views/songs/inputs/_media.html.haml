@@ -1,9 +1,0 @@
-- if current_user.admin?
-  .form-group
-    = f.label :youtube_url
-    = f.url_field :youtube_url, value: f.object.youtube_url, class: 'form-control', placeholder: 'https://www.youtube.com/watch?v=sSbqm7ZK_9s', pattern: 'https?://(www\.youtube\.com|youtu\.be)/.*'
-
-.form-group
-  = f.label :audio
-  .filename= icon('fas', 'music') + ' ' + f.object.audio.filename if f.object.audio.attached?
-  = f.file_field :audio, direct_upload: true, accept: 'audio/mpeg', class: 'form-control-file'

@@ -1,7 +1,7 @@
 = form_for @song do |f|
   = render 'shared/error_messages', errors: f.object.errors
 
-  = render 'songs/inputs/live_time_position', f: f
+  = render 'songs/inputs/time_position', f: f
 
   = render 'songs/inputs/name', f: f
 
@@ -9,7 +9,10 @@
 
   = render 'songs/inputs/playings', f: f
 
-  = render 'songs/inputs/media', f: f
+  .form-group
+    = f.label :audio
+    .filename= icon('fas', 'music') + ' ' + f.object.audio.filename if f.object.audio.attached?
+    = f.file_field :audio, direct_upload: true, accept: 'audio/mpeg', class: 'form-control-file'
 
   .form-group
     = f.label :status

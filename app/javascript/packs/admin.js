@@ -1,4 +1,5 @@
 import Rails from '@rails/ujs'
+import * as ActiveStorage from '@rails/activestorage'
 import Turbolinks from 'turbolinks'
 
 import * as Sentry from '@sentry/browser'
@@ -6,7 +7,10 @@ import * as Sentry from '@sentry/browser'
 import 'bootstrap/dist/js/bootstrap.bundle'
 import 'admin-lte/dist/js/adminlte'
 
+import '../controllers'
+
 Rails.start()
+ActiveStorage.start()
 Turbolinks.start()
 
 Sentry.init({

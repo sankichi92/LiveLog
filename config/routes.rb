@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   get '/auth/failure', to: 'sessions#failure'
   delete '/logout', to: 'sessions#destroy'
 
-  resources :songs do
+  resources :songs, only: %i[index show edit update] do
     collection do
       get 'search'
     end
@@ -44,6 +44,8 @@ Rails.application.routes.draw do
       member do
         put :publish
       end
+
+      resources :songs, only: %i[new create edit update destroy], shallow: true
     end
 
     resources :members, only: %i[index new create destroy] do

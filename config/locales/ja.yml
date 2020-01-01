@@ -17,7 +17,7 @@ ja:
       models:
         song:
           attributes:
-            playing:
+            playings:
               duplicated: が重複しています
         user:
           attributes:
@@ -62,7 +62,8 @@ ja:
         playings_count: 出演数
         avatar: プロフィール画像
       playing:
-        user: メンバー
+        member_id: メンバー
+        member: メンバー
         inst: 楽器
   activemodel:
     attributes:

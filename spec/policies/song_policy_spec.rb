@@ -43,20 +43,6 @@ RSpec.describe SongPolicy do
     end
   end
 
-  permissions :create?, :destroy? do
-    it 'denies access if user is not logged in' do
-      expect(SongPolicy).not_to permit(nil, song)
-    end
-
-    it 'denies access if user is logged in but not admin' do
-      expect(SongPolicy).not_to permit(create(:user), song)
-    end
-
-    it 'grants access if user is an admin' do
-      expect(SongPolicy).to permit(create(:admin), song)
-    end
-  end
-
   permissions :update? do
     it 'denies access if user is not logged in' do
       expect(SongPolicy).not_to permit(nil, song)

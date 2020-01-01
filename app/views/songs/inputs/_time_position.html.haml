@@ -1,8 +1,3 @@
-- if current_user.admin?
-  .form-group
-    = f.label :live_id
-    = f.collection_select :live_id, Live.newest_order, :id, :title, {}, class: 'form-control'
-
 .form-row
   - if f.object.live.nf?
     .form-group.col

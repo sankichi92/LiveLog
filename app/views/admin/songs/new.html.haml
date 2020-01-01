@@ -1,0 +1,19 @@
+%header.content-header
+  .container-fluid
+    .row.mb-3
+      .col-sm-6
+        %h1
+          = @live.title
+          曲の追加
+
+      .col-sm-6
+        %ol.breadcrumb.float-sm-right
+          %li.breadcrumb-item= link_to 'Home', admin_root_path
+          %li.breadcrumb-item= link_to Live.model_name.human, admin_lives_path
+          %li.breadcrumb-item= link_to @live.title, admin_live_path(@live)
+          %li.breadcrumb-item.active 曲の追加
+
+%section.content
+  .container-fluid
+    %section.card
+      = render 'admin/songs/form', model: @song, url: admin_live_songs_path

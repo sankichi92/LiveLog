@@ -10,6 +10,7 @@
     "bootstrap": "^4.4.1",
     "jquery": "^3.4.1",
     "select2": "^4.0.12",
+    "stimulus": "^1.1.1",
     "turbolinks": "^5.2.0"
   },
   "devDependencies": {

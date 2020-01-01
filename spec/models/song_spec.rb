@@ -1,6 +1,48 @@
 require 'rails_helper'
 
 RSpec.describe Song, type: :model do
+  describe '#save_with_playings_attributes' do
+    let(:song) { build(:song, playings_attributes: playings_attributes) }
+    let(:playings_attributes) do
+      {
+        '0' => {
+          inst: 'Vo',
+          member_id: member1_id,
+        },
+        '1' => {
+          inst: 'Gt',
+          member_id: member2_id,
+        },
+      }
+    end
+
+    context 'with NOT duplicated playings_attributes' do
+      let(:member1_id) { create(:member).id }
+      let(:member2_id) { create(:member).id }
+
+      it 'saves and returns true' do
+        result = song.save_with_playings_attributes
+
+        expect(result).to be true
+        expect(song).to be_persisted
+        expect(song.errors).to be_empty
+      end
+    end
+
+    context 'with duplicated playings_attributes' do
+      let(:member1_id) { create(:member).id }
+      let(:member2_id) { member1_id }
+
+      it 'returns false' do
+        result = song.save_with_playings_attributes
+
+        expect(result).to be false
+        expect(song).to be_new_record
+        expect(song.errors.added?(:playings, :duplicated)).to be true
+      end
+    end
+  end
+
   describe '#youtube_url=' do
     let(:song) { build(:song) }
     let(:youtube_id) { '-gKPuxV3MkY' }
