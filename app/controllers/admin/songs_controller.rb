@@ -1,6 +1,6 @@
 module Admin
   class SongsController < AdminController
-    permits :time, :position, :name, :artist, :original, :youtube_url, :audio, playings_attributes: %i[member_id inst _destroy]
+    permits :time, :position, :name, :artist, :original, :youtube_url, :audio, playings_attributes: %i[id member_id inst _destroy]
 
     def new(live_id)
       @live = Live.find(live_id)
@@ -17,6 +17,22 @@ module Admin
         redirect_to admin_live_path(@live), notice: "#{@song.title} を追加しました"
       else
         render :new, status: :unprocessable_entity
+      end
+    end
+
+    def edit(id)
+      @song = Song.find(id)
+    end
+
+    def update(id, song)
+      @song = Song.find(id)
+      @song.assign_attributes(song)
+
+      if @song.save_with_playings_attributes
+        AdminActivityNotifyJob.perform_later(current_user, "#{Song.model_name.human} #{@song.id} を更新しました")
+        redirect_to admin_live_path(@song.live), notice: "ID: #{@song.id} を更新しました"
+      else
+        render :edit, status: :unprocessable_entity
       end
     end
 

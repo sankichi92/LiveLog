@@ -45,7 +45,7 @@ Rails.application.routes.draw do
         put :publish
       end
 
-      resources :songs, only: %i[new create destroy], shallow: true
+      resources :songs, only: %i[new create edit update destroy], shallow: true
     end
 
     resources :members, only: %i[index new create destroy] do

@@ -43,4 +43,5 @@
                   %td
                     - if song.live.published?
                       = link_to icon('fas', 'eye'), song_path(song), class: 'btn btn-secondary'
+                    = link_to icon('fas', 'edit'), edit_admin_song_path(song), class: 'btn btn-info'
                     = link_to icon('fas', 'trash'), admin_song_path(song), method: :delete, class: 'btn btn-danger', data: { confirm: "本当に #{song.title} を削除しますか" }
