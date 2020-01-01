@@ -75,4 +75,15 @@ RSpec.describe 'admin/songs request:', type: :request do
       end
     end
   end
+
+  describe 'DELETE /admin/songs/:id' do
+    let(:song) { create(:song) }
+
+    it 'destroys the song and redirects to /admin/lives/:id' do
+      delete admin_song_path(song)
+
+      expect(response).to redirect_to admin_live_path(song.live)
+      expect { song.reload }.to raise_error ActiveRecord::RecordNotFound
+    end
+  end
 end

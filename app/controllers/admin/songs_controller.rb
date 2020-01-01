@@ -19,5 +19,12 @@ module Admin
         render :new, status: :unprocessable_entity
       end
     end
+
+    def destroy(id)
+      song = Song.find(id)
+      song.destroy!
+      AdminActivityNotifyJob.perform_later(current_user, "#{Song.model_name.human} #{song.id} を削除しました")
+      redirect_to admin_live_path(song.live), notice: "ID: #{song.id} を削除しました"
+    end
   end
 end
