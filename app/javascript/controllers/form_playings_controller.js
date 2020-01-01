@@ -19,7 +19,7 @@ export default class extends Controller {
   removePlaying (event) {
     const playingForm = event.target.closest('.playing-form')
     playingForm.querySelector('input[name*="_destroy"]').value = 1
-    playingForm.querySelector('.form-row').remove()
+    playingForm.querySelector('.playing-form-visible-fields').remove()
   }
 
   _initializeSelect2 () {

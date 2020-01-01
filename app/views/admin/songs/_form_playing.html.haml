@@ -1,7 +1,7 @@
 .playing-form
   = form.hidden_field :_destroy
 
-  .form-row.align-items-end
+  .playing-form-visible-fields.form-row.align-items-end
     .form-group.col-3.col-md-2
       = form.label :inst
       = form.text_field :inst, class: 'form-control', placeholder: 'Gt&Vo', list: 'instruments'
@@ -11,4 +11,4 @@
       = form.collection_select :member_id, Member.regular_order, :id, :joined_year_and_name, {}, class: 'form-control member-select'
 
     .form-group.col-3.col-md-2
-      %button.btn.btn-block.btn-light{ type: 'button', data: { action: 'form-playings#removePlaying' } }= icon('fas', 'minus')
+      %button.btn.btn-block.btn-light{ type: 'button', data: { action: 'form-playings#removePlaying' } }= icon('fas', 'minus-circle', '削除')

@@ -43,7 +43,7 @@
       = form.fields_for :playings do |playings_form|
         = render 'admin/songs/form_playing', form: playings_form
 
-      %button.btn.btn-light{ type: 'button', data: { action: 'form-playings#addPlaying' } }= icon('fas', 'plus', 'メンバーを追加する')
+      %button.btn.btn-light{ type: 'button', data: { action: 'form-playings#addPlaying' } }= icon('fas', 'plus-circle', '演者を追加する')
 
     %datalist#instruments
       - Playing.insts_for_suggestion.each do |inst|
