@@ -101,6 +101,10 @@ RSpec.describe 'admin/members request:', type: :request do
   describe 'DELETE /admin/members/:id' do
     let(:member) { create(:member) }
 
+    before do
+      allow(AdminActivityNotifyJob).to receive(:perform_now)
+    end
+
     it 'destroys the member and redirects to /admin/members' do
       delete admin_member_path(member)
 

@@ -20,7 +20,13 @@ module Admin
       @live = Live.new(live)
 
       if @live.save
-        AdminActivityNotifyJob.perform_later(current_user, "#{Live.model_name.human} #{@live.title} を作成しました")
+        AdminActivityNotifyJob.perform_later(
+          user: current_user,
+          operation: '作成しました',
+          object: @live,
+          detail: @live.as_json,
+          url: admin_lives_url(year: @live.date.nendo),
+        )
         redirect_to admin_lives_path(year: @live.date.nendo), notice: "#{@live.title} を作成しました"
       else
         render :new, status: :unprocessable_entity
@@ -35,7 +41,13 @@ module Admin
       @live = Live.find(id)
 
       if @live.update(live)
-        AdminActivityNotifyJob.perform_later(current_user, "#{Live.model_name.human} #{@live.title} を更新しました")
+        AdminActivityNotifyJob.perform_later(
+          user: current_user,
+          operation: '更新しました',
+          object: @live,
+          detail: @live.previous_changes,
+          url: admin_lives_url(year: @live.date.nendo),
+        )
         redirect_to admin_lives_path(year: @live.date.nendo), notice: "#{@live.title} を更新しました"
       else
         render :edit, status: :unprocessable_entity
@@ -45,7 +57,12 @@ module Admin
     def destroy(id)
       live = Live.find(id)
       live.destroy!
-      AdminActivityNotifyJob.perform_later(current_user, "#{Live.model_name.human} #{live.title} を削除しました")
+      AdminActivityNotifyJob.perform_now(
+        user: current_user,
+        operation: '削除しました',
+        object: live,
+        detail: live.as_json,
+      )
       redirect_to admin_lives_path(year: live.date.nendo), notice: "#{live.title} を削除しました"
     end
 
@@ -53,7 +70,13 @@ module Admin
       live = Live.find(id)
       live.publish!
       TweetJob.perform_later("#{live.title} のセットリストが公開されました！\n#{live_url(live)}")
-      AdminActivityNotifyJob.perform_later(current_user, "#{Live.model_name.human} #{live.title} を公開しました")
+      AdminActivityNotifyJob.perform_later(
+        user: current_user,
+        operation: '公開しました',
+        object: live,
+        detail: live.previous_changes,
+        url: live_url(live),
+      )
       redirect_to admin_lives_path(year: live.date.nendo), notice: "#{live.title} を公開しました"
     end
   end

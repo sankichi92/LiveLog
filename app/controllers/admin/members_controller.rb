@@ -16,7 +16,13 @@ module Admin
       @member = Member.new(member.permit(:joined_year, :name))
 
       if @member.save
-        AdminActivityNotifyJob.perform_later(current_user, "#{Member.model_name.human} #{@member.joined_year_and_name} を追加しました")
+        AdminActivityNotifyJob.perform_later(
+          user: current_user,
+          operation: '作成しました',
+          object: @member,
+          detail: @member.as_json,
+          url: admin_members_url(year: @member.joined_year),
+        )
 
         @user = @member.build_user(user.permit(:email))
         if @user.valid?
@@ -39,7 +45,12 @@ module Admin
     def destroy(id)
       member = Member.find(id)
       member.destroy!
-      AdminActivityNotifyJob.perform_later(current_user, "#{Member.model_name.human} #{member.joined_year_and_name} を削除しました")
+      AdminActivityNotifyJob.perform_now(
+        user: current_user,
+        operation: '削除しました',
+        object: member,
+        detail: member.as_json,
+      )
       redirect_to admin_members_path(year: member.joined_year), notice: "#{member.joined_year_and_name} を削除しました"
     end
   end

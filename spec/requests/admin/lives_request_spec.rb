@@ -128,6 +128,10 @@ RSpec.describe 'admin/lives request:', type: :request do
   describe 'DELETE /admin/lives/:id' do
     let(:live) { create(:live) }
 
+    before do
+      allow(AdminActivityNotifyJob).to receive(:perform_now)
+    end
+
     it 'destroys the live and redirects to /admin/lives' do
       delete admin_live_path(live)
 

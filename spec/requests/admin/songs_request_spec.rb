@@ -135,6 +135,10 @@ RSpec.describe 'admin/songs request:', type: :request do
   describe 'DELETE /admin/songs/:id' do
     let(:song) { create(:song) }
 
+    before do
+      allow(AdminActivityNotifyJob).to receive(:perform_now)
+    end
+
     it 'destroys the song and redirects to /admin/lives/:id' do
       delete admin_song_path(song)
 
