@@ -93,6 +93,7 @@ RSpec.describe 'admin/songs request:', type: :request do
       let(:params) do
         {
           song: {
+            live_id: song.live_id,
             position: song.position,
             name: 'after',
             artist: song.artist,
@@ -114,6 +115,7 @@ RSpec.describe 'admin/songs request:', type: :request do
       let(:params) do
         {
           song: {
+            live_id: song.live_id,
             position: song.position,
             name: '',
             artist: song.artist,

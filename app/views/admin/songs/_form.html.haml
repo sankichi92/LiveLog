@@ -2,6 +2,11 @@
   .card-body
     = render 'shared/error_messages', errors: model.errors
 
+    - if model.persisted?
+      .form-group
+        = form.label :live_id
+        = form.collection_select :live_id, Live.newest_order, :id, :title, {}, class: 'form-control'
+
     - if model.live.nf?
       .form-group
         = form.label :time

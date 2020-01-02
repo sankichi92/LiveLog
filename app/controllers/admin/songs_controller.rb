@@ -1,6 +1,6 @@
 module Admin
   class SongsController < AdminController
-    permits :time, :position, :name, :artist, :original, :youtube_url, :audio, playings_attributes: %i[id member_id inst _destroy]
+    permits :live_id, :time, :position, :name, :artist, :original, :youtube_url, :audio, playings_attributes: %i[id member_id inst _destroy]
 
     def new(live_id)
       @live = Live.find(live_id)
