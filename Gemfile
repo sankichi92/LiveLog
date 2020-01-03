@@ -26,7 +26,6 @@ gem 'font-awesome-sass'
 gem 'haml-rails'
 gem 'kaminari'
 gem 'kaminari-i18n'
-gem 'pundit'
 gem 'rails-i18n'
 gem 'ridgepole', require: false
 
