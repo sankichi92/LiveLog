@@ -4,6 +4,7 @@ class Song < ApplicationRecord
   belongs_to :live, counter_cache: true
   has_many :plays, dependent: :destroy, inverse_of: :song
   has_many :members, through: :plays
+  has_one :entry, dependent: :destroy
   has_one_attached :audio
 
   accepts_nested_attributes_for :plays, allow_destroy: true
