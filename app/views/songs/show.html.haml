@@ -1,6 +1,6 @@
 :ruby
   provide(:title, @song.title)
-  provide(:description, strip_tags(@song.comment).presence || "#{@song.live.title} #{@song.time_and_position} #{@song.plays.sort_by(&:instrument_order).map { |p| "#{p.instrument_and_name}" }.join(' ')}")
+  provide(:description, strip_tags(@song.comment).presence || "#{@song.live.title} #{@song.time_and_position} #{@song.plays.sort_by(&:instrument_order_index).map { |p| "#{p.instrument_and_name}" }.join(' ')}")
   provide(:og_type, 'music.song')
   provide(:og_image, @song.youtube_thumbnail('maxresdefault')) if policy(@song).play?
 
@@ -25,7 +25,7 @@
           %small= '(オリジナル曲)' if @song.original?
           = @song.status_icon if @song.player?(current_user&.member)
       - if @song.plays.present?
-        .mb-3= render @song.plays.sort_by(&:instrument_order)
+        .mb-3= render @song.plays.sort_by(&:instrument_order_index)
       - if @song.comment.present?
         = simple_format(@song.comment, class: 'text-muted')
       - if @song.playable?

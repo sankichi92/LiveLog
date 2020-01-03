@@ -15,7 +15,7 @@
         = song.status_icon if song.player?(current_user&.member)
 
       %ul.list-inline.mb-2
-        - song.plays.sort_by(&:instrument_order).each do |play|
+        - song.plays.sort_by(&:instrument_order_index).each do |play|
           %li.list-inline-item<
             = play.instrument_and_name
 
