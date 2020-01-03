@@ -1,7 +1,8 @@
 class SongsController < ApplicationController
-  permits :time, :position, :name, :artist, :original, :audio, :status, :comment, plays_attributes: %i[id member_id instrument _destroy]
+  before_action :require_current_user, only: %i[edit update]
+  before_action :require_player, only: %i[edit update]
 
-  after_action :verify_authorized, except: %i[index search show]
+  permits :name, :artist, :original, :status, :comment, plays_attributes: %i[id member_id instrument _destroy]
 
   def index(page = 1)
     @songs = Song.includes(:live, plays: :member).published.newest_live_order.page(page)
@@ -27,27 +28,33 @@ class SongsController < ApplicationController
     end
   end
 
-  def edit(id)
-    @song = Song.includes(plays: :member).find(id)
-    authorize @song
+  def edit
   end
 
-  def update(id, song)
-    @song = Song.find(id)
-    authorize @song
+  def update(song)
     if @song.update(song)
-      redirect_to @song, notice: "#{@song.title} を更新しました"
+      redirect_to song_path(@song), notice: '更新しました'
     else
       render :edit, status: :unprocessable_entity
     end
-  rescue ActiveRecord::RecordNotUnique
-    @song.errors.add(:plays, :duplicated)
-    render :edit, status: :unprocessable_entity
   end
 
   private
 
+  # region Filters
+
+  def require_player(id)
+    @song = Song.find(id)
+    redirect_back fallback_location: song_path(@song), alert: '権限がありません' unless @song.player?(current_user.member)
+  end
+
+  # endregion
+
+  # region Strong parameters
+
   def search_params
     params.permit(:q, :name, :artist, :instruments, :players_lower, :players_upper, :date_lower, :date_upper, :media, :original)
   end
+
+  # endregion
 end

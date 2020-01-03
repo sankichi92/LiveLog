@@ -1,30 +1,38 @@
-= form_for @song do |f|
-  = render 'shared/error_messages', errors: f.object.errors
+.form-group
+  = form.label :name
+  = form.text_field :name, required: true, class: 'form-control'
 
-  = render 'songs/inputs/time_position', f: f
+.form-group
+  = form.label :artist
+  = form.text_field :artist, class: 'form-control', list: 'artists'
+  %datalist#artists
+    - Song.artists_for_suggestion.each do |artist|
+      %option{ value: artist }
 
-  = render 'songs/inputs/name', f: f
+.form-check.mb-3
+  = form.check_box :original, class: 'form-check-input'
+  = form.label :original, class: 'form-check-label'
+  %small.form-text.text-muted 京大アンプラグドのメンバーが作詞・作曲した曲の場合にチェックしてください
 
-  = render 'songs/inputs/original', f: f
+.form-group
+  = form.label :status
+  = form.select :status, { '公開': 'open', 'サークル内': 'closed', 'バンド内': 'secret' }, { selected: 'open' }, class: 'form-control'
+  %small.form-text.text-muted 動画・音源の公開範囲です。「公開」は全てのユーザ、「サークル内」はログインユーザのみ、「バンド内」は演者のみに公開されます
 
-  = render 'songs/inputs/plays', f: f
+%div.mb-3{ data: { controller: 'form-plays' } }
+  %template{ data: { target: 'form-plays.template' } }
+    = form.fields_for :plays, Play.new, child_index: 'TEMPLATE_INDEX' do |plays_form|
+      = render 'plays/form', form: plays_form
 
-  .form-group
-    = f.label :audio
-    .filename= icon('fas', 'music') + ' ' + f.object.audio.filename if f.object.audio.attached?
-    = f.file_field :audio, direct_upload: true, accept: 'audio/mpeg', class: 'form-control-file'
+  = form.fields_for :plays do |plays_form|
+    = render 'plays/form', form: plays_form
 
-  .form-group
-    = f.label :status
-    = icon 'fas', 'question-circle',
-               'data-toggle': 'tooltip',
-               'data-placement': 'right',
-               title: '動画・音源の公開範囲です。「公開」は全てのユーザ，「サークル内」はログインユーザのみ，「バンド内」は演者のみに公開されます'
-    = f.select :status, { '公開': 'open', 'サークル内': 'closed', 'バンド内': 'secret' }, { selected: 'open' }, class: 'form-control', disabled: !f.object.player?(current_user&.member)
+  %button.btn.btn-light{ type: 'button', data: { action: 'form-plays#addPlay' } }= icon('fas', 'plus-circle', '演者を追加する')
 
-  .form-group
-    = f.label :comment
-    = f.text_area :comment, class: 'form-control', rows: 3, disabled: !f.object.player?(current_user&.member)
+%datalist#instruments
+  - Play.instruments_for_suggestion.each do |instrument|
+    %option{ value: instrument }
 
-  = f.submit class: 'btn btn-primary'
-
+.form-group
+  = form.label :comment
+  = form.text_area :comment, class: 'form-control'

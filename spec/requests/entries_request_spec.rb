@@ -61,6 +61,7 @@ RSpec.describe 'entries request:', type: :request do
           artist: '',
           original: '1',
           status: 'open',
+          comment: '',
           plays_attributes: {
             '0' => {
               instrument: '',

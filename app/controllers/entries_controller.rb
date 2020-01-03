@@ -16,7 +16,7 @@ class EntriesController < ApplicationController
 
   def create(entry, song)
     @entry = current_user.member.entries.build(entry)
-    @entry.build_song(song.permit(:live_id, :name, :artist, :original, :status, plays_attributes: %i[id member_id instrument _destroy]))
+    @entry.build_song(song.permit(:live_id, :name, :artist, :original, :status, :comment, plays_attributes: %i[id member_id instrument _destroy]))
 
     if @entry.save
       redirect_to entries_path, notice: "#{@entry.song.live.title} に #{@entry.song.title} をエントリーしました"

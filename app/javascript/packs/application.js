@@ -19,7 +19,6 @@ import '../legacy/log_twitter'
 import '../legacy/log_youtube'
 import '../legacy/manual_link'
 import '../legacy/playlist'
-import '../legacy/song_form'
 import '../legacy/tooltip'
 
 Rails.start()

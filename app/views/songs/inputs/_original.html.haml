@@ -1,9 +1,0 @@
-.form-group
-  .custom-control.custom-checkbox.custom-control-inline
-    = f.check_box :original, class: 'custom-control-input'
-    = f.label :original, class: 'custom-control-label' do
-      = Song.human_attribute_name(:original)
-      = icon 'fas', 'question-circle',
-               'data-toggle': 'tooltip',
-               'data-placement': 'right',
-               title: '京大アンプラグドのメンバーが作詞・作曲した曲の場合にチェックしてください'

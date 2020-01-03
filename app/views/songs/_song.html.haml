@@ -1,6 +1,6 @@
 = link_to song, class: 'song-item px-0 px-md-3' do
   .row.align-items-center
-    - if song.youtube_id.present? && policy(song).play?
+    - if song.youtube_playable?
       .song-thumbnail.col-4.col-xl-3.pr-0
         = image_tag song.youtube_thumbnail, class: 'img-fluid'
 
