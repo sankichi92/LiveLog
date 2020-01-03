@@ -18,8 +18,6 @@ Rails.application.routes.draw do
     member do
       get :album
     end
-
-    resources :entries, only: %i[index new create]
   end
 
   resources :members, only: %i[index show] do

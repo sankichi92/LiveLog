@@ -45,14 +45,6 @@
 
           - if current_user
             %ul.nav.navbar-nav
-              - if Live.unpublished.exists?
-                %li.nav-item.dropdown{ class: params[:controller] == 'entries' ? 'active' : '' }
-                  %a.nav-link.dropdown-toggle#navbar-entry-dropdown-menu-link{ href: '#', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' }
-                    = 'エントリー'
-                  .dropdown-menu.dropdown-menu-right{ 'aria-labellebdy': 'navbar-entry-dropdown-menu-link' }
-                    - Live.unpublished.newest_order.reverse_each do |live|
-                      = link_to live.name, live_entries_path(live), class: 'dropdown-item'
-
               %li.nav-item.dropdown
                 %a.nav-link.dropdown-toggle#navbar-user-dropdown-menu-link{ href: '#', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' }
                   = current_user.member.name

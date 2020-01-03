@@ -70,7 +70,3 @@ ja:
         user_id: メンバー ID
         original: オリジナル曲のみ
         media: 動画または音源を視聴できる曲のみ
-      entry:
-        preferred_rehearsal_time: リハ希望時間
-        preferred_performance_time: 本番希望時間
-        notes: 備考

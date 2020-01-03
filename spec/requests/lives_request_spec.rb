@@ -10,28 +10,16 @@ RSpec.describe 'lives request:', type: :request do
   end
 
   describe 'GET /lives/:id' do
-    context 'when the live is published' do
-      let(:live) { create(:live) }
+    let(:live) { create(:live) }
 
-      before do
-        create_pair(:song, live: live, members: create_pair(:member))
-      end
-
-      it 'responds 200' do
-        get live_path(live)
-
-        expect(response).to have_http_status(:ok)
-      end
+    before do
+      create_pair(:song, live: live, members: create_pair(:member))
     end
 
-    context 'when the live is unpublished' do
-      let(:live) { create(:live, :unpublished) }
+    it 'responds 200' do
+      get live_path(live)
 
-      it 'redirects to /lives/:id/entries' do
-        get live_path(live)
-
-        expect(response).to redirect_to(live_entries_url(live))
-      end
+      expect(response).to have_http_status(:ok)
     end
   end
 
