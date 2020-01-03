@@ -6,11 +6,11 @@ RSpec.describe Song, type: :model do
     let(:plays_attributes) do
       {
         '0' => {
-          inst: 'Vo',
+          instrument: 'Vo',
           member_id: member1_id,
         },
         '1' => {
-          inst: 'Gt',
+          instrument: 'Gt',
           member_id: member2_id,
         },
       }

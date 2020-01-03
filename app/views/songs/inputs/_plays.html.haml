@@ -1,7 +1,7 @@
 #plays-fields
   %datalist#instruments
-    - Play.insts_for_suggestion.each do |inst|
-      %option{ value: inst }
+    - Play.instruments_for_suggestion.each do |instrument|
+      %option{ value: instrument }
   = f.fields_for :plays do |builder|
     = render 'songs/inputs/plays_fields', f: builder
 

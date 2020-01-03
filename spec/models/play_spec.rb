@@ -8,29 +8,29 @@ RSpec.describe Play, type: :model do
   let(:member) { create(:member) }
 
   describe '#save' do
-    describe 'when inst includes fill-width alphabets' do
-      before { play.inst = 'Ｇｔ＆Ｖｏ' }
+    describe 'when instrument includes fill-width alphabets' do
+      before { play.instrument = 'Ｇｔ＆Ｖｏ' }
 
       it 'converts them into half-width alphabets' do
         play.save
-        expect(play.inst).to eq 'Gt&Vo'
+        expect(play.instrument).to eq 'Gt&Vo'
       end
     end
 
-    describe 'when inst includes dot' do
-      before { play.inst = 'Ba&Cho.' }
+    describe 'when instrument includes dot' do
+      before { play.instrument = 'Ba&Cho.' }
 
       it 'trims the dot' do
         play.save
-        expect(play.inst).to eq 'Ba&Cho'
+        expect(play.instrument).to eq 'Ba&Cho'
       end
     end
   end
 
   describe '.count_by_divided_instrument' do
     before do
-      %w[Gt Gt Vo Gt&Vo Ba&Cho Cj&Cho].each do |inst|
-        create(:play, inst: inst)
+      %w[Gt Gt Vo Gt&Vo Ba&Cho Cj&Cho].each do |instrument|
+        create(:play, instrument: instrument)
       end
     end
 

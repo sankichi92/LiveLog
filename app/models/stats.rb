@@ -21,7 +21,7 @@ class Stats
     plays.distinct.count(:member_id)
   end
 
-  def inst_to_count
+  def instrument_to_count
     plays.count_by_divided_instrument
   end
 

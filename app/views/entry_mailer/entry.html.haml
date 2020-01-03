@@ -11,7 +11,7 @@
   %dt メンバー
   %dd
     - @entry.plays.reverse_each do |play|
-      #{play.inst}.
+      #{play.instrument}.
       = link_to "#{play.member.name} (#{play.member.joined_year})", member_url(play.member)
       %br
   %dt リハーサル希望時間

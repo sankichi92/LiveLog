@@ -3,7 +3,7 @@
   = f.label :member
   .form-row
     .col-3.col-md-2
-      = f.text_field :inst, class: 'inst-field form-control', placeholder: 'Gt&Vo', list: 'instruments'
+      = f.text_field :instrument, class: 'instrument-field form-control', placeholder: 'Gt&Vo', list: 'instruments'
     .col
       = f.collection_select :member_id, Member.regular_order, :id, :joined_year_and_name, {}, class: 'member-select select2 form-control'
     .col-2.col-md-1

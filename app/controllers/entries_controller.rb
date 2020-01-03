@@ -1,5 +1,5 @@
 class EntriesController < ApplicationController
-  permits :name, :artist, :original, :status, plays_attributes: %i[id member_id inst _destroy], model_name: 'Song'
+  permits :name, :artist, :original, :status, plays_attributes: %i[id member_id instrument _destroy], model_name: 'Song'
 
   before_action :set_live
   before_action :draft_live

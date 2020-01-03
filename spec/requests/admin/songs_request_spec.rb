@@ -33,7 +33,7 @@ RSpec.describe 'admin/songs request:', type: :request do
             plays_attributes: {
               '0' => {
                 _destroy: '0',
-                inst: 'Key',
+                instrument: 'Key',
                 member_id: member.id.to_s,
               },
             },
@@ -60,7 +60,7 @@ RSpec.describe 'admin/songs request:', type: :request do
             plays_attributes: {
               '0' => {
                 _destroy: '0',
-                inst: 'Key',
+                instrument: 'Key',
                 member_id: member.id.to_s,
               },
             },

@@ -71,11 +71,11 @@ class Song
     end
 
     def included_instruments
-      instrument_arr.reject { |inst| inst.start_with?('-') }
+      instrument_arr.reject { |instrument| instrument.start_with?('-') }
     end
 
     def excluded_instruments
-      instrument_arr.select { |inst| inst.start_with?('-') }.map { |inst| inst.sub('-', '') }
+      instrument_arr.select { |instrument| instrument.start_with?('-') }.map { |instrument| instrument.sub('-', '') }
     end
 
     def media?

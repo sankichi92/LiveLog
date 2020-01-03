@@ -1,7 +1,7 @@
 module PlayDecorator
   def instrument_and_name
-    if inst.present?
-      "#{inst}.#{member.name}"
+    if instrument.present?
+      "#{instrument}.#{member.name}"
     else
       member.name
     end

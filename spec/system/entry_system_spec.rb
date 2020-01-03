@@ -64,7 +64,7 @@ RSpec.describe 'Entry', type: :system do
       select 'サークル内', from: 'song_status'
 
       [user.member, members.first].each_with_index do |member, i|
-        all('.inst-field')[i].set('Gt')
+        all('.instrument-field')[i].set('Gt')
         all('.member-select')[i].find(:option, member.joined_year_and_name).select_option
       end
 

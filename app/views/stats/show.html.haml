@@ -20,12 +20,12 @@
         %h5.card-header 演奏された楽器
         .card-body
           %p<
-            %mark= @stats.inst_to_count.size
+            %mark= @stats.instrument_to_count.size
             種類の楽器が演奏されました。
           %ul.list-inline
-            - @stats.inst_to_count.each do |inst, count|
+            - @stats.instrument_to_count.each do |instrument, count|
               %li.list-inline-item.lead
-                = link_to_search inst, instruments: inst, date_range: @stats.date_range
+                = link_to_search instrument, instruments: instrument, date_range: @stats.date_range
                 %span.badge.badge-pill.badge-secondary= count
 
     .col-lg.mb-3

@@ -64,7 +64,7 @@ ja:
       play:
         member_id: メンバー
         member: メンバー
-        inst: 楽器
+        instrument: 楽器
   activemodel:
     attributes:
       song/search_query:
