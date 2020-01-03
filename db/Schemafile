@@ -43,18 +43,18 @@ create_table :members, force: :cascade do |t|
   t.string :name, null: false
   t.string :url
   t.string :bio
-  t.integer :plays_count, null: false, default: 0, limit: 2, renamed_from: :playings_count
+  t.integer :plays_count, null: false, default: 0, limit: 2
 
   t.timestamps
 
   t.index %i[name joined_year], unique: true
-  t.index %i[joined_year playings_count]
+  t.index %i[joined_year plays_count]
 end
 
 create_table :plays, force: :cascade do |t|
   t.bigint :member_id, null: false
   t.bigint :song_id, null: false
-  t.string :inst
+  t.string :instrument, renamed_from: :inst
 
   t.timestamps
 
