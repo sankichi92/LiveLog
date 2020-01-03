@@ -14,6 +14,7 @@ class Song < ApplicationRecord
   enum status: { secret: 0, closed: 1, open: 2 }
 
   validates :name, presence: true
+  validate :unique_players
 
   scope :played_order, -> { order(:time, :position) }
   scope :newest_live_order, -> { joins(:live).order('lives.date desc', :time, :position) }
@@ -31,14 +32,6 @@ class Song < ApplicationRecord
 
   def self.artists_for_suggestion
     where.not(artist: '').group(:artist).order(count_all: :desc).having('count(*) >= 2').count.keys
-  end
-
-  # FIXME: https://github.com/sankichi92/LiveLog/issues/118
-  def save_with_plays_attributes
-    save
-  rescue ActiveRecord::RecordNotUnique
-    errors.add(:plays, :duplicated)
-    false
   end
 
   def title
@@ -84,4 +77,15 @@ class Song < ApplicationRecord
   def player?(member)
     plays.map(&:member_id).include?(member&.id)
   end
+
+  private
+
+  # region Validations
+
+  # FIXME: https://github.com/sankichi92/LiveLog/issues/118
+  def unique_players
+    errors.add(:plays, :duplicated) if plays.map(&:member_id).uniq!
+  end
+
+  # endregion
 end

@@ -40,6 +40,8 @@ ja:
         plays: 演者
         audio: 音源
         youtube_url: YouTube URL
+      song/plays:
+        member_id: メンバー
       live:
         name: ライブ名
         date: 開催日
@@ -59,6 +61,14 @@ ja:
         member_id: メンバー
         member: メンバー
         instrument: 楽器
+      entry:
+        notes: 備考
+        song: 曲
+        available_times: 演奏可能時間
+      entry/available_times:
+        range: 演奏可能時間
+      available_time:
+        range: 演奏可能時間
   activemodel:
     attributes:
       song/search_query:

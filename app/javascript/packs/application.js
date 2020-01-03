@@ -6,8 +6,7 @@ import * as Sentry from '@sentry/browser'
 
 import 'bootstrap/dist/js/bootstrap.bundle'
 
-import 'select2/dist/js/select2'
-import 'select2/dist/js/i18n/ja'
+import '../controllers'
 
 import '../legacy/close_alert_donation'
 import '../legacy/facebook_sdk'

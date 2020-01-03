@@ -1,6 +1,4 @@
 $(document).on('turbolinks:load', function () {
-    $('.select2').select2({theme: 'bootstrap4'});
-
     $('form').on('click', '#add-member', function () {
         var reg = /(song_plays_attributes_|song\[plays_attributes]\[)\d+/gi;
         var mSec = new Date().getTime();
