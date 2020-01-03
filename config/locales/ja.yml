@@ -19,12 +19,6 @@ ja:
           attributes:
             plays:
               duplicated: が重複しています
-        user:
-          attributes:
-            furigana:
-              invalid: はひらがなで入力してください
-            password:
-              wrong: が現在のものと異なります
     models:
       live: ライブ
       member: メンバー
