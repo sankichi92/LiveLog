@@ -1,3 +1,35 @@
 - provide(:title, 'エントリー')
 
-= link_to icon('fas', 'paper-plane', 'エントリーする'), new_entry_path, class: 'btn btn-outline-primary'
+%aside.mb-3
+  = link_to icon('fas', 'paper-plane', 'エントリーする'), new_entry_path, class: 'btn btn-outline-primary'
+
+%section.table-responsive
+  %table.table.table-hover.text-nowrap
+    %thead
+      %tr
+        %th ID
+        - %i[live name artist plays].each do |attr|
+          %th{ scope: 'col' }= Song.human_attribute_name(attr)
+        - %i[available_times notes updated_at].each do |attr|
+          %th{ scope: 'col' }= Entry.human_attribute_name(attr)
+
+    %tbody
+      - @entries.each do |entry|
+        %tr
+          %td= entry.id
+          %td= entry.song.live.title
+          %td
+            = entry.song.name
+            %small= '(オリジナル曲)' if entry.song.original?
+            = entry.song.status_icon
+          %td= entry.song.artist
+          %td
+            %ul.list-inline.mb-0
+              - entry.song.plays.each do |play|
+                %li.list-inline-item= play.instrument_and_name
+          %td
+            %ul.list-inline.mb-0
+              - entry.available_times.each do |available_time|
+                %li.list-inline-item #{l(available_time.lower, format: :short)}〜#{l(available_time.upper, format: :short)}
+          %td= truncate(entry.notes)
+          %td= l entry.updated_at, format: :short

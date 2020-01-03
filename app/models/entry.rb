@@ -7,4 +7,9 @@ class Entry < ApplicationRecord
 
   validates :available_times, presence: true
   validates_associated :song
+
+  scope :submitted_or_played_by, ->(member) do
+    joins(song: { plays: :member }).merge(Member.where(id: member.id))
+      .or(joins(song: { plays: :member }).where(member_id: member.id))
+  end
 end

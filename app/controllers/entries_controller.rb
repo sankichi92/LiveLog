@@ -5,7 +5,10 @@ class EntriesController < ApplicationController
   permits :notes, available_times_attributes: %i[id lower upper _destroy]
 
   def index
-    @entries = Entry.joins(song: { plays: :member }).merge(Member.where(id: current_user.member_id))
+    @entries = Entry
+                 .includes(:available_times, song: [:live, { plays: :member }])
+                 .submitted_or_played_by(current_user.member)
+                 .order(id: :desc)
   end
 
   def new

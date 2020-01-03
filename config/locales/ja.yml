@@ -10,8 +10,11 @@ ja:
   time:
     formats:
       default: "%Y/%m/%d %H:%M"
+      short: "%-m/%-d %-H:%M"
   attributes:
     id: ID
+    created_at: 作成日時
+    updated_at: 更新日時
   activerecord:
     errors:
       models:
@@ -28,6 +31,7 @@ ja:
       user:
         email: メールアドレス
       song:
+        live: ライブ
         live_id: ライブ
         time: 時間
         position: 曲順
