@@ -1,4 +1,6 @@
 class Playing < ApplicationRecord
+  self.table_name = :plays
+
   INST_ORDER = %w[Vo Vn Vla Vc Fl Cl Sax Tp Hr Tb Harp Gt Koto Pf Acc 鍵ハ Ba Cj Dr Bongo Perc].freeze
 
   belongs_to :member, counter_cache: true

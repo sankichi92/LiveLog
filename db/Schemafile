@@ -51,7 +51,7 @@ create_table :members, force: :cascade do |t|
   t.index %i[joined_year playings_count]
 end
 
-create_table :playings, force: :cascade do |t|
+create_table :plays, force: :cascade, renamed_from: :playings do |t|
   t.bigint :member_id, null: false
   t.bigint :song_id, null: false
   t.string :inst
@@ -95,7 +95,7 @@ create_table :users, force: :cascade do |t|
 end
 
 add_foreign_key :active_storage_attachments, :active_storage_blobs, column: :blob_id
-add_foreign_key :playings, :members
-add_foreign_key :playings, :songs
+add_foreign_key :plays, :members
+add_foreign_key :plays, :songs
 add_foreign_key :songs, :lives, column: :live_id
 add_foreign_key :users, :members
