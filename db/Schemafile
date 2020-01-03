@@ -28,7 +28,7 @@ create_table :lives, force: :cascade do |t|
   t.date :date, null: false
   t.string :place
   t.string :album_url
-  t.boolean :published, default: false, null: false
+  t.boolean :published, null: false, default: false
   t.datetime :published_at
   t.integer :songs_count, null: false, default: 0, limit: 2
 
@@ -54,7 +54,7 @@ end
 create_table :plays, force: :cascade do |t|
   t.bigint :member_id, null: false
   t.bigint :song_id, null: false
-  t.string :instrument, renamed_from: :inst
+  t.string :instrument
 
   t.timestamps
 
@@ -64,6 +64,7 @@ end
 
 create_table :songs, force: :cascade do |t|
   t.bigint :live_id, null: false
+  t.time :time
   t.integer :position, null: false, limit: 2
   t.string :name, null: false
   t.string :artist
@@ -71,7 +72,6 @@ create_table :songs, force: :cascade do |t|
   t.integer :status, null: false, default: 1, limit: 2
   t.string :youtube_id
   t.text :comment
-  t.time :time
 
   t.timestamps
 
