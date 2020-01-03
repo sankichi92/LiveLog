@@ -8,7 +8,7 @@ class LivesController < ApplicationController
   def show(id)
     @live = Live.find(id)
     redirect_to live_entries_url(@live) unless @live.published?
-    @songs = @live.songs.with_attached_audio.includes(playings: :member).played_order
+    @songs = @live.songs.with_attached_audio.includes(plays: :member).played_order
   end
 
   def album(id)

@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Song, type: :model do
-  describe '#save_with_playings_attributes' do
-    let(:song) { build(:song, playings_attributes: playings_attributes) }
-    let(:playings_attributes) do
+  describe '#save_with_plays_attributes' do
+    let(:song) { build(:song, plays_attributes: plays_attributes) }
+    let(:plays_attributes) do
       {
         '0' => {
           inst: 'Vo',
@@ -16,12 +16,12 @@ RSpec.describe Song, type: :model do
       }
     end
 
-    context 'with NOT duplicated playings_attributes' do
+    context 'with NOT duplicated plays_attributes' do
       let(:member1_id) { create(:member).id }
       let(:member2_id) { create(:member).id }
 
       it 'saves and returns true' do
-        result = song.save_with_playings_attributes
+        result = song.save_with_plays_attributes
 
         expect(result).to be true
         expect(song).to be_persisted
@@ -29,16 +29,16 @@ RSpec.describe Song, type: :model do
       end
     end
 
-    context 'with duplicated playings_attributes' do
+    context 'with duplicated plays_attributes' do
       let(:member1_id) { create(:member).id }
       let(:member2_id) { member1_id }
 
       it 'returns false' do
-        result = song.save_with_playings_attributes
+        result = song.save_with_plays_attributes
 
         expect(result).to be false
         expect(song).to be_new_record
-        expect(song.errors.added?(:playings, :duplicated)).to be true
+        expect(song.errors.added?(:plays, :duplicated)).to be true
       end
     end
   end

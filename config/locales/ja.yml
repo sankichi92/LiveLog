@@ -17,7 +17,7 @@ ja:
       models:
         song:
           attributes:
-            playings:
+            plays:
               duplicated: が重複しています
         user:
           attributes:
@@ -43,7 +43,7 @@ ja:
         status: 公開設定
         youtube_id: YouTube ID
         comment: コメント
-        playings: 演者
+        plays: 演者
         audio: 音源
         youtube_url: YouTube URL
       live:
@@ -59,9 +59,9 @@ ja:
         name: 名前
         url: URL
         bio: 自己紹介
-        playings_count: 出演数
+        plays_count: 出演数
         avatar: プロフィール画像
-      playing:
+      play:
         member_id: メンバー
         member: メンバー
         inst: 楽器

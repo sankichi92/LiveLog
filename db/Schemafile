@@ -43,7 +43,7 @@ create_table :members, force: :cascade do |t|
   t.string :name, null: false
   t.string :url
   t.string :bio
-  t.integer :playings_count, null: false, default: 0, limit: 2
+  t.integer :plays_count, null: false, default: 0, limit: 2, renamed_from: :playings_count
 
   t.timestamps
 
@@ -51,7 +51,7 @@ create_table :members, force: :cascade do |t|
   t.index %i[joined_year playings_count]
 end
 
-create_table :plays, force: :cascade, renamed_from: :playings do |t|
+create_table :plays, force: :cascade do |t|
   t.bigint :member_id, null: false
   t.bigint :song_id, null: false
   t.string :inst

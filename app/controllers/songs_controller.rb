@@ -1,17 +1,17 @@
 class SongsController < ApplicationController
-  permits :time, :position, :name, :artist, :original, :audio, :status, :comment, playings_attributes: %i[id member_id inst _destroy]
+  permits :time, :position, :name, :artist, :original, :audio, :status, :comment, plays_attributes: %i[id member_id inst _destroy]
 
   after_action :verify_authorized, except: %i[index search show]
 
   def index(page = 1)
-    @songs = Song.includes(:live, playings: :member).published.newest_live_order.page(page)
+    @songs = Song.includes(:live, plays: :member).published.newest_live_order.page(page)
     @query = Song::SearchQuery.new
   end
 
   def search(page = 1)
     @query = Song::SearchQuery.new(search_params.merge(logged_in: !current_user.nil?))
     if @query.valid?
-      @songs = Song.search(@query).page(page).records(includes: [:live, { playings: :member }])
+      @songs = Song.search(@query).page(page).records(includes: [:live, { plays: :member }])
       render :index
     else
       render :index, status: :unprocessable_entity
@@ -19,16 +19,16 @@ class SongsController < ApplicationController
   end
 
   def show(id)
-    @song = Song.includes(playings: { member: { 'avatar_attachment': :blob } }).find(id)
+    @song = Song.includes(plays: { member: { 'avatar_attachment': :blob } }).find(id)
     begin
-      @related_songs = @song.more_like_this.records(includes: [:live, { playings: :member }]).to_a if @song.live.published?
+      @related_songs = @song.more_like_this.records(includes: [:live, { plays: :member }]).to_a if @song.live.published?
     rescue => e
       Raven.capture_exception(e)
     end
   end
 
   def edit(id)
-    @song = Song.includes(playings: :member).find(id)
+    @song = Song.includes(plays: :member).find(id)
     authorize @song
   end
 
@@ -41,7 +41,7 @@ class SongsController < ApplicationController
       render :edit, status: :unprocessable_entity
     end
   rescue ActiveRecord::RecordNotUnique
-    @song.errors.add(:playings, :duplicated)
+    @song.errors.add(:plays, :duplicated)
     render :edit, status: :unprocessable_entity
   end
 

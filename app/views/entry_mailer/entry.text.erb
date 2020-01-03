@@ -5,8 +5,8 @@
 曲名 / アーティスト名: <%= @entry.title %><%= @entry.song.original? ? ' （オリジナル曲）' : ''%>
 
 メンバー:
-<% @entry.playings.reverse.each do |playing| %>
-    <%= "#{playing.inst}. #{playing.member.name} (#{playing.member.joined_year})" %>
+<% @entry.plays.reverse.each do |play| %>
+    <%= "#{play.inst}. #{play.member.name} (#{play.member.joined_year})" %>
 <% end %>
 
 リハーサル希望時間:

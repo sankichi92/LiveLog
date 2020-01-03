@@ -40,18 +40,18 @@
       = form.label :audio
       = form.file_field :audio, direct_upload: true, accept: 'audio/mpeg', class: 'form-control-file'
 
-    %div{ data: { controller: 'form-playings' } }
-      %template{ data: { target: 'form-playings.template' } }
-        = form.fields_for :playings, Playing.new, child_index: 'TEMPLATE_INDEX' do |playings_form|
-          = render 'admin/songs/form_playing', form: playings_form
+    %div{ data: { controller: 'form-plays' } }
+      %template{ data: { target: 'form-plays.template' } }
+        = form.fields_for :plays, Play.new, child_index: 'TEMPLATE_INDEX' do |plays_form|
+          = render 'admin/songs/form_play', form: plays_form
 
-      = form.fields_for :playings do |playings_form|
-        = render 'admin/songs/form_playing', form: playings_form
+      = form.fields_for :plays do |plays_form|
+        = render 'admin/songs/form_play', form: plays_form
 
-      %button.btn.btn-light{ type: 'button', data: { action: 'form-playings#addPlaying' } }= icon('fas', 'plus-circle', '演者を追加する')
+      %button.btn.btn-light{ type: 'button', data: { action: 'form-plays#addPlay' } }= icon('fas', 'plus-circle', '演者を追加する')
 
     %datalist#instruments
-      - Playing.insts_for_suggestion.each do |inst|
+      - Play.insts_for_suggestion.each do |inst|
         %option{ value: inst }
 
   .card-footer

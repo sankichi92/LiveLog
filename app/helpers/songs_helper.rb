@@ -1,7 +1,7 @@
 module SongsHelper
   def button_to_add_member(form)
-    fields = form.fields_for(:playings, form.object.playings.build) do |builder|
-      render 'songs/inputs/playings_fields', f: builder
+    fields = form.fields_for(:plays, form.object.plays.build) do |builder|
+      render 'songs/inputs/plays_fields', f: builder
     end
     content_tag :button,
                 icon('fas', 'plus') + ' ' + 'メンバーを追加する',

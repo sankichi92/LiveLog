@@ -30,7 +30,7 @@ RSpec.describe 'admin/songs request:', type: :request do
             artist: 'YMO',
             original: '0',
             youtube_url: '',
-            playings_attributes: {
+            plays_attributes: {
               '0' => {
                 _destroy: '0',
                 inst: 'Key',
@@ -43,7 +43,7 @@ RSpec.describe 'admin/songs request:', type: :request do
 
       it 'creates a song and redirects to /admin/lives/:id' do
         expect { post admin_live_songs_path(live), params: params }
-          .to change(Song, :count).by(1).and change(Playing, :count).by(1)
+          .to change(Song, :count).by(1).and change(Play, :count).by(1)
         expect(response).to redirect_to admin_live_path(live)
       end
     end
@@ -57,7 +57,7 @@ RSpec.describe 'admin/songs request:', type: :request do
             artist: '',
             original: '0',
             youtube_url: '',
-            playings_attributes: {
+            plays_attributes: {
               '0' => {
                 _destroy: '0',
                 inst: 'Key',
@@ -70,7 +70,7 @@ RSpec.describe 'admin/songs request:', type: :request do
 
       it 'responds 422' do
         expect { post admin_live_songs_path(live), params: params }
-          .to change(Song, :count).by(0).and change(Playing, :count).by(0)
+          .to change(Song, :count).by(0).and change(Play, :count).by(0)
         expect(response).to have_http_status :unprocessable_entity
       end
     end

@@ -18,11 +18,11 @@ class Stats
   end
 
   def number_of_players
-    playings.distinct.count(:member_id)
+    plays.distinct.count(:member_id)
   end
 
   def inst_to_count
-    playings.count_by_divided_instrument
+    plays.count_by_divided_instrument
   end
 
   def number_of_artists
@@ -42,7 +42,7 @@ class Stats
   end
 
   def formation_to_count
-    playings.count_formations
+    plays.count_formations
   end
 
   def average_formation
@@ -61,7 +61,7 @@ class Stats
     Song.published.includes(:live).where('lives.date': date_range)
   end
 
-  def playings
-    Playing.includes(song: :live).merge(Live.published).where('lives.date': date_range)
+  def plays
+    Play.includes(song: :live).merge(Live.published).where('lives.date': date_range)
   end
 end

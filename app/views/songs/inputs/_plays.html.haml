@@ -1,0 +1,9 @@
+#plays-fields
+  %datalist#instruments
+    - Play.insts_for_suggestion.each do |inst|
+      %option{ value: inst }
+  = f.fields_for :plays do |builder|
+    = render 'songs/inputs/plays_fields', f: builder
+
+.form-group
+  .form-text= button_to_add_member(f)

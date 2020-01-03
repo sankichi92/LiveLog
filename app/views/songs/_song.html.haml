@@ -15,9 +15,9 @@
         = song.status_icon if song.player?(current_user&.member)
 
       %ul.list-inline.mb-2
-        - song.playings.sort_by(&:inst_order).each do |playing|
+        - song.plays.sort_by(&:inst_order).each do |play|
           %li.list-inline-item<
-            = playing.instrument_and_name
+            = play.instrument_and_name
 
       %p.text-muted.mb-0= truncate strip_tags(song.comment) if song.comment?
 

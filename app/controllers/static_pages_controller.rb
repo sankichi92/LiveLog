@@ -2,7 +2,7 @@ class StaticPagesController < ApplicationController
   before_action :require_current_user, only: :donation
 
   def home
-    @song = Song.includes(playings: :member).pickup
+    @song = Song.includes(plays: :member).pickup
     @lives = Live.published.newest_order.limit(5)
   end
 

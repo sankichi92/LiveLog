@@ -20,8 +20,8 @@ RSpec.describe 'Entry', type: :system do
       expect(page).to have_link('エントリーする', href: new_live_entry_path(live))
       expect(page).not_to have_css('#admin-tools')
       expect(page).to have_content(user_song.name)
-      user_song.playings.each do |playing|
-        expect(page).to have_content(playing.member.name)
+      user_song.plays.each do |play|
+        expect(page).to have_content(play.member.name)
       end
       expect(page).not_to have_content(other_song.name)
     end

@@ -64,8 +64,8 @@ module SongSearchable
       audio_attached?: audio.attached?,
       original?: original?,
       comment: comment,
-      players_count: playings.size,
-      players: playings.as_json(only: %i[member_id instruments], methods: [:instruments]),
+      players_count: plays.size,
+      players: plays.as_json(only: %i[member_id instruments], methods: [:instruments]),
     }
   end
 

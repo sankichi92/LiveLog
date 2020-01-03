@@ -20,7 +20,7 @@
           %table.table-admin.table.table-striped.text-nowrap.mb-0
             %thead
               %tr
-                - %i[id position name artist youtube_id audio playings].each do |attr|
+                - %i[id position name artist youtube_id audio plays].each do |attr|
                   %th{ scope: 'col' }= Song.human_attribute_name(attr)
                 %th{ scope: 'col' } 操作
             %tbody
@@ -38,8 +38,8 @@
                       = audio_tag song.audio_url, controls: true
                   %td
                     %ul.list-inline.mb-0
-                      - song.playings.each do |playing|
-                        %li.list-inline-item= playing.instrument_and_name
+                      - song.plays.each do |play|
+                        %li.list-inline-item= play.instrument_and_name
                   %td
                     - if song.live.published?
                       = link_to icon('fas', 'eye'), song_path(song), class: 'btn btn-secondary'

@@ -29,6 +29,6 @@ class Live < ApplicationRecord
     raise AlreadyPublishedError, "Live id #{id} has already been published" if published?
 
     update!(published: true, published_at: Time.zone.now)
-    songs.includes(:audio_attachment, :playings).import
+    songs.includes(:audio_attachment, :plays).import
   end
 end

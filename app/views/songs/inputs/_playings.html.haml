@@ -1,9 +1,0 @@
-#playings-fields
-  %datalist#instruments
-    - Playing.insts_for_suggestion.each do |inst|
-      %option{ value: inst }
-  = f.fields_for :playings do |builder|
-    = render 'songs/inputs/playings_fields', f: builder
-
-.form-group
-  .form-text= button_to_add_member(f)

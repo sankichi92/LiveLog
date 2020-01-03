@@ -1,23 +1,23 @@
 module Admin
   class SongsController < AdminController
-    permits :live_id, :time, :position, :name, :artist, :original, :youtube_url, :audio, playings_attributes: %i[id member_id inst _destroy]
+    permits :live_id, :time, :position, :name, :artist, :original, :youtube_url, :audio, plays_attributes: %i[id member_id inst _destroy]
 
     def new(live_id)
       @live = Live.find(live_id)
       @song = @live.songs.build
-      @song.playings.build
+      @song.plays.build
     end
 
     def create(live_id, song)
       @live = Live.find(live_id)
       @song = @live.songs.build(song)
 
-      if @song.save_with_playings_attributes
+      if @song.save_with_plays_attributes
         AdminActivityNotifyJob.perform_later(
           user: current_user,
           operation: '作成しました',
           object: @song,
-          detail: @song.as_json(include: :playings),
+          detail: @song.as_json(include: :plays),
           url: admin_live_url(@live),
         )
         redirect_to admin_live_path(@live), notice: "ID: #{@song.id} を追加しました"
@@ -34,7 +34,7 @@ module Admin
       @song = Song.find(id)
       @song.assign_attributes(song)
 
-      if @song.save_with_playings_attributes
+      if @song.save_with_plays_attributes
         AdminActivityNotifyJob.perform_later(
           user: current_user,
           operation: '更新しました',

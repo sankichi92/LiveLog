@@ -1,5 +1,5 @@
 class EntriesController < ApplicationController
-  permits :name, :artist, :original, :status, playings_attributes: %i[id member_id inst _destroy], model_name: 'Song'
+  permits :name, :artist, :original, :status, plays_attributes: %i[id member_id inst _destroy], model_name: 'Song'
 
   before_action :set_live
   before_action :draft_live
@@ -9,13 +9,13 @@ class EntriesController < ApplicationController
 
   def index
     authorize Entry
-    @songs = policy_scope(@live.songs).with_attached_audio.includes(playings: :member).played_order
+    @songs = policy_scope(@live.songs).with_attached_audio.includes(plays: :member).played_order
   end
 
   def new
     authorize Entry
     @song = @live.songs.build
-    @song.playings.build
+    @song.plays.build
   end
 
   def create(song, entry)
@@ -32,7 +32,7 @@ class EntriesController < ApplicationController
     entry.send_email
     redirect_to live_entries_url(@live), notice: "#{@live.title} に #{@song.title} をエントリーしました"
   rescue ActiveRecord::RecordNotUnique
-    @song.errors.add(:playings, :duplicated)
+    @song.errors.add(:plays, :duplicated)
     render status: :unprocessable_entity
   end
 

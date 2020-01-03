@@ -2,11 +2,11 @@ class Song < ApplicationRecord
   include SongSearchable
 
   belongs_to :live, counter_cache: true
-  has_many :playings, dependent: :destroy, inverse_of: :song
-  has_many :members, through: :playings
+  has_many :plays, dependent: :destroy, inverse_of: :song
+  has_many :members, through: :plays
   has_one_attached :audio
 
-  accepts_nested_attributes_for :playings, allow_destroy: true
+  accepts_nested_attributes_for :plays, allow_destroy: true
 
   acts_as_list scope: :live
 
@@ -33,10 +33,10 @@ class Song < ApplicationRecord
   end
 
   # FIXME: https://github.com/sankichi92/LiveLog/issues/118
-  def save_with_playings_attributes
+  def save_with_plays_attributes
     save
   rescue ActiveRecord::RecordNotUnique
-    errors.add(:playings, :duplicated)
+    errors.add(:plays, :duplicated)
     false
   end
 
@@ -81,6 +81,6 @@ class Song < ApplicationRecord
   end
 
   def player?(member)
-    playings.map(&:member_id).include?(member&.id)
+    plays.map(&:member_id).include?(member&.id)
   end
 end

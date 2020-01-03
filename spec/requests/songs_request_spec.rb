@@ -71,7 +71,7 @@ RSpec.describe 'songs request:', type: :request do
 
     before do
       user = create(:user)
-      create(:playing, member: user.member, song: song)
+      create(:play, member: user.member, song: song)
       log_in_as user
     end
 
