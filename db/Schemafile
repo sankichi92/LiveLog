@@ -23,6 +23,27 @@ create_table :active_storage_blobs, force: :cascade do |t|
   t.index :key, unique: true
 end
 
+create_table :available_times, force: :cascade do |t|
+  t.bigint :entry_id, null: false
+  t.tstzrange :range, null: false
+
+  t.timestamps
+
+  t.index :entry_id
+  t.index :range, using: :gist
+end
+
+create_table :entries, force: :cascade do |t|
+  t.bigint :song_id, null: false
+  t.bigint :member_id, null: false
+  t.text :notes
+
+  t.timestamps
+
+  t.index :song_id, unique: true
+  t.index :member_id
+end
+
 create_table :lives, force: :cascade do |t|
   t.string :name, null: false
   t.date :date, null: false
