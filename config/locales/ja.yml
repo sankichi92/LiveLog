@@ -28,8 +28,33 @@ ja:
       song: 曲
       user: ユーザー
     attributes:
-      user:
-        email: メールアドレス
+      entry:
+        notes: 備考
+        song: 曲
+        playable_times: 演奏可能時間
+      entry/playable_times:
+        range: 演奏可能時間
+      live:
+        name: ライブ名
+        date: 開催日
+        place: 場所
+        album_url: アルバム URL
+        album: アルバム
+        songs_count: 曲数
+        published_at: 公開日時
+      member:
+        joined_year: 入部年度
+        name: 名前
+        url: URL
+        bio: 自己紹介
+        plays_count: 出演数
+        avatar: プロフィール画像
+      playable_time:
+        range: 演奏可能時間
+      play:
+        member_id: メンバー
+        member: メンバー
+        instrument: 楽器
       song:
         live: ライブ
         live_id: ライブ
@@ -46,33 +71,8 @@ ja:
         youtube_url: YouTube URL
       song/plays:
         member_id: メンバー
-      live:
-        name: ライブ名
-        date: 開催日
-        place: 場所
-        album_url: アルバム URL
-        album: アルバム
-        songs_count: 曲数
-        published_at: 公開日時
-      member:
-        joined_year: 入部年度
-        name: 名前
-        url: URL
-        bio: 自己紹介
-        plays_count: 出演数
-        avatar: プロフィール画像
-      play:
-        member_id: メンバー
-        member: メンバー
-        instrument: 楽器
-      entry:
-        notes: 備考
-        song: 曲
-        playable_times: 演奏可能時間
-      entry/playable_times:
-        range: 演奏可能時間
-      playable_time:
-        range: 演奏可能時間
+      user:
+        email: メールアドレス
   activemodel:
     attributes:
       song/search_query:
