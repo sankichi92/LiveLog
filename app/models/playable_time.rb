@@ -1,4 +1,4 @@
-class AvailableTime < ApplicationRecord
+class PlayableTime < ApplicationRecord
   belongs_to :entry, touch: true
 
   validate :lower_must_be_less_than_upper

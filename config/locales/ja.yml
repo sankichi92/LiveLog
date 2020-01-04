@@ -68,10 +68,10 @@ ja:
       entry:
         notes: 備考
         song: 曲
-        available_times: 演奏可能時間
-      entry/available_times:
+        playable_times: 演奏可能時間
+      entry/playable_times:
         range: 演奏可能時間
-      available_time:
+      playable_time:
         range: 演奏可能時間
   activemodel:
     attributes:

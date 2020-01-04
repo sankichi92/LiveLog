@@ -23,16 +23,6 @@ create_table :active_storage_blobs, force: :cascade do |t|
   t.index :key, unique: true
 end
 
-create_table :available_times, force: :cascade do |t|
-  t.bigint :entry_id, null: false
-  t.tstzrange :range, null: false
-
-  t.timestamps
-
-  t.index :entry_id
-  t.index :range, using: :gist
-end
-
 create_table :entries, force: :cascade do |t|
   t.bigint :song_id, null: false
   t.bigint :member_id, null: false
@@ -70,6 +60,16 @@ create_table :members, force: :cascade do |t|
 
   t.index %i[name joined_year], unique: true
   t.index %i[joined_year plays_count]
+end
+
+create_table :playable_times, force: :cascade do |t|
+  t.bigint :entry_id, null: false
+  t.tstzrange :range, null: false
+
+  t.timestamps
+
+  t.index :entry_id
+  t.index :range, using: :gist
 end
 
 create_table :plays, force: :cascade do |t|

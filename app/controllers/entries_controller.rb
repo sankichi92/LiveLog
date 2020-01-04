@@ -3,18 +3,18 @@ class EntriesController < ApplicationController
   before_action :require_unpublished_live, only: %i[new create]
   before_action :require_submitter_or_player, only: %i[edit update destroy]
 
-  permits :notes, available_times_attributes: %i[id lower upper _destroy]
+  permits :notes, playable_times_attributes: %i[id lower upper _destroy]
 
   def index
     @entries = Entry
-                 .includes(:available_times, song: [:live, { plays: :member }])
+                 .includes(:playable_times, song: [:live, { plays: :member }])
                  .submitted_or_played_by(current_user.member)
                  .order(id: :desc)
   end
 
   def new
     @entry = current_user.member.entries.build
-    @entry.available_times.build
+    @entry.playable_times.build
     @entry.build_song.plays.build
   end
 

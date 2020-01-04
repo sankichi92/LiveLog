@@ -53,7 +53,7 @@ RSpec.describe 'entries request:', type: :request do
       {
         entry: {
           notes: '',
-          available_times_attributes: available_times_attributes,
+          playable_times_attributes: playable_times_attributes,
         },
         song: {
           live_id: live.id.to_s,
@@ -78,7 +78,7 @@ RSpec.describe 'entries request:', type: :request do
     end
 
     context 'with valid params' do
-      let(:available_times_attributes) do
+      let(:playable_times_attributes) do
         {
           '0' => {
             lower: 1.month.from_now.beginning_of_hour.iso8601,
@@ -90,18 +90,18 @@ RSpec.describe 'entries request:', type: :request do
 
       it 'creates entry and redirect_to /entries' do
         expect { post entries_path, params: params }
-          .to change(Entry, :count).by(1).and change(AvailableTime, :count).by(1).and change(Song, :count).by(1)
+          .to change(Entry, :count).by(1).and change(PlayableTime, :count).by(1).and change(Song, :count).by(1)
 
         expect(response).to redirect_to entries_path
       end
     end
 
     context 'with invalid params' do
-      let(:available_times_attributes) { {} }
+      let(:playable_times_attributes) { {} }
 
       it 'responds 422' do
         expect { post entries_path, params: params }
-          .to change(Entry, :count).by(0).and change(AvailableTime, :count).by(0).and change(Song, :count).by(0)
+          .to change(Entry, :count).by(0).and change(PlayableTime, :count).by(0).and change(Song, :count).by(0)
 
         expect(response).to have_http_status :unprocessable_entity
       end
@@ -158,13 +158,13 @@ RSpec.describe 'entries request:', type: :request do
       {
         entry: {
           notes: entry_notes,
-          available_times_attributes: entry.available_times.map.with_index { |available_time, i|
+          playable_times_attributes: entry.playable_times.map.with_index { |playable_time, i|
             [
               i.to_s,
               {
-                id: available_time.id.to_s,
-                lower: available_time.lower.iso8601,
-                upper: available_time.upper.iso8601,
+                id: playable_time.id.to_s,
+                lower: playable_time.lower.iso8601,
+                upper: playable_time.upper.iso8601,
                 _destroy: '0',
               },
             ]

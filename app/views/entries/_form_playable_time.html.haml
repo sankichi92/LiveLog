@@ -1,7 +1,7 @@
-.available-time-form
+.playable-time-form
   = form.hidden_field :_destroy
 
-  .available-time-form-visible-fields.form-row.align-items-end
+  .playable-time-form-visible-fields.form-row.align-items-end
     .form-group.col
       = form.label :range
 
@@ -12,4 +12,4 @@
         = form.datetime_field :upper, class: 'form-control'
 
     .form-group.col-3.col-md-2
-      %button.btn.btn-block.btn-light{ type: 'button', data: { action: 'form-available-times#removeAvailableTime' } }= icon('fas', 'minus-circle', '削除')
+      %button.btn.btn-block.btn-light{ type: 'button', data: { action: 'form-playable-times#removePlayableTime' } }= icon('fas', 'minus-circle', '削除')

@@ -5,15 +5,15 @@ FactoryBot.define do
     notes { Faker::Boolean.boolean ? Faker::Lorem.paragraph : nil }
 
     transient do
-      available_times_count { Faker::Number.between(from: 1, to: 5) }
+      playable_times_count { Faker::Number.between(from: 1, to: 5) }
     end
 
     after(:build) do |entry, evaluator|
-      entry.available_times = build_list(:available_time, evaluator.available_times_count, entry: entry) if entry.available_times.empty?
+      entry.playable_times = build_list(:playable_time, evaluator.playable_times_count, entry: entry) if entry.playable_times.empty?
     end
   end
 
-  factory :available_time do
+  factory :playable_time do
     entry
     lower { Faker::Time.between_dates(from: entry.song.live.date, to: entry.song.live.date, period: entry.song.live.nf? ? :day : :night) }
     upper { Faker::Time.between(from: lower, to: entry.song.live.date.end_of_day) }

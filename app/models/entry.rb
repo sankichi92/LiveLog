@@ -1,11 +1,11 @@
 class Entry < ApplicationRecord
   belongs_to :song
   belongs_to :member
-  has_many :available_times, dependent: :delete_all
+  has_many :playable_times, dependent: :delete_all
 
-  accepts_nested_attributes_for :available_times, allow_destroy: true
+  accepts_nested_attributes_for :playable_times, allow_destroy: true
 
-  validates :available_times, presence: true
+  validates :playable_times, presence: true
   validates_associated :song
   validate :live_must_be_unpublished
 
