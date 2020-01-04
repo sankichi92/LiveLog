@@ -5,18 +5,30 @@ RSpec.describe 'entries request:', type: :request do
     let(:user) { create(:user) }
 
     before do
-      3.times do
-        song = create(:song, :unpublished, members: [user.member])
-        create(:entry, song: song)
-      end
-
       log_in_as user
     end
 
-    it 'responds 200' do
-      get entries_path
+    context 'when logged-in user has entries' do
+      before do
+        3.times do
+          song = create(:song, :unpublished, members: [user.member])
+          create(:entry, song: song)
+        end
+      end
 
-      expect(response).to have_http_status :ok
+      it 'responds 200' do
+        get entries_path
+
+        expect(response).to have_http_status :ok
+      end
+    end
+
+    context 'when logged-in user does not have entries' do
+      it 'redirects to /entries/new' do
+        get entries_path
+
+        expect(response).to redirect_to new_entry_path
+      end
     end
   end
 
@@ -38,10 +50,11 @@ RSpec.describe 'entries request:', type: :request do
     end
 
     context 'when any unpublished lives does not exist' do
-      it 'redirects to /entries' do
+      it 'redirects with alert' do
         get new_entry_path
 
-        expect(response).to redirect_to entries_path
+        expect(response).to have_http_status :redirect
+        expect(flash.alert).to eq 'エントリー募集中のライブがありません'
       end
     end
   end
@@ -145,7 +158,7 @@ RSpec.describe 'entries request:', type: :request do
         get edit_entry_path(entry)
 
         expect(response).to have_http_status :redirect
-        expect(flash[:alert]).to eq '権限がありません'
+        expect(flash.alert).to eq '権限がありません'
       end
     end
   end

@@ -11,7 +11,6 @@ RSpec.describe 'Entry system:', type: :system do
 
     # When
     visit entries_path
-    click_on 'エントリーする'
 
     # Then
     expect(page).to have_title '新規エントリー'

@@ -10,7 +10,7 @@ class Entry < ApplicationRecord
   validate :live_must_be_unpublished
 
   scope :submitted_or_played_by, ->(member) do
-    left_joins(song: :plays).merge(Play.where(member_id: member.id)).or(left_joins(song: :plays).where(member_id: member.id))
+    left_joins(song: :plays).merge(Play.where(member_id: member.id)).or(left_joins(song: :plays).where(member_id: member.id)).distinct
   end
 
   def submitter?(user)

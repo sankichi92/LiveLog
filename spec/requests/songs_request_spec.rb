@@ -76,7 +76,7 @@ RSpec.describe 'songs request:', type: :request do
         get edit_song_path(song)
 
         expect(response).to have_http_status :redirect
-        expect(flash[:alert]).to eq '権限がありません'
+        expect(flash.alert).to eq '権限がありません'
       end
     end
   end

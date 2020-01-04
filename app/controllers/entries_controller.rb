@@ -10,7 +10,7 @@ class EntriesController < ApplicationController
                  .includes(:playable_times, song: [:live, { plays: :member }])
                  .submitted_or_played_by(current_user.member)
                  .order(id: :desc)
-                 .distinct
+    redirect_to new_entry_path unless @entries.exists?
   end
 
   def new
@@ -54,7 +54,7 @@ class EntriesController < ApplicationController
   # region Filters
 
   def require_unpublished_live
-    redirect_to entries_path, alert: 'エントリー募集中のライブがありません' unless Live.unpublished.exists?
+    redirect_back fallback_location: root_path, alert: 'エントリー募集中のライブがありません' unless Live.unpublished.exists?
   end
 
   def require_submitter_or_player(id)
