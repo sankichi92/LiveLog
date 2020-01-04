@@ -1,7 +1,7 @@
 class EntriesController < ApplicationController
   before_action :require_current_user
   before_action :require_unpublished_live, only: %i[new create]
-  before_action :require_submitter_or_player, only: %i[edit update]
+  before_action :require_submitter_or_player, only: %i[edit update destroy]
 
   permits :notes, available_times_attributes: %i[id lower upper _destroy]
 
@@ -41,6 +41,11 @@ class EntriesController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    @entry.song.destroy!
+    redirect_to entries_path, notice: "エントリー ID: #{@entry.id} を削除しました"
   end
 
   private

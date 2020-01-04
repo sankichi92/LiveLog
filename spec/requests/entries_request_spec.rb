@@ -222,4 +222,21 @@ RSpec.describe 'entries request:', type: :request do
       end
     end
   end
+
+  describe 'DELETE /entries/:id' do
+    let(:entry) { create(:entry, member: user.member) }
+    let(:user) { create(:user) }
+
+    before do
+      log_in_as user
+    end
+
+    it 'destroys the entry and redirects to /entries' do
+      delete entry_path(entry)
+
+      expect(response).to redirect_to entries_path
+      expect { entry.song.reload }.to raise_error ActiveRecord::RecordNotFound
+      expect { entry.reload }.to raise_error ActiveRecord::RecordNotFound
+    end
+  end
 end

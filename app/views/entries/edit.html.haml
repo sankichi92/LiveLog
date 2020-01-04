@@ -1,3 +1,6 @@
 - provide(:title, "エントリーの編集（ID: #{@entry.id}）")
 
+%aside.mb-3
+  = link_to '削除する', entry_path(@entry), method: :delete, class: 'btn btn-danger', data: { confirm: '本当に削除しますか？' }
+
 = render 'form', entry: @entry

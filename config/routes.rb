@@ -30,7 +30,7 @@ Rails.application.routes.draw do
 
   resources :stats, only: :show, param: :year
 
-  resources :entries
+  resources :entries, except: :show
 
   scope :settings do
     resource :profile, only: %i[show update]
