@@ -8,7 +8,7 @@
     %thead
       %tr
         %th ID
-        - %i[live name artist plays].each do |attr|
+        - %i[live name plays].each do |attr|
           %th{ scope: 'col' }= Song.human_attribute_name(attr)
         - %i[playable_times notes updated_at].each do |attr|
           %th{ scope: 'col' }= Entry.human_attribute_name(attr)
@@ -19,10 +19,9 @@
           %td= entry.id
           %td= entry.song.live.title
           %td
-            = entry.song.name
+            = entry.song.title
             %small= '(オリジナル曲)' if entry.song.original?
             = entry.song.status_icon
-          %td= entry.song.artist
           %td
             %ul.list-inline.mb-0
               - entry.song.plays.each do |play|

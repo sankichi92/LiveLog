@@ -10,6 +10,7 @@ class EntriesController < ApplicationController
                  .includes(:playable_times, song: [:live, { plays: :member }])
                  .submitted_or_played_by(current_user.member)
                  .order(id: :desc)
+                 .distinct
   end
 
   def new
