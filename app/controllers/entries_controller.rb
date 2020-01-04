@@ -24,6 +24,12 @@ class EntriesController < ApplicationController
     @entry.build_song(song.permit(:live_id, :name, :artist, :original, :status, :comment, plays_attributes: %i[member_id instrument _destroy]))
 
     if @entry.save
+      EntryActivityNotifyJob.perform_later(
+        user: current_user,
+        operation: '作成しました',
+        entry_id: @entry.id,
+        detail: @entry.as_json(include: [:playable_times, { song: { include: :plays } }]),
+      )
       EntryMailer.created(@entry).deliver_now
       redirect_to entries_path, notice: "エントリー ID: #{@entry.id} を作成しました"
     else
@@ -39,6 +45,12 @@ class EntriesController < ApplicationController
 
     if @entry.update(entry)
       @entry.song.save!
+      EntryActivityNotifyJob.perform_later(
+        user: current_user,
+        operation: '更新しました',
+        entry_id: @entry.id,
+        detail: @entry.song.previous_changes.empty? ? @entry.previous_changes : @entry.previous_changes.merge(song: @entry.song.previous_changes),
+      )
       redirect_to entries_path, notice: "エントリー ID: #{@entry.id} を更新しました"
     else
       render :new, status: :unprocessable_entity
@@ -46,7 +58,14 @@ class EntriesController < ApplicationController
   end
 
   def destroy
+    json = @entry.as_json(include: [:playable_times, { song: { include: :plays } }])
     @entry.song.destroy!
+    EntryActivityNotifyJob.perform_later(
+      user: current_user,
+      operation: '削除しました',
+      entry_id: @entry.id,
+      detail: json,
+    )
     redirect_to entries_path, notice: "エントリー ID: #{@entry.id} を削除しました"
   end
 
