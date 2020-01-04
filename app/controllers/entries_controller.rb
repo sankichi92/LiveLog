@@ -24,6 +24,7 @@ class EntriesController < ApplicationController
     @entry.build_song(song.permit(:live_id, :name, :artist, :original, :status, :comment, plays_attributes: %i[member_id instrument _destroy]))
 
     if @entry.save
+      EntryMailer.created(@entry).deliver_now
       redirect_to entries_path, notice: "エントリー ID: #{@entry.id} を作成しました"
     else
       render :new, status: :unprocessable_entity

@@ -1,0 +1,14 @@
+エントリー ID: <%= @entry.id %>
+申請者: <%= @entry.member.joined_year_and_name %>
+ライブ: <%= @entry.song.live.title %>
+曲名 / アーティスト名: <%= @entry.song.title %><%= @entry.song.original? ? '（オリジナル曲）' : '' %>
+演者:
+<% @entry.song.plays.each do |play| %>
+  - <%= play.instrument_and_name %>
+<% end %>
+演奏可能時間:
+<% @entry.playable_times.each do |playable_time| %>
+  - <%= playable_time.formatted_range %>
+<% end %>
+備考:
+<%= @entry.notes %>

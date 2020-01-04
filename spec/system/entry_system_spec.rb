@@ -1,12 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe 'Entry system:', type: :system do
+  include Auth0UserHelper
+
   specify 'A logged-in user creates an entry', js: true do
     # Given
+    ActionMailer::Base.deliveries.clear
     date = 1.month.from_now.to_date
     create(:live, :unpublished, date: date)
     member = create(:member)
     user = create(:user)
+    stub_auth0_user(user)
     log_in_as user
 
     # When
@@ -51,6 +55,7 @@ RSpec.describe 'Entry system:', type: :system do
     expect(page).to have_content "Gt.#{member.name}"
     expect(page).to have_content "#{date.strftime('%-m/%-d')} 18:00〜#{date.strftime('%-m/%-d')} 20:00"
     expect(page).to have_content "#{date.strftime('%-m/%-d')} 21:00〜#{date.strftime('%-m/%-d')} 22:00"
+    expect(ActionMailer::Base.deliveries.size).to eq 1
   end
 
   specify 'A submitter edits their entry', js: true do

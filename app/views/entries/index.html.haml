@@ -29,6 +29,6 @@
           %td
             %ul.list-inline.mb-0
               - entry.playable_times.each do |playable_time|
-                %li.list-inline-item #{l(playable_time.lower, format: :short)}〜#{l(playable_time.upper, format: :short)}
+                %li.list-inline-item= playable_time.formatted_range
           %td= truncate(entry.notes)
           %td= l entry.updated_at, format: :short

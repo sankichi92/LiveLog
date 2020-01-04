@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'entries request:', type: :request do
+  include Auth0UserHelper
+
   describe 'GET /entries' do
     let(:user) { create(:user) }
 
@@ -87,6 +89,7 @@ RSpec.describe 'entries request:', type: :request do
     end
 
     before do
+      stub_auth0_user(user)
       log_in_as user
     end
 
@@ -103,7 +106,10 @@ RSpec.describe 'entries request:', type: :request do
 
       it 'creates entry and redirect_to /entries' do
         expect { post entries_path, params: params }
-          .to change(Entry, :count).by(1).and change(PlayableTime, :count).by(1).and change(Song, :count).by(1)
+          .to change(Entry, :count).by(1)
+          .and change(PlayableTime, :count).by(1)
+          .and change(Song, :count).by(1)
+          .and change { ActionMailer::Base.deliveries.size }.by(1)
 
         expect(response).to redirect_to entries_path
       end
@@ -114,7 +120,10 @@ RSpec.describe 'entries request:', type: :request do
 
       it 'responds 422' do
         expect { post entries_path, params: params }
-          .to change(Entry, :count).by(0).and change(PlayableTime, :count).by(0).and change(Song, :count).by(0)
+          .to change(Entry, :count).by(0)
+          .and change(PlayableTime, :count).by(0)
+          .and change(Song, :count).by(0)
+          .and change { ActionMailer::Base.deliveries.size }.by(0)
 
         expect(response).to have_http_status :unprocessable_entity
       end

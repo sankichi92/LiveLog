@@ -16,6 +16,6 @@ FactoryBot.define do
   factory :playable_time do
     entry
     lower { Faker::Time.between_dates(from: entry.song.live.date, to: entry.song.live.date, period: entry.song.live.nf? ? :day : :night).beginning_of_minute }
-    upper { Faker::Time.between(from: lower, to: entry.song.live.date.end_of_day).beginning_of_minute }
+    upper { Faker::Time.between(from: lower + 1.minute, to: entry.song.live.date.end_of_day + 1.hour).beginning_of_minute }
   end
 end
