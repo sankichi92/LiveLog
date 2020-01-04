@@ -1,13 +1,21 @@
 FactoryBot.define do
   factory :entry do
-    song
+    association :song, factory: %i[song unpublished]
     member
     notes { Faker::Boolean.boolean ? Faker::Lorem.paragraph : nil }
-    available_times { build_list(:available_time, Faker::Number.between(from: 1, to: 5)) }
+
+    transient do
+      available_times_count { Faker::Number.between(from: 1, to: 5) }
+    end
+
+    after(:build) do |entry, evaluator|
+      entry.available_times = build_list(:available_time, evaluator.available_times_count, entry: entry) if entry.available_times.empty?
+    end
   end
 
   factory :available_time do
-    lower { entry&.song&.live&.date&.beginning_of_day&.iso8601 || 1.month.from_now.beginning_of_day.iso8601 }
-    upper { entry&.song&.live&.date&.end_of_day&.iso8601 || 1.month.from_now.end_of_day.iso8601 }
+    entry
+    lower { Faker::Time.between_dates(from: entry.song.live.date, to: entry.song.live.date, period: entry.song.live.nf? ? :day : :night) }
+    upper { Faker::Time.between(from: lower, to: entry.song.live.date.end_of_day) }
   end
 end

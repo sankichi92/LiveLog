@@ -55,7 +55,7 @@ class Song < ApplicationRecord
   end
 
   def youtube_url=(url_str)
-    uri = URI.parse(url_str)
+    uri = URI.parse(url_str.to_s)
     self.youtube_id = case uri.host
                       when 'www.youtube.com'
                         Rack::Utils.parse_query(uri.query)['v']

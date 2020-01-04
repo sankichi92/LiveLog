@@ -15,7 +15,7 @@
 
     %tbody
       - @entries.each do |entry|
-        %tr
+        %tr.link{ data: { location: edit_entry_path(entry) } }
           %td= entry.id
           %td= entry.song.live.title
           %td
