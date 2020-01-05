@@ -20,9 +20,9 @@ class SongsController < ApplicationController
   end
 
   def show(id)
-    @song = Song.includes(plays: { member: { 'avatar_attachment': :blob } }).find(id)
+    @song = Song.published.includes(plays: { member: { 'avatar_attachment': :blob } }).find(id)
     begin
-      @related_songs = @song.more_like_this.records(includes: [:live, { plays: :member }]).to_a if @song.live.published?
+      @related_songs = @song.more_like_this.records(includes: [:live, { plays: :member }]).to_a
     rescue => e
       Raven.capture_exception(e)
     end
@@ -44,7 +44,7 @@ class SongsController < ApplicationController
   # region Filters
 
   def require_player(id)
-    @song = Song.find(id)
+    @song = Song.published.find(id)
     redirect_back fallback_location: song_path(@song), alert: '権限がありません' unless @song.player?(current_user.member)
   end
 
