@@ -12,7 +12,7 @@ module Admin
       @live = Live.find(live_id)
       @song = @live.songs.build(song)
 
-      if @song.save_with_plays_attributes
+      if @song.save
         AdminActivityNotifyJob.perform_later(
           user: current_user,
           operation: '作成しました',
@@ -34,7 +34,7 @@ module Admin
       @song = Song.find(id)
       @song.assign_attributes(song)
 
-      if @song.save_with_plays_attributes
+      if @song.save
         AdminActivityNotifyJob.perform_later(
           user: current_user,
           operation: '更新しました',
@@ -50,12 +50,13 @@ module Admin
 
     def destroy(id)
       song = Song.find(id)
+      json = song.as_json(include: :plays)
       song.destroy!
       AdminActivityNotifyJob.perform_now(
         user: current_user,
         operation: '削除しました',
         object: song,
-        detail: song.as_json,
+        detail: json,
         url: admin_live_url(song.live),
       )
       redirect_to admin_live_path(song.live), notice: "ID: #{song.id} を削除しました"

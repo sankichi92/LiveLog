@@ -1,82 +1,100 @@
 require 'rails_helper'
 
-RSpec.describe 'Entry', type: :system do
+RSpec.describe 'Entry system:', type: :system do
   include Auth0UserHelper
 
-  let(:live) { create(:live, :unpublished) }
-  let(:user) { create(:user) }
+  specify 'A logged-in user creates an entry', js: true do
+    # Given
+    ActionMailer::Base.deliveries.clear
+    date = 1.month.from_now.to_date
+    create(:live, :unpublished, date: date)
+    member = create(:member)
+    user = create(:user)
+    stub_auth0_user(user)
+    log_in_as user
 
-  describe 'list' do
-    let!(:user_song) { create(:song, :draft, name: 'applied song', live: live, members: [user.member, create(:member)]) }
-    let!(:other_song) { create(:song, :draft, name: 'other song', live: live) }
+    # When
+    visit entries_path
 
-    it 'enables logged-in users to see individual live entries pages and their applied songs' do
-      log_in_as user
-      visit root_path
-      click_link live.name
+    # Then
+    expect(page).to have_title '新規エントリー'
 
-      expect(page).to have_title(live.title)
-      expect(page).to have_content(live.name)
-      expect(page).to have_link('エントリーする', href: new_live_entry_path(live))
-      expect(page).not_to have_css('#admin-tools')
-      expect(page).to have_content(user_song.name)
-      user_song.plays.each do |play|
-        expect(page).to have_content(play.member.name)
-      end
-      expect(page).not_to have_content(other_song.name)
+    # When
+    click_button '演者を追加する'
+    click_button '演奏可能時間を追加する'
+
+    # Then
+    expect(page).to have_selector '.play-form', count: 2
+    expect(page).to have_selector '.playable-time-form', count: 2
+
+    # When
+    fill_in '曲名', with: '恋はリズムに乗って'
+    fill_in 'アーティスト', with: '□□□'
+    within all('.play-form-visible-fields')[0] do
+      fill_in '楽器', with: 'Vo'
+      select user.member.joined_year_and_name, from: 'メンバー'
     end
-
-    it 'enables admin users to see individual live entries pages and all applied songs' do
-      log_in_as create(:admin)
-      visit live_entries_path(live)
-
-      expect(page).to have_title(live.title)
-      expect(page).to have_link('エントリーする', href: new_live_entry_path(live))
-      expect(page).to have_css('#admin-tools')
-      live.songs.each do |entry|
-        expect(page).to have_content(entry.name)
-      end
+    within all('.play-form-visible-fields')[1] do
+      fill_in '楽器', with: 'Gt'
+      select member.joined_year_and_name, from: 'メンバー'
     end
+    within all('.playable-time-form-visible-fields')[0] do
+      find('input[name*=lower]').set(date + 18.hours)
+      find('input[name*=upper]').set(date + 20.hours)
+    end
+    within all('.playable-time-form-visible-fields')[1] do
+      find('input[name*=lower]').set(date + 21.hours)
+      find('input[name*=upper]').set(date + 22.hours)
+    end
+    click_button '登録する'
+
+    # Then
+    expect(page).to have_content '作成しました'
+    expect(page).to have_content '恋はリズムに乗って / □□□'
+    expect(page).to have_content "Vo.#{user.member.name}"
+    expect(page).to have_content "Gt.#{member.name}"
+    expect(page).to have_content "#{date.strftime('%-m/%-d')} 18:00〜#{date.strftime('%-m/%-d')} 20:00"
+    expect(page).to have_content "#{date.strftime('%-m/%-d')} 21:00〜#{date.strftime('%-m/%-d')} 22:00"
+    expect(ActionMailer::Base.deliveries.size).to eq 1
   end
 
-  describe 'add' do
-    let!(:members) { create_list(:member, 5) }
+  specify 'A submitter edits their entry', js: true do
+    # Given
+    user = create(:user)
+    entry = create(:entry, member: user.member, notes: '', playable_times_count: 2)
+    log_in_as user
 
-    before do
-      ActionMailer::Base.deliveries.clear
-      log_in_as user
-      stub_auth0_user(user)
+    # When
+    visit edit_entry_path(entry)
+
+    # Then
+    expect(page).to have_title 'エントリーの編集'
+
+    # When
+    fill_in '備考', with: '間奏でボーカルがフルートを吹きます'
+    within '.playable-time-form-visible-fields', match: :first do
+      click_button '削除'
     end
+    click_button '更新する'
 
-    it 'enables logged-in users to create new entries', js: true do
-      visit new_live_entry_path(live)
+    # Then
+    expect(page).to have_content "エントリー ID: #{entry.id} を更新しました"
+    expect(page).to have_content '間奏でボーカルがフルートを吹きます'
+    expect(entry.reload.playable_times.count).to eq 1
+  end
 
-      expect(page).to have_title('Entry')
-      expect(page).to have_content('Entry')
+  specify 'A submitter deletes their entry' do
+    # Given
+    user = create(:user)
+    entry = create(:entry, member: user.member)
+    log_in_as user
 
-      2.times do
-        click_button 'add-member'
-      end
-      click_button class: 'remove-member', match: :first
+    # When
+    visit edit_entry_path(entry)
+    click_on '削除する'
 
-      fill_in 'song_name', with: 'テストソング'
-      fill_in 'song_artist', with: 'テストアーティスト'
-      select 'サークル内', from: 'song_status'
-
-      [user.member, members.first].each_with_index do |member, i|
-        all('.instrument-field')[i].set('Gt')
-        all('.member-select')[i].find(:option, member.joined_year_and_name).select_option
-      end
-
-      fill_in 'entry_preferred_rehearsal_time', with: '23時以前'
-      fill_in 'entry_preferred_performance_time', with: '20時以降'
-
-      accept_confirm do
-        click_button '送信する'
-      end
-
-      expect(page).to have_css('.alert-info')
-      expect(ActionMailer::Base.deliveries.size).to eq 1
-    end
+    # Then
+    expect(page).to have_content "エントリー ID: #{entry.id} を削除しました"
+    expect { entry.reload }.to raise_error ActiveRecord::RecordNotFound
   end
 end

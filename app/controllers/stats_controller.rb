@@ -9,6 +9,6 @@ class StatsController < ApplicationController
   private
 
   def current_year(year)
-    redirect_to stat_url(Live.years.first) if year == 'current'
+    redirect_to stat_url(Live.published.years.first) if year == 'current'
   end
 end

@@ -23,6 +23,17 @@ create_table :active_storage_blobs, force: :cascade do |t|
   t.index :key, unique: true
 end
 
+create_table :entries, force: :cascade do |t|
+  t.bigint :song_id, null: false
+  t.bigint :member_id, null: false
+  t.text :notes
+
+  t.timestamps
+
+  t.index :song_id, unique: true
+  t.index :member_id
+end
+
 create_table :lives, force: :cascade do |t|
   t.string :name, null: false
   t.date :date, null: false
@@ -49,6 +60,16 @@ create_table :members, force: :cascade do |t|
 
   t.index %i[name joined_year], unique: true
   t.index %i[joined_year plays_count]
+end
+
+create_table :playable_times, force: :cascade do |t|
+  t.bigint :entry_id, null: false
+  t.tsrange :range, null: false
+
+  t.timestamps
+
+  t.index :entry_id
+  t.index :range, using: :gist
 end
 
 create_table :plays, force: :cascade do |t|
@@ -95,6 +116,9 @@ create_table :users, force: :cascade do |t|
 end
 
 add_foreign_key :active_storage_attachments, :active_storage_blobs, column: :blob_id
+add_foreign_key :entries, :members
+add_foreign_key :entries, :songs
+add_foreign_key :playable_times, :entries
 add_foreign_key :plays, :members
 add_foreign_key :plays, :songs
 add_foreign_key :songs, :lives, column: :live_id

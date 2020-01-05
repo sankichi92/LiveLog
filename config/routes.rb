@@ -18,8 +18,6 @@ Rails.application.routes.draw do
     member do
       get :album
     end
-
-    resources :entries, only: %i[index new create]
   end
 
   resources :members, only: %i[index show] do
@@ -31,6 +29,8 @@ Rails.application.routes.draw do
   end
 
   resources :stats, only: :show, param: :year
+
+  resources :entries, except: :show
 
   scope :settings do
     resource :profile, only: %i[show update]
@@ -52,6 +52,8 @@ Rails.application.routes.draw do
       resource :user, only: :destroy
       resource :admin, only: %i[create destroy]
     end
+
+    resources :entries, only: %i[index edit update]
   end
 
   direct :organization do

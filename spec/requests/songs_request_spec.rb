@@ -51,47 +51,74 @@ RSpec.describe 'songs request:', type: :request do
     end
   end
 
-  describe 'GET /songs/:id/edit by player' do
-    let(:song) { create(:song, members: [user.member]) }
+  describe 'GET /songs/:id/edit' do
+    let(:song) { create(:song) }
     let(:user) { create(:user) }
 
     before do
-      log_in_as(user)
+      log_in_as user
     end
 
-    it 'responds 200' do
-      get edit_song_path(song)
+    context 'when the current_user is a player of the song' do
+      before do
+        create(:play, song: song, member: user.member)
+      end
 
-      expect(response).to have_http_status(:ok)
+      it 'responds 200' do
+        get edit_song_path(song)
+
+        expect(response).to have_http_status :ok
+      end
+    end
+
+    context 'when the current_user is NOT a player of the song' do
+      it 'redirects with alert' do
+        get edit_song_path(song)
+
+        expect(response).to have_http_status :redirect
+        expect(flash.alert).to eq '権限がありません'
+      end
     end
   end
 
-  describe 'PATCH /songs/:id by player' do
-    let(:song) { create(:song) }
+  describe 'PATCH /songs/:id' do
+    let(:song) { create(:song, name: 'before', members: [user.member]) }
+    let(:user) { create(:user) }
+    let(:params) do
+      {
+        song: {
+          name: song_name,
+          artist: song.artist,
+          original: song.original,
+          status: song.status,
+          comment: song.comment,
+        },
+      }
+    end
 
     before do
-      user = create(:user)
-      create(:play, member: user.member, song: song)
       log_in_as user
     end
 
     context 'with valid params' do
-      let(:new_song_attrs) { attributes_for(:song, name: 'updated song') }
+      let(:song_name) { 'after' }
 
       it 'updates the song and redirects to /songs/:id' do
-        patch song_path(song), params: { song: new_song_attrs }
+        patch song_path(song), params: params
+
+        expect(song.reload.name).to eq song_name
         expect(response).to redirect_to(song)
-        expect(song.reload.name).to eq 'updated song'
       end
     end
 
     context 'with invalid params' do
-      let(:new_song_attrs) { attributes_for(:song, name: '') }
+      let(:song_name) { '' }
 
       it 'responds 422' do
-        patch song_path(song), params: { song: new_song_attrs }
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(song.reload.name).not_to eq ''
+        patch song_path(song), params: params
+
+        expect(song.reload.name).not_to eq song_name
+        expect(response).to have_http_status :unprocessable_entity
       end
     end
   end

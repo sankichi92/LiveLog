@@ -3,7 +3,7 @@
 
 %article
   %nav.nav.nav-pills.mb-3
-    - Live.years.each do |year|
+    - Live.published.years.each do |year|
       = link_to year, stat_path(year), class: "nav-link#{year == @stats.year ? ' active' : ''}"
 
   %p.lead<

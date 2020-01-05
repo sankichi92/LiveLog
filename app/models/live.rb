@@ -14,11 +14,15 @@ class Live < ApplicationRecord
   scope :published, -> { where(published: true) }
 
   def self.years
-    published.newest_order.pluck(:date).map(&:nendo).uniq
+    newest_order.pluck(:date).map(&:nendo).uniq
   end
 
   def title
     "#{date.year} #{name}"
+  end
+
+  def date_and_name
+    "#{I18n.l(date)} #{name}"
   end
 
   def nf?
@@ -30,5 +34,6 @@ class Live < ApplicationRecord
 
     update!(published: true, published_at: Time.zone.now)
     songs.includes(:audio_attachment, :plays).import
+    Entry.joins(:song).merge(Song.where(live_id: id)).destroy_all
   end
 end

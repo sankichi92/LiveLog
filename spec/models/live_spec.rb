@@ -1,45 +1,33 @@
 require 'rails_helper'
 
 RSpec.describe Live, type: :model do
-  describe 'validations' do
-    subject(:live) { build(:live) }
+  describe '#publish!', elasticsearch: true do
+    subject(:publish!) { live.publish! }
 
-    it { is_expected.to be_valid }
-
-    describe 'when name is blank' do
-      before { live.name = '' }
-
-      it { is_expected.not_to be_valid }
-    end
-
-    describe 'when date is blank' do
-      before { live.date = '' }
-
-      it { is_expected.not_to be_valid }
-    end
-
-    describe 'when the combination of name and date is already taken' do
-      before { live.dup.save }
-
-      it { is_expected.not_to be_valid }
-    end
-
-    describe 'when album_url is invalid' do
-      before { live.album_url = 'invalid' }
-
-      it { is_expected.not_to be_valid }
-    end
-  end
-
-  describe 'song associations' do
-    let(:live) { create(:live) }
+    let(:live) { create(:live, :unpublished) }
 
     before do
-      create(:song, live: live)
+      3.times do
+        song = create(:song, :unpublished, live: live)
+        create(:entry, song: song)
+      end
     end
 
-    it 'raises an exception when live is deleted with songs' do
-      expect { live.destroy! }.to raise_exception ActiveRecord::DeleteRestrictionError
+    it 'updates column `publish` and destroys entries' do
+      live.publish!
+
+      expect(live.reload).to be_published
+      expect(live.songs.map(&:entry).compact).to be_empty
+    end
+
+    context 'when already published' do
+      before do
+        live.publish!
+      end
+
+      it 'raise AlreadyPublishedError' do
+        expect { live.publish! }.to raise_error Live::AlreadyPublishedError
+      end
     end
   end
 end

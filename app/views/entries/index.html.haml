@@ -1,24 +1,34 @@
-- provide(:title, @live.title)
-%header.page-header.d-flex.flex-column.flex-md-row.justify-content-between.align-items-md-center
-  %h1<
-    = @live.name
-    %small.text-muted
-      = @live.date_and_place
-  = @live.new_entry_link class: 'btn btn-info btn-lg'
+- provide(:title, 'エントリー')
 
-- if current_user.admin?
-  %aside.btn-toolbar.justify-content-end.mb-3#admin-tools{ role: 'toolbar' }
-    - if current_user&.admin?
-      .btn-group.mr-2{ rold: 'group' }
-        = link_to icon('fas', 'edit') + ' ' + '曲を編集する', live_entries_path(@live, edit: true), class: 'btn btn-outline-secondary'
+%aside.mb-3
+  = link_to icon('fas', 'paper-plane', '新規エントリー'), new_entry_path, class: 'btn btn-outline-primary'
 
-%p.text-right<
-  全
-  %b= @songs.size
-  件
+%section.table-responsive
+  %table.table.table-hover.text-nowrap
+    %thead
+      %tr
+        %th ID
+        - %i[live name plays].each do |attr|
+          %th{ scope: 'col' }= Song.human_attribute_name(attr)
+        - %i[playable_times notes updated_at].each do |attr|
+          %th{ scope: 'col' }= Entry.human_attribute_name(attr)
 
-- if params[:edit].present? && current_user&.admin?
-  = render partial: 'form_easy', collection: @songs, as: :song
-- else
-  .song-list
-    = render @songs
+    %tbody
+      - @entries.each do |entry|
+        %tr.link{ data: { location: edit_entry_path(entry) } }
+          %td= entry.id
+          %td= entry.song.live.title
+          %td
+            = entry.song.title
+            %small= '(オリジナル曲)' if entry.song.original?
+            = entry.song.status_icon
+          %td
+            %ul.list-inline.mb-0
+              - entry.song.plays.each do |play|
+                %li.list-inline-item= play.instrument_and_name
+          %td
+            %ul.list-inline.mb-0
+              - entry.playable_times.each do |playable_time|
+                %li.list-inline-item= playable_time.formatted_range
+          %td= truncate(entry.notes)
+          %td= l entry.updated_at, format: :short

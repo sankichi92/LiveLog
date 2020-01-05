@@ -1,48 +1,86 @@
 class EntriesController < ApplicationController
-  permits :name, :artist, :original, :status, plays_attributes: %i[id member_id instrument _destroy], model_name: 'Song'
+  before_action :require_current_user
+  before_action :require_unpublished_live, only: %i[new create]
+  before_action :require_submitter_or_player, only: %i[edit update destroy]
 
-  before_action :set_live
-  before_action :draft_live
-
-  after_action :verify_authorized
-  after_action :verify_policy_scoped, only: :index
+  permits :notes, playable_times_attributes: %i[id lower upper _destroy]
 
   def index
-    authorize Entry
-    @songs = policy_scope(@live.songs).with_attached_audio.includes(plays: :member).played_order
+    @entries = Entry
+                 .includes(:playable_times, song: [:live, { plays: :member }])
+                 .submitted_or_played_by(current_user.member)
+                 .order(id: :desc)
+    redirect_to new_entry_path unless @entries.exists?
   end
 
   def new
-    authorize Entry
-    @song = @live.songs.build
-    @song.plays.build
+    @entry = current_user.member.entries.build
+    @entry.playable_times.build
+    @entry.build_song.plays.build
   end
 
-  def create(song, entry)
-    authorize Entry
-    @song = @live.songs.build(song)
-    return render(status: :unprocessable_entity) unless @song.save
-    entry = Entry.new(
-      applicant: current_user,
-      song: @song,
-      preferred_rehearsal_time: entry[:preferred_rehearsal_time],
-      preferred_performance_time: entry[:preferred_performance_time],
-      notes: entry[:notes],
+  def create(entry, song)
+    @entry = current_user.member.entries.build(entry)
+    @entry.build_song(song.permit(:live_id, :name, :artist, :original, :status, :comment, plays_attributes: %i[member_id instrument _destroy]))
+
+    if @entry.save
+      EntryActivityNotifyJob.perform_later(
+        user: current_user,
+        operation: '作成しました',
+        entry_id: @entry.id,
+        detail: @entry.as_json(include: [:playable_times, { song: { include: :plays } }]),
+      )
+      EntryMailer.created(@entry).deliver_now
+      redirect_to entries_path, notice: "エントリー ID: #{@entry.id} を作成しました"
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
+
+  def edit
+  end
+
+  def update(entry, song)
+    @entry.song.assign_attributes(song.permit(:live_id, :name, :artist, :original, :status, :comment, plays_attributes: %i[id member_id instrument _destroy]))
+
+    if @entry.update(entry)
+      @entry.song.save!
+      EntryActivityNotifyJob.perform_later(
+        user: current_user,
+        operation: '更新しました',
+        entry_id: @entry.id,
+        detail: @entry.song.previous_changes.empty? ? @entry.previous_changes : @entry.previous_changes.merge(song: @entry.song.previous_changes),
+      )
+      redirect_to entries_path, notice: "エントリー ID: #{@entry.id} を更新しました"
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    json = @entry.as_json(include: [:playable_times, { song: { include: :plays } }])
+    @entry.song.destroy!
+    EntryActivityNotifyJob.perform_later(
+      user: current_user,
+      operation: '削除しました',
+      entry_id: @entry.id,
+      detail: json,
     )
-    entry.send_email
-    redirect_to live_entries_url(@live), notice: "#{@live.title} に #{@song.title} をエントリーしました"
-  rescue ActiveRecord::RecordNotUnique
-    @song.errors.add(:plays, :duplicated)
-    render status: :unprocessable_entity
+    redirect_to entries_path, notice: "エントリー ID: #{@entry.id} を削除しました"
   end
 
   private
 
-  def set_live(live_id)
-    @live = Live.find(live_id)
+  # region Filters
+
+  def require_unpublished_live
+    redirect_back fallback_location: root_path, alert: 'エントリー募集中のライブがありません' unless Live.unpublished.exists?
   end
 
-  def draft_live
-    redirect_to @live, status: :moved_permanently if @live.published?
+  def require_submitter_or_player(id)
+    @entry = Entry.find(id)
+    redirect_back fallback_location: entries_path, alert: '権限がありません' if !@entry.submitter?(current_user) && !@entry.song.player?(current_user.member)
   end
+
+  # endregion
 end

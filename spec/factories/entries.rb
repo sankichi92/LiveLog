@@ -1,11 +1,21 @@
 FactoryBot.define do
-  factory :entry, class: 'Entry' do
-    association :applicant, factory: :user
-    association :song, factory: %i[song draft]
-    preferred_rehearsal_time { '〜20:00,22:30〜25:00' }
-    preferred_performance_time { '19:00〜20:30,23:00〜' }
-    notes { 'Vo がタンバリンを使うかもしれません。' }
+  factory :entry do
+    association :song, factory: %i[song unpublished]
+    member
+    notes { Faker::Boolean.boolean ? Faker::Lorem.paragraph : nil }
 
-    initialize_with { new attributes }
+    transient do
+      playable_times_count { Faker::Number.between(from: 1, to: 5) }
+    end
+
+    after(:build) do |entry, evaluator|
+      entry.playable_times = build_list(:playable_time, evaluator.playable_times_count, entry: entry) if entry.playable_times.empty?
+    end
+  end
+
+  factory :playable_time do
+    entry
+    lower { Faker::Time.between_dates(from: entry.song.live.date, to: entry.song.live.date, period: entry.song.live.nf? ? :day : :night).beginning_of_minute }
+    upper { Faker::Time.between(from: lower + 1.minute, to: lower + 6.hours).beginning_of_minute }
   end
 end

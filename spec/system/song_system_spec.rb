@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Song', type: :system do
+RSpec.describe 'Song system:', type: :system do
   describe 'search' do
     let!(:beatles_song) { create(:song, artist: 'The Beatles', name: 'Yesterday') }
 
@@ -47,25 +47,29 @@ RSpec.describe 'Song', type: :system do
     end
   end
 
-  describe 'edit' do
-    let(:user) { create(:user) }
-    let(:song) { create(:song, members: [user.member], audio: nil) }
+  specify 'A logged-in user edits their played song', js: true do
+    # Given
+    members = create_list(:member, 3)
+    song = create(:song, name: 'before', members: members)
+    user = create(:user, member: members.first)
+    log_in_as user
 
-    it 'enables logged-in users to update songs they played' do
-      log_in_as user
+    # When
+    visit song_path(song)
+    click_on '編集する'
 
-      visit song_path(song)
-      click_link '編集する'
+    # Then
+    expect(page).to have_title '曲の編集'
+    expect(page).to have_selector '.play-form', count: 3
 
-      expect(page).to have_title('曲の編集')
+    # When
+    fill_in '曲名', with: 'after'
+    click_button '削除', match: :first
+    click_button '更新する'
 
-      select '公開', from: 'song_status'
-      fill_in 'song_comment', with: 'お気に入りの曲です'
-      click_button '更新する'
-
-      expect(page).to have_css('.alert-info')
-      expect(song.reload.status).to eq 'open'
-      expect(song.comment).to eq 'お気に入りの曲です'
-    end
+    # Then
+    expect(page).to have_content '更新しました'
+    expect(page).to have_content 'after'
+    expect(song.plays.count).to eq 2
   end
 end

@@ -2,8 +2,9 @@ class Song < ApplicationRecord
   include SongSearchable
 
   belongs_to :live, counter_cache: true
-  has_many :plays, dependent: :destroy, inverse_of: :song
+  has_many :plays, dependent: :destroy
   has_many :members, through: :plays
+  has_one :entry, dependent: :destroy
   has_one_attached :audio
 
   accepts_nested_attributes_for :plays, allow_destroy: true
@@ -13,6 +14,8 @@ class Song < ApplicationRecord
   enum status: { secret: 0, closed: 1, open: 2 }
 
   validates :name, presence: true
+  validates :position, presence: true, on: :update
+  validate :unique_players
 
   scope :played_order, -> { order(:time, :position) }
   scope :newest_live_order, -> { joins(:live).order('lives.date desc', :time, :position) }
@@ -32,14 +35,6 @@ class Song < ApplicationRecord
     where.not(artist: '').group(:artist).order(count_all: :desc).having('count(*) >= 2').count.keys
   end
 
-  # FIXME: https://github.com/sankichi92/LiveLog/issues/118
-  def save_with_plays_attributes
-    save
-  rescue ActiveRecord::RecordNotUnique
-    errors.add(:plays, :duplicated)
-    false
-  end
-
   def title
     if artist.present?
       "#{name} / #{artist}"
@@ -52,7 +47,7 @@ class Song < ApplicationRecord
     if time.nil?
       live.date
     else
-      live.date + time.hour.hours + time.min.minutes
+      live.date.in_time_zone.change(hour: time.hour, min: time.min)
     end
   end
 
@@ -61,7 +56,7 @@ class Song < ApplicationRecord
   end
 
   def youtube_url=(url_str)
-    uri = URI.parse(url_str)
+    uri = URI.parse(url_str.to_s)
     self.youtube_id = case uri.host
                       when 'www.youtube.com'
                         Rack::Utils.parse_query(uri.query)['v']
@@ -83,4 +78,15 @@ class Song < ApplicationRecord
   def player?(member)
     plays.map(&:member_id).include?(member&.id)
   end
+
+  private
+
+  # region Validations
+
+  # FIXME: https://github.com/sankichi92/LiveLog/issues/118
+  def unique_players
+    errors.add(:plays, :duplicated) if plays.map(&:member_id).uniq!
+  end
+
+  # endregion
 end

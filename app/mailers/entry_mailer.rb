@@ -1,10 +1,14 @@
 class EntryMailer < ApplicationMailer
   default to: '"PA" <pa@ku-unplugged.net>'
 
-  def entry(entry)
+  def created(entry)
     @entry = entry
-    from = %("#{entry.applicant.member.name}" <noreply@livelog.ku-unplugged.net>)
-    cc = %("#{entry.applicant.member.name}" <#{entry.applicant.auth0_user.email}>)
-    mail from: from, cc: cc, subject: "#{entry.live.name} 曲申請「#{entry.title}」"
+    from = %("#{entry.member.name}" <noreply@livelog.ku-unplugged.net>)
+    bcc = if entry.member.user.auth0_user.email_verified?
+            %("#{entry.member.name}" <#{entry.member.user.auth0_user.email}>)
+          else
+            nil
+          end
+    mail from: from, bcc: bcc, subject: "新規エントリー: #{entry.song.live.name}「#{entry.song.title}」"
   end
 end

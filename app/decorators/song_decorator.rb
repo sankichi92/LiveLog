@@ -3,8 +3,12 @@ module SongDecorator
     time.present? ? "#{time_str} #{position}" : position
   end
 
-  def playable?
-    policy(self).play? && audio.attached?
+  def youtube_playable?
+    youtube_id.present? && media_playable?
+  end
+
+  def audio_playable?
+    audio.attached? && media_playable?
   end
 
   def audio_url
@@ -41,14 +45,6 @@ module SongDecorator
     live.songs.played_order.where('songs.time > ? or songs.position > ?', time, position).first
   end
 
-  def edit_link(html_options)
-    link_to_edit edit_song_path(self), html_options
-  end
-
-  def delete_link(html_options)
-    link_to_delete self, html_options.merge(data: { confirm: '本当に削除しますか？' })
-  end
-
   def twitter_share_button(html_options)
     uri = URI.parse('https://twitter.com/intent/tweet')
     uri.query = {
@@ -65,5 +61,11 @@ module SongDecorator
   def facebook_share_button(html_options)
     html_options[:class] = html_options[:class].nil? ? 'fb-share' : html_options[:class] + ' fb-share'
     button_tag icon('fab', 'facebook') + ' Facebook', html_options.merge(data: { url: song_url(self), content_type: 'song', content_id: id }, type: 'button')
+  end
+
+  private
+
+  def media_playable?
+    open? || closed? && current_user || player?(current_user&.member)
   end
 end

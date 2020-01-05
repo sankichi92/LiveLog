@@ -52,7 +52,7 @@ class Stats
   private
 
   def year_must_be_included_in_live_years
-    unless Live.years.include?(year)
+    unless Live.published.years.include?(year)
       errors.add(:year, :inclusion)
     end
   end

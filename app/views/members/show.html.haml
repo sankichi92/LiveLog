@@ -43,7 +43,7 @@
         .btn-group.mr-2
           = link_to 'LiveLog に招待する', new_member_user_path(@member), class: 'btn btn-info'
 
-- unless (playable_songs = @songs.select(&:playable?)).empty?
+- unless (playable_songs = @songs.select(&:audio_playable?)).empty?
   = render 'songs/playlist', songs: playable_songs
 
 - unless @songs.empty?

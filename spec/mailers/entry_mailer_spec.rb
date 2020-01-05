@@ -3,41 +3,36 @@ require 'rails_helper'
 RSpec.describe EntryMailer, type: :mailer do
   include Auth0UserHelper
 
-  describe 'entry' do
-    let(:applicant) { create(:user) }
-    let(:applicant_email) { 'applicant@example.com' }
-    let(:player) { create(:user) }
-    let(:song) { create(:song, members: [applicant.member, player.member]) }
-    let(:entry) { build(:entry, applicant: applicant, song: song) }
-    let(:mail) { EntryMailer.entry(entry) }
+  describe '#created' do
+    subject(:mail) { EntryMailer.created(entry) }
 
-    before do
-      stub_auth0_user(applicant, email: applicant_email)
+    let(:entry) { create(:entry, member: user.member) }
+    let(:user) { create(:user) }
+
+    context 'when submitter has verified email' do
+      before do
+        stub_auth0_user(user, email: 'submitter@example.com', email_verified: true)
+      end
+
+      it 'renders the headers with bcc' do
+        expect(mail.from).to contain_exactly ApplicationMailer::DEFAULT_FROM_EMAIL
+        expect(mail.to).to contain_exactly 'pa@ku-unplugged.net'
+        expect(mail.bcc).to contain_exactly 'submitter@example.com'
+        expect(mail.subject).to eq "新規エントリー: #{entry.song.live.name}「#{entry.song.title}」"
+      end
     end
 
-    it 'renders the headers' do
-      expect(mail.subject).to eq("#{song.live.name} 曲申請「#{song.title}」")
-      expect(mail.to).to eq(['pa@ku-unplugged.net'])
-      expect(mail.from).to eq(['noreply@livelog.ku-unplugged.net'])
-      expect(mail.cc).to eq([applicant_email])
-    end
+    context 'when submitter does not have verified email' do
+      before do
+        stub_auth0_user(user, email_verified: false)
+      end
 
-    it 'renders the text body' do
-      expect(mail.text_part.body).to include(applicant.member.name)
-      expect(mail.text_part.body).to include(song.title)
-      expect(mail.text_part.body).to include(player.member.name)
-      expect(mail.text_part.body).to include(entry.notes)
-      expect(mail.text_part.body).to include(entry.preferred_rehearsal_time)
-      expect(mail.text_part.body).to include(entry.preferred_performance_time)
-    end
-
-    it 'renders the html body' do
-      expect(mail.html_part.body).to include(applicant.member.name)
-      expect(mail.html_part.body).to include(CGI.escapeHTML(song.name))
-      expect(mail.html_part.body).to include(player.member.name)
-      expect(mail.html_part.body).to include(entry.notes)
-      expect(mail.html_part.body).to include(entry.preferred_rehearsal_time)
-      expect(mail.html_part.body).to include(entry.preferred_performance_time)
+      it 'renders the headers without bcc' do
+        expect(mail.from).to contain_exactly ApplicationMailer::DEFAULT_FROM_EMAIL
+        expect(mail.to).to contain_exactly 'pa@ku-unplugged.net'
+        expect(mail.bcc).to be_empty
+        expect(mail.subject).to eq "新規エントリー: #{entry.song.live.name}「#{entry.song.title}」"
+      end
     end
   end
 end

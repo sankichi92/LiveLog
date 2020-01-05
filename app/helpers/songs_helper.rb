@@ -1,13 +1,4 @@
 module SongsHelper
-  def button_to_add_member(form)
-    fields = form.fields_for(:plays, form.object.plays.build) do |builder|
-      render 'songs/inputs/plays_fields', f: builder
-    end
-    content_tag :button,
-                icon('fas', 'plus') + ' ' + 'メンバーを追加する',
-                id: 'add-member', type: 'button', class: 'btn btn-light', data: { fields: fields.delete("\n") }
-  end
-
   def link_to_search(name, options = nil, html_options = nil, &block)
     if block_given?
       html_options = options

@@ -1,7 +1,8 @@
-- provide(:title, "曲の編集 (#{@song.id})")
+- provide(:title, "曲の編集 (ID: #{@song.id})")
 
-- if @song.persisted? && policy(@song).destroy?
-  .text-right
-    = @song.delete_link class: 'btn btn-outline-danger'
+= form_with model: @song do |form|
+  = render 'shared/error_messages', errors: @song.errors
 
-= render 'form'
+  = render 'form', form: form
+
+  = form.submit class: 'btn btn-primary'
