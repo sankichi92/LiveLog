@@ -83,13 +83,4 @@ Rails.application.routes.draw do
   direct :slack_invitation do
     "https://join.slack.com/t/ku-livelog/shared_invite/#{ENV['SLACK_INVITATION_TOKEN']}"
   end
-
-  direct :feedback do |user|
-    uri = URI.parse('https://docs.google.com/forms/d/e/1FAIpQLSfhLHpL54pH_Oh5u7bLN31wGmJdqVUQ8WFSlyOF0A3DEJDzew/viewform')
-    uri.query = {
-      'entry.1322390882' => user.member.joined_year,
-      'entry.1102506699' => user.member.name,
-    }.to_query
-    uri.to_s
-  end
 end
