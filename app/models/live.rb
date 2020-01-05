@@ -34,5 +34,6 @@ class Live < ApplicationRecord
 
     update!(published: true, published_at: Time.zone.now)
     songs.includes(:audio_attachment, :plays).import
+    Entry.joins(:song).merge(Song.where(live_id: id)).destroy_all
   end
 end
