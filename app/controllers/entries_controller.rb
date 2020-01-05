@@ -30,7 +30,6 @@ class EntriesController < ApplicationController
         entry_id: @entry.id,
         detail: @entry.as_json(include: [:playable_times, { song: { include: :plays } }]),
       )
-      EntryMailer.created(@entry).deliver_now
       redirect_to entries_path, notice: "エントリー ID: #{@entry.id} を作成しました"
     else
       render :new, status: :unprocessable_entity
