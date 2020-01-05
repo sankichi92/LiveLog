@@ -45,14 +45,6 @@ module SongDecorator
     end
   end
 
-  def previous
-    live.songs.played_order.where('songs.time < ? or songs.position < ?', time, position).last
-  end
-
-  def next
-    live.songs.played_order.where('songs.time > ? or songs.position > ?', time, position).first
-  end
-
   def twitter_share_button(html_options)
     uri = URI.parse('https://twitter.com/intent/tweet')
     uri.query = {

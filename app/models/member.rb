@@ -23,7 +23,6 @@ class Member < ApplicationRecord
     order(joined_year: :desc).distinct.pluck(:joined_year)
   end
 
-  # For #collection_select option values
   def joined_year_and_name
     "#{joined_year} #{name}"
   end

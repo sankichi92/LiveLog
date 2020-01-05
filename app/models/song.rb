@@ -79,6 +79,14 @@ class Song < ApplicationRecord
     plays.map(&:member_id).include?(member&.id)
   end
 
+  def previous
+    live.songs.played_order.where('songs.time < ? or songs.position < ?', time, position).last
+  end
+
+  def next
+    live.songs.played_order.where('songs.time > ? or songs.position > ?', time, position).first
+  end
+
   private
 
   # region Validations

@@ -21,6 +21,7 @@ class Live < ApplicationRecord
     "#{date.year} #{name}"
   end
 
+  # For #collection_select option values
   def date_and_name
     "#{I18n.l(date)} #{name}"
   end
