@@ -5,12 +5,12 @@
     - if model.persisted?
       .form-group
         = form.label :live_id
-        = form.collection_select :live_id, Live.newest_order, :id, :title, {}, class: 'form-control'
+        = form.collection_select :live_id, Live.newest_order, :id, :date_and_name, {}, class: 'form-control'
 
     - if model.live.nf?
       .form-group
         = form.label :time
-        = form.time_field :time, class: 'form-control'
+        = form.time_field :time, step: 10.minutes.to_i, class: 'form-control'
 
     .form-group
       = form.label :position

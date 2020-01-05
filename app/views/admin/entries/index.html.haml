@@ -53,5 +53,5 @@
                   %td= simple_format(entry.notes, class: 'mb-0')
                   %td= entry.member.joined_year_and_name
                   %td= l entry.updated_at
-                  %td
+                  %td= link_to icon('fas', 'edit'), edit_admin_entry_path(entry), class: 'btn btn-info'
 

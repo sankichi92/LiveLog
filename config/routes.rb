@@ -53,7 +53,7 @@ Rails.application.routes.draw do
       resource :admin, only: %i[create destroy]
     end
 
-    resources :entries, only: %i[index]
+    resources :entries, only: %i[index edit update]
   end
 
   direct :organization do

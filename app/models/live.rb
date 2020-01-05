@@ -21,6 +21,10 @@ class Live < ApplicationRecord
     "#{date.year} #{name}"
   end
 
+  def date_and_name
+    "#{I18n.l(date)} #{name}"
+  end
+
   def nf?
     name.include?('NF')
   end

@@ -1,0 +1,50 @@
+%header.content-header
+  .container-fluid
+    .row.mb-3
+      .col-sm-6
+        %h1
+          ID: #{@entry.id} 編集
+
+      .col-sm-6
+        %ol.breadcrumb.float-sm-right
+          %li.breadcrumb-item= link_to 'Home', admin_root_path
+          %li.breadcrumb-item= link_to Entry.model_name.human, admin_entries_path
+          %li.breadcrumb-item.active ID: #{@entry.id} 編集
+
+%section.content
+  .container-fluid
+    %section.card
+      = form_with model: @entry, url: admin_entry_path(@entry), local: true do |form|
+        .card-body
+          = render 'shared/error_messages', errors: @entry.errors
+
+          = fields model: @entry.song do |song_form|
+            .form-group
+              = song_form.label :live_id
+              = song_form.collection_select :live_id, Live.unpublished.newest_order, :id, :date_and_name, {}, class: 'form-control'
+
+            - if song_form.object.live.nf?
+              .form-group
+                = song_form.label :time
+                = song_form.time_field :time, step: 10.minutes.to_i, class: 'form-control'
+
+            .form-group
+              = song_form.label :position
+              = song_form.number_field :position, class: 'form-control'
+
+          %div.mb-3{ data: { controller: 'form-playable-times' } }
+            %template{ data: { target: 'form-playable-times.template' } }
+              = form.fields_for :playable_times, PlayableTime.new, child_index: 'TEMPLATE_INDEX' do |playable_times_form|
+                = render 'form_playable_time', form: playable_times_form
+
+            = form.fields_for :playable_times do |playable_times_form|
+              = render 'form_playable_time', form: playable_times_form
+
+            %button.btn.btn-light{ type: 'button', data: { action: 'form-playable-times#addPlayableTime' } }= icon('fas', 'plus-circle', '演奏可能時間を追加する')
+
+          .form-group
+            = form.label :notes
+            = form.text_area :notes, class: 'form-control'
+
+        .card-footer
+          = form.submit class: 'btn btn-primary'
