@@ -37,7 +37,6 @@
               = icon('fas', 'share') + ' ' + '共有'
             .dropdown-menu{ 'aria-labelledby': 'share-button' }
               = @song.twitter_share_button class: 'dropdown-item'
-              = @song.facebook_share_button class: 'dropdown-item btn'
         - if @song.player?(current_user&.member)
           .btn-group
             = link_to icon('fas', 'edit', '編集する'), edit_song_path(@song), class: 'btn btn-outline-primary'

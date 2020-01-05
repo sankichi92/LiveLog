@@ -58,11 +58,6 @@ module SongDecorator
     link_to(icon('fab', 'twitter') + ' Twitter', uri.to_s, html_options.merge(target: '_blank', data: { content_type: 'song', content_id: id }))
   end
 
-  def facebook_share_button(html_options)
-    html_options[:class] = html_options[:class].nil? ? 'fb-share' : html_options[:class] + ' fb-share'
-    button_tag icon('fab', 'facebook') + ' Facebook', html_options.merge(data: { url: song_url(self), content_type: 'song', content_id: id }, type: 'button')
-  end
-
   private
 
   def media_playable?
