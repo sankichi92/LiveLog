@@ -42,6 +42,7 @@
                   %td
                     - if live.published?
                       = link_to icon('fas', 'eye'), live_path(live), class: 'btn btn-secondary'
+                    = link_to icon('fas', 'list', '曲一覧'), admin_live_path(live), class: 'btn btn-primary'
                     = link_to icon('fas', 'edit'), edit_admin_live_path(live), class: 'btn btn-info'
                     - if live.songs_count.zero?
                       = link_to icon('fas', 'trash', '削除する'), admin_live_path(live), method: :delete, class: 'btn btn-warning', data: { confirm: "本当に #{live.title} を削除しますか" }
