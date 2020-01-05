@@ -20,7 +20,6 @@
       .custom-control.custom-checkbox
         = form.check_box :subscribing, checked: @auth0_user.email_verified? && @auth0_user.subscribing?, disabled: !@auth0_user.email_verified?, class: 'custom-control-input'
         = form.label :subscribing, 'LiveLog からのお知らせメールを受け取る', class: 'custom-control-label'
-        = icon 'fas', 'question-circle', 'data-toggle': 'tooltip', 'data-placement': 'right', title: '演奏した曲が今日のピックアップに選ばれた時などにお知らせします'
       - unless @auth0_user.email_verified?
         %small.form-text.text-danger メールアドレスが確認されていません。メールに記載されているURLにアクセスし、メールアドレスを確認してください
 

@@ -4,33 +4,26 @@ RSpec.describe SongMailer, type: :mailer do
   include Auth0UserHelper
 
   describe 'pickup_song' do
-    let(:users) { create_list(:user, 3) }
-    let(:no_user_member) { create(:member) }
+    subject(:mail) { SongMailer.pickup(song) }
+
+    let(:song) { create(:song, name: 'くちなしの丘', artist: '原田知世', live: live, members: users.map(&:member) + [unsubscribing_user.member, member]) }
+    let(:live) { create(:live, name: 'NF', date: '2019-11-23') }
+    let(:users) { create_pair(:user) }
     let(:unsubscribing_user) { create(:user) }
-    let(:song) { create(:song, members: [users.map(&:member), no_user_member, unsubscribing_user.member].flatten) }
-    let(:mail) { SongMailer.pickup_song(song) }
+    let(:member) { create(:member) }
 
     before do
-      users.each do |user|
-        stub_auth0_user(user, subscribing: true)
+      users.each_with_index do |user, i|
+        stub_auth0_user(user, email: "user#{i}@example.com", subscribing: true)
       end
       stub_auth0_user(unsubscribing_user, subscribing: false)
     end
 
-    it 'renders the headers' do
-      expect(mail.subject).to eq("「#{song.name}」が今日のピックアップに選ばれました！")
-      expect(mail.from).to eq(['noreply@livelog.ku-unplugged.net'])
-      expect(mail.bcc.size).to eq users.size
-    end
-
-    it 'renders the text body' do
-      expect(mail.text_part.body).to include(song.title)
-      expect(mail.text_part.body).to include(root_url)
-    end
-
-    it 'renders the html body' do
-      expect(mail.html_part.body).to include(CGI.escapeHTML(song.title))
-      expect(mail.html_part.body).to include(root_url)
+    it 'renders the headers and the body' do
+      expect(mail.from).to contain_exactly 'noreply@livelog.ku-unplugged.net'
+      expect(mail.bcc).to contain_exactly 'user0@example.com', 'user1@example.com'
+      expect(mail.subject).to eq '「くちなしの丘」が今日のピックアップに選ばれました！'
+      expect(mail.body.to_s).to eq read_fixture('pickup.txt').gsub("\n", "\r\n")
     end
   end
 end

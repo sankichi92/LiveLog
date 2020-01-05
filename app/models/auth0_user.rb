@@ -64,6 +64,10 @@ class Auth0User
     @response.dig('user_metadata', 'subscribing')
   end
 
+  def email_verified_and_subscribing?
+    email_verified? && subscribing?
+  end
+
   def has_logged_in?
     !@response.dig('user_metadata', 'last_login').nil?
   end
