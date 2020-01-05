@@ -5,6 +5,8 @@ class PlayableTime < ApplicationRecord
 
   before_save :assign_range
 
+  scope :contains, ->(time) { where("#{table_name}.range @> ?::timestamp", time) }
+
   def lower=(time_str)
     @lower = time_str.to_s.in_time_zone
   end

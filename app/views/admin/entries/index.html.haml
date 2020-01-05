@@ -1,0 +1,57 @@
+%header.content-header
+  .container-fluid
+    .row.mb-3
+      .col-sm-6
+        %h1= Entry.model_name.human
+      .col-sm-6
+        %ol.breadcrumb.float-sm-right
+          %li.breadcrumb-item= link_to 'Home', admin_root_path
+          %li.breadcrumb-item.active= Entry.model_name.human
+
+%section.content
+  .container-fluid
+    %section.card
+      .card-header.border-bottom-0
+        = form_with url: admin_entries_path, method: :get, local: true, class: 'form-inline' do |form|
+          = label_tag :playable_time, '演奏可能時間', class: 'mr-2'
+          = datetime_field_tag :playable_time, params[:playable_time] || Time.zone.now.beginning_of_hour.strftime("%Y-%m-%dT%H:%M"), step: 10.minutes.to_i, class: 'form-control mr-2'
+          = form.button icon('fas', 'search', '検索'), class: 'btn btn-primary'
+
+      .card-body.p-0
+        .table-responsive
+          %table.table-admin.table.table-striped.text-nowrap.mb-0
+            %thead
+              %tr
+                %th{ scope: 'col' } ID
+                %th{ scope: 'col' }= Song.human_attribute_name(:live)
+                %th{ scope: 'col' }= Live.human_attribute_name(:date)
+                - %i[position name plays].each do |attr|
+                  %th{ scope: 'col' }= Song.human_attribute_name(attr)
+                %th 人数
+                - %i[playable_times playable_time_sum notes member updated_at].each do |attr|
+                  %th{ scope: 'col' }= Entry.human_attribute_name(attr)
+                %th{ scope: 'col' } 操作
+            %tbody
+              - @entries.each do |entry|
+                %tr{ class: entry.in_playable_time? ? '' : 'table-danger' }
+                  %td= entry.id
+                  %td= link_to entry.song.live.name, admin_live_path(entry.song.live)
+                  %td= l entry.song.live.date, format: :short
+                  %td= entry.song.time_and_position
+                  %td
+                    = entry.song.title
+                    %small= '(オリジナル曲)' if entry.song.original?
+                  %td
+                    %ul.list-inline.mb-0
+                      = render entry.song.plays
+                  %td #{entry.song.plays.size} 人
+                  %td
+                    %ul.list-unstyled.mb-0
+                      - entry.playable_times.each do |playable_time|
+                        %li= playable_time.formatted_range
+                  %td= distance_of_time_in_words(entry.playable_time_sum)
+                  %td= simple_format(entry.notes, class: 'mb-0')
+                  %td= entry.member.joined_year_and_name
+                  %td= l entry.updated_at
+                  %td
+

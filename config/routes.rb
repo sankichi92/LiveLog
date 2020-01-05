@@ -52,6 +52,8 @@ Rails.application.routes.draw do
       resource :user, only: :destroy
       resource :admin, only: %i[create destroy]
     end
+
+    resources :entries, only: %i[index]
   end
 
   direct :organization do

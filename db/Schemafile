@@ -64,7 +64,7 @@ end
 
 create_table :playable_times, force: :cascade do |t|
   t.bigint :entry_id, null: false
-  t.tstzrange :range, null: false
+  t.tsrange :range, null: false
 
   t.timestamps
 

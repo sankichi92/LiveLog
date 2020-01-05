@@ -47,7 +47,7 @@ class Song < ApplicationRecord
     if time.nil?
       live.date
     else
-      live.date + time.hour.hours + time.min.minutes
+      live.date.in_time_zone.change(hour: time.hour, min: time.min)
     end
   end
 
