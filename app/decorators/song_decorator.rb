@@ -29,6 +29,14 @@ module SongDecorator
                 allowfullscreen: true
   end
 
+  def title_with_original
+    if original?
+      safe_join [title, content_tag(:small, '（オリジナル曲）')]
+    else
+      title
+    end
+  end
+
   def status_icon
     if open?
       icon 'fas', 'globe', 'data-toggle': 'tooltip', 'data-placement': 'right', title: '公開設定: 公開'

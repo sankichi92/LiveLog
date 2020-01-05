@@ -28,9 +28,7 @@
                 %tr
                   %td= song.id
                   %td= song.time_and_position
-                  %td
-                    =song.title
-                    %small= '(オリジナル曲)' if song.original?
+                  %td= song.title_with_original
                   %td
                     %ul.list-inline.mb-0
                       = render song.plays

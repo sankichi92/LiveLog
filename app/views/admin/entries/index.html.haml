@@ -38,9 +38,7 @@
                   %td= link_to entry.song.live.name, admin_live_path(entry.song.live)
                   %td= l entry.song.live.date, format: :short
                   %td= entry.song.time_and_position
-                  %td
-                    = entry.song.title
-                    %small= '(オリジナル曲)' if entry.song.original?
+                  %td= entry.song.title_with_original
                   %td
                     %ul.list-inline.mb-0
                       = render entry.song.plays

@@ -19,8 +19,7 @@
           %td= entry.id
           %td= entry.song.live.title
           %td
-            = entry.song.title
-            %small= '(オリジナル曲)' if entry.song.original?
+            = entry.song.title_with_original
             = entry.song.status_icon
           %td
             %ul.list-inline.mb-0

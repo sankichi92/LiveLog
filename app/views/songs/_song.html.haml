@@ -10,8 +10,7 @@
         = song.time_and_position
 
       %h5
-        = song.title
-        %small= '(オリジナル曲)' if song.original?
+        = song.title_with_original
         = song.status_icon if song.player?(current_user&.member)
 
       %ul.list-inline.mb-2
