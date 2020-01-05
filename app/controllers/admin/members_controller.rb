@@ -9,7 +9,7 @@ module Admin
 
     def new
       @member = Member.new(joined_year: Time.zone.now.year)
-      @user = @member.build_user
+      @member.build_user
     end
 
     def create(member, user)
@@ -24,11 +24,11 @@ module Admin
           url: admin_members_url(year: @member.joined_year),
         )
 
-        @user = @member.build_user(user.permit(:email))
-        if @user.valid?
+        user = @member.build_user(user.permit(:email))
+        if user.valid?
           begin
-            @user.create_with_auth0_user!
-            AppAuth0Client.instance.change_password(@user.email, nil)
+            user.create_with_auth0_user!
+            AppAuth0Client.instance.change_password(user.email, nil)
           rescue Auth0::BadRequest => e
             Raven.capture_exception(e, level: :debug)
             return redirect_to admin_members_path(year: @member.joined_year), alert: '招待メールの送信に失敗しました'
@@ -37,7 +37,7 @@ module Admin
 
         redirect_to admin_members_path(year: @member.joined_year), notice: "#{@member.joined_year_and_name} を追加しました"
       else
-        @user = @member.build_user(user.permit(:email))
+        @member.build_user(user.permit(:email))
         render :new, status: :unprocessable_entity
       end
     end
