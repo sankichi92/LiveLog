@@ -9,8 +9,6 @@ import 'bootstrap/dist/js/bootstrap.bundle'
 import '../controllers'
 
 import '../legacy/close_alert_donation'
-import '../legacy/facebook_sdk'
-import '../legacy/facebook_share'
 import '../legacy/google_adsense'
 import '../legacy/google_analytics'
 import '../legacy/itunes_search'
