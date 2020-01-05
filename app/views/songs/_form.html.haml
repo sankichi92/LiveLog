@@ -14,11 +14,6 @@
   = form.label :original, class: 'form-check-label'
   %small.form-text.text-muted 京大アンプラグドのメンバーが作詞・作曲した曲の場合にチェックしてください
 
-.form-group
-  = form.label :status
-  = form.select :status, { '公開': 'open', 'サークル内': 'closed', 'バンド内': 'secret' }, { selected: 'open' }, class: 'form-control'
-  %small.form-text.text-muted 動画・音源の公開範囲です。「公開」は全てのユーザ、「サークル内」はログインユーザのみ、「バンド内」は演者のみに公開されます
-
 %div.mb-3{ data: { controller: 'form-plays' } }
   %template{ data: { target: 'form-plays.template' } }
     = form.fields_for :plays, Play.new, child_index: 'TEMPLATE_INDEX' do |plays_form|
@@ -32,6 +27,11 @@
 %datalist#instruments
   - Play.instruments_for_suggestion.each do |instrument|
     %option{ value: instrument }
+
+.form-group
+  = form.label :status
+  = form.select :status, { '公開': 'open', 'サークル内': 'closed', 'バンド内': 'secret' }, { selected: 'open' }, class: 'form-control'
+  %small.form-text.text-muted 動画・音源の公開範囲です。「公開」は全てのユーザ、「サークル内」はログインユーザのみ、「バンド内」は演者のみに公開されます
 
 .form-group
   = form.label :comment

@@ -14,6 +14,7 @@ class Song < ApplicationRecord
   enum status: { secret: 0, closed: 1, open: 2 }
 
   validates :name, presence: true
+  validates :position, presence: true, on: :update
   validate :unique_players
 
   scope :played_order, -> { order(:time, :position) }

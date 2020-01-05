@@ -32,15 +32,7 @@
       = form.label :original, class: 'form-check-label'
       %small.form-text.text-muted 京大アンプラグドのメンバーが作詞・作曲した曲の場合にチェックしてください
 
-    .form-group
-      = form.label :youtube_url
-      = form.url_field :youtube_url, class: 'form-control', placeholder: 'https://www.youtube.com/watch?v=sSbqm7ZK_9s', pattern: 'https?://(www\.youtube\.com|youtu\.be)/.*'
-
-    .form-group
-      = form.label :audio
-      = form.file_field :audio, direct_upload: true, accept: 'audio/mpeg', class: 'form-control-file'
-
-    %div{ data: { controller: 'form-plays' } }
+    %div.mb-3{ data: { controller: 'form-plays' } }
       %template{ data: { target: 'form-plays.template' } }
         = form.fields_for :plays, Play.new, child_index: 'TEMPLATE_INDEX' do |plays_form|
           = render 'admin/songs/form_play', form: plays_form
@@ -53,6 +45,14 @@
     %datalist#instruments
       - Play.instruments_for_suggestion.each do |instrument|
         %option{ value: instrument }
+
+    .form-group
+      = form.label :youtube_url
+      = form.url_field :youtube_url, class: 'form-control', placeholder: 'https://www.youtube.com/watch?v=sSbqm7ZK_9s', pattern: 'https?://(www\.youtube\.com|youtu\.be)/.*'
+
+    .form-group
+      = form.label :audio
+      = form.file_field :audio, direct_upload: true, accept: 'audio/mpeg', class: 'form-control-file'
 
   .card-footer
     = form.submit class: 'btn btn-primary'
