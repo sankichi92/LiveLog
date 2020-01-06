@@ -1,4 +1,4 @@
-%tr.link{ data: { location: live_path(live) } }
+%tr.clickable{ data: { controller: 'tr-link', tr_link_location: live_path(live), action: 'click->tr-link#clickRow' } }
   %td= l live.date
   %td= live.name
   %td= live.at_place
