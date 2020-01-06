@@ -1,3 +1,5 @@
+require 'twitter_client'
+
 namespace :tweet do
   desc "Tweet today's pickup song"
   task pickup_song: :environment do
