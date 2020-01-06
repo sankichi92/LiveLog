@@ -22,8 +22,6 @@ module SongDecorator
   def youtube_embed
     return unless youtube_id?
     content_tag :iframe, '',
-                id: 'youtube-player',
-                data: { song_id: id },
                 src: "https://www.youtube.com/embed/#{youtube_id}?enablejsapi=1&origin=#{root_url.chop}&rel=0&autoplay=1",
                 frameborder: 0,
                 allowfullscreen: true
@@ -45,7 +43,7 @@ module SongDecorator
     end
   end
 
-  def twitter_share_button(html_options)
+  def twitter_share_link(html_options)
     uri = URI.parse('https://twitter.com/intent/tweet')
     uri.query = {
       text: "#{live.title} #{time_and_position} #{title}",
@@ -54,8 +52,7 @@ module SongDecorator
       via: 'ku_livelog',
       related: 'kyodaiunplugged:京大アンプラグド公式,sankichi92:LiveLog 開発者',
     }.to_query
-    html_options[:class] = html_options[:class].to_s + ' twitter-share'
-    link_to icon('fab', 'twitter', 'ツイート'), uri.to_s, html_options.merge(target: '_blank', data: { content_type: 'song', content_id: id })
+    link_to icon('fab', 'twitter', 'ツイート'), uri.to_s, html_options.merge(target: '_blank')
   end
 
   private
