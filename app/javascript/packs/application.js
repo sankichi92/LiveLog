@@ -10,7 +10,6 @@ import '../controllers'
 
 import '../legacy/itunes_search'
 import '../legacy/manual_link'
-import '../legacy/playlist'
 import '../legacy/tooltip'
 
 Rails.start()

@@ -9,8 +9,5 @@
     - if current_user && @live.album_url.present?
       = link_to icon('fas', 'images', 'アルバムへ'), @live.album_url, class: 'btn btn-primary btn-lg', target: '_blank', rel: 'noopener'
 
-  - if @songs.to_a.any?(&:audio_playable?)
-    = render 'songs/playlist', songs: @songs.select(&:audio_playable?)
-
   .song-list
     = render @songs
