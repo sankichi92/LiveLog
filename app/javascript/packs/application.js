@@ -10,7 +10,6 @@ import '../controllers'
 
 import '../legacy/close_alert_donation'
 import '../legacy/google_adsense'
-import '../legacy/google_analytics'
 import '../legacy/itunes_search'
 import '../legacy/log_audio'
 import '../legacy/log_twitter'

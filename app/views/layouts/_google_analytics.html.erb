@@ -1,0 +1,19 @@
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-56294602-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || []
+
+  function gtag () {dataLayer.push(arguments)}
+
+  gtag('js', new Date())
+
+  // https://github.com/turbolinks/turbolinks/issues/73#issuecomment-460028854
+  document.addEventListener('turbolinks:load', function (event) {
+    if (typeof (gtag) == 'function') {
+      gtag('config', 'UA-56294602-1', {
+        'page_title': event.target.title,
+        'page_path': event.data.url.replace(window.location.protocol + '//' + window.location.hostname, ''),
+        'user_id': '<%= current_user&.id %>'
+      })
+    }
+  })
+</script>

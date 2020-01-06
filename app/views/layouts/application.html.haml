@@ -27,9 +27,10 @@
     = stylesheet_link_tag 'application', data: { 'turbolinks-track': 'reload' }
     = javascript_pack_tag 'application', defer: true, data: { 'turbolinks-track': 'reload' }
 
-    %script{ src: 'https://www.googletagmanager.com/gtag/js?id=UA-56294602-1', async: true }
+    - if Rails.env.production?
+      = render 'layouts/google_analytics'
 
-  %body{ data: { user_id: current_user&.id } }
+  %body
     %nav.navbar.navbar-expand-lg.sticky-top.navbar-light.bg-primary.mb-4#navbar
       .container
         = link_to t('app.title'), root_path, class: 'navbar-brand'
