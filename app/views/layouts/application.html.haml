@@ -29,6 +29,8 @@
 
     - if Rails.env.production?
       = render 'layouts/google_analytics'
+      - if current_user.nil?
+        = render 'layouts/google_adsense'
 
   %body
     %nav.navbar.navbar-expand-lg.sticky-top.navbar-light.bg-primary.mb-4#navbar
@@ -67,10 +69,6 @@
 
       %main
         = yield
-
-      - if Rails.env.production? && current_user.nil?
-        %script{ src: '//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js', async: true }
-        %aside.my-3= render 'shared/content-ads'
 
       %footer.text-center.my-3
         %ul.list-inline
