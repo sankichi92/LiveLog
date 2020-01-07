@@ -1,6 +1,6 @@
 import { Controller } from 'stimulus'
-
-import 'select2/dist/js/select2'
+import $ from 'jquery'
+import 'select2'
 import 'select2/dist/js/i18n/ja'
 
 export default class extends Controller {
@@ -23,6 +23,6 @@ export default class extends Controller {
   }
 
   _initializeSelect2 () {
-    $('.member-select').select2({ theme: 'bootstrap4' })
+    $('.member-select').select2({ theme: 'bootstrap4', width: '100%' })
   }
 }

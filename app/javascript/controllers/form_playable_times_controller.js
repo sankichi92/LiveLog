@@ -1,8 +1,5 @@
 import { Controller } from 'stimulus'
 
-import 'select2/dist/js/select2'
-import 'select2/dist/js/i18n/ja'
-
 export default class extends Controller {
   static targets = ['template']
 
