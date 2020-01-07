@@ -10,7 +10,6 @@
 
 %article
   - if @song.youtube_playable?
-    %script{ src: 'https://www.youtube.com/iframe_api', async: true }
     .embed-responsive.embed-responsive-16by9.mb-3
       = @song.youtube_embed
 
@@ -28,25 +27,23 @@
       - if @song.comment.present?
         = simple_format(@song.comment, class: 'text-muted')
       - if @song.audio_playable?
-        .mb-3= audio_tag @song.audio_url, controls: true, class: 'gtag-audio', data: { song_id: @song.id }
+        .mb-3= audio_tag @song.audio_url, controls: true
 
       %aside
-        = @song.twitter_share_button class: 'btn btn-primary'
+        = @song.twitter_share_link class: 'btn btn-primary'
         - if @song.player?(current_user&.member)
           = link_to icon('fas', 'edit', '編集する'), edit_song_path(@song), class: 'btn btn-primary'
 
-  - unless @song.original?
-    %aside.card.mb-3.d-none#itunes{ data: { song_id: @song.id, track_name: @song.name, artist_name: @song.artist } }
-      .card-body
-        %h5.card-title
-        .d-flex.align-items-center
-          %a.d-box.mr-2
-            %img.img-thumbnail{ target: '_blank' }
-          .preview
-            .card-subtitle
-            %audio{ controls: true, volume: 0.8 }
-            %a.d-block{ target: '_blank' }
-              = image_tag 'JP_iTunes_Store_Buy_Badge_RGB.svg'
+  %aside.card.mb-3.d-none{ data: { controller: 'itunes', itunes_track_name: @song.name, itunes_artist_name: @song.artist} }
+    .card-body
+      .media.align-items-center.mb-2
+        %a.mr-2{ target: '_blank', data: { target: 'itunes.link' } }
+          %img.img-thumbnail{ data: { target: 'itunes.artwork' }}
+        .media-body
+          .card-subtitle.text-muted{ data: { target: 'itunes.subTitle' } }
+          %h5.card-title{ data: { target: 'itunes.title' } }
+          %audio{ controls: true, volume: 0.8, data: { target: 'itunes.audio' } }
+      %a{ target: '_blank', data: { target: 'itunes.link' } }= image_tag 'JP_iTunes_Store_Buy_Badge_RGB.svg'
 
   %nav
     %ul.pagination.pagination-lg.justify-content-center

@@ -3,7 +3,7 @@ import * as ActiveStorage from '@rails/activestorage'
 import Turbolinks from 'turbolinks'
 
 import * as Sentry from '@sentry/browser'
-
+import 'jquery'
 import 'bootstrap/dist/js/bootstrap.bundle'
 import 'admin-lte/dist/js/adminlte'
 

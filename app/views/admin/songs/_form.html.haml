@@ -37,8 +37,9 @@
         = form.fields_for :plays, Play.new, child_index: 'TEMPLATE_INDEX' do |plays_form|
           = render 'admin/songs/form_play', form: plays_form
 
-      = form.fields_for :plays do |plays_form|
-        = render 'admin/songs/form_play', form: plays_form
+      %dev{ data: { target: 'form-plays.container' } }
+        = form.fields_for :plays do |plays_form|
+          = render 'admin/songs/form_play', form: plays_form
 
       %button.btn.btn-light{ type: 'button', data: { action: 'form-plays#addPlay' } }= icon('fas', 'plus-circle', '演者を追加する')
 
