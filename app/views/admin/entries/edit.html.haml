@@ -37,8 +37,9 @@
               = form.fields_for :playable_times, PlayableTime.new, child_index: 'TEMPLATE_INDEX' do |playable_times_form|
                 = render 'form_playable_time', form: playable_times_form
 
-            = form.fields_for :playable_times do |playable_times_form|
-              = render 'form_playable_time', form: playable_times_form
+            %dev{ data: { target: 'form-playable-times.container' } }
+              = form.fields_for :playable_times do |playable_times_form|
+                = render 'form_playable_time', form: playable_times_form
 
             %button.btn.btn-light{ type: 'button', data: { action: 'form-playable-times#addPlayableTime' } }= icon('fas', 'plus-circle', '演奏可能時間を追加する')
 

@@ -4,7 +4,7 @@ import 'select2'
 import 'select2/dist/js/i18n/ja'
 
 export default class extends Controller {
-  static targets = ['template']
+  static targets = ['template', 'container']
 
   connect () {
     this._initializeSelect2()
@@ -12,7 +12,7 @@ export default class extends Controller {
 
   addPlay (event) {
     const playForm = this.templateTarget.innerHTML.replace(/TEMPLATE_INDEX/g, new Date().getTime())
-    event.target.insertAdjacentHTML('beforebegin', playForm)
+    this.containerTarget.insertAdjacentHTML('beforeend', playForm)
     this._initializeSelect2()
   }
 

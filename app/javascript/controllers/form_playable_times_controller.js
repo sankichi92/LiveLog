@@ -1,11 +1,11 @@
 import { Controller } from 'stimulus'
 
 export default class extends Controller {
-  static targets = ['template']
+  static targets = ['template', 'container']
 
   addPlayableTime (event) {
     const playableTimeForm = this.templateTarget.innerHTML.replace(/TEMPLATE_INDEX/g, new Date().getTime())
-    event.target.insertAdjacentHTML('beforebegin', playableTimeForm)
+    this.containerTarget.insertAdjacentHTML('beforeend', playableTimeForm)
   }
 
   removePlayableTime (event) {
