@@ -8,7 +8,6 @@ import 'bootstrap/dist/js/bootstrap.bundle'
 
 import '../controllers'
 
-import '../legacy/itunes_search'
 import '../legacy/tooltip'
 
 Rails.start()

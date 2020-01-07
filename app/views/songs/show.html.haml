@@ -34,18 +34,16 @@
         - if @song.player?(current_user&.member)
           = link_to icon('fas', 'edit', '編集する'), edit_song_path(@song), class: 'btn btn-primary'
 
-  - unless @song.original?
-    %aside.card.mb-3.d-none#itunes{ data: { song_id: @song.id, track_name: @song.name, artist_name: @song.artist } }
-      .card-body
-        %h5.card-title
-        .d-flex.align-items-center
-          %a.d-box.mr-2
-            %img.img-thumbnail{ target: '_blank' }
-          .preview
-            .card-subtitle
-            %audio{ controls: true, volume: 0.8 }
-            %a.d-block{ target: '_blank' }
-              = image_tag 'JP_iTunes_Store_Buy_Badge_RGB.svg'
+  %aside.card.mb-3.d-none{ data: { controller: 'itunes', itunes_track_name: @song.name, itunes_artist_name: @song.artist} }
+    .card-body
+      .media.align-items-center.mb-2
+        %a.mr-2{ target: '_blank', data: { target: 'itunes.link' } }
+          %img.img-thumbnail{ data: { target: 'itunes.artwork' }}
+        .media-body
+          .card-subtitle.text-muted{ data: { target: 'itunes.subTitle' } }
+          %h5.card-title{ data: { target: 'itunes.title' } }
+          %audio{ controls: true, volume: 0.8, data: { target: 'itunes.audio' } }
+      %a{ target: '_blank', data: { target: 'itunes.link' } }= image_tag 'JP_iTunes_Store_Buy_Badge_RGB.svg'
 
   %nav
     %ul.pagination.pagination-lg.justify-content-center
