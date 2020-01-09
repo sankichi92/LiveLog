@@ -24,13 +24,13 @@
 
     = render 'application/favicon'
 
-    = stylesheet_link_tag 'application', data: { 'turbolinks-track': 'reload' }
-    = javascript_pack_tag 'application', defer: true, data: { 'turbolinks-track': 'reload' }
+    = stylesheet_link_tag 'application'
+    = javascript_pack_tag 'application', defer: true
 
     - if Rails.env.production?
       = render 'layouts/google_analytics'
       - if current_user.nil?
-        %script{ src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js', defer: true, data: { 'ad-client': 'ca-pub-0663971530264312', 'turbolinks-eval': 'false' } }
+        = render 'layouts/google_adsense'
 
   %body
     %nav.navbar.navbar-expand-lg.sticky-top.navbar-light.bg-primary.mb-4#navbar

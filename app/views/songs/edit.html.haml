@@ -1,6 +1,6 @@
 - provide(:title, "曲の編集 (ID: #{@song.id})")
 
-= form_with model: @song do |form|
+= form_with model: @song, local: true do |form|
   = render 'shared/error_messages', errors: @song.errors
 
   = render 'form', form: form

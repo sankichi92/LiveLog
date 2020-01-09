@@ -9,7 +9,6 @@ gem 'pg'
 gem 'puma'
 
 gem 'sass-rails'
-gem 'turbolinks'
 gem 'webpacker'
 
 gem 'redis'
