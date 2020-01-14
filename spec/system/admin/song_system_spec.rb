@@ -44,7 +44,7 @@ RSpec.describe 'Admin song system:', type: :system do
     click_button '登録する'
 
     # Then
-    expect(page).to have_content /ID: \d+ を追加しました/
+    expect(page).to have_content(/ID: \d+ を追加しました/)
     expect(page).to have_content 'Gt.徳浦'
     expect(page).to have_content 'Gt.三岡'
   end

@@ -4,6 +4,7 @@ require:
   - rubocop-performance
   - rubocop-rails
   - rubocop-rspec
+  - rubocop-rubycw
 
 Layout/LineLength:
   Max: 160
@@ -43,3 +44,8 @@ RSpec/NestedGroups:
 
 RSpec/VerifiedDoubles:
   IgnoreSymbolicNames: true
+
+# rubocop-rubycw
+
+Rubycw:
+  Enabled: true
