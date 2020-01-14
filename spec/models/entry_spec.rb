@@ -23,7 +23,7 @@ RSpec.describe Entry, type: :model do
 
     context 'when song.time is present and playable_time including the time does not exist' do
       let(:song_time) { live_date.in_time_zone.change(hour: 19) }
-      let(:playable_time_range) { (song_time - 3.hour)...(song_time - 1.hour) }
+      let(:playable_time_range) { (song_time - 3.hours)...(song_time - 1.hour) }
 
       it { is_expected.to be false }
     end

@@ -8,6 +8,6 @@ class MembersController < ApplicationController
   def show(id)
     @member = Member.find(id)
     @collaborators = Member.with_attached_avatar.collaborated_with(@member).with_played_count.to_a
-    @songs = @member.published_songs.includes(:live, { plays: :member }).newest_live_order
+    @songs = @member.published_songs.includes(:live, plays: :member).newest_live_order
   end
 end
