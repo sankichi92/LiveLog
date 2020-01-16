@@ -1,5 +1,8 @@
 {
   "private": true,
+  "scripts": {
+    "lint": "eslint *.config.js .*.js app/javascript"
+  },
   "dependencies": {
     "@rails/activestorage": "^6.0.2",
     "@rails/ujs": "^6.0.2",
