@@ -3,6 +3,7 @@ require 'app_auth0_client'
 class Auth0User
   CONNECTION_NAME = 'Username-Password-Authentication'.freeze
   DEFAULT_FIELDS = %w[
+    user_id
     email
     email_verified
     user_metadata
@@ -10,9 +11,9 @@ class Auth0User
   ].join(',').freeze
 
   class << self
-    def fetch!(id, fields: DEFAULT_FIELDS)
-      response = AppAuth0Client.instance.user("auth0|#{id}", fields: fields)
-      new(id, response)
+    def fetch!(auth0_id, fields: DEFAULT_FIELDS)
+      response = AppAuth0Client.instance.user(auth0_id, fields: fields)
+      new(response)
     end
 
     def create!(user)
@@ -29,27 +30,40 @@ class Auth0User
           subscribing: true,
         },
       )
-      new(user.id, response)
+      new(response)
+    end
+
+    def update!(auth0_id, options)
+      AppAuth0Client.instance.patch_user(auth0_id, options)
+    end
+
+    def delete!(auth0_id)
+      AppAuth0Client.instance.delete_user(auth0_id)
+    end
+
+    def extract_livelog_id(auth0_id)
+      auth0_id.match(/auth0\|(?<id>\d+)/)[:id].to_i
     end
   end
 
-  attr_reader :livelog_id
-
-  def initialize(livelog_id, response = {})
-    @livelog_id = livelog_id
+  def initialize(response)
     @response = response
   end
 
   def update!(options)
-    AppAuth0Client.instance.patch_user("auth0|#{livelog_id}", options)
+    self.class.update!(id, options)
   end
 
-  def delete!
-    AppAuth0Client.instance.delete_user("auth0|#{livelog_id}")
+  def livelog_id
+    self.class.extract_livelog_id(@response['user_id'])
   end
 
   def [](key)
     @response[key]
+  end
+
+  def id
+    @response['user_id']
   end
 
   def email
@@ -69,6 +83,6 @@ class Auth0User
   end
 
   def has_logged_in?
-    !@response.dig('user_metadata', 'last_login').nil?
+    !@response['last_login'].nil?
   end
 end

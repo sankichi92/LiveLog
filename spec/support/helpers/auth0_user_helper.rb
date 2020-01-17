@@ -7,6 +7,7 @@ module Auth0UserHelper
       fields: fields,
     ).and_return(
       {
+        'user_id' => user.auth0_id,
         'email' => email,
         'email_verified' => email_verified,
         'user_metadata' => {
