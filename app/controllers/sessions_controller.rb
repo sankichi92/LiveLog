@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
     user.activate! unless user.activated?
 
     # TODO: Remove this line after Auth0 migration finished.
-    user.update!(email: nil, password_digest: nil) unless user.password_digest.nil?
+    user.update!(password_digest: nil) unless user.password_digest.nil?
 
     log_in user
 

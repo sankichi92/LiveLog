@@ -50,10 +50,6 @@ class Auth0User
     @response = response
   end
 
-  def update!(options)
-    self.class.update!(id, options)
-  end
-
   def livelog_id
     self.class.extract_livelog_id(@response['user_id'])
   end
@@ -84,5 +80,9 @@ class Auth0User
 
   def has_logged_in?
     !@response['last_login'].nil?
+  end
+
+  def update!(options)
+    self.class.update!(id, options)
   end
 end

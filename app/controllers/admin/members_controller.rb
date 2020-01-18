@@ -1,5 +1,3 @@
-require 'app_auth0_client'
-
 module Admin
   class MembersController < AdminController
     def index(year = Member.maximum(:joined_year))
@@ -25,17 +23,14 @@ module Admin
         )
 
         user = @member.build_user(user.permit(:email))
-        if user.valid?
-          begin
-            user.create_with_auth0_user!
-            AppAuth0Client.instance.change_password(user.email, nil)
-          rescue Auth0::BadRequest => e
-            Raven.capture_exception(e, level: :debug)
-            return redirect_to admin_members_path(year: @member.joined_year), alert: '招待メールの送信に失敗しました'
-          end
+        if user.save(context: :invite)
+          user.invite!
+          flash[:notice] = "#{@member.joined_year_and_name} を追加・招待しました"
+        else
+          flash[:notice] = "#{@member.joined_year_and_name} を追加しました"
         end
 
-        redirect_to admin_members_path(year: @member.joined_year), notice: "#{@member.joined_year_and_name} を追加しました"
+        redirect_to admin_members_path(year: @member.joined_year)
       else
         @member.build_user(user.permit(:email))
         render :new, status: :unprocessable_entity

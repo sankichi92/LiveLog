@@ -50,48 +50,32 @@ RSpec.describe 'users request', type: :request do
     end
 
     context 'when there is no user associated with the given member' do
+      before do
+        allow(auth0_client).to receive(:user).and_raise(Auth0::NotFound.new('The user does not exist.'))
+        allow(auth0_client).to receive(:create_user).and_return('email' => email)
+      end
+
       it 'creates a user, requests to create Auth0 user and change their password' do
         post member_user_path(member), params: params
 
         expect(member.reload.user).to be_persisted
         expect(auth0_client).to have_received(:create_user).with(anything, hash_including(email: email)).once
-        expect(auth0_client).not_to have_received(:patch_user)
         expect(auth0_client).to have_received(:change_password).with(email, nil).once
         expect(response).to redirect_to member
         expect(flash.notice).to eq '招待しました'
       end
     end
 
-    context 'when an inactivated user exists and the email is different from Auth0 user' do
-      let(:user) { create(:user, :inactivated, member: member) }
-
-      before do
-        allow(auth0_client).to receive(:user).with(user.auth0_id, anything).and_return('email' => 'previous@example.com')
-      end
-
-      it 'requests to update Auth0 user and change their password, and redirects to /members/:id' do
-        post member_user_path(member), params: params
-
-        expect(auth0_client).not_to have_received(:create_user)
-        expect(auth0_client).to have_received(:patch_user).with(user.auth0_id, hash_including(email: email)).once
-        expect(auth0_client).to have_received(:change_password).with(email, nil).once
-        expect(response).to redirect_to member
-        expect(flash.notice).to eq '招待しました'
-      end
-    end
-
-    context 'when an inactivated user exists and the email is the same as Auth0 user' do
+    context 'when an inactivated user exists' do
       let(:user) { create(:user, :inactivated, member: member) }
 
       before do
         allow(auth0_client).to receive(:user).with(user.auth0_id, anything).and_return('email' => email)
       end
 
-      it 'requests to change Auth0 user password, and redirects to /members/:id' do
+      it 'requests to update Auth0 user and change their password, and redirects to /members/:id' do
         post member_user_path(member), params: params
 
-        expect(auth0_client).not_to have_received(:create_user)
-        expect(auth0_client).not_to have_received(:patch_user)
         expect(auth0_client).to have_received(:change_password).with(email, nil).once
         expect(response).to redirect_to member
         expect(flash.notice).to eq '招待しました'
@@ -105,25 +89,8 @@ RSpec.describe 'users request', type: :request do
         post member_user_path(member), params: params
 
         expect(member.reload.user).to be_nil
-        expect(auth0_client).not_to have_received(:create_user)
-        expect(auth0_client).not_to have_received(:patch_user)
         expect(auth0_client).not_to have_received(:change_password)
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(auth0_client).not_to have_received(:change_password)
-      end
-    end
-
-    context 'when Auth0 responds bad_request' do
-      before do
-        allow(auth0_client).to receive(:create_user).and_raise(Auth0::BadRequest, '400')
-      end
-
-      it 'does not create user and responds 422' do
-        post member_user_path(member), params: params
-
-        expect(member.reload.user).to be_nil
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(auth0_client).not_to have_received(:change_password)
       end
     end
 

@@ -1,11 +1,11 @@
-class User < ApplicationRecord
-  AlreadyCreatedError = Class.new(StandardError)
+require 'app_auth0_client'
 
+class User < ApplicationRecord
   self.ignored_columns = %i[email subscribing]
 
   belongs_to :member
 
-  validates :email, format: { with: /[^\s]@[^\s]/ }, on: :create
+  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, on: :invite
   validate :admin_must_be_activated
 
   attr_accessor :email, :password
@@ -26,19 +26,26 @@ class User < ApplicationRecord
   # region Auth0
 
   def auth0_user
-    @auth0_user ||= Auth0User.fetch!(auth0_id)
+    @auth0_user ||= fetch_auth0_user!
   rescue Auth0::NotFound => e # TODO: Remove this after Auth0 migration finished.
     Raven.capture_exception(e, extra: { user_id: id }, level: :info)
     Auth0User.new({})
   end
 
-  def create_with_auth0_user!
-    raise AlreadyCreatedError, "User id #{id} is persisted" if persisted?
+  def invite!
+    validate!(:invite)
 
-    transaction do
-      save!
-      @auth0_user = Auth0User.create!(self)
+    @auth0_user = begin
+                    fetch_auth0_user!
+                  rescue Auth0::NotFound
+                    Auth0User.create!(self)
+                  end
+
+    if email.downcase != auth0_user.email
+      update_auth0_user!(email: email, verify_email: false)
     end
+
+    AppAuth0Client.instance.change_password(email, nil)
   end
 
   def update_auth0_user!(options)
@@ -54,9 +61,17 @@ class User < ApplicationRecord
 
   private
 
+  def fetch_auth0_user!
+    Auth0User.fetch!(auth0_id)
+  end
+
+  # region Validations
+
   def admin_must_be_activated
     if admin? && !activated
       errors.add(:base, '管理者にするにはログイン済みでなければなりません')
     end
   end
+
+  # endregion
 end

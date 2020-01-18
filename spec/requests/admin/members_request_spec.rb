@@ -45,7 +45,13 @@ RSpec.describe 'admin/members request:', type: :request do
       let(:joined_year) { Time.zone.now.year.to_s }
       let(:email) { 'guitar@example.com' }
 
-      let(:auth0_client) { spy(:app_auth0_client) }
+      let(:auth0_client) do
+        double(:app_auth0_client).tap do |auth0_client|
+          allow(auth0_client).to receive(:user).and_raise(Auth0::NotFound.new('The user does not exist.'))
+          allow(auth0_client).to receive(:create_user).and_return('user_id' => 'auth0|0', 'email' => email)
+          allow(auth0_client).to receive(:change_password)
+        end
+      end
 
       before do
         allow(AppAuth0Client).to receive(:instance).and_return(auth0_client)
@@ -54,23 +60,9 @@ RSpec.describe 'admin/members request:', type: :request do
       it 'creates a member and a user, requests Auth0 to create user, and redirects to /admin/members' do
         expect { post admin_members_path, params: params }.to change(Member, :count).by(1).and change(User, :count).by(1)
 
-        expect(auth0_client).to have_received(:create_user).with(anything, hash_including(email: email)).once
         expect(auth0_client).to have_received(:change_password).with(email, nil).once
         expect(response).to redirect_to admin_members_path(year: joined_year)
-        expect(flash.notice).to include '追加しました'
-      end
-
-      context 'when Auth0 responds 400' do
-        before do
-          allow(auth0_client).to receive(:create_user).and_raise(Auth0::BadRequest, '400')
-        end
-
-        it 'creates a member and redirects to /admin/members with alert' do
-          expect { post admin_members_path, params: params }.to change(Member, :count).by(1).and change(User, :count).by(0)
-
-          expect(response).to redirect_to admin_members_path(year: joined_year)
-          expect(flash.alert).to include '招待メールの送信に失敗しました'
-        end
+        expect(flash.notice).to include '追加・招待しました'
       end
     end
 
