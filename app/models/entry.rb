@@ -19,7 +19,7 @@ class Entry < ApplicationRecord
 
   def in_playable_time?
     if song.time.nil?
-      playable_times.any? { |playable_time| (song.live.date.beginning_of_day...song.live.date.end_of_day).cover?(playable_time.range) }
+      playable_times.any? { |playable_time| (song.live.date.beginning_of_day...song.live.date.end_of_day).overlaps?(playable_time.range) }
     else
       playable_times.any? { |playable_time| playable_time.range.cover?(song.datetime) }
     end
