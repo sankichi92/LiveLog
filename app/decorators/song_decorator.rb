@@ -37,9 +37,9 @@ module SongDecorator
 
   def status_icon
     if open?
-      icon 'fas', 'globe', 'data-toggle': 'tooltip', 'data-placement': 'right', title: '公開設定: 公開'
+      icon 'fas', 'globe', title: '公開設定: 公開', data: { toggle: 'tooltip', placement: 'right', controller: 'tooltip' }
     elsif secret?
-      icon 'fas', 'lock', 'data-toggle': 'tooltip', 'data-placement': 'right', title: '公開設定: バンド内'
+      icon 'fas', 'lock', title: '公開設定: バンド内', data: { toggle: 'tooltip', placement: 'right', controller: 'tooltip' }
     end
   end
 

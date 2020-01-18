@@ -1,10 +1,7 @@
 import Rails from '@rails/ujs';
 import * as ActiveStorage from '@rails/activestorage';
-
 import * as Sentry from '@sentry/browser';
-import $ from 'jquery';
 import 'bootstrap/dist/js/bootstrap.bundle';
-
 import '../controllers';
 
 Rails.start();
@@ -15,8 +12,4 @@ Sentry.init({
   release: process.env.HEROKU_SLUG_COMMIT,
   environment: process.env.NODE_ENV,
   debug: process.env.NODE_ENV !== 'production',
-});
-
-$(() => {
-  $('[data-toggle="tooltip"]').tooltip();
 });
