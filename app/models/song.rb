@@ -45,7 +45,7 @@ class Song < ApplicationRecord
 
   def datetime
     if time.nil?
-      live.date
+      live.date.in_time_zone
     else
       live.date.in_time_zone.change(hour: time.hour, min: time.min)
     end

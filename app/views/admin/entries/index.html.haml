@@ -19,7 +19,7 @@
 
       .card-body.p-0
         .table-responsive
-          %table.table-admin.table.table-striped.text-nowrap.mb-0
+          %table.table-admin.table.table-striped.text-nowrap.mb-0#table-entries{ data: { controller: 'datatable' } }
             %thead
               %tr
                 %th{ scope: 'col' } ID
@@ -37,7 +37,7 @@
                   %td= entry.id
                   %td= link_to entry.song.live.name, admin_live_path(entry.song.live)
                   %td= l entry.song.live.date, format: :short
-                  %td= entry.song.time_and_position
+                  %td{ data: { order: "#{entry.song.datetime.to_i} #{entry.song.position}" } }= entry.song.time_and_position
                   %td= entry.song.title_with_original
                   %td
                     %ul.list-inline.mb-0
@@ -47,9 +47,9 @@
                     %ul.list-unstyled.mb-0
                       - entry.playable_times.each do |playable_time|
                         %li= playable_time.formatted_range
-                  %td= distance_of_time_in_words(entry.playable_time_sum)
+                  %td{ data: { order: entry.playable_time_sum } }= distance_of_time_in_words(entry.playable_time_sum)
                   %td= simple_format(entry.notes, class: 'mb-0')
                   %td= entry.member.joined_year_and_name
-                  %td= l entry.updated_at
+                  %td{ data: { order: entry.updated_at.to_i } }= l entry.updated_at
                   %td= link_to icon('fas', 'edit'), edit_admin_entry_path(entry), class: 'btn btn-info'
 
