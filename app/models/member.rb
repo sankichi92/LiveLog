@@ -5,6 +5,7 @@ class Member < ApplicationRecord
   has_many :plays, dependent: :restrict_with_exception
   has_many :published_songs, -> { published }, through: :plays, source: :song
   has_many :entries, dependent: :restrict_with_exception
+  has_many :donations, dependent: :restrict_with_exception
 
   has_one_attached :avatar
 
