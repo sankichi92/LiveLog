@@ -1,12 +1,9 @@
 import Rails from '@rails/ujs';
 import * as ActiveStorage from '@rails/activestorage';
-
 import * as Sentry from '@sentry/browser';
-import 'jquery';
 import 'bootstrap/dist/js/bootstrap.bundle';
 import 'admin-lte/dist/js/adminlte';
-
-import '../controllers';
+import '../controllers/admin';
 
 Rails.start();
 ActiveStorage.start();
