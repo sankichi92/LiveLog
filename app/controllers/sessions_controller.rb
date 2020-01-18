@@ -3,7 +3,8 @@ class SessionsController < ApplicationController
 
   def create
     auth = request.env['omniauth.auth']
-    user = User.find_auth0_id(auth.uid)
+    livelog_id = Auth0User.extract_livelog_id(auth.uid)
+    user = User.find(livelog_id)
 
     user.activate! unless user.activated?
 

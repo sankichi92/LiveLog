@@ -23,7 +23,11 @@ RSpec.describe 'emails request:', type: :request do
     let(:auth0_client) { spy(:app_auth0_client) }
 
     before do
-      allow(auth0_client).to receive(:user).with(user.auth0_id, anything).and_return('email' => 'current@example.com', 'email_verified' => true)
+      allow(auth0_client).to receive(:user).with(user.auth0_id, anything).and_return(
+        'user_id' => user.auth0_id,
+        'email' => 'current@example.com',
+        'email_verified' => true,
+      )
       allow(AppAuth0Client).to receive(:instance).and_return(auth0_client)
       log_in_as user
     end

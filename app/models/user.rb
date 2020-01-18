@@ -10,11 +10,6 @@ class User < ApplicationRecord
 
   attr_accessor :email, :password
 
-  def self.find_auth0_id(auth0_id)
-    id = auth0_id.match(/auth0\|(?<id>\d+)/)[:id]
-    find(id)
-  end
-
   def auth0_id
     "auth0|#{id}"
   end
@@ -31,10 +26,10 @@ class User < ApplicationRecord
   # region Auth0
 
   def auth0_user
-    @auth0_user ||= Auth0User.fetch!(id)
+    @auth0_user ||= Auth0User.fetch!(auth0_id)
   rescue Auth0::NotFound => e # TODO: Remove this after Auth0 migration finished.
     Raven.capture_exception(e, extra: { user_id: id }, level: :info)
-    Auth0User.new(id)
+    Auth0User.new({})
   end
 
   def create_with_auth0_user!
@@ -47,11 +42,11 @@ class User < ApplicationRecord
   end
 
   def update_auth0_user!(options)
-    Auth0User.new(id).update!(options)
+    Auth0User.update!(auth0_id, options)
   end
 
   def destroy_with_auth0_user!
-    Auth0User.new(id).delete!
+    Auth0User.delete!(auth0_id)
     destroy!
   end
 
