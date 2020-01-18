@@ -5,10 +5,12 @@ class User < ApplicationRecord
 
   belongs_to :member
 
+  attr_accessor :email, :password
+
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, on: :invite
   validate :admin_must_be_activated
 
-  attr_accessor :email, :password
+  scope :inactivated, -> { where(activated: false) }
 
   def auth0_id
     "auth0|#{id}"

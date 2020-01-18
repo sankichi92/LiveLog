@@ -112,6 +112,7 @@ create_table :users, force: :cascade do |t|
   t.timestamps
 
   t.index :member_id, unique: true
+  t.index :activated
   t.index :email, unique: true
 end
 

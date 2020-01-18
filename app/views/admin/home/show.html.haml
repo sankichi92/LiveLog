@@ -1,0 +1,37 @@
+%header.content-header
+  .container-fluid
+    .row.mb-3
+      .col-sm-6
+        %h1 Home
+      .col-sm-6
+        %ol.breadcrumb.float-sm-right
+          %li.breadcrumb-item.active Home
+
+
+%section.content
+  .container-fluid
+    .row
+      .col-lg-4.col-6
+        .small-box.bg-yellow
+          .inner
+            %h3= Live.unpublished.count
+            %p エントリー募集中のライブ
+          .icon
+            = icon('fas', 'guitar')
+          = link_to icon('fas', 'arrow-circle-right', Live.model_name.human), admin_lives_path, class: 'small-box-footer'
+      .col-lg-4.col-6
+        .small-box.bg-green
+          .inner
+            %h3= User.inactivated.count
+            %p 招待中のメンバー
+          .icon
+            = icon('fas', 'users')
+          = link_to icon('fas', 'arrow-circle-right', Member.model_name.human), admin_members_path, class: 'small-box-footer'
+      .col-lg-4.col-6
+        .small-box.bg-cyan
+          .inner
+            %h3= Entry.count
+            %p エントリー
+          .icon
+            = icon('fas', 'paper-plane')
+          = link_to icon('fas', 'arrow-circle-right', Entry.model_name.human), admin_entries_path, class: 'small-box-footer'
