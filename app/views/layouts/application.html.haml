@@ -85,4 +85,4 @@
               %small= link_to icon('fab', 'slack', 'Slack'), slack_invitation_url, class: 'text-muted', target: '_blank', rel: 'noopener'
             - if current_user.member.graduate?
               %li.list-inline-item
-                %small= link_to 'カンパのお願い', donation_path, class: 'text-muted'
+                %small= link_to 'カンパのお願い', donate_path, class: 'text-muted'

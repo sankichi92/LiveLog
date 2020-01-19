@@ -1,0 +1,56 @@
+- provide(:title, 'カンパのお願い')
+
+.row
+  .col-12.col-lg-8
+    %section
+      %header
+        %h1 LiveLog 運営のためのカンパのお願い
+      .lead
+        %p
+          LiveLog を運営している2011年度入部の #{link_to '三吉', member_path(1)} です。
+        %p
+          私は、卒業が近づいてきた2014年の NF 直前、私の代のこれまでの演奏を振り返る目的で LiveLog を作りました。<br>
+          しかし、私の代の演奏というのは、私の代のメンバーだけで完結するものではありません。<br>
+          むしろ、ほとんどの曲を先輩や後輩と一緒に演奏してきました。<br>
+          その繋がりは脈々と途切れることなく続いており、結果、LiveLog には2011年度から今日に至るまでのアンプラグドの全ての演奏が記録されています。
+        %p
+          しかし、LiveLog のデータ量が増えるのに伴い、運営費もかさむようになりました。<br>
+          2017年度には、現役生からの申し入れもあり、運営費の一部を受け取ることになりました。<br>
+          ただ、私はできれば現役生の手を借りず、OB・OG からのカンパで LiveLog を運営したいと考えています。
+        %p
+          ご賛同いただけるのであれば、LiveLog を今後も維持し、さらに発展させていくため、できる範囲でのカンパをいただければ幸いです。<br>
+          よろしくお願いいたします。
+        %p.text-right
+          2018年3月<br>
+          三吉 貴大
+
+  .col-12.col-lg-4
+    %section.card.mb-3
+      .card-body
+        %h2.h5.card-title カンパする
+        %dl
+          %dt= link_to 'PayPal マネープール', 'https://www.paypal.com/jp/webapps/mpp/personal/money-pool', target: '_blank'
+          %dd= link_to 'paypal.me/pools/c/8lNgGTnXWw', 'https://paypal.me/pools/c/8lNgGTnXWw', target: '_blank'
+          %dt= link_to 'Amazon ギフト券', 'https://www.amazon.co.jp/dp/B004N3APGO/', target: '_blank'
+          %dd miyoshi@ku-unplugged.net
+          %dt= link_to 'Kyash', 'https://support.kyash.co/hc/ja/articles/360026164991-%E9%80%81%E9%87%91%E6%96%B9%E6%B3%95', target: '_blank'
+          %dd sankichi92
+          %dt= link_to 'LINE Pay', 'http://pay-blog.line.me/archives/72540250.html', target: '_blank'
+          %dd ※ すでに友だちの方のみ
+        %p.card-text
+          入部年度と LiveLog 上の名前、カンパである旨を送金時に教えていただけると助かります。
+
+    %section.card
+      %h2.h5.card-header 実績
+      %table.table.table-hover
+        %thead
+          %tr
+            %th 年度
+            %th 件数
+            %th 合計(円)
+        %tbody
+          - @donations.group_by { |donation| donation.donated_on.nendo }.each do |nendo, donations|
+            %tr
+              %td= nendo
+              %td= donations.size
+              %td= number_with_delimiter(donations.sum(&:amount))

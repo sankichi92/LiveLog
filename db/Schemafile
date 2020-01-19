@@ -31,6 +31,7 @@ create_table :donations, force: :cascade do |t|
   t.datetime :created_at, null: false
 
   t.index :member_id
+  t.index :donated_on
 end
 
 create_table :entries, force: :cascade do |t|
