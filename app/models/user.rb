@@ -1,6 +1,8 @@
 require 'app_auth0_client'
 
 class User < ApplicationRecord
+  SUPER_ADMIN_ID = 1
+
   self.ignored_columns = %i[email subscribing]
 
   belongs_to :member
@@ -12,14 +14,16 @@ class User < ApplicationRecord
 
   scope :inactivated, -> { where(activated: false) }
 
-  delegate :graduate?, :hide_ads?, to: :member
-
   def auth0_id
     "auth0|#{id}"
   end
 
   def activate!
     update!(activated: true)
+  end
+
+  def hide_ads?
+    member.hide_ads? || id == SUPER_ADMIN_ID
   end
 
   # region Auth0
