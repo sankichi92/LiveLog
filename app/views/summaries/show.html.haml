@@ -1,0 +1,70 @@
+- provide(:title, "データ #{@summary.year}")
+- provide(:description, "#{@summary.year}年度に京大アンプラグドで行った演奏のサマリー")
+
+%article
+  %nav.nav.nav-pills.mb-3
+    - Live.published.years.each do |year|
+      = link_to year, summary_path(year), class: "nav-link#{year == @summary.year ? ' active' : ''}"
+
+  %p.lead<
+    %mark= @summary.members_count
+    人のメンバーで
+    %mark= @summary.lives_count
+    回のライブを開催し
+    %mark= @summary.songs_count
+    曲を演奏しました。
+
+  .row
+    .col-lg-4.mb-3
+      %section.card
+        %h5.card-header 演奏された楽器
+        .card-body
+          %p.card-text
+            %mark= @summary.instrument_to_count.size
+            種類の楽器が演奏されました。
+          %ul.list-inline
+            - @summary.instrument_to_count.each do |instrument, count|
+              %li.list-inline-item.lead
+                = link_to_search instrument, instruments: instrument, date_range: @summary.date_range
+                %span.badge.badge-pill.badge-secondary= count
+
+    .col-lg-4.mb-3
+      %section.card
+        %h5.card-header カバーしたアーティスト
+        .card-body
+          %p.card-text
+            %mark= @summary.artists_count
+            組のアーティストの曲が演奏されました。
+            - unless @summary.top10_artist_to_count.empty?
+              %br
+              特に次のアーティストが人気です。
+        .list-group.list-group-flush
+          - @summary.top10_artist_to_count.each do |artist, count|
+            = link_to_search({ artist: artist, date_range: @summary.date_range },
+                             class: 'list-group-item list-group-item-action d-flex justify-content-between align-items-center') do
+              = artist
+              %span.badge.badge-pill.badge-secondary= count
+
+    .col-lg-4.mb-3
+      %section.card
+        %h5.card-header バンドの構成人数
+        .card-body
+          %p.card-text
+            構成人数の平均は
+            %mark= @summary.formation_average
+            人でした。
+        %table.table.table-hover
+          %thead
+            %tr
+              %th 人数
+              %th 割合
+              %th 曲数
+          %tbody
+          - @summary.formation_to_count.each do |formation, count|
+            %tr.clickable{ data: { controller: 'tr-link', tr_link_location: search_songs_path(players_lower: formation, players_upper: formation, date_lower: @summary.date_range.begin, date_upper: @summary.date_range.end), action: 'click->tr-link#clickRow' } }
+              %td #{formation}人
+              %td<
+                = (count / @summary.songs_count.to_f * 100).round(1)
+                \%
+              %td
+                %span.badge.badge-pill.badge-secondary= count

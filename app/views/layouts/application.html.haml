@@ -43,7 +43,7 @@
             %li.nav-item{ class: current_page?(songs_path) || current_page?(search_songs_path) ? 'active' : '' }= link_to '曲検索', songs_path, class: 'nav-link'
             %li.nav-item{ class: params[:controller] == 'lives' ? 'active' : '' }= link_to 'ライブ', lives_path, class: 'nav-link'
             %li.nav-item{ class: params[:controller] == 'members' ? 'active' : '' }= link_to 'メンバー', members_path, class: 'nav-link'
-            %li.nav-item{ class: params[:controller] == 'stats' ? 'active' : '' }= link_to '統計', stat_path('current'), class: 'nav-link'
+            %li.nav-item{ class: params[:controller] == 'summaries' ? 'active' : '' }= link_to 'データ', summaries_path, class: 'nav-link'
 
           - if current_user
             %ul.nav.navbar-nav

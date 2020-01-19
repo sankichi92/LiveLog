@@ -13,7 +13,7 @@ module SongsHelper
       date_lower: options[:date_range]&.begin,
       date_upper: options[:date_range]&.end,
       user_id: options[:user_id],
-    ) + '#results'
+    )
     block_given? ? link_to(options, html_options, &block) : link_to(name, options, html_options)
   end
 end

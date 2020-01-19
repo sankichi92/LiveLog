@@ -28,7 +28,7 @@ Rails.application.routes.draw do
     resource :user, only: %i[new create]
   end
 
-  resources :stats, only: :show, param: :year
+  resources :summaries, only: %i[index show], param: :year
 
   resources :entries, except: :show
 
