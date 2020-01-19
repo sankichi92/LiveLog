@@ -12,17 +12,14 @@ class User < ApplicationRecord
 
   scope :inactivated, -> { where(activated: false) }
 
+  delegate :graduate?, :hide_ads?, to: :member
+
   def auth0_id
     "auth0|#{id}"
   end
 
   def activate!
     update!(activated: true)
-  end
-
-  def donated?
-    donated_ids = ENV['LIVELOG_DONATED_USER_IDS']&.split(',')&.map(&:to_i) || []
-    donated_ids.include?(id)
   end
 
   # region Auth0

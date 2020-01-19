@@ -27,10 +27,9 @@
     = stylesheet_link_tag 'application'
     = javascript_pack_tag 'application', defer: true
 
-    - if Rails.env.production?
-      = render 'layouts/google_analytics'
-      - if current_user.nil?
-        = render 'layouts/google_adsense'
+    = render 'layouts/google_analytics'
+    - unless current_user&.hide_ads?
+      = render 'layouts/google_adsense'
 
   %body
     %nav.navbar.navbar-expand-lg.sticky-top.navbar-light.bg-primary.mb-4#navbar
@@ -67,6 +66,14 @@
     .container
       = render 'layouts/flash'
 
+      - if current_user && !current_user.hide_ads? && !current_page?(donate_path)
+        %aside.alert.alert-warning.alert-dismissible.fade.show{ role: 'alert' }
+          %strong.mr-2 OB・OG の皆さまへ
+          LiveLog の運営にご支援をお願いします。
+          = link_to '詳細', donate_path, class: 'alert-link'
+          %button.close{ type: 'button', 'aria-label': 'Close', data: { dismiss: 'alert' } }
+            %span{ 'aria-hidden': true } &times;
+
       %main
         = yield
 
@@ -83,6 +90,6 @@
           - if current_user
             %li.list-inline-item
               %small= link_to icon('fab', 'slack', 'Slack'), slack_invitation_url, class: 'text-muted', target: '_blank', rel: 'noopener'
-            - if current_user.member.graduate?
+            - if current_user.graduate?
               %li.list-inline-item
                 %small= link_to 'カンパのお願い', donate_path, class: 'text-muted'
