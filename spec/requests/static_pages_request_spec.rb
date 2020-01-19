@@ -13,15 +13,6 @@ RSpec.describe 'static_pages request:', type: :request do
     end
   end
 
-  describe 'GET /donation' do
-    before { log_in_as(create(:user)) }
-
-    it 'responds 200' do
-      get donation_path
-      expect(response).to have_http_status(:ok)
-    end
-  end
-
   describe 'GET /privacy' do
     it 'responds 200' do
       get privacy_path

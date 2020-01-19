@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root 'static_pages#home'
 
-  get '/donation', to: 'static_pages#donation'
+  get '/donate', to: 'donations#index'
   get '/privacy', to: 'static_pages#privacy'
 
   get '/auth/auth0/callback', to: 'sessions#create'

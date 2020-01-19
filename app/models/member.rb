@@ -5,6 +5,7 @@ class Member < ApplicationRecord
   has_many :plays, dependent: :restrict_with_exception
   has_many :published_songs, -> { published }, through: :plays, source: :song
   has_many :entries, dependent: :restrict_with_exception
+  has_many :donations, dependent: :restrict_with_exception
 
   has_one_attached :avatar
 
@@ -27,8 +28,12 @@ class Member < ApplicationRecord
     "#{joined_year} #{name}"
   end
 
-  def graduate?
-    joined_year <= Time.zone.now.nendo - 4
+  def graduate?(nendo: Time.zone.today.nendo)
+    joined_year <= nendo - 4
+  end
+
+  def hide_ads?
+    !graduate? || donations.last&.active?
   end
 
   def played_instruments
