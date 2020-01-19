@@ -1,15 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe 'Entry system:', type: :system do
-  include Auth0UserHelper
-
   specify 'A logged-in user creates an entry', js: true do
     # Given
     date = 1.month.from_now.to_date
     create(:live, :unpublished, date: date)
     member = create(:member)
     user = create(:user)
-    stub_auth0_user(user)
     log_in_as user
 
     # When
