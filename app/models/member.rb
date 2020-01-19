@@ -37,6 +37,8 @@ class Member < ApplicationRecord
   end
 
   def played_instruments
-    @played_instruments ||= plays.joins(song: :live).merge(Live.published).count_by_divided_instrument.keys
+    Rails.cache.fetch("#{cache_key_with_version}/played_instruments", expires_in: 1.day) do
+      plays.joins(song: :live).merge(Live.published).count_by_divided_instrument.keys
+    end
   end
 end
