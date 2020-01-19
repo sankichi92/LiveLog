@@ -28,8 +28,12 @@ class Member < ApplicationRecord
     "#{joined_year} #{name}"
   end
 
-  def graduate?
-    joined_year <= Time.zone.now.nendo - 4
+  def graduate?(nendo: Time.zone.today.nendo)
+    joined_year <= nendo - 4
+  end
+
+  def hide_ads?
+    !graduate? || donations.last&.active?
   end
 
   def played_instruments
