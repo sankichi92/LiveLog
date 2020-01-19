@@ -7,7 +7,7 @@ non_admin = FactoryBot.create(:user, id: 2)
 
 if ENV['AUTH0_CLIENT_ID'].present? && ENV['AUTH0_CLIENT_SECRET'].present?
   [[admin, 'admin@example.com'], [non_admin, 'user@example.com']].each do |user, email|
-    Auth0User.fetch!(user.id)
+    Auth0User.fetch!(user.auth0_id)
   rescue Auth0::NotFound
     user.assign_attributes(email: email, password: 'password')
     Auth0User.create!(user)
