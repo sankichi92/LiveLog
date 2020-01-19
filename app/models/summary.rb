@@ -5,13 +5,14 @@ class Summary
     end
 
     def build
-      summary_hash = Rails.cache.fetch("summaries/20190119/#{@year}", expires_in: 1.day) do
+      summary_hash = Rails.cache.fetch("summaries/20190120/#{@year}", expires_in: 1.day) do
         {
           lives_count: live_relation.count,
           songs_count: song_relation.count,
           members_count: play_relation.distinct.count(:member_id),
           instrument_to_count: play_relation.count_by_divided_instrument,
-          artists_count: song_relation.where.not(artist: '').distinct.count(:artist),
+          original_songs_count: song_relation.where(original: true).count,
+          covered_artists_count: song_relation.where(original: false).where.not(artist: '').distinct.count(:artist),
           top10_artist_to_count: top10_artist_to_count,
           formation_to_count: play_relation.count_formations,
         }
@@ -47,15 +48,18 @@ class Summary
     end
   end
 
-  attr_reader :year, :lives_count, :songs_count, :members_count, :instrument_to_count, :artists_count, :top10_artist_to_count, :formation_to_count
+  attr_reader :year, :lives_count, :songs_count, :members_count, :instrument_to_count, :original_songs_count, :covered_artists_count, :top10_artist_to_count,
+              :formation_to_count
 
-  def initialize(year, lives_count:, songs_count:, members_count:, instrument_to_count:, artists_count:, top10_artist_to_count:, formation_to_count:)
+  def initialize(year, lives_count:, songs_count:, members_count:, instrument_to_count:, original_songs_count:, covered_artists_count:, top10_artist_to_count:,
+                 formation_to_count:)
     @year = year
     @lives_count = lives_count
     @songs_count = songs_count
     @members_count = members_count
     @instrument_to_count = instrument_to_count
-    @artists_count = artists_count
+    @original_songs_count = original_songs_count
+    @covered_artists_count = covered_artists_count
     @top10_artist_to_count = top10_artist_to_count
     @formation_to_count = formation_to_count
   end

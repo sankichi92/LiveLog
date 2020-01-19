@@ -12,7 +12,7 @@ module SongsHelper
       players_upper: options[:players_count],
       date_lower: options[:date_range]&.begin,
       date_upper: options[:date_range]&.end,
-      user_id: options[:user_id],
+      original: options[:original] ? '1' : '0',
     )
     block_given? ? link_to(options, html_options, &block) : link_to(name, options, html_options)
   end
