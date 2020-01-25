@@ -1,0 +1,47 @@
+name: Lint
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      # https://github.com/actions/setup-ruby/issues/31#issuecomment-561144368
+      - name: Read .ruby-version
+        run: echo "::set-output name=RUBY_VERSION::$(cat .ruby-version)"
+        id: rbenv
+
+      - name: Set up Ruby
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: ${{ steps.rbenv.outputs.RUBY_VERSION }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      # https://github.community/t5/GitHub-Actions/Problem-building-pg-gem/td-p/31252
+      - name: Install required packages
+        run: sudo apt-get install libpq-dev
+
+      - name: Install gems
+        run: |
+          gem install bundler
+          bundle install --jobs 4 --retry 3
+
+      - name: Install npm packages
+        run: yarn install
+
+      - name: Run lint
+        run: |
+          bundle exec rubocop --parallel
+          bundle exec haml-lint
+          yarn run lint
