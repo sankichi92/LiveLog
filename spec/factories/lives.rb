@@ -23,7 +23,7 @@ FactoryBot.define do
     end
 
     trait :unpublished do
-      date { Faker::Date.unique.between(from: Time.zone.today, to: 3.months.from_now) }
+      date { Faker::Date.unique.between(from: Time.zone.today, to: 3.months.from_now.to_date) }
       published { false }
     end
 
