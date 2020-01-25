@@ -32,7 +32,7 @@
       = form.label :original, class: 'form-check-label'
       %small.form-text.text-muted 京大アンプラグドのメンバーが作詞・作曲した曲の場合にチェックしてください
 
-    %div.mb-3{ data: { controller: 'form-plays' } }
+    .mb-3{ data: { controller: 'form-plays' } }
       %template{ data: { target: 'form-plays.template' } }
         = form.fields_for :plays, Play.new, child_index: 'TEMPLATE_INDEX' do |plays_form|
           = render 'admin/songs/form_play', form: plays_form

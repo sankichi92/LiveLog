@@ -32,7 +32,7 @@
               = song_form.label :position
               = song_form.number_field :position, class: 'form-control'
 
-          %div.mb-3{ data: { controller: 'form-playable-times' } }
+          .mb-3{ data: { controller: 'form-playable-times' } }
             %template{ data: { target: 'form-playable-times.template' } }
               = form.fields_for :playable_times, PlayableTime.new, child_index: 'TEMPLATE_INDEX' do |playable_times_form|
                 = render 'form_playable_time', form: playable_times_form

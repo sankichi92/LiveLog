@@ -30,7 +30,7 @@
 
     - unless @collaborators.empty?
       %h5
-        = '共演者'
+        共演者
         %small.text-muted #{@collaborators.size}人
       %ul.list-inline
         - @collaborators.take(10).each do |collaborator|

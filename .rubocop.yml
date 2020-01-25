@@ -6,8 +6,20 @@ require:
   - rubocop-rspec
   - rubocop-rubycw
 
+Bundler/OrderedGems:
+  Enabled: true
+
 Layout/LineLength:
   Max: 160
+
+Lint/AssignmentInCondition:
+  AllowSafeAssignment: true
+
+Security:
+  Enabled: true
+
+Style/ClassAndModuleChildren:
+  Enabled: true
 
 Style/MutableConstant:
   Enabled: true

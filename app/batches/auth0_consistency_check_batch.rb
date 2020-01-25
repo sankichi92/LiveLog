@@ -17,7 +17,7 @@ class Auth0ConsistencyCheckBatch < ApplicationBatch
     logger.info("LiveLog users total: #{user_ids.size}")
 
     i = 0
-    begin
+    loop do
       response = AppAuth0Client.instance.users(
         page: i,
         per_page: 100,
@@ -26,7 +26,7 @@ class Auth0ConsistencyCheckBatch < ApplicationBatch
         q: %(identities.connection:"#{Auth0User::CONNECTION_NAME}"),
       )
 
-      logger.info("Auth0 users total: #{response['total']}") if i == 0
+      logger.info("Auth0 users total: #{response['total']}") if i.zero?
       logger.info("Start: #{response['start']}, Length: #{response['length']}")
 
       auth0_users = response['users'].map { |user| Auth0User.new(user) }
@@ -38,9 +38,11 @@ class Auth0ConsistencyCheckBatch < ApplicationBatch
         end
       end
 
+      break if response['start'] + response['length'] >= response['total']
+
       i += 1
       sleep @sleep_duration # For rate limit
-    end while response['start'] + response['length'] < response['total']
+    end
 
     results[:inconsistent_livelog_ids] += user_ids
 

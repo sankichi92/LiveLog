@@ -1,4 +1,4 @@
-- unless errors.blank?
+- if errors.present?
   .alert.alert-danger
     %strong #{errors.size} 件のエラーがあります
     %ul.mb-0

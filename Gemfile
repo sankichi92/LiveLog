@@ -33,9 +33,9 @@ gem 'omniauth-auth0'
 gem 'omniauth-rails_csrf_protection'
 
 gem 'elasticsearch', '~> 6.8'
-gem 'elasticsearch-rails', '~> 6.1'
-gem 'elasticsearch-model', '~> 6.1'
 gem 'elasticsearch-dsl'
+gem 'elasticsearch-model', '~> 6.1'
+gem 'elasticsearch-rails', '~> 6.1'
 
 gem 'auth0'
 gem 'slack-ruby-client'
@@ -54,9 +54,9 @@ end
 
 group :development do
   gem 'listen'
-  gem 'web-console'
   gem 'spring'
   gem 'spring-watcher-listen'
+  gem 'web-console'
 
   gem 'bullet'
   gem 'dotenv-rails'
