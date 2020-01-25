@@ -1,0 +1,135 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+env:
+  RAILS_ENV: test
+
+jobs:
+  RSpec:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:9.6
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+      elasticsearch:
+        image: elasticsearch:6.4.0
+        ports:
+          - 9200:9200
+        options: --env "discovery.type=single-node" --health-cmd "curl http://localhost:9200/_cluster/health" --health-interval 10s --health-timeout 5s --health-retries 10
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Read .ruby-version
+        run: echo "::set-output name=version::$(cat .ruby-version)"
+        id: ruby-version
+
+      - uses: actions/setup-ruby@v1
+        with:
+          ruby-version: ${{ steps.ruby-version.outputs.version }}
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - name: Bundler cache
+        uses: actions/cache@v1
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: ${{ runner.os }}-gems-
+
+      - name: Get yarn cache dir
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+        id: yarn-cache
+
+      - name: Yarn cache
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.yarn-cache.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ runner.os }}-yarn-
+
+      - name: Install dependencies
+        run: |
+          sudo apt install libpq-dev
+          bundle install --jobs 4 --retry 3 --path vendor/bundle
+          yarn install
+
+      - name: Setup database
+        run: |
+          cp config/database.yml.ci config/database.yml
+          bin/rake db:create
+          bin/rake ridgepole:apply
+        env:
+          POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
+
+      - name: Run spec
+        run: bin/rake spec
+        env:
+          POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
+
+
+  RuboCop:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Read .ruby-version
+        run: echo "::set-output name=version::$(cat .ruby-version)"
+        id: ruby-version
+
+      - uses: actions/setup-ruby@v1
+        with:
+          ruby-version: ${{ steps.ruby-version.outputs.version }}
+
+      - uses: actions/cache@v1
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: ${{ runner.os }}-gems-
+
+      - name: Install dependencies
+        run: |
+          sudo apt install libpq-dev
+          bundle install --jobs 4 --retry 3 --path vendor/bundle
+
+      - name: Run rubocop
+        run: bundle exec rubocop --parallel
+
+
+  ESLint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - name: Get yarn cache dir
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+        id: yarn-cache
+
+      - uses: actions/cache@v1
+        with:
+          path: ${{ steps.yarn-cache.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ runner.os }}-yarn-
+
+      - run: yarn install
+
+      - run: yarn run eslint
+
