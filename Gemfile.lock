@@ -155,11 +155,6 @@ GEM
       haml (>= 4.0.6, < 6.0)
       html2haml (>= 1.0.1)
       railties (>= 5.1)
-    haml_lint (0.34.1)
-      haml (>= 4.0, < 5.2)
-      rainbow
-      rubocop (>= 0.50.0)
-      sysexits (~> 1.1)
     hashdiff (1.0.0)
     hashie (3.6.0)
     html2haml (2.2.0)
@@ -382,7 +377,6 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    sysexits (1.2.0)
     temple (0.8.2)
     thor (1.0.1)
     thread_safe (0.3.6)
@@ -451,7 +445,6 @@ DEPENDENCIES
   faker
   font-awesome-sass
   haml-rails
-  haml_lint
   image_processing
   kaminari
   kaminari-i18n

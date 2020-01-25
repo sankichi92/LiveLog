@@ -22,7 +22,7 @@ module SongSearchable
       analysis: {
         analyzer: {
           default: {
-            type: 'kuromoji',
+            type: Rails.env.test? ? 'standard' : 'kuromoji',
             stopwords: '_english_',
           },
         },
