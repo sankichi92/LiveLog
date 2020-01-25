@@ -58,5 +58,4 @@ jobs:
       - name: Run lint
         run: |
           bundle exec rubocop --parallel
-          bundle exec haml-lint app/views/
           yarn run lint
