@@ -50,6 +50,11 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'rspec-rails'
+  gem 'rubocop', require: false
+  gem 'rubocop-performance', require: false
+  gem 'rubocop-rails', require: false
+  gem 'rubocop-rspec', require: false
+  gem 'rubocop-rubycw', require: false
 end
 
 group :development do
@@ -61,11 +66,6 @@ group :development do
   gem 'bullet'
   gem 'dotenv-rails'
   gem 'rails_real_favicon', require: false
-  gem 'rubocop', require: false
-  gem 'rubocop-performance', require: false
-  gem 'rubocop-rails', require: false
-  gem 'rubocop-rspec', require: false
-  gem 'rubocop-rubycw', require: false
 end
 
 group :test do

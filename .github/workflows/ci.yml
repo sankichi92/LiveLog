@@ -65,7 +65,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt install libpq-dev
-          bundle install --jobs 4 --retry 3 --path vendor/bundle
+          bundle install --jobs 4 --retry 3 --path vendor/bundle --with=test
           yarn install
 
       - name: Setup database
@@ -104,7 +104,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt install libpq-dev
-          bundle install --jobs 4 --retry 3 --path vendor/bundle
+          bundle install --jobs 4 --retry 3 --path vendor/bundle --with=test
 
       - name: Run rubocop
         run: bundle exec rubocop --parallel
