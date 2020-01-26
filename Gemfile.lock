@@ -112,19 +112,19 @@ GEM
     dotenv-rails (2.7.5)
       dotenv (= 2.7.5)
       railties (>= 3.2, < 6.1)
-    elasticsearch (7.4.0)
-      elasticsearch-api (= 7.4.0)
-      elasticsearch-transport (= 7.4.0)
-    elasticsearch-api (7.4.0)
+    elasticsearch (6.8.1)
+      elasticsearch-api (= 6.8.1)
+      elasticsearch-transport (= 6.8.1)
+    elasticsearch-api (6.8.1)
       multi_json
     elasticsearch-dsl (0.1.9)
-    elasticsearch-model (7.0.0)
+    elasticsearch-model (6.1.0)
       activesupport (> 3)
       elasticsearch (> 1)
       hashie
-    elasticsearch-rails (7.0.0)
-    elasticsearch-transport (7.4.0)
-      faraday
+    elasticsearch-rails (6.1.0)
+    elasticsearch-transport (6.8.1)
+      faraday (>= 0.14, < 1)
       multi_json
     equalizer (0.0.11)
     erubi (1.9.0)
@@ -437,9 +437,10 @@ DEPENDENCIES
   byebug
   capybara
   dotenv-rails
+  elasticsearch (~> 6.8)
   elasticsearch-dsl
-  elasticsearch-model
-  elasticsearch-rails
+  elasticsearch-model (~> 6.1)
+  elasticsearch-rails (~> 6.1)
   factory_bot_rails
   faker
   font-awesome-sass
