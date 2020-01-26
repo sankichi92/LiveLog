@@ -54,7 +54,7 @@ Rails.application.configure do
   config.log_tags = [ :request_id ]
 
   # Use a different cache store in production.
-  config.cache_store = :redis_cache_store, { url: ENV['REDIS_URL'] }
+  config.cache_store = :redis_cache_store, { url: ENV.fetch('REDIS_URL') }
 
   # Use a real queuing backend for Active Job (and separate queues per environment).
   # config.active_job.queue_adapter     = :resque
@@ -71,8 +71,8 @@ Rails.application.configure do
     address: 'smtp.sendgrid.net',
     port: '587',
     authentication: :plain,
-    user_name: ENV['SENDGRID_USERNAME'],
-    password: ENV['SENDGRID_PASSWORD'],
+    user_name: ENV.fetch('SENDGRID_USERNAME'),
+    password: ENV.fetch('SENDGRID_PASSWORD'),
     domain: 'heroku.com',
     enable_starttls_auto: true,
   }
@@ -100,7 +100,7 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  Elasticsearch::Model.client = Elasticsearch::Client.new(url: ENV.fetch('SEARCHBOX_SSL_URL'), log: true)
+  Elasticsearch::Model.client = Elasticsearch::Client.new(url: ENV.fetch('SEARCHBOX_SSL_URL'))
 
   # Inserts middleware to perform automatic connection switching.
   # The `database_selector` hash is used to pass options to the DatabaseSelector
