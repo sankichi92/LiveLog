@@ -23,6 +23,11 @@ If you're using macOS and [Homebrew](https://brew.sh/), you can install these by
 
 ## Development
 
+### Clone the repository
+
+    $ git clone https://github.com/sankichi92/LiveLog.git
+    $ cd LiveLog
+
 ### Setup or update your development environment
 
     $ bin/setup
@@ -52,7 +57,4 @@ Then, you can log-in by email `admin@example.com` and password `password`.
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/sankichi92/LiveLog.  
-Please check out the [Contributing to LiveLog](https://github.com/sankichi92/LiveLog/blob/master/CONTRIBUTING.md) for guidelines about how to proceed.
-
-Everyone interacting in the LiveLog project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/sankichi92/LiveLog/blob/master/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/sankichi92/LiveLog. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/sankichi92/LiveLog/blob/master/CODE_OF_CONDUCT.md).
