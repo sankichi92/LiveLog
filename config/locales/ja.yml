@@ -12,6 +12,15 @@ ja:
     formats:
       default: "%Y/%m/%d %H:%M"
       short: "%-m/%-d %-H:%M"
+  helpers:
+    page_entries_info:
+      more_pages:
+        display_entries: "<b>%{first}</b>番目から<b>%{last}</b>番目までの%{entry_name}を表示しています（全<b>%{total}</b>件中）"
+      one_page:
+        display_entries:
+          one: "<b>1</b>件の%{entry_name}を表示しています"
+          other: "<b>%{count}</b>件の%{entry_name}をすべて表示しています"
+          zero: "%{entry_name}が見つかりませんでした"
   attributes:
     id: ID
     created_at: 作成日時
