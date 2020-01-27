@@ -2,30 +2,53 @@
 
 https://livelog.ku-unplugged.net/
 
-The Ruby on Rails application to manage set lists of the acoustic light music club "[京大アンプラグド](http://ku-unplugged.net/)."
+The [Ruby on Rails](https://rubyonrails.org/) application for set list management of the acoustic light music club "[京大アンプラグド](http://ku-unplugged.net/)."
 
 ## Requirements
 
-- Ruby 2.6
-- Node.js & Yarn
-- PostgreSQL
-- [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/install-elasticsearch.html) 6.x
+- [Ruby](https://www.ruby-lang.org/) 2.7
+- [Node.js](https://nodejs.org/) & [Yarn](https://yarnpkg.com/)
+- [PostgreSQL](https://www.postgresql.org/)
+- [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/) 6.x
   - with [Japanese (kuromoji) Analysis Plugin](https://www.elastic.co/guide/en/elasticsearch/plugins/current/analysis-kuromoji.html)
 - [ImageMagick](https://imagemagick.org/)
 
+If you're using macOS and [Homebrew](https://brew.sh/), you can install these by the following commands:
+
+    $ brew install rbenv yarn postgresql elasticsearch imagemagick
+    $ rbenv install 2.7.0
+    $ elasticsearch-plugin install analysis-kuromoji
+    $ brew services start postgresql
+    $ brew services start elasticsearch
+
 ## Development
 
-To get started with the app, clone the repo and then execute:
+### Setup or update your development environment
 
     $ bin/setup
 
-Next, run the test suite to verify that everything is working correctly:
+This script is idempotent, so that you can run it at anytime and get an expectable outcome.
+
+### Run the app in your local web server
+
+    $ bin/rails server
+
+### Run the test suite
 
     $ bin/rails spec
 
-If the test suite passes, you'll be ready to run the app in a local server:
+### Lint and fix files
 
-    $ bin/rails server
+    $ bundle exec rubocop --auto-correct
+    $ yarn run eslint --fix
+
+### Create the first admin user
+
+1. Sign up [Auth0](https://auth0.com/) and create an application (regular web)
+2. Overwrite `AUTH0_*` values in `.env` by your Auth0 application settings
+3. Run `bin/rails db:replant`
+
+Then, you can log-in by email `admin@example.com` and password `password`.
 
 ## Contributing
 

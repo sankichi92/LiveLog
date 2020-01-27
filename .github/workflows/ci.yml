@@ -5,10 +5,12 @@ on:
     branches:
       - master
     paths-ignore:
-      - bin/*
+      - '*.md'
+      - 'bin/*'
   pull_request:
     paths-ignore:
-      - bin/*
+      - '*.md'
+      - 'bin/*'
 
 env:
   RAILS_ENV: test
