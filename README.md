@@ -13,12 +13,12 @@ The [Ruby on Rails](https://rubyonrails.org/) application for set list managemen
   - with [Japanese (kuromoji) Analysis Plugin](https://www.elastic.co/guide/en/elasticsearch/plugins/current/analysis-kuromoji.html)
 - [ImageMagick](https://imagemagick.org/)
 
-If you're using macOS and [Homebrew](https://brew.sh/), you can install these by the following commands:
+If you're using macOS and [Homebrew](https://brew.sh/), you can setup them by the following commands:
 
     $ brew install rbenv yarn postgresql elasticsearch imagemagick
     $ rbenv install 2.7.0
-    $ elasticsearch-plugin install analysis-kuromoji
     $ brew services start postgresql
+    $ elasticsearch-plugin install analysis-kuromoji
     $ brew services start elasticsearch
 
 ## Development
@@ -53,7 +53,17 @@ This script is idempotent, so that you can run it at anytime and get an expectab
 2. Overwrite `AUTH0_*` values in `.env` by your Auth0 application settings
 3. Run `bin/rails db:replant`
 
-Then, you can log-in by email `admin@example.com` and password `password`.
+Then, you can log in by email `admin@example.com` and password `password`.
+
+### Update DB schema
+
+Edit `db/Schemafile` and run:
+
+    $ bin/rake ridgepole:apply
+
+### Rebuild Elasticsearch index
+
+    $ bin/rake elasticsearch:import:song FORCE=y
 
 ## Contributing
 
