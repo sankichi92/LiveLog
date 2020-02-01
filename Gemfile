@@ -38,11 +38,9 @@ gem 'elasticsearch-model', '~> 6.1'
 gem 'elasticsearch-rails', '~> 6.1'
 
 gem 'auth0'
+gem 'sentry-raven'
 gem 'slack-ruby-client'
 gem 'twitter'
-
-gem 'newrelic_rpm'
-gem 'sentry-raven'
 
 gem 'commonmarker'
 

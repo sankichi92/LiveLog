@@ -224,7 +224,6 @@ GEM
     multipart-post (2.1.1)
     naught (1.1.0)
     netrc (0.11.0)
-    newrelic_rpm (6.8.0.360)
     nio4r (2.5.2)
     nokogiri (1.10.7)
       mini_portile2 (~> 2.4.0)
@@ -454,7 +453,6 @@ DEPENDENCIES
   kaminari
   kaminari-i18n
   listen
-  newrelic_rpm
   omniauth
   omniauth-auth0
   omniauth-rails_csrf_protection
