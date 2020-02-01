@@ -30,7 +30,7 @@ FileUtils.chdir APP_ROOT do
   system! 'bin/rake ridgepole:apply'
   system! 'bin/rake db:seed'
 
-  puts "\n== Building elasticsearch index"
+  puts "\n== Building elasticsearch index =="
   system! 'bin/rake elasticsearch:import:song FORCE=y'
 
   puts "\n== Removing old logs and tempfiles =="
