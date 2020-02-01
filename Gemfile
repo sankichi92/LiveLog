@@ -44,6 +44,8 @@ gem 'twitter'
 gem 'newrelic_rpm'
 gem 'sentry-raven'
 
+gem 'commonmarker'
+
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 

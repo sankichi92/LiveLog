@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
-  root 'static_pages#home'
+  root 'home#show'
 
   get '/donate', to: 'donations#index'
-  get '/privacy', to: 'static_pages#privacy'
+  get '/privacy', to: 'docs#privacy'
 
   get '/auth/auth0/callback', to: 'sessions#create'
   get '/auth/failure', to: 'sessions#failure'
