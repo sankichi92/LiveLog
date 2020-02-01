@@ -1,8 +1,7 @@
 test:
   adapter: postgresql
   encoding: unicode
-  host: <%= ENV.fetch('POSTGRES_HOST', 'localhost') %>
-  port: <%= ENV.fetch('POSTGRES_PORT', '5432') %>
-  username: <%= ENV.fetch('POSTGRES_USER', 'postgres') %>
-  password: <%= ENV.fetch('POSTGRES_PASSWORD', 'postgres') %>
-  database: LiveLog2_test
+  pool: 5
+  host: localhost
+  username: postgres
+  database: LiveLog2_ci
