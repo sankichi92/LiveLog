@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   permits :email
 
   def new
-    @user = @member.build_user
+    @user = @member.user || @member.build_user
   end
 
   def create(user)
