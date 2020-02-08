@@ -23,17 +23,17 @@ class EntriesController < ApplicationController
     @entry = current_user.member.entries.build(entry)
     @entry.build_song(song.permit(:live_id, :name, :artist, :original, :status, :comment, plays_attributes: %i[member_id instrument _destroy]))
 
-    if @entry.save
-      EntryActivityNotifyJob.perform_later(
-        user: current_user,
-        operation: '作成しました',
-        entry_id: @entry.id,
-        detail: @entry.as_json(include: [:playable_times, { song: { include: :plays } }]),
-      )
-      redirect_to entries_path, notice: "エントリー ID: #{@entry.id} を作成しました"
-    else
-      render :new, status: :unprocessable_entity
-    end
+    @entry.save!
+    EntryActivityNotifyJob.perform_later(
+      user: current_user,
+      operation: '作成しました',
+      entry_id: @entry.id,
+      detail: @entry.as_json(include: [:playable_times, { song: { include: :plays } }]),
+    )
+    redirect_to entries_path, notice: "エントリー ID: #{@entry.id} を作成しました"
+  rescue ActiveRecord::RecordInvalid => e
+    Raven.capture_exception(e, extra: { errors: @entry.errors.as_json }, level: :debug)
+    render :new, status: :unprocessable_entity
   end
 
   def edit
