@@ -43,7 +43,7 @@
                     %ul.list-inline.mb-0
                       = render entry.song.plays
                   %td #{entry.song.plays.size} 人
-                  %td
+                  %td{ data: { order: entry.playable_times.first.range.first.to_i } }
                     %ul.list-unstyled.mb-0
                       - entry.playable_times.each do |playable_time|
                         %li= playable_time.formatted_range
