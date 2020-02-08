@@ -36,7 +36,7 @@ module Admin
 
     def destroy(id)
       entry = Entry.find(id)
-      json = entry.as_json(include: [:playable_times, { song: { include: :plays } }])
+      json = entry.as_json_for_notification
       entry.song.destroy!
       AdminActivityNotifyJob.perform_now(
         user: current_user,

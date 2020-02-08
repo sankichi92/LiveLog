@@ -29,7 +29,7 @@ class EntriesController < ApplicationController
       user: current_user,
       operation: '作成しました',
       entry_id: @entry.id,
-      detail: @entry.as_json(include: [:playable_times, { song: { include: :plays } }]),
+      detail: @entry.as_json_for_notification,
     )
     redirect_to entries_path, notice: "エントリー ID: #{@entry.id} を作成しました"
   rescue ActiveRecord::RecordInvalid => e
@@ -58,7 +58,7 @@ class EntriesController < ApplicationController
   end
 
   def destroy
-    json = @entry.as_json(include: [:playable_times, { song: { include: :plays } }])
+    json = @entry.as_json_for_notification
     @entry.song.destroy!
     EntryActivityNotifyJob.perform_later(
       user: current_user,

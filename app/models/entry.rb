@@ -30,6 +30,16 @@ class Entry < ApplicationRecord
     playable_times.sum { |playable_time| playable_time.upper - playable_time.lower }
   end
 
+  def as_json_for_notification
+    as_json(
+      only: %i[member_id notes],
+      include: [
+        { playable_times: { only: :range } },
+        { song: { only: %i[live_id name artist original status comment], include: { plays: { only: %i[member_id instrument] } } } },
+      ],
+    )
+  end
+
   private
 
   def playable_on_live_day?
