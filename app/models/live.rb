@@ -37,4 +37,12 @@ class Live < ApplicationRecord
     songs.includes(:audio_attachment, :plays).import
     Entry.joins(:song).merge(Song.where(live_id: id)).destroy_all
   end
+
+  def time_range
+    if nf?
+      date.in_time_zone.change(hour: 10)...date.in_time_zone.change(hour: 19)
+    else
+      date.in_time_zone.change(hour: 12)...date.in_time_zone.change(hour: 24)
+    end
+  end
 end
