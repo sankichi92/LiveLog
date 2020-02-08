@@ -17,6 +17,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
+      TZ: Asia/Tokyo
       RAILS_ENV: test
 
     services:
