@@ -41,7 +41,7 @@ export default class extends Controller {
 
   _showResult(result) {
     this.subTitleTarget.textContent = `${result.collectionName} ${result.trackNumber}`;
-    this.titleTarget.textContent = result.trackName;
+    this.titleTarget.textContent = `${result.trackName} / ${result.artistName}`;
 
     this.artworkTarget.setAttribute('src', result.artworkUrl100);
     this.audioTarget.setAttribute('src', result.previewUrl);
