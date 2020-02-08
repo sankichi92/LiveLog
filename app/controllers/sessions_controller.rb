@@ -6,7 +6,10 @@ class SessionsController < ApplicationController
     livelog_id = Auth0User.extract_livelog_id(auth.uid)
     user = User.find(livelog_id)
 
-    user.activate! unless user.activated?
+    unless user.activated?
+      user.activate!
+      InvitationActivityNotifyJob.perform_later(user: user, text: "初めてログインしました")
+    end
 
     # TODO: Remove this line after Auth0 migration finished.
     user.update!(password_digest: nil) unless user.password_digest.nil?

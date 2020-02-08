@@ -14,6 +14,7 @@ class UsersController < ApplicationController
 
     if @user.save(context: :invite)
       @user.invite!
+      InvitationActivityNotifyJob.perform_later(user: current_user, text: "#{@member.joined_year_and_name} を招待しました")
       redirect_to @member, notice: '招待しました'
     else
       render :new, status: :unprocessable_entity
