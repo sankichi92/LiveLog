@@ -10,7 +10,7 @@
 
   .mb-3{ data: { controller: 'form-playable-times' } }
     %template{ data: { target: 'form-playable-times.template' } }
-      = form.fields_for :playable_times, PlayableTime.new, child_index: 'TEMPLATE_INDEX' do |playable_times_form|
+      = form.fields_for :playable_times, PlayableTime.new(range: entry.song.live.time_range), child_index: 'TEMPLATE_INDEX' do |playable_times_form|
         = render 'form_playable_time', form: playable_times_form
 
     %dev{ data: { target: 'form-playable-times.container' } }

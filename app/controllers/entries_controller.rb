@@ -15,8 +15,9 @@ class EntriesController < ApplicationController
 
   def new
     @entry = current_user.member.entries.build
-    @entry.playable_times.build(range: Live.unpublished.first.time_range)
-    @entry.build_song.plays.build
+    live = Live.unpublished.first
+    @entry.playable_times.build(range: live.time_range)
+    @entry.build_song(live: live).plays.build
   end
 
   def create(entry, song)
