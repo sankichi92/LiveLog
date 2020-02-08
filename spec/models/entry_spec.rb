@@ -11,7 +11,6 @@ RSpec.describe Entry, type: :model do
 
     before do
       entry.playable_times.build(range: playable_time_range)
-      entry.save!
     end
 
     context 'when song.time is present and playable_time including the time exists' do

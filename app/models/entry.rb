@@ -8,6 +8,7 @@ class Entry < ApplicationRecord
   validates :playable_times, presence: true
   validates_associated :song
   validate :live_must_be_unpublished
+  validate :playable_time_on_live_day_exists, on: :create
 
   scope :submitted_or_played_by, ->(member) do
     left_joins(song: :plays).merge(Play.where(member_id: member.id)).or(left_joins(song: :plays).where(member_id: member.id)).distinct
@@ -19,7 +20,7 @@ class Entry < ApplicationRecord
 
   def in_playable_time?
     if song.time.nil?
-      playable_times.any? { |playable_time| (song.live.date.beginning_of_day...song.live.date.end_of_day).overlaps?(playable_time.range) }
+      playable_on_live_day?
     else
       playable_times.any? { |playable_time| playable_time.range.cover?(song.datetime) }
     end
@@ -31,10 +32,18 @@ class Entry < ApplicationRecord
 
   private
 
+  def playable_on_live_day?
+    playable_times.any? { |playable_time| (song.live.date.beginning_of_day...song.live.date.end_of_day).overlaps?(playable_time.range) }
+  end
+
   # region Validations
 
   def live_must_be_unpublished
     errors.add(:base, 'エントリー募集中のライブではありません') if song.live.published?
+  end
+
+  def playable_time_on_live_day_exists
+    errors.add(:base, 'ライブ当日の演奏可能時間を入力してください') unless playable_on_live_day?
   end
 
   # endregion

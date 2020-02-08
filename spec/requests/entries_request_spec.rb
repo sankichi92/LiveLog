@@ -97,8 +97,8 @@ RSpec.describe 'entries request:', type: :request do
       let(:playable_times_attributes) do
         {
           '0' => {
-            lower: 1.month.from_now.beginning_of_hour.iso8601,
-            upper: 1.month.from_now.end_of_hour.iso8601,
+            lower: live.date.beginning_of_day.iso8601,
+            upper: live.date.end_of_day.iso8601,
             _destroy: '0',
           },
         }
