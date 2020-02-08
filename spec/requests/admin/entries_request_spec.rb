@@ -90,4 +90,19 @@ RSpec.describe 'admin/songs request:', type: :request do
       end
     end
   end
+
+  describe 'DELETE /admin/entries/:id' do
+    let(:entry) { create(:entry) }
+
+    before do
+      allow(AdminActivityNotifyJob).to receive(:perform_now)
+    end
+
+    it 'destroys the entry and redirects to /admin/entries' do
+      delete admin_entry_path(entry)
+
+      expect(response).to redirect_to admin_entries_path
+      expect { entry.reload }.to raise_error ActiveRecord::RecordNotFound
+    end
+  end
 end

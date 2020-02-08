@@ -33,5 +33,19 @@ module Admin
         render :edit, status: :unprocessable_entity
       end
     end
+
+    def destroy(id)
+      entry = Entry.find(id)
+      json = entry.as_json(include: [:playable_times, { song: { include: :plays } }])
+      entry.song.destroy!
+      AdminActivityNotifyJob.perform_now(
+        user: current_user,
+        operation: '削除しました',
+        object: entry,
+        detail: json,
+        url: admin_entries_url,
+      )
+      redirect_to admin_entries_path, notice: "ID: #{entry.id} を削除しました"
+    end
   end
 end
