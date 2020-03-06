@@ -305,7 +305,7 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
-    ridgepole (0.8.6)
+    ridgepole (0.8.7)
       activerecord (>= 5.0.1, < 6.1)
       diffy
     rspec-core (3.9.1)
@@ -429,7 +429,7 @@ GEM
     websocket-extensions (0.1.4)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.2.2)
+    zeitwerk (2.3.0)
 
 PLATFORMS
   ruby
