@@ -32,6 +32,8 @@ Rails.application.routes.draw do
 
   resources :entries, except: :show
 
+  resources :user_registration_forms, only: :show, path: 'register', param: :token
+
   scope :settings do
     resource :profile, only: %i[show update]
     resource :email, only: %i[show update]

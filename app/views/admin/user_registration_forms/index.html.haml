@@ -20,6 +20,7 @@
               %tr
                 - %i[id admin created_at expires_at].each do |attr|
                   %th{ scope: 'col' }= UserRegistrationForm.human_attribute_name(attr)
+                %th{ scope: 'col' } URL
                 %th{ scope: 'col' } 操作
             %tbody
               - @user_registration_forms.each do |user_registration_form|
@@ -28,4 +29,5 @@
                   %td= user_registration_form.admin.member.joined_year_and_name
                   %td= l user_registration_form.created_at
                   %td= l user_registration_form.expires_at
+                  %td= link_to user_registration_form_url(user_registration_form.token), user_registration_form_path(user_registration_form.token)
                   %td= link_to icon('fas', 'trash', '削除する'), admin_user_registration_form_path(user_registration_form), method: :delete, class: 'btn btn-warning', data: { confirm: "本当に ID: #{user_registration_form.id} を削除しますか？" }
