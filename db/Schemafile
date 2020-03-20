@@ -38,6 +38,7 @@ create_table :entries, force: :cascade do |t|
   t.bigint :song_id, null: false
   t.bigint :member_id, null: false
   t.text :notes
+  t.text :admin_memo
 
   t.timestamps
 

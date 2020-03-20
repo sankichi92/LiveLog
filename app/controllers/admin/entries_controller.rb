@@ -1,6 +1,6 @@
 module Admin
   class EntriesController < AdminController
-    permits :notes, playable_times_attributes: %i[id lower upper _destroy]
+    permits :notes, :admin_memo, playable_times_attributes: %i[id lower upper _destroy]
 
     def index(playable_time = nil)
       entries = Entry.preload(:member, :playable_times, song: [:live, { plays: :member }]).order(id: :desc)

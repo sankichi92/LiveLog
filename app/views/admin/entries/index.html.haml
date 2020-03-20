@@ -19,7 +19,7 @@
 
       .card-body.p-0
         .table-responsive
-          %table.table-admin.table.table-striped.text-nowrap.mb-0#table-entries{ data: { controller: 'datatable' } }
+          %table.table-admin.table.table-sm.table-striped.text-nowrap.mb-0#table-entries{ data: { controller: 'datatable' } }
             %thead
               %tr
                 %th{ scope: 'col' } ID
@@ -28,7 +28,7 @@
                 - %i[position name plays].each do |attr|
                   %th{ scope: 'col' }= Song.human_attribute_name(attr)
                 %th 人数
-                - %i[playable_times playable_time_sum notes member created_at updated_at].each do |attr|
+                - %i[playable_times playable_time_sum notes admin_memo member created_at updated_at].each do |attr|
                   %th{ scope: 'col' }= Entry.human_attribute_name(attr)
                 %th{ scope: 'col' } 操作
             %tbody
@@ -49,6 +49,7 @@
                         %li= playable_time.formatted_range
                   %td{ data: { order: entry.playable_time_sum } }= distance_of_time_in_words(entry.playable_time_sum)
                   %td= simple_format(entry.notes, class: 'mb-0')
+                  %td= simple_format(entry.admin_memo, class: 'mb-0')
                   %td= entry.member.joined_year_and_name
                   %td{ data: { order: entry.created_at.to_i } }= l entry.created_at, format: :short
                   %td{ data: { order: entry.updated_at.to_i } }= l entry.updated_at, format: :short

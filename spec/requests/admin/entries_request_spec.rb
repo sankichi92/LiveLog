@@ -44,7 +44,8 @@ RSpec.describe 'admin/songs request:', type: :request do
     let(:params) do
       {
         entry: {
-          notes: entry_notes,
+          notes: entry.notes,
+          admin_memo: admin_memo,
           playable_times_attributes: entry.playable_times.map.with_index { |playable_time, i|
             [
               i.to_s,
@@ -65,26 +66,26 @@ RSpec.describe 'admin/songs request:', type: :request do
     end
 
     context 'with valid params' do
-      let(:entry_notes) { '確定' }
+      let(:admin_memo) { '確定' }
       let(:song_position) { entry.song.position + 1 }
 
       it 'updates the entry and redirects to /admin/entries' do
         patch admin_entry_path(entry), params: params
 
-        expect(entry.reload.notes).to eq entry_notes
+        expect(entry.reload.admin_memo).to eq admin_memo
         expect(entry.song.position).to eq song_position
         expect(response).to redirect_to admin_entries_path
       end
     end
 
     context 'with invalid params' do
-      let(:entry_notes) { '確定' }
+      let(:admin_memo) { '確定' }
       let(:song_position) { nil }
 
       it 'responds 422' do
         patch admin_entry_path(entry), params: params
 
-        expect(entry.reload.notes).not_to eq entry_notes
+        expect(entry.reload.admin_memo).not_to eq admin_memo
         expect(entry.song.position).not_to eq song_position
         expect(response).to have_http_status :unprocessable_entity
       end

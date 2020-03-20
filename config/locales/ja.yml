@@ -41,6 +41,7 @@ ja:
       user_registration_form: ユーザー登録フォーム
     attributes:
       entry:
+        admin_memo: 管理メモ
         notes: 備考
         member: 申請者
         song: 曲
