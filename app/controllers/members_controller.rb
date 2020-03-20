@@ -20,7 +20,7 @@ class MembersController < ApplicationController
 
     if @member.user.valid?(:invite) && @member.save
       @member.user.invite!
-      @user_registration_form.increment!(:used_count)
+      @user_registration_form.increment!(:used_count) # rubocop:disable Rails/SkipsModelValidations
       InvitationActivityNotifyJob.perform_later(
         user: @user_registration_form.admin,
         text: "#{@member.joined_year_and_name} を ID: #{@user_registration_form.id} のユーザー登録フォームで招待しました",
