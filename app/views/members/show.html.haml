@@ -1,5 +1,5 @@
 :ruby
-  provide(:title, @member.name)
+  provide(:title, @member.joined_year_and_name)
   provide(:description, strip_tags(@member.bio).presence || "#{@member.joined_year}年度入部 #{@member.played_instruments}")
   provide(:og_type, 'profile')
   provide(:og_image, @member.avatar_url(:large)) if @member.avatar.attached?

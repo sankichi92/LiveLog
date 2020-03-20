@@ -93,7 +93,7 @@ RSpec.describe 'members request:', type: :request do
 
         expect(auth0_client).to have_received(:create_user)
         expect(auth0_client).to have_received(:change_password).with(email, nil)
-        expect(response).to redirect_to root_path
+        expect(response).to have_http_status :redirect
       end
     end
 

@@ -19,12 +19,15 @@ RSpec.describe 'User registration form:', type: :system do
     expect(page).to have_title 'ユーザー登録'
 
     # When
-    fill_in '入部年度', with: Time.zone.now.year
-    fill_in '名前', with: 'ギータ'
+    joined_year = Time.zone.now.year
+    name = 'ギータ'
+    fill_in '入部年度', with: joined_year
+    fill_in '名前', with: name
     fill_in 'メールアドレス', with: email
     click_button '登録する'
 
     # Then
+    expect(page).to have_title "#{joined_year} #{name}"
     expect(page).to have_content 'メールを送信しました。メールに記載されているURLにアクセスし、パスワードを設定してください'
   end
 end
