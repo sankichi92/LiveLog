@@ -28,7 +28,7 @@
                 - %i[position name plays].each do |attr|
                   %th{ scope: 'col' }= Song.human_attribute_name(attr)
                 %th 人数
-                - %i[playable_times playable_time_sum notes member updated_at].each do |attr|
+                - %i[playable_times playable_time_sum notes member created_at updated_at].each do |attr|
                   %th{ scope: 'col' }= Entry.human_attribute_name(attr)
                 %th{ scope: 'col' } 操作
             %tbody
@@ -50,7 +50,8 @@
                   %td{ data: { order: entry.playable_time_sum } }= distance_of_time_in_words(entry.playable_time_sum)
                   %td= simple_format(entry.notes, class: 'mb-0')
                   %td= entry.member.joined_year_and_name
-                  %td{ data: { order: entry.updated_at.to_i } }= l entry.updated_at
+                  %td{ data: { order: entry.created_at.to_i } }= l entry.created_at, format: :short
+                  %td{ data: { order: entry.updated_at.to_i } }= l entry.updated_at, format: :short
                   %td
                     = link_to icon('fas', 'edit'), edit_admin_entry_path(entry), class: 'btn btn-info'
                     = link_to icon('fas', 'trash'), admin_entry_path(entry), method: :delete, class: 'btn btn-danger', data: { confirm: "本当に ID: #{entry.id} を削除しますか" }

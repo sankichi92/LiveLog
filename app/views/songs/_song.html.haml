@@ -19,6 +19,3 @@
             = play.instrument_and_name
 
       %p.text-muted.mb-0= truncate strip_tags(song.comment) if song.comment?
-
-      - unless song.live.published?
-        %small.text-muted= l(song.created_at, format: :short)

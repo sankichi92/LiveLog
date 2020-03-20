@@ -10,7 +10,7 @@
         %th ID
         - %i[live name plays].each do |attr|
           %th{ scope: 'col' }= Song.human_attribute_name(attr)
-        - %i[playable_times notes updated_at].each do |attr|
+        - %i[playable_times notes created_at updated_at].each do |attr|
           %th{ scope: 'col' }= Entry.human_attribute_name(attr)
 
     %tbody
@@ -30,4 +30,5 @@
               - entry.playable_times.each do |playable_time|
                 %li.list-inline-item= playable_time.formatted_range
           %td= truncate(entry.notes)
+          %td= l entry.updated_at, format: :short
           %td= l entry.updated_at, format: :short
