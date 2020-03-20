@@ -114,6 +114,7 @@ create_table :user_registration_forms, force: :cascade do |t|
   t.bigint :admin_id, null: false
   t.string :token, null: false
   t.datetime :expires_at, null: false
+  t.integer :used_count, null: false, default: 0
 
   t.timestamps
 

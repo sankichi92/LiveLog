@@ -58,7 +58,8 @@ RSpec.describe 'members request:', type: :request do
   end
 
   describe 'POST /register/:user_registration_form_token/members' do
-    let!(:token) { create(:user_registration_form).token }
+    let!(:token) { user_registration_form.token }
+    let(:user_registration_form) { create(:user_registration_form) }
     let(:params) do
       {
         member: {
@@ -88,7 +89,7 @@ RSpec.describe 'members request:', type: :request do
     context 'with valid member and user params' do
       it 'create a member and a user, requests Auth0 to create a user, and redirects to /' do
         expect { post user_registration_form_members_path(token), params: params }.
-          to change(Member, :count).by(1).and change(User, :count).by(1)
+          to change(Member, :count).by(1).and change(User, :count).by(1).and change { user_registration_form.reload.used_count }.by(1)
 
         expect(auth0_client).to have_received(:create_user)
         expect(auth0_client).to have_received(:change_password).with(email, nil)
@@ -123,7 +124,7 @@ RSpec.describe 'members request:', type: :request do
     end
 
     context 'with an expired token' do
-      let!(:token) { create(:user_registration_form, :expired).token }
+      let(:user_registration_form) { create(:user_registration_form, :expired) }
 
       it 'redirects to /' do
         expect { post user_registration_form_members_path(token), params: params }.

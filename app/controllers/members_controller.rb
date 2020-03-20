@@ -20,6 +20,7 @@ class MembersController < ApplicationController
 
     if @member.user.valid?(:invite) && @member.save
       @member.user.invite!
+      @user_registration_form.increment!(:used_count)
       redirect_to root_path, notice: 'メールを送信しました。メールに記載されているURLにアクセスし、パスワードを設定してください'
     else
       render 'user_registration_forms/show', status: :unprocessable_entity

@@ -89,6 +89,7 @@ ja:
         email: メールアドレス
       user_registration_form:
         admin: 作成者
+        used_count: 使用数
         active_days: 有効期限
         expires_at: 有効期限
   activemodel:

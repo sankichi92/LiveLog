@@ -18,7 +18,7 @@
           %table.table-admin.table.table-striped.text-nowrap.mb-0
             %thead
               %tr
-                - %i[id admin created_at expires_at].each do |attr|
+                - %i[id admin used_count created_at expires_at].each do |attr|
                   %th{ scope: 'col' }= UserRegistrationForm.human_attribute_name(attr)
                 %th{ scope: 'col' } URL
                 %th{ scope: 'col' } 操作
@@ -27,6 +27,7 @@
                 %tr{ class: user_registration_form.expired? ? 'table-secondary' : '' }
                   %td= user_registration_form.id
                   %td= user_registration_form.admin.member.joined_year_and_name
+                  %td= user_registration_form.used_count
                   %td= l user_registration_form.created_at
                   %td= l user_registration_form.expires_at
                   %td= link_to user_registration_form_url(user_registration_form.token), user_registration_form_path(user_registration_form.token)
