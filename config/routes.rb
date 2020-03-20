@@ -32,7 +32,9 @@ Rails.application.routes.draw do
 
   resources :entries, except: :show
 
-  resources :user_registration_forms, only: :show, path: 'register', param: :token
+  resources :user_registration_forms, only: :show, path: 'register', param: :token do
+    resources :members, only: :create
+  end
 
   scope :settings do
     resource :profile, only: %i[show update]
