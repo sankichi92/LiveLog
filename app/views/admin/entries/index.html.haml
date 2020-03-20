@@ -36,13 +36,13 @@
                 %tr{ class: entry.in_playable_time? ? '' : 'table-danger' }
                   %td= entry.id
                   %td= link_to entry.song.live.name, admin_live_path(entry.song.live)
-                  %td= l entry.song.live.date, format: :short
-                  %td{ data: { order: "#{entry.song.datetime.to_i} #{entry.song.position}" } }= entry.song.time_and_position
+                  %td{ data: { order: entry.song.live.date.in_time_zone.to_i } }= l entry.song.live.date, format: :short
+                  %td{ data: { order: entry.song.datetime.to_i + entry.song.position / 100.0 } }= entry.song.time_and_position
                   %td= entry.song.title_with_original
                   %td
                     %ul.list-inline.mb-0
                       = render entry.song.plays
-                  %td #{entry.song.plays.size} 人
+                  %td{ data: { order: entry.song.plays.size } } #{entry.song.plays.size} 人
                   %td{ data: { order: entry.playable_times.first.range.first.to_i } }
                     %ul.list-unstyled.mb-0
                       - entry.playable_times.each do |playable_time|
