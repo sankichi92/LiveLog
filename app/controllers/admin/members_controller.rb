@@ -6,7 +6,7 @@ module Admin
     end
 
     def new
-      @member = Member.new(joined_year: Time.zone.now.year)
+      @member = Member.new(joined_year: Time.zone.now.nendo)
       @member.build_user
     end
 
