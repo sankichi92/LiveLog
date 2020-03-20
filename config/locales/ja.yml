@@ -38,6 +38,7 @@ ja:
       member: メンバー
       song: 曲
       user: ユーザー
+      user_registration_form: ユーザー登録フォーム
     attributes:
       entry:
         notes: 備考
@@ -86,6 +87,11 @@ ja:
         member_id: メンバー
       user:
         email: メールアドレス
+      user_registration_form:
+        admin: 作成者
+        used_count: 使用数
+        active_days: 有効期限
+        expires_at: 有効期限
   activemodel:
     attributes:
       song/search_query:

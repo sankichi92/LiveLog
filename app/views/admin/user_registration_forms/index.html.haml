@@ -1,0 +1,34 @@
+%header.content-header
+  .container-fluid
+    .row.mb-3
+      .col-sm-6
+        %h1= UserRegistrationForm.model_name.human
+      .col-sm-6
+        %ol.breadcrumb.float-sm-right
+          %li.breadcrumb-item= link_to 'Home', admin_root_path
+          %li.breadcrumb-item.active= UserRegistrationForm.model_name.human
+
+%section.content
+  .container-fluid
+    %p= link_to icon('fas', 'plus', '新規作成'), new_admin_user_registration_form_path, class: 'btn btn-outline-primary'
+
+    %section.card
+      .card-body.p-0
+        .table-responsive
+          %table.table-admin.table.table-striped.text-nowrap.mb-0
+            %thead
+              %tr
+                - %i[id admin used_count created_at expires_at].each do |attr|
+                  %th{ scope: 'col' }= UserRegistrationForm.human_attribute_name(attr)
+                %th{ scope: 'col' } URL
+                %th{ scope: 'col' } 操作
+            %tbody
+              - @user_registration_forms.each do |user_registration_form|
+                %tr{ class: user_registration_form.expired? ? 'table-secondary' : '' }
+                  %td= user_registration_form.id
+                  %td= user_registration_form.admin.member.joined_year_and_name
+                  %td= user_registration_form.used_count
+                  %td= l user_registration_form.created_at
+                  %td= l user_registration_form.expires_at
+                  %td= link_to user_registration_form_url(user_registration_form.token), user_registration_form_path(user_registration_form.token)
+                  %td= link_to icon('fas', 'trash', '削除する'), admin_user_registration_form_path(user_registration_form), method: :delete, class: 'btn btn-warning', data: { confirm: "本当に ID: #{user_registration_form.id} を削除しますか？" }

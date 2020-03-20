@@ -32,6 +32,10 @@ Rails.application.routes.draw do
 
   resources :entries, except: :show
 
+  resources :user_registration_forms, only: :show, path: 'register', param: :token do
+    resources :members, only: :create
+  end
+
   scope :settings do
     resource :profile, only: %i[show update]
     resource :email, only: %i[show update]
@@ -54,6 +58,8 @@ Rails.application.routes.draw do
     end
 
     resources :entries, only: %i[index edit update destroy]
+
+    resources :user_registration_forms, only: %i[index new create destroy]
   end
 
   direct :organization do

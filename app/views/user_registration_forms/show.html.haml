@@ -1,0 +1,19 @@
+- provide(:title, 'ユーザー登録')
+
+= form_with model: @member, url: user_registration_form_members_path(@user_registration_form.token), local: true do |form|
+  = render 'shared/error_messages', errors: @member.errors
+
+  .form-group
+    = form.label :joined_year
+    = form.number_field :joined_year, min: Member::MINIMUM_JOINED_YEAR, max: Time.zone.now.year, required: true, class: 'form-control'
+
+  .form-group
+    = form.label :name
+    = form.text_field :name, required: true, class: 'form-control'
+
+  = fields model: @member.user do |user_form|
+    .form-group
+      = user_form.label :email
+      = user_form.email_field :email, required: true, class: 'form-control'
+
+  = form.submit class: 'btn btn-primary'

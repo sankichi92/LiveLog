@@ -10,4 +10,24 @@ class MembersController < ApplicationController
     @collaborators = Member.with_attached_avatar.collaborated_with(@member).with_played_count.to_a
     @songs = @member.published_songs.includes(:live, plays: :member).newest_live_order
   end
+
+  def create(user_registration_form_token, member, user)
+    @user_registration_form = UserRegistrationForm.find_by!(token: user_registration_form_token)
+    return redirect_to root_path, alert: 'ユーザー登録フォームの有効期限が切れています' if @user_registration_form.expired?
+
+    @member = Member.new(member.permit(:joined_year, :name))
+    @member.build_user(user.permit(:email))
+
+    if @member.user.valid?(:invite) && @member.save
+      @member.user.invite!
+      @user_registration_form.increment!(:used_count) # rubocop:disable Rails/SkipsModelValidations
+      InvitationActivityNotifyJob.perform_later(
+        user: @user_registration_form.admin,
+        text: "#{@member.joined_year_and_name} を ID: #{@user_registration_form.id} のユーザー登録フォームで招待しました",
+      )
+      redirect_to root_path, notice: 'メールを送信しました。メールに記載されているURLにアクセスし、パスワードを設定してください'
+    else
+      render 'user_registration_forms/show', status: :unprocessable_entity
+    end
+  end
 end
