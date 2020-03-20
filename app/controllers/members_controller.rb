@@ -21,6 +21,10 @@ class MembersController < ApplicationController
     if @member.user.valid?(:invite) && @member.save
       @member.user.invite!
       @user_registration_form.increment!(:used_count)
+      InvitationActivityNotifyJob.perform_later(
+        user: @user_registration_form.admin,
+        text: "#{@member.joined_year_and_name} を ID: #{@user_registration_form.id} のユーザー登録フォームで招待しました",
+      )
       redirect_to root_path, notice: 'メールを送信しました。メールに記載されているURLにアクセスし、パスワードを設定してください'
     else
       render 'user_registration_forms/show', status: :unprocessable_entity

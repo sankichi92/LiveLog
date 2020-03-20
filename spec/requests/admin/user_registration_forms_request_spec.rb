@@ -64,6 +64,10 @@ RSpec.describe 'admin/user_registration_forms request:', type: :request do
   describe 'DELETE /admin/user_registration_forms/:id' do
     let(:user_registration_form) { create(:user_registration_form) }
 
+    before do
+      allow(AdminActivityNotifyJob).to receive(:perform_now)
+    end
+
     it 'destroys the user_registration_form and redirects to /admin/user_registration_forms' do
       delete admin_user_registration_form_path(user_registration_form)
 
