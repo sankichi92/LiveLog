@@ -1,0 +1,41 @@
+%header.content-header
+  .container-fluid
+    .row.mb-3
+      .col-sm-6
+        %h1
+          = UserRegistrationForm.model_name.human
+          新規作成
+
+      .col-sm-6
+        %ol.breadcrumb.float-sm-right
+          %li.breadcrumb-item= link_to 'Home', admin_root_path
+          %li.breadcrumb-item= link_to UserRegistrationForm.model_name.human, admin_lives_path
+          %li.breadcrumb-item.active 新規作成
+
+%section.content
+  .container-fluid
+    %section.card
+      = form_with model: @user_registration_form, url: [:admin, @user_registration_form], local: true do |form|
+        .card-body
+          = render 'shared/error_messages', errors: @user_registration_form.errors
+
+          .form-group
+            = form.label :active_days
+
+            .form-check
+              = form.radio_button :active_days, 1, class: 'form-check-input'
+              = form.label :active_days_1, '1日', class: 'form-check-label'
+
+            .form-check
+              = form.radio_button :active_days, 7, class: 'form-check-input'
+              = form.label :active_days_7, '7日', class: 'form-check-label'
+
+            .form-check
+              = form.radio_button :active_days, 30, class: 'form-check-input'
+              = form.label :active_days_30, '30日', class: 'form-check-label'
+
+            %small.form-text.text-muted 可能な限り短めに設定してください
+
+        .card-footer
+          = form.submit class: 'btn btn-primary'
+

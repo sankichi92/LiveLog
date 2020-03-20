@@ -3,6 +3,7 @@ module Admin
     permits :active_days
 
     def index
+      @user_registration_forms = UserRegistrationForm.includes(admin: :member).all.reverse_order
     end
 
     def new

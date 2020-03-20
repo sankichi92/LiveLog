@@ -44,6 +44,10 @@
                 = link_to admin_entries_path, class: "nav-link#{params[:controller] == 'admin/entries' ? ' active' : ''}" do
                   = icon('fas', 'paper-plane', class: 'nav-icon')
                   %p= Entry.model_name.human
+              %li.nav-item
+                = link_to admin_user_registration_forms_path, class: "nav-link#{params[:controller] == 'admin/user_registration_forms' ? ' active' : ''}" do
+                  = icon('fas', 'list-alt', class: 'nav-icon')
+                  %p= UserRegistrationForm.model_name.human
 
               %li.nav-header TOOLS
               %li.nav-item
