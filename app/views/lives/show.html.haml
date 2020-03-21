@@ -7,7 +7,8 @@
       .card-subtitle.text-muted= l @live.date
       %h1.card-title= @live.name
       %p.card-text.text-muted= @live.at_place
-      = simple_format(@live.comment, class: 'text-muted')
+      - if @live.comment.present?
+        = simple_format(@live.comment, class: 'text-muted')
       - if current_user && @live.album_url?
         = link_to icon('fas', 'images', 'アルバム'), @live.album_url, class: 'card-link btn btn-primary', target: '_blank', rel: 'noopener'
 
