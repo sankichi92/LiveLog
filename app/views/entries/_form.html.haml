@@ -4,7 +4,7 @@
   = fields model: entry.song do |song_form|
     .form-group
       = song_form.label :live_id
-      = song_form.collection_select :live_id, Live.unpublished.newest_order, :id, :date_and_name, {}, class: 'form-control'
+      = song_form.collection_select :live_id, Live.unpublished.order(:date), :id, :date_and_name, {}, class: 'form-control'
 
     = render 'songs/form', form: song_form
 
