@@ -9,8 +9,8 @@
       %p.card-text.text-muted= @live.at_place
       - if @live.comment.present?
         = simple_format(@live.comment, class: 'text-muted')
-      - if current_user && @live.album_url?
-        = link_to icon('fas', 'images', 'アルバム'), @live.album_url, class: 'card-link btn btn-primary', target: '_blank', rel: 'noopener'
+      - if current_user && @live.album_url.present?
+        = link_to icon('fas', 'images', 'アルバム'), album_live_path(@live), class: 'card-link btn btn-primary', target: '_blank', rel: 'noopener'
 
   .song-list
     = render @songs
