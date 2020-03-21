@@ -142,7 +142,8 @@ RSpec.describe 'admin/lives request:', type: :request do
     let(:live) { create(:live, :unpublished) }
 
     it 'publishes the live and redirects to /admin/lives' do
-      put publish_admin_live_path(live)
+      expect { put publish_admin_live_path(live) }.
+        to change { ActionMailer::Base.deliveries.size }.by(1)
 
       expect(live.reload).to be_published
       expect(response).to redirect_to admin_lives_path(year: live.date.nendo)
