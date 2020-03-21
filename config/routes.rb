@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   get '/donate', to: 'donations#index'
   get '/privacy', to: 'docs#privacy'
+  get '/slack', to: 'slack#show'
 
   get '/auth/auth0/callback', to: 'sessions#create'
   get '/auth/failure', to: 'sessions#failure'
