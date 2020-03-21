@@ -22,7 +22,7 @@
           %table.table-admin.table.table-striped.text-nowrap.mb-0
             %thead
               %tr
-                - %i[id date name place album songs_count published_at].each do |attr|
+                - %i[id date name place comment album songs_count published_at].each do |attr|
                   %th{ scope: 'col' }= Live.human_attribute_name(attr)
                 %th{ scope: 'col' } 操作
             %tbody
@@ -32,6 +32,7 @@
                   %td= l live.date
                   %td= live.name
                   %td= live.place
+                  %td= simple_format(live.comment, class: 'mb-0')
                   %td= link_to_if live.album_url.present?, URI(live.album_url.to_s).host, live.album_url
                   %td= link_to live.songs_count, admin_live_path(live)
                   %td

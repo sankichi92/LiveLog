@@ -14,6 +14,7 @@ FactoryBot.define do
       end
     end
     place { name.include?('NF') ? '共北駐輪場' : %w[4共11 4共21 4共31].sample(random: Faker::Config.random) }
+    comment { Faker::Boolean.boolean ? Faker::Lorem.paragraph : nil }
     album_url { Faker::Boolean.boolean ? Faker::Internet.url : nil }
     published { true }
     published_at { published ? Time.zone.now : nil }

@@ -1,6 +1,6 @@
 module Admin
   class LivesController < AdminController
-    permits :name, :date, :place, :album_url
+    permits :name, :date, :place, :comment, :album_url
 
     def index(year = Live.maximum(:date).nendo)
       @year = year.to_i

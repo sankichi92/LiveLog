@@ -53,6 +53,7 @@ ja:
         name: ライブ名
         date: 開催日
         place: 場所
+        comment: コメント
         album_url: アルバム URL
         album: アルバム
         songs_count: 曲数
