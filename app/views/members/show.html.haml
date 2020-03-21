@@ -7,9 +7,8 @@
 - content_for :additional_meta_fields do
   %meta{ property: 'profile:username', content: @member.name }
 
-%section.member-detail.card.mb-3
-  .card-body
-
+%section.card.mb-3
+  .card-body.lead
     .d-flex.flex-column.flex-sm-row.align-items-sm-center.mb-2
       .text-center
         = @member.avatar_image_tag(:large, class: 'm-3')

@@ -13,8 +13,8 @@
     .embed-responsive.embed-responsive-16by9.mb-3
       = @song.youtube_embed
 
-  %section.song-detail.card.mb-3
-    .card-body
+  %section.card.mb-3
+    .card-body.lead
       %header
         .card-subtitle.text-muted
           = link_to @song.live.title, @song.live

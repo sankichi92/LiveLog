@@ -110,12 +110,6 @@ img {
   cursor: pointer;
 }
 
-.page-header {
-  padding-bottom: ($spacer * .5);
-  margin: ($spacer * 3) 0 ($spacer * 1.5);
-  border-bottom: 1px solid $theme-border-color;
-}
-
 // endregion
 
 // region Song
@@ -137,17 +131,3 @@ img {
     }
   }
 }
-
-.song-detail {
-  @extend .lead;
-}
-
-// endregion
-
-// region Member
-
-.member-detail {
-  @extend .lead;
-}
-
-// endregion
