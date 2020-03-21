@@ -1,4 +1,6 @@
-- provide(:title, 'ユーザー登録')
+- provide :title, 'ユーザー登録'
+- content_for :additional_meta_fields do
+  %meta{ name: 'robots', content: 'noindex' }
 
 = form_with model: @member, url: user_registration_form_members_path(@user_registration_form.token), local: true do |form|
   = render 'shared/error_messages', errors: @member.errors
