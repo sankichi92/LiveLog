@@ -10,10 +10,12 @@
   .form-group
     = form.label :name
     = form.text_field :name, required: true, class: 'form-control'
+    %small.form-text.text-muted 同じ入部年度内で重複せず、他のメンバーが識別できる名前であれば本名でなくとも構いません。あとから変更することもできます
 
   = fields model: @member.user do |user_form|
     .form-group
       = user_form.label :email
       = user_form.email_field :email, required: true, class: 'form-control'
+      %small.form-text.text-muted パスワード設定のためのURLを記載したメールを送信します
 
   = form.submit class: 'btn btn-primary'
