@@ -50,11 +50,11 @@ class Entry < ApplicationRecord
   # region Validations
 
   def live_must_have_entry_guideline
-    errors.add(:base, 'エントリー募集中のライブではありません') if song.live.entry_guideline.nil?
+    errors.add(:base, 'ライブはエントリー募集中ではありません') if song.live.entry_guideline.nil?
   end
 
   def live_must_be_entry_acceptable
-    errors.add(:base, 'エントリー締切を過ぎています') if song.live.entry_guideline&.closed?
+    errors.add(:base, 'ライブのエントリー締切を過ぎています') if song.live.entry_guideline&.closed?
   end
 
   def playable_time_on_live_day_exists
