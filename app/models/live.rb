@@ -34,9 +34,13 @@ class Live < ApplicationRecord
   def publish!
     raise AlreadyPublishedError, "Live id #{id} has already been published" if published?
 
-    update!(published: true, published_at: Time.zone.now)
+    transaction do
+      Entry.joins(:song).merge(Song.where(live_id: id)).each(&:destroy!)
+      entry_guideline&.destroy!
+      update!(published: true, published_at: Time.zone.now)
+    end
+
     songs.includes(:audio_attachment, :plays).import
-    Entry.joins(:song).merge(Song.where(live_id: id)).destroy_all
   end
 
   def time_range

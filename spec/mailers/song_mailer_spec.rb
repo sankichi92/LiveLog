@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe SongMailer, type: :mailer do
   include Auth0UserHelper
 
-  describe 'pickup_song' do
+  describe '#pickup' do
     subject(:mail) { SongMailer.pickup(song) }
 
     let(:song) { create(:song, name: 'くちなしの丘', artist: '原田知世', live: live, members: users.map(&:member) + [unsubscribing_user.member, member]) }

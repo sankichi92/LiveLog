@@ -35,6 +35,14 @@ FactoryBot.define do
         create_pair(:song, live: live)
       end
     end
+
+    trait :with_entries do
+      after(:create) do |live|
+        create_pair(:song, live: live).each do |song|
+          create(:entry, song: song)
+        end
+      end
+    end
   end
 
   factory :entry_guideline do
