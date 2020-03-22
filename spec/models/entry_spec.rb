@@ -5,7 +5,7 @@ RSpec.describe Entry, type: :model do
     subject(:in_playable_time?) { entry.in_playable_time? }
 
     let(:entry) { build(:entry, song: song, playable_times_count: 0) }
-    let(:song) { create(:song, :unpublished, live: live, time: song_time) }
+    let(:song) { create(:song, :for_entry, live: live, time: song_time) }
     let(:live) { create(:live, :unpublished, date: live_date) }
     let(:live_date) { Time.zone.today }
 

@@ -22,8 +22,9 @@
           %table.table-admin.table.table-striped.text-nowrap.mb-0
             %thead
               %tr
-                - %i[id date name place comment album songs_count published_at].each do |attr|
+                - %i[id date name place comment album songs_count].each do |attr|
                   %th{ scope: 'col' }= Live.human_attribute_name(attr)
+                %th{ scope: 'col' } ステータス
                 %th{ scope: 'col' } 操作
             %tbody
               - @lives.each do |live|
@@ -35,17 +36,18 @@
                   %td= simple_format(live.comment, class: 'mb-0')
                   %td= link_to_if live.album_url.present?, URI(live.album_url.to_s).host, live.album_url
                   %td= link_to live.songs_count, admin_live_path(live)
+                  %td= live.status_badge
                   %td
-                    - if live.published_at.present?
-                      = l live.published_at
-                    - else
-                      %span.badge.badge-warning 未公開
-                  %td
+                    = link_to icon('fas', 'list', '曲一覧'), admin_live_path(live), class: 'btn btn-default'
                     - if live.published?
                       = link_to icon('fas', 'eye'), live_path(live), class: 'btn btn-secondary'
-                    = link_to icon('fas', 'list', '曲一覧'), admin_live_path(live), class: 'btn btn-primary'
+                    - else
+                      - if live.entry_guideline.nil?
+                        = link_to icon('fas', 'paper-plane', 'エントリーを募集する'), new_admin_live_entry_guideline_path(live), class: 'btn btn-primary'
+                      - else
+                        = link_to icon('fas', 'paper-plane', 'エントリー募集要項を編集する'), edit_admin_live_entry_guideline_path(live), class: 'btn btn-outline-primary'
+                      - if live.songs_count.positive?
+                        = link_to icon('fas', 'unlock', '公開する'), publish_admin_live_path(live), method: :put, class: 'btn btn-danger', data: { confirm: "本当に #{live.title} を公開しますか" }
                     = link_to icon('fas', 'edit'), edit_admin_live_path(live), class: 'btn btn-info'
                     - if live.songs_count.zero?
                       = link_to icon('fas', 'trash', '削除する'), admin_live_path(live), method: :delete, class: 'btn btn-warning', data: { confirm: "本当に #{live.title} を削除しますか" }
-                    - elsif !live.published?
-                      = link_to icon('fas', 'unlock', '公開する'), publish_admin_live_path(live), method: :put, class: 'btn btn-danger', data: { confirm: "本当に #{live.title} を公開しますか" }

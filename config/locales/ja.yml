@@ -34,6 +34,7 @@ ja:
               duplicated: が重複しています
     models:
       entry: エントリー
+      entry_guideline: エントリー募集要項
       live: ライブ
       member: メンバー
       song: 曲
@@ -49,6 +50,9 @@ ja:
         playable_time_sum: 総演奏可能時間
       entry/playable_times:
         range: 演奏可能時間
+      entry_guideline:
+        deadline: 締切
+        notes: 注意事項
       live:
         name: ライブ名
         date: 開催日

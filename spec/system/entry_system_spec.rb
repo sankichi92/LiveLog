@@ -4,7 +4,7 @@ RSpec.describe 'Entry system:', type: :system do
   specify 'A logged-in user creates an entry', js: true do
     # Given
     date = 1.month.from_now.to_date
-    create(:live, :unpublished, date: date)
+    create(:live, :unpublished, :with_entry_guideline, date: date)
     member = create(:member)
     user = create(:user)
     log_in_as user

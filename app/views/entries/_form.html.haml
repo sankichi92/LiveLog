@@ -1,26 +1,34 @@
-= form_with model: entry, local: true do |form|
-  = render 'shared/error_messages', errors: entry.errors
+%section{ data: { controller: 'entry-guideline' } }
+  .alert.alert-primary
+    %dl.mb-0
+      %dt 締切
+      %dd{ data: { target: 'entry-guideline.deadline' } }= l entry.song.live.entry_guideline.deadline
+      %dt 注意事項
+      %dd{ data: { target: 'entry-guideline.notes' } }= simple_format(entry.song.live.entry_guideline.notes)
 
-  = fields model: entry.song do |song_form|
+  = form_with model: entry, local: true do |form|
+    = render 'shared/error_messages', errors: entry.errors
+
+    = fields model: entry.song do |song_form|
+      .form-group
+        = song_form.label :live_id
+        = song_form.collection_select :live_id, lives, :id, :date_and_name, {}, class: 'form-control', data: { action: 'entry-guideline#fetchAndReplaceGuideline' }
+
+      = render 'songs/form', form: song_form
+
+    .mb-3{ data: { controller: 'form-playable-times' } }
+      %template{ data: { target: 'form-playable-times.template' } }
+        = form.fields_for :playable_times, PlayableTime.new(range: entry.song.live.time_range), child_index: 'TEMPLATE_INDEX' do |playable_times_form|
+          = render 'form_playable_time', form: playable_times_form
+
+      %dev{ data: { target: 'form-playable-times.container' } }
+        = form.fields_for :playable_times do |playable_times_form|
+          = render 'form_playable_time', form: playable_times_form
+
+      %button.btn.btn-light{ type: 'button', data: { action: 'form-playable-times#addPlayableTime' } }= icon('fas', 'plus-circle', '演奏可能時間を追加する')
+
     .form-group
-      = song_form.label :live_id
-      = song_form.collection_select :live_id, Live.unpublished.order(:date), :id, :date_and_name, {}, class: 'form-control'
+      = form.label :notes
+      = form.text_area :notes, class: 'form-control'
 
-    = render 'songs/form', form: song_form
-
-  .mb-3{ data: { controller: 'form-playable-times' } }
-    %template{ data: { target: 'form-playable-times.template' } }
-      = form.fields_for :playable_times, PlayableTime.new(range: entry.song.live.time_range), child_index: 'TEMPLATE_INDEX' do |playable_times_form|
-        = render 'form_playable_time', form: playable_times_form
-
-    %dev{ data: { target: 'form-playable-times.container' } }
-      = form.fields_for :playable_times do |playable_times_form|
-        = render 'form_playable_time', form: playable_times_form
-
-    %button.btn.btn-light{ type: 'button', data: { action: 'form-playable-times#addPlayableTime' } }= icon('fas', 'plus-circle', '演奏可能時間を追加する')
-
-  .form-group
-    = form.label :notes
-    = form.text_area :notes, class: 'form-control'
-
-  = form.submit class: 'btn btn-primary'
+    = form.submit class: 'btn btn-primary'

@@ -13,7 +13,7 @@ RSpec.describe 'entries request:', type: :request do
     context 'when logged-in user has entries' do
       before do
         3.times do
-          song = create(:song, :unpublished, members: [user.member])
+          song = create(:song, :for_entry, members: [user.member])
           create(:entry, song: song)
         end
       end
@@ -41,7 +41,7 @@ RSpec.describe 'entries request:', type: :request do
 
     context 'when an unpublished live exists' do
       before do
-        create(:live, :unpublished)
+        create(:live, :unpublished, :with_entry_guideline)
       end
 
       it 'responds 200' do
@@ -63,7 +63,7 @@ RSpec.describe 'entries request:', type: :request do
 
   describe 'POST /entries' do
     let(:user) { create(:user) }
-    let(:live) { create(:live, :unpublished) }
+    let(:live) { create(:live, :unpublished, :with_entry_guideline) }
     let(:params) do
       {
         entry: {
@@ -168,7 +168,7 @@ RSpec.describe 'entries request:', type: :request do
 
   describe 'PATCH /entries/:id' do
     let(:entry) { create(:entry, notes: '', song: song, member: user.member) }
-    let(:song) { create(:song, :unpublished, name: 'before') }
+    let(:song) { create(:song, :for_entry, name: 'before') }
     let(:user) { create(:user) }
     let(:params) do
       {

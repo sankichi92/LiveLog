@@ -1,6 +1,7 @@
 class Live < ApplicationRecord
   AlreadyPublishedError = Class.new(StandardError)
 
+  has_one :entry_guideline, dependent: :destroy
   has_many :songs, dependent: :restrict_with_exception
 
   validates :date, presence: true
@@ -12,6 +13,7 @@ class Live < ApplicationRecord
   scope :nendo, ->(year) { where(date: Date.new(year, 4, 1)...Date.new(year + 1, 4, 1)) }
   scope :unpublished, -> { where(published: false) }
   scope :published, -> { where(published: true) }
+  scope :entry_acceptable, -> { joins(:entry_guideline).merge(EntryGuideline.open) }
 
   def self.years
     newest_order.pluck(:date).map(&:nendo).uniq
@@ -33,9 +35,13 @@ class Live < ApplicationRecord
   def publish!
     raise AlreadyPublishedError, "Live id #{id} has already been published" if published?
 
-    update!(published: true, published_at: Time.zone.now)
+    transaction do
+      Entry.joins(:song).merge(Song.where(live_id: id)).each(&:destroy!)
+      entry_guideline&.destroy!
+      update!(published: true, published_at: Time.zone.now)
+    end
+
     songs.includes(:audio_attachment, :plays).import
-    Entry.joins(:song).merge(Song.where(live_id: id)).destroy_all
   end
 
   def time_range

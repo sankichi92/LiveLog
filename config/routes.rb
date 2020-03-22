@@ -19,6 +19,8 @@ Rails.application.routes.draw do
     member do
       get :album
     end
+
+    resource :entry_guideline, only: :show
   end
 
   resources :members, only: %i[index show] do
@@ -50,6 +52,7 @@ Rails.application.routes.draw do
         put :publish
       end
 
+      resource :entry_guideline, only: %i[new create edit update]
       resources :songs, only: %i[new create edit update destroy], shallow: true
     end
 
