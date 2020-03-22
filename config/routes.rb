@@ -19,6 +19,8 @@ Rails.application.routes.draw do
     member do
       get :album
     end
+
+    resource :entry_guideline, only: :show
   end
 
   resources :members, only: %i[index show] do
