@@ -67,7 +67,7 @@ module Admin
     end
 
     def publish(id)
-      live = Live.find(id)
+      live = Live.unpublished.find(id)
       LiveMailer.entries_backup(live).deliver_now
       live.publish!
       TweetJob.perform_later("#{live.title} のセットリストが公開されました！\n#{live_url(live)}")

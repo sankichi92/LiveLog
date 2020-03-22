@@ -1,6 +1,4 @@
 class Live < ApplicationRecord
-  AlreadyPublishedError = Class.new(StandardError)
-
   has_one :entry_guideline, dependent: :destroy
   has_many :songs, dependent: :restrict_with_exception
 
@@ -8,6 +6,7 @@ class Live < ApplicationRecord
   validates :name, presence: true, length: { maximum: 20 }, uniqueness: { scope: :date }
   validates :place, length: { maximum: 20 }
   validates :album_url, format: /\A#{URI.regexp(%w[http https])}\z/, allow_blank: true
+  validate :published_live_must_not_have_entry_guideline
 
   scope :newest_order, -> { order(date: :desc) }
   scope :nendo, ->(year) { where(date: Date.new(year, 4, 1)...Date.new(year + 1, 4, 1)) }
@@ -33,8 +32,6 @@ class Live < ApplicationRecord
   end
 
   def publish!
-    raise AlreadyPublishedError, "Live id #{id} has already been published" if published?
-
     transaction do
       Entry.joins(:song).merge(Song.where(live_id: id)).each(&:destroy!)
       entry_guideline&.destroy!
@@ -51,4 +48,14 @@ class Live < ApplicationRecord
       date.in_time_zone.change(hour: 12)...date.in_time_zone.change(hour: 24)
     end
   end
+
+  private
+
+  # region Validations
+
+  def published_live_must_not_have_entry_guideline
+    errors.add(:base, 'エントリー募集中のライブは公開できません') if published? && entry_guideline && !entry_guideline.destroyed?
+  end
+
+  # endregion
 end

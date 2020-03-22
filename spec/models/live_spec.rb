@@ -20,15 +20,5 @@ RSpec.describe Live, type: :model do
       expect(live.entry_guideline).to be_nil
       expect(live.songs.map(&:entry).compact).to be_empty
     end
-
-    context 'when already published' do
-      before do
-        live.publish!
-      end
-
-      it 'raise AlreadyPublishedError' do
-        expect { live.publish! }.to raise_error Live::AlreadyPublishedError
-      end
-    end
   end
 end

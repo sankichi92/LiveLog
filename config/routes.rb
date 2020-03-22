@@ -49,7 +49,7 @@ Rails.application.routes.draw do
 
     resources :lives do
       member do
-        put :publish
+        post :publish
       end
 
       resource :entry_guideline, only: %i[new create edit update]
