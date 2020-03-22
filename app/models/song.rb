@@ -26,7 +26,7 @@ class Song < ApplicationRecord
       random = Random.new(date.to_time.to_i)
       candidate_songs = joins(:live).merge(Live.published.where('date < ?', date)).where.not(status: :secret)
       count = candidate_songs.count
-      candidate_songs.offset(random.rand(count)).first.id if count.positive?
+      candidate_songs.offset(random.rand(count)).pick(:id) if count.positive?
     end
     find_by(id: song_id)
   end
