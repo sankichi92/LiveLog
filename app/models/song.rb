@@ -93,7 +93,7 @@ class Song < ApplicationRecord
 
   # FIXME: https://github.com/sankichi92/LiveLog/issues/118
   def unique_players
-    errors.add(:plays, :duplicated) if plays.map(&:member_id).uniq!
+    errors.add(:plays, 'が重複しています') if plays.map(&:member_id).uniq!
   end
 
   # endregion

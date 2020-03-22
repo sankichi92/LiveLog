@@ -26,12 +26,6 @@ ja:
     created_at: 作成日時
     updated_at: 更新日時
   activerecord:
-    errors:
-      models:
-        song:
-          attributes:
-            plays:
-              duplicated: が重複しています
     models:
       entry: エントリー
       entry_guideline: エントリー要項
