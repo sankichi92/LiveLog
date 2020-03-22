@@ -7,7 +7,7 @@ class Entry < ApplicationRecord
 
   validates :playable_times, presence: true
   validates_associated :song
-  validate :live_must_be_unpublished
+  validate :live_must_have_entry_guideline
   validate :playable_time_on_live_day_exists, on: :create
 
   scope :submitted_or_played_by, ->(member) do
@@ -48,8 +48,8 @@ class Entry < ApplicationRecord
 
   # region Validations
 
-  def live_must_be_unpublished
-    errors.add(:base, 'エントリー募集中のライブではありません') if song.live.published?
+  def live_must_have_entry_guideline
+    errors.add(:base, 'エントリー募集中のライブではありません') if song.live.entry_guideline.nil?
   end
 
   def playable_time_on_live_day_exists

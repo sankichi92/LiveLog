@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :entry do
-    association :song, factory: %i[song unpublished]
+    association :song, factory: %i[song for_entry]
     member
     notes { Faker::Boolean.boolean ? Faker::Lorem.paragraph : nil }
 

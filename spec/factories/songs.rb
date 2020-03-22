@@ -14,8 +14,8 @@ FactoryBot.define do
       name { '' }
     end
 
-    trait :unpublished do
-      association :live, factory: %i[live unpublished]
+    trait :for_entry do
+      association :live, factory: %i[live unpublished with_entry_guideline]
       position { nil }
       youtube_url { nil }
       audio { nil }
