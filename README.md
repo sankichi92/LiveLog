@@ -51,7 +51,7 @@ This script is idempotent, so that you can run it at anytime and get an expectab
 
 1. Sign up [Auth0](https://auth0.com/) and create an application (regular web)
 2. Overwrite `AUTH0_*` values in `.env` by your Auth0 application settings
-3. Run `bin/rails db:replant`
+3. Run `bin/rails db:seed:replant`
 
 Then, you can log in by email `admin@example.com` and password `password`.
 
