@@ -15,7 +15,7 @@
         .small-box.bg-yellow
           .inner
             %h3= Live.unpublished.count
-            %p エントリー募集中のライブ
+            %p 未公開のライブ
           .icon
             = icon('fas', 'guitar')
           = link_to icon('fas', 'arrow-circle-right', Live.model_name.human), admin_lives_path, class: 'small-box-footer'
