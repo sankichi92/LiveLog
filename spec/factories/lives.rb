@@ -19,19 +19,27 @@ FactoryBot.define do
     published { true }
     published_at { published ? Time.zone.now : nil }
 
-    trait :invalid do
-      name { '' }
-    end
-
     trait :unpublished do
       date { Faker::Date.unique.between(from: Time.zone.today, to: 3.months.from_now.to_date) }
       published { false }
     end
 
-    trait :with_songs do
+    trait :with_entry_guideline do
       after(:create) do |live|
-        create_list(:song, 2, live: live)
+        create(:entry_guideline, live: live)
       end
     end
+
+    trait :with_songs do
+      after(:create) do |live|
+        create_pair(:song, live: live)
+      end
+    end
+  end
+
+  factory :entry_guideline do
+    association :live, factory: %i[live unpublished]
+    deadline { Faker::Time.between(from: Time.zone.now, to: live.date.in_time_zone) }
+    notes { Faker::Boolean.boolean(true_ratio: 0.9) ? Faker::Lorem.paragraph : nil }
   end
 end

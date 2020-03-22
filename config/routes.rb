@@ -50,6 +50,7 @@ Rails.application.routes.draw do
         put :publish
       end
 
+      resource :entry_guideline, only: %i[new create edit update]
       resources :songs, only: %i[new create edit update destroy], shallow: true
     end
 
