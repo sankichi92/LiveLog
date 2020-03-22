@@ -47,7 +47,7 @@ FactoryBot.define do
 
   factory :entry_guideline do
     association :live, factory: %i[live unpublished]
-    deadline { Faker::Time.between(from: Time.zone.now, to: live.date.in_time_zone) }
+    deadline { Faker::Time.between(from: 1.minute.from_now, to: live.date.end_of_day) }
     notes { Faker::Boolean.boolean(true_ratio: 0.9) ? Faker::Lorem.paragraph : nil }
   end
 end
