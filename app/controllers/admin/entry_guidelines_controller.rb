@@ -42,7 +42,7 @@ module Admin
           detail: @entry_guideline.previous_changes,
           url: admin_lives_url(year: live.date.nendo),
         )
-        redirect_to admin_lives_path(year: live.date.nendo), notice: "#{live.name} のエントリー募集要項を更新しました"
+        redirect_to admin_lives_path(year: live.date.nendo), notice: "#{live.name} のエントリー要項を更新しました"
       else
         render :edit, status: :unprocessable_entity
       end

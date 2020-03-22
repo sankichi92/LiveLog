@@ -3,13 +3,13 @@
     .row.mb-3
       .col-sm-6
         %h1
-          #{@entry_guideline.live.title} のエントリー募集要項を編集する
+          #{@entry_guideline.live.title} のエントリー要項を編集する
 
       .col-sm-6
         %ol.breadcrumb.float-sm-right
           %li.breadcrumb-item= link_to 'Home', admin_root_path
           %li.breadcrumb-item= link_to Live.model_name.human, admin_lives_path(year: @entry_guideline.live.date.nendo)
-          %li.breadcrumb-item.active #{@entry_guideline.live.title} のエントリー募集要項を編集する
+          %li.breadcrumb-item.active #{@entry_guideline.live.title} のエントリー要項を編集する
 
 %section.content
   .container-fluid

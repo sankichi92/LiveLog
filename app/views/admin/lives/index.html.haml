@@ -45,7 +45,7 @@
                       - if live.entry_guideline.nil?
                         = link_to icon('fas', 'paper-plane', 'エントリーを募集する'), new_admin_live_entry_guideline_path(live), class: 'btn btn-primary'
                       - else
-                        = link_to icon('fas', 'paper-plane', 'エントリー募集要項を編集する'), edit_admin_live_entry_guideline_path(live), class: 'btn btn-outline-primary'
+                        = link_to icon('fas', 'paper-plane', 'エントリー要項を編集する'), edit_admin_live_entry_guideline_path(live), class: 'btn btn-outline-primary'
                       - if live.songs_count.positive?
                         = link_to icon('fas', 'unlock', '公開する'), publish_admin_live_path(live), method: :put, class: 'btn btn-danger', data: { confirm: "本当に #{live.title} を公開しますか" }
                     = link_to icon('fas', 'edit'), edit_admin_live_path(live), class: 'btn btn-info'
