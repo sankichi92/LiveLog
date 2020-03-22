@@ -41,7 +41,7 @@ RSpec.describe 'entries request:', type: :request do
 
     context 'when an unpublished live exists' do
       before do
-        create(:live, :unpublished)
+        create(:live, :unpublished, :with_entry_guideline)
       end
 
       it 'responds 200' do

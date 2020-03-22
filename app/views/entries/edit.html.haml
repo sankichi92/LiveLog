@@ -3,4 +3,4 @@
 %aside.mb-3
   = link_to '削除する', entry_path(@entry), method: :delete, class: 'btn btn-danger', data: { confirm: '本当に削除しますか？' }
 
-= render 'form', entry: @entry
+= render 'form', lives: Live.entry_acceptable.order(:date).to_a.unshift(@entry.song.live).uniq, entry: @entry

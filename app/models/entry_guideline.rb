@@ -5,12 +5,14 @@ class EntryGuideline < ApplicationRecord
   validate :live_must_be_unpublished
   validate :deadline_must_be_less_than_live_date
 
+  scope :open, -> { where('deadline > ?', Time.zone.now) }
+
   def closed?
-    deadline.past?
+    !open?
   end
 
   def open?
-    !closed?
+    deadline.future?
   end
 
   private

@@ -13,6 +13,7 @@ class Live < ApplicationRecord
   scope :nendo, ->(year) { where(date: Date.new(year, 4, 1)...Date.new(year + 1, 4, 1)) }
   scope :unpublished, -> { where(published: false) }
   scope :published, -> { where(published: true) }
+  scope :entry_acceptable, -> { joins(:entry_guideline).merge(EntryGuideline.open) }
 
   def self.years
     newest_order.pluck(:date).map(&:nendo).uniq
