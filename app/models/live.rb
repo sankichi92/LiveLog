@@ -1,6 +1,7 @@
 class Live < ApplicationRecord
   AlreadyPublishedError = Class.new(StandardError)
 
+  has_one :entry_guideline, dependent: :destroy
   has_many :songs, dependent: :restrict_with_exception
 
   validates :date, presence: true
