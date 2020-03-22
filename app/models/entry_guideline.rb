@@ -5,6 +5,14 @@ class EntryGuideline < ApplicationRecord
   validate :live_must_be_unpublished
   validate :deadline_must_be_less_than_live_date
 
+  def closed?
+    deadline.past?
+  end
+
+  def open?
+    !closed?
+  end
+
   private
 
   # region Validations
