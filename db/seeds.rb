@@ -26,8 +26,8 @@ FactoryBot.create_list(:live, 10).each do |live|
   end
 end
 
-FactoryBot.create(:live, :unpublished, date: Time.zone.today.change(month: 11)).tap do |live|
-  FactoryBot.create_list(:song, 50, :unpublished, live: live).each do |song|
+FactoryBot.create(:live, :unpublished, :with_entry_guideline, date: Time.zone.today.change(month: 11)).tap do |live|
+  FactoryBot.create_list(:song, 50, :for_entry, live: live).each do |song|
     FactoryBot.create(:entry, song: song, member: [admin, non_admin].sample(random: Faker::Config.random).member)
 
     play_count = Faker::Number.normal(mean: 5, standard_deviation: 2).round
