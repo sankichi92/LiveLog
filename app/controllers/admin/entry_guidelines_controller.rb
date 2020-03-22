@@ -26,13 +26,11 @@ module Admin
     end
 
     def edit(live_id)
-      live = Live.unpublished.joins(:entry_guideline).find(live_id)
-      @entry_guideline = live.entry_guideline
+      @entry_guideline = EntryGuideline.find_by!(live_id: live_id)
     end
 
     def update(live_id, entry_guideline)
-      live = Live.unpublished.joins(:entry_guideline).find(live_id)
-      @entry_guideline = live.entry_guideline
+      @entry_guideline = EntryGuideline.find_by!(live_id: live_id)
 
       if @entry_guideline.update(entry_guideline)
         AdminActivityNotifyJob.perform_later(
@@ -40,9 +38,9 @@ module Admin
           operation: '更新しました',
           object: @entry_guideline,
           detail: @entry_guideline.previous_changes,
-          url: admin_lives_url(year: live.date.nendo),
+          url: admin_lives_url(year: @entry_guideline.live.date.nendo),
         )
-        redirect_to admin_lives_path(year: live.date.nendo), notice: "#{live.name} のエントリー要項を更新しました"
+        redirect_to admin_lives_path(year: @entry_guideline.live.date.nendo), notice: "#{@entry_guideline.live.name} のエントリー要項を更新しました"
       else
         render :edit, status: :unprocessable_entity
       end
