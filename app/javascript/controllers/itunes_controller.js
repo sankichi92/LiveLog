@@ -5,8 +5,8 @@ export default class extends Controller {
 
   connect() {
     fetch(`https://itunes.apple.com/search?term=${this.trackName}+${this.artistName}&country=JP&media=music&entity=song&lang=ja_jp`)
-      .then(response => response.json())
-      .then(json => {
+      .then((response) => response.json())
+      .then((json) => {
         if (json.resultCount === 0) {
           return;
         }
@@ -24,12 +24,12 @@ export default class extends Controller {
   }
 
   _findAppropriateResult(results) {
-    let result = results.find(res => {
+    let result = results.find((res) => {
       return res.trackName.toLowerCase() === this.trackName.toLowerCase() && res.artistName.toLowerCase() === this.artistName.toLowerCase();
     });
 
     if (result === undefined) {
-      result = results.find(res => res.artistName.toLowerCase() === this.artistName.toLowerCase());
+      result = results.find((res) => res.artistName.toLowerCase() === this.artistName.toLowerCase());
     }
 
     if (result === undefined) {
@@ -46,7 +46,7 @@ export default class extends Controller {
     this.artworkTarget.setAttribute('src', result.artworkUrl100);
     this.audioTarget.setAttribute('src', result.previewUrl);
 
-    this.linkTargets.forEach(element => element.setAttribute('href', `${result.trackViewUrl}&at=1001lKQU&app=itunes`));
+    this.linkTargets.forEach((element) => element.setAttribute('href', `${result.trackViewUrl}&at=1001lKQU&app=itunes`));
 
     this.element.classList.remove('d-none');
   }

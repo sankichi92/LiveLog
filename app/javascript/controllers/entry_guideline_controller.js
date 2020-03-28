@@ -5,8 +5,8 @@ export default class extends Controller {
 
   fetchAndReplaceGuideline(event) {
     fetch(`/lives/${event.target.value}/entry_guideline`)
-      .then(response => response.json())
-      .then(entryGuideline => {
+      .then((response) => response.json())
+      .then((entryGuideline) => {
         this._replaceGuideline(entryGuideline);
       });
   }
