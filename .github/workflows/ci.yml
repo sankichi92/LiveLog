@@ -46,8 +46,8 @@ jobs:
         uses: actions/cache@v1
         with:
           path: vendor/bundle
-          key: bundle-use-ruby-${{ matrix.os }}-${{ hashFiles('.ruby-version') }}-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: bundle-use-ruby-${{ matrix.os }}-${{ hashFiles('.ruby-version') }}-
+          key: ${{ runner.os }}-gems-${{ hashFiles('.ruby-version') }}-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: ${{ runner.os }}-gems-${{ hashFiles('.ruby-version') }}-
 
       - name: Get yarn cache dir
         run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -86,8 +86,8 @@ jobs:
       - uses: actions/cache@v1
         with:
           path: vendor/bundle
-          key: bundle-use-ruby-${{ matrix.os }}-${{ hashFiles('.ruby-version') }}-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: bundle-use-ruby-${{ matrix.os }}-${{ hashFiles('.ruby-version') }}-
+          key: ${{ runner.os }}-gems-${{ hashFiles('.ruby-version') }}-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: ${{ runner.os }}-gems-${{ hashFiles('.ruby-version') }}-
 
       - name: Install dependencies
         run: |
