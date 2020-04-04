@@ -34,7 +34,7 @@ RSpec.describe 'Settings:', type: :system do
   specify 'A logged-in user can edit their email and notification settings' do
     # Given
     user = create(:user)
-    stub_auth0_user(user, subscribing: true)
+    stub_auth0_user(user, email_accepting: true)
     allow(auth0_client_double).to receive(:patch_user)
     log_in_as user
 
@@ -54,6 +54,6 @@ RSpec.describe 'Settings:', type: :system do
 
     # Then
     expect(page).to have_content '更新しました'
-    expect(auth0_client_double).to have_received(:patch_user).with(user.auth0_id, user_metadata: { subscribing: false }).once
+    expect(auth0_client_double).to have_received(:patch_user).with(user.auth0_id, user_metadata: { livelog_email_notifications: false }).once
   end
 end

@@ -1,7 +1,7 @@
 require 'app_auth0_client'
 
 module Auth0UserHelper
-  def stub_auth0_user(user, fields: Auth0User::DEFAULT_FIELDS, email_verified: true, subscribing: true)
+  def stub_auth0_user(user, fields: Auth0User::DEFAULT_FIELDS, email_verified: true, email_accepting: true)
     allow(auth0_client_double).to receive(:user).with(
       user.auth0_id,
       fields: fields,
@@ -11,9 +11,7 @@ module Auth0UserHelper
         'email' => user.email,
         'email_verified' => email_verified,
         'user_metadata' => {
-          'livelog_member_id' => user.member.id,
-          'joined_year' => user.member.joined_year,
-          'subscribing' => subscribing,
+          'livelog_email_notifications' => email_accepting,
         },
         'last_login' => Time.zone.now.iso8601,
       }.slice(*fields.split(',')),

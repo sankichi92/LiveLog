@@ -65,12 +65,12 @@ class Auth0User
     @response['email_verified']
   end
 
-  def subscribing?
-    @response.dig('user_metadata', 'subscribing')
+  def email_accepting?
+    @response.dig('user_metadata', 'livelog_email_notifications')
   end
 
-  def email_verified_and_subscribing?
-    email_verified? && subscribing?
+  def email_verified_and_accepting?
+    email_verified? && email_accepting?
   end
 
   def has_logged_in?

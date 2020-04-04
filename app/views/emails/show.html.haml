@@ -18,8 +18,8 @@
 
     .form-group
       .custom-control.custom-checkbox
-        = form.check_box :subscribing, checked: @auth0_user.email_verified? && @auth0_user.subscribing?, disabled: !@auth0_user.email_verified?, class: 'custom-control-input'
-        = form.label :subscribing, 'LiveLog からのお知らせメールを受け取る', class: 'custom-control-label'
+        = form.check_box :accept, checked: @auth0_user.email_verified? && @auth0_user.email_accepting?, disabled: !@auth0_user.email_verified?, class: 'custom-control-input'
+        = form.label :accept, 'LiveLog からのお知らせメールを受け取る', class: 'custom-control-label'
       - unless @auth0_user.email_verified?
         %small.form-text.text-danger メールアドレスが確認されていません。メールに記載されているURLにアクセスし、メールアドレスを確認してください
 
