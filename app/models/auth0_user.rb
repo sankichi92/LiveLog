@@ -20,7 +20,7 @@ class Auth0User
       response = AppAuth0Client.instance.create_user(
         user.member.name,
         connection: CONNECTION_NAME,
-        user_id: user.auth0_id,
+        user_id: user.auth0_id[/\Aauth0\|(\S+)/, 1],
         email: user.email,
         password: user.password.presence || "0aA#{SecureRandom.base58}", # Prefix "0aA" is to pass the validation.
         verify_email: false,

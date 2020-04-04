@@ -94,7 +94,7 @@ class User < ApplicationRecord
   # region Callbacks
 
   def generate_auth0_id
-    self.auth0_id ||= SecureRandom.uuid
+    self.auth0_id ||= "auth0|#{SecureRandom.uuid}"
   end
 
   # endregion
