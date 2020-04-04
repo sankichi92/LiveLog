@@ -65,7 +65,7 @@ class User < ApplicationRecord
   end
 
   def update_auth0_user!(options)
-    Auth0User.update!(auth0_id, options)
+    @auth0_user = Auth0User.update!(auth0_id, options)
   end
 
   def destroy_with_auth0_user!

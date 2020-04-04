@@ -34,7 +34,8 @@ class Auth0User
     end
 
     def update!(auth0_id, options)
-      AppAuth0Client.instance.patch_user(auth0_id, options)
+      response = AppAuth0Client.instance.patch_user(auth0_id, options)
+      new(response)
     end
 
     def delete!(auth0_id)
