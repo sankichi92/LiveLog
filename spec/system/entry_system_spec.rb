@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Entry system:', type: :system do
   specify 'A logged-in user creates an entry', js: true do
     # Given
+    stub_request(:post, 'https://slack.com/api/chat.postMessage')
     date = 1.month.from_now.to_date
     create(:live, :unpublished, :with_entry_guideline, date: date)
     member = create(:member)
@@ -55,6 +56,7 @@ RSpec.describe 'Entry system:', type: :system do
 
   specify 'A submitter edits their entry', js: true do
     # Given
+    stub_request(:post, 'https://slack.com/api/chat.postMessage')
     user = create(:user)
     entry = create(:entry, member: user.member, notes: '', playable_times_count: 2)
     log_in_as user
@@ -80,6 +82,7 @@ RSpec.describe 'Entry system:', type: :system do
 
   specify 'A submitter deletes their entry' do
     # Given
+    stub_request(:post, 'https://slack.com/api/chat.postMessage')
     user = create(:user)
     entry = create(:entry, member: user.member)
     log_in_as user

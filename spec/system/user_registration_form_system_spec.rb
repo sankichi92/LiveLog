@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe 'User registration form:', type: :system do
   specify 'A user can register themselves' do
     # Given
+    stub_request(:post, 'https://slack.com/api/chat.postMessage')
     email = 'guitar@example.com'
     auth0_client = double(:app_auth0_client).tap do |auth0_client|
       allow(auth0_client).to receive(:user).and_raise(Auth0::NotFound.new('The user does not exist.'))
