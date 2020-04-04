@@ -13,10 +13,12 @@ class User < ApplicationRecord
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, on: :invite
   validate :admin_must_be_activated
 
+  before_create :generate_auth0_id
+
   scope :inactivated, -> { where(activated: false) }
 
   def auth0_id
-    "auth0|#{id}"
+    super || "auth0|#{id}"
   end
 
   def activate!
@@ -75,6 +77,14 @@ class User < ApplicationRecord
     if admin? && !activated
       errors.add(:base, '管理者にするにはログイン済みでなければなりません')
     end
+  end
+
+  # endregion
+
+  # region Callbacks
+
+  def generate_auth0_id
+    self.auth0_id ||= SecureRandom.uuid
   end
 
   # endregion
