@@ -17,10 +17,6 @@ class User < ApplicationRecord
 
   scope :inactivated, -> { where(activated: false) }
 
-  def auth0_id
-    super || "auth0|#{id}"
-  end
-
   def activate!
     update!(activated: true)
   end

@@ -9,12 +9,12 @@ class Auth0ConsistencyCheckBatch < ApplicationBatch
 
   def run
     results = {
-      inconsistent_auth0_ids: [],
-      inconsistent_livelog_ids: [],
+      only_auth0_ids: [],
+      only_livelog_ids: [],
     }
 
-    user_ids = User.where(password_digest: nil).pluck(:id)
-    logger.info("LiveLog users total: #{user_ids.size}")
+    auth0_ids = User.where(password_digest: nil).pluck(:auth0_id)
+    logger.info("LiveLog users total: #{auth0_ids.size}")
 
     i = 0
     loop do
@@ -32,9 +32,9 @@ class Auth0ConsistencyCheckBatch < ApplicationBatch
       auth0_users = response['users'].map { |user| Auth0User.new(user) }
 
       auth0_users.each do |auth0_user|
-        deleted_id = user_ids.delete(auth0_user.livelog_id)
+        deleted_id = auth0_ids.delete(auth0_user.id)
         if deleted_id.nil?
-          results[:inconsistent_auth0_ids] << auth0_user.id
+          results[:only_auth0_ids] << auth0_user.id
         end
       end
 
@@ -44,7 +44,7 @@ class Auth0ConsistencyCheckBatch < ApplicationBatch
       sleep @sleep_duration # For rate limit
     end
 
-    results[:inconsistent_livelog_ids] += user_ids
+    results[:only_livelog_ids] += auth0_ids
 
     if results.any? { |_, inconsistent_ids| !inconsistent_ids.empty? }
       raise Error, results.inspect

@@ -136,7 +136,7 @@ end
 
 create_table :users, force: :cascade do |t|
   t.bigint :member_id, null: false
-  t.string :auth0_id
+  t.string :auth0_id, null: false
   t.boolean :activated, default: false, null: false
   t.boolean :admin, default: false, null: false
 

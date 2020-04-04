@@ -3,8 +3,7 @@ class Auth0Controller < ApplicationController
 
   def callback
     auth = request.env['omniauth.auth']
-    livelog_id = Auth0User.extract_livelog_id(auth.uid)
-    user = User.find(livelog_id)
+    user = User.find_by!(auth0_id: auth.uid)
 
     unless user.activated?
       user.activate!

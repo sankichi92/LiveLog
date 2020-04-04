@@ -36,8 +36,8 @@ RSpec.describe Auth0ConsistencyCheckBatch, type: :batch do
         results = run
 
         expected_results = {
-          inconsistent_auth0_ids: [],
-          inconsistent_livelog_ids: [],
+          only_auth0_ids: [],
+          only_livelog_ids: [],
         }
 
         expect(results).to eq expected_results
@@ -57,8 +57,8 @@ RSpec.describe Auth0ConsistencyCheckBatch, type: :batch do
 
       it 'raises an error with a message including inconsistent LiveLog user id' do
         expected_results = {
-          inconsistent_auth0_ids: [],
-          inconsistent_livelog_ids: [users[4].id],
+          only_auth0_ids: [],
+          only_livelog_ids: [users[4].auth0_id],
         }
 
         expect { run }.to raise_error(Auth0ConsistencyCheckBatch::Error, expected_results.inspect)
@@ -78,8 +78,8 @@ RSpec.describe Auth0ConsistencyCheckBatch, type: :batch do
 
       it 'raises an error with a message including inconsistent LiveLog user id' do
         expected_results = {
-          inconsistent_auth0_ids: ['auth0|0'],
-          inconsistent_livelog_ids: [],
+          only_auth0_ids: ['auth0|0'],
+          only_livelog_ids: [],
         }
 
         expect { run }.to raise_error(Auth0ConsistencyCheckBatch::Error, expected_results.inspect)

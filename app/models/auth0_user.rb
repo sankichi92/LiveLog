@@ -40,18 +40,10 @@ class Auth0User
     def delete!(auth0_id)
       AppAuth0Client.instance.delete_user(auth0_id)
     end
-
-    def extract_livelog_id(auth0_id)
-      auth0_id.match(/auth0\|(?<id>\d+)/)[:id].to_i
-    end
   end
 
   def initialize(response)
     @response = response
-  end
-
-  def livelog_id
-    self.class.extract_livelog_id(@response['user_id'])
   end
 
   def [](key)
