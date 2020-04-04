@@ -5,6 +5,8 @@ class Auth0Controller < ApplicationController
     auth = request.env['omniauth.auth']
     user = User.find_by!(auth0_id: auth.uid)
 
+    user.save_token_and_userinfo!(auth.credentials, auth.extra.raw_info)
+
     unless user.activated?
       user.activate!
       InvitationActivityNotifyJob.perform_later(user: user, text: "初めてログインしました")

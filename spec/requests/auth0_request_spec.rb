@@ -9,6 +9,16 @@ RSpec.describe 'auth0 request:', type: :request do
         OmniAuth.config.mock_auth[:auth0] = OmniAuth::AuthHash.new(
           provider: 'auth0',
           uid: user.auth0_id,
+          credentials: {
+            token: 'access_token',
+            expires_at: 1.day.from_now.to_i,
+            refresh_token: 'refresh_token',
+          },
+          extra: {
+            raw_info: {
+              name: user.member.name,
+            },
+          },
         )
       end
 

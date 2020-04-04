@@ -4,7 +4,20 @@ RSpec.describe 'Login:', type: :system do
   specify 'A user is requested to log-in on a protected page, and after login, they are redirected to the protected page' do
     # Given
     user = create(:user)
-    OmniAuth.config.mock_auth[:auth0] = OmniAuth::AuthHash.new(provide: 'auth0', uid: user.auth0_id)
+    OmniAuth.config.mock_auth[:auth0] = OmniAuth::AuthHash.new(
+      provide: 'auth0',
+      uid: user.auth0_id,
+      credentials: {
+        token: 'access_token',
+        expires_at: 1.day.from_now.to_i,
+        refresh_token: 'refresh_token',
+      },
+      extra: {
+        raw_info: {
+          name: user.member.name,
+        },
+      },
+    )
 
     # When
     visit profile_path

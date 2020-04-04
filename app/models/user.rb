@@ -17,6 +17,20 @@ class User < ApplicationRecord
 
   scope :inactivated, -> { where(activated: false) }
 
+  def save_token_and_userinfo!(credentials, userinfo)
+    self.access_token = credentials[:token]
+    self.access_token_expires_at = Time.zone.at(credentials[:expires_at]) if credentials[:expires_at].present?
+    self.refresh_token = credentials[:refresh_token] if credentials[:refresh_token].present?
+
+    self.userinfo = userinfo.to_h
+    member.name = userinfo[:name] if userinfo[:name].present?
+
+    transaction do
+      save!
+      member.save! if member.changed?
+    end
+  end
+
   def activate!
     update!(activated: true)
   end

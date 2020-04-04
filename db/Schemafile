@@ -137,6 +137,11 @@ end
 create_table :users, force: :cascade do |t|
   t.bigint :member_id, null: false
   t.string :auth0_id, null: false
+  t.string :access_token
+  t.datetime :access_token_expires_at
+  t.string :refresh_token
+  t.jsonb :userinfo
+
   t.boolean :activated, default: false, null: false
   t.boolean :admin, default: false, null: false
 
