@@ -5,6 +5,8 @@ module MemberDecorator
     px = IMAGE_PX_BY_SIZE[size]
     if avatar.attached? && avatar.variable?
       avatar.variant(resize_to_fill: [px, px])
+    elsif user&.activated?
+      "https://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(user.email)}?s=#{px}&d=mm"
     else
       "https://www.gravatar.com/avatar/?s=#{px}&d=mm&f=t"
     end
