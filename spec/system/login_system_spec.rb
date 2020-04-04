@@ -15,6 +15,8 @@ RSpec.describe 'Login:', type: :system do
       extra: {
         raw_info: {
           name: user.member.name,
+          email: user.email,
+          email_verified: true,
         },
       },
     )

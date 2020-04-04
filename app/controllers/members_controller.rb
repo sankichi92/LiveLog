@@ -18,7 +18,7 @@ class MembersController < ApplicationController
     @member = Member.new(member.permit(:joined_year, :name))
     @member.build_user(user.permit(:email))
 
-    if @member.user.valid?(:invite) && @member.save
+    if @member.save(context: :user_registration_form)
       @member.user.invite!
       @user_registration_form.increment!(:used_count) # rubocop:disable Rails/SkipsModelValidations
       InvitationActivityNotifyJob.perform_later(

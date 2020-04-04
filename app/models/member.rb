@@ -15,6 +15,7 @@ class Member < ApplicationRecord
   validates :name, presence: true, length: { maximum: 20 }, uniqueness: { scope: :joined_year }
   validates :url, format: { with: /\A#{URI::DEFAULT_PARSER.make_regexp(%w[http https])}\z/ }, allow_blank: true
   validates :bio, length: { maximum: 200 }
+  validates_associated :user, on: :user_registration_form
 
   scope :regular_order, -> { order(joined_year: :desc, plays_count: :desc) }
   scope :collaborated_with, ->(member) { joins(plays: :song).merge(member.published_songs).where.not(id: member.id) }

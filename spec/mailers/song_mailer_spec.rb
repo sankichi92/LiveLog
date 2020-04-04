@@ -13,15 +13,15 @@ RSpec.describe SongMailer, type: :mailer do
     let(:member) { create(:member) }
 
     before do
-      users.each_with_index do |user, i|
-        stub_auth0_user(user, email: "user#{i}@example.com", subscribing: true)
+      users.each do |user|
+        stub_auth0_user(user, subscribing: true)
       end
       stub_auth0_user(unsubscribing_user, subscribing: false)
     end
 
     it 'renders the headers and the body' do
       expect(mail.from).to contain_exactly 'noreply@livelog.ku-unplugged.net'
-      expect(mail.bcc).to contain_exactly 'user0@example.com', 'user1@example.com'
+      expect(mail.bcc).to match_array users.map(&:email)
       expect(mail.subject).to eq '「くちなしの丘」が今日のピックアップに選ばれました！'
       expect(mail.body.to_s).to eq read_fixture('pickup.txt').gsub("\n", "\r\n")
     end

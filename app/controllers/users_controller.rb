@@ -6,13 +6,14 @@ class UsersController < ApplicationController
 
   def new
     @user = @member.user || @member.build_user
+    @user.email = nil
   end
 
   def create(user)
     @user = @member.user || @member.build_user
     @user.assign_attributes(user)
 
-    if @user.save(context: :invite)
+    if @user.save
       @user.invite!
       InvitationActivityNotifyJob.perform_later(user: current_user, text: "#{@member.joined_year_and_name} を招待しました")
       redirect_to @member, notice: '招待しました'

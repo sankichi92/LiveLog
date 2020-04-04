@@ -136,6 +136,8 @@ end
 
 create_table :users, force: :cascade do |t|
   t.bigint :member_id, null: false
+  t.string :email
+
   t.string :auth0_id, null: false
   t.string :access_token
   t.datetime :access_token_expires_at
@@ -146,7 +148,6 @@ create_table :users, force: :cascade do |t|
   t.boolean :admin, default: false, null: false
 
   # TODO: Remove these columns after Auth0 migration finished.
-  t.string :email
   t.string :password_digest
   t.boolean :subscribing, default: true, null: false
 

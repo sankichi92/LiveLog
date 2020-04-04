@@ -3,17 +3,18 @@ require 'app_auth0_client'
 class User < ApplicationRecord
   SUPER_ADMIN_ID = 1
 
-  self.ignored_columns = %i[email subscribing]
+  self.ignored_columns = %i[subscribing]
 
   belongs_to :member
   has_many :user_registration_forms, dependent: :delete_all, foreign_key: 'admin_id', inverse_of: :admin
 
-  attr_accessor :email, :password
+  attr_accessor :password
 
-  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, on: :invite
+  validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: { case_sensitive: false }
   validate :admin_must_be_activated
 
   before_create :generate_auth0_id
+  before_save { email.downcase! }
 
   scope :inactivated, -> { where(activated: false) }
 
@@ -23,6 +24,7 @@ class User < ApplicationRecord
     self.refresh_token = credentials[:refresh_token] if credentials[:refresh_token].present?
 
     self.userinfo = userinfo.to_h
+    self.email = userinfo[:email] if userinfo[:email].present? && userinfo[:email_verified]
     member.name = userinfo[:name] if userinfo[:name].present?
 
     transaction do
@@ -49,15 +51,13 @@ class User < ApplicationRecord
   end
 
   def invite!
-    validate!(:invite)
-
     @auth0_user = begin
                     fetch_auth0_user!
                   rescue Auth0::NotFound
                     Auth0User.create!(self)
                   end
 
-    if email.downcase != auth0_user.email
+    if email != auth0_user.email
       update_auth0_user!(email: email, verify_email: false)
     end
 

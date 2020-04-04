@@ -34,7 +34,7 @@ RSpec.describe 'Settings:', type: :system do
   specify 'A logged-in user can edit their email and notification settings' do
     # Given
     user = create(:user)
-    stub_auth0_user(user, email: 'current@example.com', subscribing: true)
+    stub_auth0_user(user, subscribing: true)
     allow(auth0_client_double).to receive(:patch_user)
     log_in_as user
 
@@ -45,7 +45,7 @@ RSpec.describe 'Settings:', type: :system do
 
     # Then
     expect(page).to have_title 'メール・通知設定'
-    expect(page).to have_field('メールアドレス', with: 'current@example.com')
+    expect(page).to have_field('メールアドレス', with: user.email)
     expect(page).to have_checked_field('LiveLog からのお知らせメールを受け取る')
 
     # When

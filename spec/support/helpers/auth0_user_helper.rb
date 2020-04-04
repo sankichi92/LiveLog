@@ -1,14 +1,14 @@
 require 'app_auth0_client'
 
 module Auth0UserHelper
-  def stub_auth0_user(user, fields: Auth0User::DEFAULT_FIELDS, email: Faker::Internet.email, email_verified: true, subscribing: true)
+  def stub_auth0_user(user, fields: Auth0User::DEFAULT_FIELDS, email_verified: true, subscribing: true)
     allow(auth0_client_double).to receive(:user).with(
       user.auth0_id,
       fields: fields,
     ).and_return(
       {
         'user_id' => user.auth0_id,
-        'email' => email,
+        'email' => user.email,
         'email_verified' => email_verified,
         'user_metadata' => {
           'livelog_member_id' => user.member.id,

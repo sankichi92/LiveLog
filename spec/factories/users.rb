@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :user do
     member
+    email { Faker::Internet.unique.email }
 
     access_token { 'access_token' }
     access_token_expires_at { 1.day.from_now }

@@ -17,6 +17,8 @@ RSpec.describe 'auth0 request:', type: :request do
           extra: {
             raw_info: {
               name: user.member.name,
+              email: user.email,
+              email_verified: true,
             },
           },
         )
