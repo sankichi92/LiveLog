@@ -6,7 +6,6 @@ FactoryBot.define do
     access_token { 'access_token' }
     access_token_expires_at { 1.day.from_now }
     refresh_token { 'refresh_token' }
-    userinfo { {} }
 
     activated { true }
 
@@ -14,7 +13,6 @@ FactoryBot.define do
       access_token { nil }
       access_token_expires_at { nil }
       refresh_token { nil }
-      userinfo { nil }
 
       activated { false }
     end
