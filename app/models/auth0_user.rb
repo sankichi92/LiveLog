@@ -25,9 +25,11 @@ class Auth0User
         password: user.password.presence || "0aA#{SecureRandom.base58}", # Prefix "0aA" is to pass the validation.
         verify_email: false,
         user_metadata: {
-          livelog_member_id: user.member.id,
+          livelog_email_notifications: true,
+        },
+        app_metadata: {
           joined_year: user.member.joined_year,
-          subscribing: true,
+          livelog_member_id: user.member.id,
         },
       )
       new(response)
