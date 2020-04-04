@@ -5,9 +5,9 @@ Rails.application.routes.draw do
   get '/privacy', to: 'docs#privacy'
   get '/slack', to: 'slack#show'
 
-  get '/auth/auth0/callback', to: 'sessions#create'
-  get '/auth/failure', to: 'sessions#failure'
-  delete '/logout', to: 'sessions#destroy'
+  get '/auth/auth0/callback', to: 'auth0#callback'
+  get '/auth/failure', to: 'auth0#failure'
+  delete '/logout', to: 'auth0#logout'
 
   resources :songs, only: %i[index show edit update] do
     collection do

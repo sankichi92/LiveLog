@@ -1,7 +1,7 @@
-class SessionsController < ApplicationController
-  before_action :require_current_user, only: :destroy
+class Auth0Controller < ApplicationController
+  before_action :require_current_user, only: :logout
 
-  def create
+  def callback
     auth = request.env['omniauth.auth']
     livelog_id = Auth0User.extract_livelog_id(auth.uid)
     user = User.find(livelog_id)
@@ -27,7 +27,7 @@ class SessionsController < ApplicationController
     redirect_to root_path, alert: message
   end
 
-  def destroy
+  def logout
     log_out
 
     logout_uri = URI::HTTPS.build(

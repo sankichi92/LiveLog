@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'sessions request:', type: :request do
+RSpec.describe 'auth0 request:', type: :request do
   describe 'GET /auth/auth0/callback' do
     let(:user) { create(:user, :inactivated) }
 
