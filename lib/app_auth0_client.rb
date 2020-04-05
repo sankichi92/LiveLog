@@ -4,9 +4,9 @@ class AppAuth0Client
 
   def initialize
     super(
-      client_id: ENV['AUTH0_CLIENT_ID'],
-      client_secret: ENV['AUTH0_CLIENT_SECRET'],
-      domain: ENV.fetch('AUTH0_DOMAIN', 'patient-bar-7812.auth0.com'),
+      client_id: ENV.fetch('AUTH0_CLIENT_ID'),
+      client_secret: ENV.fetch('AUTH0_CLIENT_SECRET'),
+      domain: ENV.fetch('AUTH0_DOMAIN'),
     )
   end
 end
