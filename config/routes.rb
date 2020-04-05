@@ -44,6 +44,10 @@ Rails.application.routes.draw do
     resource :email, only: %i[show update]
   end
 
+  namespace :api do
+    root to: 'no_contents#show'
+  end
+
   namespace :admin do
     root to: 'home#show'
 

@@ -44,6 +44,9 @@ gem 'twitter'
 
 gem 'commonmarker'
 
+# API
+gem 'jwt'
+
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 
