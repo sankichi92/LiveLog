@@ -3,7 +3,7 @@ require 'app_auth0_client'
 class User < ApplicationRecord
   SUPER_USER_ID = 1
 
-  self.ignored_columns = %i[subscribing admin]
+  self.ignored_columns = %i[subscribing]
 
   belongs_to :member
   has_one :admin, dependent: :destroy, class_name: 'Administrator'

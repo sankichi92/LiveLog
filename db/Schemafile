@@ -154,7 +154,6 @@ create_table :users, force: :cascade do |t|
   t.jsonb :userinfo, null: false, default: {}
 
   t.boolean :activated, default: false, null: false
-  t.boolean :admin, default: false, null: false
 
   # TODO: Remove these columns after Auth0 migration finished.
   t.string :password_digest
