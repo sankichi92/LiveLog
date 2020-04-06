@@ -2,7 +2,7 @@ return $stdout.puts 'Records already exist.' if User.exists?
 
 Faker::Config.random = Random.new(42)
 
-admin = FactoryBot.create(:admin, id: 1, auth0_id: 'auth0|1', email: 'admin@example.com')
+admin = FactoryBot.create(:user, id: 1, auth0_id: 'auth0|1', email: 'admin@example.com').tap { |u| create(:admin, user: u) }
 non_admin = FactoryBot.create(:user, id: 2, auth0_id: 'auth0|2', email: 'user@example.com')
 
 if ENV['AUTH0_CLIENT_ID'].present? && ENV['AUTH0_CLIENT_SECRET'].present?

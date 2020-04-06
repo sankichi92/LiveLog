@@ -2,7 +2,7 @@ module Admin
   class MembersController < AdminController
     def index(year = Member.maximum(:joined_year))
       @year = year.to_i
-      @members = Member.includes(:user).where(joined_year: @year).order(plays_count: :desc, id: :asc)
+      @members = Member.includes(user: :admin).where(joined_year: @year).order(plays_count: :desc, id: :asc)
     end
 
     def new

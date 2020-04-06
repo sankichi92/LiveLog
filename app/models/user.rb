@@ -1,18 +1,16 @@
 require 'app_auth0_client'
 
 class User < ApplicationRecord
-  SUPER_ADMIN_ID = 1
+  SUPER_USER_ID = 1
 
-  self.ignored_columns = %i[subscribing]
+  self.ignored_columns = %i[subscribing admin]
 
   belongs_to :member
-  # has_one :admin, dependent: :destroy
-  has_many :user_registration_forms, dependent: :delete_all, foreign_key: 'admin_id', inverse_of: :admin
+  has_one :admin, dependent: :destroy, class_name: 'Administrator'
 
   attr_accessor :password
 
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: { case_sensitive: false }
-  validate :admin_must_be_activated
 
   before_create :generate_auth0_id
   before_save { email.downcase! }
@@ -39,7 +37,7 @@ class User < ApplicationRecord
   end
 
   def hide_ads?
-    member.hide_ads? || id == SUPER_ADMIN_ID
+    member.hide_ads? || id == SUPER_USER_ID
   end
 
   # region Auth0
@@ -81,16 +79,6 @@ class User < ApplicationRecord
   def fetch_auth0_user!
     Auth0User.fetch!(auth0_id)
   end
-
-  # region Validations
-
-  def admin_must_be_activated
-    if admin? && !activated
-      errors.add(:base, '管理者にするにはログイン済みでなければなりません')
-    end
-  end
-
-  # endregion
 
   # region Callbacks
 

@@ -4,7 +4,7 @@ RSpec.describe 'admin/user_registration_forms request:', type: :request do
   let(:admin) { create(:admin) }
 
   before do
-    log_in_as admin
+    log_in_as admin.user
   end
 
   describe 'GET /admin/user_registration_forms' do

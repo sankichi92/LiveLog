@@ -4,7 +4,7 @@ RSpec.describe 'admin/songs request:', type: :request do
   let(:admin) { create(:admin) }
 
   before do
-    log_in_as admin
+    log_in_as admin.user
   end
 
   describe 'GET /admin/entries' do

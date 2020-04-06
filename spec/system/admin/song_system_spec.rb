@@ -8,7 +8,7 @@ RSpec.describe 'Admin song system:', type: :system do
     member1 = create(:member, name: '徳浦')
     member2 = create(:member, name: '三岡')
     admin = create(:admin)
-    log_in_as admin
+    log_in_as admin.user
 
     # When
     visit admin_live_path(live)
@@ -56,7 +56,7 @@ RSpec.describe 'Admin song system:', type: :system do
     members = create_list(:member, 3)
     song = create(:song, name: 'before', members: members)
     admin = create(:admin)
-    log_in_as admin
+    log_in_as admin.user
 
     # When
     visit edit_admin_song_path(song)

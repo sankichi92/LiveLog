@@ -3,15 +3,15 @@ module Admin
     permits :active_days
 
     def index
-      @user_registration_forms = UserRegistrationForm.includes(admin: :member).all.reverse_order
+      @user_registration_forms = UserRegistrationForm.includes(admin: { user: :member }).all.reverse_order
     end
 
     def new
-      @user_registration_form = current_user.user_registration_forms.new
+      @user_registration_form = current_user.admin.user_registration_forms.new
     end
 
     def create(user_registration_form)
-      @user_registration_form = current_user.user_registration_forms.new(user_registration_form)
+      @user_registration_form = current_user.admin.user_registration_forms.new(user_registration_form)
 
       if @user_registration_form.save
         AdminActivityNotifyJob.perform_later(

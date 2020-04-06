@@ -4,7 +4,7 @@ RSpec.describe 'admin/users request:', type: :request do
   let(:admin) { create(:admin) }
 
   before do
-    log_in_as admin
+    log_in_as admin.user
   end
 
   describe 'DELETE /members/:member_id/user' do

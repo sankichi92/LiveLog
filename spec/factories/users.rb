@@ -20,9 +20,9 @@ FactoryBot.define do
     trait :graduate do
       association :member, factory: :member, joined_year: Time.zone.today.nendo - 4
     end
+  end
 
-    factory :admin do
-      admin { true }
-    end
+  factory :admin, class: 'Administrator' do
+    user
   end
 end

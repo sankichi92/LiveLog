@@ -41,7 +41,7 @@
                       - else
                         = link_to icon('fas', 'envelope', '招待する'), new_member_user_path(member), class: 'btn btn-primary'
                     - else
-                      - if member.user.admin?
+                      - if member.user.admin
                         = link_to icon('fas', 'users-cog', '管理者権限を剥奪する'), admin_member_admin_path(member), method: :delete, class: 'btn btn-outline-danger', data: { confirm: "本当に #{member.joined_year_and_name} の管理者権限を剥奪しますか" }
                       - else
                         = link_to icon('fas', 'user-slash', 'ログイン情報を削除する'), admin_member_user_path(member), method: :delete, class: 'btn btn-warning', data: { confirm: "本当に #{member.joined_year_and_name} のログイン情報を削除しますか" }

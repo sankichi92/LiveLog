@@ -2,7 +2,7 @@ module Admin
   class AdminsController < AdminController
     def create(member_id)
       user = User.find_by!(member_id: member_id)
-      user.update!(admin: true)
+      user.create_admin!
       AdminActivityNotifyJob.perform_later(
         user: current_user,
         operation: '管理者にしました',
@@ -14,7 +14,7 @@ module Admin
 
     def destroy(member_id)
       user = User.find_by!(member_id: member_id)
-      user.update!(admin: false)
+      user.admin.destroy!
       AdminActivityNotifyJob.perform_later(
         user: current_user,
         operation: '管理者権限を剥奪しました',

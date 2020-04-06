@@ -26,7 +26,7 @@
               - @user_registration_forms.each do |user_registration_form|
                 %tr{ class: user_registration_form.expired? ? 'table-secondary' : '' }
                   %td= user_registration_form.id
-                  %td= user_registration_form.admin.member.joined_year_and_name
+                  %td= user_registration_form.admin.user.member.joined_year_and_name
                   %td= user_registration_form.used_count
                   %td= l user_registration_form.created_at
                   %td= l user_registration_form.expires_at

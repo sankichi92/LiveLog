@@ -10,6 +10,6 @@ class AdminController < ActionController::Base # rubocop:disable Rails/Applicati
   private
 
   def require_admin_user
-    redirect_to root_path, alert: '権限がありません' unless current_user.admin?
+    redirect_to root_path, alert: '権限がありません' if current_user.admin.nil?
   end
 end

@@ -54,7 +54,7 @@
                   = link_to icon('fas', 'user', 'プロフィール'), member_path(current_user.member), class: 'dropdown-item'
                   = link_to icon('fas', 'paper-plane', 'エントリー'), entries_path, class: 'dropdown-item'
                   = link_to icon('fas', 'cog', '設定'), profile_path, class: 'dropdown-item'
-                  - if current_user.admin?
+                  - if current_user.admin
                     .dropdown-divider
                     = link_to icon('fas', 'users-cog', 'Admin'), admin_root_path, class: 'dropdown-item'
                   .dropdown-divider

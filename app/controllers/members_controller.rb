@@ -22,7 +22,7 @@ class MembersController < ApplicationController
       @member.user.invite!
       @user_registration_form.increment!(:used_count) # rubocop:disable Rails/SkipsModelValidations
       InvitationActivityNotifyJob.perform_later(
-        user: @user_registration_form.admin,
+        user: @user_registration_form.admin.user,
         text: "#{@member.joined_year_and_name} を ID: #{@user_registration_form.id} のユーザー登録フォームで招待しました",
       )
       redirect_to member_path(@member), notice: 'メールを送信しました。メールに記載されているURLにアクセスし、パスワードを設定してください'

@@ -1,5 +1,5 @@
 class UserRegistrationForm < ApplicationRecord
-  belongs_to :admin, class_name: 'User'
+  belongs_to :admin, class_name: 'Administrator'
 
   attr_accessor :active_days
 
