@@ -6,6 +6,7 @@ class User < ApplicationRecord
   self.ignored_columns = %i[subscribing]
 
   belongs_to :member
+  # has_one :admin, dependent: :destroy
   has_many :user_registration_forms, dependent: :delete_all, foreign_key: 'admin_id', inverse_of: :admin
 
   attr_accessor :password

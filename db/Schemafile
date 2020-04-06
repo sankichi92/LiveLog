@@ -23,6 +23,15 @@ create_table :active_storage_blobs, force: :cascade do |t|
   t.index :key, unique: true
 end
 
+create_table :administrators, force: :cascade do |t|
+  t.bigint :user_id, null: false
+  t.string :scope, array: true, null: false, default: []
+
+  t.timestamps
+
+  t.index :user_id, unique: true
+end
+
 create_table :donations, force: :cascade do |t|
   t.bigint :member_id, null: false
   t.integer :amount, null: false
@@ -167,5 +176,4 @@ add_foreign_key :playable_times, :entries
 add_foreign_key :plays, :members
 add_foreign_key :plays, :songs
 add_foreign_key :songs, :lives, column: :live_id
-add_foreign_key :user_registration_forms, :users, column: :admin_id
 add_foreign_key :users, :members
