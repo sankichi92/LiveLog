@@ -1,0 +1,38 @@
+%header.content-header
+  .container-fluid
+    .row.mb-3
+      .col-sm-6
+        %h1= Administrator.model_name.human
+      .col-sm-6
+        %ol.breadcrumb.float-sm-right
+          %li.breadcrumb-item= link_to 'Home', admin_root_path
+          %li.breadcrumb-item.active= Administrator.model_name.human
+
+%section.content
+  .container-fluid
+    %section.card
+      .card-body.p-0
+        .table-responsive
+          %table.table-admin.table.table-striped.text-nowrap.mb-0
+            %thead
+              %tr
+                %th{ scope: 'col' } ID
+                %th{ scope: 'col' } 入部年度
+                %th{ scope: 'col' } 名前
+                - %i[scope updated_at].each do |attr|
+                  %th{ scope: 'col' }= Administrator.human_attribute_name(attr)
+                %th{ scope: 'col' } 操作
+            %tbody
+              - @admins.each do |admin|
+                %tr
+                  %td= admin.id
+                  %td= admin.user.member.joined_year
+                  %td= admin.user.member.name
+                  %td
+                    %ul.list-unstyled.mb-0
+                      - admin.scope.each do |scope|
+                        %li= t scope, scope: 'admin_scope'
+                  %td= l admin.updated_at
+                  %td
+                    = link_to icon('fas', 'edit'), edit_admin_administrator_path(admin), class: 'btn btn-info'
+                    = link_to icon('fas', 'trash'), admin_administrator_path(admin), method: :delete, class: 'btn btn-warning', data: { confirm: "本当に #{admin.user.member.joined_year_and_name} の管理者権限を剥奪しますか？" }

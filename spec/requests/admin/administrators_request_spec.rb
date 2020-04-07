@@ -43,8 +43,14 @@ RSpec.describe 'admin/admins request:', type: :request do
   describe 'PATCH /admin/administrators/:id' do
     let(:another_admin) { create(:admin, scope: []) }
 
-    context 'with valid scope' do
-      let(:params) { { scope: %w[write:lives] } }
+    context 'with valid params' do
+      let(:params) do
+        {
+          administrator: {
+            scope: %w[write:lives],
+          },
+        }
+      end
 
       it 'updates scope and redirects to /admin/administrators' do
         patch admin_administrator_path(another_admin), params: params
@@ -54,8 +60,14 @@ RSpec.describe 'admin/admins request:', type: :request do
       end
     end
 
-    context 'with invalid scope' do
-      let(:params) { { scope: 'invalid' } }
+    context 'with invalid params' do
+      let(:params) do
+        {
+          administrator: {
+            scope: 'invalid',
+          },
+        }
+      end
 
       it 'responds 422' do
         patch admin_administrator_path(another_admin), params: params

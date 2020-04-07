@@ -55,5 +55,5 @@
                   %td{ data: { order: entry.updated_at.to_i } }= l entry.updated_at, format: :short
                   %td
                     = link_to icon('fas', 'edit'), edit_admin_entry_path(entry), class: 'btn btn-info'
-                    = link_to icon('fas', 'trash'), admin_entry_path(entry), method: :delete, class: 'btn btn-danger', data: { confirm: "本当に ID: #{entry.id} を削除しますか" }
+                    = link_to icon('fas', 'trash'), admin_entry_path(entry), method: :delete, class: 'btn btn-warning', data: { confirm: "本当に ID: #{entry.id} を削除しますか" }
 
