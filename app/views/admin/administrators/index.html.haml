@@ -16,7 +16,6 @@
           %table.table-admin.table.table-striped.text-nowrap.mb-0
             %thead
               %tr
-                %th{ scope: 'col' } ID
                 %th{ scope: 'col' } 入部年度
                 %th{ scope: 'col' } 名前
                 - %i[scope updated_at].each do |attr|
@@ -25,7 +24,6 @@
             %tbody
               - @admins.each do |admin|
                 %tr
-                  %td= admin.id
                   %td= admin.user.member.joined_year
                   %td= admin.user.member.name
                   %td
