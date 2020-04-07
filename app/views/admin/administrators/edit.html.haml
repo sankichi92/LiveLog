@@ -1,0 +1,26 @@
+%header.content-header
+  .container-fluid
+    .row.mb-3
+      .col-sm-6
+        %h1 #{@admin.user.member.joined_year_and_name} 管理者権限
+
+      .col-sm-6
+        %ol.breadcrumb.float-sm-right
+          %li.breadcrumb-item= link_to 'Home', admin_root_path
+          %li.breadcrumb-item= link_to Administrator.model_name.human, admin_administrators_path
+          %li.breadcrumb-item.active #{@admin.user.member.joined_year_and_name} 管理者権限
+
+%section.content
+  .container-fluid
+    %section.card
+      = form_with model: @admin, url: [:admin, @admin], local: true do |form|
+        .card-body
+          = render 'shared/error_messages', errors: @admin.errors
+
+          = form.collection_check_boxes :scope, Administrator::SCOPE_COLLECTION, :value, :text do |builder|
+            .form-check
+              = builder.check_box(class: 'form-check-input')
+              = builder.label(class: 'form-check-label')
+
+        .card-footer
+          = form.submit class: 'btn btn-primary'

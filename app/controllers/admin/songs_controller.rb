@@ -1,5 +1,7 @@
 module Admin
   class SongsController < AdminController
+    before_action -> { require_scope('write:songs') }
+
     permits :live_id, :time, :position, :name, :artist, :original, :youtube_url, :audio, plays_attributes: %i[id member_id instrument _destroy]
 
     def new(live_id)

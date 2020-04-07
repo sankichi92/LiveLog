@@ -1,5 +1,7 @@
 module Admin
   class EntryGuidelinesController < AdminController
+    before_action -> { require_scope('write:lives') }
+
     permits :deadline, :notes
 
     def new(live_id)

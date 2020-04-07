@@ -1,5 +1,7 @@
 module Admin
   class UserRegistrationFormsController < AdminController
+    before_action -> { require_scope('write:user_registration_forms') }
+
     permits :active_days
 
     def index

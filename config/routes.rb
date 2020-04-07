@@ -62,8 +62,10 @@ Rails.application.routes.draw do
 
     resources :members, only: %i[index new create destroy] do
       resource :user, only: :destroy
-      resource :admin, only: %i[create destroy]
+      resource :administrator, only: :create
     end
+
+    resources :administrators, only: %i[index edit update destroy]
 
     resources :entries, only: %i[index edit update destroy]
 

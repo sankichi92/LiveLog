@@ -27,6 +27,7 @@ ja:
     updated_at: 更新日時
   activerecord:
     models:
+      administrator: 管理者
       entry: エントリー
       entry_guideline: エントリー要項
       live: ライブ
@@ -35,6 +36,8 @@ ja:
       user: ユーザー
       user_registration_form: ユーザー登録フォーム
     attributes:
+      administrator:
+        scope: 権限
       entry:
         admin_memo: 管理メモ
         notes: 備考
@@ -103,3 +106,11 @@ ja:
         user_id: メンバー ID
         original: オリジナル曲のみ
         media: 動画または音源を視聴できる曲のみ
+  admin_scope:
+    write:lives: ライブの編集
+    write:songs: 曲の編集
+    write:members: メンバーの編集
+    read:entries: エントリーの閲覧
+    write:entries: エントリーの編集
+    write:user_registration_forms: ユーザー登録フォームの編集
+    write:admins: 管理者の編集
