@@ -168,6 +168,7 @@ create_table :users, force: :cascade do |t|
 end
 
 add_foreign_key :active_storage_attachments, :active_storage_blobs, column: :blob_id
+add_foreign_key :administrators, :users
 add_foreign_key :donations, :members
 add_foreign_key :entry_guidelines, :lives, column: :live_id
 add_foreign_key :entries, :members
@@ -176,4 +177,5 @@ add_foreign_key :playable_times, :entries
 add_foreign_key :plays, :members
 add_foreign_key :plays, :songs
 add_foreign_key :songs, :lives, column: :live_id
+add_foreign_key :user_registration_forms, :administrators, column: :admin_id
 add_foreign_key :users, :members
