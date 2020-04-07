@@ -8,8 +8,6 @@ class User < ApplicationRecord
   belongs_to :member
   has_one :admin, dependent: :destroy, class_name: 'Administrator'
 
-  attr_accessor :password
-
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: { case_sensitive: false }
 
   before_create :generate_auth0_id

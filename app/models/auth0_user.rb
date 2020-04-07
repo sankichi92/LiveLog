@@ -16,13 +16,13 @@ class Auth0User
       new(response)
     end
 
-    def create!(user)
+    def create!(user, password: "0aA#{SecureRandom.base58}")
       response = AppAuth0Client.instance.create_user(
         user.member.name,
         connection: CONNECTION_NAME,
         user_id: user.auth0_id[/\Aauth0\|(\S+)/, 1],
         email: user.email,
-        password: user.password.presence || "0aA#{SecureRandom.base58}", # Prefix "0aA" is to pass the validation.
+        password: password,
         verify_email: false,
         user_metadata: {
           livelog_email_notifications: true,
