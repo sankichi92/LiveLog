@@ -1,5 +1,7 @@
 module Admin
   class AdministratorsController < AdminController
+    before_action -> { require_scope('write:admins') }, only: %i[create edit update destroy]
+
     def index
       @admins = Administrator.includes(user: :member).reverse_order
     end

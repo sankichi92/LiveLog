@@ -1,5 +1,8 @@
 module Admin
   class EntriesController < AdminController
+    before_action -> { require_scope('read:entries') }, only: :index
+    before_action -> { require_scope('write:entries') }, only: %i[edit update destroy]
+
     permits :notes, :admin_memo, playable_times_attributes: %i[id lower upper _destroy]
 
     def index(playable_time = nil)

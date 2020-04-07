@@ -1,5 +1,7 @@
 module Admin
   class UsersController < AdminController
+    before_action -> { require_scope('write:members') }
+
     def destroy(member_id)
       user = User.find_by!(member_id: member_id)
       return redirect_to admin_members_path(year: user.member.joined_year), alert: '管理者のログイン情報は削除できません' if user.admin

@@ -31,7 +31,8 @@
                   %td
                     %ul.list-unstyled.mb-0
                       - admin.scope.each do |scope|
-                        %li= t scope, scope: 'admin_scope'
+                        %li
+                          %span.badge.badge-secondary= t scope, scope: 'admin_scope'
                   %td= l admin.updated_at
                   %td
                     = link_to icon('fas', 'edit'), edit_admin_administrator_path(admin), class: 'btn btn-info'

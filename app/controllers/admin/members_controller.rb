@@ -1,5 +1,7 @@
 module Admin
   class MembersController < AdminController
+    before_action -> { require_scope('write:members') }, only: %i[new create destroy]
+
     def index(year = Member.maximum(:joined_year))
       @year = year.to_i
       @members = Member.includes(user: :admin).where(joined_year: @year).order(plays_count: :desc, id: :asc)
