@@ -6,7 +6,7 @@ class User < ApplicationRecord
   self.ignored_columns = %i[subscribing]
 
   belongs_to :member
-  has_one :admin, dependent: :destroy, class_name: 'Administrator'
+  has_one :admin, dependent: :restrict_with_exception, class_name: 'Administrator'
 
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: { case_sensitive: false }
 

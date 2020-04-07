@@ -1,0 +1,54 @@
+module Admin
+  class AdministratorsController < AdminController
+    def index
+      @admins = Administrator.includes(user: :member).reverse_order
+    end
+
+    def create(member_id)
+      user = User.find_by!(member_id: member_id)
+      admin = user.create_admin!
+      AdminActivityNotifyJob.perform_later(
+        user: current_user,
+        operation: '作成しました',
+        object: admin,
+        detail: admin.as_json,
+        url: admin_administrators_url,
+      )
+      redirect_to admin_administrators_path, notice: "#{user.member.joined_year_and_name} を管理者にしました"
+    end
+
+    def edit(id)
+      @admin = Administrator.find(id)
+    end
+
+    def update(id, scope)
+      @admin = Administrator.find(id)
+
+      if @admin.update(scope: Array(scope))
+        AdminActivityNotifyJob.perform_later(
+          user: current_user,
+          operation: '更新しました',
+          object: @admin,
+          detail: @admin.previous_changes,
+          url: admin_administrators_url,
+        )
+        redirect_to admin_administrators_path, notice: "#{@admin.user.member.joined_year_and_name} の管理者権限を更新しました"
+      else
+        render :edit, status: :unprocessable_entity
+      end
+    end
+
+    def destroy(id)
+      admin = Administrator.find(id)
+      admin.destroy!
+      AdminActivityNotifyJob.perform_now(
+        user: current_user,
+        operation: '削除しました',
+        object: admin,
+        detail: admin.as_json,
+        url: admin_administrators_url,
+      )
+      redirect_to admin_administrators_path, notice: "#{admin.user.member.joined_year_and_name} の管理者権限を剥奪しました"
+    end
+  end
+end
