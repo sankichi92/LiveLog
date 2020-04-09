@@ -1,7 +1,5 @@
 module API
   class GraphqlController < APIController
-    skip_before_action :authenticate_with_jwt if Rails.env.development? # TODO: Remove this line
-
     def execute(query = nil, variables = {}, operationName = nil)
       context = {
         # Query context goes here, for example:
