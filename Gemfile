@@ -45,6 +45,7 @@ gem 'twitter'
 gem 'commonmarker'
 
 # API
+gem 'graphql'
 gem 'jwt'
 
 group :development, :test do
@@ -78,3 +79,5 @@ group :test do
 
   gem 'webmock'
 end
+
+gem 'graphiql-rails', group: :development
