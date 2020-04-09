@@ -3,3 +3,6 @@
 //= link favicon/site.webmanifest
 //= link application.css
 //= link admin.css
+//
+//= link graphiql/rails/application.css
+//= link graphiql/rails/application.js

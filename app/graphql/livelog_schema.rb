@@ -1,4 +1,4 @@
-class LiveLog2Schema < GraphQL::Schema
+class LiveLogSchema < GraphQL::Schema
   mutation(Types::MutationType)
   query(Types::QueryType)
 
