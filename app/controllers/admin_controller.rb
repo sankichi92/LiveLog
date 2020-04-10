@@ -14,6 +14,6 @@ class AdminController < ActionController::Base # rubocop:disable Rails/Applicati
   end
 
   def require_scope(scope)
-    redirect_back fallback_location: admin_root_path, alert: "#{t(scope, scope: 'admin_scope')}権限がありません" unless current_user.admin.scope.include?(scope)
+    redirect_back fallback_location: admin_root_path, alert: "#{t(scope, scope: 'admin_scope')}権限がありません" unless current_user.admin.scopes.include?(scope)
   end
 end

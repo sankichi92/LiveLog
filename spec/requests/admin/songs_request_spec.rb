@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'admin/songs request:', type: :request do
-  let(:admin) { create(:admin, scope: %w[write:songs]) }
+  let(:admin) { create(:admin, scopes: %w[write:songs]) }
 
   before do
     log_in_as admin.user

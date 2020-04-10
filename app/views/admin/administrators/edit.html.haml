@@ -17,7 +17,7 @@
         .card-body
           = render 'shared/error_messages', errors: @admin.errors
 
-          = form.collection_check_boxes :scope, Administrator::SCOPE_COLLECTION, :value, :text do |builder|
+          = form.collection_check_boxes :scopes, Administrator::SCOPE_COLLECTION, :value, :text do |builder|
             .form-check
               = builder.check_box(class: 'form-check-input')
               = builder.label(class: 'form-check-label')

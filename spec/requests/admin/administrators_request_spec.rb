@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'admin/admins request:', type: :request do
-  let(:admin) { create(:admin, scope: %w[write:admins]) }
+  let(:admin) { create(:admin, scopes: %w[write:admins]) }
 
   before do
     log_in_as admin.user
@@ -41,7 +41,7 @@ RSpec.describe 'admin/admins request:', type: :request do
   end
 
   describe 'PATCH /admin/administrators/:id' do
-    let(:another_admin) { create(:admin, scope: []) }
+    let(:another_admin) { create(:admin, scopes: []) }
 
     context 'with valid params' do
       let(:params) do
@@ -55,7 +55,7 @@ RSpec.describe 'admin/admins request:', type: :request do
       it 'updates scope and redirects to /admin/administrators' do
         patch admin_administrator_path(another_admin), params: params
 
-        expect(another_admin.reload.scope).to contain_exactly 'write:lives'
+        expect(another_admin.reload.scopes).to contain_exactly 'write:lives'
         expect(response).to redirect_to admin_administrators_path
       end
     end
@@ -72,7 +72,7 @@ RSpec.describe 'admin/admins request:', type: :request do
       it 'responds 422' do
         patch admin_administrator_path(another_admin), params: params
 
-        expect(another_admin.reload.scope).to be_empty
+        expect(another_admin.reload.scopes).to be_empty
         expect(response).to have_http_status :unprocessable_entity
       end
     end

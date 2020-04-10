@@ -28,7 +28,7 @@
                   %td= admin.user.member.name
                   %td
                     %ul.list-unstyled.mb-0
-                      - admin.scope.each do |scope|
+                      - admin.scopes.each do |scope|
                         %li
                           %span.badge.badge-secondary= t scope, scope: 'admin_scope'
                   %td= l admin.updated_at

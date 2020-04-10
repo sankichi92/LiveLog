@@ -37,7 +37,7 @@ ja:
       user_registration_form: ユーザー登録フォーム
     attributes:
       administrator:
-        scope: 権限
+        scopes: 権限
       entry:
         admin_memo: 管理メモ
         notes: 備考

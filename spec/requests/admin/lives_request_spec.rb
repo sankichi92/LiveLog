@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'admin/lives request:', type: :request do
-  let(:admin) { create(:admin, scope: %w[write:lives]) }
+  let(:admin) { create(:admin, scopes: %w[write:lives]) }
 
   before do
     log_in_as admin.user
