@@ -4,6 +4,8 @@ class LiveLogSchema < GraphQL::Schema
 
   context_class CustomContext
 
+  default_max_page_size 20
+
   # region Plugins
 
   # Opt in to the new runtime (default in future graphql-ruby versions)
@@ -12,6 +14,8 @@ class LiveLogSchema < GraphQL::Schema
   use GraphQL::Execution::Errors
 
   use GraphQL::Pagination::Connections
+
+  use BatchLoader::GraphQL
 
   # endregion
 

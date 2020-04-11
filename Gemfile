@@ -45,6 +45,7 @@ gem 'twitter'
 gem 'commonmarker'
 
 # API
+gem 'batch-loader'
 gem 'graphiql-rails'
 gem 'graphql'
 gem 'jwt'

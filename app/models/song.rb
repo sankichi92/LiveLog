@@ -80,11 +80,11 @@ class Song < ApplicationRecord
   end
 
   def previous
-    live.songs.played_order.where('songs.time < ? or songs.position < ?', time, position).last
+    live.songs.where('songs.time < ? or songs.position < ?', time, position).last
   end
 
   def next
-    live.songs.played_order.where('songs.time > ? or songs.position > ?', time, position).first # rubocop:disable Rails/FindBy
+    live.songs.where('songs.time > ? or songs.position > ?', time, position).first # rubocop:disable Rails/FindBy
   end
 
   private

@@ -1,6 +1,6 @@
 class Live < ApplicationRecord
   has_one :entry_guideline, dependent: :destroy
-  has_many :songs, dependent: :restrict_with_exception
+  has_many :songs, -> { played_order }, dependent: :restrict_with_exception, inverse_of: :live
 
   validates :date, presence: true
   validates :name, presence: true, length: { maximum: 20 }, uniqueness: { scope: :date }

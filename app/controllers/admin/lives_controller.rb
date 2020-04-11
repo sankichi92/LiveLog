@@ -11,7 +11,7 @@ module Admin
 
     def show(id)
       @live = Live.find(id)
-      @songs = @live.songs.with_attached_audio.includes(plays: :member).played_order
+      @songs = @live.songs.with_attached_audio.includes(plays: :member)
     end
 
     def new

@@ -14,6 +14,9 @@ RSpec.describe 'GraphQL query:', type: :graphql do
             name
             place
             comment
+            songs {
+              id
+            }
           }
         }
       GRAPHQL
@@ -23,7 +26,7 @@ RSpec.describe 'GraphQL query:', type: :graphql do
 
     it 'returns Live' do
       expect(result.to_h).not_to include 'errors'
-      expect(result['data']['live']).to include 'id', 'date', 'name', 'place', 'comment'
+      expect(result['data']['live']).to include 'id', 'date', 'name', 'place', 'comment', 'songs'
     end
 
     context 'with albumUrl field' do
@@ -45,8 +48,6 @@ RSpec.describe 'GraphQL query:', type: :graphql do
         let(:scope) { 'read:lives' }
 
         it 'returns albumUrl' do
-          result = LiveLogSchema.execute(query, variables: { id: live.id }, context: context)
-
           expect(result.to_h).not_to include 'errors'
           expect(result['data']['live']['albumUrl']).to eq live.album_url
         end
