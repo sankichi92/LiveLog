@@ -5,7 +5,7 @@ module Types
 
     # region Live
 
-    field :lives, LiveType.connection_type, null: false, max_page_size: 30
+    field :lives, LiveType.connection_type, null: false
     field :live, LiveType, null: false do
       argument :id, ID, required: true
     end
@@ -22,7 +22,7 @@ module Types
 
     # region Song
 
-    field :songs, SongType.connection_type, null: false, max_page_size: 20
+    field :songs, SongType.connection_type, null: false
     field :song, SongType, null: false do
       argument :id, ID, required: true
     end

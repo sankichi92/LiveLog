@@ -6,8 +6,7 @@ class LivesController < ApplicationController
   end
 
   def show(id)
-    @live = Live.published.find(id)
-    @songs = @live.songs.includes(plays: :member).played_order
+    @live = Live.includes(songs: { plays: :member }).published.find(id)
   end
 
   def album(id)

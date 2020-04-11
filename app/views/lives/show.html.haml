@@ -1,5 +1,5 @@
 - provide(:title, @live.title)
-- provide(:description, "#{l(@live.date)} @#{@live.place} #{@songs.map.with_index { |s, i| "#{i + 1}.#{s.name}" }.join(' ')}")
+- provide(:description, "#{l(@live.date)} @#{@live.place} #{@live.songs.map.with_index { |s, i| "#{i + 1}.#{s.name}" }.join(' ')}")
 
 %article
   %header.card.mb-3
@@ -13,4 +13,4 @@
         = link_to icon('fas', 'images', 'アルバム'), album_live_path(@live), class: 'card-link btn btn-primary', target: '_blank', rel: 'noopener'
 
   .song-list
-    = render @songs
+    = render @live.songs
