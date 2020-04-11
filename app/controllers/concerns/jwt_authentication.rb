@@ -5,6 +5,8 @@ module JWTAuthentication
 
   include ActionController::HttpAuthentication::Token::ControllerMethods
 
+  attr_reader :auth_payload
+
   included do
     before_action :authenticate_with_jwt
   end
@@ -35,12 +37,12 @@ module JWTAuthentication
   end
 
   def require_scope(scope)
-    render status: :forbidden, json: { error: 'insufficient_scope' } if @auth_payload[:scope].nil? || !@auth_payload[:scope].split.include?(scope)
+    render status: :forbidden, json: { errors: %w[insufficient_scope] } if auth_payload[:scope].nil? || !auth_payload[:scope].split.include?(scope)
   end
 
   def current_user
-    @current_user ||= if @auth_payload
-                        User.find_by(auth0_id: @auth_payload.fetch(:sub))
+    @current_user ||= if auth_payload && auth_payload[:gty] != 'client-credentials'
+                        User.find_by(auth0_id: auth_payload.fetch(:sub))
                       else
                         nil
                       end
