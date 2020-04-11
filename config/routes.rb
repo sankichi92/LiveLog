@@ -47,8 +47,6 @@ Rails.application.routes.draw do
   end
 
   namespace :api do
-    root to: 'no_contents#show'
-
     post '/graphql', to: 'graphql#execute'
   end
 
