@@ -37,7 +37,7 @@ module JWTAuthentication
   end
 
   def require_scope(scope)
-    render status: :forbidden, json: { errors: %w[insufficient_scope] } if auth_payload[:scope].nil? || !auth_payload[:scope].split.include?(scope)
+    render status: :forbidden, json: { errors: [{ message: 'Insufficient scope' }] } if auth_payload[:scope].nil? || !auth_payload[:scope].split.include?(scope)
   end
 
   def current_user
