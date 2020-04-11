@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount GraphiQL::Rails::Engine, at: '/graphiql', graphql_path: '/api/graphql'
+
   root 'home#show'
 
   get '/donate', to: 'donations#index'
@@ -46,6 +48,8 @@ Rails.application.routes.draw do
 
   namespace :api do
     root to: 'no_contents#show'
+
+    post '/graphql', to: 'graphql#execute'
   end
 
   namespace :admin do

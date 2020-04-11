@@ -30,10 +30,11 @@ ActiveRecord::Migration.maintain_test_schema!
 RSpec.configure do |config|
   config.include ActionDispatch::TestProcess::FixtureFile
   config.include FactoryBot::Syntax::Methods
+  config.include GraphqlHelper, type: :graphql
+  config.include FixtureMailerHelper, type: :mailer
   config.include AccessTokenHelper, type: :request
   config.include LoginRequestHelper, type: :request
   config.include LoginSystemHelper, type: :system
-  config.include FixtureMailerHelper, type: :mailer
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
