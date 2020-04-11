@@ -22,8 +22,13 @@ module Types
 
     # region Song
 
+    field :songs, SongType.connection_type, null: false, max_page_size: 20
     field :song, SongType, null: false do
       argument :id, ID, required: true
+    end
+
+    def songs
+      Song.published.newest_live_order
     end
 
     def song(id:)

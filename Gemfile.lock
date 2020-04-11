@@ -82,6 +82,7 @@ GEM
       aws-sigv4 (~> 1.1)
     aws-sigv4 (1.1.1)
       aws-eventstream (~> 1.0, >= 1.0.2)
+    batch-loader (1.4.1)
     bindex (0.8.1)
     bootsnap (1.4.6)
       msgpack (~> 1.0)
@@ -447,6 +448,7 @@ DEPENDENCIES
   acts_as_list
   auth0
   aws-sdk-s3
+  batch-loader
   bootsnap
   bullet
   byebug

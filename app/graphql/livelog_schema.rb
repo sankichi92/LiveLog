@@ -13,6 +13,8 @@ class LiveLogSchema < GraphQL::Schema
 
   use GraphQL::Pagination::Connections
 
+  use BatchLoader::GraphQL
+
   # endregion
 
   # region Error handlers

@@ -20,5 +20,11 @@ module Types
         context.scope?('read:songs') && song.player?(context.current_user&.member)
       end
     end
+
+    def live
+      BatchLoader::GraphQL.for(object.live_id).batch do |live_ids, loader|
+        Live.where(id: live_ids).each { |live| loader.call(live.id, live) }
+      end
+    end
   end
 end
