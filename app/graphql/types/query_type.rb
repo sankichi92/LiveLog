@@ -3,19 +3,13 @@ module Types
     # Add root-level fields here.
     # They will be entry points for queries on your schema.
 
-    field :lives, LiveType.connection_type, null: false, max_page_size: 30do
-      argument :year, Int, required: false, description: 'Returns lives that held in the year'
-    end
+    field :lives, LiveType.connection_type, null: false, max_page_size: 30
     field :live, LiveType, null: false do
       argument :id, ID, required: true
     end
 
-    def lives(year: nil)
-      if year
-        Live.published.nendo(year).newest_order
-      else
-        Live.published.newest_order
-      end
+    def lives
+      Live.published.newest_order
     end
 
     def live(id:)
