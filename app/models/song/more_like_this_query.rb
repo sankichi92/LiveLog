@@ -25,7 +25,7 @@ class Song
             q.should { |q| q.terms 'players.member_id': song.plays.map(&:member_id) }
             q.should { |q| q.term original?: song.original? } if song.original?
             q.must_not { |q| q.term id: song.id }
-            q.must_not { |q| q.term status: 'secret' }
+            q.must_not { |q| q.term visibility: 'only_players' }
           end
         end
         q.sort(

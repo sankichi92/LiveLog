@@ -21,7 +21,7 @@
           = @song.time_and_position
         %h1.card-title
           = @song.title_with_original
-          = @song.status_icon if @song.player?(current_user&.member)
+          = @song.visibility_icon if @song.player?(current_user&.member)
       - if @song.plays.present?
         .mb-3= render @song.plays.sort_by(&:instrument_order_index)
       - if @song.comment.present?

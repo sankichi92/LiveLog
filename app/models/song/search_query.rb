@@ -38,7 +38,7 @@ class Song
                 q.must { |q| q.terms id: ids } if ids.present?
                 q.must { term original?: true } if original?
                 q.must { term media?: true } if media?
-                q.must { |q| q.term status: logged_in ? 'closed' : 'open' } if media?
+                q.must { |q| q.term visibility: logged_in ? 'only_logged_in_users' : 'open' } if media?
                 q.must { |q| q.term 'players.member_id': member_id.to_i } if member_id.present?
                 q.must_not { |q| q.terms 'players.instruments': excluded_instruments } if excluded_instruments.present?
               end

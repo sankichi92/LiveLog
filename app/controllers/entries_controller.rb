@@ -22,7 +22,7 @@ class EntriesController < ApplicationController
 
   def create(entry, song)
     @entry = current_user.member.entries.build(entry)
-    @entry.build_song(song.permit(:live_id, :name, :artist, :original, :status, :comment, plays_attributes: %i[member_id instrument _destroy]))
+    @entry.build_song(song.permit(:live_id, :name, :artist, :original, :visibility, :comment, plays_attributes: %i[member_id instrument _destroy]))
 
     @entry.save!
     EntryActivityNotifyJob.perform_later(
@@ -41,7 +41,9 @@ class EntriesController < ApplicationController
   end
 
   def update(entry, song)
-    @entry.song.assign_attributes(song.permit(:live_id, :name, :artist, :original, :status, :comment, plays_attributes: %i[id member_id instrument _destroy]))
+    @entry.song.assign_attributes(
+      song.permit(:live_id, :name, :artist, :original, :visibility, :comment, plays_attributes: %i[id member_id instrument _destroy]),
+    )
 
     @entry.transaction do
       @entry.update!(entry)

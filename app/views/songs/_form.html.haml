@@ -30,8 +30,8 @@
     %option{ value: instrument }
 
 .form-group
-  = form.label :status
-  = form.select :status, { '公開': 'open', 'サークル内': 'closed', 'バンド内': 'secret' }, {}, class: 'form-control'
+  = form.label :visibility
+  = form.select :visibility, { '公開': 'open', 'サークル内': 'only_logged_in_users', 'バンド内': 'only_players' }, {}, class: 'form-control'
   %small.form-text.text-muted 動画・音源の公開範囲です。「公開」は全てのユーザ、「サークル内」はログインユーザのみ、「バンド内」は演者のみに公開されます
 
 .form-group

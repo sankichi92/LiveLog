@@ -39,7 +39,7 @@ module SongSearchable
       indexes :artist, type: 'text' do
         indexes :raw, type: 'keyword'
       end
-      indexes :status, type: 'keyword'
+      indexes :visibility, type: 'keyword'
       indexes :media?, type: 'boolean'
       indexes :original?, type: 'boolean'
       indexes :players_count, type: 'byte'
@@ -58,7 +58,7 @@ module SongSearchable
       position: position,
       name: name,
       artist: artist,
-      status: status,
+      visibility: visibility,
       media?: youtube_id? || audio.attached?,
       original?: original?,
       comment: comment,

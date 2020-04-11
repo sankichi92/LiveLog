@@ -11,7 +11,7 @@ class Song < ApplicationRecord
 
   acts_as_list scope: :live
 
-  enum status: { secret: 0, closed: 1, open: 2 }
+  enum visibility: { only_players: 0, only_logged_in_users: 1, open: 2 }, _prefix: true, _scopes: false
 
   validates :name, presence: true
   validates :position, presence: true, on: :update
@@ -24,7 +24,7 @@ class Song < ApplicationRecord
   def self.pickup(date: Time.zone.today)
     song_id = Rails.cache.fetch("#{model_name.cache_key}/pickup/#{date}/song_id", expires_in: 1.day) do
       random = Random.new(date.to_time.to_i)
-      candidate_songs = joins(:live).merge(Live.published.where('date < ?', date)).where.not(status: :secret)
+      candidate_songs = joins(:live).merge(Live.published.where('date < ?', date)).where.not(visibility: :only_players)
       count = candidate_songs.count
       candidate_songs.offset(random.rand(count)).pick(:id) if count.positive?
     end

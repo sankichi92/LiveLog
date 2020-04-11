@@ -80,7 +80,7 @@ ja:
         name: 曲名
         artist: アーティスト名
         original: オリジナル
-        status: 公開設定
+        visibility: 公開設定
         youtube_id: YouTube ID
         comment: コメント
         plays: 演者

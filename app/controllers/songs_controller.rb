@@ -2,7 +2,7 @@ class SongsController < ApplicationController
   before_action :require_current_user, only: %i[edit update]
   before_action :require_player, only: %i[edit update]
 
-  permits :name, :artist, :original, :status, :comment, plays_attributes: %i[id member_id instrument _destroy]
+  permits :name, :artist, :original, :visibility, :comment, plays_attributes: %i[id member_id instrument _destroy]
 
   def index(page = 1)
     @songs = Song.includes(:live, plays: :member).published.newest_live_order.page(page)

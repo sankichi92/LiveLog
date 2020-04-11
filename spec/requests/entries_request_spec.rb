@@ -75,7 +75,7 @@ RSpec.describe 'entries request:', type: :request do
           name: 'アンプラグドのテーマ',
           artist: '',
           original: '1',
-          status: 'open',
+          visibility: 'open',
           comment: '',
           plays_attributes: {
             '0' => {
@@ -191,7 +191,7 @@ RSpec.describe 'entries request:', type: :request do
           name: song_name,
           artist: entry.song.artist,
           original: entry.song.original? ? '1' : '0',
-          status: entry.song.status,
+          visibility: entry.song.visibility,
           comment: entry.song.comment,
           plays_attributes: entry.song.plays.map.with_index { |play, i|
             [

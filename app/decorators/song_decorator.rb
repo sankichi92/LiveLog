@@ -35,10 +35,11 @@ module SongDecorator
     end
   end
 
-  def status_icon
-    if open?
+  def visibility_icon
+    case visibility
+    when 'open'
       icon 'fas', 'globe', title: '公開設定: 公開', data: { toggle: 'tooltip', placement: 'right', controller: 'tooltip' }
-    elsif secret?
+    when 'only_players'
       icon 'fas', 'lock', title: '公開設定: バンド内', data: { toggle: 'tooltip', placement: 'right', controller: 'tooltip' }
     end
   end
@@ -58,6 +59,13 @@ module SongDecorator
   private
 
   def media_playable?
-    open? || closed? && current_user || player?(current_user&.member)
+    case visibility
+    when 'open'
+      true
+    when 'only_logged_in_users'
+      !current_user.nil?
+    else
+      player?(current_user&.member)
+    end
   end
 end

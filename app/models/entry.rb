@@ -36,7 +36,7 @@ class Entry < ApplicationRecord
       only: %i[member_id notes],
       include: [
         { playable_times: { only: :range } },
-        { song: { only: %i[live_id name artist original status comment], include: { plays: { only: %i[member_id instrument] } } } },
+        { song: { only: %i[live_id name artist original visibility comment], include: { plays: { only: %i[member_id instrument] } } } },
       ],
     )
   end

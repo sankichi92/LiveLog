@@ -90,7 +90,7 @@ RSpec.describe 'songs request:', type: :request do
           name: song_name,
           artist: song.artist,
           original: song.original,
-          status: song.status,
+          visibility: song.visibility,
           comment: song.comment,
         },
       }
