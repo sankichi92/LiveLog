@@ -42,6 +42,9 @@ Rails:
 RSpec:
   Enabled: true
 
+RSpec/DescribeClass:
+  Enabled: false
+
 RSpec/DescribedClass:
   EnforcedStyle: explicit
 

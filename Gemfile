@@ -45,6 +45,7 @@ gem 'twitter'
 gem 'commonmarker'
 
 # API
+gem 'graphiql-rails'
 gem 'graphql'
 gem 'jwt'
 
@@ -69,7 +70,6 @@ group :development do
 
   gem 'bullet'
   gem 'dotenv-rails'
-  gem 'graphiql-rails'
   gem 'rails_real_favicon', require: false
 end
 
