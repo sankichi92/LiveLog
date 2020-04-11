@@ -2,8 +2,8 @@ module API
   class GraphqlController < APIController
     def execute(query = nil, variables = {}, operationName = nil)
       context = {
-        # Query context goes here, for example:
-        # current_user: current_user,
+        auth_payload: auth_payload,
+        current_user: current_user,
       }
       result = LiveLogSchema.execute(query, variables: ensure_hash(variables), context: context, operation_name: operationName)
       render json: result
