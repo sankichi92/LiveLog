@@ -3,6 +3,8 @@ module Types
     # Add root-level fields here.
     # They will be entry points for queries on your schema.
 
+    # region Live
+
     field :lives, LiveType.connection_type, null: false, max_page_size: 30
     field :live, LiveType, null: false do
       argument :id, ID, required: true
@@ -15,5 +17,19 @@ module Types
     def live(id:)
       Live.published.find(id)
     end
+
+    # endregion
+
+    # region Song
+
+    field :song, SongType, null: false do
+      argument :id, ID, required: true
+    end
+
+    def song(id:)
+      Song.published.find(id)
+    end
+
+    # endregion
   end
 end

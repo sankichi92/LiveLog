@@ -45,8 +45,6 @@ RSpec.describe 'GraphQL query:', type: :graphql do
         let(:scope) { 'read:lives' }
 
         it 'returns albumUrl' do
-          result = LiveLogSchema.execute(query, variables: { id: live.id }, context: context)
-
           expect(result.to_h).not_to include 'errors'
           expect(result['data']['live']['albumUrl']).to eq live.album_url
         end
