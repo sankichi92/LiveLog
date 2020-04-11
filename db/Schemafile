@@ -122,7 +122,7 @@ create_table :songs, force: :cascade do |t|
   t.string :name, null: false
   t.string :artist
   t.boolean :original, null: false, default: false
-  t.integer :visibility, null: false, default: 1, limit: 2, renamed_from: :status
+  t.integer :visibility, null: false, default: 1, limit: 2
   t.string :youtube_id
   t.text :comment
 
