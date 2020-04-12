@@ -1,7 +1,7 @@
-class Auth0Controller < ApplicationController
+class AuthController < ApplicationController
   before_action :require_current_user, only: :logout
 
-  def callback
+  def auth0
     auth = request.env['omniauth.auth']
     user = User.find_by!(auth0_id: auth.uid)
 
