@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe 'GraphQL query:', type: :graphql do
   describe 'songs' do
-    let!(:songs) { create_pair(:song) }
+    subject(:result) { LiveLogSchema.execute(query, variables: variables, context: context) }
+
     let(:query) do
       <<~GRAPHQL
         query {
@@ -14,10 +15,13 @@ RSpec.describe 'GraphQL query:', type: :graphql do
         }
       GRAPHQL
     end
+    let(:variables) { {} }
+    let(:context) { graphql_context }
 
-    it 'returns LiveConnection' do
-      result = LiveLogSchema.execute(query, context: graphql_context)
+    let!(:songs) { create_pair(:song) }
 
+    it 'returns SongConnection' do
+      expect(result.keys).to contain_exactly 'data'
       expect(result['data']['songs']['nodes'].map { |song| song['id'].to_i }).to match_array songs.map(&:id)
     end
   end

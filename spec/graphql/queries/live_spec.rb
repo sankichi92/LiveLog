@@ -2,9 +2,8 @@ require 'rails_helper'
 
 RSpec.describe 'GraphQL query:', type: :graphql do
   describe 'live' do
-    subject(:result) { LiveLogSchema.execute(query, variables: { id: live.id }, context: context) }
+    subject(:result) { LiveLogSchema.execute(query, variables: variables, context: context) }
 
-    let(:live) { create(:live) }
     let(:query) do
       <<~GRAPHQL
         query($id: ID!) {
@@ -23,12 +22,33 @@ RSpec.describe 'GraphQL query:', type: :graphql do
         }
       GRAPHQL
     end
+    let(:variables) { { id: live.id } }
     let(:context) { graphql_context(scope: scope) }
+
+    let(:live) { create(:live) }
+    let!(:songs) { create_pair(:song, live: live) }
     let(:scope) { '' }
 
     it 'returns Live' do
-      expect(result.to_h).not_to include 'errors'
-      expect(result['data']['live']).to include 'id', 'date', 'name', 'place', 'comment', 'songs'
+      expected_data = {
+        live: {
+          id: live.id.to_s,
+          date: live.date.iso8601,
+          name: live.name,
+          place: live.place,
+          comment: live.comment,
+          songs: {
+            nodes: songs.map { |song|
+              {
+                id: song.id.to_s,
+              }
+            },
+          },
+        },
+      }
+
+      expect(result.keys).to contain_exactly 'data'
+      expect(result['data']).to eq expected_data.deep_stringify_keys
     end
 
     context 'with albumUrl field' do
@@ -43,14 +63,14 @@ RSpec.describe 'GraphQL query:', type: :graphql do
       end
 
       it 'returns errors' do
-        expect(result.to_h).to include 'errors'
+        expect(result.keys).to contain_exactly 'errors'
       end
 
       context 'with read:lives scope' do
         let(:scope) { 'read:lives' }
 
         it 'returns albumUrl' do
-          expect(result.to_h).not_to include 'errors'
+          expect(result.keys).to contain_exactly 'data'
           expect(result['data']['live']['albumUrl']).to eq live.album_url
         end
       end

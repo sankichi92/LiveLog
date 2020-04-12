@@ -18,8 +18,8 @@ RSpec.describe 'GraphQL query:', type: :graphql do
     let(:variables) { { year: joined_year } }
     let(:context) { graphql_context }
 
-    let(:members) { create_pair(:member, joined_year: joined_year) }
     let(:joined_year) { 2020 }
+    let!(:members) { create_pair(:member, joined_year: joined_year) }
 
     it 'returns MemberConnection' do
       expected_data = {
