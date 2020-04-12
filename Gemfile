@@ -44,6 +44,9 @@ gem 'twitter'
 
 gem 'commonmarker'
 
+# Developer
+gem 'omniauth-github'
+
 # API
 gem 'batch-loader'
 gem 'graphiql-rails'

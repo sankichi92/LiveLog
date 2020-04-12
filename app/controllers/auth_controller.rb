@@ -23,6 +23,27 @@ class AuthController < ApplicationController
     redirect_to root_path, alert: 'ログインに失敗しました。管理者に問い合わせてください'
   end
 
+  def github
+    auth = request.env['omniauth.auth']
+
+    if current_user.nil?
+      Raven.capture_message('Attempt to create a developer without log-in', extra: { github_username: auth.info.nickname }, level: :warning)
+      redirect_to root_path, alert: 'ログインしてください'
+    elsif current_user.developer
+      if current_user.developer.github_id != auth.uid
+        Raven.capture_message('Re-authorized GitHub with a different account', extra: { github_username: auth.info.nickname }, level: :warning)
+      end
+      redirect_to clients_path, alert: 'すでに登録済みです'
+    else
+      current_user.create_developer!(
+        github_id: auth.uid,
+        github_username: auth.info.nickname,
+        github_access_token: auth.credentials.token,
+      )
+      redirect_to clients_path, notice: '開発者登録しました'
+    end
+  end
+
   def failure(message, strategy)
     Raven.capture_message(message, extra: { strategy: strategy }, level: :debug)
     redirect_to root_path, alert: message

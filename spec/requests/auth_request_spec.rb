@@ -64,6 +64,50 @@ RSpec.describe 'auth request:', type: :request do
     end
   end
 
+  describe 'GET /auth/github/callback' do
+    let(:github_username) { 'sankichi92' }
+
+    before do
+      OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new(Faker::Omniauth.github(name: github_username))
+    end
+
+    context 'with current_user' do
+      let(:user) { create(:user) }
+
+      before do
+        log_in_as user
+      end
+
+      it 'creates a developer and redirects to /clients' do
+        get auth_github_callback_path
+
+        expect(user.reload.developer).to be_persisted
+        expect(user.developer.github_username).to eq github_username
+        expect(response).to redirect_to clients_path
+      end
+    end
+
+    context 'without current_user' do
+      it 'redirects to /' do
+        expect { get auth_github_callback_path }.not_to change(Developer, :count)
+
+        expect(response).to redirect_to root_path
+      end
+    end
+
+    context 'with invalid auth' do
+      before do
+        OmniAuth.config.mock_auth[:github] = :invalid_credentials
+      end
+
+      it 'redirects to /auth/failure' do
+        get auth_github_callback_path
+
+        expect(response).to have_http_status :redirect
+      end
+    end
+  end
+
   describe 'DELETE /logout' do
     let(:user) { create(:user) }
 

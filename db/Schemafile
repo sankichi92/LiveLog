@@ -32,6 +32,18 @@ create_table :administrators, force: :cascade do |t|
   t.index :user_id, unique: true
 end
 
+create_table :developers, force: :cascade do |t|
+  t.bigint :user_id, null: false
+  t.bigint :github_id, null: false
+  t.string :github_username, null: false
+  t.string :github_access_token, null: false
+
+  t.timestamps
+
+  t.index :user_id, unique: true
+  t.index :github_id, unique: true
+end
+
 create_table :donations, force: :cascade do |t|
   t.bigint :member_id, null: false
   t.integer :amount, null: false

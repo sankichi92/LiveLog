@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get '/slack', to: 'slack#show'
 
   get '/auth/auth0/callback', to: 'auth#auth0'
+  get '/auth/github/callback', to: 'auth#github'
   get '/auth/failure', to: 'auth#failure'
   delete '/logout', to: 'auth#logout'
 
@@ -45,6 +46,8 @@ Rails.application.routes.draw do
     resource :profile, only: %i[show update]
     resource :email, only: %i[show update]
   end
+
+  resources :clients, only: :index
 
   namespace :api do
     post '/graphql', to: 'graphql#execute'
