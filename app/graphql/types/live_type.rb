@@ -6,7 +6,7 @@ module Types
     field :place, String, null: true
     field :comment, String, null: true
     field :album_url, HttpUrl, null: true, required_scope: 'read:lives'
-    field :songs, [SongType], null: false
+    field :songs, SongType.connection_type, null: false, max_page_size: nil
 
     def songs
       BatchLoader::GraphQL.for(object.id).batch(default_value: []) do |live_ids, loader|

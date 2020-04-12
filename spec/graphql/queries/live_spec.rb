@@ -15,7 +15,9 @@ RSpec.describe 'GraphQL query:', type: :graphql do
             place
             comment
             songs {
-              id
+              nodes {
+                id
+              }
             }
           }
         }
