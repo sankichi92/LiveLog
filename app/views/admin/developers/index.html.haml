@@ -1,0 +1,29 @@
+%header.content-header
+  .container-fluid
+    .row.mb-3
+      .col-sm-6
+        %h1= Developer.model_name.human
+      .col-sm-6
+        %ol.breadcrumb.float-sm-right
+          %li.breadcrumb-item= link_to 'Home', admin_root_path
+          %li.breadcrumb-item.active= Developer.model_name.human
+
+%section.content
+  .container-fluid
+    %section.card
+      .card-body.p-0
+        .table-responsive
+          %table.table-admin.table.table-striped.text-nowrap.mb-0
+            %thead
+              %tr
+                %th{ scope: 'col' } 入部年度
+                %th{ scope: 'col' } 名前
+                - %i[github_username created_at].each do |attr|
+                  %th{ scope: 'col' }= Developer.human_attribute_name(attr)
+            %tbody
+              - @developers.each do |developer|
+                %tr
+                  %td= developer.user.member.joined_year
+                  %td= developer.user.member.name
+                  %td= link_to developer.github_username, github_user_url(developer.github_username)
+                  %td= l developer.created_at

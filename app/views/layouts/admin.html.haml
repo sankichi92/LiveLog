@@ -49,6 +49,10 @@
                   = icon('fas', 'list-alt', class: 'nav-icon')
                   %p= UserRegistrationForm.model_name.human
               %li.nav-item
+                = link_to admin_developers_path, class: "nav-link#{params[:controller] == 'admin/developers' ? ' active' : ''}" do
+                  = icon('fas', 'code', class: 'nav-icon')
+                  %p= Developer.model_name.human
+              %li.nav-item
                 = link_to admin_administrators_path, class: "nav-link#{params[:controller] == 'admin/administrators' ? ' active' : ''}" do
                   = icon('fas', 'users-cog', class: 'nav-icon')
                   %p= Administrator.model_name.human

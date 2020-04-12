@@ -28,6 +28,7 @@ ja:
   activerecord:
     models:
       administrator: 管理者
+      developer: 開発者
       entry: エントリー
       entry_guideline: エントリー要項
       live: ライブ
@@ -38,6 +39,8 @@ ja:
     attributes:
       administrator:
         scopes: 権限
+      developer:
+        github_username: GitHub username
       entry:
         admin_memo: 管理メモ
         notes: 備考

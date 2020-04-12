@@ -70,11 +70,13 @@ Rails.application.routes.draw do
       resource :administrator, only: :create
     end
 
-    resources :administrators, only: %i[index edit update destroy]
-
     resources :entries, only: %i[index edit update destroy]
 
     resources :user_registration_forms, only: %i[index new create destroy]
+
+    resources :developers, only: %i[index]
+
+    resources :administrators, only: %i[index edit update destroy]
   end
 
   direct :organization do
@@ -83,6 +85,10 @@ Rails.application.routes.draw do
 
   direct :github do
     'https://github.com/sankichi92/LiveLog'
+  end
+
+  direct :github_user do |github_username|
+    "https://github.com/#{github_username}"
   end
 
   direct :twitter do
