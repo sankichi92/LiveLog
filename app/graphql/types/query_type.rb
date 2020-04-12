@@ -20,6 +20,30 @@ module Types
 
     # endregion
 
+    # region Member
+
+    field :member_joined_years, [Int], null: false
+    field :members, MemberType.connection_type, null: false do
+      argument :year, Int, required: true
+    end
+    field :member, MemberType, null: false do
+      argument :id, ID, required: true
+    end
+
+    def member_joined_years
+      Member.joined_years
+    end
+
+    def members(year:)
+      Member.where(joined_year: year).order(plays_count: :desc)
+    end
+
+    def member(id:)
+      Member.find(id)
+    end
+
+    # endregion
+
     # region Song
 
     field :songs, SongType.connection_type, null: false
