@@ -2,9 +2,8 @@ require 'rails_helper'
 
 RSpec.describe 'GraphQL query:', type: :graphql do
   describe 'song' do
-    subject(:result) { LiveLogSchema.execute(query, variables: { id: song.id }, context: context) }
+    subject(:result) { LiveLogSchema.execute(query, variables: variables, context: context) }
 
-    let(:song) { create(:song, visibility: :only_logged_in_users, youtube_url: 'https://www.youtube.com/watch?v=2TL90rxt9bo') }
     let(:query) do
       <<~GRAPHQL
         query($id: ID!) {
@@ -18,19 +17,54 @@ RSpec.describe 'GraphQL query:', type: :graphql do
             comment
             live {
               id
-              date
-              name
+            }
+            players {
+              edges {
+                instrument
+                node {
+                  id
+                }
+              }
             }
           }
         }
       GRAPHQL
     end
+    let(:variables) { { id: song.id } }
     let(:context) { graphql_context(scope: scope) }
+
+    let(:song) { create(:song, visibility: :only_logged_in_users, youtube_url: 'https://www.youtube.com/watch?v=2TL90rxt9bo') }
+    let!(:plays) { create_pair(:play, song: song) }
     let(:scope) { '' }
 
     it 'returns Song' do
-      expect(result.to_h).not_to include 'errors'
-      expect(result['data']['song']).to include 'id', 'time', 'order', 'name', 'artist', 'original', 'comment', 'live'
+      expected_data = {
+        song: {
+          id: song.id.to_s,
+          time: song.time_str,
+          order: song.position,
+          name: song.name,
+          artist: song.artist,
+          original: song.original?,
+          comment: song.comment,
+          live: {
+            id: song.live.id.to_s,
+          },
+          players: {
+            edges: plays.map { |play|
+              {
+                instrument: play.instrument,
+                node: {
+                  id: play.member.id.to_s,
+                },
+              }
+            },
+          },
+        },
+      }
+
+      expect(result.keys).to contain_exactly 'data'
+      expect(result['data']).to eq expected_data.deep_stringify_keys
     end
 
     context 'with youtubeUrl field' do

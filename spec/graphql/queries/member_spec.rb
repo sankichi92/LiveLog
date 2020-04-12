@@ -53,7 +53,7 @@ RSpec.describe 'GraphQL query:', type: :graphql do
       }
 
       expect(result.keys).to contain_exactly 'data'
-      expect(result['data']).to eq(expected_data.deep_stringify_keys)
+      expect(result['data']).to eq expected_data.deep_stringify_keys
     end
   end
 end
