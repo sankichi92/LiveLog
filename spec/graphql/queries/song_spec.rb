@@ -34,7 +34,7 @@ RSpec.describe 'GraphQL query:', type: :graphql do
     let(:context) { graphql_context(scope: scope) }
 
     let(:song) { create(:song, visibility: :only_logged_in_users, youtube_url: 'https://www.youtube.com/watch?v=2TL90rxt9bo') }
-    let!(:plays) { create_pair(:play, song: song) }
+    let!(:play) { create(:play, song: song) }
     let(:scope) { '' }
 
     it 'returns Song' do
@@ -51,14 +51,14 @@ RSpec.describe 'GraphQL query:', type: :graphql do
             id: song.live.id.to_s,
           },
           players: {
-            edges: plays.map { |play|
+            edges: [
               {
                 instrument: play.instrument,
                 node: {
                   id: play.member.id.to_s,
                 },
-              }
-            },
+              },
+            ],
           },
         },
       }
