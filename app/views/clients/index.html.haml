@@ -3,9 +3,13 @@
 - if current_user
   %aside.mb-3
     - if current_user.developer
-      = link_to icon('fas', 'plus', 'アプリケーションを作成する'), new_client_path, class: 'btn btn-outline-primary'
+      %p= link_to icon('fas', 'plus', 'アプリケーションを登録する'), new_client_path, class: 'btn btn-outline-primary'
+      %p.alert.alert-primary
+        わからないことがあれば
+        = link_to 'Slack', slack_path, target: '_blank', class: 'alert-link'
+        の #help チャンネルで気軽にご相談ください。
     - else
-      = link_to icon('fab', 'github', 'GitHub アカウントと連携して開発者登録する'), '/auth/github', method: :post, class: 'btn btn-outline-info'
+      %p= link_to icon('fab', 'github', 'GitHub アカウントと連携して開発者登録する'), '/auth/github', method: :post, class: 'btn btn-outline-info'
 
 %section.row
   = render @clients
