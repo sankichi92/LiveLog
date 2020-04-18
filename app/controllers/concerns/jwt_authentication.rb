@@ -23,7 +23,7 @@ module JWTAuthentication
           true,
           algorithms: openid_config.fetch(:id_token_signing_alg_values_supported),
           iss: openid_config.fetch(:issuer),
-          aud: ENV.fetch('AUTH0_API_AUDIENCE', 'https://livelog.ku-unplugged.net/api/'),
+          aud: Rails.application.config.x.auth0.api_audience,
           verify_iss: true,
           verify_aud: true,
           jwks: ->(_opts) { openid_config.get_jwks! },

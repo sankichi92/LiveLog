@@ -53,9 +53,9 @@ class AuthController < ApplicationController
     log_out
 
     logout_uri = URI::HTTPS.build(
-      host: ENV['AUTH0_DOMAIN'],
+      host: Rails.application.config.x.auth0.domain,
       path: '/v2/logout',
-      query: { client_id: ENV['AUTH0_CLIENT_ID'] }.to_query,
+      query: { client_id: Rails.application.config.x.auth0.client_id }.to_query,
     )
     redirect_to logout_uri.to_s, notice: 'ログアウトしました'
   end

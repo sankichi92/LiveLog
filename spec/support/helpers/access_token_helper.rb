@@ -4,13 +4,13 @@ module AccessTokenHelper
   DEFAULT_PAYLOAD = {
     iss: ISSUER,
     sub: 'auth0|0',
-    aud: ENV.fetch('AUTH0_API_AUDIENCE', 'https://livelog.ku-unplugged.net/api/'),
+    aud: Rails.application.config.x.auth0.api_audience,
   }.freeze
 
   def stub_access_token(**payload)
     jwk = JWT::JWK.create_from(RSA_KEYPAIR)
     jwks_uri = 'http://example.com/.well-known/jwks.json'
-    stub_request(:get, "https://#{ENV.fetch('AUTH0_DOMAIN', 'patient-bar-7812.auth0.com')}/.well-known/openid-configuration").to_return(
+    stub_request(:get, "https://#{Rails.application.config.x.auth0.domain}/.well-known/openid-configuration").to_return(
       body: {
         issuer: ISSUER,
         jwks_uri: jwks_uri,

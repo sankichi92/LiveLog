@@ -10,7 +10,7 @@ GraphiQL::Rails.config.tap do |config|
     access_token = if cookies[:graphiql_access_token].present?
                      cookies[:graphiql_access_token]
                    else
-                     api_token = AppAuth0Client.instance.api_token(audience: ENV.fetch('AUTH0_API_AUDIENCE'))
+                     api_token = AppAuth0Client.instance.api_token(audience: Rails.application.config.x.auth0.api_audience)
                      cookies[:graphiql_access_token] = { value: api_token.token, expires: api_token.expires_in.seconds }
                      api_token.token
                    end
