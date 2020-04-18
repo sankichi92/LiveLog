@@ -40,6 +40,7 @@ class AuthController < ApplicationController
         github_username: auth.info.nickname,
         github_access_token: auth.credentials.token,
       )
+      DeveloperActivityNotifyJob.perform_later(user: current_user, text: "開発者登録しました: #{auth.info.nickname}")
       redirect_to clients_path, notice: '開発者登録しました'
     end
   end

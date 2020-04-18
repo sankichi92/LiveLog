@@ -19,6 +19,7 @@ class ClientsController < ApplicationController
     if @client.valid?
       @client.create_auth0_client!
       @client.create_livelog_grant!
+      DeveloperActivityNotifyJob.perform_later(user: current_user, text: "アプリケーションを作成しました: #{@client.name}")
       redirect_to edit_client_path(@client), notice: 'アプリケーションを作成しました'
     else
       render :new, status: :unprocessable_entity
@@ -41,6 +42,7 @@ class ClientsController < ApplicationController
 
   def destroy
     @client.destroy_with_auth0_client!
+    DeveloperActivityNotifyJob.perform_later(user: current_user, text: "アプリケーションを削除しました: #{@client.name}")
     redirect_to clients_path, notice: "#{@client.name} を削除しました"
   end
 
