@@ -39,6 +39,9 @@ ja:
     attributes:
       administrator:
         scopes: 権限
+      client:
+        name: 名前
+        app_type: アプリケーションの種類
       developer:
         github_username: GitHub username
       entry:

@@ -13,6 +13,8 @@ class Client < ApplicationRecord
   validates :app_type, presence: true, inclusion: { in: APP_TYPES }, on: :create
   validates :url, format: { with: /\A#{URI::DEFAULT_PARSER.make_regexp(%w[http https])}\z/ }, allow_blank: true
 
+  # region Auth0
+
   def create_auth0_client!
     raise AlreadyCreatedError, "Auth0 Client is already created: #{auth0_id}" if auth0_id.present?
 
@@ -29,4 +31,6 @@ class Client < ApplicationRecord
     grant = AppAuth0Client.instance.create_client_grant(client_id: auth0_id, audience: Rails.application.config.x.auth0.api_audience, scope: [])
     update!(livelog_grant_id: grant.fetch('id'))
   end
+
+  # endregion
 end

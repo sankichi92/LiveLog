@@ -1,4 +1,24 @@
 - provide(:title, 'Developer')
 
-%aside.mb-3
-  = link_to icon('fab', 'github', 'GitHub アカウントと連携して開発者登録する'), '/auth/github', method: :post, class: 'btn btn-outline-info'
+- if current_user
+  %aside.mb-3
+    - if current_user.developer
+      = link_to icon('fas', 'plus', 'アプリケーションを作成する'), new_client_path, class: 'btn btn-outline-primary'
+    - else
+      = link_to icon('fab', 'github', 'GitHub アカウントと連携して開発者登録する'), '/auth/github', method: :post, class: 'btn btn-outline-info'
+
+%section.row
+  - @clients.each do |client|
+    .col-12.col-sm-6.col-lg-4.mb-3
+      %section.card
+        .card-body
+          .media.align-items-center.mb-2
+            = image_tag client.logo_url, class: 'align-self-center medium rounded-circle mr-2'
+            .media-body
+              %h2.h5.card-title
+                = link_to_if client.url.present?, client.name, client.url, target: '_blank', class: 'stretched-link text-dark'
+              .card-subtitle.text-muted
+                = client.url_host
+          %p.card-text.text-muted= client.description
+          %p.card-text.text-muted
+            %small #{client.developer.user.member.joined_year_and_name}・#{l client.created_at.to_date}

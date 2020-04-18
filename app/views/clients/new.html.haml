@@ -1,0 +1,44 @@
+- provide(:title, 'アプリケーションを作成する')
+
+%section
+  = form_with model: @client, local: true do |form|
+    = render 'shared/error_messages', errors: @client.errors
+
+    .form-group
+      = form.label :name
+      = form.text_field :name, required: true, class: 'form-control'
+
+    .form-group
+      = form.label :app_type
+
+      .form-check
+        = form.radio_button :app_type, 'native', class: 'form-check-input'
+        = form.label :app_type_native, 'Native', class: 'form-check-label'
+        %small.form-text.text-muted.mt-0.mb-1
+          Android、iOS アプリやデスクトップアプリなど、ネイティブで動作するアプリケーション
+
+      .form-check
+        = form.radio_button :app_type, 'spa', class: 'form-check-input'
+        = form.label :app_type_spa, 'Single Page Web Applications', class: 'form-check-label'
+        %small.form-text.text-muted.mt-0.mb-1
+          React や Vue などの JavaScript フロントエンドアプリケーション
+
+      .form-check
+        = form.radio_button :app_type, 'regular_web', class: 'form-check-input'
+        = form.label :app_type_regular_web, 'Regular Web Applications', class: 'form-check-label'
+        %small.form-text.text-muted.mt-0.mb-1
+          Ruby on Rails や Node.js Express など、バックエンドでの通信が可能な Web アプリケーション
+
+      .form-check
+        = form.radio_button :app_type, 'non_interactive', class: 'form-check-input'
+        = form.label :app_type_non_interactive, 'Machine to Machine Applications', class: 'form-check-label'
+        %small.form-text.text-muted.mt-0.mb-1
+          ユーザーとのやりとりのない、マシン間の通信のみで完結するアプリケーション
+
+    .form-group
+      %p.form-text
+        詳しくは
+        = link_to 'https://auth0.com/docs/getting-started/set-up-app', 'https://auth0.com/docs/getting-started/set-up-app', target: '_blank'
+        を参照してください。
+
+    = form.submit class: 'btn btn-primary'
