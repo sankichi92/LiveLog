@@ -38,11 +38,15 @@ gem 'elasticsearch-model', '~> 6.1'
 gem 'elasticsearch-rails', '~> 6.1'
 
 gem 'auth0'
+gem 'octokit'
 gem 'sentry-raven'
 gem 'slack-ruby-client'
 gem 'twitter'
 
 gem 'commonmarker'
+
+# Developer
+gem 'omniauth-github'
 
 # API
 gem 'batch-loader'

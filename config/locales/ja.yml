@@ -21,6 +21,12 @@ ja:
           one: "<b>1</b>件の%{entry_name}を表示しています"
           other: "<b>%{count}</b>件の%{entry_name}をすべて表示しています"
           zero: "%{entry_name}が見つかりませんでした"
+    label:
+      client:
+        app_type_native: Native
+        app_type_spa: Single Page Application
+        app_type_regular_web: Regular Web Application
+        app_type_non_interactive: Machine to Machine Application
   attributes:
     id: ID
     created_at: 作成日時
@@ -28,6 +34,7 @@ ja:
   activerecord:
     models:
       administrator: 管理者
+      developer: 開発者
       entry: エントリー
       entry_guideline: エントリー要項
       live: ライブ
@@ -38,6 +45,20 @@ ja:
     attributes:
       administrator:
         scopes: 権限
+      client:
+        auth0_id: Client ID
+        client_secret: Client Secret
+        name: 名前
+        description: 説明
+        url: URL
+        logo_url: ロゴ URL
+        app_type: アプリケーションの種類
+        callback_url: Callback URL
+        login_url: Application Login URL
+        logout_url: Allowed Logout URL
+        allowed_origin: Allowed Web Origin
+      developer:
+        github_username: GitHub username
       entry:
         admin_memo: 管理メモ
         notes: 備考

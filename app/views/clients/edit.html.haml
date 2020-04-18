@@ -1,0 +1,64 @@
+- provide(:title, "アプリケーションの編集（ID: #{@client.id}）")
+
+%p.alert.alert-primary
+  詳しい利用方法は
+  = link_to 'https://auth0.com/docs/quickstarts', 'https://auth0.com/docs/quickstarts', target: '_blank', class: 'alert-link'
+  を参照してください
+
+= form_with model: @client, local: true do |form|
+  = render 'shared/error_messages', errors: @client.errors
+
+  .form-group
+    = form.label :domain
+    = form.text_field :domain, disabled: true, class: 'form-control'
+
+  .form-group
+    = form.label :auth0_id
+    = form.text_field :auth0_id, disabled: true, class: 'form-control'
+
+  .form-group
+    = form.label :client_secret
+    = form.text_field :client_secret, disabled: true, class: 'form-control'
+
+  .form-group
+    = form.label :name
+    = form.text_field :name, required: true, class: 'form-control'
+
+  .form-group
+    = form.label :description
+    = form.text_area :description, class: 'form-control'
+
+  .form-group
+    = form.label :url
+    = form.url_field :url, class: 'form-control'
+    %small.form-text.text-muted LiveLog 独自の項目です。アプリケーション一覧からリンクする URL を入力してください
+
+  .form-group
+    = form.label :logo_url
+    = form.url_field :logo_url, required: true, class: 'form-control'
+
+  .form-group
+    = form.label :app_type
+    = form.select :app_type, Client::APP_TYPES.map { |app_type| [t("helpers.label.client.app_type_#{app_type}"), app_type] }, {}, class: 'form-control'
+
+  .form-group
+    = form.label :callback_url
+    = form.url_field :callback_url, class: 'form-control'
+
+  .form-group
+    = form.label :login_url
+    = form.url_field :login_url, class: 'form-control'
+
+  .form-group
+    = form.label :logout_url
+    = form.url_field :logout_url, class: 'form-control'
+
+  .form-group
+    = form.label :allowed_origin
+    = form.url_field :allowed_origin, class: 'form-control'
+
+  = form.submit class: 'btn btn-primary'
+
+%hr
+
+= link_to '削除する', client_path(@client), method: :delete, class: 'btn btn-danger', data: { confirm: '本当に削除しますか？' }

@@ -3,7 +3,7 @@ class OpenIDConfig
 
   delegate :[], :fetch, to: :config
 
-  def initialize(domain = ENV.fetch('AUTH0_DOMAIN', 'patient-bar-7812.auth0.com'))
+  def initialize(domain = Rails.application.config.x.auth0.domain)
     @domain = domain
   end
 

@@ -4,9 +4,9 @@ class AppAuth0Client
 
   def initialize
     super(
-      client_id: ENV.fetch('AUTH0_CLIENT_ID'),
-      client_secret: ENV.fetch('AUTH0_CLIENT_SECRET'),
-      domain: ENV.fetch('AUTH0_DOMAIN'),
+      client_id: Rails.application.config.x.auth0.client_id,
+      client_secret: Rails.application.config.x.auth0.client_secret,
+      domain: Rails.application.config.x.auth0.domain,
     )
   end
 end

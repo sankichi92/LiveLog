@@ -7,6 +7,7 @@ class User < ApplicationRecord
 
   belongs_to :member
   has_one :admin, dependent: :restrict_with_exception, class_name: 'Administrator'
+  has_one :developer, dependent: :restrict_with_exception
 
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: { case_sensitive: false }
 

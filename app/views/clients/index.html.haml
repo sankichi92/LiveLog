@@ -1,0 +1,11 @@
+- provide(:title, 'Developer')
+
+- if current_user
+  %aside.mb-3
+    - if current_user.developer
+      = link_to icon('fas', 'plus', 'アプリケーションを作成する'), new_client_path, class: 'btn btn-outline-primary'
+    - else
+      = link_to icon('fab', 'github', 'GitHub アカウントと連携して開発者登録する'), '/auth/github', method: :post, class: 'btn btn-outline-info'
+
+%section.row
+  = render @clients

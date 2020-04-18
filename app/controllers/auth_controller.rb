@@ -1,7 +1,7 @@
-class Auth0Controller < ApplicationController
+class AuthController < ApplicationController
   before_action :require_current_user, only: :logout
 
-  def callback
+  def auth0
     auth = request.env['omniauth.auth']
     user = User.find_by!(auth0_id: auth.uid)
 
@@ -23,6 +23,28 @@ class Auth0Controller < ApplicationController
     redirect_to root_path, alert: 'ログインに失敗しました。管理者に問い合わせてください'
   end
 
+  def github
+    auth = request.env['omniauth.auth']
+
+    if current_user.nil?
+      Raven.capture_message('Attempt to create a developer without log-in', extra: { github_username: auth.info.nickname }, level: :warning)
+      redirect_to root_path, alert: 'ログインしてください'
+    elsif current_user.developer
+      if current_user.developer.github_id != auth.uid
+        Raven.capture_message('Re-authorized GitHub with a different account', extra: { github_username: auth.info.nickname }, level: :warning)
+      end
+      redirect_to clients_path, alert: 'すでに登録済みです'
+    else
+      current_user.create_developer!(
+        github_id: auth.uid,
+        github_username: auth.info.nickname,
+        github_access_token: auth.credentials.token,
+      )
+      DeveloperActivityNotifyJob.perform_later(user: current_user, text: "開発者登録しました: #{auth.info.nickname}")
+      redirect_to clients_path, notice: '開発者登録しました'
+    end
+  end
+
   def failure(message, strategy)
     Raven.capture_message(message, extra: { strategy: strategy }, level: :debug)
     redirect_to root_path, alert: message
@@ -32,9 +54,9 @@ class Auth0Controller < ApplicationController
     log_out
 
     logout_uri = URI::HTTPS.build(
-      host: ENV['AUTH0_DOMAIN'],
+      host: Rails.application.config.x.auth0.domain,
       path: '/v2/logout',
-      query: { client_id: ENV['AUTH0_CLIENT_ID'] }.to_query,
+      query: { client_id: Rails.application.config.x.auth0.client_id }.to_query,
     )
     redirect_to logout_uri.to_s, notice: 'ログアウトしました'
   end
