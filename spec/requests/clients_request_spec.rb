@@ -180,4 +180,25 @@ RSpec.describe 'clients request:', type: :request do
       end
     end
   end
+
+  describe 'DELETE /clients/:id' do
+    let(:client) { create(:client) }
+
+    let(:auth0_client) { spy(:auth0_client) }
+
+    before do
+      allow(auth0_client).to receive(:delete_client)
+      allow(AppAuth0Client).to receive(:instance).and_return(auth0_client)
+
+      log_in_as client.developer.user
+    end
+
+    it 'destroys the client and redirects to /clients' do
+      delete client_path(client)
+
+      expect(auth0_client).to have_received(:delete_client).with(client.auth0_id)
+      expect { client.reload }.to raise_error(ActiveRecord::RecordNotFound)
+      expect(response).to redirect_to clients_path
+    end
+  end
 end

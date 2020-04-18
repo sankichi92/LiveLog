@@ -58,3 +58,7 @@
     = form.url_field :allowed_origin, class: 'form-control'
 
   = form.submit class: 'btn btn-primary'
+
+%hr
+
+= link_to '削除する', client_path(@client), method: :delete, class: 'btn btn-danger', data: { confirm: '本当に削除しますか？' }

@@ -61,6 +61,11 @@ class Client < ApplicationRecord
     false
   end
 
+  def destroy_with_auth0_client!
+    AppAuth0Client.instance.delete_client(auth0_id)
+    destroy!
+  end
+
   def domain
     info['tenant']
   end

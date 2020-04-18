@@ -1,7 +1,7 @@
 class ClientsController < ApplicationController
-  before_action :require_current_user, only: %i[new create edit update]
+  before_action :require_current_user, only: %i[new create edit update destroy]
   before_action :require_developer, only: %i[new create]
-  before_action :require_owner, only: %i[edit update]
+  before_action :require_owner, only: %i[edit update destroy]
 
   permits :name, :description, :url, :logo_url, :app_type, :callback_url, :login_url, :logout_url, :allowed_origin
 
@@ -37,6 +37,11 @@ class ClientsController < ApplicationController
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    @client.destroy_with_auth0_client!
+    redirect_to clients_path, notice: "#{@client.name} を削除しました"
   end
 
   private
