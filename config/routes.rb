@@ -47,7 +47,7 @@ Rails.application.routes.draw do
     resource :email, only: %i[show update]
   end
 
-  resources :clients, only: %i[index new create]
+  resources :clients, only: %i[index new create edit update]
 
   namespace :api do
     post '/graphql', to: 'graphql#execute'

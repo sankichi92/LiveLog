@@ -4,17 +4,17 @@ module Auth0UserHelper
   def stub_auth0_user(user, fields: Auth0User::DEFAULT_FIELDS, email_verified: true, email_accepting: true)
     allow(auth0_client_double).to receive(:user).with(
       user.auth0_id,
-      fields: fields,
+      fields: fields.join(','),
     ).and_return(
       {
-        'user_id' => user.auth0_id,
-        'email' => user.email,
-        'email_verified' => email_verified,
-        'user_metadata' => {
-          'livelog_email_notifications' => email_accepting,
+        user_id: user.auth0_id,
+        email: user.email,
+        email_verified: email_verified,
+        user_metadata: {
+          livelog_email_notifications: email_accepting,
         },
-        'last_login' => Time.zone.now.iso8601,
-      }.slice(*fields.split(',')),
+        last_login: Time.zone.now.iso8601,
+      }.deep_stringify_keys.slice(*fields),
     )
   end
 

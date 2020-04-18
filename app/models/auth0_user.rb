@@ -8,11 +8,11 @@ class Auth0User
     email_verified
     user_metadata
     last_login
-  ].join(',').freeze
+  ].freeze
 
   class << self
     def fetch!(auth0_id, fields: DEFAULT_FIELDS)
-      response = AppAuth0Client.instance.user(auth0_id, fields: fields)
+      response = AppAuth0Client.instance.user(auth0_id, fields: fields.join(','))
       new(response)
     end
 

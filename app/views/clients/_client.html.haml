@@ -1,0 +1,17 @@
+.col-12.col-sm-6.col-lg-4.mb-3
+  %section.card
+    .card-body
+      .media.align-items-center.mb-2
+        = image_tag client.logo_url, class: 'align-self-center medium rounded-circle mr-2'
+        .media-body
+          %h2.h5.card-title
+            - if current_user == client.developer.user
+              = link_to client.name, edit_client_path(client), class: 'stretched-link text-dark'
+            - else
+              = link_to_if client.url.present?, client.name, client.url, target: '_blank', class: 'stretched-link text-dark'
+          .card-subtitle.text-muted
+            = client.url_host
+      %p.card-text.text-muted
+        = simple_format(client.description)
+      %p.card-text.text-muted
+        %small #{client.developer.user.member.joined_year_and_name}・#{l client.created_at.to_date}
