@@ -37,7 +37,7 @@ create_table :clients, force: :cascade do |t|
   t.string :auth0_id, null: false
   t.string :name, null: false
   t.string :description
-  t.string :logo_url
+  t.string :logo_url, null: false
   t.string :url
   t.string :livelog_grant_id
 

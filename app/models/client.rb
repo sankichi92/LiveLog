@@ -17,8 +17,9 @@ class Client < ApplicationRecord
     raise AlreadyCreatedError, "Auth0 Client is already created: #{auth0_id}" if auth0_id.present?
 
     validate!(:create)
+    self.logo_url = developer.avatar_url
 
-    client = AppAuth0Client.instance.create_client(name, app_type: app_type)
+    client = AppAuth0Client.instance.create_client(name, logo_uri: logo_url, app_type: app_type)
     update!(auth0_id: client.fetch('client_id'))
   end
 
