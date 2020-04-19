@@ -4,6 +4,7 @@ module API
       context = {
         auth_payload: auth_payload,
         current_user: current_user,
+        current_client: current_client,
       }
       result = LiveLogSchema.execute(query, variables: ensure_hash(variables), context: context, operation_name: operationName)
       render json: result
