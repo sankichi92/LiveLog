@@ -28,7 +28,7 @@ module JWTAuthentication
           verify_aud: true,
           jwks: ->(_opts) { openid_config.get_jwks! },
         )
-        @auth_payload = payload.with_indifferent_access
+        @auth_payload = payload.symbolize_keys
       rescue JWT::DecodeError => e
         Raven.capture_exception(e, level: :debug)
         false
@@ -46,5 +46,13 @@ module JWTAuthentication
                       else
                         nil
                       end
+  end
+
+  def current_client
+    @current_client ||= if auth_payload && auth_payload[:azp]
+                          Client.find_by(auth0_id: auth_payload[:azp])
+                        else
+                          nil
+                        end
   end
 end
