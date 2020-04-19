@@ -49,10 +49,10 @@ class Client < ApplicationRecord
         description: description,
         logo_uri: logo_url,
         app_type: app_type,
-        callbacks: [callback_url].compact,
+        callbacks: [callback_url.presence].compact,
         initiate_login_uri: login_url,
-        allowed_logout_urls: [logout_url].compact,
-        allowed_origins: [allowed_origin].compact,
+        allowed_logout_urls: [logout_url.presence].compact,
+        allowed_origins: [allowed_origin.presence].compact,
       },
     )
   rescue Auth0::BadRequest => e
