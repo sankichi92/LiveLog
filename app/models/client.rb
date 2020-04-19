@@ -29,7 +29,13 @@ class Client < ApplicationRecord
     validate!(:create)
     self.logo_url = developer.avatar_url
 
-    @info = AppAuth0Client.instance.create_client(name, logo_uri: logo_url, app_type: app_type, oidc_conformant: true)
+    @info = AppAuth0Client.instance.create_client(
+      name,
+      logo_uri: logo_url,
+      app_type: app_type,
+      grant_types: %w[authorization_code refresh_token client_credentials],
+      oidc_conformant: true,
+    )
     update!(auth0_id: @info.fetch('client_id'))
   end
 
