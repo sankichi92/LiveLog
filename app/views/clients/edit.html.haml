@@ -1,9 +1,13 @@
 - provide(:title, "アプリケーションの編集（ID: #{@client.id}）")
 
 %p.alert.alert-primary
-  詳しい利用方法は
+  LiveLog GraphQL API については
+  = link_to 'GitHub Wiki', 'https://github.com/sankichi92/LiveLog/wiki', target: '_blank', class: 'alert-link'
+  をご覧ください。
+  %br
+  また、Auth0 で管理されている LiveLog アカウントを使った Single Sign-On については
   = link_to 'https://auth0.com/docs/quickstarts', 'https://auth0.com/docs/quickstarts', target: '_blank', class: 'alert-link'
-  を参照してください
+  を参照してください。
 
 = form_with model: @client, local: true do |form|
   = render 'shared/error_messages', errors: @client.errors

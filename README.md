@@ -4,6 +4,12 @@ https://livelog.ku-unplugged.net/
 
 The [Ruby on Rails](https://rubyonrails.org/) application for set list management of the acoustic light music club "[京大アンプラグド](http://ku-unplugged.net/)."
 
+## GraphQL API
+
+- Endpoint: https://livelog.ku-unplugged.net/api/graphql
+- GraphiQL: https://livelog.ku-unplugged.net/graphiql
+- Documentation: https://github.com/sankichi92/LiveLog/wiki
+
 ## Requirements
 
 - [Ruby](https://www.ruby-lang.org/) 2.7
@@ -16,7 +22,7 @@ The [Ruby on Rails](https://rubyonrails.org/) application for set list managemen
 If you're using macOS and [Homebrew](https://brew.sh/), you can setup them by the following commands:
 
     $ brew install rbenv yarn postgresql elasticsearch imagemagick
-    $ rbenv install 2.7.0
+    $ rbenv install 2.7.1
     $ brew services start postgresql
     $ elasticsearch-plugin install analysis-kuromoji
     $ brew services start elasticsearch

@@ -2,12 +2,16 @@
 
 - if current_user
   %aside.mb-3
+    %p.alert.alert-primary
+      LiveLog GraphQL API については
+      = link_to 'GitHub Wiki', 'https://github.com/sankichi92/LiveLog/wiki', target: '_blank', class: 'alert-link'
+      をご覧ください。
+      %br
+      また、わからないことがあれば
+      = link_to 'Slack', slack_path, target: '_blank', class: 'alert-link'
+      の #help チャンネルで気軽にご相談ください。
     - if current_user.developer
       %p= link_to icon('fas', 'plus', 'アプリケーションを登録する'), new_client_path, class: 'btn btn-outline-primary'
-      %p.alert.alert-primary
-        わからないことがあれば
-        = link_to 'Slack', slack_path, target: '_blank', class: 'alert-link'
-        の #help チャンネルで気軽にご相談ください。
     - else
       %p= link_to icon('fab', 'github', 'GitHub アカウントと連携して開発者登録する'), '/auth/github', method: :post, class: 'btn btn-outline-info'
 
