@@ -50,6 +50,8 @@ Rails.application.routes.draw do
   resources :clients, only: %i[index new create edit update destroy]
 
   namespace :api do
+    resources :scopes, only: :index
+
     post '/graphql', to: 'graphql#execute'
   end
 
