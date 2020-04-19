@@ -13,10 +13,6 @@
   = render 'shared/error_messages', errors: @client.errors
 
   .form-group
-    = form.label :domain
-    = form.text_field :domain, disabled: true, class: 'form-control'
-
-  .form-group
     = form.label :auth0_id
     = form.text_field :auth0_id, disabled: true, class: 'form-control'
 

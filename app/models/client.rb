@@ -3,7 +3,6 @@ require 'app_auth0_client'
 class Client < ApplicationRecord
   APP_TYPES = %w[native spa regular_web non_interactive].freeze
   DEFAULT_FIELDS = %w[
-    tenant
     client_secret
     app_type
     callbacks
@@ -64,10 +63,6 @@ class Client < ApplicationRecord
   def destroy_with_auth0_client!
     AppAuth0Client.instance.delete_client(auth0_id)
     destroy!
-  end
-
-  def domain
-    info['tenant']
   end
 
   def client_secret
