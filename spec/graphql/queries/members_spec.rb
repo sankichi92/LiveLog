@@ -19,7 +19,11 @@ RSpec.describe 'GraphQL query:', type: :graphql do
     let(:context) { graphql_context }
 
     let(:joined_year) { 2020 }
-    let!(:members) { create_pair(:member, joined_year: joined_year) }
+    let(:members) { create_pair(:member, joined_year: joined_year) }
+
+    before do
+      create(:song, members: [members.first])
+    end
 
     it 'returns MemberConnection' do
       expected_data = {
