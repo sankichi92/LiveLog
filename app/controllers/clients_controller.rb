@@ -3,7 +3,7 @@ class ClientsController < ApplicationController
   before_action :require_developer, only: %i[new create]
   before_action :require_owner, only: %i[edit update destroy]
 
-  permits :name, :description, :url, :logo_url, :app_type, :callback_url, :login_url, :logout_url, :allowed_origin
+  permits :name, :description, :url, :logo_url, :app_type, :callback_url, :login_url, :logout_url, :allowed_origin, :jwt_signature_alg
 
   def index
     @clients = Client.includes(developer: { user: :member }).reverse_order

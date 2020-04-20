@@ -132,6 +132,7 @@ RSpec.describe 'clients request:', type: :request do
           login_url: 'https://example.com/login',
           logout_url: 'https://example.com/logout',
           allowed_origin: 'https://example.com',
+          jwt_signature_alg: 'RS256',
         },
       }
     end

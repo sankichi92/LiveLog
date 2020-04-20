@@ -9,5 +9,6 @@ FactoryBot.define do
     sequence(:livelog_grant_id) { |n| "auth0_grant_id_#{n}" }
 
     app_type { Client::APP_TYPES.sample(random: Faker::Config.random) }
+    jwt_signature_alg { auth0_id.present? ? Client::JWT_SIGNATURE_ALGORITHMS.sample(random: Faker::Config.random) : nil }
   end
 end

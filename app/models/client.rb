@@ -2,6 +2,7 @@ require 'app_auth0_client'
 
 class Client < ApplicationRecord
   APP_TYPES = %w[native spa regular_web non_interactive].freeze
+  JWT_SIGNATURE_ALGORITHMS = %w[HS256 RS256].freeze
   DEFAULT_FIELDS = %w[
     client_secret
     app_type
@@ -9,19 +10,21 @@ class Client < ApplicationRecord
     initiate_login_uri
     allowed_logout_urls
     allowed_origins
+    jwt_configuration.alg
   ].freeze
 
   AlreadyCreatedError = Class.new(StandardError)
 
   belongs_to :developer
 
-  attr_writer :app_type, :callback_url, :login_url, :logout_url, :allowed_origin
+  attr_writer :app_type, :callback_url, :login_url, :logout_url, :allowed_origin, :jwt_signature_alg
 
   validates :name, presence: true
   validates :description, length: { maximum: 140 }
   validates :logo_url, format: { with: /\A#{URI::DEFAULT_PARSER.make_regexp(%w[http https])}\z/ }, allow_blank: true
   validates :url, format: { with: /\A#{URI::DEFAULT_PARSER.make_regexp(%w[http https])}\z/ }, allow_blank: true
   validates :app_type, presence: true, inclusion: { in: APP_TYPES }
+  validates :jwt_signature_alg, inclusion: { in: JWT_SIGNATURE_ALGORITHMS }, allow_blank: true
 
   def create_auth0_client!
     raise AlreadyCreatedError, "Auth0 Client is already created: #{auth0_id}" if auth0_id.present?
@@ -58,6 +61,9 @@ class Client < ApplicationRecord
         initiate_login_uri: login_url,
         allowed_logout_urls: [logout_url.presence].compact,
         allowed_origins: [allowed_origin.presence].compact,
+        jwt_configuration: {
+          alg: jwt_signature_alg,
+        },
       },
     )
   rescue Auth0::BadRequest => e
@@ -93,6 +99,10 @@ class Client < ApplicationRecord
 
   def allowed_origin
     @allowed_origin ||= info['allowed_origins']&.first
+  end
+
+  def jwt_signature_alg
+    @jwt_signature_alg ||= info.dig('jwt_configuration', 'alg')
   end
 
   def info(fields: DEFAULT_FIELDS)

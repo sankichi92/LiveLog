@@ -5,7 +5,7 @@
   = link_to 'GitHub Wiki', 'https://github.com/sankichi92/LiveLog/wiki', target: '_blank', class: 'alert-link'
   をご覧ください。
   %br
-  また、Auth0 で管理されている LiveLog アカウントを使った Single Sign-On については
+  また、LiveLog アカウントを使った Single Sign-On については
   = link_to 'https://auth0.com/docs/quickstarts', 'https://auth0.com/docs/quickstarts', target: '_blank', class: 'alert-link'
   を参照してください。
 
@@ -56,6 +56,10 @@
   .form-group
     = form.label :allowed_origin
     = form.url_field :allowed_origin, class: 'form-control'
+
+  .form-group
+    = form.label :jwt_signature_alg
+    = form.select :jwt_signature_alg, Client::JWT_SIGNATURE_ALGORITHMS, {}, class: 'form-control'
 
   = form.submit class: 'btn btn-primary'
 

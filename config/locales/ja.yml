@@ -57,6 +57,7 @@ ja:
         login_url: Application Login URL
         logout_url: Allowed Logout URL
         allowed_origin: Allowed Web Origin
+        jwt_signature_alg: JWT Signature Algorithm
       developer:
         github_username: GitHub username
       entry:
