@@ -6,8 +6,12 @@ The [Ruby on Rails](https://rubyonrails.org/) application for set list managemen
 
 ## GraphQL API
 
+Protected by OAuth 2.0.
+
 - Endpoint: https://livelog.ku-unplugged.net/api/graphql
 - GraphiQL: https://livelog.ku-unplugged.net/graphiql
+- Authorization Server: https://patient-bar-7812.auth0.com/.well-known/openid-configuration
+- Client Registration: https://livelog.ku-unplugged.net/clients/new
 - Documentation: https://github.com/sankichi92/LiveLog/wiki
 
 ## Requirements
