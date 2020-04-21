@@ -5,11 +5,9 @@
     %p.alert.alert-primary
       LiveLog GraphQL API については
       = link_to 'GitHub Wiki', 'https://github.com/sankichi92/LiveLog/wiki', target: '_blank', class: 'alert-link'
-      をご覧ください。
-      %br
-      また、わからないことがあれば
-      = link_to 'Slack', slack_path, target: '_blank', class: 'alert-link'
-      の #help チャンネルで気軽にご相談ください。
+      を、LiveLog アカウントを使った Single Sign-On の実装については
+      = link_to 'https://auth0.com/docs/quickstarts', 'https://auth0.com/docs/quickstarts', target: '_blank', class: 'alert-link'
+      を参照してください。
     - if current_user.developer
       %p= link_to icon('fas', 'plus', 'アプリケーションを登録する'), new_client_path, class: 'btn btn-outline-primary'
     - else
