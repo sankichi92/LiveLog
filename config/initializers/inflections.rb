@@ -19,6 +19,5 @@ ActiveSupport::Inflector.inflections do |inflect|
   inflect.acronym 'API'
   inflect.acronym 'JWT'
   inflect.acronym 'LiveLog'
-  inflect.acronym 'OpenID'
   inflect.irregular 'live', 'lives'
 end
