@@ -21,6 +21,7 @@ gem 'bootsnap', require: false
 gem 'action_args'
 gem 'active_decorator'
 gem 'acts_as_list'
+gem 'commonmarker'
 gem 'font-awesome-sass'
 gem 'haml-rails'
 gem 'kaminari'
@@ -31,6 +32,7 @@ gem 'ridgepole', require: false
 
 gem 'omniauth'
 gem 'omniauth-auth0'
+gem 'omniauth-github'
 gem 'omniauth-rails_csrf_protection'
 
 gem 'elasticsearch', '~> 6.8'
@@ -43,11 +45,6 @@ gem 'octokit'
 gem 'sentry-raven'
 gem 'slack-ruby-client'
 gem 'twitter'
-
-gem 'commonmarker'
-
-# Developer
-gem 'omniauth-github'
 
 # API
 gem 'batch-loader'
