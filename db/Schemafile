@@ -1,3 +1,209 @@
+# region Essentials
+
+create_table :lives, force: :cascade do |t|
+  t.string :name, null: false
+  t.date :date, null: false
+  t.string :place
+  t.text :comment
+  t.string :album_url
+  t.boolean :published, null: false, default: false
+  t.datetime :published_at
+  t.integer :songs_count, null: false, default: 0, limit: 2
+
+  t.timestamps
+
+  t.index %i[date name], unique: true
+  t.index %i[published date]
+end
+
+create_table :songs, force: :cascade do |t|
+  t.bigint :live_id, null: false
+  t.time :time
+  t.integer :position, null: false, limit: 2
+  t.string :name, null: false
+  t.string :artist
+  t.boolean :original, null: false, default: false
+  t.integer :visibility, null: false, default: 1, limit: 2
+  t.string :youtube_id
+  t.text :comment
+
+  t.timestamps
+
+  t.index :live_id
+end
+add_foreign_key :songs, :lives, column: :live_id
+
+create_table :members, force: :cascade do |t|
+  t.integer :joined_year, null: false, limit: 2
+  t.string :name, null: false
+  t.string :url
+  t.string :bio
+  t.integer :plays_count, null: false, default: 0, limit: 2
+
+  t.timestamps
+
+  t.index %i[name joined_year], unique: true
+  t.index %i[joined_year plays_count]
+end
+
+create_table :plays, force: :cascade do |t|
+  t.bigint :member_id, null: false
+  t.bigint :song_id, null: false
+  t.string :instrument
+
+  t.timestamps
+
+  t.index :song_id
+  t.index %i[member_id song_id], unique: true
+end
+add_foreign_key :plays, :songs
+add_foreign_key :plays, :members
+
+# endregion
+
+# region User
+
+create_table :users, force: :cascade do |t|
+  t.bigint :member_id, null: false
+  t.string :email, null: false
+
+  t.string :auth0_id, null: false
+  t.string :access_token
+  t.string :refresh_token
+  t.datetime :access_token_expires_at
+  t.jsonb :userinfo, null: false, default: {}
+
+  t.boolean :activated, default: false, null: false
+
+  # TODO: Remove these columns after Auth0 migration finished.
+  t.string :password_digest
+  t.boolean :subscribing, default: true, null: false
+
+  t.timestamps
+
+  t.index :member_id, unique: true
+  t.index :email, unique: true
+  t.index :auth0_id, unique: true
+  t.index :activated
+end
+add_foreign_key :users, :members
+
+create_table :donations, force: :cascade do |t|
+  t.bigint :member_id, null: false
+  t.integer :amount, null: false
+  t.date :donated_on, null: false
+
+  t.datetime :created_at, null: false
+
+  t.index :member_id
+  t.index :donated_on
+end
+add_foreign_key :donations, :members
+
+# endregion
+
+# region Administrator
+
+create_table :administrators, force: :cascade do |t|
+  t.bigint :user_id, null: false
+  t.string :scopes, array: true, null: false, default: []
+
+  t.timestamps
+
+  t.index :user_id, unique: true
+end
+add_foreign_key :administrators, :users
+
+create_table :user_registration_forms, force: :cascade do |t|
+  t.bigint :admin_id, null: false
+  t.string :token, null: false
+  t.datetime :expires_at, null: false
+  t.integer :used_count, null: false, default: 0
+
+  t.timestamps
+
+  t.index :admin_id
+  t.index :token, unique: true
+end
+add_foreign_key :user_registration_forms, :administrators, column: :admin_id
+
+# endregion
+
+# region Developer
+
+create_table :developers, force: :cascade do |t|
+  t.bigint :user_id, null: false
+  t.bigint :github_id, null: false
+  t.string :github_username, null: false
+  t.string :github_access_token, null: false
+
+  t.timestamps
+
+  t.index :user_id, unique: true
+  t.index :github_id, unique: true
+end
+add_foreign_key :developers, :users
+
+create_table :clients, force: :cascade do |t|
+  t.bigint :developer_id, null: false
+  t.string :auth0_id, null: false
+  t.string :name, null: false
+  t.string :description
+  t.string :logo_url, null: false
+  t.string :url
+  t.string :livelog_grant_id
+
+  t.timestamps
+
+  t.index :developer_id
+  t.index :auth0_id, unique: true
+end
+add_foreign_key :clients, :developers
+
+# endregion
+
+# region Entry
+
+create_table :entry_guidelines, force: :cascade do |t|
+  t.bigint :live_id, null: false
+  t.datetime :deadline, null: false
+  t.text :notes
+
+  t.timestamps
+
+  t.index :live_id, unique: true
+end
+add_foreign_key :entry_guidelines, :lives, column: :live_id
+
+create_table :entries, force: :cascade do |t|
+  t.bigint :song_id, null: false
+  t.bigint :member_id, null: false
+  t.text :notes
+  t.text :admin_memo
+
+  t.timestamps
+
+  t.index :song_id, unique: true
+  t.index :member_id
+end
+add_foreign_key :entries, :songs
+add_foreign_key :entries, :members
+
+create_table :playable_times, force: :cascade do |t|
+  t.bigint :entry_id, null: false
+  t.tsrange :range, null: false
+
+  t.timestamps
+
+  t.index :entry_id
+  t.index :range, using: :gist
+end
+add_foreign_key :playable_times, :entries
+
+# endregion
+
+# region ActiveStorage
+
 create_table :active_storage_attachments, force: :cascade do |t|
   t.string :name, null: false
   t.string :record_type, null: false
@@ -22,189 +228,6 @@ create_table :active_storage_blobs, force: :cascade do |t|
 
   t.index :key, unique: true
 end
-
-create_table :administrators, force: :cascade do |t|
-  t.bigint :user_id, null: false
-  t.string :scopes, array: true, null: false, default: []
-
-  t.timestamps
-
-  t.index :user_id, unique: true
-end
-
-create_table :clients, force: :cascade do |t|
-  t.bigint :developer_id, null: false
-  t.string :auth0_id, null: false
-  t.string :name, null: false
-  t.string :description
-  t.string :logo_url, null: false
-  t.string :url
-  t.string :livelog_grant_id
-
-  t.timestamps
-
-  t.index :developer_id
-  t.index :auth0_id, unique: true
-end
-
-create_table :developers, force: :cascade do |t|
-  t.bigint :user_id, null: false
-  t.bigint :github_id, null: false
-  t.string :github_username, null: false
-  t.string :github_access_token, null: false
-
-  t.timestamps
-
-  t.index :user_id, unique: true
-  t.index :github_id, unique: true
-end
-
-create_table :donations, force: :cascade do |t|
-  t.bigint :member_id, null: false
-  t.integer :amount, null: false
-  t.date :donated_on, null: false
-
-  t.datetime :created_at, null: false
-
-  t.index :member_id
-  t.index :donated_on
-end
-
-create_table :entry_guidelines, force: :cascade do |t|
-  t.bigint :live_id, null: false
-  t.datetime :deadline, null: false
-  t.text :notes
-
-  t.timestamps
-
-  t.index :live_id, unique: true
-end
-
-create_table :entries, force: :cascade do |t|
-  t.bigint :song_id, null: false
-  t.bigint :member_id, null: false
-  t.text :notes
-  t.text :admin_memo
-
-  t.timestamps
-
-  t.index :song_id, unique: true
-  t.index :member_id
-end
-
-create_table :lives, force: :cascade do |t|
-  t.string :name, null: false
-  t.date :date, null: false
-  t.string :place
-  t.text :comment
-  t.string :album_url
-  t.boolean :published, null: false, default: false
-  t.datetime :published_at
-  t.integer :songs_count, null: false, default: 0, limit: 2
-
-  t.timestamps
-
-  t.index %i[date name], unique: true
-  t.index %i[published date]
-end
-
-create_table :members, force: :cascade do |t|
-  t.integer :joined_year, null: false, limit: 2
-  t.string :name, null: false
-  t.string :url
-  t.string :bio
-  t.integer :plays_count, null: false, default: 0, limit: 2
-
-  t.timestamps
-
-  t.index %i[name joined_year], unique: true
-  t.index %i[joined_year plays_count]
-end
-
-create_table :playable_times, force: :cascade do |t|
-  t.bigint :entry_id, null: false
-  t.tsrange :range, null: false
-
-  t.timestamps
-
-  t.index :entry_id
-  t.index :range, using: :gist
-end
-
-create_table :plays, force: :cascade do |t|
-  t.bigint :member_id, null: false
-  t.bigint :song_id, null: false
-  t.string :instrument
-
-  t.timestamps
-
-  t.index :song_id
-  t.index %i[member_id song_id], unique: true
-end
-
-create_table :songs, force: :cascade do |t|
-  t.bigint :live_id, null: false
-  t.time :time
-  t.integer :position, null: false, limit: 2
-  t.string :name, null: false
-  t.string :artist
-  t.boolean :original, null: false, default: false
-  t.integer :visibility, null: false, default: 1, limit: 2
-  t.string :youtube_id
-  t.text :comment
-
-  t.timestamps
-
-  t.index :live_id
-end
-
-create_table :user_registration_forms, force: :cascade do |t|
-  t.bigint :admin_id, null: false
-  t.string :token, null: false
-  t.datetime :expires_at, null: false
-  t.integer :used_count, null: false, default: 0
-
-  t.timestamps
-
-  t.index :admin_id
-  t.index :token, unique: true
-end
-
-create_table :users, force: :cascade do |t|
-  t.bigint :member_id, null: false
-  t.string :email, null: false
-
-  t.string :auth0_id, null: false
-  t.string :access_token
-  t.datetime :access_token_expires_at
-  t.string :refresh_token
-  t.jsonb :userinfo, null: false, default: {}
-
-  t.boolean :activated, default: false, null: false
-
-  # TODO: Remove these columns after Auth0 migration finished.
-  t.string :password_digest
-  t.boolean :subscribing, default: true, null: false
-
-  t.timestamps
-
-  t.index :member_id, unique: true
-  t.index :email, unique: true
-  t.index :auth0_id, unique: true
-  t.index :activated
-end
-
 add_foreign_key :active_storage_attachments, :active_storage_blobs, column: :blob_id
-add_foreign_key :administrators, :users
-add_foreign_key :clients, :developers
-add_foreign_key :developers, :users
-add_foreign_key :donations, :members
-add_foreign_key :entry_guidelines, :lives, column: :live_id
-add_foreign_key :entries, :members
-add_foreign_key :entries, :songs
-add_foreign_key :playable_times, :entries
-add_foreign_key :plays, :members
-add_foreign_key :plays, :songs
-add_foreign_key :songs, :lives, column: :live_id
-add_foreign_key :user_registration_forms, :administrators, column: :admin_id
-add_foreign_key :users, :members
+
+# endregion
