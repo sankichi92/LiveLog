@@ -1,3 +1,5 @@
+require 'app_auth0_client'
+
 class AuthController < ApplicationController
   before_action :require_current_user, only: :logout
 
@@ -53,11 +55,7 @@ class AuthController < ApplicationController
   def logout
     log_out
 
-    logout_uri = URI::HTTPS.build(
-      host: Rails.application.config.x.auth0.domain,
-      path: '/v2/logout',
-      query: { client_id: Rails.application.config.x.auth0.client_id }.to_query,
-    )
+    logout_uri = AppAuth0Client.instance.logout_url(root_url, include_client: true)
     redirect_to logout_uri.to_s, notice: 'ログアウトしました'
   end
 end

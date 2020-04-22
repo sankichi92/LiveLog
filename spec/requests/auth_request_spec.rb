@@ -111,14 +111,21 @@ RSpec.describe 'auth request:', type: :request do
   describe 'DELETE /logout' do
     let(:user) { create(:user) }
 
-    before { log_in_as(user) }
+    let(:auth0_client) { double(:auth0_client, logout_url: 'logout_url') }
+
+    before do
+      allow(AppAuth0Client).to receive(:instance).and_return(auth0_client)
+
+      log_in_as(user)
+    end
 
     it 'resets session and redirects with notice' do
       delete logout_path
 
-      expect(response).to have_http_status :redirect
-      expect(flash.notice).to eq 'ログアウトしました'
       expect(session[:user_id]).to be_nil
+      expect(flash.notice).to eq 'ログアウトしました'
+      expect(auth0_client).to have_received(:logout_url).with(root_url, anything)
+      expect(response).to have_http_status :redirect
     end
   end
 end
