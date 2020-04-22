@@ -5,9 +5,12 @@ GraphiQL::Rails.config.tap do |config|
   config.logo = 'LiveLog GraphiQL'
   config.csrf = false
   config.headers['Authorization'] = lambda do |context|
+    current_user = User.find_by(id: context.session[:user_id])
     cookies = Rails.env.production? ? context.cookies.encrypted : context.cookies
 
-    access_token = if cookies[:graphiql_access_token].present?
+    access_token = if current_user && current_user.auth0_credential.valid_access_token
+                     current_user.auth0_credential.valid_access_token
+                   elsif cookies[:graphiql_access_token].present?
                      cookies[:graphiql_access_token]
                    else
                      api_token = AppAuth0Client.instance.api_token(audience: Rails.application.config.x.auth0.api_audience)
