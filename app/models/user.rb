@@ -6,6 +6,7 @@ class User < ApplicationRecord
   self.ignored_columns = %i[subscribing]
 
   belongs_to :member
+  has_one :auth0_credential, dependent: :destroy
   has_one :admin, dependent: :restrict_with_exception, class_name: 'Administrator'
   has_one :developer, dependent: :restrict_with_exception
 
@@ -16,18 +17,15 @@ class User < ApplicationRecord
 
   scope :inactivated, -> { where(activated: false) }
 
-  def save_token_and_userinfo!(credentials, userinfo)
-    self.access_token = credentials[:token]
-    self.access_token_expires_at = Time.zone.at(credentials[:expires_at]) if credentials[:expires_at].present?
-    self.refresh_token = credentials[:refresh_token] if credentials[:refresh_token].present?
+  def save_credentials_and_userinfo!(credentials, userinfo)
+    build_auth0_credential if auth0_credential.nil?
 
-    self.userinfo = userinfo.to_h
     self.email = userinfo[:email] if userinfo[:email].present? && userinfo[:email_verified]
-    member.name = userinfo[:name] if userinfo[:name].present?
+    self.userinfo = userinfo.to_h
 
     transaction do
+      auth0_credential.save_with_omniauth_credentials!(credentials)
       save!
-      member.save! if member.changed?
     end
   end
 
