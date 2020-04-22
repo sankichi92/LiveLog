@@ -18,7 +18,7 @@
               %tr
                 %th{ scope: 'col' } 入部年度
                 %th{ scope: 'col' } 名前
-                - %i[scope updated_at].each do |attr|
+                - %i[scopes updated_at].each do |attr|
                   %th{ scope: 'col' }= Administrator.human_attribute_name(attr)
                 %th{ scope: 'col' } 操作
             %tbody
