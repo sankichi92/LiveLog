@@ -1,5 +1,5 @@
 module Types
-  class HttpUrl < Types::BaseScalar
+  class HttpUrl < BaseScalar
     def self.coerce_input(input_value, context)
       uri = URI.parse(input_value)
 

@@ -1,7 +1,7 @@
 module Types
-  class SongType < Types::BaseObject
+  class SongType < BaseObject
     field :id, ID, null: false
-    field :live, Types::LiveType, null: false
+    field :live, LiveType, null: false
     field :time, String, null: true, method: :time_str
     field :order, Integer, null: false, method: :position
     field :name, String, null: false

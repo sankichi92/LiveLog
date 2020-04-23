@@ -1,5 +1,5 @@
 module Types
-  class MemberType < Types::BaseObject
+  class MemberType < BaseObject
     class AvatarSize < BaseEnum
       value 'SMALL', '64x64', value: 64
       value 'MEDIUM', '192x192', value: 192
