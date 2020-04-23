@@ -8,10 +8,11 @@ module Types
     field :artist, String, null: true
     field :original, Boolean, null: false
     field :comment, String, null: true
-    field :youtube_url, HttpUrl, null: true, authorization: ->(object, args, context) { video_visible?(object, args, context) }
+    field :youtube_url, HttpUrl, null: true, authorization: ->(object, args, context) { audio_visual_visible?(object, args, context) }
+    field :audio_url, HttpUrl, null: true, authorization: ->(object, args, context) { audio_visual_visible?(object, args, context) }
     field :players, PlayerConnection, null: false, max_page_size: nil
 
-    def self.video_visible?(song, _args, context)
+    def self.audio_visual_visible?(song, _args, context)
       case song.visibility
       when 'open'
         true
@@ -25,6 +26,15 @@ module Types
     def live
       BatchLoader::GraphQL.for(object.live_id).batch do |live_ids, loader|
         Live.where(id: live_ids).each { |live| loader.call(live.id, live) }
+      end
+    end
+
+    def audio_url
+      BatchLoader::GraphQL.for(object).batch do |songs, loader|
+        ActiveRecord::Associations::Preloader.new.preload(songs, { audio_attachment: :blob })
+        songs.each do |song|
+          loader.call(song, context.url_for(song.audio)) if song.audio.attached?
+        end
       end
     end
 

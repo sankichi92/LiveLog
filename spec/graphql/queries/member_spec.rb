@@ -13,6 +13,7 @@ RSpec.describe 'GraphQL query:', type: :graphql do
             name
             url
             bio
+            avatarUrl
             playedSongs {
               edges {
                 instrument
@@ -39,6 +40,7 @@ RSpec.describe 'GraphQL query:', type: :graphql do
           name: member.name,
           url: member.url,
           bio: member.bio,
+          avatarUrl: member.avatar.attached? ? instance_of(String) : nil,
           playedSongs: {
             edges: [
               {
@@ -53,7 +55,7 @@ RSpec.describe 'GraphQL query:', type: :graphql do
       }
 
       expect(result.keys).to contain_exactly 'data'
-      expect(result['data']).to eq expected_data.deep_stringify_keys
+      expect(result['data']).to match expected_data.deep_stringify_keys
     end
   end
 end

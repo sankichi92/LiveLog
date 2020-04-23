@@ -2,6 +2,7 @@ module API
   class GraphqlController < APIController
     def execute(query = nil, variables = {}, operationName = nil)
       context = {
+        controller: self,
         auth_payload: auth_payload,
         current_user: current_user,
         current_client: current_client,

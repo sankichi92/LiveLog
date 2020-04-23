@@ -1,4 +1,6 @@
 class CustomContext < GraphQL::Query::Context
+  def_delegators :controller, :url_for
+
   def auth_payload
     self[:auth_payload] || {}
   end
@@ -21,5 +23,11 @@ class CustomContext < GraphQL::Query::Context
     else
       scopes.include?(scope)
     end
+  end
+
+  private
+
+  def controller
+    self[:controller]
   end
 end

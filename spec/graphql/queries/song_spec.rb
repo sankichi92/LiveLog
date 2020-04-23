@@ -33,7 +33,14 @@ RSpec.describe 'GraphQL query:', type: :graphql do
     let(:variables) { { id: song.id } }
     let(:context) { graphql_context(scope: scope) }
 
-    let(:song) { create(:song, visibility: :only_logged_in_users, youtube_url: 'https://www.youtube.com/watch?v=2TL90rxt9bo') }
+    let(:song) do
+      create(
+        :song,
+        visibility: :only_logged_in_users,
+        youtube_url: 'https://www.youtube.com/watch?v=2TL90rxt9bo',
+        audio: Rack::Test::UploadedFile.new("#{::Rails.root}/spec/fixtures/files/audio.mp3", 'audio/mpeg'),
+      )
+    end
     let!(:play) { create(:play, song: song) }
     let(:scope) { '' }
 
@@ -67,12 +74,13 @@ RSpec.describe 'GraphQL query:', type: :graphql do
       expect(result['data']).to eq expected_data.deep_stringify_keys
     end
 
-    context 'with youtubeUrl field' do
+    context 'with youtubeUrl and audioUrl' do
       let(:query) do
         <<~GRAPHQL
           query($id: ID!) {
             song(id: $id) {
               youtubeUrl
+              audioUrl
             }
           }
         GRAPHQL
@@ -80,6 +88,7 @@ RSpec.describe 'GraphQL query:', type: :graphql do
 
       it 'returns empty youtubeUrl' do
         expect(result['data']['song']['youtubeUrl']).to be_nil
+        expect(result['data']['song']['audioUrl']).to be_nil
       end
 
       context 'with read:songs scope' do
@@ -87,6 +96,7 @@ RSpec.describe 'GraphQL query:', type: :graphql do
 
         it 'returns youtubeUrl' do
           expect(result['data']['song']['youtubeUrl']).to eq song.youtube_url
+          expect(result['data']['song']['audioUrl']).to be_present
         end
       end
     end
