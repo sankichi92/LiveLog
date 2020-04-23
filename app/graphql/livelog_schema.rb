@@ -4,7 +4,8 @@ class LiveLogSchema < GraphQL::Schema
 
   context_class CustomContext
 
-  max_depth 15
+  max_complexity 200
+  max_depth 16
   default_max_page_size 20
 
   # region Plugins
