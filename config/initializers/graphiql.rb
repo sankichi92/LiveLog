@@ -6,16 +6,16 @@ GraphiQL::Rails.config.tap do |config|
   config.csrf = false
   config.headers['Authorization'] = lambda do |context|
     current_user = User.find_by(id: context.session[:user_id])
-    cookies = Rails.env.production? ? context.cookies.encrypted : context.cookies
+    cache_key = 'graphiql/access_token'
 
     access_token = if current_user && current_user.auth0_credential.valid_access_token
                      current_user.auth0_credential.valid_access_token
-                   elsif cookies[:graphiql_access_token].present?
-                     cookies[:graphiql_access_token]
+                   elsif Rails.cache.exist?(cache_key)
+                     Rails.cache.read(cache_key)
                    else
-                     api_token = AppAuth0Client.instance.api_token(audience: Rails.application.config.x.auth0.api_audience)
-                     cookies[:graphiql_access_token] = { value: api_token.token, expires: api_token.expires_in.seconds }
-                     api_token.token
+                     auth0_api_token = AppAuth0Client.instance.api_token(audience: Rails.application.config.x.auth0.api_audience)
+                     Rails.cache.write(cache_key, auth0_api_token.token, expires_in: auth0_api_token.expires_in.seconds)
+                     auth0_api_token.token
                    end
 
     "Bearer #{access_token}"
