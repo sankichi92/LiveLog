@@ -14,6 +14,7 @@ module Types
     field :avatar_url, HttpUrl, null: true do
       argument :size, AvatarSize, required: false
     end
+    field :played_instruments, [String], null: false
     field :played_songs, PlayedSongConnection, null: false
 
     def avatar_url(size: 64)
