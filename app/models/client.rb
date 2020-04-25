@@ -47,7 +47,7 @@ class Client < ApplicationRecord
     update!(livelog_grant_id: grant.fetch('id'))
   end
 
-  def update_auth0_client!
+  def update_auth0_client
     @info = AppAuth0Client.instance.patch_client(
       auth0_id,
       {

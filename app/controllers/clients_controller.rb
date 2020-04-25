@@ -33,7 +33,7 @@ class ClientsController < ApplicationController
   def update(client)
     @client.assign_attributes(client)
 
-    if @client.valid? && @client.update_auth0_client!
+    if @client.valid? && @client.update_auth0_client
       @client.save!
       redirect_to edit_client_path(@client), notice: '更新しました'
     else
