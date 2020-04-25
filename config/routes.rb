@@ -45,9 +45,10 @@ Rails.application.routes.draw do
   scope :settings do
     resource :profile, only: %i[show update]
     resource :email, only: %i[show update]
+    resource :developer, only: :show
   end
 
-  resources :clients, only: %i[index new create edit update destroy]
+  resources :clients, only: %i[new create edit update destroy]
 
   namespace :api do
     resources :scopes, only: :index

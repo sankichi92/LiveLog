@@ -1,5 +1,13 @@
 - provide(:title, 'アプリケーションを作成する')
 
+%aside.mb-3
+  %p.alert.alert-primary
+    LiveLog GraphQL API については
+    = link_to 'GitHub Wiki', 'https://github.com/sankichi92/LiveLog/wiki', target: '_blank', class: 'alert-link'
+    を、LiveLog アカウントを使った Single Sign-On の実装については
+    = link_to 'https://auth0.com/docs/quickstarts', 'https://auth0.com/docs/quickstarts', target: '_blank', class: 'alert-link'
+    を参照してください。
+
 %section
   = form_with model: @client, local: true do |form|
     = render 'shared/error_messages', errors: @client.errors

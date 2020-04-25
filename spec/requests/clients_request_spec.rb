@@ -3,18 +3,6 @@ require 'rails_helper'
 RSpec.describe 'clients request:', type: :request do
   include Auth0ClientHelper
 
-  describe 'GET /clients' do
-    before do
-      create_pair(:client)
-    end
-
-    it 'responds 200' do
-      get clients_path
-
-      expect(response).to have_http_status :ok
-    end
-  end
-
   describe 'GET /clients/new' do
     let(:user) { create(:user) }
 

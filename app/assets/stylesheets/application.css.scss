@@ -110,9 +110,11 @@ img {
   cursor: pointer;
 }
 
-// endregion
+.table-vertical-middle > tbody > tr > td {
+  vertical-align: middle;
+}
 
-// region Song
+// endregion
 
 .song-list {
   @extend .list-group;

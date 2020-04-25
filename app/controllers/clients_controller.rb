@@ -5,10 +5,6 @@ class ClientsController < ApplicationController
 
   permits :name, :description, :url, :logo_url, :app_type, :callback_url, :login_url, :logout_url, :allowed_origin, :jwt_signature_alg
 
-  def index
-    @clients = Client.includes(developer: { user: :member }).reverse_order
-  end
-
   def new
     @client = current_user.developer.clients.build
   end
