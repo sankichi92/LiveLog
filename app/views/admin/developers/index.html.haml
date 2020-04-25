@@ -10,20 +10,25 @@
 
 %section.content
   .container-fluid
-    %section.card
-      .card-body.p-0
-        .table-responsive
-          %table.table-admin.table.table-striped.text-nowrap.mb-0
-            %thead
-              %tr
-                %th{ scope: 'col' } 入部年度
-                %th{ scope: 'col' } 名前
-                - %i[github_username created_at].each do |attr|
-                  %th{ scope: 'col' }= Developer.human_attribute_name(attr)
-            %tbody
-              - @developers.each do |developer|
-                %tr
-                  %td= developer.user.member.joined_year
-                  %td= developer.user.member.name
-                  %td= link_to developer.github_username, github_user_url(developer.github_username)
-                  %td= l developer.created_at
+    - @developers.each do |developer|
+      %section.card
+        .card-header
+          = developer.user.member.joined_year_and_name
+          = link_to icon('fab', 'github', developer.github_username), github_user_url(developer.github_username), class: 'badge badge-primary'
+        .card-body.p-0
+          - unless developer.clients.empty?
+            .table-responsive
+              %table.table-admin.table.table-striped.text-nowrap.mb-0
+                %thead
+                  %tr
+                    %th{ scope: 'col' } ロゴ
+                    - %i[name auth0_id description created_at].each do |attr|
+                      %th{ scope: 'col' }= Client.human_attribute_name(attr)
+                %tbody
+                  - developer.clients.reverse_each do |client|
+                    %tr
+                      %td= image_tag client.logo_url, size: '32', class: 'rounded'
+                      %td= client.name
+                      %td= client.auth0_id
+                      %td= simple_format(client.description, class: 'mb-0')
+                      %td= l client.created_at

@@ -9,7 +9,9 @@ RSpec.describe 'admin/admins request:', type: :request do
 
   describe 'GET /admin/developers' do
     before do
-      create_pair(:developer)
+      create_pair(:developer).each do |developer|
+        create_pair(:client, developer: developer)
+      end
     end
 
     it 'responds 200' do
