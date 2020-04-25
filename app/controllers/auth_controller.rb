@@ -31,19 +31,15 @@ class AuthController < ApplicationController
     if current_user.nil?
       Raven.capture_message('Attempt to create a developer without log-in', extra: { github_username: auth.info.nickname }, level: :warning)
       redirect_to root_path, alert: 'ログインしてください'
-    elsif current_user.developer
-      if current_user.developer.github_id != auth.uid
-        Raven.capture_message('Re-authorized GitHub with a different account', extra: { github_username: auth.info.nickname }, level: :warning)
-      end
-      redirect_to clients_path, alert: 'すでに登録済みです'
     else
-      current_user.create_developer!(
+      developer = current_user.developer || current_user.build_developer
+      developer.update!(
         github_id: auth.uid,
         github_username: auth.info.nickname,
         github_access_token: auth.credentials.token,
       )
       DeveloperActivityNotifyJob.perform_later(user: current_user, text: "開発者登録しました: #{auth.info.nickname}")
-      redirect_to clients_path, notice: '開発者登録しました'
+      redirect_to developer_path, notice: '開発者登録しました'
     end
   end
 

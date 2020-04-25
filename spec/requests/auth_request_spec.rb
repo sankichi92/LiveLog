@@ -83,7 +83,7 @@ RSpec.describe 'auth request:', type: :request do
 
         expect(user.reload.developer).to be_persisted
         expect(user.developer.github_username).to eq github_username
-        expect(response).to redirect_to clients_path
+        expect(response).to redirect_to developer_path
       end
     end
 

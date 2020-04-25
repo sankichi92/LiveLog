@@ -22,10 +22,22 @@ RSpec.describe 'clients request:', type: :request do
         user.developer.destroy!
       end
 
-      it 'redirects to /clients' do
+      it 'redirects to /settings/developer' do
         get new_client_path
 
-        expect(response).to redirect_to clients_path
+        expect(response).to redirect_to developer_path
+      end
+    end
+
+    context 'without github_access_token' do
+      before do
+        user.developer.update!(github_access_token: nil)
+      end
+
+      it 'redirects to /settings/developer' do
+        get new_client_path
+
+        expect(response).to redirect_to developer_path
       end
     end
   end
@@ -40,7 +52,9 @@ RSpec.describe 'clients request:', type: :request do
         },
       }
     end
+    let(:name) { 'LiveLog' }
 
+    let(:octokit_client) { instance_double(Octokit::Client, user: { avatar_url: 'https://example.com/github_avatar_url' }) }
     let(:auth0_client) do
       double(:auth0_client).tap do |auth0_client|
         allow(auth0_client).to receive(:create_client).and_return({ 'client_id' => 'auth0_client_id' })
@@ -49,22 +63,16 @@ RSpec.describe 'clients request:', type: :request do
     end
 
     before do
-      allow(Octokit::Client).to receive(:new).with(access_token: developer.github_access_token).and_return(
-        double(:octokit_client, user: { avatar_url: 'https://example.com/github_avatar_url' }),
-      )
+      allow(Octokit::Client).to receive(:new).with(access_token: developer.github_access_token).and_return(octokit_client)
       allow(AppAuth0Client).to receive(:instance).and_return(auth0_client)
 
       log_in_as developer.user
     end
 
-    context 'with valid params' do
-      let(:name) { 'LiveLog' }
+    it 'creates a client and redirects to /clients' do
+      expect { post clients_path, params: params }.to change(Client, :count).by(1)
 
-      it 'creates a client and redirects to /clients' do
-        expect { post clients_path, params: params }.to change(Client, :count).by(1)
-
-        expect(response).to have_http_status :redirect
-      end
+      expect(response).to have_http_status :redirect
     end
 
     context 'with invalid params' do
@@ -74,6 +82,18 @@ RSpec.describe 'clients request:', type: :request do
         expect { post clients_path, params: params }.not_to change(Client, :count)
 
         expect(response).to have_http_status :unprocessable_entity
+      end
+    end
+
+    context 'when github_access_token has been revoked' do
+      before do
+        allow(octokit_client).to receive(:user).and_raise(Octokit::Unauthorized)
+      end
+
+      it 'redirects to /settings/developer' do
+        expect { post clients_path, params: params }.not_to change(Client, :count)
+
+        expect(response).to redirect_to developer_path
       end
     end
   end
@@ -98,10 +118,10 @@ RSpec.describe 'clients request:', type: :request do
         log_in_as create(:user)
       end
 
-      it 'redirects to /clients' do
+      it 'redirects to /settings/developer' do
         get edit_client_path(client)
 
-        expect(response).to redirect_to clients_path
+        expect(response).to redirect_to developer_path
       end
     end
   end
@@ -181,12 +201,12 @@ RSpec.describe 'clients request:', type: :request do
       log_in_as client.developer.user
     end
 
-    it 'destroys the client and redirects to /clients' do
+    it 'destroys the client and redirects to /settings/developer' do
       delete client_path(client)
 
       expect(auth0_client).to have_received(:delete_client).with(client.auth0_id)
       expect { client.reload }.to raise_error(ActiveRecord::RecordNotFound)
-      expect(response).to redirect_to clients_path
+      expect(response).to redirect_to developer_path
     end
   end
 end

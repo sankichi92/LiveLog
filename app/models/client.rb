@@ -21,15 +21,14 @@ class Client < ApplicationRecord
 
   validates :name, presence: true
   validates :description, length: { maximum: 140 }
-  validates :logo_url, format: { with: /\A#{URI::DEFAULT_PARSER.make_regexp(%w[http https])}\z/ }, allow_blank: true
+  validates :logo_url, format: { with: /\A#{URI::DEFAULT_PARSER.make_regexp(%w[http https])}\z/ }
   validates :app_type, presence: true, inclusion: { in: APP_TYPES }
   validates :jwt_signature_alg, inclusion: { in: JWT_SIGNATURE_ALGORITHMS }, allow_blank: true
 
   def create_auth0_client!
     raise AlreadyCreatedError, "Auth0 Client is already created: #{auth0_id}" if auth0_id.present?
 
-    validate!(:create)
-    self.logo_url = developer.avatar_url
+    validate!
 
     @info = AppAuth0Client.instance.create_client(
       name,

@@ -8,7 +8,22 @@ RSpec.describe 'developers request:', type: :request do
       log_in_as user
     end
 
-    context 'without developer' do
+    it 'responds 200' do
+      get developer_path
+
+      expect(response).to have_http_status(:ok)
+    end
+
+    context 'with developer' do
+      before do
+        developer = create(:developer, user: user)
+        create_list(:client, Faker::Number.within(range: 0..2), developer: developer)
+
+        allow(Octokit::Client).to receive(:new).with(access_token: developer.github_access_token).and_return(
+          instance_double(Octokit::Client, user: {}),
+        )
+      end
+
       it 'responds 200' do
         get developer_path
 
@@ -16,10 +31,14 @@ RSpec.describe 'developers request:', type: :request do
       end
     end
 
-    context 'with developer' do
+    context 'with developer but their github_access_token has been revoked' do
       before do
         developer = create(:developer, user: user)
-        create_pair(:client, developer: developer)
+        create_list(:client, Faker::Number.within(range: 0..2), developer: developer)
+
+        allow(Octokit::Client).to receive(:new).with(access_token: developer.github_access_token).and_return(
+          instance_double(Octokit::Client).tap { |client| allow(client).to receive(:user).and_raise(Octokit::Unauthorized) },
+        )
       end
 
       it 'responds 200' do

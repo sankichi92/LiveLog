@@ -2,14 +2,18 @@ class Developer < ApplicationRecord
   belongs_to :user
   has_many :clients, dependent: :restrict_with_exception
 
-  def avatar_url
-    userinfo.fetch(:avatar_url)
-  end
-
-  def userinfo
-    @userinfo ||= github_client.user.to_h.tap do |info|
-      update!(github_username: info[:login]) if info[:login].present? && info[:login] != github_username
+  def fetch_github_user!
+    github_client.user.to_h.tap do |user|
+      update!(github_username: user[:login]) if user[:login].present? && user[:login] != github_username
     end
+  rescue Octokit::Unauthorized => e
+    Raven.capture_exception(e, level: :debug)
+    if clients.empty?
+      destroy!
+    else
+      update!(github_access_token: nil)
+    end
+    raise e
   end
 
   private

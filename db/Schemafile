@@ -142,7 +142,7 @@ create_table :developers, force: :cascade do |t|
   t.bigint :user_id, null: false
   t.bigint :github_id, null: false
   t.string :github_username, null: false
-  t.string :github_access_token, null: false
+  t.string :github_access_token
 
   t.timestamps
 

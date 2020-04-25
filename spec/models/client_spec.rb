@@ -7,10 +7,6 @@ RSpec.describe Client, type: :model do
     let(:auth0_client) { spy(:app_auth0_client) }
 
     before do
-      allow(Octokit::Client).to receive(:new).with(access_token: client.developer.github_access_token).and_return(
-        double(:octokit_client, user: { avatar_url: 'https://example.com/github_avatar_url' }),
-      )
-
       allow(auth0_client).to receive(:create_client).and_return({ 'client_id' => 'auth0_client_id' })
       allow(AppAuth0Client).to receive(:instance).and_return(auth0_client)
     end

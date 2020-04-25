@@ -6,11 +6,14 @@ class ClientsController < ApplicationController
   permits :name, :description, :logo_url, :app_type, :callback_url, :login_url, :logout_url, :allowed_origin, :jwt_signature_alg
 
   def new
-    @client = current_user.developer.clients.build
+    @client = Client.new
   end
 
   def create(client)
-    @client = current_user.developer.clients.build(client)
+    @client = Client.new(client)
+    @client.developer = current_user.developer
+    github_user = current_user.developer.fetch_github_user!
+    @client.logo_url = github_user[:avatar_url]
 
     if @client.valid?
       @client.create_auth0_client!
@@ -20,6 +23,8 @@ class ClientsController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
+  rescue Octokit::Unauthorized
+    redirect_to developer_path, alert: 'GitHub アカウントを再連携してください'
   end
 
   def edit
@@ -39,7 +44,7 @@ class ClientsController < ApplicationController
   def destroy
     @client.destroy_with_auth0_client!
     DeveloperActivityNotifyJob.perform_later(user: current_user, text: "アプリケーションを削除しました: #{@client.name}")
-    redirect_to clients_path, notice: "#{@client.name} を削除しました"
+    redirect_to developer_path, notice: "#{@client.name} を削除しました"
   end
 
   private
@@ -47,12 +52,12 @@ class ClientsController < ApplicationController
   # region Filters
 
   def require_developer
-    redirect_to clients_path, alert: '開発者登録してください' if current_user.developer.nil?
+    redirect_to developer_path, alert: '開発者登録してください' if current_user.developer.nil? || current_user.developer.github_access_token.nil?
   end
 
   def require_owner(id)
     @client = Client.find(id)
-    redirect_to clients_path, alert: '権限がありません' if current_user != @client.developer.user
+    redirect_to developer_path, alert: '権限がありません' if current_user != @client.developer.user
   end
 
   # endregion

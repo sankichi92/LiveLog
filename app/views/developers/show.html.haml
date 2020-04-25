@@ -16,9 +16,11 @@
       や LiveLog アカウントによる Single Sign-On を利用するアプリケーションを開発できるようになります。
 
   - else
-    %p=link_to icon('fab', 'github', @developer.github_username), github_user_url(@developer.github_username), target: '_blank', class: 'badge badge-info'
-
-    %p= link_to icon('fas', 'plus', 'アプリケーションを登録する'), new_client_path, class: 'btn btn-outline-primary'
+    - if @developer.github_access_token.nil?
+      %p= link_to icon('fab', 'github', 'GitHub アカウントを再連携する'), '/auth/github', method: :post, class: 'btn btn-outline-info'
+    - else
+      %p=link_to icon('fab', 'github', @developer.github_username), github_user_url(@developer.github_username), target: '_blank', class: 'badge badge-info'
+      %p= link_to icon('fas', 'plus', 'アプリケーションを登録する'), new_client_path, class: 'btn btn-outline-primary'
 
     - unless @developer.clients.empty?
       .table-responsive
