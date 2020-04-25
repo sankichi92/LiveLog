@@ -29,11 +29,6 @@
     = form.text_area :description, class: 'form-control'
 
   .form-group
-    = form.label :url
-    = form.url_field :url, class: 'form-control'
-    %small.form-text.text-muted LiveLog 独自の項目です。アプリケーション一覧からリンクする URL を入力してください
-
-  .form-group
     = form.label :logo_url
     = form.url_field :logo_url, required: true, class: 'form-control'
 

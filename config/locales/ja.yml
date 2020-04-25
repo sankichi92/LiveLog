@@ -50,7 +50,6 @@ ja:
         client_secret: Client Secret
         name: 名前
         description: 説明
-        url: URL
         logo_url: ロゴ URL
         app_type: アプリケーションの種類
         callback_url: Callback URL

@@ -113,7 +113,6 @@ RSpec.describe 'clients request:', type: :request do
         client: {
           name: client.name,
           description: description,
-          url: client.url,
           logo_url: client.logo_url,
           app_type: client.app_type,
           callback_url: 'https://example.com/callback',
