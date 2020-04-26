@@ -17,7 +17,7 @@ module Auth0ClientHelper
         callbacks: nil,
         initiate_login_uri: nil,
         allowed_logout_urls: nil,
-        allowed_origins: nil,
+        web_origins: nil,
       }.compact.stringify_keys.slice(*fields),
     )
   end

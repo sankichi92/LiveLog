@@ -138,7 +138,7 @@ RSpec.describe 'clients request:', type: :request do
           callback_url: 'https://example.com/callback',
           login_url: 'https://example.com/login',
           logout_url: 'https://example.com/logout',
-          allowed_origin: 'https://example.com',
+          web_origin: 'https://example.com',
           jwt_signature_alg: 'RS256',
         },
       }

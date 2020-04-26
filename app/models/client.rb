@@ -9,7 +9,7 @@ class Client < ApplicationRecord
     callbacks
     initiate_login_uri
     allowed_logout_urls
-    allowed_origins
+    web_origins
     jwt_configuration.alg
   ].freeze
 
@@ -17,7 +17,7 @@ class Client < ApplicationRecord
 
   belongs_to :developer
 
-  attr_writer :app_type, :callback_url, :login_url, :logout_url, :allowed_origin, :jwt_signature_alg
+  attr_writer :app_type, :callback_url, :login_url, :logout_url, :web_origin, :jwt_signature_alg
 
   validates :name, presence: true
   validates :description, length: { maximum: 140 }
@@ -58,7 +58,7 @@ class Client < ApplicationRecord
         callbacks: [callback_url.presence].compact,
         initiate_login_uri: login_url,
         allowed_logout_urls: [logout_url.presence].compact,
-        allowed_origins: [allowed_origin.presence].compact,
+        web_origins: [web_origin.presence].compact,
         jwt_configuration: {
           alg: jwt_signature_alg,
         },
@@ -95,8 +95,8 @@ class Client < ApplicationRecord
     @logout_url ||= info['allowed_logout_urls']&.first
   end
 
-  def allowed_origin
-    @allowed_origin ||= info['allowed_origins']&.first
+  def web_origin
+    @web_origin ||= info['web_origins']&.first
   end
 
   def jwt_signature_alg
