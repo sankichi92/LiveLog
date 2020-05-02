@@ -47,7 +47,7 @@ RSpec.describe 'admin/admins request:', type: :request do
       let(:params) do
         {
           administrator: {
-            scope: %w[write:lives],
+            scopes: %w[write:lives],
           },
         }
       end
@@ -64,7 +64,7 @@ RSpec.describe 'admin/admins request:', type: :request do
       let(:params) do
         {
           administrator: {
-            scope: 'invalid',
+            scopes: 'invalid',
           },
         }
       end
