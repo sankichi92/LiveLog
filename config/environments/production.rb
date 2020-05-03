@@ -102,6 +102,8 @@ Rails.application.configure do
 
   Elasticsearch::Model.client = Elasticsearch::Client.new(url: ENV.fetch('SEARCHBOX_SSL_URL'))
 
+  Cloudinary.config.secure = true
+
   # Inserts middleware to perform automatic connection switching.
   # The `database_selector` hash is used to pass options to the DatabaseSelector
   # middleware. The `delay` is used to determine how long to wait after a write
