@@ -51,11 +51,13 @@ RSpec.describe 'profiles request:', type: :request do
         }
       end
       let(:cloudinary_uploader) { class_spy(Cloudinary::Uploader).as_stubbed_const }
+      let(:auth0_client) { spy(:app_auth0_client) }
 
       before do
         allow(cloudinary_uploader).to receive(:upload) do |_file, options|
           { 'public_id' => options[:public_id] }
         end
+        allow(AppAuth0Client).to receive(:instance).and_return(auth0_client)
       end
 
       it "updates the logged-in user's profile, uploads avatar to Cloudinary and redirects to their profile" do
@@ -63,6 +65,7 @@ RSpec.describe 'profiles request:', type: :request do
 
         expect(cloudinary_uploader).to have_received(:upload).with(anything, hash_including(public_id: member.id))
         expect(member.avatar).to be_persisted
+        expect(auth0_client).to have_received(:patch_user).with(user.auth0_id, name: 'ギータ', picture: String).once
         expect(response).to redirect_to user.member
       end
     end
