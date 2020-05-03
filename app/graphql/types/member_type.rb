@@ -18,15 +18,9 @@ module Types
     field :played_songs, PlayedSongConnection, null: false
 
     def avatar_url(size: 64)
-      BatchLoader::GraphQL.for(object).batch do |members, loader|
-        ActiveRecord::Associations::Preloader.new.preload(members, [:user, { avatar_attachment: :blob }])
-        members.each do |member|
-          url = if member.avatar.attached? && member.avatar.variable?
-                  context.url_for(member.avatar.variant(resize_to_fill: [size, size]))
-                elsif member.user&.activated?
-                  "https://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(object.user.email)}?s=#{size}&d=mm"
-                end
-          loader.call(member, url) if url
+      BatchLoader::GraphQL.for(object.id).batch do |member_ids, loader|
+        Avatar.where(member_id: member_ids).each do |avatar|
+          loader.call(avatar.member_id, avatar.cloudinary_url(size))
         end
       end
     end

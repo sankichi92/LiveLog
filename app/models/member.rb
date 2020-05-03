@@ -1,14 +1,14 @@
 class Member < ApplicationRecord
   MINIMUM_JOINED_YEAR = 1995
 
-  has_one :new_avatar, dependent: :destroy, class_name: 'Avatar', inverse_of: :member
+  has_one :avatar, dependent: :destroy
   has_one :user, dependent: :restrict_with_exception
   has_many :plays, dependent: :restrict_with_exception
   has_many :published_songs, -> { published }, through: :plays, source: :song
   has_many :entries, dependent: :restrict_with_exception
   has_many :donations, dependent: :restrict_with_exception
 
-  has_one_attached :avatar
+  has_one_attached :old_avatar
 
   validates :joined_year,
             presence: true,

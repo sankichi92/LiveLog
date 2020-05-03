@@ -8,13 +8,13 @@
 = render 'settings/nav'
 
 %section
-  = form_with model: @member, url: profile_path, local: true do |form|
+  = form_with model: @member, url: profile_path, local: true, multipart: true do |form|
 
     = render 'shared/error_messages', errors: @member.errors
 
     .form-group
-      = form.label :avatar
-      = form.file_field :avatar, direct_upload: true, accept: 'image/png,image/gif,image/jpeg', class: 'form-control-file'
+      = label_tag :avatar, 'プロフィール画像'
+      = file_field_tag :avatar, accept: 'image/png,image/gif,image/jpeg', class: 'form-control-file'
 
     .form-group
       = form.label :name

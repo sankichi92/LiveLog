@@ -8,6 +8,9 @@ RSpec.describe 'Settings:', type: :system do
     member = create(:member, name: 'ベス', url: nil, bio: nil, avatar: nil)
     user = create(:user, member: member)
     allow(auth0_client_double).to receive(:patch_user).with(user.auth0_id, anything)
+    allow(Cloudinary::Uploader).to receive(:upload) do |_file, options|
+      { 'public_id' => options[:public_id] }
+    end
     log_in_as user
 
     # When

@@ -20,7 +20,7 @@ class SongsController < ApplicationController
   end
 
   def show(id)
-    @song = Song.published.includes(plays: { member: [:user, { 'avatar_attachment': :blob }] }).find(id)
+    @song = Song.published.includes(plays: { member: [:avatar, :user] }).find(id)
     begin
       @related_songs = @song.more_like_this.records(includes: [:live, { plays: :member }]).to_a
     rescue => e

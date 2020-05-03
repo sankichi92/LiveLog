@@ -4,13 +4,6 @@ FactoryBot.define do
     name { Faker::Name.unique.last_name }
     url { Faker::Boolean.boolean(true_ratio: 0.2) ? Faker::Internet.url : nil }
     bio { Faker::Boolean.boolean ? Faker::Lorem.sentence : nil }
-    avatar do
-      if Faker::Boolean.boolean(true_ratio: 0.2)
-        Rack::Test::UploadedFile.new("#{::Rails.root}/spec/fixtures/files/avatar.png", 'image/png')
-      else
-        nil
-      end
-    end
 
     trait :with_user do
       user
@@ -25,5 +18,10 @@ FactoryBot.define do
         create(:play, song: song, user: member)
       end
     end
+  end
+
+  factory :avatar do
+    member
+    cloudinary_id { "avatar/#{member.id}" }
   end
 end

@@ -41,7 +41,7 @@ RSpec.describe 'GraphQL query:', type: :graphql do
           name: member.name,
           url: member.url,
           bio: member.bio,
-          avatarUrl: member.avatar.attached? ? String : nil,
+          avatarUrl: member.avatar ? String : nil,
           playedInstruments: Array,
           playedSongs: {
             edges: [

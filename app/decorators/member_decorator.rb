@@ -1,14 +1,12 @@
 module MemberDecorator
-  IMAGE_PX_BY_SIZE = { small: 64, medium: 192, large: 384 }.freeze
+  IMAGE_PX_BY_SIZE = { small: 16 * 2 * 2, medium: 16 * 6 * 2, large: 16 * 12 * 2 }.freeze
 
   def avatar_url(size = :small)
     px = IMAGE_PX_BY_SIZE[size]
-    if avatar.attached? && avatar.variable?
-      avatar.variant(resize_to_fill: [px, px])
-    elsif user&.activated?
-      "https://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(user.email)}?s=#{px}&d=mm"
+    if avatar
+      avatar.cloudinary_url(px)
     else
-      "https://www.gravatar.com/avatar/?s=#{px}&d=mm&f=t"
+      "https://www.gravatar.com/avatar/#{user&.activated? ? Digest::MD5.hexdigest(user.email) : ''}?s=#{px}&d=mm"
     end
   end
 
