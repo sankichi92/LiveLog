@@ -20,7 +20,7 @@ module Admin
           user: current_user,
           operation: '作成しました',
           object: @user_registration_form,
-          detail: @user_registration_form.as_json,
+          detail: @user_registration_form.as_json(except: :token),
           url: admin_user_registration_forms_url,
         )
         redirect_to admin_user_registration_forms_path, notice: "ID: #{@user_registration_form.id} を作成しました"
