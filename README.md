@@ -21,11 +21,10 @@ Protected by OAuth 2.0.
 - [PostgreSQL](https://www.postgresql.org/)
 - [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/) 6.x
   - with [Japanese (kuromoji) Analysis Plugin](https://www.elastic.co/guide/en/elasticsearch/plugins/current/analysis-kuromoji.html)
-- [ImageMagick](https://imagemagick.org/)
 
 If you're using macOS and [Homebrew](https://brew.sh/), you can setup them by the following commands:
 
-    $ brew install rbenv yarn postgresql elasticsearch imagemagick
+    $ brew install rbenv yarn postgresql elasticsearch
     $ rbenv install 2.7.1
     $ brew services start postgresql
     $ elasticsearch-plugin install analysis-kuromoji
@@ -59,7 +58,7 @@ This script is idempotent, so that you can run it at anytime and get an expectab
 
 ### Create the first admin user
 
-1. Sign up [Auth0](https://auth0.com/) and create an application (regular web)
+1. Sign up for [Auth0](https://auth0.com/) and create an application (regular web)
 2. Overwrite `AUTH0_*` values in `.env` by your Auth0 application settings
 3. Run `bin/rails db:seed:replant`
 
@@ -74,6 +73,11 @@ Edit `db/Schemafile` and run:
 ### Rebuild Elasticsearch index
 
     $ bin/rake elasticsearch:import:song FORCE=y
+
+### Enable to upload avatar images
+
+1. Sign up for [Cloudinary](https://cloudinary.com/)
+2. Overwrite `CLOUDINARY_URL` value in `.env`
 
 ## Contributing
 
