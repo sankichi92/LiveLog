@@ -1,9 +1,9 @@
 module Types
   class MemberType < BaseObject
     class AvatarSize < BaseEnum
-      value 'SMALL', '64x64', value: 64
-      value 'MEDIUM', '192x192', value: 192
-      value 'LARGE', '384x384', value: 384
+      value 'SMALL', '64x64', value: :small
+      value 'MEDIUM', '192x192', value: :medium
+      value 'LARGE', '384x384', value: :large
     end
 
     field :id, ID, null: false
@@ -17,10 +17,10 @@ module Types
     field :played_instruments, [String], null: false
     field :played_songs, PlayedSongConnection, null: false
 
-    def avatar_url(size: 64)
+    def avatar_url(size: :small)
       BatchLoader::GraphQL.for(object.id).batch do |member_ids, loader|
         Avatar.where(member_id: member_ids).each do |avatar|
-          loader.call(avatar.member_id, avatar.image_url(size))
+          loader.call(avatar.member_id, avatar.image_url(size: size))
         end
       end
     end

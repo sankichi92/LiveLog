@@ -21,7 +21,7 @@ class ProfilesController < ApplicationController
         current_user.update_auth0_user!(
           {
             name: @member.name,
-            picture: @member.avatar&.image_url(192),
+            picture: @member.avatar&.image_url(size: :medium),
           }.compact,
         )
       end

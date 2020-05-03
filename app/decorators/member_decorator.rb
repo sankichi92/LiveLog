@@ -1,12 +1,9 @@
 module MemberDecorator
-  IMAGE_PX_BY_SIZE = { small: 16 * 2 * 2, medium: 16 * 6 * 2, large: 16 * 12 * 2 }.freeze
-
   def avatar_url(size = :small)
-    px = IMAGE_PX_BY_SIZE[size]
     if avatar
-      avatar.image_url(px)
+      avatar.image_url(size: size)
     else
-      "https://www.gravatar.com/avatar/#{user&.activated? ? Digest::MD5.hexdigest(user.email) : ''}?s=#{px}&d=mm"
+      "https://www.gravatar.com/avatar/#{user&.activated? ? Digest::MD5.hexdigest(user.email) : ''}?s=#{Avatar::IMAGE_PX_BY_SIZE[size]}&d=mm"
     end
   end
 
