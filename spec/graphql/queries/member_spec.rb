@@ -30,7 +30,7 @@ RSpec.describe 'GraphQL query:', type: :graphql do
     let(:variables) { { id: member.id } }
     let(:context) { graphql_context }
 
-    let(:member) { create(:member) }
+    let(:member) { create(:member, avatar: create(:avatar)) }
     let!(:play) { create(:play, member: member) }
 
     it 'returns Member' do
@@ -41,7 +41,7 @@ RSpec.describe 'GraphQL query:', type: :graphql do
           name: member.name,
           url: member.url,
           bio: member.bio,
-          avatarUrl: member.avatar ? String : nil,
+          avatarUrl: member.avatar.image_url(64),
           playedInstruments: Array,
           playedSongs: {
             edges: [
