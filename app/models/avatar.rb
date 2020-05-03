@@ -1,5 +1,5 @@
 class Avatar < ApplicationRecord
-  belongs_to :member
+  belongs_to :member, touch: true
 
   def upload_and_save!(file)
     response = Cloudinary::Uploader.upload(
