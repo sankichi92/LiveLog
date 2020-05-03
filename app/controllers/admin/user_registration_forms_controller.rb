@@ -5,7 +5,7 @@ module Admin
     permits :active_days
 
     def index
-      @user_registration_forms = UserRegistrationForm.includes(admin: { user: :member }).all.reverse_order
+      @user_registration_forms = UserRegistrationForm.includes(admin: { user: { member: :avatar } }).all.reverse_order
     end
 
     def new

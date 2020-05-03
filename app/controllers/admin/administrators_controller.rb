@@ -3,7 +3,7 @@ module Admin
     before_action -> { require_scope('write:admins') }, only: %i[create edit update destroy]
 
     def index
-      @admins = Administrator.eager_load(user: :member).order('members.joined_year': :desc, 'members.plays_count': :desc)
+      @admins = Administrator.eager_load(user: { member: :avatar }).order('members.joined_year': :desc, 'members.plays_count': :desc)
     end
 
     def create(member_id)

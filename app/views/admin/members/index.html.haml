@@ -30,7 +30,9 @@
               - @members.each do |member|
                 %tr
                   %td= member.id
-                  %td= member.name
+                  %td
+                    = member.avatar_image_tag
+                    = member.name
                   %td= member.plays_count
                   %td= member.user&.status_badge
                   %td

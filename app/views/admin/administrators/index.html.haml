@@ -25,7 +25,9 @@
               - @admins.each do |admin|
                 %tr
                   %td= admin.user.member.joined_year
-                  %td= admin.user.member.name
+                  %td
+                    = admin.user.member.avatar_image_tag
+                    = admin.user.member.name
                   %td
                     %ul.list-unstyled.mb-0
                       - admin.scopes.each do |scope|

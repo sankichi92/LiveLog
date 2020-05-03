@@ -9,6 +9,13 @@
 @import "font-awesome-sprockets";
 @import "font-awesome";
 
+img {
+  &.small {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
 .table-admin > tbody > tr > td {
   vertical-align: middle;
 }
