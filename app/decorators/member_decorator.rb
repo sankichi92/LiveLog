@@ -4,7 +4,7 @@ module MemberDecorator
   def avatar_url(size = :small)
     px = IMAGE_PX_BY_SIZE[size]
     if avatar
-      avatar.cloudinary_url(px)
+      avatar.image_url(px)
     else
       "https://www.gravatar.com/avatar/#{user&.activated? ? Digest::MD5.hexdigest(user.email) : ''}?s=#{px}&d=mm"
     end

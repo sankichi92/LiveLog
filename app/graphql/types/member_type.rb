@@ -20,7 +20,7 @@ module Types
     def avatar_url(size: 64)
       BatchLoader::GraphQL.for(object.id).batch do |member_ids, loader|
         Avatar.where(member_id: member_ids).each do |avatar|
-          loader.call(avatar.member_id, avatar.cloudinary_url(size))
+          loader.call(avatar.member_id, avatar.image_url(size))
         end
       end
     end

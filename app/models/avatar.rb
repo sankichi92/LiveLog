@@ -10,7 +10,7 @@ class Avatar < ApplicationRecord
     update!(cloudinary_id: response['public_id'], metadata: response.except('public_id'))
   end
 
-  def cloudinary_url(size)
+  def image_url(size)
     Cloudinary::Utils.cloudinary_url(
       cloudinary_id,
       sign_url: true,
