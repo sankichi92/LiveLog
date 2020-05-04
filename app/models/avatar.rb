@@ -1,5 +1,5 @@
 class Avatar < ApplicationRecord
-  IMAGE_PX_BY_SIZE = {
+  SIZE_TO_PIXEL = {
     small:  16 *  2 * 2,
     medium: 16 *  6 * 2,
     large:  16 * 12 * 2,
@@ -18,17 +18,16 @@ class Avatar < ApplicationRecord
   end
 
   def image_url(size: :small)
-    px = IMAGE_PX_BY_SIZE[size]
     Cloudinary::Utils.cloudinary_url(
       cloudinary_id,
       sign_url: true,
       transformation: [
         {
-          width: px,
-          height: px,
-          gravity: 'faces',
+          width: SIZE_TO_PIXEL[size],
+          aspect_ratio: 1,
           crop: 'fill',
-          quality: 'auto',
+          gravity: 'face:auto',
+          quality: 'auto:good',
           fetch_format: 'auto',
         },
       ],
