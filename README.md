@@ -38,13 +38,13 @@ If you're using macOS and [Homebrew](https://brew.sh/), you can setup them by th
     $ git clone https://github.com/sankichi92/LiveLog.git
     $ cd LiveLog
 
-### Setup or update your development environment
+### Setup your development environment
 
     $ bin/setup
 
 This script is idempotent, so that you can run it at anytime and get an expectable outcome.
 
-### Run the app in your local web server
+### Run the app on your local web server
 
     $ bin/rails server
 
