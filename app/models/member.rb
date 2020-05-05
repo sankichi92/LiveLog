@@ -8,8 +8,6 @@ class Member < ApplicationRecord
   has_many :entries, dependent: :restrict_with_exception
   has_many :donations, dependent: :restrict_with_exception
 
-  has_one_attached :old_avatar
-
   validates :joined_year,
             presence: true,
             numericality: { only_integer: true, greater_than_or_equal_to: MINIMUM_JOINED_YEAR, less_than_or_equal_to: Time.zone.now.year }

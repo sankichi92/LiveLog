@@ -14,7 +14,6 @@ gem 'webpacker'
 gem 'redis'
 
 gem 'aws-sdk-s3', require: false
-gem 'image_processing'
 
 gem 'bootsnap', require: false
 
