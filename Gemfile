@@ -11,44 +11,40 @@ gem 'puma'
 gem 'sass-rails'
 gem 'webpacker'
 
-gem 'redis'
-
-gem 'aws-sdk-s3', require: false
-
-gem 'bootsnap', require: false
-
 gem 'action_args'
 gem 'active_decorator'
 gem 'acts_as_list'
+gem 'auth0'
+gem 'aws-sdk-s3', require: false
+gem 'bootsnap', require: false
+gem 'cloudinary'
 gem 'commonmarker'
+gem 'elasticsearch', '~> 6.8'
+gem 'elasticsearch-dsl'
+gem 'elasticsearch-rails', '~> 6.1'
 gem 'font-awesome-sass'
+gem 'graphiql-rails'
 gem 'haml-rails'
 gem 'kaminari'
 gem 'kaminari-i18n'
-gem 'rack-timeout'
-gem 'rails-i18n'
-gem 'ridgepole', require: false
-
+gem 'octokit'
 gem 'omniauth'
 gem 'omniauth-auth0'
 gem 'omniauth-github'
 gem 'omniauth-rails_csrf_protection'
-
-gem 'elasticsearch', '~> 6.8'
-gem 'elasticsearch-dsl'
-gem 'elasticsearch-model', '~> 6.1'
-gem 'elasticsearch-rails', '~> 6.1'
-
-gem 'auth0'
-gem 'cloudinary'
-gem 'octokit'
+gem 'rack-timeout'
+gem 'rails-i18n'
+gem 'redis'
+gem 'ridgepole', require: false
 gem 'sentry-raven'
 gem 'slack-ruby-client'
 gem 'twitter'
 
+# Must be after 'kaminari'
+gem 'elasticsearch-model', '~> 6.1'
+
 # API
 gem 'batch-loader'
-gem 'graphiql-rails'
 gem 'graphql'
 gem 'jwt'
 
