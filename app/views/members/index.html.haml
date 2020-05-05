@@ -6,4 +6,4 @@
     = link_to year, year_members_path(year: year), class: "nav-item nav-link#{year == @year ? ' active' : ''}"
 
 .row
-  = render partial: 'member', collection: @members, cached: true
+  = render @members
