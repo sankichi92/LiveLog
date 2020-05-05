@@ -6,7 +6,7 @@
 
     .song-info.col
       .text-muted
-        = song.live.title unless current_page?(song.live) || params[:controller] == 'entries'
+        = song.live.title unless current_page?(song.live)
         = song.time_and_position
 
       %h5
