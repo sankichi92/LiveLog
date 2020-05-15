@@ -10,7 +10,7 @@
     "@sentry/browser": "^5.15.5",
     "@ttskch/select2-bootstrap4-theme": "^1.4.0",
     "admin-lte": "^3.0.4",
-    "bootstrap": "^4.4.1",
+    "bootstrap": "^4.5.0",
     "datatables.net": "^1.10.20",
     "datatables.net-bs4": "^1.10.21",
     "jquery": "^3.5.0",
