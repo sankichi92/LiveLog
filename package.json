@@ -13,7 +13,7 @@
     "bootstrap": "^4.5.0",
     "datatables.net": "^1.10.20",
     "datatables.net-bs4": "^1.10.21",
-    "jquery": "^3.5.0",
+    "jquery": "^3.5.1",
     "select2": "^4.0.13",
     "stimulus": "^1.1.1"
   },
