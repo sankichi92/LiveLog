@@ -1307,10 +1307,10 @@ acorn@^7.1.1:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-7.2.0.tgz#17ea7e40d7c8640ff54a694c889c26f31704effe"
   integrity sha512-apwXVmYVpQ34m/i71vrApRrRKCWQnZZF1+npOD0WV5xZFfwWOmKGQ2RWlfdy9vWITsenisM8M0Qeq8agcFHNiQ==
 
-admin-lte@^3.0.4:
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/admin-lte/-/admin-lte-3.0.4.tgz#c80d0b1e2c7e657c9557a653318437c722e31842"
-  integrity sha512-OsA/yzAPyZgm3WsQYBXOMO8FZx2+kYoiSV6vYWwluSvenTYW/8CRrsIZFck2WndcZnMx9/HReWo5ePJXD3Xc2g==
+admin-lte@^3.0.5:
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/admin-lte/-/admin-lte-3.0.5.tgz#664664863bb7a5bf306b3a7b76fd16b345f0b00f"
+  integrity sha512-VkwBy6KukhuQk8A0GrryZorkDHVK52azkCu4l2Kw5kJt4tMQD2ezb268ssFpd6uKM8swLJ64td2Dx6y/MHA7Ew==
   dependencies:
     "@fortawesome/fontawesome-free" "^5.13.0"
     "@fullcalendar/bootstrap" "^4.4.0"
