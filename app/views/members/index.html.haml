@@ -1,7 +1,7 @@
 - provide(:title, 'メンバー')
 - provide(:description, '京大アンプラグドのメンバー一覧')
 
-%nav.nav.nav-pills.nav-justified.mb-3
+%nav.nav.nav-pills.mb-3
   - Member.joined_years.each do |year|
     = link_to year, year_members_path(year: year), class: "nav-item nav-link#{year == @year ? ' active' : ''}"
 
