@@ -64,8 +64,10 @@ GEM
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
     ast (2.4.1)
-    auth0 (4.11.0)
+    auth0 (4.12.0)
+      jwt (~> 2.2.0)
       rest-client (~> 2.0.0)
+      zache (~> 0.12.0)
     aws-eventstream (1.1.0)
     aws-partitions (1.329.0)
     aws-sdk-core (3.99.1)
@@ -449,6 +451,7 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
+    zache (0.12.0)
     zeitwerk (2.3.0)
 
 PLATFORMS
