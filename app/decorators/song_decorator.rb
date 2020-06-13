@@ -21,7 +21,7 @@ module SongDecorator
 
   def youtube_embed
     return unless youtube_id?
-    content_tag :iframe, '',
+    tag.iframe '',
                 src: "https://www.youtube.com/embed/#{youtube_id}?enablejsapi=1&origin=#{root_url.chop}&rel=0&autoplay=1",
                 frameborder: 0,
                 allowfullscreen: true
@@ -29,7 +29,7 @@ module SongDecorator
 
   def title_with_original
     if original?
-      safe_join [title, content_tag(:small, '（オリジナル曲）')]
+      safe_join [title, tag.small('（オリジナル曲）')]
     else
       title
     end
