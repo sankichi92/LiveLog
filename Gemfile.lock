@@ -428,7 +428,7 @@ GEM
     unf_ext (0.0.7.7)
     unicode-display_width (1.7.0)
     uniform_notifier (1.13.0)
-    web-console (4.0.2)
+    web-console (4.0.3)
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
