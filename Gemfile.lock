@@ -319,7 +319,7 @@ GEM
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
     rexml (3.2.4)
-    ridgepole (0.8.7)
+    ridgepole (0.8.8)
       activerecord (>= 5.0.1, < 6.1)
       diffy
     rspec-core (3.9.2)
@@ -452,7 +452,7 @@ GEM
     xpath (3.2.0)
       nokogiri (~> 1.8)
     zache (0.12.0)
-    zeitwerk (2.3.1)
+    zeitwerk (2.4.0)
 
 PLATFORMS
   ruby
