@@ -64,7 +64,7 @@ GEM
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
     ast (2.4.1)
-    auth0 (4.13.0)
+    auth0 (4.14.0)
       jwt (~> 2.2.0)
       rest-client (~> 2.0.0)
       zache (~> 0.12.0)
