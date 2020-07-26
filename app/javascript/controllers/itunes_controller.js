@@ -3,16 +3,13 @@ import { Controller } from 'stimulus';
 export default class extends Controller {
   static targets = ['title', 'subTitle', 'artwork', 'audio', 'link'];
 
-  connect() {
-    fetch(`https://itunes.apple.com/search?term=${this.trackName}+${this.artistName}&country=JP&media=music&entity=song&lang=ja_jp`)
-      .then((response) => response.json())
-      .then((json) => {
-        if (json.resultCount === 0) {
-          return;
-        }
-        const result = this._findAppropriateResult(json.results);
-        this._showResult(result);
-      });
+  async connect() {
+    const searchResult = await this._fetchSearchResult();
+    if (searchResult.resultCount === 0) {
+      return;
+    }
+    const result = this._findAppropriateResult(searchResult.results);
+    this._showResult(result);
   }
 
   get trackName() {
@@ -21,6 +18,20 @@ export default class extends Controller {
 
   get artistName() {
     return this.data.get('artistName');
+  }
+
+  _fetchSearchResult() {
+    const encodedTrackName = encodeURIComponent(this.trackName);
+    const encodedArtistName = encodeURIComponent(this.artistName);
+    return fetch(`https://itunes.apple.com/search?term=${encodedTrackName}+${encodedArtistName}&country=JP&media=music&entity=song&lang=ja_jp`, {
+      redirect: 'error',
+    }).then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        return Promise.reject(new Error(`${response.status}: ${response.statusText}`));
+      }
+    });
   }
 
   _findAppropriateResult(results) {
