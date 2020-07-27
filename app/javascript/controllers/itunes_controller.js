@@ -5,7 +5,7 @@ export default class extends Controller {
 
   async connect() {
     const searchResult = await this._fetchSearchResult();
-    if (searchResult.resultCount === 0) {
+    if (searchResult === null || searchResult.resultCount === 0) {
       return;
     }
     const result = this._findAppropriateResult(searchResult.results);
@@ -24,10 +24,16 @@ export default class extends Controller {
     const encodedTrackName = encodeURIComponent(this.trackName);
     const encodedArtistName = encodeURIComponent(this.artistName);
     return fetch(`https://itunes.apple.com/search?term=${encodedTrackName}+${encodedArtistName}&country=JP&media=music&entity=song&lang=ja_jp`, {
-      redirect: 'error',
+      redirect: 'manual',
     }).then((response) => {
       if (response.ok) {
         return response.json();
+      } else if (response.redirected) {
+        if (response.url.startsWith('music://')) {
+          return Promise.resolve(null);
+        } else {
+          return Promise.reject(new Error(`Unexpected redirect: ${response.url}`));
+        }
       } else {
         return Promise.reject(new Error(`${response.status}: ${response.statusText}`));
       }
