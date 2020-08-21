@@ -131,7 +131,7 @@ GEM
       activesupport (> 3)
       elasticsearch (~> 6)
       hashie
-    elasticsearch-rails (6.1.0)
+    elasticsearch-rails (6.1.1)
     elasticsearch-transport (6.8.2)
       faraday (~> 1)
       multi_json
