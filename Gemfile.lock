@@ -356,8 +356,8 @@ GEM
       activesupport (>= 4.2.0)
       rack (>= 1.1)
       rubocop (>= 0.87.0)
-    rubocop-rspec (1.42.0)
-      rubocop (>= 0.87.0)
+    rubocop-rspec (1.43.1)
+      rubocop (~> 0.87)
     rubocop-rubycw (0.1.4)
       rubocop
     ruby-enum (0.7.2)
