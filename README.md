@@ -19,16 +19,16 @@ Protected by OAuth 2.0.
 - [Ruby](https://www.ruby-lang.org/) 2.7
 - [Node.js](https://nodejs.org/) & [Yarn](https://yarnpkg.com/)
 - [PostgreSQL](https://www.postgresql.org/)
-- [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/) 6.x
+- [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/) 7.x
   - with [Japanese (kuromoji) Analysis Plugin](https://www.elastic.co/guide/en/elasticsearch/plugins/current/analysis-kuromoji.html)
 
 If you're using macOS and [Homebrew](https://brew.sh/), you can setup them by the following commands:
 
-    $ brew install rbenv yarn postgresql elasticsearch@6
+    $ brew install rbenv yarn postgresql elasticsearch
     $ rbenv install 2.7.1
     $ brew services start postgresql
-    $ /usr/local/opt/elasticsearch@6/bin/elasticsearch-plugin install analysis-kuromoji
-    $ brew services start elasticsearch@6
+    $ elasticsearch-plugin install analysis-kuromoji
+    $ brew services start elasticsearch
 
 ## Development
 

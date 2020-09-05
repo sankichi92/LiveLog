@@ -100,8 +100,6 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  Elasticsearch::Model.client = Elasticsearch::Client.new(url: ENV.fetch('SEARCHBOX_SSL_URL'))
-
   Cloudinary.config.secure = true
 
   # Inserts middleware to perform automatic connection switching.
