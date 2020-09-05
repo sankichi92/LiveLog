@@ -24,11 +24,11 @@ Protected by OAuth 2.0.
 
 If you're using macOS and [Homebrew](https://brew.sh/), you can setup them by the following commands:
 
-    $ brew install rbenv yarn postgresql elasticsearch
+    $ brew install rbenv yarn postgresql elasticsearch@6
     $ rbenv install 2.7.1
     $ brew services start postgresql
-    $ elasticsearch-plugin install analysis-kuromoji
-    $ brew services start elasticsearch
+    $ /usr/local/opt/elasticsearch@6/bin/elasticsearch-plugin install analysis-kuromoji
+    $ brew services start elasticsearch@6
 
 ## Development
 
