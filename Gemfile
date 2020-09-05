@@ -19,9 +19,9 @@ gem 'aws-sdk-s3', require: false
 gem 'bootsnap', require: false
 gem 'cloudinary'
 gem 'commonmarker'
-gem 'elasticsearch', '~> 6.8'
+gem 'elasticsearch', '~> 7.0'
 gem 'elasticsearch-dsl'
-gem 'elasticsearch-rails', '~> 6.1'
+gem 'elasticsearch-rails', '~> 7.0'
 gem 'font-awesome-sass'
 gem 'graphiql-rails'
 gem 'haml-rails'
@@ -41,7 +41,7 @@ gem 'slack-ruby-client'
 gem 'twitter'
 
 # Must be after 'kaminari'
-gem 'elasticsearch-model', '~> 6.1'
+gem 'elasticsearch-model', '~> 7.0'
 
 # API
 gem 'batch-loader'
