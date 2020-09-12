@@ -8,5 +8,6 @@ class TwitterClient < Twitter::REST::Client
     @consumer_secret = ENV['TWITTER_CONSUMER_SECRET']
     @access_token = ENV['TWITTER_ACCESS_TOKEN']
     @access_token_secret = ENV['TWITTER_ACCESS_TOKEN_SECRET']
+    super
   end
 end

@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
-return $stdout.puts 'Records already exist.' if User.exists?
+if User.exists?
+  $stdout.puts 'Records already exist.'
+  exit
+end
 
 Faker::Config.random = Random.new(42)
 

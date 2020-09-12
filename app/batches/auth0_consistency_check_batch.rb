@@ -7,6 +7,7 @@ class Auth0ConsistencyCheckBatch < ApplicationBatch
 
   def initialize(sleep_duration: 1)
     @sleep_duration = sleep_duration
+    super()
   end
 
   def run

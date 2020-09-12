@@ -12,6 +12,7 @@ class Song
     end
 
     def to_hash
+      # rubocop:disable Lint/ShadowingOuterLocalVariable
       search do |q|
         q.query do |q|
           q.bool do |q|
@@ -36,6 +37,7 @@ class Song
         )
         q.size size
       end.to_hash
+      # rubocop:enable Lint/ShadowingOuterLocalVariable
     end
 
     private

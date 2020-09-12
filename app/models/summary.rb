@@ -72,6 +72,6 @@ class Summary
   end
 
   def formation_average
-    (formation_to_count.inject(0) { |sum, (f, c)| sum += f * c } / songs_count.to_f).round(2)
+    (formation_to_count.inject(0) { |sum, (f, c)| sum += f * c } / songs_count.to_f).round(2) # rubocop:disable Lint/UselessAssignment
   end
 end
