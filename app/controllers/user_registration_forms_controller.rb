@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UserRegistrationFormsController < ApplicationController
   def show(token)
     @user_registration_form = UserRegistrationForm.find_by!(token: token)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class EntriesController < ApplicationController
   before_action :require_current_user
   before_action :require_entry_acceptable_live, only: %i[new create]

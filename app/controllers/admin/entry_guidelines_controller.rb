@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Admin
   class EntryGuidelinesController < AdminController
     before_action -> { require_scope('write:lives') }

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module MemberDecorator
   def avatar_url(size = :small)
     if avatar

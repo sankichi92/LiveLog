@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Song < ApplicationRecord
   include SongSearchable
 
@@ -62,8 +64,6 @@ class Song < ApplicationRecord
                         Rack::Utils.parse_query(uri.query)['v']
                       when 'youtu.be'
                         uri.path[1..]
-                      else
-                        nil
                       end
   end
 

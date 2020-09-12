@@ -1,52 +1,49 @@
-inherit_from: https://raw.githubusercontent.com/cookpad/styleguide/master/.rubocop.yml
-
 require:
   - rubocop-performance
   - rubocop-rails
   - rubocop-rspec
   - rubocop-rubycw
 
-Bundler/OrderedGems:
-  Enabled: true
+AllCops:
+  NewCops: enable
 
 Layout/LineLength:
   Max: 160
 
-Lint/AssignmentInCondition:
-  AllowSafeAssignment: true
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented_relative_to_receiver
 
-Security:
-  Enabled: true
+Metrics:
+  Enabled: false
 
-Style/ClassAndModuleChildren:
-  Enabled: true
+Style/Documentation:
+  Enabled: false
 
-Style/MutableConstant:
-  Enabled: true
+Style/EmptyMethod:
+  EnforcedStyle: expanded
+
+Style/GuardClause:
+  Enabled: false
+
+Style/IfUnlessModifier:
+  Enabled: false
+
+Style/RescueStandardError:
+  Enabled: false
 
 Style/TrailingCommaInArguments:
   EnforcedStyleForMultiline: consistent_comma
 
-# rubocop-performance
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: consistent_comma
 
-Performance:
-  Enabled: true
-
-# rubocop-rails
-
-Rails:
-  Enabled: true
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: consistent_comma
 
 # rubocop-rspec
 
-RSpec:
-  Enabled: true
-
 RSpec/DescribeClass:
   Enabled: false
-
-RSpec/DescribedClass:
-  EnforcedStyle: explicit
 
 RSpec/ExampleLength:
   Enabled: false
@@ -62,8 +59,3 @@ RSpec/NestedGroups:
 
 RSpec/VerifiedDoubles:
   IgnoreSymbolicNames: true
-
-# rubocop-rubycw
-
-Rubycw:
-  Enabled: true

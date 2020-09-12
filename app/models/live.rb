@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Live < ApplicationRecord
   has_one :entry_guideline, dependent: :destroy
   has_many :songs, -> { played_order }, dependent: :restrict_with_exception, inverse_of: :live
@@ -5,7 +7,7 @@ class Live < ApplicationRecord
   validates :date, presence: true
   validates :name, presence: true, length: { maximum: 20 }, uniqueness: { scope: :date }
   validates :place, length: { maximum: 20 }
-  validates :album_url, format: /\A#{URI.regexp(%w[http https])}\z/, allow_blank: true
+  validates :album_url, format: /\A#{URI::DEFAULT_PARSER.make_regexp(%w[http https])}\z/, allow_blank: true
   validate :published_live_must_not_have_entry_guideline
 
   scope :newest_order, -> { order(date: :desc) }

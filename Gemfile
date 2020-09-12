@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 
 ruby '2.7.1'
@@ -49,7 +51,7 @@ gem 'graphql'
 gem 'jwt'
 
 group :development, :test do
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'byebug', platforms: %i[mri mingw x64_mingw]
 
   gem 'factory_bot_rails'
   gem 'faker'

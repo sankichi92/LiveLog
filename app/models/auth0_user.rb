@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'app_auth0_client'
 
 class Auth0User
-  CONNECTION_NAME = 'Username-Password-Authentication'.freeze
+  CONNECTION_NAME = 'Username-Password-Authentication'
   DEFAULT_FIELDS = %w[
     user_id
     email
@@ -73,7 +75,7 @@ class Auth0User
     email_verified? && email_accepting?
   end
 
-  def has_logged_in?
+  def has_logged_in? # rubocop:disable Naming/PredicateName
     !@response['last_login'].nil?
   end
 

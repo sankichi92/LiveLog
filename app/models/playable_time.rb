@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PlayableTime < ApplicationRecord
   belongs_to :entry, touch: true
 

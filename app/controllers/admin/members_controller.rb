@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Admin
   class MembersController < AdminController
     before_action -> { require_scope('write:members') }, only: %i[new create destroy]

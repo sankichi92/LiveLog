@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SongsController < ApplicationController
   before_action :require_current_user, only: %i[edit update]
   before_action :require_player, only: %i[edit update]
@@ -20,7 +22,7 @@ class SongsController < ApplicationController
   end
 
   def show(id)
-    @song = Song.published.includes(plays: { member: [:avatar, :user] }).find(id)
+    @song = Song.published.includes(plays: { member: %i[avatar user] }).find(id)
     begin
       @related_songs = @song.more_like_this.records(includes: [:live, { plays: :member }]).to_a
     rescue => e

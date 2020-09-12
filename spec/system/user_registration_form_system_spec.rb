@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'User registration form:', type: :system do
@@ -5,10 +7,10 @@ RSpec.describe 'User registration form:', type: :system do
     # Given
     stub_request(:post, 'https://slack.com/api/chat.postMessage')
     email = 'guitar@example.com'
-    auth0_client = double(:app_auth0_client).tap do |auth0_client|
-      allow(auth0_client).to receive(:user).and_raise(Auth0::NotFound.new('The user does not exist.'))
-      allow(auth0_client).to receive(:create_user).and_return('user_id' => 'auth0|0', 'email' => email)
-      allow(auth0_client).to receive(:change_password)
+    auth0_client = double(:app_auth0_client).tap do |double|
+      allow(double).to receive(:user).and_raise(Auth0::NotFound.new('The user does not exist.'))
+      allow(double).to receive(:create_user).and_return('user_id' => 'auth0|0', 'email' => email)
+      allow(double).to receive(:change_password)
     end
     allow(AppAuth0Client).to receive(:instance).and_return(auth0_client)
     user_registration_form = create(:user_registration_form)

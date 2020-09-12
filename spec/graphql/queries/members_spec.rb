@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'GraphQL query:', type: :graphql do
@@ -28,11 +30,11 @@ RSpec.describe 'GraphQL query:', type: :graphql do
     it 'returns MemberConnection' do
       expected_data = {
         members: {
-          nodes: members.map { |member|
+          nodes: members.map do |member|
             {
               id: member.id.to_s,
             }
-          },
+          end,
         },
       }
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'app_auth0_client'
 
 class AuthController < ApplicationController
@@ -11,7 +13,7 @@ class AuthController < ApplicationController
 
     unless user.activated?
       user.activate!
-      InvitationActivityNotifyJob.perform_later(user: user, text: "初めてログインしました")
+      InvitationActivityNotifyJob.perform_later(user: user, text: '初めてログインしました')
     end
 
     # TODO: Remove this line after Auth0 migration finished.

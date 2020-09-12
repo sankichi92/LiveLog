@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'admin/songs request:', type: :request do
@@ -46,7 +48,7 @@ RSpec.describe 'admin/songs request:', type: :request do
         entry: {
           notes: entry.notes,
           admin_memo: admin_memo,
-          playable_times_attributes: entry.playable_times.map.with_index { |playable_time, i|
+          playable_times_attributes: entry.playable_times.map.with_index do |playable_time, i|
             [
               i.to_s,
               {
@@ -56,7 +58,7 @@ RSpec.describe 'admin/songs request:', type: :request do
                 _destroy: '0',
               },
             ]
-          }.to_h,
+          end.to_h,
         },
         song: {
           live_id: entry.song.live_id,

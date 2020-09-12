@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SongMailer < ApplicationMailer
   def pickup(song = Song.pickup)
     @song = song

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module LiveDecorator
   def at_place
     place.present? ? "@#{place}" : ''
@@ -8,12 +10,11 @@ module LiveDecorator
   end
 
   def status_badge
-    case
-    when published?
+    if published?
       tag.span('公開済み', class: 'badge badge-primary')
-    when entry_guideline&.open?
+    elsif entry_guideline&.open?
       tag.span('エントリー募集中', class: 'badge badge-success')
-    when entry_guideline&.closed?
+    elsif entry_guideline&.closed?
       tag.span('エントリー締切', class: 'badge badge-secondary')
     else
       tag.span('未公開', class: 'badge badge-warning')

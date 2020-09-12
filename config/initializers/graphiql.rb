@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'app_auth0_client'
 
 GraphiQL::Rails.config.tap do |config|
@@ -8,7 +10,7 @@ GraphiQL::Rails.config.tap do |config|
     current_user = User.find_by(id: context.session[:user_id])
     cache_key = 'graphiql/access_token'
 
-    access_token = if current_user && current_user.auth0_credential.valid_access_token
+    access_token = if current_user&.auth0_credential&.valid_access_token
                      current_user.auth0_credential.valid_access_token
                    elsif Rails.cache.exist?(cache_key)
                      Rails.cache.read(cache_key)

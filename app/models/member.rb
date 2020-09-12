@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Member < ApplicationRecord
   MINIMUM_JOINED_YEAR = 1995
 

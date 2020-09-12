@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 module API
   class GraphqlController < APIController
+    # rubocop:disable Naming/MethodParameterName, Naming/VariableName
     def execute(query = nil, variables = {}, operationName = nil)
       context = {
         controller: self,
@@ -10,6 +13,7 @@ module API
       result = LiveLogSchema.execute(query, variables: ensure_hash(variables), context: context, operation_name: operationName)
       render json: result
     end
+    # rubocop:enable Naming/MethodParameterName, Naming/VariableName
 
     private
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Song
   class SearchQuery
     include ActiveModel::Model
@@ -12,6 +14,8 @@ class Song
 
     def to_hash
       return {} if invalid?
+
+      # rubocop:disable Lint/ShadowingOuterLocalVariable
       search do |q|
         q.query do |q|
           q.bool do |q|
@@ -52,6 +56,7 @@ class Song
         )
         q.size ids.size if ids.present?
       end.to_hash
+      # rubocop:enable Lint/ShadowingOuterLocalVariable
     end
 
     private

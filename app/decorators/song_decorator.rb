@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SongDecorator
   def time_and_position
     time.present? ? "#{time_str} #{position}" : position
@@ -21,10 +23,11 @@ module SongDecorator
 
   def youtube_embed
     return unless youtube_id?
+
     tag.iframe '',
-                src: "https://www.youtube.com/embed/#{youtube_id}?enablejsapi=1&origin=#{root_url.chop}&rel=0&autoplay=1",
-                frameborder: 0,
-                allowfullscreen: true
+               src: "https://www.youtube.com/embed/#{youtube_id}?enablejsapi=1&origin=#{root_url.chop}&rel=0&autoplay=1",
+               frameborder: 0,
+               allowfullscreen: true
   end
 
   def title_with_original

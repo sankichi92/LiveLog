@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'app_auth0_client'
 
 class Auth0Credential < ApplicationRecord
@@ -21,8 +23,6 @@ class Auth0Credential < ApplicationRecord
       if refresh_token.present?
         refresh!
         access_token
-      else
-        nil
       end
     else
       access_token

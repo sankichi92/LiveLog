@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class EntryActivityNotifyJob < ApplicationJob
   CHANNEL = if Rails.env.production?
-              '#notif-entry'.freeze
+              '#notif-entry'
             else
-              '#sandbox'.freeze
+              '#sandbox'
             end
 
   queue_as :default

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'GraphQL query:', type: :graphql do
@@ -38,11 +40,11 @@ RSpec.describe 'GraphQL query:', type: :graphql do
           place: live.place,
           comment: live.comment,
           songs: {
-            nodes: songs.map { |song|
+            nodes: songs.map do |song|
               {
                 id: song.id.to_s,
               }
-            },
+            end,
           },
         },
       }

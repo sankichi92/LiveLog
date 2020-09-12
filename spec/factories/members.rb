@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :member do
     joined_year { Faker::Number.within(range: 3.years.ago.year..Time.zone.today.year) }

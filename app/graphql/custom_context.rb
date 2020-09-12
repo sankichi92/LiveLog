@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CustomContext < GraphQL::Query::Context
   def_delegators :controller, :url_for
 

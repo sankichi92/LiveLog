@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AdminController < ActionController::Base # rubocop:disable Rails/ApplicationController
   include Session
   include RavenContext

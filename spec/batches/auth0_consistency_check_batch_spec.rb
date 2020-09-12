@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Auth0ConsistencyCheckBatch, type: :batch do
   describe '#run' do
-    subject(:run) { Auth0ConsistencyCheckBatch.new(sleep_duration: 0).run }
+    subject(:run) { described_class.new(sleep_duration: 0).run }
 
     let(:users) { create_list(:user, 5) }
 
@@ -17,15 +19,15 @@ RSpec.describe Auth0ConsistencyCheckBatch, type: :batch do
     end
 
     before do
-      auth0_client = double(:auth0_client).tap do |auth0_client|
-        allow(auth0_client).to receive(:users).with(hash_including(page: 0)).and_return(
+      auth0_client = double(:auth0_client).tap do |double|
+        allow(double).to receive(:users).with(hash_including(page: 0)).and_return(
           'start' => 0,
           'length' => 3,
           'total' => response_total,
           'users' => users[0..2].map { |user| { 'user_id' => user.auth0_id } },
         )
 
-        allow(auth0_client).to receive(:users).with(hash_including(page: 1)).and_return(second_response)
+        allow(double).to receive(:users).with(hash_including(page: 1)).and_return(second_response)
       end
 
       allow(AppAuth0Client).to receive(:instance).and_return(auth0_client)
