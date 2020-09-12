@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SongsHelper
   def link_to_search(name, options = nil, html_options = nil, &block)
     if block_given?

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.configure do |config|
   config.around elasticsearch: true do |example|
     Song.__elasticsearch__.create_index! force: true

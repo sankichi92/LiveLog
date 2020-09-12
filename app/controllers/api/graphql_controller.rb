@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module API
   class GraphqlController < APIController
     def execute(query = nil, variables = {}, operationName = nil)

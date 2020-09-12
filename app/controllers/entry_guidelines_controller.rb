@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class EntryGuidelinesController < ApplicationController
   include ActionView::Helpers::TextHelper
 

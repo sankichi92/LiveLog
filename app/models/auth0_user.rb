@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'app_auth0_client'
 
 class Auth0User
-  CONNECTION_NAME = 'Username-Password-Authentication'.freeze
+  CONNECTION_NAME = 'Username-Password-Authentication'
   DEFAULT_FIELDS = %w[
     user_id
     email

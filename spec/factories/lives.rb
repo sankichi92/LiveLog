@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :live, class: 'Live' do
     date { Faker::Date.unique.between(from: 3.years.ago.to_date, to: Time.zone.today) }

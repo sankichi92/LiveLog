@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Types
   class HttpUrl < BaseScalar
     def self.coerce_input(input_value, _context)

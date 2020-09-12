@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Play < ApplicationRecord
   INSTRUMENT_ORDER = %w[Vo Vn Vla Vc Fl Cl Sax Tp Hr Tb Gt Pf Acc 鍵ハ Glo Ba Dr Cj Bongo Perc].freeze
 

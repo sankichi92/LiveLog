@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class LiveMailer < ApplicationMailer
   def entries_backup(live)
     @entry_guideline = live.entry_guideline

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SongsController < ApplicationController
   before_action :require_current_user, only: %i[edit update]
   before_action :require_player, only: %i[edit update]

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Play, type: :model do
@@ -9,7 +11,7 @@ RSpec.describe Play, type: :model do
     end
 
     it 'returns the number of occurrences of each instrument' do
-      result = Play.all.count_by_divided_instrument
+      result = described_class.all.count_by_divided_instrument
 
       expect(result).to eq('Gt' => 3, 'Vo' => 2, 'Cho' => 2, 'Ba' => 1, 'Cj' => 1)
     end
@@ -23,7 +25,7 @@ RSpec.describe Play, type: :model do
     end
 
     it 'returns the number of occurrences of each formation' do
-      result = Play.all.count_formations
+      result = described_class.all.count_formations
 
       expect(result).to eq(1 => 3, 2 => 2, 3 => 1)
     end

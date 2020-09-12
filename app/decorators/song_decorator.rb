@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SongDecorator
   def time_and_position
     time.present? ? "#{time_str} #{position}" : position

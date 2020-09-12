@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Avatar < ApplicationRecord
   SIZE_TO_PIXEL = {
     small: 16 * 2 * 2,

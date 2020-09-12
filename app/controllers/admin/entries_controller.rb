@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Admin
   class EntriesController < AdminController
     before_action -> { require_scope('read:entries') }, only: :index

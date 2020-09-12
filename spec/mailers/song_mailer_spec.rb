@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe SongMailer, type: :mailer do
   include Auth0UserHelper
 
   describe '#pickup' do
-    subject(:mail) { SongMailer.pickup(song) }
+    subject(:mail) { described_class.pickup(song) }
 
     let(:song) { create(:song, name: 'くちなしの丘', artist: '原田知世', live: live, members: users.map(&:member) + [email_rejected_user.member, member]) }
     let(:live) { create(:live, name: 'NF', date: '2019-11-23') }

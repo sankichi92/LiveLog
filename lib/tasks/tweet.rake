@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'twitter_client'
 
 namespace :tweet do

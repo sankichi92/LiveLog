@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AppAuth0Client
   include Singleton
   include Auth0::Mixins

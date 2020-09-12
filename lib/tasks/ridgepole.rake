@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :ridgepole do
   desc 'Apply db/Schemafile'
   task apply: 'db:load_config' do

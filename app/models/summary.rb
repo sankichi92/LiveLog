@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Summary
   class Builder
     def initialize(year)

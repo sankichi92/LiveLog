@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Types
   class PlayedSongConnection < BaseConnection
     class Edge < BaseEdge

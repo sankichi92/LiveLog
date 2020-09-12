@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Donation < ApplicationRecord
   MONTHLY_COST = 50
 

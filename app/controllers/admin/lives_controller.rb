@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Admin
   class LivesController < AdminController
     before_action -> { require_scope('write:lives') }, only: %i[new create edit update destroy publish]

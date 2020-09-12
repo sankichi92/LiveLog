@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Song
   class MoreLikeThisQuery
     include Elasticsearch::DSL

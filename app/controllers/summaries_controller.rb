@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SummariesController < ApplicationController
   before_action :require_valid_year, only: :show
 

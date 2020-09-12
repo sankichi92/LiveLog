@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module LiveDecorator
   def at_place
     place.present? ? "@#{place}" : ''

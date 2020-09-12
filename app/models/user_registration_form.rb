@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UserRegistrationForm < ApplicationRecord
   belongs_to :admin, class_name: 'Administrator'
 

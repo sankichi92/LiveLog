@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module AccessTokenHelper
   RSA_KEYPAIR = OpenSSL::PKey::RSA.new(512, 3).freeze
   DEFAULT_PAYLOAD = {

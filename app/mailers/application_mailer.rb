@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class ApplicationMailer < ActionMailer::Base
-  DEFAULT_FROM_NAME = 'LiveLog'.freeze
-  DEFAULT_FROM_EMAIL = 'noreply@livelog.ku-unplugged.net'.freeze
+  DEFAULT_FROM_NAME = 'LiveLog'
+  DEFAULT_FROM_EMAIL = 'noreply@livelog.ku-unplugged.net'
 
   layout 'mailer'
 

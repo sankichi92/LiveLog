@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module NendoExtension
   def nendo
     mon < 4 ? year - 1 : year

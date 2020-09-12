@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Auth0ConsistencyCheckBatch, type: :batch do
   describe '#run' do
-    subject(:run) { Auth0ConsistencyCheckBatch.new(sleep_duration: 0).run }
+    subject(:run) { described_class.new(sleep_duration: 0).run }
 
     let(:users) { create_list(:user, 5) }
 

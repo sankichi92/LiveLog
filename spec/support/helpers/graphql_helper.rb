@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module GraphqlHelper
   def graphql_context(user: nil, client: nil, scope: nil)
     controller = instance_double(API::GraphqlController).tap do |controller|

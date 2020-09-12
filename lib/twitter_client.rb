@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TwitterClient < Twitter::REST::Client
   include Singleton
 

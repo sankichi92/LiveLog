@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'app_auth0_client'
 
 GraphiQL::Rails.config.tap do |config|

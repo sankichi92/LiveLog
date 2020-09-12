@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe LiveMailer, type: :mailer do
   describe '#entries_backup' do
-    subject(:mail) { LiveMailer.entries_backup(live) }
+    subject(:mail) { described_class.entries_backup(live) }
 
     let(:live) { create(:live, :unpublished, :with_entry_guideline, :with_entries) }
 

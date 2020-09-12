@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DonationsController < ApplicationController
   before_action :require_current_user
 

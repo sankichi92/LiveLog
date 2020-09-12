@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ClientsController < ApplicationController
   before_action :require_current_user, only: %i[new create edit update destroy]
   before_action :require_developer, only: %i[new create]

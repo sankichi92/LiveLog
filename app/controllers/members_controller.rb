@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MembersController < ApplicationController
   def index(year = Member.maximum(:joined_year))
     @year = year.to_i

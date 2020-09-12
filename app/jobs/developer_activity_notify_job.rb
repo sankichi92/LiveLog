@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class DeveloperActivityNotifyJob < ApplicationJob
   CHANNEL = if Rails.env.production?
-              '#notif-developer'.freeze
+              '#notif-developer'
             else
-              '#sandbox'.freeze
+              '#sandbox'
             end
 
   queue_as :default

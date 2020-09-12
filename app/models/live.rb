@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Live < ApplicationRecord
   has_one :entry_guideline, dependent: :destroy
   has_many :songs, -> { played_order }, dependent: :restrict_with_exception, inverse_of: :live

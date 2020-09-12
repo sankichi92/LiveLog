@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Developer, type: :model do
@@ -19,7 +21,7 @@ RSpec.describe Developer, type: :model do
     end
 
     context 'when returned github_username if different from current github_username' do
-      let(:response) { { login: developer.github_username + '_new' } }
+      let(:response) { { login: "#{developer.github_username}_new" } }
 
       it 'calls Octokit::Client#user and update github_username' do
         github_user = developer.fetch_github_user!
