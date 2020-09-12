@@ -12,6 +12,7 @@ class Song
 
     def to_hash
       return {} if invalid?
+
       search do |q|
         q.query do |q|
           q.bool do |q|

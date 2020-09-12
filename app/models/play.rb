@@ -11,6 +11,7 @@ class Play < ApplicationRecord
   def self.count_by_divided_instrument
     instrument_to_count = group(:instrument).count.each_with_object(Hash.new(0)) do |(instrument, count), hash|
       next if instrument.blank?
+
       instrument.split('&').each { |divided_instrument| hash[divided_instrument] += count }
     end
     instrument_to_count.sort_by { |_, count| -count }.to_h

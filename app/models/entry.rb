@@ -11,9 +11,9 @@ class Entry < ApplicationRecord
   validate :live_must_be_entry_acceptable, on: :create
   validate :playable_time_on_live_day_exists, on: :create
 
-  scope :submitted_or_played_by, ->(member) do
+  scope :submitted_or_played_by, lambda { |member|
     left_joins(song: :plays).merge(Play.where(member_id: member.id)).or(left_joins(song: :plays).where(member_id: member.id)).distinct
-  end
+  }
 
   def submitter?(user)
     member_id == user.member_id

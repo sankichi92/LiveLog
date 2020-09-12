@@ -4,6 +4,6 @@ class ApplicationBatch
   self.logger = if Rails.env.test?
                   Rails.logger
                 else
-                  ActiveSupport::Logger.new(STDOUT).extend(ActiveSupport::Logger.broadcast(Rails.logger))
+                  ActiveSupport::Logger.new($stdout).extend(ActiveSupport::Logger.broadcast(Rails.logger))
                 end
 end

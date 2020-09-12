@@ -23,11 +23,11 @@ RSpec.describe 'GraphQL query:', type: :graphql do
     it 'returns LiveConnection' do
       expected_data = {
         lives: {
-          nodes: lives.sort_by(&:date).reverse.map { |live|
+          nodes: lives.sort_by(&:date).reverse.map do |live|
             {
               id: live.id.to_s,
             }
-          },
+          end,
         },
       }
 

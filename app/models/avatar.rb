@@ -1,8 +1,8 @@
 class Avatar < ApplicationRecord
   SIZE_TO_PIXEL = {
-    small:  16 *  2 * 2,
-    medium: 16 *  6 * 2,
-    large:  16 * 12 * 2,
+    small: 16 * 2 * 2,
+    medium: 16 * 6 * 2,
+    large: 16 * 12 * 2,
   }.freeze
 
   belongs_to :member, touch: true

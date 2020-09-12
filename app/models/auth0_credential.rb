@@ -21,8 +21,6 @@ class Auth0Credential < ApplicationRecord
       if refresh_token.present?
         refresh!
         access_token
-      else
-        nil
       end
     else
       access_token

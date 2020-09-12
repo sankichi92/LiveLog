@@ -29,6 +29,7 @@ class Summary
       artist_to_count = song_relation.where.not(artist: [nil, '']).group(:artist).count
       artist_to_count.select { |_, c| c >= 2 }.sort { |(_, c1), (_, c2)| c2 <=> c1 }.each_with_index do |(artist, count), i|
         break if i >= 10 && count < previous_count
+
         results << [artist, count]
         previous_count = count
       end
