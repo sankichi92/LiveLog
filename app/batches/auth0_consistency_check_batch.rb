@@ -16,7 +16,7 @@ class Auth0ConsistencyCheckBatch < ApplicationBatch
       only_livelog_ids: [],
     }
 
-    auth0_ids = User.where(password_digest: nil).pluck(:auth0_id)
+    auth0_ids = User.pluck(:auth0_id)
     logger.info("LiveLog users total: #{auth0_ids.size}")
 
     i = 0

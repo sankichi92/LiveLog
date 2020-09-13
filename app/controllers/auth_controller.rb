@@ -16,9 +16,6 @@ class AuthController < ApplicationController
       InvitationActivityNotifyJob.perform_later(user: user, text: '初めてログインしました')
     end
 
-    # TODO: Remove this line after Auth0 migration finished.
-    user.update!(password_digest: nil) unless user.password_digest.nil?
-
     log_in user
 
     redirect_to pop_stored_location || root_path, notice: 'ログインしました'

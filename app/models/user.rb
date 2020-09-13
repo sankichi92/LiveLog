@@ -5,8 +5,6 @@ require 'app_auth0_client'
 class User < ApplicationRecord
   SUPER_USER_ID = 1
 
-  # self.ignored_columns = %i[subscribing]
-
   belongs_to :member
   has_one :auth0_credential, dependent: :destroy
   has_one :admin, dependent: :restrict_with_exception, class_name: 'Administrator'
@@ -47,9 +45,6 @@ class User < ApplicationRecord
 
   def auth0_user
     @auth0_user ||= fetch_auth0_user!
-  rescue Auth0::NotFound => e # TODO: Remove this after Auth0 migration finished.
-    Raven.capture_exception(e, extra: { user_id: id }, level: :info)
-    Auth0User.new({})
   end
 
   def invite!
