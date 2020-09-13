@@ -118,15 +118,14 @@ ja:
         expires_at: 有効期限
   activemodel:
     attributes:
-      song/search_query:
+      song_search_form:
         name: 曲名
         artist: アーティスト名
         instruments: 楽器
         players_count: 構成人数
-        date: ライブ開催日
-        user_id: メンバー ID
+        date_lower: ライブ開催日
         original: オリジナル曲のみ
-        media: 動画または音源を視聴できる曲のみ
+        has_media: 動画または音源を視聴できる曲のみ
   admin_scope:
     write:lives: ライブの編集
     write:songs: 曲の編集

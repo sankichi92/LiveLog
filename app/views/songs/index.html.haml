@@ -12,50 +12,9 @@
 
 .tab-content#search-tabs-content
   .tab-pane.fade#basic{ class: advanced ? '' : 'show active', role: 'tabpanel', 'aria-labelledby': 'basic-tab' }
-    = render 'form_search'
+    = render 'form_basic_search', query: params[:q]
   .tab-pane.fade#advanced{ class: advanced ? 'show active' : '', role: 'tabpanel', 'aria-labelledby': 'advanced-tab' }
-    = form_with model: @query, scope: '', url: search_songs_path, method: :get, local: true, class: 'mb-3' do |f|
-
-      .form-row
-        .form-group.col-sm
-          = f.label :name, class: 'col-form-label'
-          = f.text_field :name, class: 'form-control', placeholder: '楓'
-        .form-group.col-sm
-          = f.label :artist, class: 'col-form-label'
-          = f.text_field :artist, class: 'form-control', placeholder: 'スピッツ', list: 'artists'
-          %datalist#artists
-            - Song.artists_for_suggestion.each do |artist|
-              %option{ value: artist }
-
-      .form-row
-        .form-group.col-sm
-          = f.label :instruments, class: 'col-form-label'
-          = f.text_field :instruments, class: 'form-control', placeholder: 'Vo Gt Ba Cj -Vn'
-        .form-group.col-sm
-          = f.label :players_count, class: 'col-form-label'
-          .input-group
-            = f.number_field :players_lower, class: 'form-control col', placeholder: '4'
-            .input-group-append.input-group-prepend
-              %span.input-group-text 〜
-            = f.number_field :players_upper, class: 'form-control col', placeholder: '6'
-
-      .form-group
-        = f.label :date
-        .input-group
-          = f.date_field :date_lower, value: params[:date_lower], class: 'form-control'
-          .input-group-append.input-group-prepend
-            %span.input-group-text 〜
-          = f.date_field :date_upper, value: params[:date_upper], class: 'form-control'
-
-      .custom-control.custom-checkbox.mb-2
-        = f.check_box :original, class: 'custom-control-input'
-        = f.label :original, class: 'custom-control-label'
-
-      .custom-control.custom-checkbox.mb-3
-        = f.check_box :media, class: 'custom-control-input'
-        = f.label :media, class: 'custom-control-label'
-
-      = f.submit '検索', class: 'btn btn-primary'
+    = render 'form_advanced_search', song_search_form: @song_search_form
 
 - if @songs.present?
   %section#results

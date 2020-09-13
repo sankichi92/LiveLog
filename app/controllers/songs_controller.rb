@@ -8,26 +8,31 @@ class SongsController < ApplicationController
 
   def index(page = 1)
     @songs = Song.includes(:live, plays: :member).published.newest_live_order.page(page)
-    @query = Song::SearchQuery.new
+    @song_search_form = SongSearchForm.new
   end
 
   def search(page = 1)
-    @query = Song::SearchQuery.new(search_params.merge(logged_in: !current_user.nil?))
-    if @query.valid?
-      @songs = Song.search(@query).page(page).records(includes: [:live, { plays: :member }])
-      render :index
-    else
-      render :index, status: :unprocessable_entity
-    end
+    @song_search_form = SongSearchForm.new(search_params)
+    return render :index, status: :unprocessable_entity if params[:q].nil? && @song_search_form.invalid?
+
+    query = if params[:q].present?
+              Song.basic_search_query(params[:q])
+            else
+              Song.advanced_search_query(logged_in: !current_user.nil?, **@song_search_form.to_h)
+            end
+
+    @songs = Song.search(query).page(page).records(includes: [:live, { plays: :member }])
+    render :index
   end
 
   def show(id)
     @song = Song.published.includes(plays: { member: %i[avatar user] }).find(id)
-    begin
-      @related_songs = @song.more_like_this.records(includes: [:live, { plays: :member }]).to_a
-    rescue => e
-      Raven.capture_exception(e)
-    end
+    @related_songs = begin
+                       Song.search(@song.more_like_this_query).records(includes: [:live, { plays: :member }]).to_a
+                     rescue => e
+                       Raven.capture_exception(e)
+                       []
+                     end
   end
 
   def edit
@@ -55,7 +60,7 @@ class SongsController < ApplicationController
   # region Strong parameters
 
   def search_params
-    params.permit(:q, :name, :artist, :instruments, :players_lower, :players_upper, :date_lower, :date_upper, :media, :original)
+    params.permit(:name, :artist, :instruments, :players_lower, :players_upper, :date_lower, :date_upper, :has_media, :original)
   end
 
   # endregion

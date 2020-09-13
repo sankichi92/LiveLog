@@ -1,0 +1,5 @@
+= form_tag '/songs/search', method: 'get' do
+  .input-group.mb-3
+    = search_field_tag :q, local_assigns[:query], class: 'form-control', placeholder: '曲名・アーティスト名'
+    .input-group-append
+      = button_tag icon('fas', 'search') + ' ' + '検索', class: 'btn btn-primary'

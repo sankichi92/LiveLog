@@ -33,7 +33,7 @@ RSpec.describe 'songs request:', type: :request do
     end
 
     context 'with invalid params' do
-      let(:search_params) { { media: 'invalid' } }
+      let(:search_params) { { players_lower: 'invalid' } }
 
       it 'responds 422' do
         get search_songs_path, params: search_params
