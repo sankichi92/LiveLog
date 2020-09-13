@@ -5,7 +5,7 @@ require 'app_auth0_client'
 class User < ApplicationRecord
   SUPER_USER_ID = 1
 
-  self.ignored_columns = %i[subscribing]
+  # self.ignored_columns = %i[subscribing]
 
   belongs_to :member
   has_one :auth0_credential, dependent: :destroy
@@ -41,6 +41,10 @@ class User < ApplicationRecord
 
   # region Auth0
 
+  def fetch_auth0_user!
+    Auth0User.fetch!(auth0_id)
+  end
+
   def auth0_user
     @auth0_user ||= fetch_auth0_user!
   rescue Auth0::NotFound => e # TODO: Remove this after Auth0 migration finished.
@@ -74,10 +78,6 @@ class User < ApplicationRecord
   # endregion
 
   private
-
-  def fetch_auth0_user!
-    Auth0User.fetch!(auth0_id)
-  end
 
   # region Callbacks
 
