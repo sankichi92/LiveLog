@@ -1,10 +1,5 @@
 # frozen_string_literal: true
 
-if User.exists?
-  $stdout.puts 'Records already exist.'
-  exit
-end
-
 Faker::Config.random = Random.new(42)
 
 admin = FactoryBot.create(:user, auth0_id: 'auth0|1', email: 'admin@example.com').tap do |user|
