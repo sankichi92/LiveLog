@@ -1,0 +1,16 @@
+create_table :songs, force: :cascade do |t|
+  t.bigint :live_id, null: false
+  t.time :time
+  t.integer :position, null: false, limit: 2
+  t.string :name, null: false
+  t.string :artist
+  t.boolean :original, null: false, default: false
+  t.integer :visibility, null: false, default: 1, limit: 2
+  t.string :youtube_id
+  t.text :comment
+
+  t.timestamps
+
+  t.index :live_id
+end
+add_foreign_key :songs, :lives, column: :live_id

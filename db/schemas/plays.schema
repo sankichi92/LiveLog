@@ -1,0 +1,12 @@
+create_table :plays, force: :cascade do |t|
+  t.bigint :member_id, null: false
+  t.bigint :song_id, null: false
+  t.string :instrument
+
+  t.timestamps
+
+  t.index :song_id
+  t.index %i[member_id song_id], unique: true
+end
+add_foreign_key :plays, :songs
+add_foreign_key :plays, :members

@@ -1,0 +1,12 @@
+create_table :developers, force: :cascade do |t|
+  t.bigint :user_id, null: false
+  t.bigint :github_id, null: false
+  t.string :github_username, null: false
+  t.string :github_access_token
+
+  t.timestamps
+
+  t.index :user_id, unique: true
+  t.index :github_id, unique: true
+end
+add_foreign_key :developers, :users

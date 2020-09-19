@@ -1,0 +1,10 @@
+create_table :avatars, force: :cascade do |t|
+  t.bigint :member_id, null: false
+  t.string :cloudinary_id, null: false
+  t.jsonb :metadata, null: false, default: {}
+
+  t.timestamps
+
+  t.index :member_id, unique: true
+end
+add_foreign_key :avatars, :members

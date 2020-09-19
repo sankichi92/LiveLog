@@ -1,0 +1,12 @@
+create_table :user_registration_forms, force: :cascade do |t|
+  t.bigint :admin_id, null: false
+  t.string :token, null: false
+  t.datetime :expires_at, null: false
+  t.integer :used_count, null: false, default: 0
+
+  t.timestamps
+
+  t.index :admin_id
+  t.index :token, unique: true
+end
+add_foreign_key :user_registration_forms, :administrators, column: :admin_id
