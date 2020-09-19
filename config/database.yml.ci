@@ -4,4 +4,4 @@ test:
   pool: 5
   host: localhost
   username: postgres
-  database: LiveLog2_ci
+  database: livelog_ci
