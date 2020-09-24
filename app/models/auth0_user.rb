@@ -26,6 +26,7 @@ class Auth0User
         email: user.email,
         password: password,
         verify_email: false,
+        picture: user.member.avatar&.image_url(size: :medium),
         user_metadata: {
           livelog_email_notifications: true,
         },
