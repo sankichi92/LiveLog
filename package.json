@@ -12,7 +12,7 @@
     "admin-lte": "^3.0.5",
     "bootstrap": "^4.5.2",
     "datatables.net": "^1.10.22",
-    "datatables.net-bs4": "^1.10.21",
+    "datatables.net-bs4": "^1.10.22",
     "jquery": "^3.5.1",
     "select2": "^4.0.13",
     "stimulus": "^1.1.1"
