@@ -72,11 +72,9 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = {
     address: 'smtp.sendgrid.net',
     port: 587,
-    authentication: :plain,
+    authentication: :login,
     user_name: 'apikey',
     password: ENV.fetch('SENDGRID_API_KEY'),
-    domain: 'livelog.ku-unplugged.net',
-    enable_starttls_auto: true,
   }
   config.action_mailer.default_url_options = { protocol: :https, host: 'livelog.ku-unplugged.net' }
 
