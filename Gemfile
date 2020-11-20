@@ -21,7 +21,7 @@ gem 'aws-sdk-s3', require: false
 gem 'bootsnap', require: false
 gem 'cloudinary'
 gem 'commonmarker'
-gem 'elasticsearch', '~> 7.0'
+gem 'elasticsearch', '~> 7.10'
 gem 'elasticsearch-dsl'
 gem 'elasticsearch-rails', '~> 7.0'
 gem 'font-awesome-sass'
