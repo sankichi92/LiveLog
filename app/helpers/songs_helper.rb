@@ -2,7 +2,7 @@
 
 module SongsHelper
   def link_to_search(name, options = nil, html_options = nil, &block)
-    if block_given?
+    if block
       html_options = options
       options = name
     end
@@ -16,6 +16,6 @@ module SongsHelper
       date_upper: options[:date_range]&.end,
       original: options[:original] ? '1' : '0',
     )
-    block_given? ? link_to(options, html_options, &block) : link_to(name, options, html_options)
+    block ? link_to(options, html_options, &block) : link_to(name, options, html_options)
   end
 end
