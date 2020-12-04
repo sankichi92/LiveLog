@@ -320,7 +320,7 @@ GEM
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
     rexml (3.2.4)
-    ridgepole (0.8.10)
+    ridgepole (0.8.12)
       activerecord (>= 5.0.1, < 6.1)
       diffy
     rspec-core (3.9.2)
@@ -423,7 +423,7 @@ GEM
       multipart-post (~> 2.0)
       naught (~> 1.0)
       simple_oauth (~> 0.3.0)
-    tzinfo (1.2.7)
+    tzinfo (1.2.8)
       thread_safe (~> 0.1)
     unf (0.1.4)
       unf_ext
@@ -454,7 +454,7 @@ GEM
     xpath (3.2.0)
       nokogiri (~> 1.8)
     zache (0.12.0)
-    zeitwerk (2.4.1)
+    zeitwerk (2.4.2)
 
 PLATFORMS
   ruby
