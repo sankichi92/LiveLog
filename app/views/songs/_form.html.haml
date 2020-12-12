@@ -15,11 +15,11 @@
   %small.form-text.text-muted 京大アンプラグドのメンバーが作詞・作曲した曲の場合にチェックしてください
 
 .mb-3{ data: { controller: 'form-plays' } }
-  %template{ data: { target: 'form-plays.template' } }
+  %template{ data: { 'form-plays-target': 'template' } }
     = form.fields_for :plays, Play.new, child_index: 'TEMPLATE_INDEX' do |plays_form|
       = render 'plays/form', form: plays_form
 
-  %dev{ data: { target: 'form-plays.container' } }
+  %dev{ data: { 'form-plays-target': 'container' } }
     = form.fields_for :plays do |plays_form|
       = render 'plays/form', form: plays_form
 
