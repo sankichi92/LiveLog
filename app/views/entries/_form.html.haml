@@ -2,9 +2,9 @@
   .alert.alert-primary
     %dl.mb-0
       %dt 締切
-      %dd{ data: { target: 'entry-guideline.deadline' } }= l entry.song.live.entry_guideline.deadline
+      %dd{ data: { 'entry-guideline-target': 'deadline' } }= l entry.song.live.entry_guideline.deadline
       %dt 注意事項
-      %dd{ data: { target: 'entry-guideline.notes' } }= simple_format(entry.song.live.entry_guideline.notes)
+      %dd{ data: { 'entry-guideline-target': 'notes' } }= simple_format(entry.song.live.entry_guideline.notes)
 
   = form_with model: entry, local: true do |form|
     = render 'shared/error_messages', errors: entry.errors
@@ -17,11 +17,11 @@
       = render 'songs/form', form: song_form
 
     .mb-3{ data: { controller: 'form-playable-times' } }
-      %template{ data: { target: 'form-playable-times.template' } }
+      %template{ data: { 'form-playable-times-target': 'template' } }
         = form.fields_for :playable_times, PlayableTime.new(range: entry.song.live.time_range), child_index: 'TEMPLATE_INDEX' do |playable_times_form|
           = render 'form_playable_time', form: playable_times_form
 
-      %dev{ data: { target: 'form-playable-times.container' } }
+      %dev{ data: { 'form-playable-times-target': 'container' } }
         = form.fields_for :playable_times do |playable_times_form|
           = render 'form_playable_time', form: playable_times_form
 
