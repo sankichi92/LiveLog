@@ -32,7 +32,7 @@ module SongDecorator
 
   def title_with_original
     if original?
-      safe_join [title, tag.small('（オリジナル曲）')]
+      safe_join[title, tag.small('（オリジナル曲）')]
     else
       title
     end
