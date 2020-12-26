@@ -16,7 +16,7 @@ Protected by OAuth 2.0.
 
 ## Requirements
 
-- [Ruby](https://www.ruby-lang.org/) 3.0
+- [Ruby](https://www.ruby-lang.org/) 2.7
 - [Node.js](https://nodejs.org/) & [Yarn](https://yarnpkg.com/)
 - [PostgreSQL](https://www.postgresql.org/)
 - [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/) 7.x
@@ -26,7 +26,7 @@ If you're using macOS and [Homebrew](https://brew.sh/), you can setup them by th
 
     $ brew tap elastic/tap
     $ brew install rbenv yarn postgresql elastic/tap/elasticsearch-full
-    $ rbenv install 3.0.0
+    $ rbenv install 2.7.2
     $ brew services start postgresql
     $ elasticsearch-plugin install analysis-kuromoji
     $ brew services restart elastic/tap/elasticsearch-full
