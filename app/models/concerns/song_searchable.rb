@@ -54,7 +54,7 @@ module SongSearchable
   def as_indexed_json(_options = {})
     {
       id: id,
-      datetime: datetime,
+      datetime: datetime.iso8601,
       position: position,
       name: name,
       artist: artist,
