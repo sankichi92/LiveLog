@@ -1,3 +1,9 @@
+GIT
+  remote: https://github.com/Workstream-App/batch-loader.git
+  revision: d19d49b45a933028566d22a07d6afebda02fad43
+  specs:
+    batch-loader (1.5.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -86,7 +92,6 @@ GEM
     aws-sigv4 (1.2.2)
       aws-eventstream (~> 1, >= 1.0.2)
     aws_cf_signer (0.1.3)
-    batch-loader (1.5.0)
     bindex (0.8.1)
     bootsnap (1.5.1)
       msgpack (~> 1.0)
@@ -367,7 +372,7 @@ GEM
       i18n
     ruby-progressbar (1.10.1)
     ruby2_keywords (0.0.2)
-    ruby_parser (3.14.1)
+    ruby_parser (3.15.0)
       sexp_processor (~> 4.9)
     rubyzip (2.3.0)
     sass-rails (6.0.0)
@@ -389,7 +394,7 @@ GEM
     semantic_range (2.3.0)
     sentry-raven (3.1.1)
       faraday (>= 1.0)
-    sexp_processor (4.13.0)
+    sexp_processor (4.15.1)
     simple_oauth (0.3.1)
     slack-ruby-client (0.15.1)
       faraday (>= 1.0)
@@ -465,7 +470,7 @@ DEPENDENCIES
   acts_as_list
   auth0
   aws-sdk-s3
-  batch-loader
+  batch-loader!
   bootsnap
   bullet
   byebug
@@ -519,7 +524,7 @@ DEPENDENCIES
   webpacker
 
 RUBY VERSION
-   ruby 2.7.2p137
+   ruby 3.0.0p0
 
 BUNDLED WITH
-   2.1.4
+   2.2.3
