@@ -32,7 +32,7 @@ module JWTAuthentication
       )
       @auth_payload = payload.symbolize_keys
     rescue JWT::DecodeError => e
-      Raven.capture_exception(e, level: :debug)
+      Sentry.capture_exception(e, level: :debug)
       false
     end
   end

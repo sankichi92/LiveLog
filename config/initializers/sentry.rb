@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-Raven.configure do |config|
-  config.sanitize_fields = Rails.application.config.filter_parameters.map(&:to_s)
-  config.environments = ['production']
+Sentry.init do |config|
+  config.breadcrumbs_logger = [:active_support_logger]
+  config.traces_sample_rate = 1.0
 end

@@ -20,7 +20,7 @@ class AuthController < ApplicationController
 
     redirect_to pop_stored_location || root_path, notice: 'ログインしました'
   rescue ActiveRecord::RecordNotFound => e
-    Raven.capture_exception(e, extra: { auth0_id: request.env['omniauth.auth'].uid })
+    Sentry.capture_exception(e, extra: { auth0_id: request.env['omniauth.auth'].uid })
     redirect_to root_path, alert: 'ログインに失敗しました。管理者に問い合わせてください'
   end
 
@@ -28,7 +28,7 @@ class AuthController < ApplicationController
     auth = request.env['omniauth.auth']
 
     if current_user.nil?
-      Raven.capture_message('Attempt to create a developer without log-in', extra: { github_username: auth.info.nickname }, level: :warning)
+      Sentry.capture_message('Attempt to create a developer without log-in', extra: { github_username: auth.info.nickname }, level: :warning)
       redirect_to root_path, alert: 'ログインしてください'
     else
       developer = current_user.developer || current_user.build_developer
@@ -43,7 +43,7 @@ class AuthController < ApplicationController
   end
 
   def failure(message, strategy)
-    Raven.capture_message(message, extra: { strategy: strategy }, level: :debug)
+    Sentry.capture_message(message, extra: { strategy: strategy }, level: :debug)
     redirect_to root_path, alert: message
   end
 

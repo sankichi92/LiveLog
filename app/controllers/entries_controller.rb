@@ -35,7 +35,7 @@ class EntriesController < ApplicationController
     )
     redirect_to entries_path, notice: "エントリー ID: #{@entry.id} を作成しました"
   rescue ActiveRecord::RecordInvalid => e
-    Raven.capture_exception(e, level: :debug)
+    Sentry.capture_exception(e, level: :debug)
     render :new, status: :unprocessable_entity
   end
 
@@ -59,7 +59,7 @@ class EntriesController < ApplicationController
     )
     redirect_to entries_path, notice: "エントリー ID: #{@entry.id} を更新しました"
   rescue ActiveRecord::RecordInvalid => e
-    Raven.capture_exception(e, level: :debug)
+    Sentry.capture_exception(e, level: :debug)
     render :edit, status: :unprocessable_entity
   end
 

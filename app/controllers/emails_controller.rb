@@ -25,7 +25,7 @@ class EmailsController < ApplicationController
 
     redirect_to email_path
   rescue Auth0::BadRequest => e
-    Raven.capture_exception(e, level: :debug)
+    Sentry.capture_exception(e, level: :debug)
     @errors = ['メールアドレスが不正な値です']
     render :show, status: :unprocessable_entity
   end

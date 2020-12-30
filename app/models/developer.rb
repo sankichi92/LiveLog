@@ -9,7 +9,7 @@ class Developer < ApplicationRecord
       update!(github_username: user[:login]) if user[:login].present? && user[:login] != github_username
     end
   rescue Octokit::Unauthorized => e
-    Raven.capture_exception(e, level: :debug)
+    Sentry.capture_exception(e, level: :debug)
     if clients.empty?
       destroy!
     else

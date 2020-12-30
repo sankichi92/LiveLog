@@ -38,7 +38,7 @@ gem 'rack-timeout'
 gem 'rails-i18n'
 gem 'redis'
 gem 'ridgepole', require: false
-gem 'sentry-raven'
+gem 'sentry-rails'
 gem 'slack-ruby-client'
 gem 'twitter'
 

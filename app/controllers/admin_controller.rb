@@ -2,7 +2,7 @@
 
 class AdminController < ActionController::Base # rubocop:disable Rails/ApplicationController
   include Session
-  include RavenContext
+  include SentryUser
 
   layout 'admin'
 

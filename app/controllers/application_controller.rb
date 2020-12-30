@@ -2,5 +2,5 @@
 
 class ApplicationController < ActionController::Base
   include Session
-  include RavenContext
+  include SentryUser
 end

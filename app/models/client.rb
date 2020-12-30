@@ -67,7 +67,7 @@ class Client < ApplicationRecord
       },
     )
   rescue Auth0::BadRequest => e
-    Raven.capture_exception(e, level: :debug)
+    Sentry.capture_exception(e, level: :debug)
     errors.add(:base, JSON.parse(e.message)['message'])
     false
   end

@@ -30,7 +30,7 @@ class SongsController < ApplicationController
     @related_songs = begin
                        Song.search(@song.more_like_this_query).records(includes: [:live, { plays: :member }]).to_a
                      rescue => e
-                       Raven.capture_exception(e)
+                       Sentry.capture_exception(e)
                        []
                      end
   end
