@@ -4,7 +4,7 @@
     "eslint": "eslint *.config.js .*.js app/javascript"
   },
   "dependencies": {
-    "@rails/activestorage": "^6.1.0",
+    "@rails/activestorage": "^6.1.1",
     "@rails/ujs": "^6.1.0",
     "@rails/webpacker": "^5.2.1",
     "@sentry/browser": "^5.29.2",
