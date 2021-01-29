@@ -12,13 +12,6 @@ class LiveLogSchema < GraphQL::Schema
 
   # region Plugins
 
-  # Opt in to the new runtime (default in future graphql-ruby versions)
-  use GraphQL::Execution::Interpreter
-  use GraphQL::Analysis::AST
-  use GraphQL::Execution::Errors
-
-  use GraphQL::Pagination::Connections
-
   use BatchLoader::GraphQL
 
   # endregion
