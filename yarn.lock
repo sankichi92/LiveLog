@@ -1040,10 +1040,10 @@
   resolved "https://registry.yarnpkg.com/@sweetalert2/theme-bootstrap-4/-/theme-bootstrap-4-3.2.0.tgz#9580fcefd7c624863e5a7cd35cb6b253e0ac8592"
   integrity sha512-hNt+KMN84FLeL+AomgiCnsuBViFnVamq8ABwn2Y/EvLBQKPRvRQuYtoX+Ub6B6R3brdh6ylPpDwnUGC1xyhi9A==
 
-"@ttskch/select2-bootstrap4-theme@^1.3.2", "@ttskch/select2-bootstrap4-theme@^1.4.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@ttskch/select2-bootstrap4-theme/-/select2-bootstrap4-theme-1.4.0.tgz#1e15ed14c5adbd6f86940811e195bde984aa9882"
-  integrity sha512-5WVMdFpQLx0vKxX0/LfapI0aE+qUYOuOuMjOc+ecN8vsr7plcBsgIbp4YtlpLmQR9aqgyM1QyqEiO/FwB+qaqQ==
+"@ttskch/select2-bootstrap4-theme@^1.3.2", "@ttskch/select2-bootstrap4-theme@^1.5.2":
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/@ttskch/select2-bootstrap4-theme/-/select2-bootstrap4-theme-1.5.2.tgz#3b4519b349f3e7831c28752a1e9617312a192656"
+  integrity sha512-gAj8qNy/VYwQDBkACm0USM66kxFai8flX83ayRXPNhzZckEgSqIBB9sM74SCM3ssgeX+ZVy4BifTnLis+KpIyg==
 
 "@types/color-name@^1.1.1":
   version "1.1.1"
