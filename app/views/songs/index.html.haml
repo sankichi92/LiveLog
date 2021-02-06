@@ -22,9 +22,9 @@
       = page_entries_info @songs, entry_name: '曲'
     .song-list.mb-3
       - if current_user
-        = render @songs
+        = render @songs.to_a
       - else
-        = render partial: 'song', collection: @songs, cached: true
+        = render partial: 'song', collection: @songs.to_a, cached: true
     = paginate @songs
 
 - else
