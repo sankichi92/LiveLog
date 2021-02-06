@@ -3,7 +3,7 @@ create_table :active_storage_blobs, force: :cascade do |t|
   t.string :filename, null: false
   t.string :content_type
   t.text :metadata
-  t.string :service_name
+  t.string :service_name, null: false
   t.bigint :byte_size, null: false
   t.string :checksum, null: false
 
