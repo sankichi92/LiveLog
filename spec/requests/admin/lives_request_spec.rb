@@ -89,14 +89,14 @@ RSpec.describe 'admin/lives request:', type: :request do
       {
         live: {
           date: live.date.to_s,
-          name: name,
+          name: live_name,
           place: live.place,
           comment: comment,
           album_url: album_url,
         },
       }
     end
-    let(:name) { live.name }
+    let(:live_name) { live.name }
     let(:comment) { live.comment }
     let(:album_url) { live.album_url }
 
@@ -114,7 +114,7 @@ RSpec.describe 'admin/lives request:', type: :request do
     end
 
     context 'with invalid params' do
-      let(:name) { 'a' * 21 }
+      let(:live_name) { 'a' * 21 }
 
       it 'responds 422' do
         patch admin_live_path(live), params: params
