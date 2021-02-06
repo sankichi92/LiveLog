@@ -478,10 +478,10 @@ DEPENDENCIES
   auth0
   aws-sdk-s3
   batch-loader
-  bootsnap
+  bootsnap (>= 1.4.4)
   bullet
   byebug
-  capybara
+  capybara (>= 3.26)
   cloudinary
   commonmarker
   dotenv-rails
@@ -498,16 +498,16 @@ DEPENDENCIES
   jwt
   kaminari
   kaminari-i18n
-  listen
+  listen (~> 3.3)
   octokit
   omniauth
   omniauth-auth0
   omniauth-github
   omniauth-rails_csrf_protection
-  pg
-  puma
+  pg (~> 1.1)
+  puma (~> 5.0)
   rack-timeout
-  rails
+  rails (~> 6.1.1)
   rails-i18n
   rails_real_favicon
   redis
@@ -518,15 +518,15 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   rubocop-rubycw
-  sass-rails
+  sass-rails (>= 6)
   selenium-webdriver
   sentry-rails
   slack-ruby-client
   twitter
-  web-console
+  web-console (>= 4.1.0)
   webdrivers
   webmock
-  webpacker
+  webpacker (~> 5.0)
 
 RUBY VERSION
    ruby 2.7.2p137
