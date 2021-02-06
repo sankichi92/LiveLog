@@ -9,7 +9,7 @@
   = link_to 'Slack', slack_path, target: '_blank', class: 'alert-link'
   の #help チャンネルで気軽にご相談ください。
 
-= form_with model: @client, local: true do |form|
+= form_with model: @client do |form|
   = render 'shared/error_messages', errors: @client.errors
 
   .form-group

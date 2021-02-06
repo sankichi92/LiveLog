@@ -9,7 +9,7 @@
     を参照してください。
 
 %section
-  = form_with model: @client, local: true do |form|
+  = form_with model: @client do |form|
     = render 'shared/error_messages', errors: @client.errors
 
     .form-group

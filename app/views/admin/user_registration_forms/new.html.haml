@@ -15,7 +15,7 @@
 %section.content
   .container-fluid
     %section.card
-      = form_with model: @user_registration_form, url: [:admin, @user_registration_form], local: true do |form|
+      = form_with model: @user_registration_form, url: [:admin, @user_registration_form] do |form|
         .card-body
           = render 'shared/error_messages', errors: @user_registration_form.errors
 

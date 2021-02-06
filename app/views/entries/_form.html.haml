@@ -6,7 +6,7 @@
       %dt 注意事項
       %dd{ data: { 'entry-guideline-target': 'notes' } }= simple_format(entry.song.live.entry_guideline.notes)
 
-  = form_with model: entry, local: true do |form|
+  = form_with model: entry do |form|
     = render 'shared/error_messages', errors: entry.errors
 
     = fields model: entry.song do |song_form|

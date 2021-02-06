@@ -15,7 +15,7 @@
 %section.content
   .container-fluid
     %section.card
-      = form_with model: @member, url: admin_members_path, local: true do |form|
+      = form_with model: @member, url: admin_members_path do |form|
         .card-body
           = render 'shared/error_messages', errors: @member.errors
 
