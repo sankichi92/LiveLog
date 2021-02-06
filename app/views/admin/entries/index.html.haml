@@ -12,7 +12,7 @@
   .container-fluid
     %section.card
       .card-header.border-bottom-0
-        = form_with url: admin_entries_path, method: :get, local: true, class: 'form-inline' do |form|
+        = form_with url: admin_entries_path, method: :get, class: 'form-inline' do |form|
           = label_tag :playable_time, '演奏可能時間', class: 'mr-2'
           = datetime_field_tag :playable_time, params[:playable_time] || Time.zone.now.beginning_of_hour.strftime("%Y-%m-%dT%H:%M"), step: 10.minutes.to_i, class: 'form-control mr-2'
           = form.button icon('fas', 'search', '検索'), class: 'btn btn-primary'

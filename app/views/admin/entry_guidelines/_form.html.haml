@@ -1,5 +1,5 @@
 %section.card
-  = form_with model: entry_guideline, url: admin_live_entry_guideline_path(entry_guideline.live), local: true do |form|
+  = form_with model: entry_guideline, url: admin_live_entry_guideline_path(entry_guideline.live) do |form|
     .card-body
       = render 'shared/error_messages', errors: entry_guideline.errors
 

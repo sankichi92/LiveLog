@@ -2,7 +2,7 @@
 - content_for :additional_meta_fields do
   %meta{ name: 'robots', content: 'noindex' }
 
-= form_with model: @member, url: user_registration_form_members_path(@user_registration_form.token), local: true do |form|
+= form_with model: @member, url: user_registration_form_members_path(@user_registration_form.token) do |form|
   = render 'shared/error_messages', errors: @member.errors
 
   .form-group

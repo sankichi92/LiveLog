@@ -13,7 +13,7 @@
 %section.content
   .container-fluid
     %section.card
-      = form_with model: @admin, url: [:admin, @admin], local: true do |form|
+      = form_with model: @admin, url: [:admin, @admin] do |form|
         .card-body
           = render 'shared/error_messages', errors: @admin.errors
 

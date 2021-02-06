@@ -8,7 +8,7 @@
 = render 'settings/nav'
 
 %section
-  = form_with model: @member, url: profile_path, local: true, multipart: true do |form|
+  = form_with model: @member, url: profile_path, multipart: true do |form|
 
     = render 'shared/error_messages', errors: @member.errors
 
