@@ -2,7 +2,7 @@
 - provide(:description, "#{l(@live.date)} @#{@live.place} #{@live.songs.map.with_index { |s, i| "#{i + 1}.#{s.name}" }.join(' ')}")
 
 %article
-  %header.card.mb-3
+  %section.card.mb-3
     .card-body.lead
       .card-subtitle.text-muted= l @live.date
       %h1.card-title= @live.name

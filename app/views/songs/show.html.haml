@@ -15,13 +15,12 @@
 
   %section.card.mb-3
     .card-body.lead
-      %header
-        .card-subtitle.text-muted
-          = link_to @song.live.title, @song.live
-          = @song.time_and_position
-        %h1.card-title
-          = @song.title_with_original
-          = @song.visibility_icon if @song.player?(current_user&.member)
+      .card-subtitle.text-muted
+        = link_to @song.live.title, @song.live
+        = @song.time_and_position
+      %h1.card-title
+        = @song.title_with_original
+        = @song.visibility_icon if @song.player?(current_user&.member)
       - if @song.plays.present?
         .mb-3= render @song.plays.sort_by(&:instrument_order_index)
       - if @song.comment.present?

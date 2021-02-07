@@ -1,4 +1,4 @@
-%header.jumbotron
+%section.jumbotron
   .row.justify-content-center.align-items-center
     .col-8.col-md-6.col-lg-4
       = image_tag 'logo.png', alt: 'LiveLog logo', class: 'img-fluid'
@@ -11,15 +11,13 @@
       = render 'songs/form_basic_search'
 
 %section.mb-3
-  %header
-    %h2.h3 今日のピックアップ
+  %h2.h3 今日のピックアップ
   %hr
   .song-list
     = render @song if @song
 
 %section.mb-3
-  %header
-    %h2.h3 最近のライブ
+  %h2.h3 最近のライブ
   %hr
   .row
     .col-lg-6
