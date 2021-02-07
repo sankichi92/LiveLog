@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.2'
+ruby '3.0.0'
 
 gem 'rails', '~> 6.1.1'
 # Use postgresql as the database for Active Record
@@ -48,7 +49,7 @@ gem 'twitter'
 gem 'elasticsearch-model', '~> 7.0'
 
 # API
-gem 'batch-loader'
+gem 'batch-loader', github: 'sankichi92/batch-loader' # https://github.com/exAspArk/batch-loader/pull/71
 gem 'graphql'
 gem 'jwt'
 
