@@ -13,6 +13,11 @@
 !/log/.keep
 !/tmp/.keep
 
+# Ignore pidfiles, but keep the directory.
+/tmp/pids/*
+!/tmp/pids/
+!/tmp/pids/.keep
+
 # Ignore uploaded files in development.
 /storage/*
 !/storage/.keep
@@ -28,9 +33,6 @@
 
 # dotenv
 .env
-
-# Rubocop
-/.rubocop-https---raw-githubusercontent-com-cookpad-styleguide-master--rubocop-yml
 
 /public/packs
 /public/packs-test
