@@ -2,78 +2,75 @@ name: CI
 
 on:
   push:
-    branches:
-      - master
-    paths-ignore:
-      - '*.md'
-      - 'bin/*'
+    branches: [ $default-branch ]
   pull_request:
-    paths-ignore:
-      - '*.md'
-      - 'bin/*'
 
 jobs:
   RSpec:
     runs-on: ubuntu-latest
 
-    env:
-      TZ: Asia/Tokyo
-      RAILS_ENV: test
-
     services:
       postgres:
         image: postgres:11.6
-        ports:
-          - 5432:5432
-        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports: [ '5432:5432' ]
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
       elasticsearch:
         image: elasticsearch:7.3.2
-        ports:
-          - 9200:9200
-        options: --env "discovery.type=single-node" --health-cmd "curl http://localhost:9200/_cluster/health" --health-interval 10s --health-timeout 5s --health-retries 10
+        ports: [ '9200:9200' ]
+        options: >-
+          --env "discovery.type=single-node"
+          --health-cmd "curl http://localhost:9200/_cluster/health"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      TZ: Asia/Tokyo
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      RAILS_ENV: test
 
     steps:
       - uses: actions/checkout@v2
 
+      - run: sudo apt-get -qq install libpq-dev
+
       - uses: ruby/setup-ruby@v1
-
-      - uses: actions/setup-node@v1
         with:
-          node-version: 12
+          bundler-cache: true
 
-      - name: Bundler cache
-        uses: actions/cache@v1
+      - uses: actions/setup-node@v2
         with:
-          path: vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('.ruby-version') }}-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: ${{ runner.os }}-gems-${{ hashFiles('.ruby-version') }}-
+          node-version: '14'
 
-      - name: Get yarn cache dir
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
-        id: yarn-cache
 
       - name: Yarn cache
-        uses: actions/cache@v1
+        uses: actions/cache@v2
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
-          path: ${{ steps.yarn-cache.outputs.dir }}
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: ${{ runner.os }}-yarn-
 
-      - name: Install dependencies
-        run: |
-          sudo apt-get install libpq-dev
-          bundle config path vendor/bundle
-          bundle install --jobs 4 --retry 3 --with=test
-          yarn install
+      - run: yarn install
 
       - name: Setup database
         run: |
-          cp config/database.yml.ci config/database.yml
           bin/rake db:create
           bin/rake ridgepole:apply
 
-      - name: Run spec
+      - name: Run RSpec
         run: bin/rake spec
 
   RuboCop:
@@ -81,39 +78,31 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - run: sudo apt-get -qq install libpq-dev
+
       - uses: ruby/setup-ruby@v1
-
-      - uses: actions/cache@v1
         with:
-          path: vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('.ruby-version') }}-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: ${{ runner.os }}-gems-${{ hashFiles('.ruby-version') }}-
+          bundler-cache: true
 
-      - name: Install dependencies
-        run: |
-          sudo apt-get install libpq-dev
-          bundle config path vendor/bundle
-          bundle install --jobs 4 --retry 3 --with=test
-
-      - name: Run rubocop
-        run: bundle exec rubocop --parallel
+      - run: bundle exec rubocop --parallel
 
   ESLint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v2
         with:
-          node-version: 12
+          node-version: '14'
 
-      - name: Get yarn cache dir
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
-        id: yarn-cache
 
-      - uses: actions/cache@v1
+      - uses: actions/cache@v2
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
-          path: ${{ steps.yarn-cache.outputs.dir }}
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: ${{ runner.os }}-yarn-
 
