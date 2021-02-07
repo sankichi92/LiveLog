@@ -82,4 +82,4 @@ Edit `db/Schemafile` and run:
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/sankichi92/LiveLog. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/sankichi92/LiveLog/blob/master/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/sankichi92/LiveLog. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/sankichi92/LiveLog/blob/main/CODE_OF_CONDUCT.md).
