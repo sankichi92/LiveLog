@@ -405,6 +405,8 @@ GEM
     sawyer (0.8.2)
       addressable (>= 2.3.5)
       faraday (> 0.8, < 2.0)
+    scout_apm (4.0.4)
+      parser
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
@@ -532,6 +534,7 @@ DEPENDENCIES
   rubocop-rspec
   rubocop-rubycw
   sass-rails (>= 6)
+  scout_apm
   selenium-webdriver
   sentry-rails
   slack-ruby-client
