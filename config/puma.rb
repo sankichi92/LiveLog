@@ -41,5 +41,10 @@ workers ENV.fetch('WEB_CONCURRENCY', 2)
 #
 preload_app!
 
+# https://devcenter.heroku.com/articles/language-runtime-metrics-ruby#add-the-barnes-gem-to-your-application
+before_fork do
+  Barnes.start
+end
+
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart

@@ -22,6 +22,7 @@ gem 'active_decorator'
 gem 'acts_as_list'
 gem 'auth0'
 gem 'aws-sdk-s3', require: false
+gem 'barnes'
 gem 'cloudinary'
 gem 'commonmarker'
 gem 'elasticsearch', '~> 7.10'
