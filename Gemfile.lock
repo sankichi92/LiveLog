@@ -120,7 +120,7 @@ GEM
     cloudinary (1.18.1)
       aws_cf_signer
       rest-client
-    commonmarker (0.21.1)
+    commonmarker (0.21.2)
       ruby-enum (~> 0.5)
     concurrent-ruby (1.1.8)
     crack (0.4.5)
@@ -385,7 +385,7 @@ GEM
       rubocop-ast (>= 1.1.0)
     rubocop-rubycw (0.1.4)
       rubocop
-    ruby-enum (0.8.0)
+    ruby-enum (0.9.0)
       i18n
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.4)
