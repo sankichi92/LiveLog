@@ -1,5 +1,5 @@
 create_table :clients, force: :cascade do |t|
-  t.bigint :developer_id, null: false
+  t.references :developer, null: false
   t.string :auth0_id, null: false
   t.string :name, null: false
   t.string :description
@@ -8,7 +8,6 @@ create_table :clients, force: :cascade do |t|
 
   t.timestamps
 
-  t.index :developer_id
   t.index :auth0_id, unique: true
+  t.foreign_key :developers
 end
-add_foreign_key :clients, :developers

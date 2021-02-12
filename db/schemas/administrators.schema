@@ -1,9 +1,8 @@
 create_table :administrators, force: :cascade do |t|
-  t.bigint :user_id, null: false
+  t.references :user, null: false, index: { unique: true }
   t.string :scopes, array: true, null: false, default: []
 
   t.timestamps
 
-  t.index :user_id, unique: true
+  t.foreign_key :users
 end
-add_foreign_key :administrators, :users
