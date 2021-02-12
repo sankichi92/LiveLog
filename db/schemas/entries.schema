@@ -1,24 +1,21 @@
 create_table :entries, force: :cascade do |t|
-  t.bigint :song_id, null: false
-  t.bigint :member_id, null: false
+  t.references :song, null: false, index: { unique: true }
+  t.references :member, null: false
   t.text :notes
   t.text :admin_memo
 
   t.timestamps
 
-  t.index :song_id, unique: true
-  t.index :member_id
+  t.foreign_key :songs
+  t.foreign_key :members
 end
-add_foreign_key :entries, :songs
-add_foreign_key :entries, :members
 
 create_table :playable_times, force: :cascade do |t|
-  t.bigint :entry_id, null: false
+  t.references :entry, null: false
   t.tsrange :range, null: false
 
   t.timestamps
 
-  t.index :entry_id
   t.index :range, using: :gist
+  t.foreign_key :entries
 end
-add_foreign_key :playable_times, :entries

@@ -1,5 +1,5 @@
 create_table :users, force: :cascade do |t|
-  t.bigint :member_id, null: false
+  t.references :member, null: false, index: { unique: true }
   t.string :auth0_id, null: false
   t.string :email, null: false
   t.jsonb :userinfo, null: false, default: {}
@@ -7,9 +7,8 @@ create_table :users, force: :cascade do |t|
 
   t.timestamps
 
-  t.index :member_id, unique: true
   t.index :auth0_id, unique: true
   t.index :email, unique: true
   t.index :activated
+  t.foreign_key :members
 end
-add_foreign_key :users, :members

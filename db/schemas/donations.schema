@@ -1,11 +1,10 @@
 create_table :donations, force: :cascade do |t|
-  t.bigint :member_id, null: false
+  t.references :member, null: false
   t.integer :amount, null: false
   t.date :donated_on, null: false
 
   t.datetime :created_at, null: false
 
-  t.index :member_id
   t.index :donated_on
+  t.foreign_key :members
 end
-add_foreign_key :donations, :members
