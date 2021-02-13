@@ -1,9 +1,7 @@
 create_table :entry_guidelines, force: :cascade do |t|
-  t.references :live, null: false, index: { unique: true }
+  t.references :live, null: false, index: { unique: true }, foreign_key: { column: :live_id }
   t.datetime :deadline, null: false
   t.text :notes
 
   t.timestamps
-
-  t.foreign_key :lives, column: :live_id
 end

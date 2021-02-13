@@ -1,5 +1,5 @@
 create_table :songs, force: :cascade do |t|
-  t.references :live, null: false
+  t.references :live, null: false, foreign_key: { column: :live_id }
   t.time :time
   t.integer :position, null: false, limit: 2
   t.string :name, null: false
@@ -10,6 +10,4 @@ create_table :songs, force: :cascade do |t|
   t.text :comment
 
   t.timestamps
-
-  t.foreign_key :lives, column: :live_id
 end
