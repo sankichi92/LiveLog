@@ -119,7 +119,7 @@ RSpec.describe 'admin/lives request:', type: :request do
       it 'responds 422' do
         patch admin_live_path(live), params: params
 
-        expect(live.reload.name).not_to eq name
+        expect(live.reload.name).not_to eq live_name
         expect(response).to have_http_status :unprocessable_entity
       end
     end
