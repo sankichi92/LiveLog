@@ -51,7 +51,7 @@ gem 'twitter'
 gem 'elasticsearch-model', '~> 7.0'
 
 # API
-gem 'batch-loader', github: 'sankichi92/batch-loader' # https://github.com/exAspArk/batch-loader/pull/71
+gem 'batch-loader'
 gem 'graphql'
 gem 'jwt'
 

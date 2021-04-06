@@ -1,9 +1,3 @@
-GIT
-  remote: https://github.com/sankichi92/batch-loader.git
-  revision: d19d49b45a933028566d22a07d6afebda02fad43
-  specs:
-    batch-loader (1.5.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -99,6 +93,7 @@ GEM
     barnes (0.0.9)
       multi_json (~> 1)
       statsd-ruby (~> 1.1)
+    batch-loader (2.0.1)
     bindex (0.8.1)
     bootsnap (1.7.3)
       msgpack (~> 1.0)
@@ -489,7 +484,7 @@ DEPENDENCIES
   auth0
   aws-sdk-s3
   barnes
-  batch-loader!
+  batch-loader
   bootsnap (>= 1.4.4)
   bullet
   byebug
