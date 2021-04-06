@@ -5,7 +5,7 @@ class EntryActivityNotifyJob < ApplicationJob
 
   def perform(user:, operation:, entry_id:, detail:)
     Slack::Web::Client.new.chat_postMessage(
-      channel: Rails.application.config.x.slack.notification_channel,
+      channel: ENV.fetch('SLACK_NOTIFICATION_CHANNEL', '#notif-entry'),
       blocks: build_blocks(operation, entry_id, detail),
       username: user.member.joined_year_and_name,
     )
