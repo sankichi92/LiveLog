@@ -20,9 +20,9 @@ class Auth0User
 
     def create!(user, password: "0aA#{SecureRandom.base58}")
       response = AppAuth0Client.instance.create_user(
-        user.member.name,
-        connection: CONNECTION_NAME,
+        CONNECTION_NAME,
         user_id: user.auth0_id[/\Aauth0\|(\S+)/, 1],
+        name: user.member.name,
         email: user.email,
         password: password,
         verify_email: false,
