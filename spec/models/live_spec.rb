@@ -20,7 +20,7 @@ RSpec.describe Live, type: :model do
 
       expect(live.reload).to be_published
       expect(live.entry_guideline).to be_nil
-      expect(live.songs.map(&:entry).compact).to be_empty
+      expect(live.songs.filter_map(&:entry)).to be_empty
     end
   end
 end
