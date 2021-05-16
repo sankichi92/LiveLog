@@ -43,6 +43,11 @@ Style/TrailingCommaInArrayLiteral:
 Style/TrailingCommaInHashLiteral:
   EnforcedStyleForMultiline: consistent_comma
 
+# rubocop-rails
+
+Rails/EnvironmentVariableAccess:
+  Enabled: false
+
 # rubocop-rspec
 
 RSpec/DescribeClass:
