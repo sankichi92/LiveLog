@@ -1,0 +1,9 @@
+{
+  "editor.tabSize": 2,
+  
+  "ruby.lint": {
+    "rubocop": {
+      "useBundler": true
+    }
+  }
+}
