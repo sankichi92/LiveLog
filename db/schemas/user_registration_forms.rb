@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 create_table :user_registration_forms, force: :cascade do |t|
   t.references :admin, null: false
   t.string :token, null: false

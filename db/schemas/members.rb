@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 create_table :members, force: :cascade do |t|
   t.integer :joined_year, null: false, limit: 2
   t.string :name, null: false

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 create_table :active_storage_blobs, force: :cascade do |t|
   t.string :key, null: false
   t.string :filename, null: false

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 create_table :lives, force: :cascade do |t|
   t.string :name, null: false
   t.date :date, null: false

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 create_table :clients, force: :cascade do |t|
   t.references :developer, null: false, foreign_key: true
   t.string :auth0_id, null: false

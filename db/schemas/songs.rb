@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 create_table :songs, force: :cascade do |t|
   t.references :live, null: false, foreign_key: { column: :live_id }
   t.time :time

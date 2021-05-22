@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 create_table :donations, force: :cascade do |t|
   t.references :member, null: false, foreign_key: true
   t.integer :amount, null: false
