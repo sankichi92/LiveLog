@@ -4,7 +4,7 @@
   provide(:og_type, 'music.song')
   provide(:og_image, @song.youtube_thumbnail('maxresdefault')) if @song.youtube_playable?
 
-- content_for :additional_meta_fields do
+- content_for :head do
   - @song.plays.each do |play|
     %meta{ property: 'music:musician', content: member_url(play.member) }
 

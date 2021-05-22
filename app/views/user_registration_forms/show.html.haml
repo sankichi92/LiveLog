@@ -1,5 +1,5 @@
 - provide :title, 'ユーザー登録'
-- content_for :additional_meta_fields do
+- content_for :head do
   %meta{ name: 'robots', content: 'noindex' }
 
 = form_with model: @member, url: user_registration_form_members_path(@user_registration_form.token) do |form|
