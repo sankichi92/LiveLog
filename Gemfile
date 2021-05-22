@@ -12,8 +12,6 @@ gem 'pg', '~> 1.1'
 gem 'puma', '~> 5.3'
 # Use SCSS for stylesheets
 gem 'sass-rails', '>= 6'
-# Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-gem 'webpacker', '~> 5.4'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 
@@ -44,6 +42,7 @@ gem 'rails-i18n'
 gem 'ridgepole', require: false
 gem 'scout_apm'
 gem 'sentry-rails'
+gem 'simpacker'
 gem 'slack-ruby-client'
 gem 'twitter'
 

@@ -1,0 +1,16 @@
+{
+  // Visit https://aka.ms/tsconfig.json to read more about this file
+  "compilerOptions": {
+    "target": "ES2015",
+    "allowJs": true,
+    "checkJs": true,
+    "sourceMap": true,
+    "noEmit": true,
+    "strict": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["./app/javascript"]
+}
