@@ -1,5 +1,6 @@
 const glob = require('glob');
 const path = require('path');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const webpack = require('webpack');
 const WebpackAssetsManifest = require('webpack-assets-manifest');
 
@@ -31,7 +32,8 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: ['.js', '.ts'],
+    extensions: ['.js', '.ts', '.jsx', '.tsx'],
+    plugins: [new TsconfigPathsPlugin()],
   },
   optimization: {
     splitChunks: {
