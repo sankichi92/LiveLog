@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'app_auth0_client'
+require 'livelog/auth0_client'
 
 class AuthController < ApplicationController
   before_action :require_current_user, only: :logout
@@ -50,7 +50,7 @@ class AuthController < ApplicationController
   def logout
     log_out
 
-    logout_uri = AppAuth0Client.instance.logout_url(root_url, include_client: true)
+    logout_uri = LiveLog::Auth0Client.instance.logout_url(root_url, include_client: true)
     redirect_to logout_uri.to_s, notice: 'ログアウトしました'
   end
 end

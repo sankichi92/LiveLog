@@ -66,7 +66,7 @@ RSpec.describe 'clients request:', type: :request do
 
     before do
       allow(Octokit::Client).to receive(:new).with(access_token: developer.github_access_token).and_return(octokit_client)
-      allow(AppAuth0Client).to receive(:instance).and_return(auth0_client)
+      allow(LiveLog::Auth0Client).to receive(:instance).and_return(auth0_client)
 
       log_in_as developer.user
     end
@@ -151,7 +151,7 @@ RSpec.describe 'clients request:', type: :request do
 
     before do
       allow(auth0_client).to receive(:patch_client).and_return({})
-      allow(AppAuth0Client).to receive(:instance).and_return(auth0_client)
+      allow(LiveLog::Auth0Client).to receive(:instance).and_return(auth0_client)
 
       log_in_as client.developer.user
     end
@@ -198,7 +198,7 @@ RSpec.describe 'clients request:', type: :request do
 
     before do
       allow(auth0_client).to receive(:delete_client)
-      allow(AppAuth0Client).to receive(:instance).and_return(auth0_client)
+      allow(LiveLog::Auth0Client).to receive(:instance).and_return(auth0_client)
 
       log_in_as client.developer.user
     end

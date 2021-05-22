@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'app_auth0_client'
+require 'livelog/auth0_client'
 
 GraphiQL::Rails.config.tap do |config|
   config.title = 'LiveLog GraphiQL'
@@ -15,7 +15,7 @@ GraphiQL::Rails.config.tap do |config|
                    elsif Rails.cache.exist?(cache_key)
                      Rails.cache.read(cache_key)
                    else
-                     auth0_api_token = AppAuth0Client.instance.api_token(audience: Rails.application.config.x.auth0.api_audience)
+                     auth0_api_token = LiveLog::Auth0Client.instance.api_token(audience: Rails.application.config.x.auth0.api_audience)
                      Rails.cache.write(cache_key, auth0_api_token.token, expires_in: auth0_api_token.expires_in.seconds)
                      auth0_api_token.token
                    end

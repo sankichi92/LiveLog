@@ -116,7 +116,7 @@ RSpec.describe 'auth request:', type: :request do
     let(:auth0_client) { double(:auth0_client, logout_url: 'logout_url') }
 
     before do
-      allow(AppAuth0Client).to receive(:instance).and_return(auth0_client)
+      allow(LiveLog::Auth0Client).to receive(:instance).and_return(auth0_client)
 
       log_in_as(user)
     end

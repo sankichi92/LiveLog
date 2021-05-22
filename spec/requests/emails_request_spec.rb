@@ -30,7 +30,7 @@ RSpec.describe 'emails request:', type: :request do
         'email' => 'current@example.com',
         'email_verified' => true,
       )
-      allow(AppAuth0Client).to receive(:instance).and_return(auth0_client)
+      allow(LiveLog::Auth0Client).to receive(:instance).and_return(auth0_client)
       log_in_as user
     end
 

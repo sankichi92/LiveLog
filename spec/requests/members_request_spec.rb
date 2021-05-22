@@ -83,7 +83,7 @@ RSpec.describe 'members request:', type: :request do
     end
 
     before do
-      allow(AppAuth0Client).to receive(:instance).and_return(auth0_client)
+      allow(LiveLog::Auth0Client).to receive(:instance).and_return(auth0_client)
     end
 
     context 'with valid member and user params' do

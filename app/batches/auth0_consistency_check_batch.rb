@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'app_auth0_client'
+require 'livelog/auth0_client'
 
 class Auth0ConsistencyCheckBatch < ApplicationBatch
   Error = Class.new(StandardError)
@@ -21,7 +21,7 @@ class Auth0ConsistencyCheckBatch < ApplicationBatch
 
     i = 0
     loop do
-      response = AppAuth0Client.instance.users(
+      response = LiveLog::Auth0Client.instance.users(
         page: i,
         per_page: 100,
         include_totals: true,

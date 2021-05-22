@@ -46,7 +46,7 @@ RSpec.describe 'users request', type: :request do
     let(:auth0_client) { spy(:app_auth0_client) }
 
     before do
-      allow(AppAuth0Client).to receive(:instance).and_return(auth0_client)
+      allow(LiveLog::Auth0Client).to receive(:instance).and_return(auth0_client)
 
       log_in_as create(:user)
     end

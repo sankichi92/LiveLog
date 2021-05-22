@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'twitter_client'
+require 'livelog/twitter_client'
 
 class TweetJob < ApplicationJob
   queue_as :default

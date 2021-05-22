@@ -10,7 +10,7 @@ RSpec.describe User, type: :model do
     let(:auth0_client) { spy(:app_auth0_client) }
 
     before do
-      allow(AppAuth0Client).to receive(:instance).and_return(auth0_client)
+      allow(LiveLog::Auth0Client).to receive(:instance).and_return(auth0_client)
     end
 
     context 'when a corresponding Auth0 user does not exist' do

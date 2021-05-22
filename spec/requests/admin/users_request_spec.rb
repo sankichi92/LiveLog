@@ -15,7 +15,7 @@ RSpec.describe 'admin/users request:', type: :request do
     let(:auth0_client) { spy(:app_auth0_client) }
 
     before do
-      allow(AppAuth0Client).to receive(:instance).and_return(auth0_client)
+      allow(LiveLog::Auth0Client).to receive(:instance).and_return(auth0_client)
     end
 
     it 'destroys the user and redirects to /admin/members' do

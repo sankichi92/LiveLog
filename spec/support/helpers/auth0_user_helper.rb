@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'app_auth0_client'
+require 'livelog/auth0_client'
 
 module Auth0UserHelper
   def stub_auth0_user(user, fields: Auth0User::DEFAULT_FIELDS, email_verified: true, email_accepting: true)
@@ -22,7 +22,7 @@ module Auth0UserHelper
 
   def auth0_client_double
     @auth0_client_double ||= double(:auth0_client).tap do |auth0_client|
-      allow(AppAuth0Client).to receive(:instance).and_return(auth0_client)
+      allow(LiveLog::Auth0Client).to receive(:instance).and_return(auth0_client)
     end
   end
 end

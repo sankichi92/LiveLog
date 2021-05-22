@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'app_auth0_client'
+require 'livelog/auth0_client'
 
 class User < ApplicationRecord
   SUPER_USER_ID = 1
@@ -58,7 +58,7 @@ class User < ApplicationRecord
       update_auth0_user!(email: email, verify_email: false)
     end
 
-    AppAuth0Client.instance.change_password(email, nil)
+    LiveLog::Auth0Client.instance.change_password(email, nil)
   end
 
   def update_auth0_user!(options)

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'app_auth0_client'
+require 'livelog/auth0_client'
 
 class Auth0Credential < ApplicationRecord
   SCOPES = %w[
@@ -34,7 +34,7 @@ class Auth0Credential < ApplicationRecord
   end
 
   def refresh!
-    auth0_access_token = AppAuth0Client.instance.exchange_refresh_token(refresh_token)
+    auth0_access_token = LiveLog::Auth0Client.instance.exchange_refresh_token(refresh_token)
 
     self.access_token = auth0_access_token.token
     self.refresh_token = auth0_access_token.refresh_token if auth0_access_token.refresh_token.present?

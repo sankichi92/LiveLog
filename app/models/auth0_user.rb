@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'app_auth0_client'
+require 'livelog/auth0_client'
 
 class Auth0User
   CONNECTION_NAME = 'Username-Password-Authentication'
@@ -14,12 +14,12 @@ class Auth0User
 
   class << self
     def fetch!(auth0_id, fields: DEFAULT_FIELDS)
-      response = AppAuth0Client.instance.user(auth0_id, fields: fields.join(','))
+      response = LiveLog::Auth0Client.instance.user(auth0_id, fields: fields.join(','))
       new(response)
     end
 
     def create!(user, password: "0aA#{SecureRandom.base58}")
-      response = AppAuth0Client.instance.create_user(
+      response = LiveLog::Auth0Client.instance.create_user(
         CONNECTION_NAME,
         user_id: user.auth0_id[/\Aauth0\|(\S+)/, 1],
         name: user.member.name,
@@ -39,12 +39,12 @@ class Auth0User
     end
 
     def update!(auth0_id, options)
-      response = AppAuth0Client.instance.patch_user(auth0_id, options)
+      response = LiveLog::Auth0Client.instance.patch_user(auth0_id, options)
       new(response)
     end
 
     def delete!(auth0_id)
-      AppAuth0Client.instance.delete_user(auth0_id)
+      LiveLog::Auth0Client.instance.delete_user(auth0_id)
     end
   end
 

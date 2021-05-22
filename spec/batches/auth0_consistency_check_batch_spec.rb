@@ -30,7 +30,7 @@ RSpec.describe Auth0ConsistencyCheckBatch, type: :batch do
         allow(double).to receive(:users).with(hash_including(page: 1)).and_return(second_response)
       end
 
-      allow(AppAuth0Client).to receive(:instance).and_return(auth0_client)
+      allow(LiveLog::Auth0Client).to receive(:instance).and_return(auth0_client)
     end
 
     context 'when there is no consistency' do

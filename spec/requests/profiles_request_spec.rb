@@ -59,7 +59,7 @@ RSpec.describe 'profiles request:', type: :request do
         allow(cloudinary_uploader).to receive(:upload) do |_file, options|
           { 'public_id' => options[:public_id] }
         end
-        allow(AppAuth0Client).to receive(:instance).and_return(auth0_client)
+        allow(LiveLog::Auth0Client).to receive(:instance).and_return(auth0_client)
       end
 
       it "updates the logged-in user's profile, uploads avatar to Cloudinary and redirects to their profile" do
@@ -84,7 +84,7 @@ RSpec.describe 'profiles request:', type: :request do
       let(:auth0_client) { spy(:app_auth0_client) }
 
       before do
-        allow(AppAuth0Client).to receive(:instance).and_return(auth0_client)
+        allow(LiveLog::Auth0Client).to receive(:instance).and_return(auth0_client)
       end
 
       it "updates the logged-in user's profile, requests to update Auth0 user and redirect to their profile" do

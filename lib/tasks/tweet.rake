@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'twitter_client'
+require 'livelog/twitter_client'
 
 namespace :tweet do
   desc "Tweet today's pickup song"

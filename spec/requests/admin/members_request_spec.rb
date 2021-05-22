@@ -56,7 +56,7 @@ RSpec.describe 'admin/members request:', type: :request do
       end
 
       before do
-        allow(AppAuth0Client).to receive(:instance).and_return(auth0_client)
+        allow(LiveLog::Auth0Client).to receive(:instance).and_return(auth0_client)
       end
 
       it 'creates a member and a user, requests Auth0 to create user, and redirects to /admin/members' do

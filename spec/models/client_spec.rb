@@ -10,7 +10,7 @@ RSpec.describe Client, type: :model do
 
     before do
       allow(auth0_client).to receive(:create_client).and_return({ 'client_id' => 'auth0_client_id' })
-      allow(AppAuth0Client).to receive(:instance).and_return(auth0_client)
+      allow(LiveLog::Auth0Client).to receive(:instance).and_return(auth0_client)
     end
 
     it 'requests Auth0 to create a client and saves returned client_id' do
@@ -53,7 +53,7 @@ RSpec.describe Client, type: :model do
 
     before do
       allow(auth0_client).to receive(:create_client_grant).and_return({ 'id' => 'auth0_grant_id' })
-      allow(AppAuth0Client).to receive(:instance).and_return(auth0_client)
+      allow(LiveLog::Auth0Client).to receive(:instance).and_return(auth0_client)
     end
 
     it 'requests Auth0 to create a grant and saves returned id' do

@@ -12,7 +12,7 @@ RSpec.describe 'User registration form:', type: :system do
       allow(double).to receive(:create_user).and_return('user_id' => 'auth0|0', 'email' => email)
       allow(double).to receive(:change_password)
     end
-    allow(AppAuth0Client).to receive(:instance).and_return(auth0_client)
+    allow(LiveLog::Auth0Client).to receive(:instance).and_return(auth0_client)
     user_registration_form = create(:user_registration_form)
 
     # When

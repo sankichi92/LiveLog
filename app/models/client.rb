@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'app_auth0_client'
+require 'livelog/auth0_client'
 
 class Client < ApplicationRecord
   APP_TYPES = %w[native spa regular_web non_interactive].freeze
@@ -32,7 +32,7 @@ class Client < ApplicationRecord
 
     validate!
 
-    @info = AppAuth0Client.instance.create_client(
+    @info = LiveLog::Auth0Client.instance.create_client(
       name,
       logo_uri: logo_url,
       app_type: app_type,
@@ -45,12 +45,12 @@ class Client < ApplicationRecord
   def create_livelog_grant!
     raise AlreadyCreatedError, "Grant for LiveLog is already created: #{livelog_grant_id}" if livelog_grant_id.present?
 
-    grant = AppAuth0Client.instance.create_client_grant(client_id: auth0_id, audience: Rails.application.config.x.auth0.api_audience, scope: [])
+    grant = LiveLog::Auth0Client.instance.create_client_grant(client_id: auth0_id, audience: Rails.application.config.x.auth0.api_audience, scope: [])
     update!(livelog_grant_id: grant.fetch('id'))
   end
 
   def update_auth0_client
-    @info = AppAuth0Client.instance.patch_client(
+    @info = LiveLog::Auth0Client.instance.patch_client(
       auth0_id,
       {
         name: name,
@@ -73,7 +73,7 @@ class Client < ApplicationRecord
   end
 
   def destroy_with_auth0_client!
-    AppAuth0Client.instance.delete_client(auth0_id)
+    LiveLog::Auth0Client.instance.delete_client(auth0_id)
     destroy!
   end
 
@@ -107,7 +107,7 @@ class Client < ApplicationRecord
 
   def info(fields: DEFAULT_FIELDS)
     if auth0_id.present?
-      @info ||= AppAuth0Client.instance.client(auth0_id, fields: fields.join(','))
+      @info ||= LiveLog::Auth0Client.instance.client(auth0_id, fields: fields.join(','))
     else
       {}
     end
