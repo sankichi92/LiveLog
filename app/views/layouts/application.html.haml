@@ -25,7 +25,7 @@
     = render 'application/favicon'
 
     = stylesheet_link_tag 'application'
-    = javascript_pack_tag 'application', defer: true
+    = javascript_pack_tag 'vendor', 'application'
 
     = render 'layouts/google_analytics'
     - unless current_user&.hide_ads?

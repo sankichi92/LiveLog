@@ -31,6 +31,9 @@ FileUtils.chdir APP_ROOT do
   puts "\n== Building elasticsearch index =="
   system! 'bin/rake elasticsearch:import:song FORCE=y'
 
+  puts "\n== Building javascripts =="
+  system! 'yarn run build'
+
   puts "\n== Removing old logs and tempfiles =="
   system! 'bin/rails log:clear tmp:clear'
 
