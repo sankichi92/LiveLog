@@ -17,7 +17,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'public/packs'),
     publicPath: '/packs/',
-    filename: isProd ? '[name]-[hash].js' : '[name].js',
+    filename: isProd ? '[name]-[contenthash].js' : '[name].js',
   },
   module: {
     rules: [
