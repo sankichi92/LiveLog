@@ -13,9 +13,7 @@
       },
       "app_name": "LiveLog"
     },
-    "desktop_browser": [
-
-    ],
+    "desktop_browser": [],
     "windows": {
       "picture_aspect": "no_change",
       "background_color": "#da532c",

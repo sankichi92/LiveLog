@@ -23,9 +23,12 @@ export default class extends Controller {
   _fetchSearchResult() {
     const encodedTrackName = encodeURIComponent(this.trackName);
     const encodedArtistName = encodeURIComponent(this.artistName);
-    return fetch(`https://itunes.apple.com/search?term=${encodedTrackName}+${encodedArtistName}&country=JP&media=music&entity=song&lang=ja_jp`, {
-      redirect: 'manual',
-    }).then((response) => {
+    return fetch(
+      `https://itunes.apple.com/search?term=${encodedTrackName}+${encodedArtistName}&country=JP&media=music&entity=song&lang=ja_jp`,
+      {
+        redirect: 'manual',
+      }
+    ).then((response) => {
       if (response.ok) {
         return response.json();
       } else if (response.redirected) {
@@ -42,7 +45,10 @@ export default class extends Controller {
 
   _findAppropriateResult(results) {
     let result = results.find((res) => {
-      return res.trackName.toLowerCase() === this.trackName.toLowerCase() && res.artistName.toLowerCase() === this.artistName.toLowerCase();
+      return (
+        res.trackName.toLowerCase() === this.trackName.toLowerCase() &&
+        res.artistName.toLowerCase() === this.artistName.toLowerCase()
+      );
     });
 
     if (result === undefined) {
@@ -63,7 +69,9 @@ export default class extends Controller {
     this.artworkTarget.setAttribute('src', result.artworkUrl100);
     this.audioTarget.setAttribute('src', result.previewUrl);
 
-    this.linkTargets.forEach((element) => element.setAttribute('href', `${result.trackViewUrl}&at=1001lKQU&app=itunes`));
+    this.linkTargets.forEach((element) =>
+      element.setAttribute('href', `${result.trackViewUrl}&at=1001lKQU&app=itunes`)
+    );
 
     this.element.classList.remove('d-none');
   }
