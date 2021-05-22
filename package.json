@@ -3,7 +3,8 @@
   "scripts": {
     "build": "webpack",
     "format": "prettier '**/*.{json,js,ts}' --ignore-path .gitignore --write && eslint . --ext .js,.ts --ignore-path .gitignore --fix",
-    "lint": "prettier '**/*.{json,js,ts}' --ignore-path .gitignore --check && eslint . --ext .js,.ts --ignore-path .gitignore && tsc"
+    "lint": "prettier '**/*.{json,js,ts}' --ignore-path .gitignore --check && eslint . --ext .js,.ts --ignore-path .gitignore && tsc",
+    "serve": "USE_WEBPACK_DEV_SERVER=1 webpack serve"
   },
   "dependencies": {
     "@rails/activestorage": "^6.1.3",
