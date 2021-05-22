@@ -5,7 +5,12 @@ import 'bootstrap';
 import 'admin-lte';
 import '../controllers/admin';
 
-Sentry.init({ dsn: 'https://a73e1519070f4bbab6079e78a5801590@sentry.io/1821621' });
+Sentry.init({
+  enabled: process.env.NODE_ENV === 'production',
+  dsn: 'https://a73e1519070f4bbab6079e78a5801590@sentry.io/1821621',
+  environment: process.env.NODE_ENV,
+  release: document.documentElement.dataset.release,
+});
 
 Rails.start();
 
