@@ -14,4 +14,12 @@ Rails.start();
 
 document.addEventListener('DOMContentLoaded', () => {
   $('[data-toggle="tooltip"]').tooltip();
+
+  document.querySelectorAll('tr.clickable').forEach((clickableTableRow) => {
+    clickableTableRow.addEventListener('click', () => {
+      if (clickableTableRow instanceof HTMLElement && clickableTableRow.dataset.href) {
+        location.href = clickableTableRow.dataset.href;
+      }
+    });
+  });
 });
