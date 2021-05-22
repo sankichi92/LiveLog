@@ -1,5 +1,24 @@
 {
   "editor.tabSize": 2,
+  "editor.rulers": [120],
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[ruby]": {
+    "editor.rulers": [160]
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
 
   "ruby.lint": {
     "rubocop": {
