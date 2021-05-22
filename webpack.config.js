@@ -7,7 +7,7 @@ const { NODE_ENV, USE_WEBPACK_DEV_SERVER } = process.env;
 const isProd = NODE_ENV === 'production';
 
 const entry = {};
-for (const p of glob.sync(path.resolve(__dirname, 'app/javascript/packs/*.{js,ts}'))) {
+for (const p of glob.sync(path.resolve(__dirname, 'app/javascript/packs/*.{js,ts,jsx,tsx}'))) {
   entry[path.basename(p, path.extname(p))] = p;
 }
 
