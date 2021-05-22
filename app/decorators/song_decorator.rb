@@ -41,9 +41,9 @@ module SongDecorator
   def visibility_icon
     case visibility
     when 'open'
-      icon 'fas', 'globe', title: '公開設定: 公開', data: { toggle: 'tooltip', placement: 'right', controller: 'tooltip' }
+      icon 'fas', 'globe', title: '公開設定: 公開', data: { toggle: 'tooltip', placement: 'right' }
     when 'only_players'
-      icon 'fas', 'lock', title: '公開設定: バンド内', data: { toggle: 'tooltip', placement: 'right', controller: 'tooltip' }
+      icon 'fas', 'lock', title: '公開設定: バンド内', data: { toggle: 'tooltip', placement: 'right' }
     end
   end
 

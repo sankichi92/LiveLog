@@ -11,3 +11,7 @@ Sentry.init({
 });
 
 Rails.start();
+
+document.addEventListener('DOMContentLoaded', () => {
+  $('[data-toggle="tooltip"]').tooltip();
+});
