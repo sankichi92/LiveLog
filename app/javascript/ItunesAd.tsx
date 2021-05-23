@@ -27,9 +27,17 @@ export const ItunesAd: React.FC<Props> = ({ searchTerm }: Props) => {
       const itunesSearchURL = new URL('https://itunes.apple.com/search');
       itunesSearchURL.search = itunesSearchParams.toString();
 
-      const response = await fetch(itunesSearchURL.toString());
-      if (!response.ok) {
-        throw new Error(`Failed GET ${itunesSearchURL} (${response.status} ${response.statusText})`);
+      const response = await fetch(itunesSearchURL.toString(), { redirect: 'manual' });
+      if (response.redirected) {
+        if (response.url.startsWith('music://')) {
+          // Ignore redirection to musics://
+          // https://sentry.io/organizations/livelog/issues/2413802806/
+          return;
+        } else {
+          throw new Error(`Unexpected redirection to ${response.url}`);
+        }
+      } else if (!response.ok) {
+        throw new Error(`Failed iTunes search for "${searchTerm}" (${response.status} ${response.statusText})`);
       }
 
       const searchResult = await response.json();
