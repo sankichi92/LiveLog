@@ -1,5 +1,5 @@
 !!!
-%html{ lang: 'ja', data: { release: Sentry.configuration.release } }
+%html{ lang: 'ja', data: { release: Sentry.configuration.release, user_id: current_user&.id } }
   %head
     %meta{ charset: 'utf-8' }
     %meta{ name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no' }
