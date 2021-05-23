@@ -39,7 +39,7 @@
     %aside#itunes-ad{ data: { search_term: "#{@song.name} #{@song.artist}".strip } }
 
   %nav
-    %ul.pagination.pagination-lg.justify-content-center
+    %ul.pagination.justify-content-center
       - if @song.previous.present?
         %li.page-item
           = link_to @song.previous, class: 'page-link' do
