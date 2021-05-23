@@ -4,9 +4,11 @@
   provide(:og_type, 'music.song')
   provide(:og_image, @song.youtube_thumbnail('maxresdefault')) if @song.youtube_playable?
 
-- content_for :additional_meta_fields do
+- content_for :head do
   - @song.plays.each do |play|
     %meta{ property: 'music:musician', content: member_url(play.member) }
+  
+  = javascript_pack_tag 'songs_show'
 
 %article
   - if @song.youtube_playable?
@@ -34,16 +36,7 @@
           = link_to icon('fas', 'edit', '編集する'), edit_song_path(@song), class: 'btn btn-primary'
 
   - unless @song.original?
-    %aside.card.mb-3.d-none{ data: { controller: 'itunes', itunes_track_name: @song.name, itunes_artist_name: @song.artist} }
-      .card-body
-        .media.align-items-center.mb-2
-          %a.mr-2{ target: '_blank', data: { 'itunes-target': 'link' } }
-            %img.img-thumbnail{ data: { 'itunes-target': 'artwork' } }
-          .media-body
-            .card-subtitle.text-muted{ data: { 'itunes-target': 'subTitle' } }
-            %h5.card-title{ data: { 'itunes-target': 'title' } }
-            %audio{ controls: true, volume: 0.8, data: { 'itunes-target': 'audio' } }
-        %a{ target: '_blank', data: { 'itunes-target': 'link' } }= image_tag 'JP_iTunes_Store_Buy_Badge_RGB.svg'
+    %aside#itunes-ad{ data: { search_term: "#{@song.name} #{@song.artist}".strip } }
 
   %nav
     %ul.pagination.pagination-lg.justify-content-center

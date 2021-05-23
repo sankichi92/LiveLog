@@ -1,5 +1,6 @@
 const glob = require('glob');
 const path = require('path');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const webpack = require('webpack');
 const WebpackAssetsManifest = require('webpack-assets-manifest');
 
@@ -7,7 +8,7 @@ const { NODE_ENV, USE_WEBPACK_DEV_SERVER } = process.env;
 const isProd = NODE_ENV === 'production';
 
 const entry = {};
-for (const p of glob.sync(path.resolve(__dirname, 'app/javascript/packs/*.{js,ts}'))) {
+for (const p of glob.sync(path.resolve(__dirname, 'app/javascript/packs/*.{js,ts,jsx,tsx}'))) {
   entry[path.basename(p, path.extname(p))] = p;
 }
 
@@ -31,7 +32,8 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: ['.js', '.ts'],
+    extensions: ['.js', '.ts', '.jsx', '.tsx'],
+    plugins: [new TsconfigPathsPlugin()],
   },
   optimization: {
     splitChunks: {

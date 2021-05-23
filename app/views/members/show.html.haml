@@ -4,7 +4,7 @@
   provide(:og_type, 'profile')
   provide(:og_image, @member.avatar_url(:large)) if @member.avatar
 
-- content_for :additional_meta_fields do
+- content_for :head do
   %meta{ property: 'profile:username', content: @member.name }
 
 %section.card.mb-3

@@ -19,18 +19,16 @@
     %meta{ property: 'fb:app_id', content: '555963681451627' }
     %meta{ name: 'twitter:site', content: '@ku_livelog' }
 
-    - if content_for?(:additional_meta_fields)
-      = content_for(:additional_meta_fields)
-
     = render 'application/favicon'
 
     = stylesheet_link_tag 'application'
     = javascript_pack_tag 'vendor', 'application'
+    
+    = content_for(:head)
 
     = render 'layouts/google_analytics'
     - unless current_user&.hide_ads?
       = render 'layouts/google_adsense'
-
   %body
     %nav.navbar.navbar-expand-lg.sticky-top.navbar-light.bg-primary.mb-4#navbar
       .container
