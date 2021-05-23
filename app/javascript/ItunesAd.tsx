@@ -6,27 +6,13 @@ type Props = {
 };
 
 type ItunesSearchResult = {
-  resultCount: number;
-  results: ItunesSong[];
-};
-
-type ItunesSong = {
-  artistName: string;
-  collectionName: string;
-  trackName: string;
-
-  artistViewUrl: string;
-  collectionViewUrl: string;
-  trackViewUrl: string;
-
-  previewUrl: string;
-  artworkUrl100: string;
-
-  trackNumber: number;
+  results: {
+    trackViewUrl: string;
+  }[];
 };
 
 export const ItunesAd: React.FC<Props> = ({ searchTerm }: Props) => {
-  const [itunesSong, setItunesSong] = useState<ItunesSong | null>(null);
+  const [itunesSearchResult, setItunesSearchResult] = useState<ItunesSearchResult | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -47,64 +33,37 @@ export const ItunesAd: React.FC<Props> = ({ searchTerm }: Props) => {
         throw new Error(`Failed GET ${itunesSearchURL} (${response.status} ${response.statusText})`);
       }
 
-      const searchResult = (await response.json()) as ItunesSearchResult;
-      if (searchResult.resultCount > 0) {
-        setItunesSong(searchResult.results[0]);
-      }
+      const searchResult = await response.json();
+      setItunesSearchResult(searchResult);
     })();
   }, [searchTerm]);
 
-  if (itunesSong === null) {
+  if (itunesSearchResult === null || itunesSearchResult.results.length === 0) {
     return null;
   }
 
   // https://affiliate.itunes.apple.com/resources/documentation/basic_affiliate_link_guidelines_for_the_phg_network/
-  function appendAffiliateParam(url: string): string {
-    const affiliateURL = new URL(url);
-    affiliateURL.searchParams.append('app', 'music');
-    affiliateURL.searchParams.append('at', '1001lKQU');
-    return affiliateURL.toString();
-  }
+  // https://tools.applemediaservices.com/
+  const affiliateEmbedSrc = new URL(itunesSearchResult.results[0].trackViewUrl);
+  affiliateEmbedSrc.hostname = 'embed.music.apple.com';
+  affiliateEmbedSrc.searchParams.append('app', 'music');
+  affiliateEmbedSrc.searchParams.append('at', '1001lKQU');
 
   return (
-    <Card className="mb-3">
-      <Card.Body>
-        <Media className="align-items-center">
-          <a href={appendAffiliateParam(itunesSong.trackViewUrl)} target="_blank" rel="noreferrer">
-            <Image src={itunesSong.artworkUrl100} thumbnail className="mr-3" />
-          </a>
-          <Media.Body>
-            <a
-              href={appendAffiliateParam(itunesSong.collectionViewUrl)}
-              target="_blank"
-              rel="noreferrer"
-              className="text-muted"
-            >
-              {itunesSong.collectionName} {itunesSong.trackNumber}
-            </a>
-            <h5>
-              <a
-                href={appendAffiliateParam(itunesSong.trackViewUrl)}
-                target="_blank"
-                rel="noreferrer"
-                className="text-dark"
-              >
-                {itunesSong.trackName}
-              </a>{' '}
-              /{' '}
-              <a
-                href={appendAffiliateParam(itunesSong.artistViewUrl)}
-                target="_blank"
-                rel="noreferrer"
-                className="text-dark"
-              >
-                {itunesSong.artistName}
-              </a>
-            </h5>
-            <audio src={itunesSong.previewUrl} controls />
-          </Media.Body>
-        </Media>
-      </Card.Body>
-    </Card>
+    <div className="mb-3">
+      <iframe
+        src={affiliateEmbedSrc.toString()}
+        height="150px"
+        frameBorder="0"
+        sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
+        allow="autoplay *; encrypted-media *;"
+        style={{
+          width: '100%',
+          overflow: 'hidden',
+          borderRadius: '10px',
+          background: 'transparent',
+        }}
+      ></iframe>
+    </div>
   );
 };
