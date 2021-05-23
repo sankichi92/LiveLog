@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Image, Media } from 'react-bootstrap';
 
 type Props = {
   searchTerm: string;
