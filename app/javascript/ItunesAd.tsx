@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import * as Sentry from '@sentry/browser';
 
 type Props = {
   searchTerm: string;
@@ -28,20 +29,28 @@ export const ItunesAd: React.FC<Props> = ({ searchTerm }: Props) => {
       itunesSearchURL.search = itunesSearchParams.toString();
 
       const response = await fetch(itunesSearchURL.toString(), { redirect: 'manual' });
-      if (response.redirected) {
-        if (response.url.startsWith('music://')) {
-          // Ignore redirection to musics://
-          // https://sentry.io/organizations/livelog/issues/2413802806/
-          return;
-        } else {
-          throw new Error(`Unexpected redirection to ${response.url}`);
+      if (response.ok) {
+        const searchResult = await response.json();
+        setItunesSearchResult(searchResult);
+      } else {
+        const message = response.redirected
+          ? 'Unexpected redirect on iTunes Search API'
+          : 'Failed request on iTunes Search API';
+        const headers: { [key: string]: string } = {};
+        for (const pair of response.headers) {
+          headers[pair[0]] = pair[1];
         }
-      } else if (!response.ok) {
-        throw new Error(`Failed iTunes search for "${searchTerm}" (${response.status} ${response.statusText})`);
+        const body = await response.text();
+        Sentry.captureMessage(message, {
+          level: Sentry.Severity.Debug,
+          extra: {
+            status: `${response.status} ${response.statusText}`,
+            url: response.url,
+            headers: headers,
+            body: body,
+          },
+        });
       }
-
-      const searchResult = await response.json();
-      setItunesSearchResult(searchResult);
     })();
   }, [searchTerm]);
 
