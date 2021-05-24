@@ -28,7 +28,10 @@ export const ItunesAd: React.FC<Props> = ({ searchTerm }: Props) => {
       const itunesSearchURL = new URL('https://itunes.apple.com/search');
       itunesSearchURL.search = itunesSearchParams.toString();
 
-      const response = await fetch(itunesSearchURL.toString(), { redirect: 'manual' });
+      const response = await fetch(itunesSearchURL.toString(), {
+        mode: 'cors',
+        redirect: 'manual',
+      });
       if (response.ok) {
         const searchResult = await response.json();
         setItunesSearchResult(searchResult);
