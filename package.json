@@ -23,7 +23,7 @@
     "stimulus": "^2.0.0"
   },
   "devDependencies": {
-    "@types/bootstrap": "^5.0.15",
+    "@types/bootstrap": "^5.0.16",
     "@types/jquery": "^3.5.5",
     "@types/rails__activestorage": "^6.0.0",
     "@types/rails__ujs": "^6.0.0",
