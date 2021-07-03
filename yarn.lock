@@ -23,10 +23,10 @@
     chalk "^2.0.0"
     js-tokens "^4.0.0"
 
-"@babel/runtime@^7.13.8", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.3", "@babel/runtime@^7.8.7":
-  version "7.14.0"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.14.0.tgz#46794bc20b612c5f75e62dd071e24dfd95f1cbe6"
-  integrity sha512-JELkvo/DlpNdJ7dlyw/eY7E0suy5i5GQH+Vlxaq1nsNJ+H7f4Vtv3jMeCEgRhZZQFXTjldYfQgv2qmM6M1v5wA==
+"@babel/runtime@^7.13.8", "@babel/runtime@^7.14.0", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.3", "@babel/runtime@^7.8.7":
+  version "7.14.6"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.14.6.tgz#535203bc0892efc7dec60bdc27b2ecf6e409062d"
+  integrity sha512-/PCB2uJ7oM44tz8YhC4Z/6PeOKXp4K588f+5M3clr1M4zbqztlo0XEfJ2LEzj/FgwfgGcIdl8n7YYjTCI0BYwg==
   dependencies:
     regenerator-runtime "^0.13.4"
 
@@ -205,13 +205,6 @@
     "@popperjs/core" "^2.9.2"
     "@types/jquery" "*"
 
-"@types/classnames@^2.2.10":
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/@types/classnames/-/classnames-2.3.1.tgz#3c2467aa0f1a93f1f021e3b9bcf938bd5dfdc0dd"
-  integrity sha512-zeOWb0JGBoVmlQoznvqXbE0tEC/HONsnoUNH19Hc96NFsTAwTXbTqb8FMYkru1F/iqp7a18Ws3nWJvtA1sHD1A==
-  dependencies:
-    classnames "*"
-
 "@types/color-name@^1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@types/color-name/-/color-name-1.1.1.tgz#1c1261bbeaa10a8055bbc5d8ab84b7b2afc846a0"
@@ -307,7 +300,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@>=16.9.11", "@types/react@>=16.9.35", "@types/react@^17.0.13":
+"@types/react@*", "@types/react@>=16.14.8", "@types/react@>=16.9.11", "@types/react@^17.0.13":
   version "17.0.13"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.13.tgz#6b7c9a8f2868586ad87d941c02337c6888fb874f"
   integrity sha512-D/G3PiuqTfE3IMNjLn/DCp6umjVCSvtZTPdtAFy5+Ved6CsdRvivfKeCzw79W4AatShtU4nGqgvOv5Gro534vQ==
@@ -1213,7 +1206,7 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
-classnames@*, classnames@^2.2.6:
+classnames@^2.3.1:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.3.1.tgz#dfcfa3891e306ec1dad105d0e88f4417b8535e8e"
   integrity sha512-OlQdbZ7gLfGarSqxesMesDa5uz7KFbID8Kpq/SxIoNGDqY8lSYs0D+hhtBXhcdB3rcbXArFr7vlHheLk1voeNA==
@@ -1840,7 +1833,7 @@ doctrine@^3.0.0:
   dependencies:
     esutils "^2.0.2"
 
-dom-helpers@^5.0.1, dom-helpers@^5.1.2, dom-helpers@^5.2.0:
+dom-helpers@^5.0.1, dom-helpers@^5.2.0, dom-helpers@^5.2.1:
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/dom-helpers/-/dom-helpers-5.2.1.tgz#d9400536b2bf8225ad98fe052e029451ac40e902"
   integrity sha512-nRCa7CK3VTrM2NmGkIy4cbK7IZlgBE/PYMn55rrXefr5xXDP0LdtfPnblFDoVdcAfslJ7or6iqAUnx0CCGIWQA==
@@ -4404,26 +4397,25 @@ raw-body@2.4.0:
     iconv-lite "0.4.24"
     unpipe "1.0.0"
 
-react-bootstrap@^1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/react-bootstrap/-/react-bootstrap-1.6.0.tgz#5b4f160ce0cd22784cf4271ca90550b4891fdd42"
-  integrity sha512-PaeOGeRC2+JH9Uf1PukJgXcIpfGlrKKHEBZIArymjenYzSJ/RhO2UdNX+e7nalsCFFZLRRgQ0/FKkscW2LmmRg==
+react-bootstrap@^1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/react-bootstrap/-/react-bootstrap-1.6.1.tgz#c5493c028ede885826b72eb31e66f6f0a52ab007"
+  integrity sha512-ojEPQ6OtyIMdLg0Smofk+85PKN6MLKQX3bU0Vwmok/4yNa8DQ2vCGhO2IgHJvT+ERQZ4X+gAQcdn6msAHSwLBg==
   dependencies:
-    "@babel/runtime" "^7.13.8"
+    "@babel/runtime" "^7.14.0"
     "@restart/context" "^2.1.4"
     "@restart/hooks" "^0.3.26"
-    "@types/classnames" "^2.2.10"
     "@types/invariant" "^2.2.33"
     "@types/prop-types" "^15.7.3"
-    "@types/react" ">=16.9.35"
+    "@types/react" ">=16.14.8"
     "@types/react-transition-group" "^4.4.1"
     "@types/warning" "^3.0.0"
-    classnames "^2.2.6"
-    dom-helpers "^5.1.2"
+    classnames "^2.3.1"
+    dom-helpers "^5.2.1"
     invariant "^2.2.4"
     prop-types "^15.7.2"
     prop-types-extra "^1.1.0"
-    react-overlays "^5.0.0"
+    react-overlays "^5.0.1"
     react-transition-group "^4.4.1"
     uncontrollable "^7.2.1"
     warning "^4.0.3"
@@ -4447,10 +4439,10 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-overlays@^5.0.0:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/react-overlays/-/react-overlays-5.0.1.tgz#7e2c3cd3c0538048b0b7451d203b1289c561b7f2"
-  integrity sha512-plwUJieTBbLSrgvQ4OkkbTD/deXgxiJdNuKzo6n1RWE3OVnQIU5hffCGS/nvIuu6LpXFs2majbzaXY8rcUVdWA==
+react-overlays@^5.0.1:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/react-overlays/-/react-overlays-5.1.0.tgz#107fbe4ff88e61f9c379f976b049a1554141d06b"
+  integrity sha512-Qp8dqDIIYgQoHxOGVKHwvQUkDe70/Ja/6dn8iCQAXyPvvpks3+T8scLTZLK8MPBBu+X8ustas6y4U6M6zdmCjA==
   dependencies:
     "@babel/runtime" "^7.13.8"
     "@popperjs/core" "^2.8.6"
