@@ -84,7 +84,7 @@ class Song < ApplicationRecord
   end
 
   def next
-    live.songs.where('songs.time > ? or songs.position > ?', time, position).first # rubocop:disable Rails/FindBy
+    live.songs.where('songs.time > ? or songs.position > ?', time, position).first
   end
 
   private
