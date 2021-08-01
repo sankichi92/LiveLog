@@ -129,10 +129,10 @@ GEM
     dotenv-rails (2.7.6)
       dotenv (= 2.7.6)
       railties (>= 3.2)
-    elasticsearch (7.13.1)
-      elasticsearch-api (= 7.13.1)
-      elasticsearch-transport (= 7.13.1)
-    elasticsearch-api (7.13.1)
+    elasticsearch (7.13.3)
+      elasticsearch-api (= 7.13.3)
+      elasticsearch-transport (= 7.13.3)
+    elasticsearch-api (7.13.3)
       multi_json
     elasticsearch-dsl (0.1.10)
     elasticsearch-model (7.1.1)
@@ -140,7 +140,7 @@ GEM
       elasticsearch (> 1)
       hashie
     elasticsearch-rails (7.1.1)
-    elasticsearch-transport (7.13.1)
+    elasticsearch-transport (7.13.3)
       faraday (~> 1)
       multi_json
     equalizer (0.0.11)
