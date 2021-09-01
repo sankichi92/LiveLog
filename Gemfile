@@ -47,7 +47,7 @@ gem 'slack-ruby-client'
 gem 'twitter'
 
 # Must be after 'kaminari'
-gem 'elasticsearch-model', '~> 7.0'
+gem 'elasticsearch-model', '~> 7.2'
 
 # API
 gem 'batch-loader'

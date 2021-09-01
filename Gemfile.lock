@@ -135,9 +135,9 @@ GEM
     elasticsearch-api (7.13.3)
       multi_json
     elasticsearch-dsl (0.1.10)
-    elasticsearch-model (7.1.1)
+    elasticsearch-model (7.2.0)
       activesupport (> 3)
-      elasticsearch (> 1)
+      elasticsearch (~> 7)
       hashie
     elasticsearch-rails (7.1.1)
     elasticsearch-transport (7.13.3)
@@ -153,7 +153,7 @@ GEM
       railties (>= 5.0.0)
     faker (2.18.0)
       i18n (>= 1.6, < 2)
-    faraday (1.6.0)
+    faraday (1.7.1)
       faraday-em_http (~> 1.0)
       faraday-em_synchrony (~> 1.0)
       faraday-excon (~> 1.1)
@@ -502,7 +502,7 @@ DEPENDENCIES
   dotenv-rails
   elasticsearch (~> 7.13)
   elasticsearch-dsl
-  elasticsearch-model (~> 7.0)
+  elasticsearch-model (~> 7.2)
   elasticsearch-rails (~> 7.0)
   factory_bot_rails
   faker
