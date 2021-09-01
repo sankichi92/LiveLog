@@ -129,10 +129,10 @@ GEM
     dotenv-rails (2.7.6)
       dotenv (= 2.7.6)
       railties (>= 3.2)
-    elasticsearch (7.13.3)
-      elasticsearch-api (= 7.13.3)
-      elasticsearch-transport (= 7.13.3)
-    elasticsearch-api (7.13.3)
+    elasticsearch (7.14.0)
+      elasticsearch-api (= 7.14.0)
+      elasticsearch-transport (= 7.14.0)
+    elasticsearch-api (7.14.0)
       multi_json
     elasticsearch-dsl (0.1.10)
     elasticsearch-model (7.1.1)
@@ -140,7 +140,7 @@ GEM
       elasticsearch (> 1)
       hashie
     elasticsearch-rails (7.1.1)
-    elasticsearch-transport (7.13.3)
+    elasticsearch-transport (7.14.0)
       faraday (~> 1)
       multi_json
     equalizer (0.0.11)
@@ -153,7 +153,7 @@ GEM
       railties (>= 5.0.0)
     faker (2.18.0)
       i18n (>= 1.6, < 2)
-    faraday (1.6.0)
+    faraday (1.7.1)
       faraday-em_http (~> 1.0)
       faraday-em_synchrony (~> 1.0)
       faraday-excon (~> 1.1)
@@ -500,7 +500,7 @@ DEPENDENCIES
   commonmarker
   dalli
   dotenv-rails
-  elasticsearch (~> 7.13)
+  elasticsearch (~> 7.14)
   elasticsearch-dsl
   elasticsearch-model (~> 7.0)
   elasticsearch-rails (~> 7.0)
