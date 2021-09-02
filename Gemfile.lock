@@ -95,7 +95,7 @@ GEM
       statsd-ruby (~> 1.1)
     batch-loader (2.0.1)
     bindex (0.8.1)
-    bootsnap (1.7.6)
+    bootsnap (1.8.1)
       msgpack (~> 1.0)
     buftok (0.2.0)
     builder (3.2.4)
