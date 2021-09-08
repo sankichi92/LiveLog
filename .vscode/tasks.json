@@ -12,26 +12,14 @@
       }
     },
     {
-      "label": "app: start",
-      "dependsOn": ["npm: serve", "rails: server"],
+      "label": "rails: server",
+      "type": "shell",
+      "command": "bin/rails server",
       "problemMatcher": [],
       "group": {
         "kind": "build",
         "isDefault": true
       }
-    },
-    {
-      "type": "npm",
-      "script": "serve",
-      "problemMatcher": [],
-      "label": "npm: serve",
-      "detail": "USE_WEBPACK_DEV_SERVER=1 webpack serve"
-    },
-    {
-      "label": "rails: server",
-      "type": "shell",
-      "command": "bin/rails server",
-      "problemMatcher": []
     },
     {
       "label": "rails: console",

@@ -14,37 +14,21 @@ Protected by OAuth 2.0.
 - Client Registration: https://livelog.ku-unplugged.net/clients/new
 - Documentation: https://github.com/sankichi92/LiveLog/wiki
 
-## Requirements
-
-- [Ruby](https://www.ruby-lang.org/) 3.0
-- [Node.js](https://nodejs.org/) & [Yarn](https://yarnpkg.com/)
-- [PostgreSQL](https://www.postgresql.org/)
-- [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/) 7.x
-  - with [Japanese (kuromoji) Analysis Plugin](https://www.elastic.co/guide/en/elasticsearch/plugins/current/analysis-kuromoji.html)
-
-If you're using macOS and [Homebrew](https://brew.sh/), you can setup them by the following commands:
-
-    $ brew tap elastic/tap
-    $ brew install rbenv yarn postgresql elastic/tap/elasticsearch-full
-    $ rbenv install 3.0.2
-    $ brew services start postgresql
-    $ elasticsearch-plugin install analysis-kuromoji
-    $ brew services restart elastic/tap/elasticsearch-full
-
 ## Development
 
-### Clone the repository
+### Requirements
+
+- [Ruby](https://www.ruby-lang.org/)
+- [Docker](https://www.docker.com/)
+
+### Setup
 
     $ git clone https://github.com/sankichi92/LiveLog.git
     $ cd LiveLog
-
-### Setup your development environment
-
+    $ docker-compose up -d
     $ bin/setup
 
-This script is idempotent, so that you can run it at anytime and get an expectable outcome.
-
-### Run the app on your local web server
+### Start the rails server
 
     $ bin/rails server
 
@@ -67,8 +51,7 @@ Then, you can log in by email `admin@example.com` and password `password`.
 
 ### Update DB schema
 
-Edit `db/Schemafile` and run:
-
+    $ bin/rake ridgepole:dry-run
     $ bin/rake ridgepole:apply
 
 ### Rebuild Elasticsearch index

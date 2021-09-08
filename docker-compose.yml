@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  
+  postgres:
+    image: postgres:11.13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - 15432:5432
+  
+  elasticsearch:
+    build:
+      context: .
+      dockerfile: Dockerfile.elasticsearch
+    environment:
+      discovery.type: single-node
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    ports:
+      - 19200:9200
+
+  webpack-dev-server:
+    image: node:14-slim
+    command: sh -c "yarn install && yarn run dev"
+    working_dir: /app
+    volumes:
+      - ./:/app
+    ports:
+      - 3035:3035
+
+volumes:
+  postgres-data:
+  elasticsearch-data:

@@ -2,9 +2,9 @@
   "private": true,
   "scripts": {
     "build": "webpack",
+    "dev": "USE_WEBPACK_DEV_SERVER=1 webpack serve",
     "format": "prettier '**/*.{json,js,ts,tsx}' --ignore-path .gitignore --write && eslint . --ext .js,.ts,.tsx --ignore-path .gitignore --fix",
-    "lint": "prettier '**/*.{json,js,ts,tsx}' --ignore-path .gitignore --check && eslint . --ext .js,.ts,.tsx --ignore-path .gitignore && tsc",
-    "serve": "USE_WEBPACK_DEV_SERVER=1 webpack serve"
+    "lint": "prettier '**/*.{json,js,ts,tsx}' --ignore-path .gitignore --check && eslint . --ext .js,.ts,.tsx --ignore-path .gitignore && tsc"
   },
   "dependencies": {
     "@rails/activestorage": "^6.1.4",
