@@ -502,10 +502,10 @@ DEPENDENCIES
   commonmarker
   dalli
   dotenv-rails
-  elasticsearch (~> 7.13)
+  elasticsearch (~> 7.13.3)
   elasticsearch-dsl
-  elasticsearch-model (~> 7.0)
-  elasticsearch-rails (~> 7.0)
+  elasticsearch-model (~> 7.1.1)
+  elasticsearch-rails (~> 7.1.1)
   factory_bot_rails
   faker
   font-awesome-sass

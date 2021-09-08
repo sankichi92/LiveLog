@@ -7,6 +7,13 @@ updates:
       time: "20:00"
       timezone: Asia/Tokyo
     open-pull-requests-limit: 99
+    ignore:
+      - dependency-name: elasticsearch
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: elasticsearch-rails
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: elasticsearch-model
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
 
   - package-ecosystem: npm
     directory: "/"
