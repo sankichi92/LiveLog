@@ -2,8 +2,11 @@ name: JavaScript
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   pull_request:
+    branches:
+      - main
 
 jobs:
   lint:
@@ -27,6 +30,6 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: ${{ runner.os }}-yarn-
 
-      - run: yarn install
+      - run: yarn install --frozen-lockfile
 
       - run: yarn run lint

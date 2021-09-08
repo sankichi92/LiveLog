@@ -2,8 +2,11 @@ name: Ruby
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   pull_request:
+    branches:
+      - main
 
 jobs:
   test:
@@ -14,7 +17,8 @@ jobs:
         image: postgres:11.13
         env:
           POSTGRES_PASSWORD: postgres
-        ports: ['5432:5432']
+        ports:
+          - 5432:5432
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -23,9 +27,11 @@ jobs:
 
       elasticsearch:
         image: elasticsearch:7.10.1
-        ports: ['9200:9200']
+        env:
+          discovery.type: single-node
+        ports:
+          - 9200:9200
         options: >-
-          --env "discovery.type=single-node"
           --health-cmd "curl http://localhost:9200/_cluster/health"
           --health-interval 10s
           --health-timeout 5s
@@ -54,7 +60,7 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: ${{ runner.os }}-yarn-
 
-      - run: yarn install
+      - run: yarn install --frozen-lockfile
 
       - run: yarn run build
 
