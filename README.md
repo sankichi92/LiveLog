@@ -51,12 +51,12 @@ Then, you can log in by email `admin@example.com` and password `password`.
 
 ### Update DB schema
 
-    $ bin/rake ridgepole:dry-run
-    $ bin/rake ridgepole:apply
+    $ bin/rails ridgepole:dry-run
+    $ bin/rails ridgepole:apply
 
 ### Rebuild Elasticsearch index
 
-    $ bin/rake elasticsearch:import:song FORCE=y
+    $ bin/rails elasticsearch:import:song FORCE=y
 
 ### Enable to upload avatar images
 
