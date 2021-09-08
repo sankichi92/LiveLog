@@ -1,36 +1,30 @@
 # frozen_string_literal: true
 
-def ridgepole_apply(environment = Rails.env, dry_run: false)
-  environments = [environment]
-  environments << 'test' if !dry_run && environment == 'development'
-
-  environments.each do |env|
-    puts "For #{env}" if environments.size > 1
-    ActiveRecord::Base.configurations.configs_for(env_name: env).each do |db_config|
-      args = [
-        '--config', db_config.config.to_json,
-        '--file', Rails.root.join(db_config.config['schemafile_path'] || 'db/Schemafile').to_s,
-        '--apply',
-      ]
-      args << '--dry-run' if dry_run
-      system('ridgepole', *args) || abort
-    end
-  end
+def ridgepole_apply(env = Rails.env, dry_run: false)
+  options = %W[
+    --config config/database.yml
+    --file db/Schemafile
+    --env #{env}
+    --apply
+  ]
+  options << '--dry-run' if dry_run
+  sh 'ridgepole', *options
 end
 
 namespace :ridgepole do
-  desc 'Runs `ridgepole --apply`'
-  task apply: 'db:load_config' do
+  desc 'Updates the DB schema according to db/Schemafile'
+  task apply: :environment do
     ridgepole_apply
+    ridgepole_apply('test') if Rails.env.development?
   end
 
-  desc 'Runs `ridgepole --apply --dru-run`'
-  task 'dry-run': 'db:load_config' do
+  desc 'Display SQLs for DB schema update without executing them'
+  task 'dry-run': :environment do
     ridgepole_apply(dry_run: true)
   end
 
-  desc 'Runs db:create and db:seed around `ridgepole --apply` if database does not exist (like db:prepare)'
-  task prepare: 'db:load_config' do
+  desc 'Creates the database, loads the schema, and initializes with the seed data if database does not exist, or updates the schema if it does'
+  task prepare: :environment do
     seed = false
 
     begin
@@ -41,6 +35,7 @@ namespace :ridgepole do
     end
 
     ridgepole_apply
+    ridgepole_apply('test') if Rails.env.development?
 
     ActiveRecord::Base.establish_connection
     ActiveRecord::Tasks::DatabaseTasks.load_seed if seed
