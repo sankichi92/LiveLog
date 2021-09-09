@@ -11,13 +11,19 @@ module Types
 
     # region Live
 
-    field :lives, Types::LiveType.connection_type, null: false
+    field :lives, Types::LiveType.connection_type, null: false do
+      argument :year, Int, required: false
+    end
     field :live, Types::LiveType, null: false do
       argument :id, ID, required: true, loads: LiveType, as: :live
     end
 
-    def lives
-      Live.published.newest_order
+    def lives(year: nil)
+      if year
+        Live.published.nendo(year).newest_order
+      else
+        Live.published.newest_order
+      end
     end
 
     def live(live:)
