@@ -13,7 +13,7 @@ module Types
     end
 
     def visible?(context)
-      super && context.scope?(required_scope)
+      super && (required_scope.blank? || context.scope?(required_scope))
     end
 
     def authorized?(object, args, context)

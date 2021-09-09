@@ -2,39 +2,44 @@
 
 require 'rails_helper'
 
-RSpec.describe 'GraphQL query:', type: :graphql do
-  describe 'lives' do
-    subject(:result) { LiveLogSchema.execute(query, variables: variables, context: context) }
+RSpec.describe 'GraphQL query: lives', type: :graphql do
+  subject(:result) { LiveLogSchema.execute(query, variables: variables) }
 
-    let(:query) do
-      <<~GRAPHQL
-        query {
-          lives {
-            nodes {
-              id
-            }
+  let(:query) do
+    <<~GRAPHQL
+      query($year: Int) {
+        lives(year: $year) {
+          nodes {
+            id
           }
         }
-      GRAPHQL
-    end
-    let(:variables) { {} }
-    let(:context) { graphql_context }
-
-    let!(:lives) { create_pair(:live) }
-
-    it 'returns LiveConnection' do
-      expected_data = {
-        lives: {
-          nodes: lives.sort_by(&:date).reverse.map do |live|
-            {
-              id: live.id.to_s,
-            }
-          end,
-        },
       }
+    GRAPHQL
+  end
+  let(:variables) { {} }
 
-      expect(result.keys).to contain_exactly 'data'
-      expect(result['data']).to eq expected_data.deep_stringify_keys
+  before do
+    3.times do |i|
+      create(:live, date: Date.new(2021, i + 1, 1))
+    end
+  end
+
+  it 'returns lives' do
+    expect(result.to_h).not_to include('errors')
+    expect(result['data']['lives']['nodes'].size).to eq 3
+  end
+
+  context 'with year' do
+    let(:variables) { { year: year } }
+    let(:year) { 2022 }
+
+    before do
+      create(:live, date: Date.new(2022, 4, 1))
+    end
+
+    it 'returns lives that held on given year' do
+      expect(result.to_h).not_to include('errors')
+      expect(result['data']['lives']['nodes'].size).to eq 1
     end
   end
 end

@@ -28,7 +28,6 @@ Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 RSpec.configure do |config|
   config.include ActionDispatch::TestProcess::FixtureFile
   config.include FactoryBot::Syntax::Methods
-  config.include GraphqlHelper, type: :graphql
   config.include FixtureMailerHelper, type: :mailer
   config.include AccessTokenHelper, type: :request
   config.include LoginRequestHelper, type: :request

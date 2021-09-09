@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CustomContext < GraphQL::Query::Context
-  def_delegators :controller, :url_for
+  include Rails.application.routes.url_helpers
 
   def auth_payload
     self[:auth_payload] || {}
@@ -15,21 +15,13 @@ class CustomContext < GraphQL::Query::Context
     self[:current_client]
   end
 
-  def scopes
-    auth_payload[:scope].to_s.split
-  end
-
   def scope?(scope)
-    if scope.blank?
-      true
-    else
-      scopes.include?(scope)
-    end
+    auth_payload[:scope].to_s.split.include?(scope)
   end
 
   private
 
-  def controller
-    self[:controller]
+  def default_url_options
+    self[:url_options] || { protocol: :https, host: 'livelog.ku-unplugged.net' }
   end
 end

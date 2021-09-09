@@ -2,43 +2,43 @@
 
 require 'rails_helper'
 
-RSpec.describe 'GraphQL query:', type: :graphql do
-  describe 'member' do
-    subject(:result) { LiveLogSchema.execute(query, variables: variables, context: context) }
+RSpec.describe 'GraphQL query: member', type: :graphql do
+  subject(:result) { LiveLogSchema.execute(query, variables: variables) }
 
-    let(:query) do
-      <<~GRAPHQL
-        query($id: ID!) {
-          member(id: $id) {
-            id
-            joinedYear
-            name
-            url
-            bio
-            avatarUrl
-            playedInstruments
-            playedSongs {
-              edges {
-                instrument
-                node {
-                  id
-                }
+  let(:query) do
+    <<~GRAPHQL
+      query($id: ID!) {
+        member(id: $id) {
+          id
+          joinedYear
+          name
+          url
+          bio
+          avatarUrl
+          playedInstruments
+          playedSongs {
+            edges {
+              instrument
+              node {
+                id
               }
             }
           }
         }
-      GRAPHQL
-    end
-    let(:variables) { { id: member.id } }
-    let(:context) { graphql_context }
+      }
+    GRAPHQL
+  end
+  let(:variables) { { id: LiveLogSchema.id_from_object(member, Types::MemberType) } }
 
-    let(:member) { create(:member, avatar: create(:avatar)) }
-    let!(:play) { create(:play, member: member) }
+  let(:member) { create(:member, avatar: create(:avatar)) }
+  let!(:play) { create(:play, member: member) }
 
-    it 'returns Member' do
-      expected_data = {
+  it 'returns a member' do
+    expect(result.to_h).not_to include('errors')
+    expect(result['data'].deep_symbolize_keys).to match(
+      {
         member: {
-          id: member.id.to_s,
+          id: String,
           joinedYear: member.joined_year,
           name: member.name,
           url: member.url,
@@ -50,16 +50,13 @@ RSpec.describe 'GraphQL query:', type: :graphql do
               {
                 instrument: play.instrument,
                 node: {
-                  id: play.song.id.to_s,
+                  id: String,
                 },
               },
             ],
           },
         },
-      }
-
-      expect(result.keys).to contain_exactly 'data'
-      expect(result['data']).to match expected_data.deep_stringify_keys
-    end
+      },
+    )
   end
 end

@@ -1,18 +1,20 @@
 # frozen_string_literal: true
 
 module Types
-  class SongType < BaseObject
-    field :id, ID, null: false
-    field :live, LiveType, null: false
+  class SongType < Types::BaseObject
+    implements GraphQL::Types::Relay::Node
+    global_id_field :id
+
+    field :live, Types::LiveType, null: false
     field :time, String, null: true, method: :time_str
-    field :order, Integer, null: false, method: :position
+    field :order, Int, null: false, method: :position
     field :name, String, null: false
     field :artist, String, null: true
     field :original, Boolean, null: false
     field :comment, String, null: true
-    field :youtube_url, HttpUrl, null: true, authorization: ->(object, args, context) { audio_visual_visible?(object, args, context) }
-    field :audio_url, HttpUrl, null: true, authorization: ->(object, args, context) { audio_visual_visible?(object, args, context) }
-    field :players, PlayerConnection, null: false, max_page_size: nil
+    field :youtube_url, Types::HttpUrl, null: true, authorization: ->(object, args, context) { audio_visual_visible?(object, args, context) }
+    field :audio_url, Types::HttpUrl, null: true, authorization: ->(object, args, context) { audio_visual_visible?(object, args, context) }
+    field :players, Types::PlayerConnection, null: false, max_page_size: nil, method: :plays
 
     def self.audio_visual_visible?(song, _args, context)
       case song.visibility
@@ -26,25 +28,12 @@ module Types
     end
 
     def live
-      BatchLoader::GraphQL.for(object.live_id).batch do |live_ids, loader|
-        Live.where(id: live_ids).each { |live| loader.call(live.id, live) }
-      end
+      Loaders::AssociationLoader.for(Song, :live).load(object)
     end
 
     def audio_url
-      BatchLoader::GraphQL.for(object).batch do |songs, loader|
-        ActiveRecord::Associations::Preloader.new.preload(songs, { audio_attachment: :blob })
-        songs.each do |song|
-          loader.call(song, context.url_for(song.audio)) if song.audio.attached?
-        end
-      end
-    end
-
-    def players
-      BatchLoader::GraphQL.for(object.id).batch(default_value: []) do |song_ids, loader|
-        Member.joins(:plays).merge(Play.where(song_id: song_ids)).select('members.*', 'plays.song_id', 'plays.instrument').each do |member|
-          loader.call(member.song_id) { |memo| memo << member }
-        end
+      Loaders::ActiveStorageLoader.for(:Song, :audio).load(object.id).then do |audio|
+        context.url_for(audio)
       end
     end
   end
