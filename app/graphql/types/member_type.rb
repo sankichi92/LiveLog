@@ -28,8 +28,7 @@ module Types
     end
 
     def played_songs
-      # TODO
-      Song.published.joins(:plays).merge(Play.where(member_id: object.id)).newest_live_order.select('songs.*', 'plays.member_id', 'plays.instrument')
+      object.plays.joins(:song).merge(Song.published.newest_live_order)
     end
   end
 end

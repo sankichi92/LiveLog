@@ -66,4 +66,10 @@ Rails.application.configure do
     config.api_key = '874837483274837'
     config.api_secret = 'a676b67565c6767a6767d6767f676fe1'
   end
+
+  # Bullet
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.bullet_logger = true
+  end
 end

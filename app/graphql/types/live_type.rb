@@ -11,9 +11,5 @@ module Types
     field :comment, String, null: true
     field :album_url, HttpUrl, null: true, required_scope: 'read:lives'
     field :songs, SongType.connection_type, null: false, max_page_size: nil
-
-    def songs
-      Loaders::AssociationLoader.for(Live, :songs).load(object)
-    end
   end
 end

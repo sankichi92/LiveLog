@@ -58,6 +58,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
 
+  gem 'bullet'
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'rspec-rails'
@@ -76,7 +77,6 @@ group :development do
   # Can be configured to work on production as well see: https://github.com/MiniProfiler/rack-mini-profiler/blob/master/README.md
   gem 'rack-mini-profiler', '~> 2.3'
 
-  gem 'bullet'
   gem 'dotenv-rails'
   gem 'rails_real_favicon', require: false
 end
