@@ -38,9 +38,10 @@ jobs:
           --health-retries 5
 
     env:
-      TZ: Asia/Tokyo
       POSTGRES_PASSWORD: postgres
+      POSTGRES_PORT: 5432
       RAILS_ENV: test
+      TZ: Asia/Tokyo
 
     steps:
       - uses: actions/checkout@v2

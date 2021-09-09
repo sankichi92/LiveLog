@@ -15,8 +15,8 @@
       "name": "RSpec - active spec file only",
       "type": "Ruby",
       "request": "launch",
-      "program": "${workspaceRoot}/bin/rspec",
-      "args": ["-I", "${workspaceRoot}", "${file}"]
+      "program": "${workspaceRoot}/bin/bundle",
+      "args": ["exec", "rspec", "-I", "${workspaceRoot}", "${file}"]
     }
   ]
 }
