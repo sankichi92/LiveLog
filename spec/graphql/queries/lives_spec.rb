@@ -2,39 +2,27 @@
 
 require 'rails_helper'
 
-RSpec.describe 'GraphQL query:', type: :graphql do
-  describe 'lives' do
-    subject(:result) { LiveLogSchema.execute(query, variables: variables, context: context) }
+RSpec.describe 'GraphQL query: lives', type: :graphql do
+  subject(:result) { LiveLogSchema.execute(query) }
 
-    let(:query) do
-      <<~GRAPHQL
-        query {
-          lives {
-            nodes {
-              id
-            }
+  let(:query) do
+    <<~GRAPHQL
+      query {
+        lives {
+          nodes {
+            id
           }
         }
-      GRAPHQL
-    end
-    let(:variables) { {} }
-    let(:context) { graphql_context }
-
-    let!(:lives) { create_pair(:live) }
-
-    it 'returns LiveConnection' do
-      expected_data = {
-        lives: {
-          nodes: lives.sort_by(&:date).reverse.map do |live|
-            {
-              id: live.id.to_s,
-            }
-          end,
-        },
       }
+    GRAPHQL
+  end
 
-      expect(result.keys).to contain_exactly 'data'
-      expect(result['data']).to eq expected_data.deep_stringify_keys
-    end
+  before do
+    create_list(:live, 3)
+  end
+
+  it 'returns lives' do
+    expect(result.to_h).not_to include('errors')
+    expect(result['data']['lives']['nodes'].size).to eq 3
   end
 end

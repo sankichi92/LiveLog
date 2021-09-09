@@ -2,32 +2,31 @@
 
 require 'rails_helper'
 
-RSpec.describe 'GraphQL query:', type: :graphql do
-  describe 'memberJoinedYears' do
-    subject(:result) { LiveLogSchema.execute(query, variables: variables, context: context) }
+RSpec.describe 'GraphQL query: memberJoinedYears', type: :graphql do
+  subject(:result) { LiveLogSchema.execute(query) }
 
-    let(:query) do
-      <<~GRAPHQL
-        query {
-          memberJoinedYears
-        }
-      GRAPHQL
-    end
-    let(:variables) { {} }
-    let(:context) { graphql_context }
-
-    before do
-      create(:member, joined_year: 2020)
-      create(:member, joined_year: 2019)
-    end
-
-    it 'returns joined_years Int array' do
-      expected_data = {
-        memberJoinedYears: [2020, 2019],
+  let(:query) do
+    <<~GRAPHQL
+      query {
+        memberJoinedYears
       }
+    GRAPHQL
+  end
 
-      expect(result.keys).to contain_exactly 'data'
-      expect(result['data']).to eq(expected_data.deep_stringify_keys)
-    end
+  before do
+    create(:member, joined_year: 2020)
+    create(:member, joined_year: 2019)
+  end
+
+  it 'returns joined_years Int array' do
+    expect(result.to_h).not_to include('errors')
+    expect(result['data'].deep_symbolize_keys).to eq(
+      {
+        memberJoinedYears: [
+          2020,
+          2019,
+        ],
+      },
+    )
   end
 end

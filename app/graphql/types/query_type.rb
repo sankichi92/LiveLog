@@ -13,15 +13,15 @@ module Types
 
     field :lives, LiveType.connection_type, null: false
     field :live, LiveType, null: false do
-      argument :id, ID, required: true
+      argument :id, ID, required: true, loads: LiveType, as: :live
     end
 
     def lives
       Live.published.newest_order
     end
 
-    def live(id:)
-      Live.published.find(id)
+    def live(live:)
+      live
     end
 
     # endregion
@@ -33,7 +33,7 @@ module Types
       argument :year, Int, required: true
     end
     field :member, MemberType, null: false do
-      argument :id, ID, required: true
+      argument :id, ID, required: true, loads: MemberType, as: :member
     end
 
     def member_joined_years
@@ -44,8 +44,8 @@ module Types
       Member.where(joined_year: year).order(plays_count: :desc)
     end
 
-    def member(id:)
-      Member.find(id)
+    def member(member:)
+      member
     end
 
     # endregion
@@ -54,15 +54,15 @@ module Types
 
     field :songs, SongType.connection_type, null: false
     field :song, SongType, null: false do
-      argument :id, ID, required: true
+      argument :id, ID, required: true, loads: SongType, as: :song
     end
 
     def songs
       Song.published.newest_live_order
     end
 
-    def song(id:)
-      Song.published.find(id)
+    def song(song:)
+      song
     end
 
     # endregion

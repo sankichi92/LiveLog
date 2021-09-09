@@ -2,7 +2,9 @@
 
 module Types
   class SongType < BaseObject
-    field :id, ID, null: false
+    implements GraphQL::Types::Relay::Node
+    global_id_field :id
+
     field :live, LiveType, null: false
     field :time, String, null: true, method: :time_str
     field :order, Integer, null: false, method: :position

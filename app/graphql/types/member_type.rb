@@ -8,7 +8,9 @@ module Types
       value 'LARGE', '384x384', value: :large
     end
 
-    field :id, ID, null: false
+    implements GraphQL::Types::Relay::Node
+    global_id_field :id
+
     field :joined_year, Int, null: false
     field :name, String, null: false
     field :url, HttpUrl, null: true

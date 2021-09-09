@@ -2,7 +2,9 @@
 
 module Types
   class LiveType < BaseObject
-    field :id, ID, null: false
+    implements GraphQL::Types::Relay::Node
+    global_id_field :id
+
     field :date, GraphQL::Types::ISO8601Date, null: false
     field :name, String, null: false
     field :place, String, null: true
