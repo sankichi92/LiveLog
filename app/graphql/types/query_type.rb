@@ -52,13 +52,8 @@ module Types
 
     # region Song
 
-    field :songs, Types::SongType.connection_type, null: false
     field :song, Types::SongType, null: false do
       argument :id, ID, required: true, loads: SongType, as: :song
-    end
-
-    def songs
-      Song.published.newest_live_order
     end
 
     def song(song:)
