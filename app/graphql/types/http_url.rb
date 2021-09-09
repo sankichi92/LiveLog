@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Types
-  class HttpUrl < BaseScalar
+  class HttpUrl < Types::BaseScalar
     def self.coerce_input(input_value, _context)
       uri = URI.parse(input_value)
 

@@ -11,8 +11,8 @@ module Types
 
     # region Live
 
-    field :lives, LiveType.connection_type, null: false
-    field :live, LiveType, null: false do
+    field :lives, Types::LiveType.connection_type, null: false
+    field :live, Types::LiveType, null: false do
       argument :id, ID, required: true, loads: LiveType, as: :live
     end
 
@@ -29,10 +29,10 @@ module Types
     # region Member
 
     field :member_joined_years, [Int], null: false
-    field :members, MemberType.connection_type, null: false do
+    field :members, Types::MemberType.connection_type, null: false do
       argument :year, Int, required: true
     end
-    field :member, MemberType, null: false do
+    field :member, Types::MemberType, null: false do
       argument :id, ID, required: true, loads: MemberType, as: :member
     end
 
@@ -52,8 +52,8 @@ module Types
 
     # region Song
 
-    field :songs, SongType.connection_type, null: false
-    field :song, SongType, null: false do
+    field :songs, Types::SongType.connection_type, null: false
+    field :song, Types::SongType, null: false do
       argument :id, ID, required: true, loads: SongType, as: :song
     end
 

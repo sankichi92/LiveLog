@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Types
-  class MemberType < BaseObject
+  class MemberType < Types::BaseObject
     class AvatarSize < BaseEnum
       value 'SMALL', '64x64', value: :small
       value 'MEDIUM', '192x192', value: :medium
@@ -13,13 +13,13 @@ module Types
 
     field :joined_year, Int, null: false
     field :name, String, null: false
-    field :url, HttpUrl, null: true
+    field :url, Types::HttpUrl, null: true
     field :bio, String, null: true
-    field :avatar_url, HttpUrl, null: true do
+    field :avatar_url, Types::HttpUrl, null: true do
       argument :size, AvatarSize, required: false
     end
     field :played_instruments, [String], null: false
-    field :played_songs, PlayedSongConnection, null: false
+    field :played_songs, Types::PlayedSongConnection, null: false
 
     def avatar_url(size: :small)
       Loaders::AssociationLoader.for(Member, :avatar).load(object).then do |avatar|

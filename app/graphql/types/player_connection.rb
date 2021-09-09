@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 module Types
-  class PlayerConnection < BaseConnection
-    class Edge < BaseEdge
+  class PlayerConnection < Types::BaseConnection
+    class Edge < Types::BaseEdge
       graphql_name 'PlayerEdge'
-      node_type MemberType
+      node_type Types::MemberType
 
       field :instrument, String, null: true
 

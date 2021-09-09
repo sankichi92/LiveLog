@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 module Types
-  class PlayedSongConnection < BaseConnection
-    class Edge < BaseEdge
+  class PlayedSongConnection < Types::BaseConnection
+    class Edge < Types::BaseEdge
       graphql_name 'PlayedSongEdge'
-      node_type SongType
+      node_type Types::SongType
 
       field :instrument, String, null: true
 
