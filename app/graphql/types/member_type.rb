@@ -20,20 +20,14 @@ module Types
     field :played_songs, PlayedSongConnection, null: false
 
     def avatar_url(size: :small)
-      BatchLoader::GraphQL.for(object.id).batch do |member_ids, loader|
-        Avatar.where(member_id: member_ids).each do |avatar|
-          loader.call(avatar.member_id, avatar.image_url(size: size))
-        end
+      Loaders::AssociationLoader.for(Member, :avatar).load(object).then do |avatar|
+        avatar.image_url(size: size)
       end
     end
 
     def played_songs
-      BatchLoader::GraphQL.for(object.id).batch(default_value: []) do |member_ids, loader|
-        songs = Song.published.joins(:plays).merge(Play.where(member_id: member_ids)).newest_live_order.select('songs.*', 'plays.member_id', 'plays.instrument')
-        songs.each do |song|
-          loader.call(song.member_id) { |memo| memo << song }
-        end
-      end
+      # TODO
+      Song.published.joins(:plays).merge(Play.where(member_id: object.id)).newest_live_order.select('songs.*', 'plays.member_id', 'plays.instrument')
     end
   end
 end

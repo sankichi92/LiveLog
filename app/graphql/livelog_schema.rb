@@ -6,7 +6,7 @@ class LiveLogSchema < GraphQL::Schema
 
   context_class CustomContext
 
-  use BatchLoader::GraphQL
+  use GraphQL::Batch
 
   rescue_from ActiveRecord::RecordNotFound do |_err, _obj, _args, _ctx, field|
     raise GraphQL::ExecutionError, "#{field.type.unwrap.graphql_name} not found"

@@ -50,8 +50,8 @@ gem 'twitter'
 gem 'elasticsearch-model', '~> 7.1.1'
 
 # API
-gem 'batch-loader'
 gem 'graphql'
+gem 'graphql-batch'
 gem 'jwt'
 
 group :development, :test do

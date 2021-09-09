@@ -11,11 +11,7 @@ module Types
     field :songs, SongType.connection_type, null: false, max_page_size: nil
 
     def songs
-      BatchLoader::GraphQL.for(object.id).batch(default_value: []) do |live_ids, loader|
-        Song.where(live_id: live_ids).played_order.each do |song|
-          loader.call(song.live_id) { |memo| memo << song }
-        end
-      end
+      Loaders::AssociationLoader.for(Live, :songs).load(object)
     end
   end
 end

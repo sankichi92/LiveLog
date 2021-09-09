@@ -26,26 +26,18 @@ module Types
     end
 
     def live
-      BatchLoader::GraphQL.for(object.live_id).batch do |live_ids, loader|
-        Live.where(id: live_ids).each { |live| loader.call(live.id, live) }
-      end
+      Loaders::AssociationLoader.for(Song, :live).load(object)
     end
 
     def audio_url
-      BatchLoader::GraphQL.for(object).batch do |songs, loader|
-        ActiveRecord::Associations::Preloader.new.preload(songs, { audio_attachment: :blob })
-        songs.each do |song|
-          loader.call(song, context.url_for(song.audio)) if song.audio.attached?
-        end
+      Loaders::ActiveStorageLoader.for(:Song, :audio).load(object.id).then do |audio|
+        context.url_for(audio)
       end
     end
 
     def players
-      BatchLoader::GraphQL.for(object.id).batch(default_value: []) do |song_ids, loader|
-        Member.joins(:plays).merge(Play.where(song_id: song_ids)).select('members.*', 'plays.song_id', 'plays.instrument').each do |member|
-          loader.call(member.song_id) { |memo| memo << member }
-        end
-      end
+      # TODO
+      Member.joins(:plays).merge(Play.where(song_id: object.id)).select('members.*', 'plays.song_id', 'plays.instrument')
     end
   end
 end
