@@ -32,7 +32,7 @@ RSpec.describe 'GraphQL query: song', type: :graphql do
     GRAPHQL
   end
   let(:variables) { { id: LiveLogSchema.id_from_object(song, Types::SongType) } }
-  let(:context) { graphql_context(scope: scope) }
+  let(:context) { { auth_payload: { scope: scope } } }
 
   let(:song) do
     create(

@@ -24,7 +24,7 @@ RSpec.describe 'GraphQL query: live', type: :graphql do
     GRAPHQL
   end
   let(:variables) { { id: LiveLogSchema.id_from_object(live, Types::LiveType) } }
-  let(:context) { graphql_context(scope: scope) }
+  let(:context) { { auth_payload: { scope: scope } } }
 
   let(:live) { create(:live) }
   let(:scope) { '' }

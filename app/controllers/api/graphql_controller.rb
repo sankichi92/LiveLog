@@ -10,7 +10,7 @@ module API
     # rubocop:disable Naming/MethodParameterName, Naming/VariableName
     def execute(query = nil, variables = {}, operationName = nil)
       context = {
-        controller: self,
+        url_options: url_options,
         auth_payload: auth_payload,
         current_user: current_user,
         current_client: current_client,

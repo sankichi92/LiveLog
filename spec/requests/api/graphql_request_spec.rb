@@ -105,10 +105,10 @@ RSpec.describe 'graphql request:', type: :request do
 
       it 'responds 200 without errors' do
         post api_graphql_path, headers: { authorization: "Bearer #{access_token}" }, params: { query: query }
-        response_body = JSON.parse(response.body)
 
-        expect(response_body.keys).to contain_exactly 'data'
         expect(response).to have_http_status :ok
+        parsed_body = JSON.parse(response.body)
+        expect(parsed_body).not_to include('errors')
       end
     end
 
@@ -157,10 +157,10 @@ RSpec.describe 'graphql request:', type: :request do
 
       it 'responds 200 without errors' do
         post api_graphql_path, headers: { authorization: "Bearer #{access_token}" }, params: { query: query }
-        response_body = JSON.parse(response.body)
 
-        expect(response_body.keys).to contain_exactly 'data'
         expect(response).to have_http_status :ok
+        parsed_body = JSON.parse(response.body)
+        expect(parsed_body).not_to include('errors')
       end
     end
   end
