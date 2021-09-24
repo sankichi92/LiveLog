@@ -211,10 +211,10 @@
   resolved "https://registry.yarnpkg.com/@ttskch/select2-bootstrap4-theme/-/select2-bootstrap4-theme-1.5.2.tgz#3b4519b349f3e7831c28752a1e9617312a192656"
   integrity sha512-gAj8qNy/VYwQDBkACm0USM66kxFai8flX83ayRXPNhzZckEgSqIBB9sM74SCM3ssgeX+ZVy4BifTnLis+KpIyg==
 
-"@types/bootstrap@^5.1.4":
-  version "5.1.4"
-  resolved "https://registry.yarnpkg.com/@types/bootstrap/-/bootstrap-5.1.4.tgz#f2cc03c485b53d4e9dadbfee8eb519ce1b37a871"
-  integrity sha512-VAY+o6sCKrJ7Xix/lugdvQz0PpOn7Go+fQzCXOZvIdp7E/TDaiJddInVhNB/84bk9NX6uuKFSfl2pqslNYH9aA==
+"@types/bootstrap@^5.1.6":
+  version "5.1.6"
+  resolved "https://registry.yarnpkg.com/@types/bootstrap/-/bootstrap-5.1.6.tgz#669a0cd7fb37bca12424e0d68f1f4704cfcdb780"
+  integrity sha512-3L6IvOCKyoVd3e4bgQTH7VBPbuYEOG8IQbRcuZ0AbjfwPdRX+kVf5L/7mVt1EVM+D/BVw4+71rtp7Z8yYROlpQ==
   dependencies:
     "@popperjs/core" "^2.9.2"
     "@types/jquery" "*"
