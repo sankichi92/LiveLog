@@ -27,7 +27,7 @@
     "@types/jquery": "^3.5.6",
     "@types/rails__activestorage": "^6.0.1",
     "@types/rails__ujs": "^6.0.1",
-    "@types/react": "^17.0.24",
+    "@types/react": "^17.0.26",
     "@types/react-dom": "^17.0.9",
     "@typescript-eslint/eslint-plugin": "^4.31.2",
     "@typescript-eslint/parser": "^4.32.0",
