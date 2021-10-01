@@ -13,7 +13,7 @@
     "@ttskch/select2-bootstrap4-theme": "^1.5.2",
     "admin-lte": "^3.1.0",
     "bootstrap": "^4.6.0",
-    "datatables.net": "^1.11.2",
+    "datatables.net": "^1.11.3",
     "datatables.net-bs4": "^3.2.2",
     "jquery": "^3.6.0",
     "react": "^17.0.2",
