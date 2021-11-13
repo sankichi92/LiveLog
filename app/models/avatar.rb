@@ -15,7 +15,6 @@ class Avatar < ApplicationRecord
       folder: 'avatar/',
       public_id: member.id,
       allowed_formats: %w[jpg png],
-      invalidate: true,
     )
     update!(cloudinary_id: response['public_id'], metadata: response.except('public_id'))
   end
@@ -23,6 +22,7 @@ class Avatar < ApplicationRecord
   def image_url(size: :small)
     Cloudinary::Utils.cloudinary_url(
       cloudinary_id,
+      version: metadata['version'],
       sign_url: true,
       transformation: [
         {
