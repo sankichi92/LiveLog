@@ -57,7 +57,7 @@ RSpec.describe 'profiles request:', type: :request do
 
       before do
         allow(cloudinary_uploader).to receive(:upload) do |_file, options|
-          { 'public_id' => options[:public_id] }
+          { 'public_id' => options[:public_id], 'version' => Time.zone.now.to_i }
         end
         allow(LiveLog::Auth0Client).to receive(:instance).and_return(auth0_client)
       end

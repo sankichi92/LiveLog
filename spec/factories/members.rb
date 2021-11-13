@@ -25,5 +25,6 @@ FactoryBot.define do
   factory :avatar do
     member
     cloudinary_id { "avatar/#{member.id}" }
+    version { Time.zone.now.to_i }
   end
 end

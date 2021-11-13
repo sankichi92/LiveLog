@@ -11,7 +11,7 @@ RSpec.describe 'Settings:', type: :system do
     user = create(:user, member: member)
     allow(auth0_client_double).to receive(:patch_user).with(user.auth0_id, anything)
     allow(Cloudinary::Uploader).to receive(:upload) do |_file, options|
-      { 'public_id' => options[:public_id] }
+      { 'public_id' => options[:public_id], 'version' => Time.zone.now.to_i }
     end
     log_in_as user
 
