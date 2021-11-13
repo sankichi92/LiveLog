@@ -16,13 +16,17 @@ class Avatar < ApplicationRecord
       public_id: member.id,
       allowed_formats: %w[jpg png],
     )
-    update!(cloudinary_id: response['public_id'], metadata: response.except('public_id'))
+    update!(
+      cloudinary_id: response['public_id'],
+      version: response['version'],
+      metadata: response.except('public_id', 'version'),
+    )
   end
 
   def image_url(size: :small)
     Cloudinary::Utils.cloudinary_url(
       cloudinary_id,
-      version: metadata['version'],
+      version: version,
       sign_url: true,
       transformation: [
         {
