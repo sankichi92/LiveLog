@@ -72,4 +72,8 @@ Rails.application.configure do
     Bullet.enable = true
     Bullet.bullet_logger = true
   end
+
+  # Hotfix until Rails 7
+  # https://github.com/rails/rails/pull/43503#issuecomment-949674931
+  Selenium::WebDriver.logger.ignore(:browser_options)
 end
