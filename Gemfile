@@ -5,7 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.0.3'
 
-gem 'rails', '~> 6.1.4'
+gem 'rails', '~> 7.0.0'
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 1.1'
 # Use Puma as the app server
@@ -46,6 +46,7 @@ gem 'scout_apm'
 gem 'sentry-rails'
 gem 'simpacker'
 gem 'slack-ruby-client'
+gem 'sprockets-rails'
 gem 'twitter'
 
 # Must be after 'kaminari'
