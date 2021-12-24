@@ -46,7 +46,7 @@ gem 'scout_apm'
 gem 'sentry-rails'
 gem 'simpacker'
 gem 'slack-ruby-client'
-gem 'sprockets-rails'
+gem 'sprockets-rails', require: 'sprockets/railtie'
 gem 'twitter'
 
 # Must be after 'kaminari'

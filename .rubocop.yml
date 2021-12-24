@@ -34,6 +34,11 @@ Style/IfUnlessModifier:
 Style/RescueStandardError:
   Enabled: false
 
+Style/StringLiterals:
+  Exclude:
+    - config/{application,boot,environment}.rb
+    - config/environments/*.rb
+
 Style/TrailingCommaInArguments:
   EnforcedStyleForMultiline: consistent_comma
 
