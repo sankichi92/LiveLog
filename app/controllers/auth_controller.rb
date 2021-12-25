@@ -51,6 +51,6 @@ class AuthController < ApplicationController
     log_out
 
     logout_uri = LiveLog::Auth0Client.instance.logout_url(root_url, include_client: true)
-    redirect_to logout_uri.to_s, notice: 'ログアウトしました'
+    redirect_to logout_uri.to_s, allow_other_host: true, notice: 'ログアウトしました'
   end
 end
