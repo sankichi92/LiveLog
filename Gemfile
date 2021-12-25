@@ -6,14 +6,22 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.0.3'
 
 gem 'rails', '~> 7.0.0'
+
+# The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
+gem 'sprockets-rails'
+
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 1.1'
-# Use Puma as the app server
-gem 'puma', '~> 5.5'
-# Use SCSS for stylesheets
-gem 'sass-rails', '>= 6'
+
+# Use the Puma web server [https://github.com/puma/puma]
+gem 'puma', '~> 5.0'
+
 # Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '>= 1.4.4', require: false
+gem 'bootsnap', require: false
+
+# Use Sass to process CSS
+gem 'sassc-rails'
+
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors'
 
@@ -46,7 +54,6 @@ gem 'scout_apm'
 gem 'sentry-rails'
 gem 'simpacker'
 gem 'slack-ruby-client'
-gem 'sprockets-rails', require: 'sprockets/railtie'
 gem 'twitter'
 
 # Must be after 'kaminari'
@@ -73,22 +80,20 @@ group :development, :test do
 end
 
 group :development do
-  gem 'listen', '~> 3.7'
-  # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
-  gem 'web-console', '>= 4.1.0'
-  # Display performance information such as SQL time and flame graphs for each request in your browser.
-  # Can be configured to work on production as well see: https://github.com/MiniProfiler/rack-mini-profiler/blob/master/README.md
-  gem 'rack-mini-profiler', '~> 2.3'
+  # Use console on exceptions pages [https://github.com/rails/web-console]
+  gem 'web-console'
+
+  # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
+  gem 'rack-mini-profiler'
 
   gem 'dotenv-rails'
   gem 'rails_real_favicon', require: false
 end
 
 group :test do
-  # Adds support for Capybara system testing and selenium driver
-  gem 'capybara', '>= 3.26'
+  # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
+  gem 'capybara'
   gem 'selenium-webdriver'
-  # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
 
   gem 'webmock'

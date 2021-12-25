@@ -244,9 +244,6 @@ GEM
     kaminari-i18n (0.5.0)
       kaminari
       rails
-    listen (3.7.0)
-      rb-fsevent (~> 0.10, >= 0.10.3)
-      rb-inotify (~> 0.9, >= 0.9.10)
     loofah (2.13.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -352,9 +349,6 @@ GEM
       zeitwerk (~> 2.5)
     rainbow (3.0.0)
     rake (13.0.6)
-    rb-fsevent (0.11.0)
-    rb-inotify (0.10.1)
-      ffi (~> 1.0)
     regexp_parser (2.2.0)
     reline (0.3.0)
       io-console (~> 0.5)
@@ -412,8 +406,6 @@ GEM
     ruby_parser (3.15.1)
       sexp_processor (~> 4.9)
     rubyzip (2.3.2)
-    sass-rails (6.0.0)
-      sassc-rails (~> 2.1, >= 2.1.1)
     sassc (2.4.0)
       ffi (~> 1.9)
     sassc-rails (2.1.2)
@@ -509,9 +501,9 @@ DEPENDENCIES
   auth0
   aws-sdk-s3
   barnes
-  bootsnap (>= 1.4.4)
+  bootsnap
   bullet
-  capybara (>= 3.26)
+  capybara
   cloudinary
   commonmarker
   dalli
@@ -531,16 +523,15 @@ DEPENDENCIES
   jwt
   kaminari
   kaminari-i18n
-  listen (~> 3.7)
   octokit
   omniauth
   omniauth-auth0
   omniauth-github
   omniauth-rails_csrf_protection
   pg (~> 1.1)
-  puma (~> 5.5)
+  puma (~> 5.0)
   rack-cors
-  rack-mini-profiler (~> 2.3)
+  rack-mini-profiler
   rack-timeout
   rails (~> 7.0.0)
   rails-i18n
@@ -552,7 +543,7 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   rubocop-rubycw
-  sass-rails (>= 6)
+  sassc-rails
   scout_apm
   selenium-webdriver
   sentry-rails
@@ -560,7 +551,7 @@ DEPENDENCIES
   slack-ruby-client
   sprockets-rails
   twitter
-  web-console (>= 4.1.0)
+  web-console
   webdrivers
   webmock
 
