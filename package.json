@@ -7,8 +7,8 @@
     "lint": "prettier '**/*.{json,js,ts,tsx}' --ignore-path .gitignore --check && eslint . --ext .js,.ts,.tsx --ignore-path .gitignore && tsc"
   },
   "dependencies": {
-    "@rails/activestorage": "^6.1.4",
-    "@rails/ujs": "^6.1.4",
+    "@rails/activestorage": "^7.0.0",
+    "@rails/ujs": "^7.0.0",
     "@sentry/browser": "^6.16.1",
     "@ttskch/select2-bootstrap4-theme": "^1.5.2",
     "admin-lte": "^3.1.0",
@@ -25,7 +25,7 @@
   "devDependencies": {
     "@types/bootstrap": "^5.1.6",
     "@types/jquery": "^3.5.11",
-    "@types/rails__activestorage": "^6.0.1",
+    "@types/rails__activestorage": "^7.0.0",
     "@types/rails__ujs": "^6.0.1",
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",

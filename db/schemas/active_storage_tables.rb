@@ -7,7 +7,7 @@ create_table :active_storage_blobs, force: :cascade do |t|
   t.text :metadata
   t.string :service_name, null: false
   t.bigint :byte_size, null: false
-  t.string :checksum, null: false
+  t.string :checksum
 
   t.datetime :created_at, null: false
 
