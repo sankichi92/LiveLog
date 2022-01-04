@@ -28,7 +28,7 @@ module Admin
     def update(id, administrator)
       @admin = Administrator.find(id)
 
-      if @admin.update(scopes: Array(administrator[:scopes]).reject(&:blank?))
+      if @admin.update(scopes: Array(administrator[:scopes]).compact_blank)
         AdminActivityNotifyJob.perform_later(
           user: current_user,
           operation: '更新しました',
