@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
-require 'rubocop/rake_task'
-
-RuboCop::RakeTask.new
+begin
+  require 'rubocop/rake_task'
+  RuboCop::RakeTask.new
+rescue LoadError
+  # do nothing
+end
