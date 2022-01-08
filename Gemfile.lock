@@ -457,7 +457,7 @@ GEM
       concurrent-ruby
       faraday
     sexp_processor (4.15.2)
-    simpacker (1.2.0)
+    simpacker (1.2.1)
       railties (>= 4.2)
     simple_oauth (0.3.1)
     slack-ruby-client (1.0.0)
