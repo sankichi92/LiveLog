@@ -24,7 +24,7 @@ RSpec.describe 'admin/entry_guidelines request:', type: :request do
     let(:params) do
       {
         entry_guideline: {
-          deadline: deadline,
+          deadline:,
           notes: '',
         },
       }
@@ -68,7 +68,7 @@ RSpec.describe 'admin/entry_guidelines request:', type: :request do
     let(:params) do
       {
         entry_guideline: {
-          deadline: deadline,
+          deadline:,
           notes: live.entry_guideline.notes,
         },
       }

@@ -45,7 +45,7 @@ RSpec.describe Developer, type: :model do
 
       context 'with clients' do
         before do
-          create_pair(:client, developer: developer)
+          create_pair(:client, developer:)
         end
 
         it 'removes github_access_token and raises Octokit::Unauthorized' do

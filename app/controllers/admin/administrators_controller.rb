@@ -9,7 +9,7 @@ module Admin
     end
 
     def create(member_id)
-      user = User.find_by!(member_id: member_id)
+      user = User.find_by!(member_id:)
       admin = user.create_admin!
       AdminActivityNotifyJob.perform_later(
         user: current_user,

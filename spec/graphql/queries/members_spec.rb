@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'GraphQL query: members', type: :graphql do
-  subject(:result) { LiveLogSchema.execute(query, variables: variables) }
+  subject(:result) { LiveLogSchema.execute(query, variables:) }
 
   let(:query) do
     <<~GRAPHQL
@@ -21,7 +21,7 @@ RSpec.describe 'GraphQL query: members', type: :graphql do
   let(:joined_year) { 2020 }
 
   before do
-    create_list(:member, 3, joined_year: joined_year)
+    create_list(:member, 3, joined_year:)
   end
 
   it 'returns members' do

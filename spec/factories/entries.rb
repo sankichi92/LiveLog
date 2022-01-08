@@ -11,7 +11,7 @@ FactoryBot.define do
     end
 
     after(:build) do |entry, evaluator|
-      entry.playable_times = build_list(:playable_time, evaluator.playable_times_count, entry: entry) if entry.playable_times.empty?
+      entry.playable_times = build_list(:playable_time, evaluator.playable_times_count, entry:) if entry.playable_times.empty?
     end
   end
 

@@ -56,7 +56,7 @@ RSpec.describe 'Admin song system:', type: :system do
     # Given
     stub_request(:post, 'https://slack.com/api/chat.postMessage')
     members = create_list(:member, 3)
-    song = create(:song, name: 'before', members: members)
+    song = create(:song, name: 'before', members:)
     admin = create(:admin, scopes: %w[write:songs])
     log_in_as admin.user
 

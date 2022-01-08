@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'GraphQL query: live', type: :graphql do
-  subject(:result) { LiveLogSchema.execute(query, variables: variables, context: context) }
+  subject(:result) { LiveLogSchema.execute(query, variables:, context:) }
 
   let(:query) do
     <<~GRAPHQL
@@ -24,13 +24,13 @@ RSpec.describe 'GraphQL query: live', type: :graphql do
     GRAPHQL
   end
   let(:variables) { { id: LiveLogSchema.id_from_object(live, Types::LiveType) } }
-  let(:context) { { auth_payload: { scope: scope } } }
+  let(:context) { { auth_payload: { scope: } } }
 
   let(:live) { create(:live) }
   let(:scope) { '' }
 
   before do
-    create_list(:song, 3, live: live)
+    create_list(:song, 3, live:)
   end
 
   it 'returns a live' do

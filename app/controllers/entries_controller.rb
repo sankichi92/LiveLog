@@ -19,7 +19,7 @@ class EntriesController < ApplicationController
     @entry = current_user.member.entries.build
     live = Live.entry_acceptable.order(:date).first
     @entry.playable_times.build(range: live.time_range)
-    @entry.build_song(live: live).plays.build
+    @entry.build_song(live:).plays.build
   end
 
   def create(entry, song)

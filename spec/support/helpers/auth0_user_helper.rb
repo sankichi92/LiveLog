@@ -11,7 +11,7 @@ module Auth0UserHelper
       {
         user_id: user.auth0_id,
         email: user.email,
-        email_verified: email_verified,
+        email_verified:,
         user_metadata: {
           livelog_email_notifications: email_accepting,
         },

@@ -15,7 +15,7 @@ class Summary
           instrument_to_count: play_relation.count_by_divided_instrument,
           original_songs_count: song_relation.where(original: true).count,
           covered_artists_count: song_relation.where(original: false).where.not(artist: '').distinct.count(:artist),
-          top10_artist_to_count: top10_artist_to_count,
+          top10_artist_to_count:,
           formation_to_count: play_relation.count_formations,
         }
       end

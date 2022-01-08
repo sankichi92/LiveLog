@@ -15,7 +15,7 @@ RSpec.describe 'lives request:', type: :request do
     let(:live) { create(:live) }
 
     before do
-      create_pair(:song, live: live, members: create_pair(:member))
+      create_pair(:song, live:, members: create_pair(:member))
     end
 
     it 'responds 200' do

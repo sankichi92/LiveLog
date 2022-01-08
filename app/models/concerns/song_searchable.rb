@@ -102,7 +102,7 @@ module SongSearchable
     def basic_search_query(query)
       Elasticsearch::DSL::Search.search do |q|
         q.query do |q| # rubocop:disable Lint/ShadowingOuterLocalVariable
-          q.multi_match query: query, fields: %w[name^2 artist^2 comment]
+          q.multi_match query:, fields: %w[name^2 artist^2 comment]
         end
         q.sort(
           _score: { order: :desc },
@@ -118,8 +118,8 @@ module SongSearchable
         # rubocop:disable Lint/ShadowingOuterLocalVariable
         q.query do |q|
           q.bool do |q|
-            q.must { |q| q.match name: name } if name.present?
-            q.must { |q| q.match artist: artist } if artist.present?
+            q.must { |q| q.match name: } if name.present?
+            q.must { |q| q.match artist: } if artist.present?
             q.filter do |q|
               q.bool do |q|
                 instruments.each do |instrument|

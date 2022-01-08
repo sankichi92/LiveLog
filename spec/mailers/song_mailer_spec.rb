@@ -8,7 +8,7 @@ RSpec.describe SongMailer, type: :mailer do
   describe '#pickup' do
     subject(:mail) { described_class.pickup(song) }
 
-    let(:song) { create(:song, name: 'くちなしの丘', artist: '原田知世', live: live, members: users.map(&:member) + [email_rejected_user.member, member]) }
+    let(:song) { create(:song, name: 'くちなしの丘', artist: '原田知世', live:, members: users.map(&:member) + [email_rejected_user.member, member]) }
     let(:live) { create(:live, name: 'NF', date: '2019-11-23') }
     let(:users) { create_pair(:user) }
     let(:email_rejected_user) { create(:user) }

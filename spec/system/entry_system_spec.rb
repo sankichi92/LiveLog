@@ -7,7 +7,7 @@ RSpec.describe 'Entry system:', type: :system do
     # Given
     stub_request(:post, 'https://slack.com/api/chat.postMessage')
     date = 1.month.from_now.to_date
-    create(:live, :unpublished, :with_entry_guideline, date: date)
+    create(:live, :unpublished, :with_entry_guideline, date:)
     member = create(:member)
     user = create(:user)
     log_in_as user

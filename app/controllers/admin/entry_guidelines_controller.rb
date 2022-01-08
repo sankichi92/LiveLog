@@ -30,11 +30,11 @@ module Admin
     end
 
     def edit(live_id)
-      @entry_guideline = EntryGuideline.find_by!(live_id: live_id)
+      @entry_guideline = EntryGuideline.find_by!(live_id:)
     end
 
     def update(live_id, entry_guideline)
-      @entry_guideline = EntryGuideline.find_by!(live_id: live_id)
+      @entry_guideline = EntryGuideline.find_by!(live_id:)
 
       if @entry_guideline.update(entry_guideline)
         AdminActivityNotifyJob.perform_later(

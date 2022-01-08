@@ -40,7 +40,7 @@ RSpec.describe 'admin/user_registration_forms request:', type: :request do
       end
 
       it 'creates a user_registration_form and redirects to /admin/user_registration_forms' do
-        expect { post admin_user_registration_forms_path, params: params }.to change(UserRegistrationForm, :count).by(1)
+        expect { post admin_user_registration_forms_path, params: }.to change(UserRegistrationForm, :count).by(1)
 
         expect(response).to redirect_to admin_user_registration_forms_path
       end
@@ -56,7 +56,7 @@ RSpec.describe 'admin/user_registration_forms request:', type: :request do
       end
 
       it 'responds 422' do
-        expect { post admin_user_registration_forms_path, params: params }.not_to change(UserRegistrationForm, :count)
+        expect { post admin_user_registration_forms_path, params: }.not_to change(UserRegistrationForm, :count)
 
         expect(response).to have_http_status :unprocessable_entity
       end

@@ -11,8 +11,8 @@ class SongSearchForm
   def to_h
     instrument_arr = instruments&.tr('&', ' ')&.split(' ')&.uniq || []
     {
-      name: name,
-      artist: artist,
+      name:,
+      artist:,
       instruments: instrument_arr.reject { |instrument| instrument.start_with?('-') },
       excluded_instruments: instrument_arr.select { |instrument| instrument.start_with?('-') }.map { |instrument| instrument.sub('-', '') },
       players_lower: players_lower.presence&.to_i,

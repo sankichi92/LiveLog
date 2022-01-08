@@ -25,7 +25,7 @@ RSpec.describe 'summaries request:', type: :request do
       live = create(:live, date: live_date)
       3.times do
         members = create_list(:member, 3)
-        create(:song, live: live, members: members)
+        create(:song, live:, members:)
       end
     end
 

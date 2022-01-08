@@ -55,7 +55,7 @@ class User < ApplicationRecord
                   end
 
     if email != auth0_user.email
-      update_auth0_user!(email: email, verify_email: false)
+      update_auth0_user!(email:, verify_email: false)
     end
 
     LiveLog::Auth0Client.instance.change_password(email, nil)

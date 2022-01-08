@@ -63,7 +63,7 @@ RSpec.describe 'songs request:', type: :request do
 
     context 'when the current_user is a player of the song' do
       before do
-        create(:play, song: song, member: user.member)
+        create(:play, song:, member: user.member)
       end
 
       it 'responds 200' do

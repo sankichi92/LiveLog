@@ -52,7 +52,7 @@ RSpec.describe 'Song system:', type: :system do
   specify 'A logged-in user edits their played song', js: true do
     # Given
     members = create_list(:member, 3)
-    song = create(:song, name: 'before', members: members)
+    song = create(:song, name: 'before', members:)
     user = create(:user, member: members.first)
     log_in_as user
 
