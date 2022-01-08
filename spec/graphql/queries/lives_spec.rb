@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'GraphQL query: lives', type: :graphql do
-  subject(:result) { LiveLogSchema.execute(query, variables: variables) }
+  subject(:result) { LiveLogSchema.execute(query, variables:) }
 
   let(:query) do
     <<~GRAPHQL
@@ -30,7 +30,7 @@ RSpec.describe 'GraphQL query: lives', type: :graphql do
   end
 
   context 'with year' do
-    let(:variables) { { year: year } }
+    let(:variables) { { year: } }
     let(:year) { 2022 }
 
     before do

@@ -10,12 +10,12 @@ module API
     # rubocop:disable Naming/MethodParameterName, Naming/VariableName
     def execute(query = nil, variables = {}, operationName = nil)
       context = {
-        url_options: url_options,
-        auth_payload: auth_payload,
-        current_user: current_user,
-        current_client: current_client,
+        url_options:,
+        auth_payload:,
+        current_user:,
+        current_client:,
       }
-      result = LiveLogSchema.execute(query, variables: prepare_variables(variables), context: context, operation_name: operationName)
+      result = LiveLogSchema.execute(query, variables: prepare_variables(variables), context:, operation_name: operationName)
       render json: result
     rescue StandardError => e
       raise e unless Rails.env.development?

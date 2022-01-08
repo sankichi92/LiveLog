@@ -10,8 +10,8 @@ RSpec.describe Live, type: :model do
 
     before do
       3.times do
-        song = create(:song, :for_entry, live: live)
-        create(:entry, song: song)
+        song = create(:song, :for_entry, live:)
+        create(:entry, song:)
       end
     end
 

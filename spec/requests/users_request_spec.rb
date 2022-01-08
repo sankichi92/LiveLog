@@ -20,7 +20,7 @@ RSpec.describe 'users request', type: :request do
 
     context 'when an activated user associated with the given member exists' do
       before do
-        create(:user, member: member)
+        create(:user, member:)
       end
 
       it 'redirects to /members/:id with alert' do
@@ -37,7 +37,7 @@ RSpec.describe 'users request', type: :request do
     let(:params) do
       {
         user: {
-          email: email,
+          email:,
         },
       }
     end
@@ -61,7 +61,7 @@ RSpec.describe 'users request', type: :request do
         post member_user_path(member), params: params
 
         expect(member.reload.user).to be_persisted
-        expect(auth0_client).to have_received(:create_user).with(anything, hash_including(email: email)).once
+        expect(auth0_client).to have_received(:create_user).with(anything, hash_including(email:)).once
         expect(auth0_client).to have_received(:change_password).with(email, nil).once
         expect(response).to redirect_to member
         expect(flash.notice).to eq '招待しました'
@@ -69,7 +69,7 @@ RSpec.describe 'users request', type: :request do
     end
 
     context 'when an inactivated user exists' do
-      let(:user) { create(:user, :inactivated, member: member) }
+      let(:user) { create(:user, :inactivated, member:) }
 
       before do
         allow(auth0_client).to receive(:user).with(user.auth0_id, anything).and_return('email' => email)
@@ -100,7 +100,7 @@ RSpec.describe 'users request', type: :request do
       let(:email) { 'new@example.com' }
 
       before do
-        create(:user, member: member)
+        create(:user, member:)
       end
 
       it 'redirects to /members/:id with alert' do

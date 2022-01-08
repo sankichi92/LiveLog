@@ -24,7 +24,7 @@ RSpec.describe 'members request:', type: :request do
       end
 
       it 'responds 200' do
-        get year_members_path(year: year)
+        get year_members_path(year:)
 
         expect(response).to have_http_status(:ok)
       end
@@ -38,7 +38,7 @@ RSpec.describe 'members request:', type: :request do
       end
 
       it 'responds 404' do
-        expect { get year_members_path(year: year) }.to raise_error ActionController::RoutingError
+        expect { get year_members_path(year:) }.to raise_error ActionController::RoutingError
       end
     end
   end
@@ -63,11 +63,11 @@ RSpec.describe 'members request:', type: :request do
     let(:params) do
       {
         member: {
-          joined_year: joined_year,
+          joined_year:,
           name: 'ベス',
         },
         user: {
-          email: email,
+          email:,
         },
       }
     end
@@ -88,7 +88,7 @@ RSpec.describe 'members request:', type: :request do
 
     context 'with valid member and user params' do
       it 'create a member and a user, requests Auth0 to create a user, and redirects to /' do
-        expect { post user_registration_form_members_path(token), params: params }
+        expect { post user_registration_form_members_path(token), params: }
           .to change(Member, :count).by(1).and change(User, :count).by(1).and change { user_registration_form.reload.used_count }.by(1)
 
         expect(auth0_client).to have_received(:create_user)
@@ -101,7 +101,7 @@ RSpec.describe 'members request:', type: :request do
       let(:email) { 'invalid' }
 
       it 'responds 422' do
-        expect { post user_registration_form_members_path(token), params: params }
+        expect { post user_registration_form_members_path(token), params: }
           .to change(Member, :count).by(0).and change(User, :count).by(0)
 
         expect(auth0_client).not_to have_received(:create_user)
@@ -114,7 +114,7 @@ RSpec.describe 'members request:', type: :request do
       let(:joined_year) { '' }
 
       it 'responds 422' do
-        expect { post user_registration_form_members_path(token), params: params }
+        expect { post user_registration_form_members_path(token), params: }
           .to change(Member, :count).by(0).and change(User, :count).by(0)
 
         expect(auth0_client).not_to have_received(:create_user)
@@ -127,7 +127,7 @@ RSpec.describe 'members request:', type: :request do
       let(:user_registration_form) { create(:user_registration_form, :expired) }
 
       it 'redirects to /' do
-        expect { post user_registration_form_members_path(token), params: params }
+        expect { post user_registration_form_members_path(token), params: }
           .to change(Member, :count).by(0).and change(User, :count).by(0)
 
         expect(auth0_client).not_to have_received(:create_user)

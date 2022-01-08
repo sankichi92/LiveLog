@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'GraphQL query: song', type: :graphql do
-  subject(:result) { LiveLogSchema.execute(query, variables: variables, context: context) }
+  subject(:result) { LiveLogSchema.execute(query, variables:, context:) }
 
   let(:query) do
     <<~GRAPHQL
@@ -32,7 +32,7 @@ RSpec.describe 'GraphQL query: song', type: :graphql do
     GRAPHQL
   end
   let(:variables) { { id: LiveLogSchema.id_from_object(song, Types::SongType) } }
-  let(:context) { { auth_payload: { scope: scope } } }
+  let(:context) { { auth_payload: { scope: } } }
 
   let(:song) do
     create(
@@ -42,7 +42,7 @@ RSpec.describe 'GraphQL query: song', type: :graphql do
       audio: Rack::Test::UploadedFile.new("#{::Rails.root}/spec/fixtures/files/audio.mp3", 'audio/mpeg'),
     )
   end
-  let!(:play) { create(:play, song: song) }
+  let!(:play) { create(:play, song:) }
   let(:scope) { '' }
 
   it 'returns a song' do

@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   describe '#invite!' do
-    let(:user) { create(:user, email: email) }
+    let(:user) { create(:user, email:) }
     let(:email) { 'user@example.com' }
 
     let(:auth0_client) { spy(:app_auth0_client) }
@@ -23,7 +23,7 @@ RSpec.describe User, type: :model do
         user.invite!
 
         expect(auth0_client).to have_received(:user).once
-        expect(auth0_client).to have_received(:create_user).with(anything, hash_including(email: email)).once
+        expect(auth0_client).to have_received(:create_user).with(anything, hash_including(email:)).once
         expect(auth0_client).to have_received(:change_password).with(email, nil).once
       end
     end
@@ -50,7 +50,7 @@ RSpec.describe User, type: :model do
         user.invite!
 
         expect(auth0_client).to have_received(:user).once
-        expect(auth0_client).to have_received(:patch_user).with(user.auth0_id, email: email, verify_email: false).once
+        expect(auth0_client).to have_received(:patch_user).with(user.auth0_id, email:, verify_email: false).once
         expect(auth0_client).to have_received(:change_password).with(email, nil).once
       end
     end

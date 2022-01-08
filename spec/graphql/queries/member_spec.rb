@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'GraphQL query: member', type: :graphql do
-  subject(:result) { LiveLogSchema.execute(query, variables: variables) }
+  subject(:result) { LiveLogSchema.execute(query, variables:) }
 
   let(:query) do
     <<~GRAPHQL
@@ -31,7 +31,7 @@ RSpec.describe 'GraphQL query: member', type: :graphql do
   let(:variables) { { id: LiveLogSchema.id_from_object(member, Types::MemberType) } }
 
   let(:member) { create(:member, avatar: create(:avatar)) }
-  let!(:play) { create(:play, member: member) }
+  let!(:play) { create(:play, member:) }
 
   it 'returns a member' do
     expect(result.to_h).not_to include('errors')

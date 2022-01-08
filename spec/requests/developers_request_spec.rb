@@ -18,8 +18,8 @@ RSpec.describe 'developers request:', type: :request do
 
     context 'with developer' do
       before do
-        developer = create(:developer, user: user)
-        create_list(:client, Faker::Number.within(range: 0..2), developer: developer)
+        developer = create(:developer, user:)
+        create_list(:client, Faker::Number.within(range: 0..2), developer:)
 
         allow(Octokit::Client).to receive(:new).with(access_token: developer.github_access_token).and_return(
           instance_double(Octokit::Client, user: {}),
@@ -35,8 +35,8 @@ RSpec.describe 'developers request:', type: :request do
 
     context 'with developer but their github_access_token has been revoked' do
       before do
-        developer = create(:developer, user: user)
-        create_list(:client, Faker::Number.within(range: 0..2), developer: developer)
+        developer = create(:developer, user:)
+        create_list(:client, Faker::Number.within(range: 0..2), developer:)
 
         allow(Octokit::Client).to receive(:new).with(access_token: developer.github_access_token).and_return(
           instance_double(Octokit::Client).tap { |client| allow(client).to receive(:user).and_raise(Octokit::Unauthorized) },

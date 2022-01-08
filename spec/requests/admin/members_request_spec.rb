@@ -34,11 +34,11 @@ RSpec.describe 'admin/members request:', type: :request do
     let(:params) do
       {
         member: {
-          joined_year: joined_year,
+          joined_year:,
           name: 'ギータ',
         },
         user: {
-          email: email,
+          email:,
         },
       }
     end
@@ -60,7 +60,7 @@ RSpec.describe 'admin/members request:', type: :request do
       end
 
       it 'creates a member and a user, requests Auth0 to create user, and redirects to /admin/members' do
-        expect { post admin_members_path, params: params }.to change(Member, :count).by(1).and change(User, :count).by(1)
+        expect { post admin_members_path, params: }.to change(Member, :count).by(1).and change(User, :count).by(1)
 
         expect(auth0_client).to have_received(:change_password).with(email, nil).once
         expect(response).to redirect_to admin_members_path(year: joined_year)
@@ -73,7 +73,7 @@ RSpec.describe 'admin/members request:', type: :request do
       let(:email) { '' }
 
       it 'creates a member and redirects to /admin/members' do
-        expect { post admin_members_path, params: params }.to change(Member, :count).by(1).and change(User, :count).by(0)
+        expect { post admin_members_path, params: }.to change(Member, :count).by(1).and change(User, :count).by(0)
 
         expect(response).to redirect_to admin_members_path(year: joined_year)
         expect(flash.notice).to include '追加しました'
@@ -85,7 +85,7 @@ RSpec.describe 'admin/members request:', type: :request do
       let(:email) { '' }
 
       it 'responds 422' do
-        expect { post admin_members_path, params: params }.not_to change(Member, :count)
+        expect { post admin_members_path, params: }.not_to change(Member, :count)
 
         expect(response).to have_http_status :unprocessable_entity
       end

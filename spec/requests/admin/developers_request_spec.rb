@@ -12,7 +12,7 @@ RSpec.describe 'admin/admins request:', type: :request do
   describe 'GET /admin/developers' do
     before do
       create_pair(:developer).each do |developer|
-        create_pair(:client, developer: developer)
+        create_pair(:client, developer:)
       end
     end
 

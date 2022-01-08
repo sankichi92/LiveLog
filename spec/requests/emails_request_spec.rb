@@ -38,10 +38,10 @@ RSpec.describe 'emails request:', type: :request do
       let(:email) { 'new@example.com' }
 
       it 'requests to update Auth0 user and redirects /settings/email' do
-        patch email_path, params: { email: email, accept: '1' }
+        patch email_path, params: { email:, accept: '1' }
 
         expect(auth0_client).to have_received(:patch_user)
-                                  .with(user.auth0_id, email: email, verify_email: true, user_metadata: { livelog_email_notifications: true }).once
+                                  .with(user.auth0_id, email:, verify_email: true, user_metadata: { livelog_email_notifications: true }).once
         expect(flash.notice).to eq '確認メールを送信しました'
         expect(response).to redirect_to email_path
       end
@@ -51,7 +51,7 @@ RSpec.describe 'emails request:', type: :request do
       let(:email) { 'current@example.com' }
 
       it 'requests to update Auth0 user and redirects /settings/email' do
-        patch email_path, params: { email: email, accept: '0' }
+        patch email_path, params: { email:, accept: '0' }
 
         expect(auth0_client).to have_received(:patch_user).with(user.auth0_id, user_metadata: { livelog_email_notifications: false }).once
         expect(flash.notice).to eq '更新しました'
@@ -67,7 +67,7 @@ RSpec.describe 'emails request:', type: :request do
       end
 
       it 'responds 422' do
-        patch email_path, params: { email: email, accept: '1' }
+        patch email_path, params: { email:, accept: '1' }
 
         expect(response).to have_http_status :unprocessable_entity
       end

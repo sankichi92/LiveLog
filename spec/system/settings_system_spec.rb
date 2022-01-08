@@ -8,7 +8,7 @@ RSpec.describe 'Settings:', type: :system do
   specify 'A logged-in user can edit their profile' do
     # Given
     member = create(:member, name: 'ベス', url: nil, bio: nil, avatar: nil)
-    user = create(:user, member: member)
+    user = create(:user, member:)
     allow(auth0_client_double).to receive(:patch_user).with(user.auth0_id, anything)
     allow(Cloudinary::Uploader).to receive(:upload) do |_file, options|
       { 'public_id' => options[:public_id], 'version' => Time.zone.now.to_i }

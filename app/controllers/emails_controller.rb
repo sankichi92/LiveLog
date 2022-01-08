@@ -16,7 +16,7 @@ class EmailsController < ApplicationController
                       end
 
     if email.downcase != @auth0_user.email || !@auth0_user.email_verified?
-      @auth0_user.update!(email: email, verify_email: true, user_metadata: { livelog_email_notifications: email_accepting })
+      @auth0_user.update!(email:, verify_email: true, user_metadata: { livelog_email_notifications: email_accepting })
       flash.notice = '確認メールを送信しました'
     else
       @auth0_user.update!(user_metadata: { livelog_email_notifications: email_accepting })

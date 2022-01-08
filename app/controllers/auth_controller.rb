@@ -13,7 +13,7 @@ class AuthController < ApplicationController
 
     unless user.activated?
       user.activate!
-      InvitationActivityNotifyJob.perform_later(user: user, text: '初めてログインしました')
+      InvitationActivityNotifyJob.perform_later(user:, text: '初めてログインしました')
     end
 
     log_in user
@@ -43,7 +43,7 @@ class AuthController < ApplicationController
   end
 
   def failure(message, strategy)
-    Sentry.capture_message(message, extra: { strategy: strategy }, level: :debug)
+    Sentry.capture_message(message, extra: { strategy: }, level: :debug)
     redirect_to root_path, alert: message
   end
 

@@ -6,7 +6,7 @@ class InvitationActivityNotifyJob < ApplicationJob
   def perform(user:, text:)
     Slack::Web::Client.new.chat_postMessage(
       channel: ENV.fetch('SLACK_NOTIFICATION_CHANNEL', '#notif-invitation'),
-      text: text,
+      text:,
       username: user.member.joined_year_and_name,
     )
   end

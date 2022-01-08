@@ -6,7 +6,7 @@ RSpec.describe Play, type: :model do
   describe '.count_by_divided_instrument' do
     before do
       %w[Gt Gt Vo Gt&Vo Ba&Cho Cj&Cho].each do |instrument|
-        create(:play, instrument: instrument)
+        create(:play, instrument:)
       end
     end
 
@@ -32,7 +32,7 @@ RSpec.describe Play, type: :model do
   end
 
   describe 'before_save callback: format_instrument' do
-    let(:play) { build(:play, instrument: instrument) }
+    let(:play) { build(:play, instrument:) }
 
     describe 'with instrument including fill-width alphabets' do
       let(:instrument) { 'Ｇｔ＆Ｖｏ' }

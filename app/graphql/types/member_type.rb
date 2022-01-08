@@ -23,7 +23,7 @@ module Types
 
     def avatar_url(size: :small)
       Loaders::AssociationLoader.for(Member, :avatar).load(object).then do |avatar|
-        avatar.image_url(size: size)
+        avatar.image_url(size:)
       end
     end
 

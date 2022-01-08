@@ -46,7 +46,7 @@ RSpec.describe 'admin/lives request:', type: :request do
       let(:date) { Time.zone.today }
 
       it 'creates a live and redirects to /admin/lives' do
-        expect { post admin_lives_path, params: params }.to change(Live, :count).by(1)
+        expect { post admin_lives_path, params: }.to change(Live, :count).by(1)
 
         expect(response).to redirect_to admin_lives_path(year: date.nendo)
       end
@@ -66,7 +66,7 @@ RSpec.describe 'admin/lives request:', type: :request do
       end
 
       it 'responds 422' do
-        expect { post admin_lives_path, params: params }.not_to change(Live, :count)
+        expect { post admin_lives_path, params: }.not_to change(Live, :count)
 
         expect(response).to have_http_status :unprocessable_entity
       end
@@ -91,8 +91,8 @@ RSpec.describe 'admin/lives request:', type: :request do
           date: live.date.to_s,
           name: live_name,
           place: live.place,
-          comment: comment,
-          album_url: album_url,
+          comment:,
+          album_url:,
         },
       }
     end

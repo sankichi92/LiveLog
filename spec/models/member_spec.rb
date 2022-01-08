@@ -6,7 +6,7 @@ RSpec.describe Member, type: :model do
   describe '#hide_ads?' do
     subject(:hide_ads?) { member.hide_ads? }
 
-    let(:member) { create(:member, joined_year: joined_year) }
+    let(:member) { create(:member, joined_year:) }
 
     context 'when member is not graduate' do
       let(:joined_year) { Time.zone.today.nendo - 3 }
@@ -24,7 +24,7 @@ RSpec.describe Member, type: :model do
       let(:joined_year) { Time.zone.today.nendo - 4 }
 
       before do
-        create(:donation, member: member)
+        create(:donation, member:)
       end
 
       it { is_expected.to be_truthy }
@@ -34,7 +34,7 @@ RSpec.describe Member, type: :model do
       let(:joined_year) { Time.zone.today.nendo - 4 }
 
       before do
-        create(:donation, :expired, member: member)
+        create(:donation, :expired, member:)
       end
 
       it { is_expected.to be_falsey }

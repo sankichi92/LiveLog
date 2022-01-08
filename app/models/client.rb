@@ -35,7 +35,7 @@ class Client < ApplicationRecord
     @info = LiveLog::Auth0Client.instance.create_client(
       name,
       logo_uri: logo_url,
-      app_type: app_type,
+      app_type:,
       grant_types: %w[authorization_code refresh_token client_credentials],
       oidc_conformant: true,
     )
@@ -53,10 +53,10 @@ class Client < ApplicationRecord
     @info = LiveLog::Auth0Client.instance.patch_client(
       auth0_id,
       {
-        name: name,
-        description: description,
+        name:,
+        description:,
         logo_uri: logo_url,
-        app_type: app_type,
+        app_type:,
         callbacks: [callback_url.presence].compact,
         initiate_login_uri: login_url,
         allowed_logout_urls: [logout_url.presence].compact,

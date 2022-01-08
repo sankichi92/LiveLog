@@ -9,7 +9,7 @@ RSpec.describe 'clients request:', type: :request do
     let(:user) { create(:user) }
 
     before do
-      create(:developer, user: user)
+      create(:developer, user:)
       log_in_as user
     end
 
@@ -49,7 +49,7 @@ RSpec.describe 'clients request:', type: :request do
     let(:params) do
       {
         client: {
-          name: name,
+          name:,
           app_type: 'regular_web',
         },
       }
@@ -72,7 +72,7 @@ RSpec.describe 'clients request:', type: :request do
     end
 
     it 'creates a client and redirects to /clients' do
-      expect { post clients_path, params: params }.to change(Client, :count).by(1)
+      expect { post clients_path, params: }.to change(Client, :count).by(1)
 
       expect(response).to have_http_status :redirect
     end
@@ -81,7 +81,7 @@ RSpec.describe 'clients request:', type: :request do
       let(:name) { '' }
 
       it 'responds 422' do
-        expect { post clients_path, params: params }.not_to change(Client, :count)
+        expect { post clients_path, params: }.not_to change(Client, :count)
 
         expect(response).to have_http_status :unprocessable_entity
       end
@@ -93,7 +93,7 @@ RSpec.describe 'clients request:', type: :request do
       end
 
       it 'redirects to /settings/developer' do
-        expect { post clients_path, params: params }.not_to change(Client, :count)
+        expect { post clients_path, params: }.not_to change(Client, :count)
 
         expect(response).to redirect_to developer_path
       end
@@ -134,7 +134,7 @@ RSpec.describe 'clients request:', type: :request do
       {
         client: {
           name: client.name,
-          description: description,
+          description:,
           logo_url: client.logo_url,
           app_type: client.app_type,
           callback_url: 'https://example.com/callback',

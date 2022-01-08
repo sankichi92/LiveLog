@@ -28,20 +28,20 @@ FactoryBot.define do
 
     trait :with_entry_guideline do
       after(:create) do |live|
-        create(:entry_guideline, live: live)
+        create(:entry_guideline, live:)
       end
     end
 
     trait :with_songs do
       after(:create) do |live|
-        create_pair(:song, live: live)
+        create_pair(:song, live:)
       end
     end
 
     trait :with_entries do
       after(:create) do |live|
-        create_pair(:song, live: live).each do |song|
-          create(:entry, song: song)
+        create_pair(:song, live:).each do |song|
+          create(:entry, song:)
         end
       end
     end

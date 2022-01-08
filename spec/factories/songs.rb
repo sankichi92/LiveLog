@@ -29,7 +29,7 @@ FactoryBot.define do
 
     after(:create) do |song, evaluator|
       evaluator.members.each do |member|
-        create(:play, song: song, member: member)
+        create(:play, song:, member:)
       end
       song.reload
     end

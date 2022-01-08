@@ -44,7 +44,7 @@ RSpec.describe 'admin/songs request:', type: :request do
       end
 
       it 'creates a song and redirects to /admin/lives/:id' do
-        expect { post admin_live_songs_path(live), params: params }
+        expect { post admin_live_songs_path(live), params: }
           .to change(Song, :count).by(1).and change(Play, :count).by(1)
         expect(response).to redirect_to admin_live_path(live)
       end
@@ -71,7 +71,7 @@ RSpec.describe 'admin/songs request:', type: :request do
       end
 
       it 'responds 422' do
-        expect { post admin_live_songs_path(live), params: params }
+        expect { post admin_live_songs_path(live), params: }
           .to change(Song, :count).by(0).and change(Play, :count).by(0)
         expect(response).to have_http_status :unprocessable_entity
       end

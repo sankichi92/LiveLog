@@ -57,7 +57,7 @@ module Loaders
 
     def perform(record_ids)
       # find records and fulfill promises
-      attachments = ActiveStorage::Attachment.includes(:blob).where(record_type: record_type, record_id: record_ids, name: attachment_name)
+      attachments = ActiveStorage::Attachment.includes(:blob).where(record_type:, record_id: record_ids, name: attachment_name)
 
       if @association_type == :has_one_attached
         attachments.each do |attachment|

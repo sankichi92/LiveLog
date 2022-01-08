@@ -47,7 +47,7 @@ RSpec.describe 'admin/songs request:', type: :request do
       {
         entry: {
           notes: entry.notes,
-          admin_memo: admin_memo,
+          admin_memo:,
           playable_times_attributes: entry.playable_times.map.with_index do |playable_time, i|
             [
               i.to_s,

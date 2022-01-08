@@ -19,7 +19,7 @@ RSpec.describe 'profiles request:', type: :request do
 
   describe 'PATCH /settings/profile' do
     let(:member) { create(:member, name: 'ギータ', url: nil, bio: nil) }
-    let(:user) { create(:user, member: member) }
+    let(:user) { create(:user, member:) }
 
     let(:params) do
       {

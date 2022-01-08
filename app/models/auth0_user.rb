@@ -24,7 +24,7 @@ class Auth0User
         user_id: user.auth0_id[/\Aauth0\|(\S+)/, 1],
         name: user.member.name,
         email: user.email,
-        password: password,
+        password:,
         verify_email: false,
         picture: user.member.avatar&.image_url(size: :medium),
         user_metadata: {

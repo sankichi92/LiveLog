@@ -16,7 +16,7 @@ RSpec.describe 'entries request:', type: :request do
       before do
         3.times do
           song = create(:song, :for_entry, members: [user.member])
-          create(:entry, song: song)
+          create(:entry, song:)
         end
       end
 
@@ -70,7 +70,7 @@ RSpec.describe 'entries request:', type: :request do
       {
         entry: {
           notes: '',
-          playable_times_attributes: playable_times_attributes,
+          playable_times_attributes:,
         },
         song: {
           live_id: live.id.to_s,
@@ -107,7 +107,7 @@ RSpec.describe 'entries request:', type: :request do
       end
 
       it 'creates entry and redirect_to /entries' do
-        expect { post entries_path, params: params }
+        expect { post entries_path, params: }
           .to change(Entry, :count).by(1).and change(PlayableTime, :count).by(1).and change(Song, :count).by(1)
 
         expect(response).to redirect_to entries_path
@@ -118,7 +118,7 @@ RSpec.describe 'entries request:', type: :request do
       let(:playable_times_attributes) { {} }
 
       it 'responds 422' do
-        expect { post entries_path, params: params }
+        expect { post entries_path, params: }
           .to change(Entry, :count).by(0).and change(PlayableTime, :count).by(0).and change(Song, :count).by(0)
 
         expect(response).to have_http_status :unprocessable_entity
@@ -169,7 +169,7 @@ RSpec.describe 'entries request:', type: :request do
   end
 
   describe 'PATCH /entries/:id' do
-    let(:entry) { create(:entry, notes: '', song: song, member: user.member) }
+    let(:entry) { create(:entry, notes: '', song:, member: user.member) }
     let(:song) { create(:song, :for_entry, name: 'before') }
     let(:user) { create(:user) }
     let(:params) do

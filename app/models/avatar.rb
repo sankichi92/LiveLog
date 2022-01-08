@@ -26,7 +26,7 @@ class Avatar < ApplicationRecord
   def image_url(size: :small)
     Cloudinary::Utils.cloudinary_url(
       cloudinary_id,
-      version: version,
+      version:,
       sign_url: true,
       transformation: [
         {
