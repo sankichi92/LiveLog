@@ -36,10 +36,10 @@ Protected by OAuth 2.0.
 
     $ bin/rails spec
 
-### Lint and fix files
+### Format files
 
     $ bin/rails rubocop:auto_correct
-    $ yarn run eslint --fix
+    $ yarn run format
 
 ### Create the first admin user
 
