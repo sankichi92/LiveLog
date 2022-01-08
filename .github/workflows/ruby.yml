@@ -72,17 +72,5 @@ jobs:
           bin/rake db:create
           bin/rake ridgepole:apply
 
-      - name: Run tests
+      - name: Run the default task
         run: bin/rake
-
-  lint:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
-
-      - run: bundle exec rubocop --parallel

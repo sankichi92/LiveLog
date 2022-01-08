@@ -2,7 +2,7 @@ require:
   - rubocop-performance
   - rubocop-rails
   - rubocop-rspec
-  - rubocop-rubycw
+  - rubocop-graphql
 
 AllCops:
   NewCops: enable
@@ -47,6 +47,21 @@ Style/TrailingCommaInArrayLiteral:
 
 Style/TrailingCommaInHashLiteral:
   EnforcedStyleForMultiline: consistent_comma
+
+# rubocop-graphql
+
+GraphQL/ArgumentDescription:
+  Enabled: false
+
+GraphQL/FieldDefinitions:
+  Exclude:
+    - app/graphql/types/query_type.rb
+
+GraphQL/FieldDescription:
+  Enabled: false
+
+GraphQL/ObjectDescription:
+  Enabled: false
 
 # rubocop-rails
 

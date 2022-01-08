@@ -38,7 +38,7 @@ Protected by OAuth 2.0.
 
 ### Lint and fix files
 
-    $ bundle exec rubocop --auto-correct
+    $ bin/rails rubocop:auto_correct
     $ yarn run eslint --fix
 
 ### Create the first admin user

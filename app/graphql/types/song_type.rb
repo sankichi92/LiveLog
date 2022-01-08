@@ -5,16 +5,16 @@ module Types
     implements GraphQL::Types::Relay::Node
     global_id_field :id
 
-    field :live, Types::LiveType, null: false
-    field :time, String, null: true, method: :time_str
-    field :order, Int, null: false, method: :position
-    field :name, String, null: false
     field :artist, String, null: true
-    field :original, Boolean, null: false
-    field :comment, String, null: true
-    field :youtube_url, Types::HttpUrl, null: true, authorization: ->(object, args, context) { audio_visual_visible?(object, args, context) }
     field :audio_url, Types::HttpUrl, null: true, authorization: ->(object, args, context) { audio_visual_visible?(object, args, context) }
+    field :comment, String, null: true
+    field :live, Types::LiveType, null: false
+    field :name, String, null: false
+    field :order, Int, null: false, method: :position
+    field :original, Boolean, null: false
     field :players, Types::PlayerConnection, null: false, max_page_size: nil, method: :plays
+    field :time, String, null: true, method: :time_str
+    field :youtube_url, Types::HttpUrl, null: true, authorization: ->(object, args, context) { audio_visual_visible?(object, args, context) }
 
     def self.audio_visual_visible?(song, _args, context)
       case song.visibility

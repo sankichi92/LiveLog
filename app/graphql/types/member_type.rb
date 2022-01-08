@@ -11,15 +11,15 @@ module Types
     implements GraphQL::Types::Relay::Node
     global_id_field :id
 
-    field :joined_year, Int, null: false
-    field :name, String, null: false
-    field :url, Types::HttpUrl, null: true
-    field :bio, String, null: true
     field :avatar_url, Types::HttpUrl, null: true do
       argument :size, AvatarSize, required: false
     end
+    field :bio, String, null: true
+    field :joined_year, Int, null: false
+    field :name, String, null: false
     field :played_instruments, [String], null: false
-    field :played_songs, Types::PlayedSongConnection, null: false
+    field :played_songs, Types::PlayedSongConnection, null: false # rubocop:disable GraphQL/ExtractType
+    field :url, Types::HttpUrl, null: true
 
     def avatar_url(size: :small)
       Loaders::AssociationLoader.for(Member, :avatar).load(object).then do |avatar|

@@ -417,6 +417,8 @@ GEM
       unicode-display_width (>= 1.4.0, < 3.0)
     rubocop-ast (1.15.1)
       parser (>= 3.0.1.1)
+    rubocop-graphql (0.12.2)
+      rubocop (>= 0.87, < 2)
     rubocop-performance (1.13.1)
       rubocop (>= 1.7.0, < 2.0)
       rubocop-ast (>= 0.4.0)
@@ -426,8 +428,6 @@ GEM
       rubocop (>= 1.7.0, < 2.0)
     rubocop-rspec (2.7.0)
       rubocop (~> 1.19)
-    rubocop-rubycw (0.1.6)
-      rubocop (~> 1.0)
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.5)
     ruby_parser (3.15.1)
@@ -568,10 +568,10 @@ DEPENDENCIES
   ridgepole
   rspec-rails
   rubocop
+  rubocop-graphql
   rubocop-performance
   rubocop-rails
   rubocop-rspec
-  rubocop-rubycw
   sassc-rails
   scout_apm
   selenium-webdriver
