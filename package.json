@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "@types/bootstrap": "^5.1.8",
-    "@types/jquery": "^3.5.11",
+    "@types/jquery": "^3.5.13",
     "@types/rails__activestorage": "^7.0.0",
     "@types/rails__ujs": "^6.0.1",
     "@types/react": "^17.0.38",
