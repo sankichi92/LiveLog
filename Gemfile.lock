@@ -386,7 +386,7 @@ GEM
       netrc (~> 0.8)
     retryable (3.0.5)
     rexml (3.2.5)
-    ridgepole (1.0.0)
+    ridgepole (1.0.1)
       activerecord (>= 5.1, < 7.1)
       diffy
     rspec-core (3.10.1)
