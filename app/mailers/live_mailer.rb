@@ -8,6 +8,6 @@ class LiveMailer < ApplicationMailer
     jsonl = entries.map { |entry| entry.as_json(include: { playable_times: { only: :range } }).to_json }.join("\n")
 
     attachments["live_#{live.id}_entries_#{Time.zone.today}.jsonl"] = jsonl
-    mail to: 'miyoshi@ku-unplugged.net', subject: "[Entries backup] ID: #{live.id} #{live.name}"
+    mail to: 'takahiro-miyoshi+livelog@sankichi.net', subject: "[Entries backup] ID: #{live.id} #{live.name}"
   end
 end
