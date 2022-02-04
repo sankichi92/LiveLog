@@ -53,15 +53,15 @@ module SongSearchable
 
   def as_indexed_json(_options = {})
     {
-      id: id,
+      id:,
       datetime: datetime.iso8601,
-      position: position,
-      name: name,
-      artist: artist,
-      visibility: visibility,
+      position:,
+      name:,
+      artist:,
+      visibility:,
       has_media: youtube_id? || audio.attached?,
       original: original?,
-      comment: comment,
+      comment:,
       players_count: plays.size,
       players: plays.as_json(only: %i[member_id instruments], methods: [:instruments]),
     }
