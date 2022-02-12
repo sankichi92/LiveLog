@@ -11,5 +11,5 @@ create_table :songs, force: :cascade do |t|
   t.string :youtube_id
   t.text :comment
 
-  t.timestamps precision: 6
+  t.timestamps
 end

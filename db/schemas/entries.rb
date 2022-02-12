@@ -6,14 +6,14 @@ create_table :entries, force: :cascade do |t|
   t.text :notes
   t.text :admin_memo
 
-  t.timestamps precision: 6
+  t.timestamps
 end
 
 create_table :playable_times, force: :cascade do |t|
   t.references :entry, null: false, foreign_key: true
   t.tsrange :range, null: false
 
-  t.timestamps precision: 6
+  t.timestamps
 
   t.index :range, using: :gist
 end

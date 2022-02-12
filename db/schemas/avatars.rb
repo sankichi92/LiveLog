@@ -6,5 +6,5 @@ create_table :avatars, force: :cascade do |t|
   t.integer :version, null: false
   t.jsonb :metadata, null: false, default: {}
 
-  t.timestamps precision: 6
+  t.timestamps
 end

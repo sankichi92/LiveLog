@@ -6,7 +6,7 @@ create_table :developers, force: :cascade do |t|
   t.string :github_username, null: false
   t.string :github_access_token
 
-  t.timestamps precision: 6
+  t.timestamps
 
   t.index :github_id, unique: true
 end

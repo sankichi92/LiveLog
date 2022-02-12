@@ -8,7 +8,7 @@ create_table :clients, force: :cascade do |t|
   t.string :logo_url, null: false
   t.string :livelog_grant_id
 
-  t.timestamps precision: 6
+  t.timestamps
 
   t.index :auth0_id, unique: true
 end

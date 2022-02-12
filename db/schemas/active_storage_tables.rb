@@ -9,7 +9,7 @@ create_table :active_storage_blobs, force: :cascade do |t|
   t.bigint :byte_size, null: false
   t.string :checksum
 
-  t.datetime :created_at, null: false, precision: 6
+  t.datetime :created_at, null: false
 
   t.index :key, unique: true
 end
@@ -19,7 +19,7 @@ create_table :active_storage_attachments, force: :cascade do |t|
   t.references :record, null: false, polymorphic: true, index: false
   t.references :blob, null: false
 
-  t.datetime :created_at, null: false, precision: 6
+  t.datetime :created_at, null: false
 
   t.index %i[record_type record_id name blob_id], name: 'index_active_storage_attachments_uniqueness', unique: true
   t.foreign_key :active_storage_blobs, column: :blob_id
