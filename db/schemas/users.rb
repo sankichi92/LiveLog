@@ -7,7 +7,7 @@ create_table :users, force: :cascade do |t|
   t.jsonb :userinfo, null: false, default: {}
   t.boolean :activated, default: false, null: false
 
-  t.timestamps
+  t.timestamps precision: 6
 
   t.index :auth0_id, unique: true
   t.index :email, unique: true

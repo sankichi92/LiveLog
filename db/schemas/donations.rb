@@ -5,7 +5,7 @@ create_table :donations, force: :cascade do |t|
   t.integer :amount, null: false
   t.date :donated_on, null: false
 
-  t.datetime :created_at, null: false
+  t.datetime :created_at, null: false, precision: 6
 
   t.index :donated_on
 end
