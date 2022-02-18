@@ -9,7 +9,7 @@
   "dependencies": {
     "@rails/activestorage": "^7.0.2",
     "@rails/ujs": "^7.0.2",
-    "@sentry/browser": "^6.17.6",
+    "@sentry/browser": "^6.17.9",
     "@ttskch/select2-bootstrap4-theme": "^1.5.2",
     "admin-lte": "^3.2.0",
     "bootstrap": "^4.6.0",
