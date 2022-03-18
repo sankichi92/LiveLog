@@ -20,7 +20,7 @@ default: &default
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch('RAILS_MAX_THREADS', 5) %>
-  host: <%= ENV.fetch('POSTGRES_HOST', 'localhost') %>
+  host: <%= ENV.fetch('POSTGRES_HOST', '127.0.0.1') %>
 <% docker_port = ENV['DATABASE_URL'] ? nil : `docker-compose port postgres 5432`.chomp.split(':').last  %>
 <% if docker_port.present? %>
   port: <%= docker_port %>
