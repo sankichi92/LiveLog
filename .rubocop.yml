@@ -68,6 +68,9 @@ GraphQL/ObjectDescription:
 Rails/EnvironmentVariableAccess:
   Enabled: false
 
+Rails/I18nLocaleTexts:
+  Enabled: false
+
 # rubocop-rspec
 
 RSpec/DescribeClass:
