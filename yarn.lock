@@ -393,10 +393,10 @@
   resolved "https://registry.yarnpkg.com/@types/qs/-/qs-6.9.7.tgz#63bb7d067db107cc1e457c303bc25d511febf6cb"
   integrity sha512-FGa1F62FT09qcrueBA6qYTrJPVDzah9a+493+o2PCXsesWHIn27G98TsSMs3WPNbZIEj4+VJf6saSFpvD+3Zsw==
 
-"@types/rails__activestorage@^7.0.0":
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/@types/rails__activestorage/-/rails__activestorage-7.0.0.tgz#3238b1a34d1327bf9eb7d03518ffa1468361bb9e"
-  integrity sha512-Z4SCPvo3T4tBTADQyot6hd/W7sjXmH+2HgzNNNTf3DPsX6QB9d7/eZS/h1XqPAbFjDfHufu2AmohmC9O9avjCA==
+"@types/rails__activestorage@^7.0.1":
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/@types/rails__activestorage/-/rails__activestorage-7.0.1.tgz#7e60320fdb376d34051733e3f8f0df0a8ff24077"
+  integrity sha512-H8mjwqFNweMfvgg8U+rdsonqjouETdqZxEOfzARiA4ag8jtLHFhjfAgFF6gWMnzVpXgQPrJw1boiknx9rV23Eg==
 
 "@types/rails__ujs@^6.0.1":
   version "6.0.1"
