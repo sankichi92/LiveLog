@@ -1,7 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    action_args (2.7.1)
+    action_args (2.7.2)
     actioncable (7.0.2.3)
       actionpack (= 7.0.2.3)
       activesupport (= 7.0.2.3)
