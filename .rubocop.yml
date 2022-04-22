@@ -25,6 +25,9 @@ Style/Documentation:
 Style/EmptyMethod:
   EnforcedStyle: expanded
 
+Style/FetchEnvVar:
+  Enabled: false
+
 Style/GuardClause:
   Enabled: false
 
