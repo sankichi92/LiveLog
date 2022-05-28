@@ -72,7 +72,7 @@ RSpec.describe 'admin/songs request:', type: :request do
 
       it 'responds 422' do
         expect { post admin_live_songs_path(live), params: }
-          .to change(Song, :count).by(0).and change(Play, :count).by(0)
+          .to not_change(Song, :count).and not_change(Play, :count)
         expect(response).to have_http_status :unprocessable_entity
       end
     end

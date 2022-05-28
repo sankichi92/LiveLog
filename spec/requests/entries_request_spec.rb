@@ -119,7 +119,7 @@ RSpec.describe 'entries request:', type: :request do
 
       it 'responds 422' do
         expect { post entries_path, params: }
-          .to change(Entry, :count).by(0).and change(PlayableTime, :count).by(0).and change(Song, :count).by(0)
+          .to not_change(Entry, :count).and not_change(PlayableTime, :count).and not_change(Song, :count)
 
         expect(response).to have_http_status :unprocessable_entity
       end
