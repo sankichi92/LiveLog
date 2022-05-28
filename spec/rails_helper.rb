@@ -25,6 +25,8 @@ require 'webmock/rspec'
 #
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
+RSpec::Matchers.define_negated_matcher :not_change, :change
+
 RSpec.configure do |config|
   config.include ActionDispatch::TestProcess::FixtureFile
   config.include FactoryBot::Syntax::Methods

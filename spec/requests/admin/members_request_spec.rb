@@ -73,7 +73,7 @@ RSpec.describe 'admin/members request:', type: :request do
       let(:email) { '' }
 
       it 'creates a member and redirects to /admin/members' do
-        expect { post admin_members_path, params: }.to change(Member, :count).by(1).and change(User, :count).by(0)
+        expect { post admin_members_path, params: }.to change(Member, :count).by(1).and not_change(User, :count)
 
         expect(response).to redirect_to admin_members_path(year: joined_year)
         expect(flash.notice).to include '追加しました'

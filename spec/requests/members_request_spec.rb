@@ -102,7 +102,7 @@ RSpec.describe 'members request:', type: :request do
 
       it 'responds 422' do
         expect { post user_registration_form_members_path(token), params: }
-          .to change(Member, :count).by(0).and change(User, :count).by(0)
+          .to not_change(Member, :count).and not_change(User, :count)
 
         expect(auth0_client).not_to have_received(:create_user)
         expect(auth0_client).not_to have_received(:change_password)
@@ -115,7 +115,7 @@ RSpec.describe 'members request:', type: :request do
 
       it 'responds 422' do
         expect { post user_registration_form_members_path(token), params: }
-          .to change(Member, :count).by(0).and change(User, :count).by(0)
+          .to not_change(Member, :count).and not_change(User, :count)
 
         expect(auth0_client).not_to have_received(:create_user)
         expect(auth0_client).not_to have_received(:change_password)
@@ -128,7 +128,7 @@ RSpec.describe 'members request:', type: :request do
 
       it 'redirects to /' do
         expect { post user_registration_form_members_path(token), params: }
-          .to change(Member, :count).by(0).and change(User, :count).by(0)
+          .to not_change(Member, :count).and not_change(User, :count)
 
         expect(auth0_client).not_to have_received(:create_user)
         expect(auth0_client).not_to have_received(:change_password)
