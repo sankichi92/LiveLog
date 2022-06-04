@@ -38,10 +38,10 @@ export const ItunesAd: React.FC<Props> = ({ searchTerm }: Props) => {
         setItunesSearchResult(searchResult);
       } else if (response.status === 0) {
         // https://stackoverflow.com/questions/3825581/does-an-http-status-code-of-0-have-any-meaning
-        Sentry.captureMessage('iTunes Search API request failed (status is 0)', { level: Sentry.Severity.Debug });
+        Sentry.captureMessage('iTunes Search API request failed (status is 0)', { level: 'debug' });
       } else if (response.redirected) {
         Sentry.captureMessage(`iTunes Search API returned unexpected redirect`, {
-          level: Sentry.Severity.Debug,
+          level: 'debug',
           extra: {
             status: `${response.status} ${response.statusText}`,
             url: response.url,
