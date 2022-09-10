@@ -7,12 +7,12 @@ module Admin
     permits :deadline, :notes
 
     def new(live_id)
-      live = Live.unpublished.left_joins(:entry_guideline).where(entry_guidelines: { id: nil }).find(live_id)
+      live = Live.unpublished.where.missing(:entry_guideline).find(live_id)
       @entry_guideline = live.build_entry_guideline(deadline: live.date.in_time_zone)
     end
 
     def create(live_id, entry_guideline)
-      live = Live.unpublished.left_joins(:entry_guideline).where(entry_guidelines: { id: nil }).find(live_id)
+      live = Live.unpublished.where.missing(:entry_guideline).find(live_id)
       @entry_guideline = live.build_entry_guideline(entry_guideline)
 
       if @entry_guideline.save
