@@ -11,6 +11,10 @@ module Admin
       @entry_guideline = live.build_entry_guideline(deadline: live.date.in_time_zone)
     end
 
+    def edit(live_id)
+      @entry_guideline = EntryGuideline.find_by!(live_id:)
+    end
+
     def create(live_id, entry_guideline)
       live = Live.unpublished.where.missing(:entry_guideline).find(live_id)
       @entry_guideline = live.build_entry_guideline(entry_guideline)
@@ -27,10 +31,6 @@ module Admin
       else
         render :new, status: :unprocessable_entity
       end
-    end
-
-    def edit(live_id)
-      @entry_guideline = EntryGuideline.find_by!(live_id:)
     end
 
     def update(live_id, entry_guideline)

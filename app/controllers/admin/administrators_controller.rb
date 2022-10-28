@@ -8,6 +8,10 @@ module Admin
       @admins = Administrator.eager_load(user: { member: :avatar }).order('members.joined_year': :desc, 'members.plays_count': :desc)
     end
 
+    def edit(id)
+      @admin = Administrator.find(id)
+    end
+
     def create(member_id)
       user = User.find_by!(member_id:)
       admin = user.create_admin!
@@ -19,10 +23,6 @@ module Admin
         url: admin_administrators_url,
       )
       redirect_to admin_administrators_path, notice: "#{user.member.joined_year_and_name} を管理者にしました"
-    end
-
-    def edit(id)
-      @admin = Administrator.find(id)
     end
 
     def update(id, administrator)

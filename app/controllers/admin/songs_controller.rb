@@ -12,6 +12,10 @@ module Admin
       @song.plays.build
     end
 
+    def edit(id)
+      @song = Song.find(id)
+    end
+
     def create(live_id, song)
       @live = Live.find(live_id)
       @song = @live.songs.build(song)
@@ -28,10 +32,6 @@ module Admin
       else
         render :new, status: :unprocessable_entity
       end
-    end
-
-    def edit(id)
-      @song = Song.find(id)
     end
 
     def update(id, song)
