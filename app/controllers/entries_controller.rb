@@ -22,6 +22,9 @@ class EntriesController < ApplicationController
     @entry.build_song(live:).plays.build
   end
 
+  def edit
+  end
+
   def create(entry, song)
     @entry = current_user.member.entries.build(entry)
     @entry.build_song(song.permit(:live_id, :name, :artist, :original, :visibility, :comment, plays_attributes: %i[member_id instrument _destroy]))
@@ -37,9 +40,6 @@ class EntriesController < ApplicationController
   rescue ActiveRecord::RecordInvalid => e
     Sentry.capture_exception(e, level: :debug)
     render :new, status: :unprocessable_entity
-  end
-
-  def edit
   end
 
   def update(entry, song)

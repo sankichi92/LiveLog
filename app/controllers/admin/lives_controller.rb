@@ -20,6 +20,10 @@ module Admin
       @live = Live.new(date: Time.zone.today)
     end
 
+    def edit(id)
+      @live = Live.find(id)
+    end
+
     def create(live)
       @live = Live.new(live)
 
@@ -35,10 +39,6 @@ module Admin
       else
         render :new, status: :unprocessable_entity
       end
-    end
-
-    def edit(id)
-      @live = Live.find(id)
     end
 
     def update(id, live)

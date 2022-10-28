@@ -11,6 +11,9 @@ class ClientsController < ApplicationController
     @client = Client.new
   end
 
+  def edit
+  end
+
   def create(client)
     @client = Client.new(client)
     @client.developer = current_user.developer
@@ -27,9 +30,6 @@ class ClientsController < ApplicationController
     end
   rescue Octokit::Unauthorized
     redirect_to developer_path, alert: 'GitHub アカウントを再連携してください'
-  end
-
-  def edit
   end
 
   def update(client)
