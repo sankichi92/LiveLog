@@ -14,15 +14,10 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[ruby]": {
+    "editor.defaultFormatter": "Shopify.ruby-lsp",
     "editor.rulers": [160]
   },
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-
-  "ruby.lint": {
-    "rubocop": {
-      "useBundler": true
-    }
   }
 }

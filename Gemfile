@@ -88,6 +88,7 @@ group :development do
 
   gem 'dotenv-rails'
   gem 'rails_real_favicon', require: false
+  gem 'ruby-lsp', require: false
 end
 
 group :test do
