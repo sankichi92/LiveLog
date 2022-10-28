@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Login:', type: :system do
+RSpec.describe 'Login:' do
   specify 'A user is requested to log-in on a protected page, and after login, they are redirected to the protected page' do
     # Given
     user = create(:user)

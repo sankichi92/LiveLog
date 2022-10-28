@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Client, type: :model do
+RSpec.describe Client do
   describe '#create_auth0_client!' do
     let(:client) { build(:client, auth0_id: nil) }
 

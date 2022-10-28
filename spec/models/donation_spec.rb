@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Donation, type: :model do
+RSpec.describe Donation do
   describe '#active?' do
     subject(:active?) { donation.active?(on: date) }
 

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Admin song system:', type: :system do
+RSpec.describe 'Admin song system:' do
   specify 'An admin creates a song', js: true do
     # Given
     stub_request(:post, 'https://slack.com/api/chat.postMessage')

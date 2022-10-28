@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe SongMailer, type: :mailer do
+RSpec.describe SongMailer do
   include Auth0UserHelper
 
   describe '#pickup' do

@@ -2,13 +2,13 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Song system:', type: :system do
+RSpec.describe 'Song system:' do
   describe 'search' do
     let!(:beatles_song) { create(:song, artist: 'The Beatles', name: 'Yesterday') }
 
     before { Song.__elasticsearch__.refresh_index! }
 
-    it 'enables users to search songs from the both of basic and advanced forms', js: true, elasticsearch: true do
+    it 'enables users to search songs from the both of basic and advanced forms', elasticsearch: true, js: true do
       visit songs_path
 
       fill_in 'q', with: 'The Beatles'

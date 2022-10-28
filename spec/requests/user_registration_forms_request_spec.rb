@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'user_registration_forms request:', type: :request do
+RSpec.describe 'user_registration_forms request:' do
   describe 'GET /register/:token' do
     let(:token) { user_registration_form.token }
 

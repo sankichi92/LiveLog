@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe LiveMailer, type: :mailer do
+RSpec.describe LiveMailer do
   describe '#entries_backup' do
     subject(:mail) { described_class.entries_backup(live) }
 

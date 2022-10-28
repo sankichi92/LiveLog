@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'docs request:', type: :request do
+RSpec.describe 'docs request:' do
   describe 'GET /privacy' do
     it 'responds 200' do
       get privacy_path

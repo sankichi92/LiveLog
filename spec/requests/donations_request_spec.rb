@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'donations request:', type: :request do
+RSpec.describe 'donations request:' do
   describe 'GET /donate' do
     before do
       create_list(:donation, 3)

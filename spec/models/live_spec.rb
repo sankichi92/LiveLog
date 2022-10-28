@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Live, type: :model do
+RSpec.describe Live do
   describe '#publish!', elasticsearch: true do
     subject(:publish!) { live.publish! }
 

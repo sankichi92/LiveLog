@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'home request:', type: :request do
+RSpec.describe 'home request:' do
   describe 'GET /' do
     before do
       create(:song)

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe User, type: :model do
+RSpec.describe User do
   describe '#invite!' do
     let(:user) { create(:user, email:) }
     let(:email) { 'user@example.com' }

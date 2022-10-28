@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Song, type: :model do
+RSpec.describe Song do
   describe 'validations' do
     subject(:song) { build(:song) }
 

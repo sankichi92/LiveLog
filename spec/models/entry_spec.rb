@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Entry, type: :model do
+RSpec.describe Entry do
   describe '#in_playable_time?' do
     subject(:in_playable_time?) { entry.in_playable_time? }
 

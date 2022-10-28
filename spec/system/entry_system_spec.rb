@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Entry system:', type: :system do
+RSpec.describe 'Entry system:' do
   specify 'A logged-in user creates an entry', js: true do
     # Given
     stub_request(:post, 'https://slack.com/api/chat.postMessage')

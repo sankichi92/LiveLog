@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'summaries request:', type: :request do
+RSpec.describe 'summaries request:' do
   describe 'GET /summaries' do
     let(:latest_live_date) { Time.zone.today }
 

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'admin/user_registration_forms request:', type: :request do
+RSpec.describe 'admin/user_registration_forms request:' do
   let(:admin) { create(:admin, scopes: %w[write:user_registration_forms]) }
 
   before do

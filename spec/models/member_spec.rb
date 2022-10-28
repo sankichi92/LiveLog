@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Member, type: :model do
+RSpec.describe Member do
   describe '#hide_ads?' do
     subject(:hide_ads?) { member.hide_ads? }
 

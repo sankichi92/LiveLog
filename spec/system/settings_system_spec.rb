@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Settings:', type: :system do
+RSpec.describe 'Settings:' do
   include Auth0UserHelper
 
   specify 'A logged-in user can edit their profile' do

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'lives request:', type: :request do
+RSpec.describe 'lives request:' do
   describe 'GET /lives' do
     it 'responds 200' do
       get lives_path

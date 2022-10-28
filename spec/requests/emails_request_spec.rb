@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'emails request:', type: :request do
+RSpec.describe 'emails request:' do
   include Auth0UserHelper
 
   describe 'GET /settings/email' do

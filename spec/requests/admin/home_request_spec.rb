@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'admin/home request:', type: :request do
+RSpec.describe 'admin/home request:' do
   let(:admin) { create(:admin) }
 
   before do
