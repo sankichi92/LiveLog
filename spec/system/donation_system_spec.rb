@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Donation system:', type: :system do
+RSpec.describe 'Donation system:' do
   include ActiveSupport::Testing::TimeHelpers
 
   specify 'A guest user and a non-graduate user does not see the donation alert and page' do

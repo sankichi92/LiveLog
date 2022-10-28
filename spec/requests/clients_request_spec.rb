@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'clients request:', type: :request do
+RSpec.describe 'clients request:' do
   include Auth0ClientHelper
 
   describe 'GET /clients/new' do

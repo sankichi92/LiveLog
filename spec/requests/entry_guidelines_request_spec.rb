@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'entry_guidelines request:', type: :request do
+RSpec.describe 'entry_guidelines request:' do
   describe 'GET /lives/:live_id/entry_guideline' do
     let(:entry_guideline) { create(:entry_guideline) }
 

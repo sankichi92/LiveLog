@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'admin/songs request:', type: :request do
+RSpec.describe 'admin/songs request:' do
   let(:admin) { create(:admin, scopes: %w[write:songs]) }
 
   before do

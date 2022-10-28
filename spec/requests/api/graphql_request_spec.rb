@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'graphql request:', type: :request do
+RSpec.describe 'graphql request:' do
   describe 'GET /api/graphql' do
     let(:access_token) { stub_access_token }
 

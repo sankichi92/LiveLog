@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'developers request:', type: :request do
+RSpec.describe 'developers request:' do
   describe 'GET /settings/developer' do
     let(:user) { create(:user) }
 

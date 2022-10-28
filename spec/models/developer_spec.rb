@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Developer, type: :model do
+RSpec.describe Developer do
   describe '#fetch_github_user!' do
     let(:developer) { create(:developer, github_username: 'sankichi92') }
 

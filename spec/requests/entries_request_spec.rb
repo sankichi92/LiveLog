@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'entries request:', type: :request do
+RSpec.describe 'entries request:' do
   include Auth0UserHelper
 
   describe 'GET /entries' do

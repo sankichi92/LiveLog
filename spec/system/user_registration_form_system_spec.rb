@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'User registration form:', type: :system do
+RSpec.describe 'User registration form:' do
   specify 'A user can register themselves' do
     # Given
     stub_request(:post, 'https://slack.com/api/chat.postMessage')

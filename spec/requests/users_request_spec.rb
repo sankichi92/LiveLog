@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'users request', type: :request do
+RSpec.describe 'users request' do
   describe 'GET /members/:member_id/user/new' do
     let(:member) { create(:member) }
 

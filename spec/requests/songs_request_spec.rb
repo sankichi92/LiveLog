@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'songs request:', type: :request do
+RSpec.describe 'songs request:' do
   describe 'GET /songs' do
     before do
       create_pair(:song, members: create_pair(:member))

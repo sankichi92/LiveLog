@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Play, type: :model do
+RSpec.describe Play do
   describe '.count_by_divided_instrument' do
     before do
       %w[Gt Gt Vo Gt&Vo Ba&Cho Cj&Cho].each do |instrument|

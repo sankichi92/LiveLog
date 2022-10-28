@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'auth request:', type: :request do
+RSpec.describe 'auth request:' do
   describe 'GET /auth/auth0/callback' do
     let(:user) { create(:user, :inactivated) }
 

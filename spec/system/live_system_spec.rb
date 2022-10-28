@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Live:', type: :system do
+RSpec.describe 'Live:' do
   specify 'A user can see the live index page and a live detail page, and after logged-in, they can see album', js: true do
     # Given
     live = create(:live, :with_songs, album_url: 'https://example.com/album')
