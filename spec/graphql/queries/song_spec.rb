@@ -39,7 +39,7 @@ RSpec.describe 'GraphQL query: song', type: :graphql do
       :song,
       visibility: :only_logged_in_users,
       youtube_url: 'https://www.youtube.com/watch?v=2TL90rxt9bo',
-      audio: Rack::Test::UploadedFile.new("#{::Rails.root}/spec/fixtures/files/audio.mp3", 'audio/mpeg'),
+      audio: Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/audio.mp3'), 'audio/mpeg'),
     )
   end
   let!(:play) { create(:play, song:) }

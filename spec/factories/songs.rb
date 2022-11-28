@@ -10,7 +10,7 @@ FactoryBot.define do
     visibility { %i[open only_logged_in_users only_players].sample(random: Faker::Config.random) }
     youtube_url { Faker::Boolean.boolean ? 'https://www.youtube.com/watch?v=2TL90rxt9bo' : nil }
     comment { Faker::Boolean.boolean(true_ratio: 0.2) ? Faker::Lorem.paragraph : nil }
-    audio { Faker::Boolean.boolean ? Rack::Test::UploadedFile.new("#{::Rails.root}/spec/fixtures/files/audio.mp3", 'audio/mpeg') : nil }
+    audio { Faker::Boolean.boolean ? Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/audio.mp3'), 'audio/mpeg') : nil }
 
     trait :invalid do
       name { '' }

@@ -46,7 +46,7 @@ RSpec.describe 'profiles request:' do
     context 'with avatar' do
       let(:params) do
         {
-          avatar: Rack::Test::UploadedFile.new("#{::Rails.root}/spec/fixtures/files/avatar.png", 'image/png'),
+          avatar: Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/avatar.png'), 'image/png'),
           member: {
             name: 'ギータ',
           },
