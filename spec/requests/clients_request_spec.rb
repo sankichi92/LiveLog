@@ -157,7 +157,7 @@ RSpec.describe 'clients request:' do
     end
 
     it 'requests Auth0 to update client, updates client and redirects to /clients/:id/edit' do
-      patch client_path(client), params: params
+      patch(client_path(client), params:)
 
       expect(auth0_client).to have_received(:patch_client).with(client.auth0_id, instance_of(Hash))
       expect(client.reload.description).to eq description
@@ -168,7 +168,7 @@ RSpec.describe 'clients request:' do
       let(:description) { 'a' * 141 }
 
       it 'responds 422' do
-        patch client_path(client), params: params
+        patch(client_path(client), params:)
 
         expect(auth0_client).not_to have_received(:patch_client)
         expect(client.reload.description).not_to eq description
@@ -182,7 +182,7 @@ RSpec.describe 'clients request:' do
       end
 
       it 'responds 422' do
-        patch client_path(client), params: params
+        patch(client_path(client), params:)
 
         expect(auth0_client).to have_received(:patch_client).with(client.auth0_id, instance_of(Hash))
         expect(client.reload.description).not_to eq description

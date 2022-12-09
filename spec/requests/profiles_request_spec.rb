@@ -36,7 +36,7 @@ RSpec.describe 'profiles request:' do
     end
 
     it "updates the logged-in user's profile and redirects to their profile" do
-      patch profile_path, params: params
+      patch(profile_path, params:)
 
       expect(member.reload.url).to eq 'https://example.com/profile'
       expect(member.bio).to eq 'ギターを弾きます'
@@ -63,7 +63,7 @@ RSpec.describe 'profiles request:' do
       end
 
       it "updates the logged-in user's profile, uploads avatar to Cloudinary and redirects to their profile" do
-        patch profile_path, params: params
+        patch(profile_path, params:)
 
         expect(cloudinary_uploader).to have_received(:upload).with(anything, hash_including(public_id: member.id))
         expect(member.avatar).to be_persisted
@@ -88,7 +88,7 @@ RSpec.describe 'profiles request:' do
       end
 
       it "updates the logged-in user's profile, requests to update Auth0 user and redirect to their profile" do
-        patch profile_path, params: params
+        patch(profile_path, params:)
 
         expect(member.reload.name).to eq 'ベス'
         expect(member.bio).to eq 'ベースに転向しました'
@@ -103,7 +103,7 @@ RSpec.describe 'profiles request:' do
       end
 
       it 'responds 422' do
-        patch profile_path, params: params
+        patch(profile_path, params:)
 
         expect(member.reload.name).not_to eq ''
         expect(response).to have_http_status :unprocessable_entity

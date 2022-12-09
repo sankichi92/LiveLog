@@ -34,7 +34,7 @@ RSpec.describe 'admin/entry_guidelines request:' do
       let(:deadline) { Time.zone.now }
 
       it 'creates an entry_guideline and redirect_to /admin/lives' do
-        post admin_live_entry_guideline_path(live), params: params
+        post(admin_live_entry_guideline_path(live), params:)
 
         expect(live.entry_guideline).to be_persisted
         expect(response).to redirect_to admin_lives_path(year: live.date.nendo)
@@ -45,7 +45,7 @@ RSpec.describe 'admin/entry_guidelines request:' do
       let(:deadline) { nil }
 
       it 'responds 422' do
-        post admin_live_entry_guideline_path(live), params: params
+        post(admin_live_entry_guideline_path(live), params:)
 
         expect(live.entry_guideline).to be_nil
         expect(response).to have_http_status :unprocessable_entity
@@ -78,7 +78,7 @@ RSpec.describe 'admin/entry_guidelines request:' do
       let(:deadline) { Time.zone.now.change(usec: 0) }
 
       it 'updates the entry_guideline and redirects to /admin/lives' do
-        patch admin_live_entry_guideline_path(live), params: params
+        patch(admin_live_entry_guideline_path(live), params:)
 
         expect(live.entry_guideline.reload.deadline).to eq deadline
         expect(response).to redirect_to admin_lives_path(year: live.date.nendo)
@@ -89,7 +89,7 @@ RSpec.describe 'admin/entry_guidelines request:' do
       let(:deadline) { 1.day.since(live.date) }
 
       it 'responds 422' do
-        patch admin_live_entry_guideline_path(live), params: params
+        patch(admin_live_entry_guideline_path(live), params:)
 
         expect(live.entry_guideline.reload.deadline).not_to eq deadline
         expect(response).to have_http_status :unprocessable_entity

@@ -219,7 +219,7 @@ RSpec.describe 'entries request:' do
       let(:song_name) { 'after' }
 
       it 'updates the entry and redirects to /entries' do
-        patch entry_path(entry), params: params
+        patch(entry_path(entry), params:)
 
         expect(entry.reload.notes).to eq entry_notes
         expect(entry.song.name).to eq song_name
@@ -232,7 +232,7 @@ RSpec.describe 'entries request:' do
       let(:song_name) { '' }
 
       it 'responds 422' do
-        patch entry_path(entry), params: params
+        patch(entry_path(entry), params:)
 
         expect(entry.reload.notes).not_to eq entry_notes
         expect(entry.song.name).not_to eq song_name

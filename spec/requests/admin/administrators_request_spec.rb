@@ -55,7 +55,7 @@ RSpec.describe 'admin/admins request:' do
       end
 
       it 'updates scope and redirects to /admin/administrators' do
-        patch admin_administrator_path(another_admin), params: params
+        patch(admin_administrator_path(another_admin), params:)
 
         expect(another_admin.reload.scopes).to contain_exactly 'write:lives'
         expect(response).to redirect_to admin_administrators_path
@@ -72,7 +72,7 @@ RSpec.describe 'admin/admins request:' do
       end
 
       it 'responds 422' do
-        patch admin_administrator_path(another_admin), params: params
+        patch(admin_administrator_path(another_admin), params:)
 
         expect(another_admin.reload.scopes).to be_empty
         expect(response).to have_http_status :unprocessable_entity
