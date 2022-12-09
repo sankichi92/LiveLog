@@ -58,7 +58,7 @@ RSpec.describe 'users request' do
       end
 
       it 'creates a user, requests to create Auth0 user and change their password' do
-        post member_user_path(member), params: params
+        post(member_user_path(member), params:)
 
         expect(member.reload.user).to be_persisted
         expect(auth0_client).to have_received(:create_user).with(anything, hash_including(email:)).once
@@ -76,7 +76,7 @@ RSpec.describe 'users request' do
       end
 
       it 'requests to update Auth0 user and change their password, and redirects to /members/:id' do
-        post member_user_path(member), params: params
+        post(member_user_path(member), params:)
 
         expect(auth0_client).to have_received(:change_password).with(email, nil).once
         expect(response).to redirect_to member
@@ -88,7 +88,7 @@ RSpec.describe 'users request' do
       let(:email) { 'invalid' }
 
       it 'does not create user and responds 422' do
-        post member_user_path(member), params: params
+        post(member_user_path(member), params:)
 
         expect(member.reload.user).to be_nil
         expect(auth0_client).not_to have_received(:change_password)
@@ -104,7 +104,7 @@ RSpec.describe 'users request' do
       end
 
       it 'redirects to /members/:id with alert' do
-        post member_user_path(member), params: params
+        post(member_user_path(member), params:)
 
         expect(response).to redirect_to member
         expect(flash.alert).to eq 'すでにユーザー登録が完了しています'

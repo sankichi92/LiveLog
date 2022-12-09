@@ -26,7 +26,7 @@ RSpec.describe 'songs request:' do
       end
 
       it 'responds 200' do
-        get search_songs_path, params: params
+        get(search_songs_path, params:)
 
         expect(response).to have_http_status(:ok)
       end
@@ -106,7 +106,7 @@ RSpec.describe 'songs request:' do
       let(:song_name) { 'after' }
 
       it 'updates the song and redirects to /songs/:id' do
-        patch song_path(song), params: params
+        patch(song_path(song), params:)
 
         expect(song.reload.name).to eq song_name
         expect(response).to redirect_to(song)
@@ -117,7 +117,7 @@ RSpec.describe 'songs request:' do
       let(:song_name) { '' }
 
       it 'responds 422' do
-        patch song_path(song), params: params
+        patch(song_path(song), params:)
 
         expect(song.reload.name).not_to eq song_name
         expect(response).to have_http_status :unprocessable_entity

@@ -105,7 +105,7 @@ RSpec.describe 'admin/lives request:' do
       let(:album_url) { 'https://goo.gl/photos/album' }
 
       it 'updates the live and redirects to /admin/lives' do
-        patch admin_live_path(live), params: params
+        patch(admin_live_path(live), params:)
 
         expect(live.reload.album_url).to eq album_url
         expect(live.comment).to eq comment
@@ -117,7 +117,7 @@ RSpec.describe 'admin/lives request:' do
       let(:live_name) { 'a' * 21 }
 
       it 'responds 422' do
-        patch admin_live_path(live), params: params
+        patch(admin_live_path(live), params:)
 
         expect(live.reload.name).not_to eq live_name
         expect(response).to have_http_status :unprocessable_entity

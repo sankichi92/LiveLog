@@ -106,7 +106,7 @@ RSpec.describe 'admin/songs request:' do
       end
 
       it 'updates the song and redirects to /admin/lives/:id' do
-        patch admin_song_path(song), params: params
+        patch(admin_song_path(song), params:)
 
         expect(song.reload.name).to eq 'after'
         expect(response).to redirect_to admin_live_path(song.live)
@@ -128,7 +128,7 @@ RSpec.describe 'admin/songs request:' do
       end
 
       it 'responds 422' do
-        patch admin_song_path(song), params: params
+        patch(admin_song_path(song), params:)
 
         expect(song.reload.name).to eq 'before'
         expect(response).to have_http_status :unprocessable_entity

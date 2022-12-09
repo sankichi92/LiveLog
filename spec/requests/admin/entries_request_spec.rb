@@ -72,7 +72,7 @@ RSpec.describe 'admin/songs request:' do
       let(:song_position) { entry.song.position + 1 }
 
       it 'updates the entry and redirects to /admin/entries' do
-        patch admin_entry_path(entry), params: params
+        patch(admin_entry_path(entry), params:)
 
         expect(entry.reload.admin_memo).to eq admin_memo
         expect(entry.song.position).to eq song_position
@@ -85,7 +85,7 @@ RSpec.describe 'admin/songs request:' do
       let(:song_position) { nil }
 
       it 'responds 422' do
-        patch admin_entry_path(entry), params: params
+        patch(admin_entry_path(entry), params:)
 
         expect(entry.reload.admin_memo).not_to eq admin_memo
         expect(entry.song.position).not_to eq song_position
