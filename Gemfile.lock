@@ -120,7 +120,7 @@ GEM
     cloudinary (1.25.0)
       aws_cf_signer
       rest-client (>= 2.0.0)
-    commonmarker (0.23.6)
+    commonmarker (0.23.7)
     concurrent-ruby (1.1.10)
     crack (0.4.5)
       rexml
