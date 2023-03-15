@@ -107,7 +107,7 @@ RSpec.describe 'graphql request:' do
         post api_graphql_path, headers: { authorization: "Bearer #{access_token}" }, params: { query: }
 
         expect(response).to have_http_status :ok
-        parsed_body = JSON.parse(response.body)
+        parsed_body = response.parsed_body
         expect(parsed_body).not_to include('errors')
       end
     end
@@ -159,7 +159,7 @@ RSpec.describe 'graphql request:' do
         post api_graphql_path, headers: { authorization: "Bearer #{access_token}" }, params: { query: }
 
         expect(response).to have_http_status :ok
-        parsed_body = JSON.parse(response.body)
+        parsed_body = response.parsed_body
         expect(parsed_body).not_to include('errors')
       end
     end
