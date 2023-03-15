@@ -35,7 +35,7 @@ ApplicationRecord.transaction do
   end
 end
 
-if ENV['AUTH0_CLIENT_ID'] && ENV['AUTH0_CLIENT_SECRET']
+if ENV['AUTH0_CLIENT_ID'].present? && ENV['AUTH0_CLIENT_SECRET'].present?
   [admin, non_admin].each do |user|
     Auth0User.fetch!(user.auth0_id)
   rescue Auth0::NotFound

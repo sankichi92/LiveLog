@@ -16,16 +16,10 @@ Protected by OAuth 2.0.
 
 ## Development
 
-### Requirements
-
-- [Ruby](https://www.ruby-lang.org/)
-- [Docker](https://www.docker.com/)
+This project has [Dev Container](https://containers.dev/) settings.
 
 ### Setup
 
-    $ git clone https://github.com/sankichi92/LiveLog.git
-    $ cd LiveLog
-    $ docker-compose up -d
     $ bin/setup
 
 ### Start the rails server

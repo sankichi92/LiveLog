@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+    environment:
+      TZ: Asia/Tokyo
+    
+    volumes:
+      - ../..:/workspaces:cached
+    
+    # Overrides default command so things don't shut down after the process ends.
+    command: sleep infinity
+
+    # Use "forwardPorts" in **devcontainer.json** to forward an app port locally.
+    # (Adding the "ports" property to this file will not forward from a Codespace.)
+
+  db:
+    image: postgres:15.2
+    restart: unless-stopped
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    network_mode: service:app
+
+  elasticsearch:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile.elasticsearch
+    restart: unless-stopped
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    environment:
+      discovery.type: single-node
+    network_mode: service:app
+
+volumes:
+  postgres-data:
+  elasticsearch-data:
