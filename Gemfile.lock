@@ -128,7 +128,7 @@ GEM
       rexml
     crass (1.0.6)
     dalli (3.2.4)
-    debug (1.7.2)
+    debug (1.8.0)
       irb (>= 1.5.0)
       reline (>= 0.3.1)
     diff-lcs (1.5.0)
@@ -228,7 +228,7 @@ GEM
     i18n (1.13.0)
       concurrent-ruby (~> 1.0)
     io-console (0.6.0)
-    irb (1.6.3)
+    irb (1.6.4)
       reline (>= 0.3.0)
     jaro_winkler (1.5.4)
     jmespath (1.6.2)
