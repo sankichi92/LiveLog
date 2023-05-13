@@ -308,13 +308,12 @@
   dependencies:
     "@types/node" "*"
 
-"@types/bootstrap@^5.1.11":
-  version "5.1.11"
-  resolved "https://registry.yarnpkg.com/@types/bootstrap/-/bootstrap-5.1.11.tgz#afe61b5f63063cbda9474c122b7d7d3a21ae1a20"
-  integrity sha512-hto/seRZl0aKqZgSZJC9GrtTzT3e1fDPQ80wBPDogj4Zn9tC9sStkQEdn+wXw1wjAz3LoGDR0ievgJx/a42t3w==
+"@types/bootstrap@^5.2.6":
+  version "5.2.6"
+  resolved "https://registry.yarnpkg.com/@types/bootstrap/-/bootstrap-5.2.6.tgz#e861b3aa1f4a1434da0bf50fbaa372b6f7e64d2f"
+  integrity sha512-BlAc3YATdasbHoxMoBWODrSF6qwQO/E9X8wVxCCSa6rWjnaZfpkr2N6pUMCY6jj2+wf0muUtLySbvU9etX6YqA==
   dependencies:
     "@popperjs/core" "^2.9.2"
-    "@types/jquery" "*"
 
 "@types/color-name@^1.1.1":
   version "1.1.1"
@@ -388,7 +387,7 @@
   resolved "https://registry.yarnpkg.com/@types/invariant/-/invariant-2.2.34.tgz#05e4f79f465c2007884374d4795452f995720bbe"
   integrity sha512-lYUtmJ9BqUN688fGY1U1HZoWT1/Jrmgigx2loq4ZcJpICECm/Om3V314BxdzypO0u5PORKGMM6x0OXaljV1YFg==
 
-"@types/jquery@*", "@types/jquery@^3.5.16":
+"@types/jquery@^3.5.16":
   version "3.5.16"
   resolved "https://registry.yarnpkg.com/@types/jquery/-/jquery-3.5.16.tgz#632131baf30951915b0317d48c98e9890bdf051d"
   integrity sha512-bsI7y4ZgeMkmpG9OM710RRzDFp+w4P1RGiIt30C1mSBT+ExCleeh4HObwgArnDFELmRrOpXgSYN9VF1hj+f1lw==
@@ -1138,7 +1137,12 @@ bootstrap4-duallistbox@^4.0.2:
   resolved "https://registry.yarnpkg.com/bootstrap4-duallistbox/-/bootstrap4-duallistbox-4.0.2.tgz#c6942e34a39d0d05e436d51ebaf31c9349f119d3"
   integrity sha512-vQdANVE2NN0HMaZO9qWJy0C7u04uTpAmtUGO3KLq3xAZKCboJweQ437hDTszI6pbYV2olJCGZMbdhvIkBNGeGQ==
 
-bootstrap@>=4.0, bootstrap@^4.5.2, bootstrap@^4.6.0, bootstrap@^4.6.1:
+bootstrap@>=4.0, bootstrap@^5.2.3:
+  version "5.2.3"
+  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-5.2.3.tgz#54739f4414de121b9785c5da3c87b37ff008322b"
+  integrity sha512-cEKPM+fwb3cT8NzQZYEu4HilJ3anCrWqh3CHAok1p9jXqMPsPTBhU25fBckEJHJ/p+tTxTFTsFQGM+gaHpi3QQ==
+
+bootstrap@^4.5.2, bootstrap@^4.6.1:
   version "4.6.1"
   resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.6.1.tgz#bc25380c2c14192374e8dec07cf01b2742d222a2"
   integrity sha512-0dj+VgI9Ecom+rvvpNZ4MUZJz8dcX7WCX+eTID9+/8HgOkv3dsRzi8BGeZJCQU6flWQVYxwTQnEZFrmJSEO7og==
