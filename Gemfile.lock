@@ -47,7 +47,7 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.1, >= 1.2.0)
-    active_decorator (1.4.0)
+    active_decorator (1.4.1)
       activesupport
     activejob (7.0.3.1)
       activesupport (= 7.0.3.1)
@@ -225,7 +225,7 @@ GEM
     http-cookie (1.0.5)
       domain_name (~> 0.5)
     http-form_data (2.3.0)
-    i18n (1.14.0)
+    i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     io-console (0.6.0)
     irb (1.6.4)
