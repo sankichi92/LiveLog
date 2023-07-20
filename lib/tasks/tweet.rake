@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'livelog/twitter_client'
-
 namespace :tweet do
   desc "Tweet today's pickup song"
   task pickup_song: :environment do
@@ -10,6 +8,6 @@ namespace :tweet do
     title = '今日のピックアップ！'
     content = "#{song.live.title} #{time_and_position} #{song.title}"
     url = Rails.application.routes.url_helpers.song_url(song, host: 'livelog.ku-unplugged.net')
-    LiveLog::TwitterClient.instance.update("#{title}\n#{content}\n#{url}")
+    Rails.configuration.x.twitter_client.tweet("#{title}\n#{content}\n#{url}")
   end
 end

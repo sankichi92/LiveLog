@@ -53,8 +53,8 @@ gem 'ridgepole', require: false
 gem 'scout_apm'
 gem 'sentry-rails'
 gem 'simpacker'
+gem 'simple_oauth', require: false
 gem 'slack-ruby-client'
-gem 'twitter'
 
 # Must be after 'kaminari'
 gem 'elasticsearch-model', '~> 7.1.1'
