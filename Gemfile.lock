@@ -416,7 +416,7 @@ GEM
       parser (>= 3.2.1.0)
     rubocop-capybara (2.18.0)
       rubocop (~> 1.41)
-    rubocop-factory_bot (2.22.0)
+    rubocop-factory_bot (2.23.1)
       rubocop (~> 1.33)
     rubocop-graphql (0.19.0)
       rubocop (>= 0.87, < 2)
