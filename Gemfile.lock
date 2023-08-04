@@ -378,7 +378,7 @@ GEM
     retryable (3.0.5)
     reverse_markdown (2.1.1)
       nokogiri
-    rexml (3.2.5)
+    rexml (3.2.6)
     ridgepole (1.2.0)
       activerecord (>= 5.1, < 7.1)
       diffy
@@ -446,7 +446,7 @@ GEM
       faraday (>= 0.17.3, < 3)
     scout_apm (5.3.5)
       parser
-    selenium-webdriver (4.10.0)
+    selenium-webdriver (4.11.0)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
