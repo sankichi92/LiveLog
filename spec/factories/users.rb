@@ -11,7 +11,7 @@ FactoryBot.define do
     end
 
     trait :graduate do
-      association :member, factory: :member, joined_year: Time.zone.today.nendo - 4
+      member factory: %i[member], joined_year: Time.zone.today.nendo - 4
     end
   end
 
