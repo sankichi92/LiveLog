@@ -25,7 +25,7 @@ create_table :active_storage_attachments, force: :cascade do |t|
   t.foreign_key :active_storage_blobs, column: :blob_id
 end
 
-create_table :active_storage_variant_records do |t|
+create_table :active_storage_variant_records do |t| # rubocop:disable Rails/CreateTableWithTimestamps
   t.references :blob, null: false, index: false
   t.string :variation_digest, null: false
 
