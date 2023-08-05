@@ -59,8 +59,10 @@ RSpec.describe 'clients request:' do
     let(:octokit_client) { instance_double(Octokit::Client, user: { avatar_url: 'https://example.com/github_avatar_url' }) }
     let(:auth0_client) do
       double(:auth0_client).tap do |auth0_client|
-        allow(auth0_client).to receive(:create_client).and_return({ 'client_id' => 'auth0_client_id' })
-        allow(auth0_client).to receive(:create_client_grant).and_return({ 'id' => 'auth0_grant_id' })
+        allow(auth0_client).to receive_messages(
+          create_client: { 'client_id' => 'auth0_client_id' },
+          create_client_grant: { 'id' => 'auth0_grant_id' },
+        )
       end
     end
 
