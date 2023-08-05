@@ -255,7 +255,7 @@ GEM
       mime-types-data (~> 3.2015)
     mime-types-data (3.2023.0218.1)
     mini_mime (1.1.2)
-    minitest (5.18.1)
+    minitest (5.19.0)
     msgpack (1.6.0)
     multi_json (1.15.0)
     multi_xml (0.6.0)
@@ -381,7 +381,7 @@ GEM
     reverse_markdown (2.1.1)
       nokogiri
     rexml (3.2.6)
-    ridgepole (1.2.0)
+    ridgepole (1.2.1)
       activerecord (>= 5.1, < 7.1)
       diffy
     rspec-core (3.12.2)
