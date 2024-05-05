@@ -1,5 +1,8 @@
 {
   "private": true,
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "build": "webpack",
     "dev": "USE_WEBPACK_DEV_SERVER=1 webpack serve",
