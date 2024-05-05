@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Live do
-  describe '#publish!', elasticsearch: true do
+  describe '#publish!', :elasticsearch do
     subject(:publish!) { live.publish! }
 
     let(:live) { create(:live, :unpublished, :with_entry_guideline) }

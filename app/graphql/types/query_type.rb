@@ -11,11 +11,11 @@ module Types
 
     # region Live
 
-    field :lives, Types::LiveType.connection_type, null: false do
-      argument :year, Int, required: false
-    end
     field :live, Types::LiveType, null: false do
       argument :id, ID, required: true, loads: LiveType, as: :live
+    end
+    field :lives, Types::LiveType.connection_type, null: false do
+      argument :year, Int, required: false
     end
 
     def lives(year: nil)
@@ -34,12 +34,12 @@ module Types
 
     # region Member
 
+    field :member, Types::MemberType, null: false do
+      argument :id, ID, required: true, loads: MemberType, as: :member
+    end
     field :member_joined_years, [Int], null: false
     field :members, Types::MemberType.connection_type, null: false do
       argument :year, Int, required: true
-    end
-    field :member, Types::MemberType, null: false do
-      argument :id, ID, required: true, loads: MemberType, as: :member
     end
 
     def member_joined_years

@@ -140,7 +140,7 @@ RSpec.describe 'admin/lives request:' do
     end
   end
 
-  describe 'POST /admin/lives/:id/publish', elasticsearch: true do
+  describe 'POST /admin/lives/:id/publish', :elasticsearch do
     let(:live) { create(:live, :unpublished) }
 
     it 'publishes the live and redirects to /admin/lives' do

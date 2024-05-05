@@ -27,7 +27,7 @@ RSpec.describe 'User registration form:' do
     fill_in '入部年度', with: joined_year
     fill_in '名前', with: name
     fill_in 'メールアドレス', with: email
-    click_button '登録する'
+    click_on '登録する'
 
     # Then
     expect(page).to have_title "#{joined_year} #{name}"

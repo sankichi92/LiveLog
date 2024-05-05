@@ -38,7 +38,7 @@ gem 'elasticsearch', '~> 7.13.3'
 gem 'elasticsearch-dsl'
 gem 'elasticsearch-rails', '~> 7.1.1'
 gem 'font-awesome-sass'
-gem 'graphiql-rails'
+gem 'graphiql-rails', '~> 1.8.0'
 gem 'haml-rails'
 gem 'kaminari'
 gem 'kaminari-i18n'
@@ -78,6 +78,7 @@ group :development, :test do
   gem 'rubocop-graphql', require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
+  gem 'rubocop-rspec_rails', require: false
 end
 
 group :development do

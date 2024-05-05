@@ -27,7 +27,7 @@ RSpec.describe 'Settings:' do
     fill_in '名前', with: 'ギータ'
     fill_in 'URL', with: 'https://example.com/profile'
     fill_in '自己紹介', with: 'ギターに転向しました'
-    click_button '更新する'
+    click_on '更新する'
 
     # Then
     expect(page).to have_content 'プロフィールを更新しました'
@@ -55,7 +55,7 @@ RSpec.describe 'Settings:' do
 
     # When
     uncheck 'LiveLog からのお知らせメールを受け取る'
-    click_button '更新する'
+    click_on '更新する'
 
     # Then
     expect(page).to have_content '更新しました'
