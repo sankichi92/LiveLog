@@ -36,8 +36,10 @@ RSpec.describe 'summaries request:' do
     end
 
     context 'with invalid year' do
-      it 'raises ActionController::RoutingError' do
-        expect { get summary_path(live_date.nendo - 1) }.to raise_error ActionController::RoutingError
+      it 'responds 404' do
+        get summary_path(live_date.nendo - 1)
+
+        expect(response).to have_http_status(:not_found)
       end
     end
   end

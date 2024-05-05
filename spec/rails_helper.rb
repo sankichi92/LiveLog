@@ -29,6 +29,7 @@ RSpec::Matchers.define_negated_matcher :not_change, :change
 
 RSpec.configure do |config|
   config.include ActionDispatch::TestProcess::FixtureFile
+  config.include ActiveJob::TestHelper
   config.include FactoryBot::Syntax::Methods
   config.include FixtureMailerHelper, type: :mailer
   config.include AccessTokenHelper, type: :request

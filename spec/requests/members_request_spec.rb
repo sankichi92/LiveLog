@@ -38,7 +38,9 @@ RSpec.describe 'members request:' do
       end
 
       it 'responds 404' do
-        expect { get year_members_path(year:) }.to raise_error ActionController::RoutingError
+        get year_members_path(year:)
+
+        expect(response).to have_http_status(:not_found)
       end
     end
   end

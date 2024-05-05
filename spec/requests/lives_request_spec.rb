@@ -43,8 +43,10 @@ RSpec.describe 'lives request:' do
     context 'when the album_url is blank' do
       let(:live) { create(:live, album_url: '') }
 
-      it 'raises ActionController::RoutingError' do
-        expect { get album_live_path(live) }.to raise_error(ActionController::RoutingError)
+      it 'responds 404' do
+        get album_live_path(live)
+
+        expect(response).to have_http_status(:not_found)
       end
     end
   end
