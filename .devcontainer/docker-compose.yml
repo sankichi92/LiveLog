@@ -8,6 +8,7 @@ services:
     environment:
       TZ: Asia/Tokyo
       POSTGRES_PASSWORD: postgres
+      SELENIUM_REMOTE: '1'
     # Overrides default command so things don't shut down after the process ends.
     command: sleep infinity
 
@@ -30,6 +31,10 @@ services:
       - elasticsearch-data:/usr/share/elasticsearch/data
     environment:
       discovery.type: single-node
+    network_mode: service:app
+
+  selenium:
+    image: selenium/standalone-chrome:latest
     network_mode: service:app
 
 volumes:
