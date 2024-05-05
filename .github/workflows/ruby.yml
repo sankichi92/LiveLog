@@ -12,7 +12,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:15.2
+        image: postgres:15
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
@@ -43,21 +43,21 @@ jobs:
       POSTGRES_PASSWORD: postgres
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4.1.4
 
-      - uses: actions/setup-node@v3
+      - uses: ruby/setup-ruby@v1.176.0
         with:
-          node-version: '18'
+          ruby-version: '3.2'
+          bundler-cache: true
+
+      - uses: actions/setup-node@v4.0.2
+        with:
+          node-version: '22'
           cache: 'npm'
 
       - run: yarn install --frozen-lockfile
 
       - run: yarn run build
-
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.2'
-          bundler-cache: true
 
       - name: Setup database
         run: |
