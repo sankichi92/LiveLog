@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '~> 3.2.0'
+ruby '~> 3.3.0'
 
 gem 'rails', '~> 7.0.8'
 
@@ -90,8 +90,6 @@ group :development do
 
   gem 'dotenv-rails'
   gem 'rails_real_favicon', require: false
-  gem 'ruby-lsp', require: false
-  gem 'solargraph', require: false
 end
 
 group :test do

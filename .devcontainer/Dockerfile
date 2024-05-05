@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/devcontainers/ruby:1-3.2
+FROM mcr.microsoft.com/devcontainers/ruby:1-3.3
 
 ARG NODE_VERSION=22
 RUN su vscode -c "source /usr/local/share/nvm/nvm.sh && nvm install ${NODE_VERSION}" 2>&1
