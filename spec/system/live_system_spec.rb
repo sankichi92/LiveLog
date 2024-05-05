@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Live:' do
-  specify 'A user can see the live index page and a live detail page, and after logged-in, they can see album', js: true do
+  specify 'A user can see the live index page and a live detail page, and after logged-in, they can see album', :js do
     # Given
     live = create(:live, :with_songs, album_url: 'https://example.com/album')
     user = create(:user)
@@ -19,7 +19,7 @@ RSpec.describe 'Live:' do
 
     # Then
     expect(page).to have_title live.title
-    expect(page).not_to have_link 'アルバム'
+    expect(page).to have_no_link 'アルバム'
 
     # When
     log_in_as user

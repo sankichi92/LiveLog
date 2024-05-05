@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Types
-  class MemberType < Types::BaseObject
+  class MemberType < Types::BaseObject # rubocop:disable GraphQL/NotAuthorizedNodeType
     class AvatarSize < BaseEnum
       value 'SMALL', '64x64', value: :small
       value 'MEDIUM', '192x192', value: :medium

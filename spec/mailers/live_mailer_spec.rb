@@ -11,9 +11,9 @@ RSpec.describe LiveMailer do
     it 'renders the headers and attaches a file' do
       expect(mail.from).to contain_exactly 'noreply@livelog.ku-unplugged.net'
       expect(mail.to).to contain_exactly 'takahiro-miyoshi+livelog@sankichi.net'
-      expect(mail.subject).to be_start_with '[Entries backup]'
+      expect(mail.subject).to start_with '[Entries backup]'
       expect(mail.attachments.size).to eq 1
-      expect(mail.attachments.first.filename).to be_start_with "live_#{live.id}_entries_"
+      expect(mail.attachments.first.filename).to start_with "live_#{live.id}_entries_"
       expect(mail.attachments.first.body).to be_present
       expect(mail.text_part.body.to_s).to be_present
     end

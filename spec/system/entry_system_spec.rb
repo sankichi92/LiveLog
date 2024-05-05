@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Entry system:' do
-  specify 'A logged-in user creates an entry', js: true do
+  specify 'A logged-in user creates an entry', :js do
     # Given
     stub_request(:post, 'https://slack.com/api/chat.postMessage')
     date = 1.month.from_now.to_date
@@ -19,12 +19,12 @@ RSpec.describe 'Entry system:' do
     expect(page).to have_title '新規エントリー'
 
     # When
-    click_button '演者を追加する'
-    click_button '演奏可能時間を追加する'
+    click_on '演者を追加する'
+    click_on '演奏可能時間を追加する'
 
     # Then
-    expect(page).to have_selector '.play-form', count: 2
-    expect(page).to have_selector '.playable-time-form', count: 2
+    expect(page).to have_css '.play-form', count: 2
+    expect(page).to have_css '.playable-time-form', count: 2
 
     # When
     fill_in '曲名', with: '恋はリズムに乗って'
@@ -45,7 +45,7 @@ RSpec.describe 'Entry system:' do
       find('input[name*=lower]').set(date + 21.hours)
       find('input[name*=upper]').set(date + 22.hours)
     end
-    click_button '登録する'
+    click_on '登録する'
 
     # Then
     expect(page).to have_content '作成しました'
@@ -56,7 +56,7 @@ RSpec.describe 'Entry system:' do
     expect(page).to have_content "#{date.strftime('%-m/%-d')} 21:00〜#{date.strftime('%-m/%-d')} 22:00"
   end
 
-  specify 'A submitter edits their entry', js: true do
+  specify 'A submitter edits their entry', :js do
     # Given
     stub_request(:post, 'https://slack.com/api/chat.postMessage')
     user = create(:user)
@@ -72,9 +72,9 @@ RSpec.describe 'Entry system:' do
     # When
     fill_in '備考', with: '間奏でボーカルがフルートを吹きます'
     within '.playable-time-form-visible-fields', match: :first do
-      click_button '削除'
+      click_on '削除'
     end
-    click_button '更新する'
+    click_on '更新する'
 
     # Then
     expect(page).to have_content "エントリー ID: #{entry.id} を更新しました"

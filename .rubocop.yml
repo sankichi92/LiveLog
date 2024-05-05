@@ -4,6 +4,7 @@ require:
   - rubocop-graphql
   - rubocop-rails
   - rubocop-rspec
+  - rubocop-rspec_rails
 
 AllCops:
   NewCops: enable
@@ -65,6 +66,9 @@ GraphQL/FieldDescription:
   Enabled: false
 
 GraphQL/ObjectDescription:
+  Enabled: false
+
+GraphQL/MaxComplexitySchema:
   Enabled: false
 
 # rubocop-rails

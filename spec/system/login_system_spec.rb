@@ -28,7 +28,7 @@ RSpec.describe 'Login:' do
 
     # Then
     expect(page).to have_content 'ログインしてください'
-    expect(page).not_to have_title 'プロフィール設定'
+    expect(page).to have_no_title 'プロフィール設定'
 
     # When
     click_on 'ログイン'

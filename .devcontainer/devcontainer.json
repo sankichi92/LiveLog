@@ -19,13 +19,7 @@
   // Configure tool-specific properties.
   "customizations": {
     "vscode": {
-      "extensions": [
-        "Shopify.ruby-lsp",
-        "castwide.solargraph",
-        "KoichiSasada.vscode-rdbg",
-        "karunamurti.haml",
-        "esbenp.prettier-vscode"
-      ]
+      "extensions": ["esbenp.prettier-vscode", "karunamurti.haml"]
     }
   }
 

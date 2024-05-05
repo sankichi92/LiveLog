@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Types
-  class LiveType < Types::BaseObject
+  class LiveType < Types::BaseObject # rubocop:disable GraphQL/NotAuthorizedNodeType
     implements GraphQL::Types::Relay::Node
     global_id_field :id
 
