@@ -1,7 +1,7 @@
 import Rails from '@rails/ujs';
 import * as Sentry from '@sentry/browser';
 import 'bootstrap';
-import '../controllers';
+import './controllers';
 
 const rootDataset = document.documentElement.dataset;
 Sentry.init({

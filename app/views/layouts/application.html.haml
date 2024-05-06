@@ -22,7 +22,7 @@
     = render 'application/favicon'
 
     = stylesheet_link_tag 'application'
-    = javascript_pack_tag 'vendor', 'application'
+    = javascript_include_tag 'application', 'data-turbo-track': 'reload', type: 'module'
     
     = content_for(:head)
 

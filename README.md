@@ -24,7 +24,7 @@ This project has [Dev Container](https://containers.dev/) settings.
 
 ### Start the rails server
 
-    $ bin/rails server
+    $ bin/dev
 
 ### Run the test suite
 

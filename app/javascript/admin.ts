@@ -3,7 +3,7 @@ import * as ActiveStorage from '@rails/activestorage';
 import * as Sentry from '@sentry/browser';
 import 'bootstrap';
 import 'admin-lte';
-import '../controllers/admin';
+import './controllers/admin';
 
 const rootDataset = document.documentElement.dataset;
 Sentry.init({

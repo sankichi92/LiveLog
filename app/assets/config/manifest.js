@@ -1,4 +1,5 @@
 //= link_tree ../images
+//= link_tree ../builds
 //= link favicon/browserconfig.xml
 //= link favicon/site.webmanifest
 //= link application.css
