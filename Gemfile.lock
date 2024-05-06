@@ -204,9 +204,8 @@ GEM
     gli (2.21.1)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    graphiql-rails (1.8.0)
+    graphiql-rails (1.10.0)
       railties
-      sprockets-rails
     graphql (2.3.2)
       base64
     graphql-batch (0.6.0)
@@ -548,7 +547,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   font-awesome-sass
-  graphiql-rails (~> 1.8.0)
+  graphiql-rails (~> 1.10.0)
   graphql
   graphql-batch
   haml-rails
