@@ -16,7 +16,7 @@
     "@ttskch/select2-bootstrap4-theme": "^1.5.2",
     "admin-lte": "^3.2.0",
     "bootstrap": "^4.6.0",
-    "datatables.net": "^1.13.6",
+    "datatables.net": "^2.0.6",
     "datatables.net-bs4": "^3.2.2",
     "esbuild": "^0.20.2",
     "jquery": "^3.7.0",
