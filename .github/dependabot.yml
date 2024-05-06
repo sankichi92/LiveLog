@@ -8,6 +8,13 @@ updates:
       day: friday
       time: '20:00'
       timezone: Asia/Tokyo
+    ignore:
+      - dependency-name: elasticsearch
+        update-types: ['version-update:semver-major', 'version-update:semver-minor']
+      - dependency-name: elasticsearch-rails
+        update-types: ['version-update:semver-major', 'version-update:semver-minor']
+      - dependency-name: elasticsearch-model
+        update-types: ['version-update:semver-major', 'version-update:semver-minor']
 
   - package-ecosystem: npm
     directory: /
@@ -16,6 +23,13 @@ updates:
       day: friday
       time: '20:00'
       timezone: Asia/Tokyo
+    ignore:
+      - dependency-name: bootstrap
+        update-types: ['version-update:semver-major']
+      - dependency-name: datatables.net
+        update-types: ['version-update:semver-major']
+      - dependency-name: react-bootstrap
+        update-types: ['version-update:semver-major']
 
   - package-ecosystem: github-actions
     directory: /
