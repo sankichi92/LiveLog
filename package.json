@@ -10,6 +10,7 @@
     "lint": "prettier '**/*.{json,js,ts,tsx}' --ignore-path .gitignore --check && eslint . --ext .js,.ts,.tsx --ignore-path .gitignore && tsc"
   },
   "dependencies": {
+    "@hotwired/stimulus": "^3.2.2",
     "@rails/activestorage": "7.0.x",
     "@rails/ujs": "7.0.x",
     "@sentry/browser": "^7.31.1",
@@ -22,8 +23,7 @@
     "react": "^18.2.0",
     "react-bootstrap": "^1.6.7",
     "react-dom": "^18.2.0",
-    "select2": "^4.0.13",
-    "stimulus": "^2.0.0"
+    "select2": "^4.0.13"
   },
   "devDependencies": {
     "@types/bootstrap": "^5.1.11",

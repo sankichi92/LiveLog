@@ -16,6 +16,9 @@ gem 'pg', '~> 1.5'
 # Use the Puma web server [https://github.com/puma/puma]
 gem 'puma'
 
+# Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
+gem 'stimulus-rails'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
 
