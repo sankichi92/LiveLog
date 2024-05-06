@@ -161,7 +161,7 @@ GEM
       activesupport (> 3)
       elasticsearch (> 1)
       hashie
-    elasticsearch-rails (7.1.1)
+    elasticsearch-rails (7.2.1)
     elasticsearch-transport (7.13.3)
       faraday (~> 1)
       multi_json
@@ -544,7 +544,7 @@ DEPENDENCIES
   elasticsearch (~> 7.13.3)
   elasticsearch-dsl
   elasticsearch-model (~> 7.1.1)
-  elasticsearch-rails (~> 7.1.1)
+  elasticsearch-rails (~> 7.2.1)
   factory_bot_rails
   faker
   font-awesome-sass
