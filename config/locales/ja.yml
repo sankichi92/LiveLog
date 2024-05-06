@@ -6,21 +6,21 @@ ja:
     title: LiveLog Admin
   date:
     formats:
-      default: "%Y/%m/%d"
-      short: "%-m/%-d"
+      default: '%Y/%m/%d'
+      short: '%-m/%-d'
   time:
     formats:
-      default: "%Y/%m/%d %H:%M"
-      short: "%-m/%-d %-H:%M"
+      default: '%Y/%m/%d %H:%M'
+      short: '%-m/%-d %-H:%M'
   helpers:
     page_entries_info:
       more_pages:
-        display_entries: "<b>%{first}</b>番目から<b>%{last}</b>番目までの%{entry_name}を表示しています（全<b>%{total}</b>件中）"
+        display_entries: '<b>%{first}</b>番目から<b>%{last}</b>番目までの%{entry_name}を表示しています（全<b>%{total}</b>件中）'
       one_page:
         display_entries:
-          one: "<b>1</b>件の%{entry_name}を表示しています"
-          other: "<b>%{count}</b>件の%{entry_name}をすべて表示しています"
-          zero: "%{entry_name}が見つかりませんでした"
+          one: '<b>1</b>件の%{entry_name}を表示しています'
+          other: '<b>%{count}</b>件の%{entry_name}をすべて表示しています'
+          zero: '%{entry_name}が見つかりませんでした'
     label:
       client:
         app_type_native: Native

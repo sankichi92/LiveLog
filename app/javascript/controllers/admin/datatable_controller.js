@@ -1,4 +1,4 @@
-import $ from '../global_jquery';
+import $ from '../../global_jquery';
 
 import { Controller } from '@hotwired/stimulus';
 import 'datatables.net-bs4/js/dataTables.bootstrap4';

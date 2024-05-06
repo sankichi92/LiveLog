@@ -1,4 +1,4 @@
-import $ from './global_jquery';
+import $ from '../global_jquery';
 
 import { Controller } from '@hotwired/stimulus';
 import 'select2/dist/js/i18n/ja';

@@ -29,9 +29,9 @@ $info: $blue;
 $warning: $orange;
 
 $theme-colors: (
-        "primary": $primary,
-        "info": $info,
-        "warning": $warning
+  'primary': $primary,
+  'info': $info,
+  'warning': $warning,
 );
 
 $theme-color-interval: 8%;
@@ -68,9 +68,9 @@ $breadcrumb-bg: $theme-bg;
 
 // region Imports
 
-@import "bootstrap/scss/bootstrap";
+@import 'bootstrap/scss/bootstrap';
 
-@import "font-awesome";
+@import 'font-awesome';
 
 // endregion
 

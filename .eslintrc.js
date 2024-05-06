@@ -11,32 +11,22 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'prettier',
   ],
-  parser: '@typescript-eslint/parser',
-  parserOptions: {
-    ecmaVersion: 2021,
-    ecmaFeatures: {
-      jsx: true,
-    },
-  },
-  plugins: ['@typescript-eslint'],
-  rules: {},
-  settings: {
-    react: {
-      version: 'detect',
-    },
-  },
   overrides: [
     {
-      files: ['webpack.config.js'],
-      rules: {
-        '@typescript-eslint/no-var-requires': 'off',
+      env: {
+        node: true,
       },
-    },
-    {
-      files: ['*.js'],
-      rules: {
-        '@typescript-eslint/explicit-module-boundary-types': 'off',
+      files: ['.eslintrc.{js,cjs}'],
+      parserOptions: {
+        sourceType: 'script',
       },
     },
   ],
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+  },
+  plugins: ['@typescript-eslint', 'react'],
+  rules: {},
 };
