@@ -10,7 +10,7 @@
     = csp_meta_tag
 
     = stylesheet_link_tag 'admin'
-    = javascript_pack_tag 'vendor', 'admin'
+    = javascript_include_tag 'admin', 'data-turbo-track': 'reload', type: 'module'
 
   %body.hold-transition.sidebar-mini
     .wrapper

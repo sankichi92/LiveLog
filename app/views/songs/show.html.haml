@@ -8,7 +8,7 @@
   - @song.plays.each do |play|
     %meta{ property: 'music:musician', content: member_url(play.member) }
   
-  = javascript_pack_tag 'songs_show'
+  = javascript_include_tag 'songs_show', 'data-turbo-track': 'reload', type: 'module'
 
 %article
   - if @song.youtube_playable?

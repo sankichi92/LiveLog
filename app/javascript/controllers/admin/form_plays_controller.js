@@ -1,6 +1,6 @@
-import { Controller } from 'stimulus';
-import $ from 'jquery';
-import 'select2';
+import $ from '../global_jquery';
+
+import { Controller } from '@hotwired/stimulus';
 import 'select2/dist/js/i18n/ja';
 
 export default class extends Controller {

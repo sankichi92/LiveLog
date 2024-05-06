@@ -16,6 +16,12 @@ gem 'pg', '~> 1.5'
 # Use the Puma web server [https://github.com/puma/puma]
 gem 'puma'
 
+# Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
+gem 'jsbundling-rails'
+
+# Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
+gem 'stimulus-rails'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
 
@@ -52,7 +58,6 @@ gem 'rails-i18n'
 gem 'ridgepole', require: false
 gem 'scout_apm'
 gem 'sentry-rails'
-gem 'simpacker'
 gem 'simple_oauth', require: false
 gem 'slack-ruby-client'
 
