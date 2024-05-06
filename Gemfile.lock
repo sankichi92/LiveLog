@@ -151,10 +151,13 @@ GEM
       dotenv (= 3.1.1)
       railties (>= 6.1)
     drb (2.2.1)
-    elasticsearch (7.13.3)
-      elasticsearch-api (= 7.13.3)
-      elasticsearch-transport (= 7.13.3)
-    elasticsearch-api (7.13.3)
+    elastic-transport (8.3.2)
+      faraday (< 3)
+      multi_json
+    elasticsearch (8.13.0)
+      elastic-transport (~> 8.3)
+      elasticsearch-api (= 8.13.0)
+    elasticsearch-api (8.13.0)
       multi_json
     elasticsearch-dsl (0.1.10)
     elasticsearch-model (7.1.1)
@@ -162,9 +165,6 @@ GEM
       elasticsearch (> 1)
       hashie
     elasticsearch-rails (7.1.1)
-    elasticsearch-transport (7.13.3)
-      faraday (~> 1)
-      multi_json
     erubi (1.12.0)
     factory_bot (6.4.6)
       activesupport (>= 5.0.0)
@@ -541,7 +541,7 @@ DEPENDENCIES
   dalli
   debug
   dotenv-rails
-  elasticsearch (~> 7.13.3)
+  elasticsearch (~> 8.13.0)
   elasticsearch-dsl
   elasticsearch-model (~> 7.1.1)
   elasticsearch-rails (~> 7.1.1)
