@@ -1,0 +1,34 @@
+version: 2
+
+updates:
+  - package-ecosystem: bundler
+    directory: /
+    schedule:
+      interval: weekly
+      day: friday
+      time: '20:00'
+      timezone: Asia/Tokyo
+
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: friday
+      time: '20:00'
+      timezone: Asia/Tokyo
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: friday
+      time: '20:00'
+      timezone: Asia/Tokyo
+
+  - package-ecosystem: devcontainers
+    directory: /
+    schedule:
+      interval: weekly
+      day: friday
+      time: '20:00'
+      timezone: Asia/Tokyo
