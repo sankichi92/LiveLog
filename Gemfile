@@ -62,7 +62,7 @@ gem 'simple_oauth', require: false
 gem 'slack-ruby-client'
 
 # Must be after 'kaminari'
-gem 'elasticsearch-model', '~> 7.1.1'
+gem 'elasticsearch-model', '~> 7.2.1'
 
 # API
 gem 'graphql'
