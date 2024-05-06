@@ -1,3 +1,5 @@
+import $ from './global_jquery';
+
 import Rails from '@rails/ujs';
 import * as Sentry from '@sentry/browser';
 import 'bootstrap';
