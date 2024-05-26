@@ -6,10 +6,10 @@ module Types
 
     attr_reader :required_scope, :authorization
 
-    def initialize(*args, required_scope: nil, authorization: nil, **kwargs, &block)
+    def initialize(*, required_scope: nil, authorization: nil, **, &)
       @required_scope = required_scope
       @authorization = authorization
-      super(*args, **kwargs, &block)
+      super(*, **, &)
     end
 
     def visible?(context)
