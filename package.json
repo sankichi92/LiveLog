@@ -12,7 +12,7 @@
     "@hotwired/stimulus": "^3.2.2",
     "@rails/activestorage": "7.1.x",
     "@rails/ujs": "7.1.x",
-    "@sentry/browser": "^8.7.0",
+    "@sentry/browser": "^8.8.0",
     "@ttskch/select2-bootstrap4-theme": "^1.5.2",
     "admin-lte": "^3.2.0",
     "bootstrap": "^4.6.0",
