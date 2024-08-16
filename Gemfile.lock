@@ -403,8 +403,8 @@ GEM
     retryable (3.0.5)
     rexml (3.3.5)
       strscan
-    ridgepole (2.0.3)
-      activerecord (>= 6.1, < 7.2)
+    ridgepole (2.1.0)
+      activerecord (>= 6.1, < 8.0)
       diffy
     rspec-core (3.13.0)
       rspec-support (~> 3.13.0)
