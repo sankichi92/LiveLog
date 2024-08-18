@@ -22,22 +22,4 @@ namespace :ridgepole do
   task 'dry-run': :environment do
     ridgepole_apply(dry_run: true)
   end
-
-  desc 'Creates the database, loads the schema, and initializes with the seed data if database does not exist, or updates the schema if it does'
-  task prepare: :environment do
-    seed = false
-
-    begin
-      ActiveRecord::Base.connection
-    rescue ActiveRecord::NoDatabaseError
-      ActiveRecord::Tasks::DatabaseTasks.create_current
-      seed = true
-    end
-
-    ridgepole_apply
-    ridgepole_apply('test') if Rails.env.development?
-
-    ActiveRecord::Base.establish_connection
-    ActiveRecord::Tasks::DatabaseTasks.load_seed if seed
-  end
 end
