@@ -13,7 +13,7 @@ class Song < ApplicationRecord
 
   acts_as_list scope: :live
 
-  enum visibility: { only_players: 0, only_logged_in_users: 1, open: 2 }, _prefix: true, _scopes: false
+  enum :visibility, { only_players: 0, only_logged_in_users: 1, open: 2 }, prefix: true, scopes: false
 
   validates :name, presence: true
   validates :position, presence: true, on: :update

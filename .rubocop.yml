@@ -27,6 +27,12 @@ Style/Documentation:
 Style/EmptyMethod:
   EnforcedStyle: expanded
 
+Style/FrozenStringLiteralComment:
+  Exclude:
+    - config/{application,boot,environment,puma}.rb
+    - config/environments/*.rb
+    - config/initializers/*.rb
+
 Style/FetchEnvVar:
   Enabled: false
 
@@ -41,7 +47,7 @@ Style/RescueStandardError:
 
 Style/StringLiterals:
   Exclude:
-    - config/{application,boot,environment}.rb
+    - config/{application,boot,environment,puma}.rb
     - config/environments/*.rb
 
 Style/TrailingCommaInArguments:
