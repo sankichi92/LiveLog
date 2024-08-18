@@ -333,8 +333,6 @@ GEM
     rack (3.1.7)
     rack-cors (2.0.2)
       rack (>= 2.0.0)
-    rack-mini-profiler (3.3.1)
-      rack (>= 1.2.0)
     rack-protection (4.0.0)
       base64 (>= 0.1.0)
       rack (>= 3.0.0, < 4)
@@ -569,7 +567,6 @@ DEPENDENCIES
   pg (~> 1.5)
   puma
   rack-cors
-  rack-mini-profiler
   rack-timeout
   rails (~> 7.2.0)
   rails-i18n
