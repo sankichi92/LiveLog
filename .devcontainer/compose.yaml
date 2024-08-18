@@ -1,41 +1,54 @@
+name: 'LiveLog'
+
 services:
-  app:
+  rails-app:
     build:
       context: ..
       dockerfile: .devcontainer/Dockerfile
+
     volumes:
       - ../..:/workspaces:cached
-    environment:
-      TZ: Asia/Tokyo
-      POSTGRES_PASSWORD: postgres
-      SELENIUM_REMOTE: '1'
+
     # Overrides default command so things don't shut down after the process ends.
     command: sleep infinity
 
-  db:
-    image: postgres:latest
+    # Uncomment the next line to use a non-root user for all processes.
+    # user: vscode
+
+    environment:
+      TZ: Asia/Tokyo
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      SELENIUM_REMOTE: '1'
+
+    # Use "forwardPorts" in **devcontainer.json** to forward an app port locally.
+    # (Adding the "ports" property to this file will not forward from a Codespace.)
+
+  postgres:
+    image: postgres:15
     restart: unless-stopped
+    network_mode: service:rails-app
     volumes:
       - postgres-data:/var/lib/postgresql/data
     environment:
-      POSTGRES_USER: vscode
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-    network_mode: service:app
 
   elasticsearch:
     build:
       context: ..
       dockerfile: .devcontainer/Dockerfile.elasticsearch
     restart: unless-stopped
+    network_mode: service:rails-app
     volumes:
       - elasticsearch-data:/usr/share/elasticsearch/data
     environment:
       discovery.type: single-node
-    network_mode: service:app
 
   selenium:
-    image: selenium/standalone-chrome:latest
-    network_mode: service:app
+    image: selenium/standalone-chromium
+    restart: unless-stopped
+    network_mode: service:rails-app
 
 volumes:
   postgres-data:

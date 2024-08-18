@@ -26,7 +26,7 @@ FileUtils.chdir APP_ROOT do
   end
 
   puts "\n== Preparing database =="
-  system! 'bin/rails ridgepole:prepare'
+  system! 'bin/rails db:create ridgepole:apply'
 
   puts "\n== Building elasticsearch index =="
   system! 'bin/rails elasticsearch:import:song FORCE=y'

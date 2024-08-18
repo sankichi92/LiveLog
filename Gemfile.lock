@@ -333,8 +333,6 @@ GEM
     rack (3.1.7)
     rack-cors (2.0.2)
       rack (>= 2.0.0)
-    rack-mini-profiler (3.3.1)
-      rack (>= 1.2.0)
     rack-protection (4.0.0)
       base64 (>= 0.1.0)
       rack (>= 3.0.0, < 4)
@@ -566,10 +564,9 @@ DEPENDENCIES
   omniauth-auth0
   omniauth-github
   omniauth-rails_csrf_protection
-  pg (~> 1.5)
+  pg (~> 1.1)
   puma
   rack-cors
-  rack-mini-profiler
   rack-timeout
   rails (~> 7.2.0)
   rails-i18n
@@ -595,7 +592,7 @@ DEPENDENCIES
   webmock
 
 RUBY VERSION
-   ruby 3.3.3p89
+   ruby 3.3.4p94
 
 BUNDLED WITH
-   2.5.12
+   2.5.17

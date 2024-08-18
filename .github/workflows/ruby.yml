@@ -7,6 +7,18 @@ on:
     branches: [main]
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4.1.7
+
+      - uses: ruby/setup-ruby@v1.190.0
+        with:
+          bundler-cache: true
+
+      - run: bin/rubocop -f github
+
   test:
     runs-on: ubuntu-latest
 
@@ -22,7 +34,7 @@ jobs:
           --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
-          --health-retries 5
+          --health-retries 3
 
       elasticsearch:
         image: elasticsearch:7.10.1
@@ -34,33 +46,34 @@ jobs:
           --health-cmd "curl http://localhost:9200/_cluster/health"
           --health-interval 10s
           --health-timeout 5s
-          --health-retries 5
-
-    env:
-      RAILS_ENV: test
-      TZ: Asia/Tokyo
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+          --health-retries 3
 
     steps:
       - uses: actions/checkout@v4.1.7
 
       - uses: ruby/setup-ruby@v1.190.0
         with:
-          ruby-version: '3.3'
           bundler-cache: true
 
       - uses: actions/setup-node@v4.0.3
         with:
-          node-version: '22'
-          cache: 'npm'
+          node-version-file: package.json
+          cache: yarn
 
       - run: yarn install --frozen-lockfile
 
-      - name: Setup database
-        run: |
-          bin/rake db:create
-          bin/rake ridgepole:apply
+      - name: Run tests
+        run: bin/rails db:create ridgepole:apply spec
+        env:
+          RAILS_ENV: test
+          TZ: Asia/Tokyo
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
 
-      - name: Run the default task
-        run: bin/rake
+      - name: Keep screenshots from failed system tests
+        uses: actions/upload-artifact@v4.3.6
+        if: failure()
+        with:
+          name: screenshots
+          path: ${{ github.workspace }}/tmp/capybara
+          if-no-files-found: ignore
