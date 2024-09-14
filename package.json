@@ -15,7 +15,7 @@
     "@sentry/browser": "^8.30.0",
     "@ttskch/select2-bootstrap4-theme": "^1.5.2",
     "admin-lte": "^3.2.0",
-    "bootstrap": "^4.6.0",
+    "bootstrap": "^5.0.0",
     "datatables.net": "^1.13.6",
     "datatables.net-bs4": "^3.2.2",
     "esbuild": "^0.23.1",
