@@ -390,10 +390,10 @@
   resolved "https://registry.yarnpkg.com/@types/rails__ujs/-/rails__ujs-6.0.4.tgz#c5fc210e1a1fe186d9a4386280490f3ceb17d0e9"
   integrity sha512-4A8+Xp+2bd4E/mLjfwldc46katQQJfLfwTRbhDBoQyj4timlpWfJ6uHqwyre/qwcapgjKtVd365pt9ovD/3tRw==
 
-"@types/react-dom@^18.2.7":
-  version "18.3.0"
-  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-18.3.0.tgz#0cbc818755d87066ab6ca74fbedb2547d74a82b0"
-  integrity sha512-EhwApuTmMBmXuFOikhQLIBUn6uFg81SwLMOAUgodJF14SOBOCMdU04gDoYi0WOJJHD144TL32z4yDqCW3dnkQg==
+"@types/react-dom@^18.3.1":
+  version "18.3.1"
+  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-18.3.1.tgz#1e4654c08a9cdcfb6594c780ac59b55aad42fe07"
+  integrity sha512-qW1Mfv8taImTthu4KoXgDfLuk4bydU6Q/TkADnDWWHwi4NX4BR+LWfTp2sVmTqRrsHvyDDTelgelxJ+SsejKKQ==
   dependencies:
     "@types/react" "*"
 
