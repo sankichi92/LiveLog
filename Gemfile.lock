@@ -164,10 +164,10 @@ GEM
       faraday (~> 1)
       multi_json
     erubi (1.13.0)
-    factory_bot (6.4.6)
+    factory_bot (6.5.0)
       activesupport (>= 5.0.0)
-    factory_bot_rails (6.4.3)
-      factory_bot (~> 6.4)
+    factory_bot_rails (6.4.4)
+      factory_bot (~> 6.5)
       railties (>= 5.0.0)
     faker (3.4.2)
       i18n (>= 1.8.11, < 2)
@@ -255,7 +255,7 @@ GEM
       rails
     language_server-protocol (3.17.0.3)
     logger (1.6.1)
-    loofah (2.22.0)
+    loofah (2.23.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
     mail (2.8.1)
@@ -520,7 +520,7 @@ GEM
     xpath (3.2.0)
       nokogiri (~> 1.8)
     zache (0.13.1)
-    zeitwerk (2.7.0)
+    zeitwerk (2.7.1)
 
 PLATFORMS
   aarch64-linux
