@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
-    "@rails/activestorage": "7.2.101",
+    "@rails/activestorage": "7.2.200",
     "@rails/ujs": "7.1.x",
     "@sentry/browser": "^8.34.0",
     "@ttskch/select2-bootstrap4-theme": "^1.5.2",

@@ -258,10 +258,10 @@
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.8.tgz#6b79032e760a0899cd4204710beede972a3a185f"
   integrity sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==
 
-"@rails/activestorage@7.2.101":
-  version "7.2.101"
-  resolved "https://registry.yarnpkg.com/@rails/activestorage/-/activestorage-7.2.101.tgz#fc786623431e7d5ef2b4e73b8c1cbfb890f18aac"
-  integrity sha512-N4Lb2xW+6OFeE8f0nvOo6vigVM3VWlEYO6+wPBgc26CFstVG2zXbj4SV88JW3hZSArcCVox726hbXogwMV7hcg==
+"@rails/activestorage@7.2.200":
+  version "7.2.200"
+  resolved "https://registry.yarnpkg.com/@rails/activestorage/-/activestorage-7.2.200.tgz#087ff24e675f56b7abc19d29690876dd0f21df95"
+  integrity sha512-NJX7T1Z4LuoNLGGVOoMiEK24BXkpH5QNLYOTD1Ll3IzYu5eMs/mbDL+azJGsTig6WV20O16Pdkj9Fgl9Mo5qxA==
   dependencies:
     spark-md5 "^3.0.1"
 
