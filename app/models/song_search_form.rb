@@ -9,7 +9,11 @@ class SongSearchForm
   validate :valid_date
 
   def to_h
-    instrument_arr = instruments&.tr('&', ' ')&.split&.uniq || []
+    instrument_arr = if instruments
+                       instruments.tr('&', ' ').split.uniq
+                     else
+                       []
+                     end
     {
       name:,
       artist:,
