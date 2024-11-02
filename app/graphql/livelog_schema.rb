@@ -6,6 +6,7 @@ class LiveLogSchema < GraphQL::Schema
 
   context_class CustomContext
 
+  use GraphQL::Schema::Visibility
   use GraphQL::Batch
 
   max_depth 15
