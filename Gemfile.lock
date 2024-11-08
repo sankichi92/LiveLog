@@ -208,7 +208,7 @@ GEM
     graphiql-rails (1.8.0)
       railties
       sprockets-rails
-    graphql (2.4.0)
+    graphql (2.4.2)
       base64
       fiber-storage
     graphql-batch (0.6.0)
