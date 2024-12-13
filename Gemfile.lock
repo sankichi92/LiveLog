@@ -146,9 +146,9 @@ GEM
     diff-lcs (1.5.1)
     diffy (3.4.2)
     domain_name (0.6.20240107)
-    dotenv (3.1.4)
-    dotenv-rails (3.1.4)
-      dotenv (= 3.1.4)
+    dotenv (3.1.5)
+    dotenv-rails (3.1.5)
+      dotenv (= 3.1.5)
       railties (>= 6.1)
     drb (2.2.1)
     elasticsearch (7.13.3)
@@ -230,8 +230,8 @@ GEM
       domain_name (~> 0.5)
     i18n (1.14.6)
       concurrent-ruby (~> 1.0)
-    io-console (0.7.2)
-    irb (1.14.1)
+    io-console (0.8.0)
+    irb (1.14.2)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     jmespath (1.6.2)
@@ -256,7 +256,7 @@ GEM
       kaminari
       rails
     language_server-protocol (3.17.0.3)
-    logger (1.6.2)
+    logger (1.6.3)
     loofah (2.23.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -289,11 +289,11 @@ GEM
       net-protocol
     netrc (0.11.0)
     nio4r (2.7.4)
-    nokogiri (1.17.1-aarch64-linux)
+    nokogiri (1.17.2-aarch64-linux)
       racc (~> 1.4)
-    nokogiri (1.17.1-arm64-darwin)
+    nokogiri (1.17.2-arm64-darwin)
       racc (~> 1.4)
-    nokogiri (1.17.1-x86_64-linux)
+    nokogiri (1.17.2-x86_64-linux)
       racc (~> 1.4)
     oauth2 (2.0.9)
       faraday (>= 0.17.3, < 3.0)
@@ -327,7 +327,8 @@ GEM
       racc
     pg (1.5.9)
     promise.rb (0.7.4)
-    psych (5.2.0)
+    psych (5.2.1)
+      date
       stringio
     public_suffix (6.0.1)
     puma (6.4.3)
@@ -364,7 +365,7 @@ GEM
       activesupport (>= 5.0.0)
       minitest
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.6.1)
+    rails-html-sanitizer (1.6.2)
       loofah (~> 2.21)
       nokogiri (>= 1.15.7, != 1.16.7, != 1.16.6, != 1.16.5, != 1.16.4, != 1.16.3, != 1.16.2, != 1.16.1, != 1.16.0.rc1, != 1.16.0)
     rails-i18n (7.0.10)
