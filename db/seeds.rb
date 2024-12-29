@@ -23,7 +23,7 @@ ApplicationRecord.transaction do
     end
   end
 
-  FactoryBot.create(:live, :unpublished, :with_entry_guideline, date: Time.zone.today.change(month: 11)).tap do |live|
+  FactoryBot.create(:live, :unpublished, :with_entry_guideline, date: 2.months.from_now.change(month: 11)).tap do |live|
     FactoryBot.create_list(:song, 50, :for_entry, live:).each do |song|
       FactoryBot.create(:entry, song:, member: [admin, non_admin].sample(random: Faker::Config.random).member)
 
