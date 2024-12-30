@@ -31,10 +31,6 @@ updates:
         update-types: ['version-update:semver-major']
       - dependency-name: react-bootstrap
         update-types: ['version-update:semver-major']
-    groups:
-      typescript-eslint:
-        patterns:
-          - '@typescript-eslint/*'
 
   - package-ecosystem: github-actions
     directory: /
