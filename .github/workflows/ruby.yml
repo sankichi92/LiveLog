@@ -71,7 +71,7 @@ jobs:
           POSTGRES_PASSWORD: postgres
 
       - name: Keep screenshots from failed system tests
-        uses: actions/upload-artifact@v4.5.0
+        uses: actions/upload-artifact@v4.6.0
         if: failure()
         with:
           name: screenshots
