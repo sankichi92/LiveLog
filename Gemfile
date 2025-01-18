@@ -52,7 +52,6 @@ gem 'rack-timeout'
 gem 'rails-i18n'
 gem 'ridgepole', require: false
 gem 'scout_apm'
-gem 'scout_apm-sampling'
 gem 'sentry-rails'
 gem 'simple_oauth', require: false
 gem 'slack-ruby-client'
