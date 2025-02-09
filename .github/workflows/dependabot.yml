@@ -25,7 +25,9 @@ jobs:
         if: |
           steps.metadata.outputs.update-type == 'version-update:semver-patch' ||
           (steps.metadata.outputs.dependency-type != 'direct:production' && steps.metadata.outputs.update-type != 'version-update:semver-major') ||
-          (steps.metadata.outputs.package-ecosystem == 'github_actions' && steps.metadata.outputs.update-type != 'version-update:semver-major')
+          (steps.metadata.outputs.package-ecosystem == 'github_actions' && steps.metadata.outputs.update-type != 'version-update:semver-major') ||
+          (contains(steps.metadata.outputs.dependency-names, 'aws-sdk-s3') && steps.metadata.outputs.update-type != 'version-update:semver-major') ||
+          (contains(steps.metadata.outputs.dependency-names, '@sentry/browser') && steps.metadata.outputs.update-type != 'version-update:semver-major')
         run: gh pr merge --auto --squash "$PR_URL"
         env:
           PR_URL: ${{github.event.pull_request.html_url}}
