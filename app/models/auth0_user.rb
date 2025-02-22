@@ -52,9 +52,7 @@ class Auth0User
     @response = response
   end
 
-  def [](key)
-    @response[key]
-  end
+  delegate :[], to: :@response
 
   def id
     @response['user_id']
