@@ -55,7 +55,7 @@ jobs:
         with:
           bundler-cache: true
 
-      - uses: actions/setup-node@v4.2.0
+      - uses: actions/setup-node@v4.3.0
         with:
           node-version-file: package.json
           cache: yarn
