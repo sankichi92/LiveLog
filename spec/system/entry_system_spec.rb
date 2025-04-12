@@ -29,7 +29,7 @@ RSpec.describe 'Entry system:' do
     # When
     fill_in '曲名', with: '恋はリズムに乗って'
     fill_in 'アーティスト', with: '□□□'
-    within all('.play-form-visible-fields')[0] do
+    within first('.play-form-visible-fields') do
       fill_in '楽器', with: 'Vo'
       select user.member.joined_year_and_name, from: 'メンバー'
     end
@@ -37,7 +37,7 @@ RSpec.describe 'Entry system:' do
       fill_in '楽器', with: 'Gt'
       select member.joined_year_and_name, from: 'メンバー'
     end
-    within all('.playable-time-form-visible-fields')[0] do
+    within first('.playable-time-form-visible-fields') do
       find('input[name*=lower]').set(date + 18.hours)
       find('input[name*=upper]').set(date + 20.hours)
     end
