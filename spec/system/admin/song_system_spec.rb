@@ -36,7 +36,7 @@ RSpec.describe 'Admin song system:' do
     # When
     fill_in '曲名', with: 'Lion'
     fill_in 'アーティスト名', with: 'DEPAPEPE'
-    within all('.play-form-visible-fields')[0] do
+    within first('.play-form-visible-fields') do
       fill_in '楽器', with: 'Gt'
       select member1.joined_year_and_name, from: 'メンバー'
     end

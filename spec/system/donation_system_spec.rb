@@ -10,6 +10,7 @@ RSpec.describe 'Donation system:' do
     visit root_path
 
     # Then
+    expect(page).to have_content 'LiveLog'
     expect(page).to have_no_content 'OB・OG の皆さまへ'
     expect(page).to have_no_content 'カンパのお願い'
 
@@ -18,6 +19,7 @@ RSpec.describe 'Donation system:' do
     visit root_path
 
     # Then
+    expect(page).to have_content 'LiveLog'
     expect(page).to have_no_content 'OB・OG の皆さまへ'
     expect(page).to have_no_content 'カンパのお願い'
   end
@@ -39,6 +41,7 @@ RSpec.describe 'Donation system:' do
     visit root_path
 
     # Then
+    expect(page).to have_content 'LiveLog'
     expect(page).to have_no_content 'OB・OG の皆さまへ'
 
     # When
