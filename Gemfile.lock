@@ -116,7 +116,7 @@ GEM
     bootsnap (1.18.4)
       msgpack (~> 1.2)
     builder (3.3.0)
-    bullet (8.0.3)
+    bullet (8.0.4)
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.11)
     capybara (3.40.0)
@@ -135,7 +135,7 @@ GEM
     commonmarker (2.2.0-arm64-darwin)
     commonmarker (2.2.0-x86_64-linux)
     concurrent-ruby (1.3.5)
-    connection_pool (2.5.0)
+    connection_pool (2.5.1)
     crack (1.0.0)
       bigdecimal
       rexml
