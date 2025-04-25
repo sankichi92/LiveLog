@@ -288,10 +288,10 @@
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.12.tgz#12bb1e2be27293c1406acb6af1c3f3a1481d98c6"
   integrity sha512-5zvhXYtRNRluoE/jAp4GVsSduVUzNWKkOZrCDBWYtE7biZywwdC2AcEzg+cSMLFRfVgeAFqpfNabiPjxFddV1Q==
 
-"@types/rails__activestorage@^7.0.1":
-  version "7.1.1"
-  resolved "https://registry.yarnpkg.com/@types/rails__activestorage/-/rails__activestorage-7.1.1.tgz#e24d57b4cfe76e74c000ee4178326c59fc5a6357"
-  integrity sha512-raNFQ08xlqHvSYkoJ1T8pPPeARj5EzV28L4zFNj09jVz0HprVAhLknl0a51lhXDeb6va2jAFXpwOeYSY6TAjUg==
+"@types/rails__activestorage@^8.0.0":
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/@types/rails__activestorage/-/rails__activestorage-8.0.0.tgz#994f4ad0bbe134a1b2d87cce2c304ab3f89571c7"
+  integrity sha512-eq8s/jcmuE2KxDzniQyJrnNUwyh2oiSUWDIfE2JpKGvCKbajT9wmEye8pYmgkKWs7h2BdpNWXgJR7wH5zK5YEw==
 
 "@types/rails__ujs@^6.0.1":
   version "6.0.4"
