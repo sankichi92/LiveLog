@@ -18,7 +18,7 @@
     "bootstrap": "^4.6.0",
     "datatables.net": "^1.13.6",
     "datatables.net-bs4": "^3.2.2",
-    "esbuild": "^0.25.2",
+    "esbuild": "^0.25.3",
     "jquery": "^3.7.0",
     "react": "^19.1.0",
     "react-bootstrap": "^1.6.7",
