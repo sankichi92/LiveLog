@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@v5.0.0
 
       - uses: ruby/setup-ruby@v1.255.0
         with:
@@ -49,7 +49,7 @@ jobs:
           --health-retries 3
 
     steps:
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@v5.0.0
 
       - uses: ruby/setup-ruby@v1.255.0
         with:
