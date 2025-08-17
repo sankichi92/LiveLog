@@ -72,7 +72,6 @@ module SongSearchable
     mlt_fields << 'artist.raw' if artist.present?
 
     Elasticsearch::DSL::Search.search do |q|
-      # rubocop:disable Lint/ShadowingOuterLocalVariable
       q.query do |q|
         q.bool do |q|
           q.should do |q|

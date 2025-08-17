@@ -74,7 +74,7 @@ class Auth0User
     email_verified? && email_accepting?
   end
 
-  def has_logged_in? # rubocop:disable Naming/PredicateName
+  def has_logged_in? # rubocop:disable Naming/PredicatePrefix
     !@response['last_login'].nil?
   end
 
