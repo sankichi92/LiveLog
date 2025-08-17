@@ -20,7 +20,7 @@ class Member < ApplicationRecord
 
   scope :regular_order, -> { order(joined_year: :desc, plays_count: :desc) }
   scope :collaborated_with, ->(member) { joins(plays: :song).merge(member.published_songs).where.not(id: member.id) }
-  scope :with_played_count, -> { joins(plays: :song).select('members.*', 'count(distinct songs.id) as played_count').group(:id).order('played_count desc') }
+  scope :with_played_count, -> { joins(plays: :song).select('members.*', 'count(distinct songs.id) as played_count').group(:id).order(played_count: :desc) }
 
   def self.joined_years
     order(joined_year: :desc).distinct.pluck(:joined_year)
