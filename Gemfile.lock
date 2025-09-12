@@ -349,7 +349,7 @@ GEM
     puma (6.6.1)
       nio4r (~> 2.0)
     racc (1.8.1)
-    rack (3.2.0)
+    rack (3.2.1)
     rack-cors (3.0.0)
       logger
       rack (>= 3.0.14)
@@ -496,10 +496,10 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 4.0)
       websocket (~> 1.0)
-    sentry-rails (5.26.0)
+    sentry-rails (5.27.0)
       railties (>= 5.0)
-      sentry-ruby (~> 5.26.0)
-    sentry-ruby (5.26.0)
+      sentry-ruby (~> 5.27.0)
+    sentry-ruby (5.27.0)
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
     simple_oauth (0.3.1)
