@@ -170,9 +170,9 @@ GEM
       multi_json
     erb (5.0.2)
     erubi (1.13.1)
-    factory_bot (6.5.4)
+    factory_bot (6.5.5)
       activesupport (>= 6.1.0)
-    factory_bot_rails (6.5.0)
+    factory_bot_rails (6.5.1)
       factory_bot (~> 6.5)
       railties (>= 6.1.0)
     faker (3.5.2)
@@ -349,7 +349,7 @@ GEM
     puma (6.6.1)
       nio4r (~> 2.0)
     racc (1.8.1)
-    rack (3.2.0)
+    rack (3.2.1)
     rack-cors (3.0.0)
       logger
       rack (>= 3.0.14)
