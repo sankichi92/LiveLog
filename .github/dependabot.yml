@@ -8,6 +8,8 @@ updates:
       day: friday
       time: '20:00'
       timezone: Asia/Tokyo
+    cooldown:
+      default-days: 3
     ignore:
       - dependency-name: elasticsearch
         update-types: ['version-update:semver-major', 'version-update:semver-minor']
@@ -24,6 +26,8 @@ updates:
       day: friday
       time: '20:00'
       timezone: Asia/Tokyo
+    cooldown:
+      default-days: 3
     ignore:
       - dependency-name: bootstrap
         update-types: ['version-update:semver-major']
@@ -39,6 +43,8 @@ updates:
       day: friday
       time: '20:00'
       timezone: Asia/Tokyo
+    cooldown:
+      default-days: 3
 
   - package-ecosystem: devcontainers
     directory: /
@@ -47,3 +53,5 @@ updates:
       day: friday
       time: '20:00'
       timezone: Asia/Tokyo
+    cooldown:
+      default-days: 3
