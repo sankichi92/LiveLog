@@ -218,8 +218,8 @@ GEM
       base64
       fiber-storage
       logger
-    graphql-batch (0.6.0)
-      graphql (>= 1.12.18, < 3)
+    graphql-batch (0.6.1)
+      graphql (>= 1.13, < 3)
       promise.rb (~> 0.7.2)
     haml (6.3.0)
       temple (>= 0.8.2)
