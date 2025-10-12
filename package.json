@@ -20,7 +20,7 @@
     "datatables.net-bs4": "^3.2.2",
     "esbuild": "^0.25.10",
     "jquery": "^3.7.0",
-    "react": "^19.1.1",
+    "react": "^19.2.0",
     "react-bootstrap": "^1.6.7",
     "react-dom": "^19.1.1",
     "select2": "^4.0.13"
@@ -29,7 +29,7 @@
     "@types/node": "^22.18.8",
     "@types/rails__activestorage": "^8.0.1",
     "@types/rails__ujs": "^6.0.1",
-    "@types/react": "^19.1.16",
+    "@types/react": "^19.2.2",
     "@types/react-dom": "^19.1.9",
     "prettier": "^3.6.2",
     "typescript": "^5.9.3"
