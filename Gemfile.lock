@@ -246,7 +246,7 @@ GEM
     jmespath (1.6.2)
     jsbundling-rails (1.3.1)
       railties (>= 6.0.0)
-    json (2.15.1)
+    json (2.13.2)
     jwt (2.10.2)
       base64
     kaminari (1.2.2)
@@ -342,7 +342,7 @@ GEM
     pp (0.6.2)
       prettyprint
     prettyprint (0.2.0)
-    prism (1.5.2)
+    prism (1.4.0)
     promise.rb (0.7.4)
     psych (5.2.6)
       date
@@ -421,7 +421,7 @@ GEM
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
     retryable (3.0.5)
-    rexml (3.4.2)
+    rexml (3.4.4)
     ridgepole (3.0.4)
       activerecord (>= 6.1, < 8.1)
       diffy
@@ -496,9 +496,11 @@ GEM
     scout_apm (5.7.1)
       parser
     securerandom (0.4.1)
-    selenium-webdriver (4.35.0)
+    selenium-webdriver (4.36.0)
       base64 (~> 0.2)
+      json (<= 2.13.2)
       logger (~> 1.4)
+      prism (~> 1.0, < 1.5)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 4.0)
       websocket (~> 1.0)
