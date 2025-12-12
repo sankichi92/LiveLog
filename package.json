@@ -20,7 +20,7 @@
     "datatables.net-bs4": "^3.2.2",
     "esbuild": "^0.27.0",
     "jquery": "^3.7.0",
-    "react": "^19.2.0",
+    "react": "^19.2.1",
     "react-bootstrap": "^1.6.7",
     "react-dom": "^19.2.0",
     "select2": "^4.0.13"
