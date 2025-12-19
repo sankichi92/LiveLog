@@ -22,7 +22,7 @@
     "jquery": "^3.7.0",
     "react": "^19.2.1",
     "react-bootstrap": "^1.6.7",
-    "react-dom": "^19.2.0",
+    "react-dom": "^19.2.3",
     "select2": "^4.0.13"
   },
   "devDependencies": {
