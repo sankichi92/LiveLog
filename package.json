@@ -29,7 +29,7 @@
     "@types/node": "^22.19.2",
     "@types/rails__activestorage": "^8.0.1",
     "@types/rails__ujs": "^6.0.1",
-    "@types/react": "^19.2.7",
+    "@types/react": "^19.2.8",
     "@types/react-dom": "^19.2.3",
     "prettier": "^3.7.4",
     "typescript": "^5.9.3"
