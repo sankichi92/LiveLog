@@ -34,10 +34,6 @@ class Member < ApplicationRecord
     joined_year <= nendo - 4
   end
 
-  def hide_ads?
-    !graduate? || donations.last&.active?
-  end
-
   def played_instruments
     Rails.cache.fetch("#{cache_key_with_version}/played_instruments", expires_in: 1.day) do
       plays.joins(song: :live).merge(Live.published).count_by_divided_instrument.keys

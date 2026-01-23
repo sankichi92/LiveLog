@@ -3,8 +3,6 @@
 require 'livelog/auth0_client'
 
 class User < ApplicationRecord
-  SUPER_USER_ID = 1
-
   belongs_to :member
   has_one :auth0_credential, dependent: :destroy
   has_one :admin, dependent: :restrict_with_exception, class_name: 'Administrator'
@@ -31,10 +29,6 @@ class User < ApplicationRecord
 
   def activate!
     update!(activated: true)
-  end
-
-  def hide_ads?
-    member.hide_ads? || id == SUPER_USER_ID
   end
 
   # region Auth0
