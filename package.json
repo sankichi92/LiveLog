@@ -31,7 +31,7 @@
     "@types/rails__ujs": "^6.0.1",
     "@types/react": "^19.2.8",
     "@types/react-dom": "^19.2.3",
-    "prettier": "^3.8.0",
+    "prettier": "^3.8.1",
     "typescript": "^5.9.3"
   }
 }
