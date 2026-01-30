@@ -26,7 +26,7 @@
     "select2": "^4.0.13"
   },
   "devDependencies": {
-    "@types/node": "^22.19.2",
+    "@types/node": "^22.19.7",
     "@types/rails__activestorage": "^8.0.1",
     "@types/rails__ujs": "^6.0.1",
     "@types/react": "^19.2.9",
