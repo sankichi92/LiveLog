@@ -1,0 +1,5 @@
+interface:
+  display_name: "LiveLog Agent Docs"
+  short_description: "Maintain LiveLog AI agent docs"
+  default_prompt: "Use $livelog-agent-docs-maintainer to update AGENTS.md, docs/project-map.md, docs/infrastructure-inventory.md, and README links after repository changes."
+
