@@ -3,6 +3,6 @@
 class DocsController < ApplicationController
   def privacy
     markdown = Rails.root.join('docs/privacy.md').read
-    @html = Commonmarker.to_html(markdown)
+    @html = Kramdown::Document.new(markdown).to_html
   end
 end
