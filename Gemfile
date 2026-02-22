@@ -74,6 +74,7 @@ group :development, :test do
   gem 'debug', platforms: %i[mri windows], require: 'debug/prelude'
 
   gem 'bullet'
+  gem 'dotenv-rails'
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'rspec-rails'
@@ -90,7 +91,6 @@ group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem 'web-console'
 
-  gem 'dotenv-rails'
   gem 'rails_real_favicon', require: false
 end
 

@@ -16,18 +16,30 @@ Protected by OAuth 2.0.
 
 ## Development
 
-This project has [Dev Container](https://containers.dev/) settings.
+Run the Rails app on your host machine, and run middleware with Docker Compose.
 
 ### Setup
 
-    $ bin/setup
+    $ docker compose up -d postgres elasticsearch
+    $ bin/setup --skip-server
 
 ### Start the rails server
 
     $ bin/dev
 
+### Run JavaScript system specs
+
+    $ docker compose up -d selenium
+    $ USE_DOCKER_SELENIUM=1 bin/rails spec spec/system
+
 ### Run the test suite
 
+    $ bin/rails spec
+
+### Verification for AI agents
+
+    $ docker compose up -d postgres elasticsearch selenium
+    $ bin/setup --skip-server
     $ bin/rails spec
 
 ### Format files

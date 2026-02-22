@@ -45,13 +45,3 @@ updates:
       timezone: Asia/Tokyo
     cooldown:
       default-days: 3
-
-  - package-ecosystem: devcontainers
-    directory: /
-    schedule:
-      interval: weekly
-      day: friday
-      time: '20:00'
-      timezone: Asia/Tokyo
-    cooldown:
-      default-days: 3

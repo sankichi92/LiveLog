@@ -1,0 +1,36 @@
+name: livelog
+
+services:
+  postgres:
+    image: postgres:15
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  elasticsearch:
+    build:
+      context: .
+      dockerfile: docker/elasticsearch/Dockerfile
+    restart: unless-stopped
+    environment:
+      discovery.type: single-node
+    ports:
+      - '9200:9200'
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+
+  selenium:
+    image: selenium/standalone-chromium
+    restart: unless-stopped
+    ports:
+      - '4444:4444'
+    shm_size: 256mb
+
+volumes:
+  postgres-data:
+  elasticsearch-data:

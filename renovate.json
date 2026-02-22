@@ -1,5 +1,5 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["local>sankichi92/renovate-config"],
-  "packageRules": [{ "matchPackageNames": ["ruby", "ghcr.io/rails/devcontainer/images/ruby"], "groupName": "ruby" }]
+  "packageRules": [{ "matchPackageNames": ["ruby"], "groupName": "ruby" }]
 }

@@ -29,7 +29,7 @@
   - `Schemafile`: Ridgepole の入口
   - `schemas/*.rb`: 実スキーマ定義
 - `spec/`: RSpec（request/model/system/graphql/mailer）
-- `.devcontainer/`: 開発コンテナ設定（PostgreSQL/Elasticsearch/Selenium を含む）
+- `compose.yml`: ローカル開発用ミドルウェア定義（PostgreSQL/Elasticsearch/Selenium）
 
 ## 3. 主要ドメイン
 
