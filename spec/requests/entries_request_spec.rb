@@ -121,7 +121,7 @@ RSpec.describe 'entries request:' do
         expect { post entries_path, params: }
           .to not_change(Entry, :count).and not_change(PlayableTime, :count).and not_change(Song, :count)
 
-        expect(response).to have_http_status :unprocessable_entity
+        expect(response).to have_http_status :unprocessable_content
       end
     end
   end
@@ -236,7 +236,7 @@ RSpec.describe 'entries request:' do
 
         expect(entry.reload.notes).not_to eq entry_notes
         expect(entry.song.name).not_to eq song_name
-        expect(response).to have_http_status :unprocessable_entity
+        expect(response).to have_http_status :unprocessable_content
       end
     end
   end

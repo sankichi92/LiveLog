@@ -108,7 +108,7 @@ RSpec.describe 'members request:' do
 
         expect(auth0_client).not_to have_received(:create_user)
         expect(auth0_client).not_to have_received(:change_password)
-        expect(response).to have_http_status :unprocessable_entity
+        expect(response).to have_http_status :unprocessable_content
       end
     end
 
@@ -121,7 +121,7 @@ RSpec.describe 'members request:' do
 
         expect(auth0_client).not_to have_received(:create_user)
         expect(auth0_client).not_to have_received(:change_password)
-        expect(response).to have_http_status :unprocessable_entity
+        expect(response).to have_http_status :unprocessable_content
       end
     end
 

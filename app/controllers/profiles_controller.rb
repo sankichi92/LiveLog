@@ -32,7 +32,7 @@ class ProfilesController < ApplicationController
 
       redirect_to @member, notice: 'プロフィールを更新しました'
     else
-      render :show, status: :unprocessable_entity
+      render :show, status: :unprocessable_content
     end
   end
 end

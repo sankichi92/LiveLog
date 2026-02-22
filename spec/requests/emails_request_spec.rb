@@ -69,7 +69,7 @@ RSpec.describe 'emails request:' do
       it 'responds 422' do
         patch email_path, params: { email:, accept: '1' }
 
-        expect(response).to have_http_status :unprocessable_entity
+        expect(response).to have_http_status :unprocessable_content
       end
     end
   end

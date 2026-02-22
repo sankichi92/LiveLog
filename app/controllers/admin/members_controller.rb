@@ -36,7 +36,7 @@ module Admin
 
         redirect_to admin_members_path(year: @member.joined_year)
       else
-        render :new, status: :unprocessable_entity
+        render :new, status: :unprocessable_content
       end
     end
 

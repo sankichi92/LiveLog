@@ -27,7 +27,7 @@ module Admin
         )
         redirect_to admin_user_registration_forms_path, notice: "ID: #{@user_registration_form.id} を作成しました"
       else
-        render :new, status: :unprocessable_entity
+        render :new, status: :unprocessable_content
       end
     end
 

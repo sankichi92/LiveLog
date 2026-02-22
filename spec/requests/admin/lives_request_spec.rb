@@ -68,7 +68,7 @@ RSpec.describe 'admin/lives request:' do
       it 'responds 422' do
         expect { post admin_lives_path, params: }.not_to change(Live, :count)
 
-        expect(response).to have_http_status :unprocessable_entity
+        expect(response).to have_http_status :unprocessable_content
       end
     end
   end
@@ -120,7 +120,7 @@ RSpec.describe 'admin/lives request:' do
         patch(admin_live_path(live), params:)
 
         expect(live.reload.name).not_to eq live_name
-        expect(response).to have_http_status :unprocessable_entity
+        expect(response).to have_http_status :unprocessable_content
       end
     end
   end

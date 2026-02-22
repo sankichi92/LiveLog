@@ -27,6 +27,6 @@ class EmailsController < ApplicationController
   rescue Auth0::BadRequest => e
     Sentry.capture_exception(e, level: :debug)
     @errors = ['メールアドレスが不正な値です']
-    render :show, status: :unprocessable_entity
+    render :show, status: :unprocessable_content
   end
 end

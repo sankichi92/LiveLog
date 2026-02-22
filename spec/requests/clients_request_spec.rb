@@ -85,7 +85,7 @@ RSpec.describe 'clients request:' do
       it 'responds 422' do
         expect { post clients_path, params: }.not_to change(Client, :count)
 
-        expect(response).to have_http_status :unprocessable_entity
+        expect(response).to have_http_status :unprocessable_content
       end
     end
 
@@ -174,7 +174,7 @@ RSpec.describe 'clients request:' do
 
         expect(auth0_client).not_to have_received(:patch_client)
         expect(client.reload.description).not_to eq description
-        expect(response).to have_http_status :unprocessable_entity
+        expect(response).to have_http_status :unprocessable_content
       end
     end
 
@@ -188,7 +188,7 @@ RSpec.describe 'clients request:' do
 
         expect(auth0_client).to have_received(:patch_client).with(client.auth0_id, instance_of(Hash))
         expect(client.reload.description).not_to eq description
-        expect(response).to have_http_status :unprocessable_entity
+        expect(response).to have_http_status :unprocessable_content
       end
     end
   end

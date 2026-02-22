@@ -35,7 +35,7 @@ module Admin
         )
         redirect_to admin_entries_path, notice: "ID: #{@entry.id} を更新しました"
       else
-        render :edit, status: :unprocessable_entity
+        render :edit, status: :unprocessable_content
       end
     end
 

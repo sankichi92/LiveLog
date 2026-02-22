@@ -13,7 +13,7 @@ class SongsController < ApplicationController
 
   def search(page = 1)
     @song_search_form = SongSearchForm.new(search_params)
-    return render :index, status: :unprocessable_entity if params[:q].nil? && @song_search_form.invalid?
+    return render :index, status: :unprocessable_content if params[:q].nil? && @song_search_form.invalid?
 
     query = if params[:q].present?
               Song.basic_search_query(params[:q])
@@ -42,7 +42,7 @@ class SongsController < ApplicationController
     if @song.update(song)
       redirect_to song_path(@song), notice: '更新しました'
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 
@@ -52,7 +52,7 @@ class SongsController < ApplicationController
 
   def require_player(id)
     @song = Song.published.find(id)
-    redirect_back fallback_location: song_path(@song), alert: '権限がありません' unless @song.player?(current_user.member)
+    redirect_back_or_to song_path(@song), alert: '権限がありません' unless @song.player?(current_user.member)
   end
 
   # endregion

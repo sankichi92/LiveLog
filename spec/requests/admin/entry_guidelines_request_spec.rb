@@ -48,7 +48,7 @@ RSpec.describe 'admin/entry_guidelines request:' do
         post(admin_live_entry_guideline_path(live), params:)
 
         expect(live.entry_guideline).to be_nil
-        expect(response).to have_http_status :unprocessable_entity
+        expect(response).to have_http_status :unprocessable_content
       end
     end
   end
@@ -92,7 +92,7 @@ RSpec.describe 'admin/entry_guidelines request:' do
         patch(admin_live_entry_guideline_path(live), params:)
 
         expect(live.entry_guideline.reload.deadline).not_to eq deadline
-        expect(response).to have_http_status :unprocessable_entity
+        expect(response).to have_http_status :unprocessable_content
       end
     end
   end
