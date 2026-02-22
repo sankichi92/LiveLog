@@ -75,7 +75,7 @@
 
 - `POSTGRES_HOST`, `POSTGRES_USER`, `POSTGRES_PASSWORD`, `LIVELOG_DATABASE_PASSWORD`
 - `RAILS_MAX_THREADS`, `RAILS_LOG_LEVEL`, `PORT`, `PIDFILE`
-- `SELENIUM_REMOTE`（system spec 実行時）
+- `USE_DOCKER_SELENIUM`（system spec 実行時）
 
 ## 4. ローカル/テストでの代替挙動
 
@@ -85,8 +85,8 @@
 - テスト:
   - `config/environments/test.rb` で Active Storage は `test`
   - Cloudinary はテスト用固定設定
-- Dev Container:
-  - PostgreSQL / Elasticsearch / Selenium を同梱（`.devcontainer/compose.yaml`）
+- Docker Compose:
+  - PostgreSQL / Elasticsearch / Selenium を `compose.yml` で起動
 
 ## 5. 副作用タスク（実行注意）
 
@@ -106,4 +106,3 @@
 
 - 入口ガイド: `AGENTS.md`
 - 構造マップ: `docs/project-map.md`
-

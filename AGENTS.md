@@ -11,11 +11,18 @@
 
 ## 最初の 10 分
 
-1. セットアップ: `bin/setup --skip-server`
-2. 開発サーバー起動: `bin/dev`
-3. Ruby テスト: `bin/rails spec`
-4. Ruby Lint: `bin/rubocop`
-5. JavaScript/TypeScript Lint: `yarn run lint`
+1. ミドルウェア起動: `docker compose up -d postgres elasticsearch`
+2. セットアップ: `bin/setup --skip-server`
+3. 開発サーバー起動: `bin/dev`
+4. Ruby テスト: `bin/rails spec`
+5. Ruby Lint: `bin/rubocop`
+6. JavaScript/TypeScript Lint: `yarn run lint`
+
+## AI エージェント向け検証コマンド
+
+1. ミドルウェア起動: `docker compose up -d postgres elasticsearch selenium`
+2. セットアップ: `bin/setup --skip-server`
+3. テスト: `bin/rails spec`
 
 ## 必須チェック（変更内容に応じて実行）
 
