@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-ruby '4.0.0'
+ruby '3.4.7'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem 'rails', '~> 8.1.2'
@@ -48,7 +48,6 @@ gem 'omniauth'
 gem 'omniauth-auth0'
 gem 'omniauth-github'
 gem 'omniauth-rails_csrf_protection'
-gem 'ostruct'
 gem 'rack-timeout'
 gem 'rails-i18n'
 gem 'ridgepole', require: false
