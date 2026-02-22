@@ -38,7 +38,7 @@ module Admin
         )
         redirect_to admin_administrators_path, notice: "#{@admin.user.member.joined_year_and_name} の管理者権限を更新しました"
       else
-        render :edit, status: :unprocessable_entity
+        render :edit, status: :unprocessable_content
       end
     end
 

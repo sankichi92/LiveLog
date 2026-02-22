@@ -38,7 +38,7 @@ RSpec.describe 'songs request:' do
       it 'responds 422' do
         get search_songs_path, params: search_params
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
       end
     end
   end
@@ -120,7 +120,7 @@ RSpec.describe 'songs request:' do
         patch(song_path(song), params:)
 
         expect(song.reload.name).not_to eq song_name
-        expect(response).to have_http_status :unprocessable_entity
+        expect(response).to have_http_status :unprocessable_content
       end
     end
   end

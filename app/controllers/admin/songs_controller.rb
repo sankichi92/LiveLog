@@ -30,7 +30,7 @@ module Admin
         )
         redirect_to admin_live_path(@live), notice: "ID: #{@song.id} を追加しました"
       else
-        render :new, status: :unprocessable_entity
+        render :new, status: :unprocessable_content
       end
     end
 
@@ -48,7 +48,7 @@ module Admin
         )
         redirect_to admin_live_path(@song.live), notice: "ID: #{@song.id} を更新しました"
       else
-        render :edit, status: :unprocessable_entity
+        render :edit, status: :unprocessable_content
       end
     end
 

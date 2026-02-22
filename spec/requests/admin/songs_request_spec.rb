@@ -73,7 +73,7 @@ RSpec.describe 'admin/songs request:' do
       it 'responds 422' do
         expect { post admin_live_songs_path(live), params: }
           .to not_change(Song, :count).and not_change(Play, :count)
-        expect(response).to have_http_status :unprocessable_entity
+        expect(response).to have_http_status :unprocessable_content
       end
     end
   end
@@ -131,7 +131,7 @@ RSpec.describe 'admin/songs request:' do
         patch(admin_song_path(song), params:)
 
         expect(song.reload.name).to eq 'before'
-        expect(response).to have_http_status :unprocessable_entity
+        expect(response).to have_http_status :unprocessable_content
       end
     end
   end

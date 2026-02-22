@@ -29,7 +29,7 @@ class MembersController < ApplicationController
       )
       redirect_to member_path(@member), notice: 'メールを送信しました。メールに記載されているURLにアクセスし、パスワードを設定してください'
     else
-      render 'user_registration_forms/show', status: :unprocessable_entity
+      render 'user_registration_forms/show', status: :unprocessable_content
     end
   end
 end

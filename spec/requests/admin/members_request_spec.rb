@@ -87,7 +87,7 @@ RSpec.describe 'admin/members request:' do
       it 'responds 422' do
         expect { post admin_members_path, params: }.not_to change(Member, :count)
 
-        expect(response).to have_http_status :unprocessable_entity
+        expect(response).to have_http_status :unprocessable_content
       end
     end
   end

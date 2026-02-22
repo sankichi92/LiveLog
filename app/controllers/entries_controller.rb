@@ -39,7 +39,7 @@ class EntriesController < ApplicationController
     redirect_to entries_path, notice: "エントリー ID: #{@entry.id} を作成しました"
   rescue ActiveRecord::RecordInvalid => e
     Sentry.capture_exception(e, level: :debug)
-    render :new, status: :unprocessable_entity
+    render :new, status: :unprocessable_content
   end
 
   def update(entry, song)
@@ -60,7 +60,7 @@ class EntriesController < ApplicationController
     redirect_to entries_path, notice: "エントリー ID: #{@entry.id} を更新しました"
   rescue ActiveRecord::RecordInvalid => e
     Sentry.capture_exception(e, level: :debug)
-    render :edit, status: :unprocessable_entity
+    render :edit, status: :unprocessable_content
   end
 
   def destroy
@@ -80,12 +80,12 @@ class EntriesController < ApplicationController
   # region Filters
 
   def require_entry_acceptable_live
-    redirect_back fallback_location: root_path, alert: 'エントリー募集中のライブがありません' unless Live.entry_acceptable.exists?
+    redirect_back_or_to root_path, alert: 'エントリー募集中のライブがありません' unless Live.entry_acceptable.exists?
   end
 
   def require_submitter_or_player(id)
     @entry = Entry.find(id)
-    redirect_back fallback_location: entries_path, alert: '権限がありません' if !@entry.submitter?(current_user) && !@entry.song.player?(current_user.member)
+    redirect_back_or_to entries_path, alert: '権限がありません' if !@entry.submitter?(current_user) && !@entry.song.player?(current_user.member)
   end
 
   # endregion

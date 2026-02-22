@@ -106,7 +106,7 @@ RSpec.describe 'profiles request:' do
         patch(profile_path, params:)
 
         expect(member.reload.name).not_to eq ''
-        expect(response).to have_http_status :unprocessable_entity
+        expect(response).to have_http_status :unprocessable_content
       end
     end
   end

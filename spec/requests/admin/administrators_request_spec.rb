@@ -75,7 +75,7 @@ RSpec.describe 'admin/admins request:' do
         patch(admin_administrator_path(another_admin), params:)
 
         expect(another_admin.reload.scopes).to be_empty
-        expect(response).to have_http_status :unprocessable_entity
+        expect(response).to have_http_status :unprocessable_content
       end
     end
   end

@@ -89,7 +89,7 @@ RSpec.describe 'admin/songs request:' do
 
         expect(entry.reload.admin_memo).not_to eq admin_memo
         expect(entry.song.position).not_to eq song_position
-        expect(response).to have_http_status :unprocessable_entity
+        expect(response).to have_http_status :unprocessable_content
       end
     end
   end

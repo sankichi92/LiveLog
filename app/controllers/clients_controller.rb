@@ -26,7 +26,7 @@ class ClientsController < ApplicationController
       DeveloperActivityNotifyJob.perform_later(user: current_user, text: "アプリケーションを作成しました: #{@client.name}")
       redirect_to edit_client_path(@client), notice: 'アプリケーションを作成しました'
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   rescue Octokit::Unauthorized
     redirect_to developer_path, alert: 'GitHub アカウントを再連携してください'
@@ -39,7 +39,7 @@ class ClientsController < ApplicationController
       @client.save!
       redirect_to edit_client_path(@client), notice: '更新しました'
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 

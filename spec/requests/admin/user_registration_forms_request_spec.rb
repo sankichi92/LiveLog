@@ -58,7 +58,7 @@ RSpec.describe 'admin/user_registration_forms request:' do
       it 'responds 422' do
         expect { post admin_user_registration_forms_path, params: }.not_to change(UserRegistrationForm, :count)
 
-        expect(response).to have_http_status :unprocessable_entity
+        expect(response).to have_http_status :unprocessable_content
       end
     end
   end

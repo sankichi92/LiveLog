@@ -29,7 +29,7 @@ module Admin
         )
         redirect_to admin_lives_path(year: live.date.nendo), notice: "#{live.name} のエントリー募集を開始しました"
       else
-        render :new, status: :unprocessable_entity
+        render :new, status: :unprocessable_content
       end
     end
 
@@ -46,7 +46,7 @@ module Admin
         )
         redirect_to admin_lives_path(year: @entry_guideline.live.date.nendo), notice: "#{@entry_guideline.live.name} のエントリー要項を更新しました"
       else
-        render :edit, status: :unprocessable_entity
+        render :edit, status: :unprocessable_content
       end
     end
   end

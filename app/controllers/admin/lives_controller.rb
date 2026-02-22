@@ -37,7 +37,7 @@ module Admin
         )
         redirect_to admin_lives_path(year: @live.date.nendo), notice: "#{@live.title} を作成しました"
       else
-        render :new, status: :unprocessable_entity
+        render :new, status: :unprocessable_content
       end
     end
 
@@ -54,7 +54,7 @@ module Admin
         )
         redirect_to admin_lives_path(year: @live.date.nendo), notice: "#{@live.title} を更新しました"
       else
-        render :edit, status: :unprocessable_entity
+        render :edit, status: :unprocessable_content
       end
     end
 
