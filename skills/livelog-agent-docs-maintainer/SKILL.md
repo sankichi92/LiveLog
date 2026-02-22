@@ -1,46 +1,45 @@
 ---
 name: livelog-agent-docs-maintainer
-description: Maintain and refresh LiveLog AI agent documentation (`AGENTS.md`, `docs/project-map.md`, `docs/infrastructure-inventory.md`, and README links). Use when routes, dependencies, environment variables, CI checks, developer commands, or external-service integrations change and these docs must stay aligned with the repository.
+description: LiveLog の AI エージェント向け文書（`AGENTS.md`, `docs/project-map.md`, `docs/infrastructure-inventory.md`, README の導線）を継続保守する。routes、依存ライブラリ、環境変数、CI、開発コマンド、外部サービス連携の変更で文書更新が必要なときに使う。
 ---
 
 # LiveLog Agent Docs Maintainer
 
-## Overview
+## 概要
 
-Keep LiveLog's AI-agent-facing documents synchronized with actual code and operations.
+LiveLog の AI エージェント向けドキュメントを、実際のコードと運用実態に同期させ続ける。
 
-## Execute Workflow
+## 実行ワークフロー
 
-1. Confirm target files.
+1. 対象ファイルを確認する。
 - `AGENTS.md`
 - `docs/project-map.md`
 - `docs/infrastructure-inventory.md`
 - `README.md`
 
-2. Recollect facts from code before editing docs.
-- Recheck routes, environment settings, initializers, and tasks.
-- Recheck CI workflows and local developer commands.
-- Recheck environment variables and external-service couplings.
+2. 文書編集前にコードから事実を再収集する。
+- routes、環境設定、initializers、rake tasks を再確認する。
+- CI ワークフローとローカル開発コマンドを再確認する。
+- 環境変数と外部サービス結合点を再確認する。
 
-3. Update docs with strict scope.
-- Keep `AGENTS.md` short and action-oriented.
-- Keep details in `docs/project-map.md` and `docs/infrastructure-inventory.md`.
-- Keep README changes minimal and link-focused.
-- Keep migration-target comparison out unless explicitly requested.
+3. スコープを守って文書更新する。
+- `AGENTS.md` は短く、実行指向を維持する。
+- 詳細は `docs/project-map.md` と `docs/infrastructure-inventory.md` に置く。
+- README の変更は最小限にして導線維持に限定する。
+- 明示依頼がない限り、移行先比較は追加しない。
 
-4. Enforce mandatory policies.
-- Require explicit human approval for production/external-service changes.
-- Mark side-effect tasks as opt-in only.
+4. 必須ポリシーを反映する。
+- 本番環境・外部サービス変更は、明示的な人手承認必須とする。
+- 副作用タスクは明示指示がある場合のみ実行可能と記載する。
 
-5. Run consistency checks and fix issues.
+5. 整合性チェックを実行して修正する。
 - `scripts/check_agent_docs.sh <repo-path>`
 
-6. Report changes clearly.
-- List files changed and why.
-- List unresolved unknowns and follow-up actions.
+6. 変更結果を明確に報告する。
+- 変更ファイルと変更理由を列挙する。
+- 未確定事項とフォローアップを列挙する。
 
-## Resources
+## リソース
 
-- Detailed checklist: `references/maintenance-checklist.md`
-- Fast consistency checks: `scripts/check_agent_docs.sh`
-
+- 詳細チェックリスト: `references/maintenance-checklist.md`
+- 高速整合チェック: `scripts/check_agent_docs.sh`
