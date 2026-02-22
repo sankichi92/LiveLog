@@ -33,7 +33,7 @@ gem 'auth0'
 gem 'aws-sdk-s3', require: false
 gem 'barnes'
 gem 'cloudinary'
-gem 'commonmarker'
+gem 'kramdown'
 gem 'dalli'
 gem 'elasticsearch', '~> 7.13.3'
 gem 'elasticsearch-dsl'
