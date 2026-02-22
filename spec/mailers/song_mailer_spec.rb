@@ -25,7 +25,7 @@ RSpec.describe SongMailer do
       expect(mail.from).to contain_exactly 'noreply@livelog.ku-unplugged.net'
       expect(mail.bcc).to match_array users.map(&:email)
       expect(mail.subject).to eq '「くちなしの丘」が今日のピックアップに選ばれました！'
-      expect(mail.body.to_s).to eq read_fixture('pickup.txt').gsub("\n", "\r\n")
+      expect(mail.body.to_s.gsub("\r\n", "\n")).to eq read_fixture('pickup.txt')
     end
   end
 end
