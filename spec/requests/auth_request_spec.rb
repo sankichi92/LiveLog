@@ -113,7 +113,7 @@ RSpec.describe 'auth request:' do
   describe 'DELETE /logout' do
     let(:user) { create(:user) }
 
-    let(:auth0_client) { double(:auth0_client, logout_url: 'logout_url') }
+    let(:auth0_client) { double(:auth0_client, logout_url: 'https://example.com/logout') }
 
     before do
       allow(LiveLog::Auth0Client).to receive(:instance).and_return(auth0_client)
