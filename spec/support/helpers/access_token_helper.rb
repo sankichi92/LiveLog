@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module AccessTokenHelper
-  RSA_KEYPAIR = OpenSSL::PKey::RSA.new(512, 3).freeze
+  RSA_KEYPAIR = OpenSSL::PKey::RSA.new(2048).freeze
   DEFAULT_PAYLOAD = {
     iss: "https://#{Rails.application.config.x.auth0.domain}/",
     sub: 'auth0|0',
