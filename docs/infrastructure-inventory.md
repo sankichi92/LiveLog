@@ -88,6 +88,9 @@
 - Docker Compose:
   - PostgreSQL / Elasticsearch / Selenium を `compose.yml` で起動
 
+ローカル開発・テストで `docker compose` により起動した PostgreSQL / Elasticsearch / Selenium への接続・疎通確認は、AI エージェントが人手承認なしで実行してよい。  
+ただし本番環境および外部サービスへの接続・変更は、引き続き人手承認を必須とする。
+
 ## 5. 副作用タスク（実行注意）
 
 - `bin/rails tweet:pickup_song`: 外部投稿の副作用あり
