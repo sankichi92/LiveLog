@@ -3,7 +3,8 @@
 require 'livelog/auth0_client'
 
 class Auth0ConsistencyCheckBatch < ApplicationBatch
-  Error = Class.new(StandardError)
+  class Error < StandardError
+  end
 
   def initialize(sleep_duration: 1)
     @sleep_duration = sleep_duration

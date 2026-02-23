@@ -15,7 +15,8 @@ class Client < ApplicationRecord
     jwt_configuration.alg
   ].freeze
 
-  AlreadyCreatedError = Class.new(StandardError)
+  class AlreadyCreatedError < StandardError
+  end
 
   belongs_to :developer
 
