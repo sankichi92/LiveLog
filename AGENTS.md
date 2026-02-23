@@ -24,6 +24,11 @@
 2. セットアップ: `bin/setup --skip-server`
 3. テスト: `bin/rails spec`
 
+## ローカルミドルウェアの承認方針
+
+- `docker compose` で起動するローカル開発用ミドルウェア（PostgreSQL / Elasticsearch / Selenium）への接続・疎通確認は、人手承認なしで実行してよい。
+- 上記はローカル開発・テスト用途に限定する。本番環境や外部サービスへの接続・変更は従来どおり人手承認を必須とする。
+
 ## 必須チェック（変更内容に応じて実行）
 
 - Ruby コードを変更したら: `bin/rails spec` と `bin/rubocop`
