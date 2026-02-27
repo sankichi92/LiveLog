@@ -59,7 +59,7 @@ gem 'slack-ruby-client'
 
 # Hotfix until the fix is released in ActiveSupport
 # https://github.com/sankichi92/LiveLog/issues/3071
-gem 'connection_pool', '~> 2.5'
+gem 'connection_pool', '~> 3.0'
 
 # Must be after 'kaminari'
 gem 'elasticsearch-model', '~> 7.1.1'
