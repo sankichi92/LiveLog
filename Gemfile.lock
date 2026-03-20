@@ -84,7 +84,7 @@ GEM
     addressable (2.8.9)
       public_suffix (>= 2.0.2, < 8.0)
     ast (2.4.3)
-    auth0 (5.18.0)
+    auth0 (5.18.1)
       addressable (~> 2.8)
       jwt (~> 2.7)
       rest-client (~> 2.1)
@@ -291,7 +291,7 @@ GEM
     mime-types (3.7.0)
       logger
       mime-types-data (~> 3.2025, >= 3.2025.0507)
-    mime-types-data (3.2026.0203)
+    mime-types-data (3.2026.0317)
     mini_mime (1.1.5)
     minitest (6.0.2)
       drb (~> 2.0)
