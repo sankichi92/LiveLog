@@ -148,7 +148,6 @@ GEM
       irb (~> 1.10)
       reline (>= 0.3.8)
     diff-lcs (1.6.2)
-    diffy (3.4.4)
     domain_name (0.6.20240107)
     dotenv (3.2.0)
     dotenv-rails (3.2.0)
@@ -430,10 +429,10 @@ GEM
       netrc (~> 0.8)
     retryable (3.0.5)
     rexml (3.4.4)
-    ridgepole (3.1.5)
+    ridgepole (3.2.0)
       activerecord (>= 6.1, < 8.3)
-      diffy
       logger
+      udiff (>= 0.2.0)
     rspec-core (3.13.6)
       rspec-support (~> 3.13.0)
     rspec-expectations (3.13.5)
@@ -547,6 +546,7 @@ GEM
     tsort (0.2.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
+    udiff (0.2.0)
     unicode-display_width (3.2.0)
       unicode-emoji (~> 4.1)
     unicode-emoji (4.2.0)
