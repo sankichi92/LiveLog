@@ -1,5 +1,24 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["local>sankichi92/renovate-config"],
-  "packageRules": [{ "matchPackageNames": ["ruby"], "groupName": "ruby" }]
+  "packageRules": [
+    {
+      "matchPackageNames": ["ruby"],
+      "matchDatasources": ["ruby-version"],
+      "groupName": "ruby",
+      "postUpgradeTasks": {
+        "commands": ["bundle update --bundler --ruby"],
+        "fileFilters": ["Gemfile.lock"],
+        "executionMode": "branch"
+      },
+      "bumpVersions": [
+        {
+          "name": "Sync Ruby version in Gemfile",
+          "filePatterns": ["Gemfile"],
+          "matchStrings": ["ruby ['\"](?<version>\\d+\\.\\d+\\.\\d+)['\"]"],
+          "bumpType": "sync"
+        }
+      ]
+    }
+  ]
 }
