@@ -6,16 +6,17 @@
       "matchPackageNames": ["ruby"],
       "matchDatasources": ["ruby-version"],
       "groupName": "ruby",
-      "postUpgradeTasks": {
-        "commands": ["bundle update --bundler --ruby"],
-        "fileFilters": ["Gemfile.lock"],
-        "executionMode": "branch"
-      },
       "bumpVersions": [
         {
           "name": "Sync Ruby version in Gemfile",
           "filePatterns": ["Gemfile"],
           "matchStrings": ["ruby ['\"](?<version>\\d+\\.\\d+\\.\\d+)['\"]"],
+          "bumpType": "sync"
+        },
+        {
+          "name": "Sync Ruby version in Gemfile.lock",
+          "filePatterns": ["Gemfile.lock"],
+          "matchStrings": ["ruby (?<version>\\d+\\.\\d+\\.\\d+)"],
           "bumpType": "sync"
         }
       ]
