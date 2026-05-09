@@ -30,10 +30,10 @@ RSpec.describe 'Settings:' do
     click_on '更新する'
 
     # Then
-    expect(page).to have_content 'プロフィールを更新しました'
+    expect(page).to have_text 'プロフィールを更新しました'
     expect(page).to have_title 'ギータ'
     expect(page).to have_link href: 'https://example.com/profile'
-    expect(page).to have_content 'ギターに転向しました'
+    expect(page).to have_text 'ギターに転向しました'
   end
 
   specify 'A logged-in user can edit their email and notification settings' do
@@ -58,7 +58,7 @@ RSpec.describe 'Settings:' do
     click_on '更新する'
 
     # Then
-    expect(page).to have_content '更新しました'
+    expect(page).to have_text '更新しました'
     expect(auth0_client_double).to have_received(:patch_user).with(user.auth0_id, user_metadata: { livelog_email_notifications: false }).once
   end
 end

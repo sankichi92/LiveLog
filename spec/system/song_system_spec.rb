@@ -14,18 +14,18 @@ RSpec.describe 'Song system:' do
       fill_in 'q', with: 'The Beatles'
       click_on '検索'
 
-      expect(page).to have_content(beatles_song.name)
+      expect(page).to have_text(beatles_song.name)
 
       click_on '詳細'
       fill_in 'artist', with: 'The Beatles'
       click_on '検索'
 
-      expect(page).to have_content(beatles_song.name)
+      expect(page).to have_text(beatles_song.name)
 
       fill_in 'name', with: 'NoResultsQuery'
       click_on '検索'
 
-      expect(page).to have_no_content(beatles_song.name)
+      expect(page).to have_no_text(beatles_song.name)
       expect(page).to have_css('.alert-danger')
     end
   end
@@ -39,12 +39,12 @@ RSpec.describe 'Song system:' do
       visit song_path(song)
 
       expect(page).to have_title(song.title)
-      expect(page).to have_content(song.name)
-      expect(page).to have_content(song.artist)
-      expect(page).to have_content(song.live.name)
-      expect(page).to have_content(song.position)
+      expect(page).to have_text(song.name)
+      expect(page).to have_text(song.artist)
+      expect(page).to have_text(song.live.name)
+      expect(page).to have_text(song.position)
       song.plays.each do |play|
-        expect(page).to have_content(play.member.name)
+        expect(page).to have_text(play.member.name)
       end
     end
   end
@@ -70,8 +70,8 @@ RSpec.describe 'Song system:' do
     click_on '更新する'
 
     # Then
-    expect(page).to have_content '更新しました'
-    expect(page).to have_content 'after'
+    expect(page).to have_text '更新しました'
+    expect(page).to have_text 'after'
     expect(song.plays.count).to eq 2
   end
 end

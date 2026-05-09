@@ -47,9 +47,9 @@ RSpec.describe 'Admin song system:' do
     click_on '登録する'
 
     # Then
-    expect(page).to have_content(/ID: \d+ を追加しました/)
-    expect(page).to have_content 'Gt.徳浦'
-    expect(page).to have_content 'Gt.三岡'
+    expect(page).to have_text(/ID: \d+ を追加しました/)
+    expect(page).to have_text 'Gt.徳浦'
+    expect(page).to have_text 'Gt.三岡'
   end
 
   specify 'An admin edits a song', :js do
@@ -72,7 +72,7 @@ RSpec.describe 'Admin song system:' do
     click_on '更新する'
 
     # Then
-    expect(page).to have_content "ID: #{song.id} を更新しました"
+    expect(page).to have_text "ID: #{song.id} を更新しました"
     expect(song.reload.name).to eq 'after'
     expect(song.plays.count).to eq 2
   end

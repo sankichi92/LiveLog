@@ -48,12 +48,12 @@ RSpec.describe 'Entry system:' do
     click_on '登録する'
 
     # Then
-    expect(page).to have_content '作成しました'
-    expect(page).to have_content '恋はリズムに乗って / □□□'
-    expect(page).to have_content "Vo.#{user.member.name}"
-    expect(page).to have_content "Gt.#{member.name}"
-    expect(page).to have_content "#{date.strftime('%-m/%-d')} 18:00〜#{date.strftime('%-m/%-d')} 20:00"
-    expect(page).to have_content "#{date.strftime('%-m/%-d')} 21:00〜#{date.strftime('%-m/%-d')} 22:00"
+    expect(page).to have_text '作成しました'
+    expect(page).to have_text '恋はリズムに乗って / □□□'
+    expect(page).to have_text "Vo.#{user.member.name}"
+    expect(page).to have_text "Gt.#{member.name}"
+    expect(page).to have_text "#{date.strftime('%-m/%-d')} 18:00〜#{date.strftime('%-m/%-d')} 20:00"
+    expect(page).to have_text "#{date.strftime('%-m/%-d')} 21:00〜#{date.strftime('%-m/%-d')} 22:00"
   end
 
   specify 'A submitter edits their entry', :js do
@@ -77,8 +77,8 @@ RSpec.describe 'Entry system:' do
     click_on '更新する'
 
     # Then
-    expect(page).to have_content "エントリー ID: #{entry.id} を更新しました"
-    expect(page).to have_content '間奏でボーカルがフルートを吹きます'
+    expect(page).to have_text "エントリー ID: #{entry.id} を更新しました"
+    expect(page).to have_text '間奏でボーカルがフルートを吹きます'
     expect(entry.reload.playable_times.count).to eq 1
   end
 
@@ -94,7 +94,7 @@ RSpec.describe 'Entry system:' do
     click_on '削除する'
 
     # Then
-    expect(page).to have_content "エントリー ID: #{entry.id} を削除しました"
+    expect(page).to have_text "エントリー ID: #{entry.id} を削除しました"
     expect { entry.reload }.to raise_error ActiveRecord::RecordNotFound
   end
 end

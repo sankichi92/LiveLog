@@ -19,6 +19,6 @@ module LoginSystemHelper
     )
     visit root_path
     click_on 'ログイン'
-    expect(page).to have_content 'ログインしました'
+    expect(page).to have_text 'ログインしました'
   end
 end

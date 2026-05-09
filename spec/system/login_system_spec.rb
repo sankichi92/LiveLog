@@ -27,14 +27,14 @@ RSpec.describe 'Login:' do
     visit profile_path
 
     # Then
-    expect(page).to have_content 'ログインしてください'
+    expect(page).to have_text 'ログインしてください'
     expect(page).to have_no_title 'プロフィール設定'
 
     # When
     click_on 'ログイン'
 
     # Then
-    expect(page).to have_content 'ログインしました'
+    expect(page).to have_text 'ログインしました'
     expect(page).to have_title 'プロフィール設定'
   end
 end
