@@ -31,6 +31,6 @@ RSpec.describe 'User registration form:' do
 
     # Then
     expect(page).to have_title "#{joined_year} #{name}"
-    expect(page).to have_content 'メールを送信しました。メールに記載されているURLにアクセスし、パスワードを設定してください'
+    expect(page).to have_text 'メールを送信しました。メールに記載されているURLにアクセスし、パスワードを設定してください'
   end
 end
