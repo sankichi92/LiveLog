@@ -27,7 +27,9 @@ RSpec.describe 'Admin song system:' do
     expect(page).to have_css '.play-form', count: 3
 
     # When
-    click_on '削除', match: :first
+    within first('.play-form-visible-fields') do
+      click_on '削除'
+    end
 
     # Then
     expect(page).to have_css '.play-form', count: 3
@@ -68,7 +70,9 @@ RSpec.describe 'Admin song system:' do
 
     # When
     fill_in '曲名', with: 'after'
-    click_on '削除', match: :first
+    within first('.play-form-visible-fields') do
+      click_on '削除'
+    end
     click_on '更新する'
 
     # Then

@@ -23,6 +23,6 @@ export default class extends Controller {
   }
 
   _initializeSelect2() {
-    $('.member-select').select2({ theme: 'bootstrap4', width: '100%' });
+    $('.member-select:not(.select2-hidden-accessible)').select2({ theme: 'bootstrap4', width: '100%' });
   }
 }
