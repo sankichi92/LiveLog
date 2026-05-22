@@ -216,7 +216,7 @@ GEM
     graphiql-rails (1.8.0)
       railties
       sprockets-rails
-    graphql (2.6.1)
+    graphql (2.6.2)
       base64
       fiber-storage
       logger
