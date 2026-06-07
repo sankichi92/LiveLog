@@ -74,7 +74,6 @@ module Admin
       live = Live.unpublished.find(id)
       LiveMailer.entries_backup(live).deliver_now
       live.publish!
-      TweetJob.perform_later("#{live.title} のセットリストが公開されました！\n#{live_url(live)}")
       AdminActivityNotifyJob.perform_later(
         user: current_user,
         operation: '公開しました',
