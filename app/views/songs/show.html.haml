@@ -30,9 +30,8 @@
       - if @song.audio_playable?
         .mb-3= audio_tag @song.audio_url, controls: true
 
-      %aside
-        = @song.twitter_share_link class: 'btn btn-primary'
-        - if @song.player?(current_user&.member)
+      - if @song.player?(current_user&.member)
+        %aside
           = link_to icon('fas', 'edit', '編集する'), edit_song_path(@song), class: 'btn btn-primary'
 
   - unless @song.original?

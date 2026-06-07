@@ -54,7 +54,6 @@ gem 'rails-i18n'
 gem 'ridgepole', require: false
 gem 'scout_apm'
 gem 'sentry-rails'
-gem 'simple_oauth', require: false
 gem 'slack-ruby-client'
 
 # Hotfix until the fix is released in ActiveSupport

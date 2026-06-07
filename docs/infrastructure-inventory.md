@@ -56,17 +56,12 @@
 - 結合点: `config/initializers/slack.rb`, `app/jobs/*_activity_notify_job.rb`, `config/routes.rb`
 - 関連環境変数: `SLACK_API_TOKEN`, `SLACK_NOTIFICATION_CHANNEL`, `SLACK_INVITATION_TOKEN`
 
-10. Twitter(X) API
-- 用途: 投稿タスク
-- 結合点: `config/initializers/twitter_client.rb`, `lib/twitter_client.rb`, `lib/tasks/tweet.rake`
-- 関連環境変数: `TWITTER_CONSUMER_KEY`, `TWITTER_CONSUMER_SECRET`, `TWITTER_ACCESS_TOKEN`, `TWITTER_ACCESS_TOKEN_SECRET`
-
-11. Sentry
+10. Sentry
 - 用途: エラー監視
 - 結合点: `config/initializers/sentry.rb`, `app/controllers/concerns/sentry_user.rb`, `app/javascript/application.ts`, `app/javascript/admin.ts`
 - 関連環境変数: DSN は運用環境側設定に依存
 
-12. Scout APM / Barnes（Heroku 運用由来）
+11. Scout APM / Barnes（Heroku 運用由来）
 - 用途: APM / ランタイム計測
 - 結合点: `Gemfile`, `config/puma.rb`
 - 備考: 利用実態は要確認
@@ -93,7 +88,6 @@
 
 ## 5. 副作用タスク（実行注意）
 
-- `bin/rails tweet:pickup_song`: 外部投稿の副作用あり
 - `bin/rails mail:pickup_song`: 外部送信の副作用あり
 - `bin/rails elasticsearch:import:song FORCE=y`: インデックス再構築
 
