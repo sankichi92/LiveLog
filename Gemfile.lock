@@ -86,7 +86,7 @@ GEM
     ast (2.4.3)
     auth-sanitizer (0.2.1)
       version_gem (~> 1.1, >= 1.1.10)
-    auth0 (5.20.0)
+    auth0 (6.0.0)
       addressable (~> 2.8)
       jwt (>= 2.7, < 4.0)
       rest-client (~> 2.1)
@@ -287,7 +287,7 @@ GEM
     mime-types (3.7.0)
       logger
       mime-types-data (~> 3.2025, >= 3.2025.0507)
-    mime-types-data (3.2026.0414)
+    mime-types-data (3.2026.0701)
     mini_mime (1.1.5)
     minitest (6.0.6)
       drb (~> 2.0)
