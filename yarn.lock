@@ -1514,10 +1514,10 @@ scheduler@^0.28.0:
   resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.28.0.tgz#03d3ca348aeaf8b7502f64468f217b27523f9695"
   integrity sha512-juorfCmIkIw8tT+p5BXSm6PJjQF/ycEYmKyzURCIt/RaZIhL+PulbQ9Yu2z1HdOJDdqDTlxA1+xKBmHXJsczAw==
 
-select2@^4.0.13, select2@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/select2/-/select2-4.1.0.tgz#8b037e02a3c025beda07fed7f9ecc7d298036e1a"
-  integrity sha512-i9KalWOP4/LRRGc8+rj2krNm0ZqP14cV+j1TRCEBSsOhCPkKH8rYZ2MCRXcgvqIqN+llqGci0hj9aVkCMvL0+g==
+select2@^4.0.13, select2@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/select2/-/select2-4.2.0.tgz#c98af11f99928ebb14caf9582d07a8f3c33d5e71"
+  integrity sha512-wptq1br36O1UHPyXR2QTyqzyCcLUhYy90c+iFNMaotP7raeVAsUQdbHObikYOwC+mHU1hoVFIJwJTagly115TQ==
 
 set-function-length@^1.2.1:
   version "1.2.2"
